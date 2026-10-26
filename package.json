@@ -20,6 +20,7 @@
     "render": "node bin/render.mjs",
     "make": "node bin/make.mjs",
     "review": "node bin/review.mjs",
+    "memes": "node bin/memes.mjs",
     "usage": "node bin/usage.mjs",
     "critics": "node bin/critics.mjs",
     "skills": "node bin/link-skills.mjs",
