@@ -2,6 +2,8 @@
 //   node bin/doctor.mjs
 // The last check voices one word with Kokoro for real; the first run downloads the model
 // (about 340 MB, into ~/.cache/hyperframes/tts).
+//   node bin/doctor.mjs --hearback    also checks the optional hear-back check (faster-whisper), and hears
+//                                     one word back (downloads its model, about 480 MB, on the first run)
 //   node bin/doctor.mjs --omnivoice   also checks the optional OmniVoice engine, and voices one
 //                                     word with it (downloads its model, about 1.5 GB, on the first run)
 import { spawnSync } from "node:child_process";
@@ -11,6 +13,7 @@ import { join } from "node:path";
 import { writeFileSync } from "node:fs";
 import { HF, REPO, VENV_PY, ttsEnv } from "./lib.mjs";
 import { MAX, MIN, pythonVersion, supportedPython } from "./python.mjs";
+import { hearbackAvailable } from "./hearback.mjs";
 
 let bad = 0;
 const check = (name, ok, fix) => {
@@ -20,9 +23,10 @@ const check = (name, ok, fix) => {
 };
 // OmniVoice is optional: its lines only count against the machine when asked for with --omnivoice.
 const wantOmni = process.argv.includes("--omnivoice");
-const optional = (name, ok, fix) => {
-  console.log(`${ok ? "ok  " : wantOmni ? "MISS" : "opt "}  ${name}${ok ? "" : `\n      fix: ${fix}`}`);
-  if (!ok && wantOmni) bad++;
+const wantHear = wantOmni || process.argv.includes("--hearback");
+const optional = (name, ok, fix, want = wantOmni) => {
+  console.log(`${ok ? "ok  " : want ? "MISS" : "opt "}  ${name}${ok ? "" : `\n      fix: ${fix}`}`);
+  if (!ok && want) bad++;
   return ok;
 };
 const has = (cmd, args = ["-version"]) => spawnSync(cmd, args, { stdio: "ignore" }).status === 0;
@@ -43,6 +47,17 @@ if (venv) {
     const data = mods.stdout.trim();
     check(`espeak data path is short enough (${data.length} characters)`, data.length < 160,
       "make the venv somewhere with a shorter path and set HYPERFRAMES_PYTHON to its python");
+  }
+}
+if (venv) {
+  const hear = optional("Hear-back check, which catches a dropped or mangled word without a listen (faster-whisper)", hearbackAvailable(py),
+    "npm run setup:hearback", wantHear);
+  if (hear && wantHear) {
+    const dir = mkdtempSync(join(tmpdir(), "hb-"));
+    const wav = join(dir, "ready.wav");
+    const say = spawnSync(HF, ["tts", "Ready.", "-o", wav, "--json"], { env: ttsEnv(), encoding: "utf8" });
+    const r = say.status === 0 ? spawnSync(py, [join(REPO, "bin", "hearback.py"), wav], { encoding: "utf8" }) : say;
+    optional("Hear-back hears a word", r.status === 0 && /ready/i.test(r.stdout), (r.stderr || r.stdout || "").trim().slice(-400), true);
   }
 }
 if (venv) {

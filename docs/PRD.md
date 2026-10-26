@@ -97,6 +97,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F28 | Voices that read every word: OmniVoice takes are generated at their natural length and stretched to the speed, trimmed of dead air, and re-voiced if silent; `eve` is a built-in voice (DESIGN D31) | done; measured with Whisper, no dropped words in about 150 sentences |
 | F29 | A decision video made through the real handoff, as the demo: a brief about a fictional code base, a fresh explainer agent, critics (`videos/invoice-leak`, `examples/ledgerly`; DESIGN D34) | done |
 | F30 | A video ends on its finished frame, so a paused or ended player shows the answer while people discuss it; `hold` adds still seconds after the last word (DESIGN D36) | done |
+| F35 | Every voiced take is checked: OmniVoice takes are cut of the model's opening burst and voiced again when they shout or start with no lead-in; every take of either engine is levelled (Kokoro's in place, key unchanged); with the optional faster-whisper (`npm run setup:hearback`) each take is heard back, OmniVoice keeps the best of three, and the review packet lists sentences under 0.97 (DESIGN D44) | done; measured on how-it-works with both engines, the listening not verifiable by an agent |
 | F31 | Apply Anthropic's agent best practices: a smaller always-on context, hooks that enforce the hard rules, a read-only critic in fact, per-run results and evals with an independent judge. The step-by-step plan, with sources and what is unconfirmed, is `docs/PLAN.md` | planned |
 | F32 | The hard rules are enforced, not only written: tracked project hooks refuse deleting and history-rewriting commands, edits to the demo's bugs and to recorded runs, and end a session on failing tests (first steps of F31; DESIGN D41) | done |
 | F36 | The judge cannot rewrite what it judges: the `critic` agent has Write, Edit and NotebookEdit denied, a turn cap and a default model (plan steps 3.1 and 3.2, DESIGN D45) | done; the Bash half (no writes outside a scratch directory) is open |
@@ -123,7 +124,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 
 ## Out of scope for now
 
-- Speech recognition. Timing comes from voicing each sentence separately (DESIGN D1).
+- Speech recognition for timing. Timing comes from voicing each sentence separately (DESIGN D1); an optional ASR only verifies takes (F35).
 - Publishing renders or audio. Generated files are never committed.
 - A hosted service.
 
