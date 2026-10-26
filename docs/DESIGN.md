@@ -463,10 +463,19 @@ to check first (plugin-shipped agent hooks, how a missing `version` resolves).
 beside their SHA-256 and `package-lock.json`; **`stop-tests`** (Stop) runs `npm test` if the session changed anything the tests
 cover and exits 2 on a failure, once: `stop_hook_active` lets the second stop through, so an unfixable failure cannot loop.
 `permissions.deny` keeps `.env*` and `local/voices/` unread (a clone is somebody's voice). A person overrides on purpose with
-`SHIPSHOW_ALLOW_DESTRUCTIVE=1` or `SHIPSHOW_EDIT_SAMPLE=1`.
+`SHIPSHOW_ALLOW_DESTRUCTIVE=1`, `SHIPSHOW_EDIT_SAMPLE=1` or `SHIPSHOW_ALLOW_PRIVATE=1`.
+**Bash is covered too (review of #21).** Agents here edit and read through Bash, so `protect-files` and the Read denial alone
+left holes. `guard-bash` now (1) refuses a command that names a protected path as the target of a write form (`>`, `>>`, `tee`,
+`sed -i`, `perl -i`, `cp`/`mv`/`install`/`ln`/`rsync` destination, `truncate`, `dd of=`, `patch`, and inline `python -c` or
+`node -e` that names one and writes), using `protect-files`' own rule and override; (2) refuses a command that reads `.env*`
+or `local/voices` (`cat`, `head`, `grep`, `sed -n`, `< file`, a `cp` source, inline interpreter code); (3) splits on grouping
+parens, so `(rm f)` and `<(rm f)` are seen. It follows a simple `cd`. Copying a clip INTO `local/voices` (`cp`, `mv`, `>`)
+stays allowed, and the voice pipeline reads the clips from node, never from a command line, so it is untouched. **It is a
+seatbelt, not a sandbox**: it reads the command text, so a path built in a variable, a glob that expands to it, a script
+that writes it inside, a heredoc fed to python, or `grep -r x .` from the root get through. Real isolation is `sandbox-run.sh`.
 **Why.** CLAUDE.md is advisory and hooks are enforced (Anthropic's memory and permissions docs); the repo's hard rules were prose
 plus CI. **Checked** by `test/hooks.test.mjs`, which feeds each hook payloads on stdin: 21 refused commands, 16 allowed ones,
-the override, bad input.
+the override, bad input; Bash writes, reads and grouping each have a refused list and an allowed list.
 **Found by using it.** The hook was live in the session that wrote it and, on its first run, refused a pull-request body
 (a heredoc whose markdown had `rm` in backticks): it read backticks as command substitution everywhere. A heredoc body with a
 quoted delimiter is now text, and substitutions are looked for only outside single quotes (an unquoted heredoc and double

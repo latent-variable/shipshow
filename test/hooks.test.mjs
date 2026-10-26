@@ -7,7 +7,7 @@ import { test } from "node:test";
 import { REPO } from "../bin/lib.mjs";
 
 const hook = (name, payload, env = {}) => spawnSync(process.execPath, [join(REPO, ".claude", "hooks", name)], {
-  input: JSON.stringify(payload), encoding: "utf8", env: { ...process.env, CLAUDE_PROJECT_DIR: REPO, SHIPSHOW_ALLOW_DESTRUCTIVE: "", SHIPSHOW_EDIT_SAMPLE: "", ...env },
+  input: JSON.stringify(payload), encoding: "utf8", env: { ...process.env, CLAUDE_PROJECT_DIR: REPO, SHIPSHOW_ALLOW_DESTRUCTIVE: "", SHIPSHOW_EDIT_SAMPLE: "", SHIPSHOW_ALLOW_PRIVATE: "", ...env },
 });
 const bash = (command, env) => hook("guard-bash.mjs", { tool_name: "Bash", tool_input: { command } }, env);
 const edit = (file_path, env) => hook("protect-files.mjs", { tool_name: "Edit", tool_input: { file_path }, cwd: REPO }, env);
@@ -33,6 +33,44 @@ test("hooks: the Bash guard refuses what deletes or rewrites work, and lets ordi
   assert.equal(bash("rm -rf build", { SHIPSHOW_ALLOW_DESTRUCTIVE: "1" }).status, 0, "a person can allow it on purpose");
   assert.equal(hook("guard-bash.mjs", { tool_name: "Bash", tool_input: {} }).status, 0, "no command is not an error");
   assert.equal(spawnSync(process.execPath, [join(REPO, ".claude", "hooks", "guard-bash.mjs")], { input: "not json", encoding: "utf8" }).status, 0, "bad input does not block");
+});
+
+test("hooks: the Bash guard sees deletes inside groups and process substitution", () => {
+  for (const c of ["(rm -f a)", "cat <(rm -f a)", "{ rm a; }", "if true; then rm a; fi", "echo x > >(rm a)", "(cd x && rm a)", "true && (git clean -fd)"]) assert.equal(bash(c).status, 2, `${c} should be refused`);
+  for (const c of ["(cd docs && ls)", "echo '(rm a)'", "diff <(ls a) <(ls b)", "{ echo hi; }"]) assert.equal(bash(c).status, 0, `${c} should pass`);
+});
+
+test("hooks: the Bash guard refuses writes to what the file guard protects (a seatbelt, not a sandbox)", () => {
+  const S = "sample_application/src/pacing.mjs", R = "videos/pacer-dev-journey/review/scenario-before.txt";
+  for (const c of [`printf x > ${S}`, `echo x >> ${S}`, `echo x>${S}`, `cat a >|${S}`, `echo x | tee ${S}`, `tee -a ${R} < a`, `sed -i 's/a/b/' ${S}`, `sed -i.bak s/a/b/ ${S}`, `sed -ni 's/a/b/p' ${S}`, `perl -pi -e 's/a/b/' ${S}`,
+    `cp /tmp/x ${S}`, `cp -f /tmp/x sample_application/src/`, `cp -t sample_application/src /tmp/x`, `mv /tmp/x ${R}`, `mv ${S} /tmp/away`, `install -m 644 /tmp/x ${S}`, `ln -sf /tmp/x ${S}`, `truncate -s 0 ${S}`,
+    `dd if=/tmp/x of=${S}`, `patch ${S} < fix.diff`, "echo x > package-lock.json", "sudo sed -i s/a/b/ package-lock.json", "cp /tmp/x videos/a/results/captures/tests.txt",
+    `cd sample_application && sed -i s/a/b/ src/pacing.mjs`, `echo x > ./sample_application/../${S}`, `echo x > "${join(REPO, S)}"`, `bash -c "echo x > ${S}"`, `echo $(echo x > ${S})`,
+    `python3 -c "open('${S}','w').write('x')"`, `node -e "require('fs').writeFileSync('package-lock.json','{}')"`]) {
+    const r = bash(c);
+    assert.equal(r.status, 2, `${c} should be refused`);
+    assert.match(r.stderr, /^Blocked: it writes|^Blocked: inline code/, c);
+  }
+  for (const c of [`cat ${S}`, `grep -n pace ${S}`, `sed -n 1,5p ${S}`, `sed 's/a/b/' ${S} > /tmp/out`, `cp ${S} /tmp/copy`, `diff ${S} /tmp/x 2>&1`, "echo x > sample_application/README.md", "echo x > sample_application/test/a.mjs", "cp /tmp/x sample_application/test/",
+    `echo 'x > ${S}'`, `git commit -m "fix: sed -i on ${S}"`, `cd /tmp && echo x > sample_application/src/y`, `python3 -c "print(open('${S}').read())"`, "npm install", "npm test 2>&1 | tail -5", "node bin/make.mjs videos/x > /tmp/log"]) {
+    assert.equal(bash(c).status, 0, `${c} should pass`);
+  }
+  assert.equal(bash(`sed -i s/a/b/ ${S}`, { SHIPSHOW_EDIT_SAMPLE: "1" }).status, 0, "the sample override works through Bash too");
+  assert.equal(bash(`echo x > package-lock.json`, { SHIPSHOW_ALLOW_DESTRUCTIVE: "1" }).status, 0, "so does the general override");
+});
+
+test("hooks: the Bash guard refuses reading .env and local/voices, and still lets a clip be copied in", () => {
+  for (const c of ["cat .env", "cat .env.local", "head -3 ./.env", "grep KEY .env", "grep -r x local/voices", "cat local/voices/me.txt", "xxd local/voices/me.wav | head", "base64 local/voices/me.wav", "cp local/voices/me.wav /tmp/x", "cat < .env",
+    "sed -n 1p .env", "cd local && cat voices/me.wav", "bash -c 'cat .env'", `python3 -c "print(open('.env').read())"`, "node -e \"console.log(require('fs').readFileSync('local/voices/a.txt'))\"", "awk 1 .env", "source .env", "cat -- local/voices/*"]) {
+    const r = bash(c);
+    assert.equal(r.status, 2, `${c} should be refused`);
+    assert.match(r.stderr, /^Blocked: (it reads|inline code that names a private)/, c);
+  }
+  for (const c of ["cp ~/Downloads/me.wav local/voices/me.wav", "cp /tmp/me.wav /tmp/me.txt local/voices/", "mv /tmp/me.wav local/voices/me.wav", "echo 'words spoken' > local/voices/me.txt", "ls local/voices", "ls -la .env", "mkdir -p local/voices", "cat .envrc.md", "cat docs/.environment", "cat README.md", "grep -n env bin/lib.mjs", "echo '.env is private'",
+    "ffprobe /tmp/me.wav", "node bin/voice.mjs videos/x --voice me", "npm run voice -- videos/x", "git commit -m 'cat .env'"]) {
+    assert.equal(bash(c).status, 0, `${c} should pass`);
+  }
+  assert.equal(bash("cat .env", { SHIPSHOW_ALLOW_PRIVATE: "1" }).status, 0, "a person can allow it on purpose");
 });
 
 test("hooks: the file guard protects the demo's bugs, recorded runs and the lockfile, and nothing else", () => {
