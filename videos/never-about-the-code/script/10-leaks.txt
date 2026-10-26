@@ -1,1 +1,1 @@
-When the behavior surprises you, you go down a level. Joel Spolsky called this the law of leaky abstractions. All non-trivial abstractions leak. So you read the code where it leaks, the way programmers once read the assembly.
+When the behavior surprises you, you go down a level. An agent is an abstraction over the code, and Joel Spolsky's law says all non-trivial abstractions leak, to some degree. So the code still matters, where it leaks. You read it there, the way programmers once studied the compiler's output.
