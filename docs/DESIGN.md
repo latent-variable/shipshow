@@ -463,6 +463,13 @@ project settings and rules cannot be committed. Nothing in the plan is done.
 cost or critic agreement is recorded. **Costs.** None yet; each step names how to tell it worked and the unconfirmed items
 to check first (plugin-shipped agent hooks, how a missing `version` resolves).
 
+### D40. CI installs a pinned static ffmpeg, not the apt package (2026-10-26)
+**Decision.** The `test` job downloads ffmpeg 6.0.1's static build (johnvansickle.com old-releases, a stable URL), checks its
+SHA-256, and installs `ffmpeg` and `ffprobe` into `/usr/local/bin`; the step has a five minute limit and the job fifteen.
+**Why.** `apt-get update && apt-get install ffmpeg` sat silent on the Ubuntu mirror for 33 minutes on main and 26 on the
+security-gate branch (2026-10-26), and stalled again on #55, while the same step usually takes under a minute. **Costs.** The
+version is pinned and moves only by hand; the host is one person's site, so a dead URL fails the step loudly in seconds.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
