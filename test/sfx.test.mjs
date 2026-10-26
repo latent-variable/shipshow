@@ -303,6 +303,8 @@ test("markup and script parsing: comments are skipped, attributes are read, a ba
   const ctx = { ids: { x: 4.5 }, starts: { s: 10 }, ends: { s: 14 } };
   const ev = scriptEvents(`/* sfx("a", 1) */ // sfx("b", 2)\nconst note = "sfx('c', 3)";\nsfx("swish", cueAt("#x") + 0.25, { gain: -3 });\nsfx('thump', sceneStart('s') + 1)`, ctx);
   assert.deepEqual(ev.map((e) => [e.name, e.t, e.gain]), [["swish", 4.75, -3], ["thump", 11, 0]]);
+  assert.throws(() => markupEvents(`<div data-at="1" data-sfx="a" data-sfx-gain="loud"></div>`, "s"), /not a number of dB/);
+  assert.throws(() => scriptEvents(`sfx("a", 1, { step: 1.5 })`, ctx), /whole number of scale steps/);
   assert.throws(() => scriptEvents(`sfx("a", cueAt("#nope"))`, ctx), /names no element/);
   assert.deepEqual(profile(Float64Array.from([0, 0.5, 1, 0.5, 0])).peakAt, 2);
 });

@@ -198,6 +198,14 @@ export function cueTimes(html) {
   return out;
 }
 
+/** A call's gain (dB) and step (scale steps) as numbers, or a named error: a typo must not become NaN in the mix. */
+function numbers(gain, step, where) {
+  const g = Number(gain ?? 0), k = Number(step ?? 0);
+  if (!Number.isFinite(g)) throw new Error(`${where}: gain "${gain}" is not a number of dB`);
+  if (!Number.isInteger(k)) throw new Error(`${where}: step "${step}" is not a whole number of scale steps`);
+  return { gain: g, step: k };
+}
+
 /** The sounds a scene's markup asks for: every element with data-sfx, at its data-at plus data-sfx-offset. */
 export function markupEvents(html, scene) {
   const events = [];
@@ -208,7 +216,7 @@ export function markupEvents(html, scene) {
     if (!at) throw new Error(`scene ${scene}: ${tag.slice(0, 90)} has data-sfx but no data-cue, so it has no time. Add a data-cue, or place the sound from the scene's script: sfx("${name}", cueAt("#id") + 0.2)`);
     const offset = attr("offset") === undefined ? 0 : Number(attr("offset"));
     if (!Number.isFinite(offset)) throw new Error(`scene ${scene}: data-sfx-offset="${attr("offset")}" is not a number of seconds`);
-    events.push({ name, t: round(+at[1] + offset), scene, source: "data-sfx", label: tag.match(/\bid="([^"]+)"/)?.[1] ?? tag.match(/data-cue="([^"]*)"/)?.[1] ?? name, gain: Number(attr("gain") ?? 0), step: Number(attr("step") ?? 0) });
+    events.push({ name, t: round(+at[1] + offset), scene, source: "data-sfx", label: tag.match(/\bid="([^"]+)"/)?.[1] ?? tag.match(/data-cue="([^"]*)"/)?.[1] ?? name, ...numbers(attr("gain"), attr("step"), `scene ${scene}: data-sfx="${name}"`) });
   }
   return events;
 }
@@ -231,7 +239,7 @@ export function scriptEvents(script, { ids, starts, ends }) {
     try {
       const [name, t, opts] = args.map((a) => vm.runInNewContext(`(${a})`, { ...sandbox }, { timeout: 200 }));
       if (typeof name !== "string" || !Number.isFinite(t)) throw new Error("it needs a name and a time in seconds");
-      events.push({ name, t: round(t), scene: null, source: "script", label: shown, gain: Number(opts?.gain ?? 0), step: Number(opts?.step ?? 0) });
+      events.push({ name, t: round(t), scene: null, source: "script", label: shown, ...numbers(opts?.gain, opts?.step, shown) });
     } catch (e) {
       throw new Error(`${shown} in scenes.html's script cannot be placed at build time (${e.message}). Give it a number, or cueAt("#id"), sceneStart("scene") or sceneEnd("scene") plus or minus a number: the script's text is read, not run, so a call in a loop has nothing to evaluate`);
     }
