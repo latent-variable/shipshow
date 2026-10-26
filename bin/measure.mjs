@@ -65,3 +65,20 @@ export function newReadingText(cue, earlierInScene) {
   if (cue.text && earlierInScene.some((e) => e.text !== cue.text && e.text.includes(cue.text))) return "";
   return cue.text;
 }
+
+/** The sound effects as the review packet lists them: one row per sound with its time and scene,
+ *  what is being said, its level against the voice, how long it is audible, and how close the next
+ *  sentence's first word is. `record` is a video's assets/sfx.json. A critic judges the rows. */
+export function soundRows(record, timing) {
+  const r2 = (x) => Math.round(x * 100) / 100;
+  const sentences = timing.scenes.flatMap((sc) => sc.sentences);
+  return (record.events ?? []).map((e) => {
+    const saying = sentences.find((x) => e.t >= x.start && e.t < x.start + x.duration);
+    const next = sentences.find((x) => x.start > e.t);
+    const to = e.audible?.[1] ?? e.t;
+    const flags = [];
+    if (next && next.start - to < 0.3) flags.push(`ends ${r2(next.start - to)} s before a sentence starts`);
+    return [e.t, e.scene, e.name, e.label.length > 50 ? `${e.label.slice(0, 47)}...` : e.label, saying ? saying.text.slice(0, 60) : "(between sentences)",
+      e.level === undefined ? "" : `${e.level} LUFS (${r2(e.level - record.reference)} vs voice)`, e.audible ? `${e.audible[0]} to ${e.audible[1]} s` : "", flags.join("; ")];
+  });
+}

@@ -24,6 +24,8 @@ at that moment) and the frames, each listed with the sentence being spoken in it
   screen shows it.
 - **major:** the screen shows something the voice never mentions, competing for attention.
 - **major:** a caption in a frame that does not match the sentence being spoken in that frame.
+- **major:** a sound effect (the packet's *Sound effects* table) that lands on the wrong thing: its time is not the moment the named element arrives, or it sounds for something that does not move or land. A sound more than about 0.3 s from its picture is late or early.
+- **minor:** a sound effect on a thing that merely appears in a list of equals, rather than the one arrival that matters; or a boom, scratch, trombone or ding with no pause after it for the beat to land.
 - **minor:** several elements landing at once where they are named one after another.
 
 A **spoken alias** recorded in `sources.md` *Terms*, with its literal on screen at the same cue
