@@ -2,3 +2,6 @@
 # transcript is compared with the script. Optional and verification only (timing never uses it);
 # works with either engine. Installed by `npm run setup:hearback`, and by `npm run setup:omnivoice`.
 faster-whisper==1.2.1
+# Transitive floors (huggingface_hub pulls them in): older releases have known CVEs.
+httpx2>=2.12.0
+httpcore2>=2.10.0
