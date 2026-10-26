@@ -45,9 +45,10 @@ Three layers: **understand** (the context skills and `evidence-standard`), **mak
 
 ## Decision log
 
-### D1. No speech recognition (2026-10-17)
+### D1. No speech recognition for timing (2026-10-17; narrowed by D44)
 **Decision.** Word timing comes from voicing each sentence on its own, and placing a word by
-its share of the sentence's letters. No ASR step. **Why.** `hyperframes transcribe` built
+its share of the sentence's letters. No ASR step in timing. (D44 adds an optional ASR that
+verifies takes and never times them.) **Why.** `hyperframes transcribe` built
 whisper.cpp and then timed out downloading its model after six minutes; a second model is a
 larger download. **Consequence.** A cue can be a few hundred milliseconds off; fix it by
 splitting the sentence or using `data-cue="+seconds"`. A spoken alias made through `say`
@@ -354,7 +355,7 @@ Python 3.10 to 3.13, and `python3` is 3.14 on a current Homebrew machine, where 
 into the same `.venv` through `npm run setup:omnivoice`, which runs `npm run setup` only when no `.venv` exists, so this
 branch's supported-Python pick (D26) applies to a fresh install; an existing `.venv` needs `npm run setup` first (D35). `doctor` lists the engine as optional until asked with `--omnivoice`.
 **Consequences recorded by main.** A clone is somebody's voice (clone yourself or someone who agreed; `local/` never
-leaves the machine); OmniVoice can drop or repeat a word and nothing here hears it back (no speech recognition, D1);
+leaves the machine); OmniVoice can drop or repeat a word and nothing here heard it back (later, D44, an optional check does);
 a take's identity includes the voice file's bytes (the dropped words were fixed later, D31). This branch did not change any of it; the merge only combined
 `doctor` (its version check and main's engine lines), `package.json` (both setup scripts) and the tests.
 
@@ -390,6 +391,31 @@ The padding's silence was 13.8 s of a 67 s video. Eve's clip (built in, VCTK p36
 sentence; cut at exactly 10 s it ended mid-word and short lines came out silent.
 **Costs.** A changed speed re-voices every take, as before. `atempo` past about 1.5 starts to smear consonants; the
 tested range stays 1.0 to 1.3.
+
+### D44. Every take is cleaned, levelled and, optionally, heard back (2026-10-26)
+**Decision.** Ported from DAIS product-videos, where the owner heard these faults in published videos before anything
+measured them. `bin/voicecheck.py`: OmniVoice takes have the opening burst cut at the silence after it, are voiced again
+(three seeds) when the voice starts with no lead-in or a 400 ms stretch runs over 8 dB above the take's own median, and
+every take of either engine is set to a median speech of -20 dBFS with peaks capped at -6 dBFS (a tanh knee, not a hard clip).
+Kokoro takes are levelled in place after voicing; the take's key is unchanged and a `.lvl` stamp (rules' version and a hash of
+the key) says it is done, so nothing is voiced again. `bin/hearback.py`: with faster-whisper installed (`npm run
+setup:hearback`, `requirements-hearback.txt`; small.en pinned by revision) each take is transcribed and scored against the
+text the engine was told to say, by letters with spaces and punctuation gone and numbers spelled out; OmniVoice keeps the best
+of three; a take under 0.96 is flagged. Results live beside the take as `<scene>-<n>.check`, are collected into `timing.json`
+`voiceCheck`, and `bin/review.mjs` prints them (*Voice checks*). A voice with no transcript is given one by hearing its
+reference back as the model sees it (decoded from its tokens), cached beside it. **Why.** The models sample: two takes of one
+line differ and now and then one mangles a word, shouts, or opens on a click. Levelling is cheap and helps both engines.
+Hear-back is verification: D1 stands because timing still comes from voicing each sentence on its own, and the check is optional
+(CI, Kokoro-only users and machines without the 480 MB model skip it). **Measured (2026-10-26, this Mac).** how-it-works with
+Kokoro: speech level spread 5.8 dB before (-20.8 to -26.6 dBFS), 0.8 dB after; every take's peak at -6 dBFS; 17 of 17 heard back
+at 100%. Under OmniVoice 17 of 17 at 100%, no shout, no take starting at once; openings -45 to -82 dBFS. In this mlx-audio
+revision the opening burst of a built-in voice is small (peak about -56 dBFS, 4 of 10 takes had voice within 100 ms of it) so
+the cut mostly removes it and some leading silence; a clone cut from a VCTK clip started speaking at the first sample on 23 of
+24 seeds, which no retry or longer window changed, so such takes are kept and listed. Calibration of the 0.96: a take
+against its own text 100%; one word dropped or wrong in a 12-word sentence 91 to 95%; so the DAIS scene threshold of 0.90
+would have missed a single wrong word. **Costs.** A changed rule or installing hear-back voices OmniVoice takes again once
+(the key carries both). Hear-back adds about 1 s a take on CPU, and a Whisper that mends a slurred word passes it. What
+nobody can measure here: how any of it sounds.
 
 ### D32. Karaoke captions are a theme option (2026-10-17)
 **Decision.** A theme sets `--cap-style: karaoke` and `--cap-words` (the line length); `bin/build.mjs` reads them from the
@@ -466,6 +492,9 @@ What an agent or person observes. Each line is checkable against the cited file.
   scene never says and warns when a bare cue word occurs more than once in its scene. A cue
   matches the start of a spoken word across the whole scene, so use `word#n` or a distinctive
   word.
+- `voice` also levels every take and, with faster-whisper installed, hears each back (`bin/voice.mjs`,
+  `bin/hearback.py`, `bin/voicecheck.py`; D44): it prints `LISTEN` for a sentence under 0.96 or kept with a fault, and
+  records them in `timing.json` `voiceCheck`, which `review` prints as *Voice checks*.
 - `render` writes `out/<name>.mp4`; `make` chains voice, build, lint and render.
 - `review` writes `review/packet.md` (words a minute while speaking, every pause, every cue's
   time and reading time, with code counted in tokens, the longest still stretch of each scene) and

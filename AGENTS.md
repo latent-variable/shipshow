@@ -99,20 +99,21 @@ Node.js 22+, Python 3.10 to 3.13 (`npm run setup` picks one; `doctor` checks it)
 npm install                                                       # HyperFrames, GSAP; links skills into .claude/skills
 npm run setup                                                     # .venv with Kokoro, which hyperframes tts runs
 npm run doctor                                                    # what is missing, with the fix; voices one word
-npm run setup:omnivoice                                           # optional, Apple Silicon: OmniVoice for better and cloned voices
+npm run setup:omnivoice                                           # optional, Apple Silicon: OmniVoice for better and cloned voices (and hear-back)
+npm run setup:hearback                                            # optional, any engine: faster-whisper hears each take back (about 480 MB model)
 ```
 
 The first `doctor` downloads Kokoro into `~/.cache/hyperframes/tts` (about 340 MB). The first
 render downloads a headless Chrome if HyperFrames finds none (about 190 MB). The first OmniVoice
 take downloads its model (about 1.5 GB, `~/.cache/huggingface`); `npm run doctor -- --omnivoice`
-checks it and voices one word.
+checks it and voices one word; `-- --hearback` checks the hear-back and hears one word.
 
 ## Commands
 
 | Command | What it does |
 |---|---|
 | `npm run new -- <folder>` | A new video from `template/` (`videos/x` for this repo, `local/videos/x` for any other code base) |
-| `npm run voice -- <folder>` | One take per sentence (Kokoro, or OmniVoice: `--engine omnivoice --voice <name>` to try it), then `assets/narration.wav` and `timing.json` |
+| `npm run voice -- <folder>` | One take per sentence (Kokoro, or OmniVoice: `--engine omnivoice --voice <name>` to try it), levelled and, with hear-back installed, heard back (`--no-hearback` skips it), then `assets/narration.wav` and `timing.json` |
 | `npm run build -- <folder>` | The HyperFrames composition, `index.html`, from `scenes.html` and the timing |
 | `npm run check -- <folder>` | HyperFrames' own check: lint, layout, motion, caption contrast |
 | `npm run preview -- <folder>` | The HyperFrames studio, to scrub through it |
@@ -159,8 +160,24 @@ clones voices, on Apple Silicon only (MLX; `npm run setup:omnivoice`, then `"eng
 `stuart_bell`, `marius`, `javert`: CC0 clips from kyutai/tts-voices, `bin/omnivoice-voices.json`; and `eve`,
 VCTK speaker p361, CC BY 4.0, which a public video credits: "Voice: VCTK corpus, CC BY 4.0") or a
 **clone**, a 3 to 10 second clip at `local/voices/<name>.wav` with, optionally, the words spoken in it at
-`<name>.txt` beside it (a clip that ends mid-word, or has no transcript, clones worse: Eve's silent takes, 2026-10-17). `say` maps a written word to what the engine is told to say
+`<name>.txt` beside it (a clip that ends mid-word, or has no transcript, clones worse: Eve's silent takes, 2026-10-17;
+with hear-back installed a clone or built-in voice with no `.txt` is given one by hearing its reference back, so
+write the `.txt` only to correct it). `say` maps a written word to what the engine is told to say
 (`"HyperFrames": "Hyper Frames"`); captions keep the written form.
+
+**Checks on every take** (ported from DAIS product-videos, where the owner heard these faults in published
+videos; `bin/voicecheck.py`, `bin/hearback.py`, `bin/hearback.mjs`). *Levelling*, both engines: a take's median
+speech is set to -20 dBFS and its peaks capped at -6 dBFS, so no sentence is louder than the next. Kokoro's are
+levelled in place after voicing and their cache key is unchanged (a `.lvl` stamp beside the take records it;
+how-it-works went from a 5.8 dB spread to 0.8). *OmniVoice only*: the opening burst of noise is cut at the
+silence after it, a take that starts with no lead-in or shouts (a 400 ms stretch over 8 dB above its own median)
+is voiced again with another seed, up to three times, then kept and reported. *Hear-back*, optional
+(`npm run setup:hearback`; `--no-hearback` turns it off): faster-whisper small.en transcribes each take and
+`bin/hearback.py` scores it against the text the engine was told to say, by letters with spaces, punctuation and
+marks gone and numbers spelled out. OmniVoice keeps the best of three; under 0.96 is flagged. Each take's
+`assets/voice/<scene>-<n>.check` holds the result, `timing.json` `voiceCheck` collects it, and `npm run review`
+prints it in the packet's *Voice checks*. It verifies, never times (D1). Without faster-whisper everything else
+still runs and the packet says nobody heard the takes.
 
 **Look.** A theme is `themes/<name>/theme.css` (or `local/themes/<name>/`, which wins): a
 `:root` of tokens for colour, type, spacing, shape, captions and motion; `themes/shipshow`
@@ -215,7 +232,7 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ## Layout
 
 ```
-bin/        voice, build, render, make, review, critics, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range
+bin/        voice, build, render, make, review, critics, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects)
 themes/     shipshow, paper, launch and buildday; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono: SIL OFL)
 skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
@@ -237,9 +254,10 @@ local/      gitignored, per person (tailor skill)
 - **espeak-ng fails when its data path is 160 characters or longer** (measured 2026-10-17: 159 works, 160 fails). It reports a missing `.../site-packages//phontab`, not a path error. A venv deep in a temp or worktree path hits this; `doctor` checks the length.
 - **OmniVoice is Apple Silicon only, and opt-in.** `requirements-omnivoice.txt` is separate so Kokoro installs anywhere; `doctor` lists the engine as `opt` until you ask with `--omnivoice`. `bin/omnivoice.py` voices every stale sentence in one process (the model loads once) from a job file `bin/voice.mjs` writes; a user-set `HYPERFRAMES_PYTHON` is its Python too, which is how the tests stand a fake worker in for it. The model and the built-in clips are pinned by revision in `bin/omnivoice-voices.json`.
 - **A clone is somebody's voice.** OmniVoice's own disclaimer prohibits unauthorized cloning and impersonation: clone yourself or someone who agreed. `local/` never leaves the machine, so a clone never reaches this public repo; keep it that way.
-- **OmniVoice drops words when its window is too short, so speed is never applied by shortening it.** It fills the duration it is given: squeezed to 1.3x, 7 of 24 sentences lost or garbled words ("not a" vanished from "not a wall of logs"); generated at its natural length and then time-stretched (ffmpeg `atempo`), none did (measured 2026-10-17 with Whisper, why-shipshow). `bin/omnivoice.py` also trims the padding's silence from each take (13.8 s of a 67 s video was dead air) and re-voices a take that comes out silent. At 16 steps instead of 32 it dropped words on long lines, so `STEPS` stays 32. Nothing in the pipeline hears a take back: listen before you ship.
+- **OmniVoice drops words when its window is too short, so speed is never applied by shortening it.** It fills the duration it is given: squeezed to 1.3x, 7 of 24 sentences lost or garbled words ("not a" vanished from "not a wall of logs"); generated at its natural length and then time-stretched (ffmpeg `atempo`), none did (measured 2026-10-17 with Whisper, why-shipshow). `bin/omnivoice.py` also trims the padding's silence from each take (13.8 s of a 67 s video was dead air) and re-voices a take that comes out silent. At 16 steps instead of 32 it dropped words on long lines, so `STEPS` stays 32. With faster-whisper installed the pipeline hears each take back and flags a sentence under 0.96 (see *Checks on every take*); a word said wrongly that Whisper mends from context still passes, so listen to the flagged ones and to anything that matters before you ship.
 - **A take's identity includes the voice's bytes.** A clip replaced under the same name (or its `.txt` edited) is a different voice, so its takes are voiced again; a Kokoro take's key is unchanged from before OmniVoice, so existing takes stay valid.
-- **No speech recognition, on purpose.** `hyperframes transcribe` built whisper.cpp and then timed out downloading its model after six minutes. Timing comes from voicing each sentence separately (`bin/voice.mjs`), so a word inside a sentence is placed by its share of the letters. Do not add an ASR step to fix a cue a few hundred milliseconds off; split the sentence or use `data-cue="+seconds"`.
+- **Speech recognition checks takes and never times them.** `hyperframes transcribe` built whisper.cpp and then timed out downloading its model after six minutes, so timing still comes from voicing each sentence separately (`bin/voice.mjs`): a word inside a sentence is placed by its share of the letters. Do not add an ASR step to fix a cue a few hundred milliseconds off; split the sentence or use `data-cue="+seconds"`. faster-whisper (`requirements-hearback.txt`, pinned model revision) is a separate, optional verification that no build depends on; never make it required, and never let a Whisper word time reach `timing.json`.
+- **A take's key carries the check rules and the reference transcript** (OmniVoice only): `voicecheck.py` `VERSION` and whether the voice's reference has a transcript (`given`, `heard` or `none`), so changing a rule, or installing or removing hear-back, voices OmniVoice takes again once. Bump `VERSION` when a rule in `voicecheck.py` changes. A clone whose clip starts speaking at its first sample (measured with a VCTK clip, 2026-10-26: 1 clean take in 24, whatever the seed or lead-in) is kept after three tries, trimmed, and listed under *Voice checks* to listen to; a longer lead-in did not help and slowed the voice.
 - **Takes are cached by text, voice and speed** in `assets/voice/<scene>-<n>.key`. Inserting a sentence shifts the number of every later sentence in that scene (numbering restarts per scene), so those re-voice; the cost per take has not been measured.
 - **Generated files are gitignored** (`videos/*/assets/`, `review/`, `index.html`, `meta.json`, `timing.json`). Never commit audio, frames or renders.
 - **The name is ShipShow**, one word, two capitals; the repo is `latent-variable/shipshow` (renamed from kokoro-explainers 2026-10-17, and GitHub redirects the old address). A rename also changes the PR reviewer's allowlist (latent-git-agents `config/repos.json` and `tests/repo-allowlist.test.mjs`), or PRs stop being reviewed.

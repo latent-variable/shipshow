@@ -97,6 +97,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F28 | Voices that read every word: OmniVoice takes are generated at their natural length and stretched to the speed, trimmed of dead air, and re-voiced if silent; `eve` is a built-in voice (DESIGN D31) | done; measured with Whisper, no dropped words in about 150 sentences |
 | F29 | A decision video made through the real handoff, as the demo: a brief about a fictional code base, a fresh explainer agent, critics (`videos/invoice-leak`, `examples/ledgerly`; DESIGN D34) | done |
 | F30 | A video ends on its finished frame, so a paused or ended player shows the answer while people discuss it; `hold` adds still seconds after the last word (DESIGN D36) | done |
+| F35 | Every voiced take is checked: OmniVoice takes are cut of the model's opening burst and voiced again when they shout or start with no lead-in; every take of either engine is levelled (Kokoro's in place, key unchanged); with the optional faster-whisper (`npm run setup:hearback`) each take is heard back, OmniVoice keeps the best of three, and the review packet lists sentences under 0.96 (DESIGN D44) | done; measured on how-it-works with both engines, the listening not verifiable by an agent |
 | F20 | Per-person preferences and private videos stay local (`tailor`, `local/`) | done in this repo; elsewhere a skill checks `local/` is ignored and uses `.git/info/exclude` |
 | F21 | Run code to verify a claim without harm: a sandbox script, a faithful scratch copy, no network, writes confined (`evidence-standard`) | done on macOS; Linux untested |
 | F22 | Scaffold and diagnose: `npm run new` from `template/`, `npm run setup` (picks a Python in 3.10 to 3.13, the range the pinned Kokoro supports, and upgrades the new venv's pip before installing), `npm run doctor` for what the machine lacks, a draft render mode | done |
@@ -120,7 +121,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 
 ## Out of scope for now
 
-- Speech recognition. Timing comes from voicing each sentence separately (DESIGN D1).
+- Speech recognition for timing. Timing comes from voicing each sentence separately (DESIGN D1); an optional ASR only verifies takes (F35).
 - Publishing renders or audio. Generated files are never committed.
 - A hosted service.
 
