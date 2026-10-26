@@ -24,7 +24,9 @@
     "critics": "node bin/critics.mjs",
     "skills": "node bin/link-skills.mjs",
     "test": "node --test test/*.test.mjs",
-    "postinstall": "node bin/link-skills.mjs"
+    "postinstall": "node bin/link-skills.mjs",
+    "audit:deps": "bash scripts/audit-deps.sh",
+    "audit:code": "bash scripts/audit-code.sh"
   },
   "devDependencies": {
     "gsap": "3.14.2",

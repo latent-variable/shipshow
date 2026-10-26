@@ -87,6 +87,7 @@ punctuation edit or the review date do not count) needs `docs: no change - <reas
 or more) in the PR title or the last non-merge commit message. The text added may be unrelated to the change:
 the rule makes a stale number loud, not a stale claim, so read the docs you touch.
 
+- Security gate: `npm run audit:deps && npm run audit:code` (both in CI as the `security` job). Fix a finding first; carry one only with its reason (`osv-scanner.toml`, or a `nosemgrep` / `gitleaks:allow` comment at the line).
 - When you add or rename a skill, list it in the skills table above and in the PRD.
 - How to write an entry, and what `npm test` and CI check: `docs/DESIGN.md`, *Keeping these files current*.
 - **Bump nothing by hand in `plugin.json`:** it has no `version`, so the commit SHA versions the plugin.
@@ -244,7 +245,7 @@ local/      gitignored, per person (tailor skill)
 - **Generated files are gitignored** (`videos/*/assets/`, `review/`, `index.html`, `meta.json`, `timing.json`). Never commit audio, frames or renders.
 - **The name is ShipShow**, one word, two capitals; the repo is `latent-variable/shipshow` (renamed from kokoro-explainers 2026-10-17, and GitHub redirects the old address). A rename also changes the PR reviewer's allowlist (latent-git-agents `config/repos.json` and `tests/repo-allowlist.test.mjs`), or PRs stop being reviewed.
 - **`hyperframes lint` warns `nested_structure_needs_subcomposition` and `timeline_track_too_dense`** on every video. Advisory: each scene is one section on one track by design. Errors still block.
-- **Project hooks enforce the no-delete rule** (`.claude/settings.json`, `.claude/hooks/`, DESIGN D39): the Bash guard refuses `rm`, `find -delete` and the git commands that discard work, the file guard refuses `sample_application/src/` and recorded runs (and so does the Bash guard, for `>`, `sed -i`, `cp` and the like, and for `cat .env` or `local/voices`: a seatbelt, not a sandbox), and the Stop hook runs `npm test`. A person overrides on purpose with `SHIPSHOW_ALLOW_DESTRUCTIVE=1`, `SHIPSHOW_EDIT_SAMPLE=1` or `SHIPSHOW_ALLOW_PRIVATE=1`. Copy a clip into `local/voices` with `cp`; that stays allowed. Move things aside with `mv` instead.
+- **Project hooks enforce the no-delete rule** (`.claude/settings.json`, `.claude/hooks/`, DESIGN D40): the Bash guard refuses `rm`, `find -delete` and the git commands that discard work, the file guard refuses `sample_application/src/` and recorded runs (and so does the Bash guard, for `>`, `sed -i`, `cp` and the like, and for `cat .env` or `local/voices`: a seatbelt, not a sandbox), and the Stop hook runs `npm test`. A person overrides on purpose with `SHIPSHOW_ALLOW_DESTRUCTIVE=1`, `SHIPSHOW_EDIT_SAMPLE=1` or `SHIPSHOW_ALLOW_PRIVATE=1`. Copy a clip into `local/voices` with `cp`; that stays allowed. Move things aside with `mv` instead.
 - The scripts never delete files: a stale take is overwritten, never removed.
 - **Never write a literal style or script tag in a comment** inside `kit/` or `themes/`: the
   build inlines them into the page, and `hyperframes lint` reads it as an unclosed tag (twice,
