@@ -143,3 +143,21 @@ text with 96% of a full-width line, which can never pass, and the layout check c
 
 **Accepted.** visuals-5: the Fowler card waits on the left for the agent card while the voice explains determinism.
 pacing-1 is #62 (the packet counts a meme twice); pacing-2 is a 0.01 s rounding flag.
+
+## Round 6: visuals (Opus), a fresh check of the round-5 fixes on the finished render
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| visuals (Opus) | pass | 0 / 0 / 3 |
+
+**Fixed.** visuals-1: scenes 06 and 10 used the `wipe` transition, whose clip held the backdrop above the caption band, so the dot
+grid showed below the memes there; both use `slide` now, and stills from the render show no dots above or below the picture.
+visuals-2: "and they felt 20% faster" arrives with its row, so the card has no gap. **Accepted.** visuals-3: scene 09's heading
+waits alone for its first question while the voice says it.
+
+## State
+
+Every critic passes: accuracy (the floor, from round 3), clarity, pacing, sync, visuals, consistency and engagement. Clarity,
+visuals and engagement were judged by Opus in the last rounds; the rest by Sonnet. The finished mix was transcribed by Whisper
+against the script (0.977 word match; the gap is digits written as numbers). Nobody has listened to it: the voice, the music bed
+and the sounds are measured, not heard.
