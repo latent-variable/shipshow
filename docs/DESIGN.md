@@ -401,7 +401,7 @@ Kokoro takes are levelled in place after voicing; the take's key is unchanged an
 the key) says it is done, so nothing is voiced again. `bin/hearback.py`: with faster-whisper installed (`npm run
 setup:hearback`, `requirements-hearback.txt`; small.en pinned by revision) each take is transcribed and scored against the
 text the engine was told to say, by letters with spaces and punctuation gone and numbers spelled out; OmniVoice keeps the best
-of three; a take under 0.96 is flagged. Results live beside the take as `<scene>-<n>.check`, are collected into `timing.json`
+of three; a take under 0.97 is flagged. Results live beside the take as `<scene>-<n>.check`, are collected into `timing.json`
 `voiceCheck`, and `bin/review.mjs` prints them (*Voice checks*). A voice with no transcript is given one by hearing its
 reference back as the model sees it (decoded from its tokens), cached beside it. **Why.** The models sample: two takes of one
 line differ and now and then one mangles a word, shouts, or opens on a click. Levelling is cheap and helps both engines.
@@ -411,8 +411,8 @@ Kokoro: speech level spread 5.8 dB before (-20.8 to -26.6 dBFS), 0.8 dB after; e
 at 100%. Under OmniVoice 17 of 17 at 100%, no shout, no take starting at once; openings -45 to -82 dBFS. In this mlx-audio
 revision the opening burst of a built-in voice is small (peak about -56 dBFS, 4 of 10 takes had voice within 100 ms of it) so
 the cut mostly removes it and some leading silence; a clone cut from a VCTK clip started speaking at the first sample on 23 of
-24 seeds, which no retry or longer window changed, so such takes are kept and listed. Calibration of the 0.96: a take
-against its own text 100%; one word dropped or wrong in a 12-word sentence 91 to 95%; so the DAIS scene threshold of 0.90
+24 seeds, which no retry or longer window changed, so such takes are kept and listed. Calibration of the 0.97: a take
+against its own text 100%; one word dropped or wrong in a 12-word sentence 91 to 95%, a dropped leading "A" 96%, a phantom leading "And" 90%, a doubled word 91%; so the DAIS scene threshold of 0.90
 would have missed a single wrong word. **Costs.** A changed rule or installing hear-back voices OmniVoice takes again once
 (the key carries both). Hear-back adds about 1 s a take on CPU, and a Whisper that mends a slurred word passes it. What
 nobody can measure here: how any of it sounds.
@@ -509,7 +509,7 @@ What an agent or person observes. Each line is checkable against the cited file.
   matches the start of a spoken word across the whole scene, so use `word#n` or a distinctive
   word.
 - `voice` also levels every take and, with faster-whisper installed, hears each back (`bin/voice.mjs`,
-  `bin/hearback.py`, `bin/voicecheck.py`; D44): it prints `LISTEN` for a sentence under 0.96 or kept with a fault, and
+  `bin/hearback.py`, `bin/voicecheck.py`; D44): it prints `LISTEN` for a sentence under 0.97 or kept with a fault, and
   records them in `timing.json` `voiceCheck`, which `review` prints as *Voice checks*.
 - `render` writes `out/<name>.mp4`; `make` chains voice, build, lint and render.
 - `review` writes `review/packet.md` (words a minute while speaking, every pause, every cue's

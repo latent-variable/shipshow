@@ -25,7 +25,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-MIN = 0.96   # a take hearing back under this much of its text is flagged to listen to (see below)
+MIN = 0.97   # a take hearing back under this much of its text is flagged to listen to (see below)
 MODEL_REPO, MODEL_REVISION = "Systran/faster-whisper-small.en", "d1d751a5f8271d482d14ca55d9e2deeebbae577f"
 
 ONES = ("zero one two three four five six seven eight nine ten eleven twelve thirteen "
