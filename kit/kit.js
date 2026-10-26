@@ -4,6 +4,15 @@
       const tl = gsap.timeline({ paused: true });
       tl.to({}, { duration: TOTAL }, 0);
 
+      // Sound effects are placed by bin/sfx.mjs from the text of scenes.html at build time (and from
+      // each element's data-sfx), never by this page; these exist so a script that places one still
+      // runs here. cueAt is an element's data-at, sceneStart and sceneEnd a scene's edges.
+      const cueAt = (sel) => +document.querySelector(sel).dataset.at;
+      const sceneEl = (id) => document.querySelector('[data-scene="' + id + '"]');
+      const sceneStart = (id) => +sceneEl(id).dataset.start;
+      const sceneEnd = (id) => sceneStart(id) + +sceneEl(id).dataset.duration;
+      const sfx = () => {};
+
       // The motion settings are theme tokens (themes/<name>/theme.css), which a video's
       // video.json "flair" may override; a section's data-transition or data-camera wins.
       const STYLE = getComputedStyle(document.getElementById("root"));

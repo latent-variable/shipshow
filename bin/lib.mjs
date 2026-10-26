@@ -50,7 +50,7 @@ export function flag(name, argv = process.argv) {
 
 const localDir = () => process.env.SHIPSHOW_LOCAL || join(REPO, "local");
 
-/** This person's settings, local/config.json (tailor skill): {speed, voice, theme}. */
+/** This person's settings, local/config.json (tailor skill): {speed, voice, theme, sfx}. */
 function localConfig() {
   const p = join(localDir(), "config.json");
   return existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : {};
@@ -125,6 +125,7 @@ export function config(dir, argv = process.argv) {
     speed: local.speed ?? DEFAULT_SPEED,
     theme: local.theme || "shipshow",
     flair: {},
+    sfx: local.sfx,    // sound effects (bin/sfx.mjs): false, a kit name, or {kit, under, tonic}; local/config.json sets one for every video
     say: {},           // written form -> what Kokoro is told to say ("HyperFrames": "hyper frames")
     lead: 0.5,         // silence before a scene's first sentence, seconds at speed 1
     gap: 0.35,         // between sentences

@@ -67,7 +67,7 @@
       <div class="arrow" data-cue="HTML" data-anim="fade">+</div>
       <div class="chip mono" data-cue="HTML">scenes.html</div>
       <svg class="arrow-svg" viewBox="0 0 64 40" data-cue="Here" data-anim="draw"><path d="M4 20 H58 M44 8 L58 20 L44 32"/></svg>
-      <div class="chip hot" data-cue="Here">video</div>
+      <div class="chip hot" data-cue="Here" data-sfx="thump" data-sfx-offset="0.8">video</div>
     </div>
   </div>
 </section>
@@ -99,7 +99,7 @@
   </div>
   <div class="stage" data-cue="Tag" data-anim="fade">
     <div class="label">The video</div>
-    <div class="shown" data-cue="appears" data-anim="pulse">appears</div>
+    <div class="shown" data-cue="appears" data-anim="pulse" data-sfx="up">appears</div>
   </div>
 </section>
 
@@ -108,7 +108,7 @@
   <div class="steps wide">
     <div class="step" data-cue="voices"><b>voice</b><span>Kokoro reads each sentence</span></div>
     <div class="step" data-cue="builds"><b>build</b><span>scenes, cues and captions become one page</span></div>
-    <div class="step" data-cue="records"><b>record</b><span>HyperFrames records it to an MP4</span></div>
+    <div class="step" id="step-record" data-cue="records"><b>record</b><span>HyperFrames records it to an MP4</span></div>
   </div>
   <div class="render-cmd wide" data-cue="One" data-anim="fade"><span class="cmd mono">npm run make -- videos/how-it-works</span></div>
   <div class="takeaway wide" style="top: 790px" data-cue="Change">Change one sentence: <em data-cue="only" data-anim="highlight">only that sentence</em> is voiced again.</div>
@@ -128,3 +128,8 @@
   </div>
 </section>
 
+
+<script>
+  // The last step lands with a swish. bin/sfx.mjs reads this call from the page's text at build time.
+  sfx("swish", cueAt("#step-record") + 0.05);
+</script>
