@@ -1,3 +1,6 @@
 # OmniVoice, the optional higher-quality voice engine (`"engine": "omnivoice"`). Apple Silicon
 # only: it runs on MLX. Installed into the same .venv as Kokoro by `npm run setup:omnivoice`.
 mlx-audio==0.5.9
+# Transitive floors (mlx-audio pulls them in): older releases have known CVEs.
+httpx2>=2.12.0
+httpcore2>=2.10.0

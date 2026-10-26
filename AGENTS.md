@@ -86,6 +86,7 @@ punctuation edit or the review date do not count) needs `docs: no change - <reas
 or more) in the PR title or the last non-merge commit message. The text added may be unrelated to the change:
 the rule makes a stale number loud, not a stale claim, so read the docs you touch.
 
+- Security gate: `npm run audit:deps && npm run audit:code` (both in CI as the `security` job). Fix a finding first; carry one only with its reason (`osv-scanner.toml`, or a `nosemgrep` / `gitleaks:allow` comment at the line).
 - When you add or rename a skill, list it in the skills table above and in the PRD.
 - How to write an entry, and what `npm test` and CI check: `docs/DESIGN.md`, *Keeping these files current*.
 - **Bump nothing by hand in `plugin.json`:** it has no `version`, so the commit SHA versions the plugin.
