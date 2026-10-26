@@ -1,0 +1,1 @@
+So the next time someone says you don't understand the code, ask a better question. Do you understand what it does, and how do you know? That was the job when the compiler arrived. It still is.
