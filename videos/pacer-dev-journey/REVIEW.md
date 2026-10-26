@@ -59,8 +59,31 @@ visuals-4 (the three 100% rows appear together).
 is not in the sources beyond "shared"; the scene says it and does not explain it. visuals-2 and -3 (frames crowd the top or fill to
 the caption zone) and consistency-1 and grounding-2 (label wording): subjective or optional.
 
+## Round 3: past the cap, to judge the round-2 fixes (2026-10-26); critics: accuracy, sync, visuals (fresh Sonnet agents)
+
+The round-2 fixes had only been checked by the builder, so the three critics that failed round 2 judged the final render again,
+after the branch was brought up to date with main (no change to the video).
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 1 |
+| sync | pass | 0 / 0 / 3 |
+| visuals | fail | 0 / 3 / 3 |
+
+The round-2 blocking overlap is gone: no critic found it. Accuracy and sync now pass.
+
+**Fixed.** accuracy-1: `sources.md` C10 credited `test/report.test.mjs` to the throughput agent; the currency agent wrote it. The
+narration was already true; only the source line changed, so nothing was re-rendered.
+
+**Accepted at the cap, with reason.** This is an internal demo (`importance: normal`, a two-round plan), already one round past its
+cap. visuals-1 (the code excerpt's source label is about 20 px, under the 28 px floor): the label comes from `kit/base.css`, so it is
+the same in every video that shows code and belongs in a kit change, not this video. visuals-2, -3 and -6 (top-heavy or one-sided
+layouts in 01, 04 to 07) and visuals-4 and -5 (tight gaps near the caption and the callout): layout taste on legible frames. sync-1 to
+-3 (a still stretch of 8.7 s in 06, an unlabelled USD row in 05, the yen row landing after its sentence): minor, the narration carries
+each.
+
 ## State
 
-The floor held: no blocking `critic-accuracy` or `critic-grounding` finding was open at the end of either round. The blocking visuals
-finding of round 2 was fixed by the builder and looked at once, not judged again; the round-2 fixes were checked only with the
-packet (no cue late or short, longest still stretch under 6 s). A third round would be the next step if this goes beyond the demo.
+The floor held: no blocking `critic-accuracy` or `critic-grounding` finding was open at the end of any round. Round 3 had fresh
+critics judge the round-2 fixes: no blocking finding remains. What follows is the round-2 note, kept for the record: the round-2 fixes were checked only with the
+packet (no cue late or short, longest still stretch under 6 s). If this video goes beyond the demo, the open visuals majors are the next work.
