@@ -93,3 +93,32 @@ set them at 30 px (`.who`, `.tag`, credits), 32 px (tags) and 36 px (the limit l
 size. sync-3 (Drake's "Check the program does its job" before the narration says it): it sets up scene 08's "checking what the
 code does", and the meme restates the scene's question. clarity-4, -5: the Karpathy line now names the swap the Pooh meme shows,
 and the two adoption figures are separate sentences.
+
+## Round 4: 23 findings (0 blocking, 5 major, 18 minor); all seven critics, Opus for clarity, visuals and engagement
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 3 |
+| clarity (Opus) | pass | 0 / 0 / 3 |
+| pacing | fail | 0 / 2 / 1 |
+| sync | pass | 0 / 0 / 3 |
+| visuals (Opus) | fail | 0 / 3 / 3 |
+| consistency | pass | 0 / 0 / 6 |
+| engagement (Opus) | pass | 0 / 0 / 2 |
+
+The plan's cap. The two critics left failing raised objective, mechanical majors, so they were fixed and a fresh pacing and visuals
+critic judge the result (round 5, below), with accuracy for the three lines that changed.
+
+**Fixed.** Each stat row now arrives with its number (visuals-1); the number column is wide enough for "over 50%" (visuals-2);
+cards arrive with their first content, never as a label alone (visuals-3); scene 02 no longer overflows its frame, which pinned it
+to the top edge (visuals-4: measured in a headless browser, 827 px of content in an 810 px stage; now 696), every scene's stage
+was measured the same way and all fit; quotes wrap balanced (visuals-5); the Fowler label is short (visuals-6). The gap after scene
+10 is 2.0 s and the end card holds eleven seconds (pacing-1, -3); pacing-2 was the meme counted twice (its wrapper and the figure),
+and it now has no flag. Also taken: "many of them" saw themselves as a priesthood (accuracy-1), "because you skipped the machine
+code" (clarity-2), "And an agent will build the nonsense, too." (clarity-3), the hook's stamp names the first compilers on the word
+(engagement-1), the credits wait 1.5 s after the last stamp (engagement-2), "paraphrased" for Naur and year-first source labels
+(consistency-1 to -3).
+
+**Accepted, minor.** The close keeps two questions for the three (consistency-4: "what it must never do" is inside "what it
+does"); "test" and "check" both stay (consistency-5); only two scenes carry a heading (consistency-6); sync-1 to -3 (a headline
+and two meme panels a second or two ahead of their words); accuracy-2, -3 and clarity-1 (said as the narrator's view).

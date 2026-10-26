@@ -36,7 +36,8 @@
     "04-theory": 0.8,
     "06-where-it-breaks": 0.8,
     "08-oversight": 0.8,
-    "10-leaks": 1.1
+    "10-leaks": 0.83,
+    "05-dead": 0.6
   },
-  "hold": 9
+  "hold": 11
 }
