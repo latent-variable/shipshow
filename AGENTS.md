@@ -202,7 +202,7 @@ self-hosted memegen. An unknown id, an unreachable source with nothing cached, o
 naming the scene. Default size is `--meme-height` (760 px; set it in the theme, on the figure, or give the figure its own
 width and height), centred in the scene window, rounded and framed by the theme. The template pictures are
 third-party: fetched, never committed (`assets/` is ignored), and a published video relies on fair use and
-commentary norms, which is the publisher's call (DESIGN D39). The review packet lists each meme's template and
+commentary norms, which is the publisher's call (DESIGN D42). The review packet lists each meme's template and
 `source`; credit both in `sources.md`.
 
 **Music.** `video.json` `"music": {"file", "volume", "duck"}` puts a bed under the narration:

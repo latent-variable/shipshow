@@ -454,7 +454,23 @@ both attributes, and the shared theme tokens determine the label's typography an
 `kit/base.css`, `skills/explainer-video/SKILL.md`, `skills/critic-grounding/SKILL.md` and
 `skills/critic-grounding/scripts/extract-excerpts.mjs`.
 
-### D39. Memes come from the memegen catalog, and ShipShow draws the text (2026-10-26)
+### D39. A plan, not a change: Claude best practices (2026-10-17)
+**Decision.** Wrote `docs/PLAN.md` from Anthropic's docs and engineering posts (read by a research agent on 2026-10-17) and
+measured facts about this repo: `AGENTS.md` is 267 lines against a 200-line yardstick, no skill description puts its trigger
+first, `agents/critic.md` is read-only only by instruction, there are no hooks, and `.claude/` is gitignored whole, so
+project settings and rules cannot be committed. Nothing in the plan is done.
+**Why.** Hard rules here ("never delete", "docs stay current", "the sample stays buggy") are prose plus CI, and no run's
+cost or critic agreement is recorded. **Costs.** None yet; each step names how to tell it worked and the unconfirmed items
+to check first (plugin-shipped agent hooks, how a missing `version` resolves).
+
+### D40. CI installs a pinned static ffmpeg, not the apt package (2026-10-26)
+**Decision.** The `test` job downloads ffmpeg 6.0.1's static build (johnvansickle.com old-releases, a stable URL), checks its
+SHA-256, and installs `ffmpeg` and `ffprobe` into `/usr/local/bin`; the step has a five minute limit and the job fifteen.
+**Why.** `apt-get update && apt-get install ffmpeg` sat silent on the Ubuntu mirror for 33 minutes on main and 26 on the
+security-gate branch (2026-10-26), and stalled again on #55, while the same step usually takes under a minute. **Costs.** The
+version is pinned and moves only by hand; the host is one person's site, so a dead URL fails the step loudly in seconds.
+
+### D42. Memes come from the memegen catalog, and ShipShow draws the text (2026-10-26)
 **Decision.** A `<figure class="ss-meme" data-meme="<id>">` with a span per line is a meme. `bin/meme.mjs` fetches the
 template's `config.yml` (the text boxes: `anchor_x`, `anchor_y`, `scale_x`, `scale_y`, `angle`, `align`, `color`, `font`) and
 its clean `default.<ext>` from github.com/jacebrowning/memegen (extension tried in turn: jpg, png, gif, jpeg), once, into
@@ -491,7 +507,7 @@ What an agent or person observes. Each line is checkable against the cited file.
   scene never says and warns when a bare cue word occurs more than once in its scene. A cue
   matches the start of a spoken word across the whole scene, so use `word#n` or a distinctive
   word.
-- `build` expands each `ss-meme` figure (D39): an unknown template, an unreachable source with nothing cached, or more spans than
+- `build` expands each `ss-meme` figure (D42): an unknown template, an unreachable source with nothing cached, or more spans than
   the template has boxes stops it naming the scene; `review` lists each meme's template and source; `memes <words>` searches the catalog.
 - `render` writes `out/<name>.mp4`; `make` chains voice, build, lint and render.
 - `review` writes `review/packet.md` (words a minute while speaking, every pause, every cue's
