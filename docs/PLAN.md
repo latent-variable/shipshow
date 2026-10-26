@@ -9,7 +9,7 @@ were measured on the same day.
 
 | Fact | Value | Best-practice yardstick |
 |---|---|---|
-| `AGENTS.md` (read as `CLAUDE.md`) | 263 lines, 22 KB, loaded every session | Under 200 lines; cut lines whose removal would not cause mistakes |
+| `AGENTS.md` (read as `CLAUDE.md`) | 267 lines, 23 KB, loaded every session | Under 200 lines; cut lines whose removal would not cause mistakes |
 | Skills | 22, descriptions 213 to 529 characters, all trigger-last ("Load when ..." at the end) | Trigger first; `description` plus `when_to_use` under 1,536 characters |
 | Skill front matter in use | `name`, `description` only | Also: `allowed-tools`, `disable-model-invocation`, `when_to_use`, `paths`, `context: fork`, `hooks` |
 | `agents/critic.md` | `tools` allowlist (Read, Grep, Glob, Bash, Skill), `model: inherit`, "told not to write", no `maxTurns`, no hooks | `disallowedTools`, `maxTurns`, scoped `hooks`, an explicit `model` |
@@ -70,7 +70,7 @@ CLAUDE.md is advisory; hooks and deny rules are enforced (memory and permissions
     "scripts never delete files"; a contributor without the user-level hook has no guard today. *Source:* hooks guide
     (PreToolUse exit 2 or `permissionDecision: "deny"`; a hook block overrides allow rules).
 2.2 **Protect what must not change.** PreToolUse on `Edit|Write` denying `sample_application/src/**` (the demo's bugs
-    are the point), `videos/*/review/*.txt` and `*.sha256` (captures), and `package-lock.json`. Override by an env var for
+    are the point), `videos/*/results/captures/*` (captures and their `.sha256`), and `package-lock.json`. Override by an env var for
     a deliberate change. *Source:* hooks guide (protect files).
 2.3 **Stop hook that runs `npm test`** (about 7 s) and blocks with the failing test names; read `stop_hook_active` to avoid
     loops (Claude Code stops overriding after eight consecutive blocks). *Source:* hooks guide. *Why:* today a failing

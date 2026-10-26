@@ -445,9 +445,18 @@ syllables a minute times the speed), where a published example decision video li
 code), the caption tokens a theme can set, the layout (`examples/`, all four videos) and the voice credit for `eve`.
 **Costs.** None known.
 
-### D38. A plan, not a change: Claude best practices (2026-10-17)
+### D38. Code excerpts show their source and range in the shared kit (2026-10-21)
+**Decision.** `kit/base.css` renders `.ss-code`'s `data-source` and `data-ranges` in a `::before` label. The
+label stays outside the code node so `extract-excerpts.mjs` can validate only the excerpt text; the grounding critic
+reports a major finding when the rendered file or range label is absent. **Why.** The explainer skill described a
+gutter that the kit did not render, leaving the shown code without attribution. **Costs.** Code scenes must provide
+both attributes, and the shared theme tokens determine the label's typography and color. Sources: issue #46;
+`kit/base.css`, `skills/explainer-video/SKILL.md`, `skills/critic-grounding/SKILL.md` and
+`skills/critic-grounding/scripts/extract-excerpts.mjs`.
+
+### D39. A plan, not a change: Claude best practices (2026-10-17)
 **Decision.** Wrote `docs/PLAN.md` from Anthropic's docs and engineering posts (read by a research agent on 2026-10-17) and
-measured facts about this repo: `AGENTS.md` is 263 lines against a 200-line yardstick, no skill description puts its trigger
+measured facts about this repo: `AGENTS.md` is 267 lines against a 200-line yardstick, no skill description puts its trigger
 first, `agents/critic.md` is read-only only by instruction, there are no hooks, and `.claude/` is gitignored whole, so
 project settings and rules cannot be committed. Nothing in the plan is done.
 **Why.** Hard rules here ("never delete", "docs stay current", "the sample stays buggy") are prose plus CI, and no run's
