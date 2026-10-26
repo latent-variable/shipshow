@@ -34,7 +34,7 @@
 //
 // PITCH: a pitched sound plays the major pentatonic of the music bed's key, measured from the bed
 // (Krumhansl-Kessler profiles over its chroma), or `sfx.tonic`, or the kit's, or C.
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import vm from "node:vm";
 import { REPO, readWav, round, themeDir, writeWav } from "./lib.mjs";
@@ -401,7 +401,7 @@ export function renderAll(events, kit, tonic) {
  *  Returns the events placed ([] when sound is off or none are asked for, and no track is written). */
 export function sfxTrack({ dir, cfg, timing, sections, script }) {
   const settings = sfxSettings(cfg.sfx), record = join(dir, "assets", "sfx.json");
-  const none = () => { writeFileSync(record, JSON.stringify({ events: [] }) + "\n"); return null; };
+  const none = () => { mkdirSync(join(dir, "assets"), { recursive: true }); writeFileSync(record, JSON.stringify({ events: [] }) + "\n"); return null; };
   const ids = {}, starts = {}, ends = {};
   for (const sc of timing.scenes) { starts[sc.id] = sc.start; ends[sc.id] = round(sc.start + sc.duration); }
   const markup = [];
