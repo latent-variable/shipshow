@@ -377,6 +377,9 @@ export function mix(events, rendered, total, reference, under) {
     const start = Math.round(e.t * RATE) - anchorIndex(r.spec, profile(r.x));
     for (let i = Math.max(0, -start); i < x.length && start + i < out.length; i++) out[start + i] += x[i] * g;
   }
+  // A sound that rings past the video's end is cut there; fade the last 80 ms so the cut is not a click.
+  const fade = Math.min(out.length, Math.round(0.08 * RATE));
+  for (let i = 0; i < fade; i++) out[out.length - fade + i] *= Math.cos((i / fade) * Math.PI / 2) ** 2;
   let peak = 0;
   for (const v of out) peak = Math.max(peak, Math.abs(v));
   if (peak > MAX_PEAK) throw new Error(`the sound effects would peak at ${round(20 * Math.log10(peak))} dBFS: raise video.json sfx "under"`);

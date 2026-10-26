@@ -145,6 +145,12 @@ test("a sound lands the set number of dB under the voice, measured by loudness, 
   assert.equal(at(-14) - at(-20), 6);
 });
 
+test("a sound that rings past the video's end is faded out, not cut on a click", () => {
+  const rendered = renderAll([{ name: "boom", step: 0, label: "x" }], { sounds: KIT.sounds, find: (f) => f }, "C");
+  const { samples } = mix([{ name: "boom", t: 1.0, gain: 0, step: 0 }], rendered, 1.3, -20, 14);
+  assert.ok(Math.abs(samples[samples.length - 2]) < 20, "the last sample is near silence");
+});
+
 test("loudness agrees with ffmpeg's ebur128", { skip: spawnSync("ffmpeg", ["-version"]).status !== 0 && "ffmpeg is not installed" }, () => {
   const v = video();
   const file = join(v.dir, "assets", "narration.wav");
