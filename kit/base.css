@@ -76,7 +76,7 @@ body { background: var(--bg); overflow: hidden; }
 .ss-meme-box { position: absolute; display: flex; align-items: center; justify-content: center; transform: rotate(var(--rot, 0deg)); }
 .ss-meme-box[data-overflow] { overflow: hidden; }
 .ss-meme-line {
-  display: block; width: 100%; padding: 0.04em 0.14em; line-height: 1.04; overflow-wrap: normal;
+  display: block; width: 96%; margin: 0 auto; padding: 0.04em 0.14em; line-height: 1.04; overflow-wrap: normal;
   font-family: "Titillium Web", "Arial Black", sans-serif; font-weight: 900; text-transform: var(--meme-case, uppercase);
   color: var(--fill, #fff); -webkit-text-stroke: 0.24em var(--stroke, #000); paint-order: stroke fill; stroke-linejoin: round;
 }

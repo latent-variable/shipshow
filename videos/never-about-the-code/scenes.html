@@ -15,7 +15,7 @@
   .big { font-family: var(--font-display); font-weight: 700; letter-spacing: var(--display-tracking); line-height: 1.05; }
   .center { text-align: center; }
   .meme-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-  .scrim { position: absolute; inset: 0; background: var(--bg); }
+  .scrim { position: absolute; inset: 0 0 -180px 0; background: var(--bg); }
   .ss-meme { --meme-height: 820px; }
 
   /* 01-hook */
@@ -108,6 +108,7 @@
   .lrow { display: grid; grid-template-columns: 470px 1fr; align-items: center; column-gap: 40px; padding: 22px 36px; }
   .lrow .num { font-family: var(--font-display); font-weight: 700; font-size: 100px; line-height: 1; white-space: nowrap; color: var(--accent); }
   .lrow .num.g { color: var(--good); }
+  .nums .lrow { grid-template-columns: 260px 1fr; }
   .lrow .num.ink { color: var(--ink); }
   .lrow .what { font-size: 42px; font-weight: 650; line-height: 1.2; }
   .lrow .who { margin-top: 8px; }
@@ -146,7 +147,7 @@
 <section data-scene="02-1952" data-transition="fade">
   <div class="stage" style="gap: 22px">
     <div class="row">
-      <div class="card person" data-cue="called" data-anim="up">
+      <div class="card person" data-cue="Hopper" data-anim="up">
         <div class="tag">1952 · Grace Hopper</div>
         <div class="title">“A compiler”</div>
         <div class="quote" data-cue="nobody" data-anim="fade">“I had a running compiler and nobody would touch it.”</div>
@@ -155,9 +156,9 @@
       <div class="card person" id="backus" data-cue="Backus#1" data-anim="up">
         <div class="tag">1954 · John Backus · IBM</div>
         <div class="title">FORTRAN</div>
-        <div class="quote" data-cue="efficient" data-anim="fade">“our claims that we would produce efficient object programs were disbelieved.”</div>
-        <div class="who" data-cue="efficient" data-anim="fade">his words, written in 1978</div>
-        <div class="stamp" data-cue="believe" data-anim="slam" data-sfx="thump">disbelieved</div>
+        <div class="quote" data-cue="believe" data-anim="fade">“our claims that we would produce efficient object programs were disbelieved.”</div>
+        <div class="who" data-cue="believe" data-anim="fade">his words, written in 1978</div>
+        <div class="stamp" data-cue="efficient" data-anim="slam" data-sfx="thump">disbelieved</div>
       </div>
     </div>
     <div class="card" data-cue="priesthood" data-anim="up">
@@ -207,6 +208,7 @@
 
 <section data-scene="04-theory" data-transition="rise">
   <div class="stage">
+    <div class="turn big" data-cue="programmer" data-anim="up">What does a programmer need to understand?</div>
     <div class="card" data-cue="building" data-anim="up">
       <div class="tag">1985 · Peter Naur · Programming as Theory Building</div>
       <div class="paraphrase">Programming is building a theory of how a program handles things in the world.</div>
@@ -227,8 +229,8 @@
 
 <section data-scene="05-dead" data-transition="fade">
   <div class="stage">
-    <div class="tag center" data-cue="nobody" data-anim="fade">1985 · Peter Naur · paraphrased</div>
-    <div class="dead big" data-cue="nobody" data-anim="up">A program nobody holds the theory of is <em>dead</em>, even while it runs.</div>
+    <div class="tag center" data-cue="warning" data-anim="fade">1985 · Peter Naur · paraphrased</div>
+    <div class="dead big" data-cue="warning" data-anim="up">A program nobody holds the theory of is <em>dead</em>, even while it runs.</div>
     <div class="hold" data-cue="somebody" data-anim="up">Somebody still has to hold the theory.</div>
   </div>
 </section>
@@ -276,10 +278,11 @@
 
 <section data-scene="07-the-numbers" data-transition="slide">
   <div class="stage">
-    <div class="list">
+    <div class="turn big" data-cue="studies" data-anim="up">The studies</div>
+    <div class="list nums">
       <div class="card lrow" data-cue="Veracode" data-anim="up">
         <div class="num">45%</div>
-        <div><div class="what">of AI-written code had a security flaw</div><div class="who">Veracode 2025 · 80 tasks, 4 languages · a vendor's own test</div></div>
+        <div><div class="what">of AI-written code had a security flaw</div><div class="who">Veracode 2025 · 80 tasks, 4 languages · vendor's test</div></div>
       </div>
       <div class="card lrow" data-cue="METR#1" data-anim="up">
         <div class="num">19%</div>
@@ -328,8 +331,8 @@
 
 <section data-scene="09-what-to-know" data-transition="rise">
   <div class="stage" style="gap: 20px; inset: 30px var(--pad) 24px">
-    <div class="tag center" data-cue="type" data-anim="fade">My three questions, after Naur</div>
-    <div class="bridge" data-cue="type" data-anim="up">Hold the theory: answer three questions, and prove the answers.</div>
+    <div class="tag center" data-cue="understanding" data-anim="fade">My three questions, after Naur</div>
+    <div class="bridge" data-cue="understanding" data-anim="up">Hold the theory: answer three questions, and prove the answers.</div>
     <div class="qs">
       <div class="q card" data-cue="What#2" data-anim="left">What does it do for the person using it?</div>
       <div class="q card" data-cue="What#3" data-anim="left">What must it never do?
@@ -350,6 +353,7 @@
 
 <section data-scene="10-leaks" data-transition="wipe">
   <div class="stage">
+    <div class="turn big" data-cue="surprises" data-anim="up">When it surprises you, go down a level</div>
     <div class="surprise">
       <div class="card" data-cue="report" data-anim="left"><div class="label">a surprise, for example</div>a report suddenly takes 40 seconds</div>
       <div class="card" data-cue="query" data-anim="right"><div class="label">go down a level</div>open the query the agent wrote</div>
@@ -371,7 +375,7 @@
 
 <section data-scene="11-close" data-transition="fade">
   <div class="stage">
-    <div class="ask big" data-cue="question" data-anim="up">Do you understand <em>what it does</em>, and <em>how do you know</em>?</div>
+    <div class="ask big" data-cue="+0.4" data-anim="up">Do you understand <em>what it does</em>, and <em>how do you know</em>?</div>
     <div class="then">
       <span class="stamp good" data-cue="compiler" data-anim="slam">1952</span>
       <span class="stamp good" data-cue="is" data-anim="slam" data-sfx="sting">today</span>

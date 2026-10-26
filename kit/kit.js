@@ -128,7 +128,7 @@
         document.querySelectorAll(".ss-meme-box").forEach((box) => {
           const line = box.firstElementChild, h = box.clientHeight, w = box.clientWidth;
           if (!h || !w) return;
-          const fits = (px) => { line.style.fontSize = px + "px"; return line.scrollWidth <= w + 0.5 && line.scrollHeight <= h + 0.5; };
+          const fits = (px) => { line.style.fontSize = px + "px"; return line.scrollWidth <= line.clientWidth + 0.5 && line.scrollHeight <= h + 0.5; };   // the line is 96% of its box (base.css), so text keeps a margin each side
           let lo = 6, hi = Math.max(8, Math.floor(h * cap * 3));
           while (lo < hi) { const mid = Math.ceil((lo + hi) / 2); if (fits(mid)) lo = mid; else hi = mid - 1; }
           // Too long for its box even at the smallest size: keep it inside the box and say so,

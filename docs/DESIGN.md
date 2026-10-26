@@ -567,7 +567,7 @@ Know Your Meme page): they are fetched at build, never committed, and `videos/*/
 packet's `source` is there so it can be credited. Fonts: Titillium Web and Anton are SIL OFL.
 **Costs.** A first build of a new template needs the network (or a mirror); a cached one does not. The config is parsed by a
 small reader for memegen's flat YAML, not a YAML library, so a template with a richer config than the 211 today (every one
-has a `text:` list of maps) needs it extended. Templates with `overlay` image slots keep the plain picture, with no overlay. A line too long for its box even at 6 px is clipped to the box (`data-overflow`) and logged as a warning, so the frames show the fault where it is. A word never breaks inside itself (`overflow-wrap: normal`): with `break-word` the fitter took the largest size at which "ENGINEERING" fit by splitting it across two lines (never-about-the-code, 2026-10-26), so now it shrinks until the longest word fits whole.
+has a `text:` list of maps) needs it extended. Templates with `overlay` image slots keep the plain picture, with no overlay. A line too long for its box even at 6 px is clipped to the box (`data-overflow`) and logged as a warning, so the frames show the fault where it is. A word never breaks inside itself (`overflow-wrap: normal`): with `break-word` the fitter took the largest size at which "ENGINEERING" fit by splitting it across two lines (never-about-the-code, 2026-10-26), so now it shrinks until the longest word fits whole. A line also keeps a 2% margin each side: at full width, "ENGINEERING" ended 4 px from the picture's edge (round 5).
 An id is checked to be a plain name before it reaches the cache path, and a colour from a config is accepted only as a name or
 hex, since both go into the page.
 

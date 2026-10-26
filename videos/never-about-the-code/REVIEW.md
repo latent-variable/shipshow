@@ -122,3 +122,24 @@ code" (clarity-2), "And an agent will build the nonsense, too." (clarity-3), the
 **Accepted, minor.** The close keeps two questions for the three (consistency-4: "what it must never do" is inside "what it
 does"); "test" and "check" both stay (consistency-5); only two scenes carry a heading (consistency-6); sync-1 to -3 (a headline
 and two meme panels a second or two ahead of their words); accuracy-2, -3 and clarity-1 (said as the narrator's view).
+
+## Round 5: past the cap, a fresh check of the round-4 fixes; pacing, accuracy, visuals (Opus)
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 1 |
+| pacing | pass | 0 / 0 / 2 |
+| visuals (Opus) | fail | 0 / 2 / 6 |
+
+Visuals sampled the rendered MP4, not only the packet's stills, and found what the stills cannot show: several scenes opened on
+an empty page for 3 to 8 seconds before their first cue (scene 04 for 8 s, the close for 4.4 s).
+
+**Fixed.** Every scene now puts something on screen within two seconds of its start, the transition included: a heading for 04,
+07 and 10, the first line of 05 and 09 on their first sentence, the close's question at once (visuals-1, -2, -3). The backdrop
+behind memes covers the caption band too, so the dot grid no longer stops in a hard line (visuals-4); the DISBELIEVED stamp lands
+after its quote (visuals-6); the Veracode source fits on one line and the studies' number column is narrower (visuals-7); meme
+lines keep a 2% margin from the picture's edge (visuals-8), done by making the line 96% of its box (a first attempt compared the
+text with 96% of a full-width line, which can never pass, and the layout check caught every meme falling to the minimum size).
+
+**Accepted.** visuals-5: the Fowler card waits on the left for the agent card while the voice explains determinism.
+pacing-1 is #62 (the packet counts a meme twice); pacing-2 is a 0.01 s rounding flag.
