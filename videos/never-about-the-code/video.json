@@ -23,7 +23,11 @@
     "METR's": "meter's",
     "Naur": "Now-er",
     "Dijkstra": "Dike-stra",
-    "ShipShow": "Ship Show",
-    "AI": "A I"
+    "ShipShow": "Ship Show"
+  },
+  "music": {
+    "file": "local/music/never-about-the-code-bed.wav",
+    "volume": 0.18,
+    "duck": 0.3
   }
 }
