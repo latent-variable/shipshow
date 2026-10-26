@@ -154,6 +154,12 @@ made for its subject, not stamped from a template.
   sentence turns on, `stagger` for a list, `pulse` for the one thing to remember. A screen
   where nothing moves for more than about eight seconds while the voice goes on is losing
   the viewer.
+- **A meme, rarely and at the right beat** (`AGENTS.md`, *Memes*; `npm run memes -- <words>` finds one). It lands a point
+  already made, as the punchline after the explanation, never instead of it: if the video is not clear without the meme,
+  fix the explanation. One at a beat, a video rarely wants more than one or two. The text is short (a few words a line; the
+  viewer reads it while listening), and the figure stays up long enough to read: the packet's reading time covers it. Cue each
+  line on its word. Put the template and its `source` in `sources.md`; an unfamiliar template reads as noise, so pick one the
+  audience knows. The picture is third-party: never commit it (`assets/` is ignored).
 - **Sound, sparingly.** Most videos need two or three sounds, many none. A sound marks a thing
   moving, landing or arriving (`data-sfx="whoosh"` on a cued element, or `sfx()` in the script),
   never each item of a list, and never a sentence's first word: the build refuses both. Pick the one

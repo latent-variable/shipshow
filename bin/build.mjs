@@ -6,12 +6,14 @@
 //   data-cue="word#2"   ... the second one
 //   data-cue="+1.5"     ... 1.5 s into the scene
 // and data-anim says how (kit/kit.js); a section's data-transition and data-camera override the
-// theme's. The look is the theme (video.json "theme", themes/ or local/themes/) under the
+// theme's. A <figure class="ss-meme" data-meme="<memegen id>"> with a <span> per line is a meme
+// (bin/meme.mjs). The look is the theme (video.json "theme", themes/ or local/themes/) under the
 // video's own styles, and video.json "flair" overrides the theme's motion. Captions are the
 // script's own words, one line at a time. Writes index.html, meta.json, assets/vendor/gsap.min.js
 // and assets/theme/ (the theme's fonts and images).
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
+import { MEME_FONTS_CSS, memeScene } from "./meme.mjs";
 import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir } from "./lib.mjs";
 import { sfxTrack } from "./sfx.mjs";
 
@@ -115,19 +117,22 @@ const src = readFileSync(join(dir, "scenes.html"), "utf8");
 const styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n");
 const script = [...src.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join("\n");
 const seen = new Set(), bodies = [];
-const sections = [...src.matchAll(/<section([^>]*)>([\s\S]*?)<\/section>/g)].map((m) => {
+let usesMemes = false;
+const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<\/section>/g)].map(async (m) => {
   const id = (m[1].match(/data-scene="([^"]+)"/) || [])[1];
   if (!id) die(`scenes.html has a <section> with no data-scene: <section${m[1]}>`);
   const scene = byId[id];
   if (!scene) die(`scenes.html names scene ${id}, which has no script/${id}.txt (or run voice.mjs again)`);
   seen.add(id);
-  const body = m[2].replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
+  const withMemes = await memeScene(m[2], dir, id);   // bin/meme.mjs: a meme figure's picture and text boxes
+  usesMemes ||= withMemes !== m[2];
+  const body = withMemes.replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
   // 10 ms short of the next scene: scenes share a track, and touching ends read as an overlap.
   const attrs = m[1].replace(/\s*class="([^"]*)"/, "");
   const cls = ["clip", "scene", (m[1].match(/class="([^"]*)"/) || [])[1]].filter(Boolean).join(" ");
   bodies.push({ id, body });
   return `      <section${attrs} id="scene-${id}" class="${cls}" data-start="${scene.start}" data-duration="${round(scene.duration - 0.01)}" data-track-index="1">\n        <div class="inner"><div class="cam">${body}</div></div>\n      </section>`;
-});
+}));
 const missing = timing.scenes.filter((s) => !seen.has(s.id)).map((s) => s.id);
 if (missing.length) die(`scenes.html has no <section data-scene> for: ${missing.join(", ")}`);
 
@@ -143,7 +148,7 @@ const html = readFileSync(join(REPO, "kit", "shell.html"), "utf8")
   .replace("{{base}}", () => readFileSync(join(REPO, "kit", "base.css"), "utf8"))
   .replace("{{flair}}", () => flairCss(cfg.flair))
   .replaceAll("{{seed}}", String(cfg.seed ?? seedFor(basename(dir))))
-  .replace("{{styles}}", () => styles)
+  .replace("{{styles}}", () => (usesMemes ? MEME_FONTS_CSS + "\n" : "") + styles)
   .replace("{{scenes}}", () => sections.join("\n"))
   .replace("{{captions}}", () => captions())
   .replace("{{kit}}", () => readFileSync(join(REPO, "kit", "kit.js"), "utf8").trimEnd())

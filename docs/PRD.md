@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-10-26 (after the code excerpt label behavior was reviewed).
+Last reviewed: 2026-10-26 (after memes were added).
 
 ## Problem
 
@@ -101,6 +101,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F35 | Every voiced take is checked: OmniVoice takes are cut of the model's opening burst and voiced again when they shout or start with no lead-in; every take of either engine is levelled (Kokoro's in place, key unchanged); with the optional faster-whisper (`npm run setup:hearback`) each take is heard back, OmniVoice keeps the best of three, and the review packet lists sentences under 0.97 (DESIGN D44) | done; measured on how-it-works with both engines, the listening not verifiable by an agent |
 | F31 | Apply Anthropic's agent best practices: a smaller always-on context, hooks that enforce the hard rules, a read-only critic in fact, per-run results and evals with an independent judge. The step-by-step plan, with sources and what is unconfirmed, is `docs/PLAN.md` | planned |
 | F32 | The hard rules are enforced, not only written: tracked project hooks refuse deleting and history-rewriting commands, edits to the demo's bugs and to recorded runs, and end a session on failing tests (first steps of F31; DESIGN D41) | done |
+| F33 | A meme can land a beat: `<figure class="ss-meme" data-meme="<memegen id>">` with a span per line; the build fetches the template's config and clean picture from memegen (MIT) into a user cache, ShipShow draws each line itself (white with a black outline, fitted to the template's box at render time) so a line can arrive on its own word; `npm run memes` searches the catalog; the review packet lists each meme's template and source for credit (DESIGN D42). The template pictures are third-party and fetched at build, never committed; publishing a video with memes relies on fair use and commentary norms and is the publisher's call | done |
 | F36 | The judge cannot rewrite what it judges: the `critic` agent has Write, Edit and NotebookEdit denied, a turn cap and a default model (plan steps 3.1 and 3.2, DESIGN D45) | done; the Bash half (no writes outside a scratch directory) is open |
 | F20 | Per-person preferences and private videos stay local (`tailor`, `local/`) | done in this repo; elsewhere a skill checks `local/` is ignored and uses `.git/info/exclude` |
 | F21 | Run code to verify a claim without harm: a sandbox script, a faithful scratch copy, no network, writes confined (`evidence-standard`) | done on macOS; Linux untested |
@@ -120,6 +121,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | N8 | **Observable.** Token and context use is readable per agent | `npm run usage` | done |
 | N9 | **Tested without Kokoro.** `npm test` runs with no voice model; it is the only thing CI runs | `test/` (50 tests; the sandbox and capture tests run on macOS only, the CI docs check only on a pull request) | done; 7 tests need `npm install` (the cue-and-caption timing test, the caption function-word test, the bare-cue warning test, the flair test, both OmniVoice tests and the `hold` test) |
 | N10 | **Portable.** The pipeline is tested on macOS; CI runs the unit tests on Linux (`ubuntu-latest`) | `README.md`, `.github/workflows/ci.yml` | open: pipeline on Linux untried |
+| N13 | **Third-party pictures stay out of the repo.** Memegen's code and configs are MIT; its template images are third-party pictures, fetched at build into `~/.cache/shipshow/memes` and the video's `assets/memes/` (gitignored: `videos/*/assets/` covers it), never committed. The meme fonts (Titillium Web, Anton) are SIL OFL, shipped with their licences in `kit/fonts/` | `bin/meme.mjs`, `.gitignore`, `kit/fonts/` | done |
 | N11 | **Attribution.** The sample is original (its `SOURCE.md` says what it is and is not based on); Kokoro-82M and HyperFrames are Apache 2.0; GSAP is under its standard licence | `sample_application/SOURCE.md`, `README.md` | done |
 | N12 | **Reviewable.** Every change is a pull request with CI and an automated review; a rename changes the reviewer's allowlist | `AGENTS.md`, traps | done |
 

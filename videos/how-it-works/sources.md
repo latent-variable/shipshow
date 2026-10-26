@@ -25,6 +25,7 @@ commit the video is built from, plus the two tools it runs.
 | To make your own, clone it and follow the setup in its README | `README.md`, *Set it up*: `npm install`, `npm run setup` (the Python venv with `requirements.txt`), `npm run doctor` |
 | Then run npm run new with a folder name | `npm run new -- videos/<name>` copies `template/` (`bin/new.mjs`) |
 | Write one text file per scene and a section for each in scenes.html, then run npm run make on it | `npm run make -- videos/<name>` (`bin/make.mjs`); `AGENTS.md`, *A video's files*: `script/01-intro.txt`, one per scene |
+| Redo the whole script / Redo only what changed (the meme) | Template `drake` (Drakeposting), source http://knowyourmeme.com/memes/drakeposting; the picture is fetched from memegen at build and never committed (`bin/meme.mjs`); the two lines restate the row above |
 
 ## Left out
 

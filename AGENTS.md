@@ -24,8 +24,8 @@ The skills in `skills/` are the team's baseline. Each person tailors on top of t
 | `docs/PRD.md`, `docs/DESIGN.md` | The requirements, and the design decisions and behaviour. Kept current (*Docs that stay current*) |
 | `skills/` | Every skill. `npm install` links them into `.claude/skills/` for Claude Code; other agents read them here |
 | `videos/<name>/` | One video: `script/`, `scenes.html`, `video.json`, `sources.md`, `critics.md`, `REVIEW.md` |
-| `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; and `usage` (token and context tracking) |
-| `kit/` | The page, base styles and timeline every video shares |
+| `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; `memes` (search the memegen catalog, with `meme.mjs` behind it and `build`); and `usage` (token and context tracking) |
+| `kit/` | The page, base styles and timeline every video shares; `kit/fonts/` holds the meme fonts (Titillium Web, Anton: SIL OFL, licences beside them) |
 | `themes/` | Shared themes (`shipshow`, `paper`, `launch`, `buildday`); a client's goes in `local/themes/` |
 | `template/` | What `npm run new` copies |
 | `examples/` | Fictional code bases for example videos: `ledgerly`, the invoicing API behind `videos/invoice-leak` |
@@ -122,6 +122,7 @@ checks it and voices one word; `-- --hearback` checks the hear-back and hears on
 | `npm run make -- <folder>` | Voice, build, lint and render (`--speed 1.5` to try a pace without editing `video.json`) |
 | `npm run review -- <folder>` | The critics' evidence: `review/packet.md` and `review/frames/` (`--frames scenes` for fewer stills) |
 | `npm run critics -- <folder>` | The video's critic plan: critics, models, rounds, severity, and a rough time and token estimate (`--preset`, `--rounds`, `--until`, `--model`, `--final`, `--frames`, `--rerun`, `--critics`, `--json`) |
+| `npm run memes -- <words>` | Search the memegen catalog (211 templates) by id, name, keywords or example text: id (what `data-meme` takes), lines, an example, the `source` to credit (`--refresh` refetches the cached list, `--limit N`, `--json`) |
 | `npm run skills` | Link new skills in `skills/` or `local/skills/` into `.claude/skills/` |
 | `npm run usage` | Tokens and context per agent for the newest Claude Code session of this repo, subagents included (`-- <session id>` for another, `-- --json` for data); read from `~/.claude/projects/`, or from `CLAUDE_PROJECTS_DIR` |
 | `claude plugin validate .` | The two manifests only (`plugin.json`, `marketplace.json`); `claude plugin validate skills` and `agents` look at components but only warn on a broken one, so a test parses every `SKILL.md` and `agents/critic.md` front matter. One warning is expected (no `version`, on purpose: the commit SHA versions the plugin); `--strict` fails on it |
@@ -204,6 +205,24 @@ explicit preset there beats importance), then importance, then `local/config.jso
 `"review"`, then the kind's default (`quick` for a decision video, else `standard`). `skills/critic-loop` has what each dial trades and the floor no dial lowers.
 The estimate's constants are measurements from 2026-10-17; replace them when you measure.
 
+**Memes.** A well-chosen meme lands a beat. `<figure class="ss-meme" data-meme="astronaut" data-cue="never" data-anim="pop">`
+with a `<span>` per line, filled into the template's text boxes in order (an empty span leaves a box blank,
+fewer spans leave later boxes out, more than the template has stops the build); a span takes its own
+`data-cue` and `data-anim`, so each line arrives on its word. `npm run memes -- <words>` finds the id
+and shows how many lines it has. The catalog is memegen's (github.com/jacebrowning/memegen, MIT): the build
+fetches a template's `config.yml` and clean `default.<ext>` once into `~/.cache/shipshow/memes/<id>/`
+(`SHIPSHOW_MEMES_CACHE`), copies the picture to the video's `assets/memes/` and positions each span by the
+box's fractions and angle (`bin/meme.mjs`); `kit/kit.js` fits each line to its box at render time, before the
+first frame, in white with a black outline (black text gets a white one), upper case (`--meme-case`). Never
+memegen's rendered images: they carry a watermark and bake the text in. `SHIPSHOW_MEMEGEN_API` (the catalog)
+and `SHIPSHOW_MEMEGEN_FILES` (the repo's `templates/` folder, a URL or a clone) point at a mirror or a
+self-hosted memegen. An unknown id, an unreachable source with nothing cached, or too many spans stops the build
+naming the scene. Default size is `--meme-height` (760 px; set it in the theme, on the figure, or give the figure its own
+width and height), centred in the scene window, rounded and framed by the theme. The template pictures are
+third-party: fetched, never committed (`assets/` is ignored), and a published video relies on fair use and
+commentary norms, which is the publisher's call (DESIGN D42). The review packet lists each meme's template and
+`source`; credit both in `sources.md`.
+
 **Music.** `video.json` `"music": {"file", "volume", "duck"}` puts a bed under the narration:
 the build decodes it with ffmpeg, loops it to length, lowers it while the voice speaks (from the
 sentence timings, with short ramps), fades it in and out, and writes `assets/music.wav`
@@ -252,8 +271,8 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ## Layout
 
 ```
-bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take
-kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects), sfx.json (the default sound kit)
+bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take
+kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
 themes/     shipshow, paper, launch and buildday; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono: SIL OFL)
 skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
 template/   what npm run new copies
