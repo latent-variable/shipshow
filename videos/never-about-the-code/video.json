@@ -29,5 +29,13 @@
     "file": "local/music/never-about-the-code-bed.wav",
     "volume": 0.18,
     "duck": 0.3
-  }
+  },
+  "pauses": {
+    "01-hook": 0.6,
+    "03-it-won": 1.6,
+    "04-theory": 2.2,
+    "06-where-it-breaks": 2.0,
+    "10-leaks": 2.0
+  },
+  "hold": 4
 }

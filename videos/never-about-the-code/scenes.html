@@ -36,7 +36,7 @@
   .callout .sf { font-size: 48px; font-weight: 650; color: var(--accent-2); }
 
   /* 03-it-won */
-  .stat .num { font-family: var(--font-display); font-weight: 700; font-size: 150px; line-height: 1; }
+  .stat .num { font-family: var(--font-display); font-weight: 700; font-size: 112px; line-height: 1; white-space: nowrap; }
   .stat .num.g { color: var(--good); }
   .stat .what { font-size: 40px; font-weight: 600; line-height: 1.22; margin-top: 18px; }
 
@@ -118,7 +118,7 @@
     <div class="row">
       <div class="card person" data-cue="Grace" data-anim="up">
         <div class="tag">1952 · Grace Hopper</div>
-        <div class="title" data-cue="called" data-anim="fade">“A compiler”</div>
+        <div class="title" data-cue="called#1" data-anim="fade">“A compiler”</div>
         <div class="quote" data-cue="nobody" data-anim="fade">“I had a running compiler and nobody would touch it.”</div>
         <div class="who" data-cue="nobody" data-anim="fade">her words, as reported in 1987</div>
       </div>
@@ -167,9 +167,9 @@
       </div>
     </div>
   </div>
-  <div class="meme-wrap" data-cue="last" data-anim="fade">
+  <div class="meme-wrap covers" data-cue="last" data-anim="fade">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-meme="drake" data-cue="last" data-anim="pop" data-sfx="whoosh">
+    <figure class="ss-meme" data-meme="drake" data-cue="last" data-anim="pop" data-sfx="whoosh" data-sfx-offset="0.2">
       <span>Read every machine instruction</span>
       <span data-cue="never" data-anim="pop">Check the program does its job</span>
     </figure>
@@ -187,7 +187,7 @@
       <div class="card text" data-cue="text" data-anim="up">the program text</div>
     </div>
   </div>
-  <div class="meme-wrap" data-cue="Wait" data-anim="fade">
+  <div class="meme-wrap covers" data-cue="Wait" data-anim="fade">
     <div class="scrim"></div>
     <figure class="ss-meme" data-meme="astronaut" data-cue="Wait" data-anim="zoom" style="--meme-height: 840px">
       <span>Wait, it was never about the code?</span>
@@ -231,13 +231,13 @@
       <div class="who">Edsger Dijkstra, 1978, on programming in plain language</div>
     </div>
   </div>
-  <div class="meme-wrap" data-cue="compiler#3" data-anim="fade">
+  <div class="meme-wrap covers" data-cue="compiler#3" data-anim="fade">
     <div class="scrim"></div>
     <figure class="ss-meme" data-meme="gru" data-cue="compiler#3" data-anim="pop" data-sfx="swish">
       <span>Describe it in English</span>
       <span>Agent builds it</span>
       <span>Check it once</span>
-      <span data-cue="every" data-anim="pop">Check it once?</span>
+      <span data-cue="every#2" data-anim="pop">Check it once?</span>
     </figure>
   </div>
 </section>
@@ -301,7 +301,7 @@
 
 <section data-scene="09-what-to-know" data-transition="rise">
   <div class="stage">
-    <div class="tag center" data-cue="theory" data-anim="fade">Naur's theory, as three questions</div>
+    <div class="tag center" data-cue="theory" data-anim="fade">Naur's theory, in three questions</div>
     <div class="qs">
       <div class="q card" data-cue="What#2" data-anim="left">What does it do for the person using it?</div>
       <div class="q card" data-cue="What#3" data-anim="left">What must it never do?
@@ -323,7 +323,7 @@
       <div class="quote">“All non-trivial abstractions, to some degree, are leaky.”</div>
     </div>
   </div>
-  <div class="meme-wrap" data-cue="code" data-anim="fade">
+  <div class="meme-wrap covers" data-cue="code" data-anim="fade">
     <div class="scrim"></div>
     <figure class="ss-meme" data-meme="exit" data-cue="code" data-anim="pop" data-sfx="whoosh">
       <span>Read all the code</span>
@@ -353,4 +353,10 @@
   const at = (sel) => +document.querySelector(sel).dataset.at;
   tl.to("#pigeon", { opacity: 0, duration: 0.35 }, at("#backus") - 0.45);
   tl.to("#fine", { opacity: 0, duration: 0.35 }, at("#stale") - 0.4);
+  // Behind a meme that stays to the end of its scene, the scene's own content fades once covered,
+  // so nothing sits under the picture.
+  document.querySelectorAll(".meme-wrap.covers").forEach((wrap) => {
+    const scene = wrap.parentElement;
+    tl.to(scene.querySelector(".stage"), { opacity: 0, duration: 0.2 }, +wrap.dataset.at + 0.4);
+  });
 </script>
