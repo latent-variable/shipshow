@@ -1,0 +1,1 @@
+So what were they understanding instead? In 1985, Peter Naur gave an answer. Programming, he wrote, is building a theory of how a program handles things in the world. That theory matters more than the program text. Wait. It was never about the code? Always has been.

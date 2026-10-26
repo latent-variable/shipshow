@@ -1,0 +1,1 @@
+FORTRAN shipped in 1957, and the results settled it. By 1958, a survey of twenty six IBM 704 sites found over half used it for more than half their problems. More than half the machine instructions on those machines came from the compiler. When did you last read the machine code your compiler wrote? Nobody says you don't understand your program because of it.

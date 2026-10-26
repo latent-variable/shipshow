@@ -1,0 +1,304 @@
+<style>
+  /* Layout only; colour, type and motion come from the paper theme. An archive look for the history
+     (index cards, date stamps), the same cards for today, so the two read as one story. Red is the
+     criticism and the stamps, blue is a source, green is what holds up. */
+  .tag { font-family: var(--font-mono); font-size: 28px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-2); white-space: nowrap; }
+  .card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .head { position: absolute; left: var(--pad); right: var(--pad); top: 70px; font-family: var(--font-display); font-weight: 700; font-size: 72px; letter-spacing: var(--display-tracking); line-height: 1.05; }
+  .quote { font-family: var(--font-display); font-style: italic; line-height: 1.22; }
+  .who { font-family: var(--font-mono); font-size: 28px; line-height: 1.35; letter-spacing: 0.08em; color: var(--muted); margin-top: 18px; }
+  .stamp { display: inline-block; padding: 8px 26px; border: 5px solid var(--accent); border-radius: 8px; color: var(--accent); font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; background: rgba(255, 253, 248, 0.85); white-space: nowrap; }
+  .meme-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .dim { position: absolute; inset: 0; background: rgba(246, 241, 231, 0.9); }
+  .ss-meme { --meme-height: 820px; }
+
+  /* 01-hook */
+  .h-bubbles { position: absolute; left: var(--pad); right: var(--pad); top: 90px; display: flex; justify-content: space-between; align-items: flex-start; gap: 30px; }
+  .bubble { padding: 22px 30px; font-size: 40px; white-space: nowrap; font-weight: 600; border-radius: 22px 22px 22px 4px; }
+  .bubble small { display: block; font-size: 26px; font-weight: 500; color: var(--muted); margin-bottom: 6px; font-family: var(--font-mono); letter-spacing: 0.04em; }
+  .bubble.b2 { margin-top: 60px; } .bubble.b3 { border-radius: 22px 22px 4px 22px; }
+  .h-main { position: absolute; left: var(--pad); right: var(--pad); top: 360px; text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 110px; letter-spacing: var(--display-tracking); color: var(--accent); }
+  .h-fair { position: absolute; left: var(--pad); top: 640px; font-size: 44px; font-weight: 600; color: var(--good); }
+  .h-stamp { position: absolute; right: calc(var(--pad) + 20px); top: 600px; font-size: 76px; transform: rotate(-7deg); }
+
+  /* 02-1952 */
+  .p-row { position: absolute; left: var(--pad); right: var(--pad); top: 70px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+  .p-card { padding: 34px 40px 36px; position: relative; min-height: 470px; }
+  .p-card .name { font-family: var(--font-display); font-weight: 700; font-size: 60px; margin-top: 10px; }
+  .p-card .quote { font-size: 42px; margin-top: 22px; }
+  .p-card .quote.small { font-size: 36px; color: var(--muted); margin-top: 16px; }
+  .p-card .stamp { margin-top: 22px; font-size: 36px; transform: rotate(-4deg); }
+  .p-priest { position: absolute; left: var(--pad); right: var(--pad); top: 590px; padding: 22px 40px; display: flex; align-items: baseline; gap: 30px; }
+  .p-priest .quote { font-size: 40px; }
+  .p-priest .tag { flex: none; }
+
+  /* 03-it-won */
+  .w-line { position: absolute; left: var(--pad); right: var(--pad); top: 110px; display: grid; grid-template-columns: 0.8fr 1.1fr 1.1fr; gap: 40px; }
+  .w-card { padding: 30px 36px; }
+  .w-card .big { font-family: var(--font-display); font-weight: 700; font-size: 104px; line-height: 1; color: var(--ink); }
+  .w-card .big.g { color: var(--good); }
+  .w-card .what { font-size: 36px; margin-top: 16px; line-height: 1.25; }
+  .w-card .who { font-size: 28px; }
+  .w-ask { position: absolute; left: var(--pad); right: var(--pad); top: 560px; text-align: center; font-family: var(--font-display); font-size: 58px; font-weight: 700; }
+
+  /* 04-theory */
+  .t-card { position: absolute; left: var(--pad); right: var(--pad); top: 80px; padding: 40px 50px; }
+  .t-card .quote { font-size: 52px; margin-top: 18px; }
+  .t-scale { position: absolute; left: var(--pad); right: var(--pad); top: 470px; display: flex; align-items: flex-end; gap: 40px; }
+  .t-box { padding: 26px 36px; font-size: 40px; font-weight: 650; }
+  .t-box.theory { flex: 1.8; min-height: 230px; border-color: var(--good); color: var(--good); font-size: 54px; }
+  .t-box.text { flex: 1; min-height: 120px; color: var(--muted); }
+  .t-box small { display: block; font-size: 28px; font-weight: 500; color: var(--muted); margin-top: 10px; }
+
+  /* 05-where-it-breaks */
+  .k-cols { position: absolute; left: var(--pad); right: var(--pad); top: 70px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+  .k-col { padding: 30px 36px; }
+  .k-col .name { font-family: var(--font-display); font-weight: 700; font-size: 54px; margin-top: 8px; }
+  .runs { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
+  .run { display: flex; justify-content: space-between; padding: 12px 22px; border-radius: 8px; background: var(--code-bg); font-family: var(--font-mono); font-size: 32px; color: var(--code-ink); }
+  .run b { color: var(--good); }
+  .k-col.model .run b { color: var(--accent); }
+  .k-col .who { font-size: 28px; }
+  .k-dij { position: absolute; left: var(--pad); right: var(--pad); top: 600px; padding: 22px 40px; }
+  .k-dij .quote { font-size: 38px; }
+  .k-dij .who { margin-top: 10px; font-size: 28px; }
+
+  /* 06-the-numbers */
+  .n-row { position: absolute; left: var(--pad); right: var(--pad); top: 130px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .n-card { padding: 32px 34px 30px; min-height: 560px; display: flex; flex-direction: column; position: relative; }
+  .n-card .num { font-family: var(--font-display); font-weight: 700; font-size: 132px; line-height: 1; color: var(--accent); }
+  .n-card .what { font-size: 38px; font-weight: 600; margin-top: 14px; line-height: 1.2; }
+  .n-card .felt { font-size: 34px; color: var(--muted); margin-top: 12px; }
+  .n-card .who { margin-top: auto; font-size: 28px; line-height: 1.35; }
+  .n-card .stamp { align-self: flex-start; margin-top: 18px; font-size: 32px; transform: rotate(-4deg); }
+
+  /* 07-oversight */
+  .o-chips { position: absolute; left: var(--pad); right: var(--pad); top: 70px; display: flex; gap: 26px; }
+  .o-chips .ss-chip { font-size: 42px; }
+  .o-fix { position: absolute; left: var(--pad); right: var(--pad); top: 230px; display: flex; flex-direction: column; gap: 22px; }
+  .o-fix div { font-size: 56px; font-weight: 600; }
+  .o-fix .no { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 4px; }
+  .o-fix .yes { color: var(--good); }
+  .o-k { position: absolute; left: var(--pad); right: var(--pad); top: 540px; display: grid; grid-template-columns: 1fr 80px 1fr; align-items: center; gap: 10px; }
+  .o-k .card { padding: 24px 32px; }
+  .o-k .quote { font-size: 44px; }
+  .o-k .who { font-size: 28px; margin-top: 10px; }
+  .o-k .arrow { font-size: 64px; text-align: center; color: var(--accent-2); }
+
+  /* 08-what-to-know */
+  .q-list { position: absolute; left: var(--pad); width: 1020px; top: 70px; display: flex; flex-direction: column; gap: 22px; }
+  .q { padding: 24px 32px; font-size: 46px; font-weight: 650; }
+  .q .sub { display: flex; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
+  .q .sub span { font-size: 32px; font-weight: 600; padding: 6px 16px; border-radius: 6px; background: var(--code-bg); color: var(--accent); }
+  .q .sub span.ev { color: var(--good); }
+  .q-law { position: absolute; right: var(--pad); width: 520px; top: 70px; padding: 30px 34px; border-color: var(--accent-2); }
+  .q-law .quote { font-size: 46px; margin-top: 14px; }
+
+  /* 09-close */
+  .c-q { position: absolute; left: var(--pad); right: var(--pad); top: 120px; text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 84px; line-height: 1.12; letter-spacing: var(--display-tracking); }
+  .c-q em { font-style: normal; color: var(--good); }
+  .c-then { position: absolute; left: var(--pad); right: var(--pad); top: 440px; display: flex; justify-content: center; gap: 30px; font-size: 40px; font-weight: 600; }
+  .c-then .stamp { font-size: 34px; }
+  .c-made { position: absolute; left: var(--pad); right: var(--pad); top: 600px; text-align: center; }
+  .c-made .name { font-family: var(--font-display); font-weight: 700; font-size: 60px; }
+  .c-made .url { font-family: var(--font-mono); font-size: 32px; color: var(--accent-2); margin-top: 10px; }
+  .c-made .credit { font-size: 28px; color: var(--muted); margin-top: 16px; }
+</style>
+
+<section data-scene="01-hook">
+  <div class="h-bubbles">
+    <div class="bubble card b1" data-cue="ships" data-anim="pop"><small>on a pull request</small>Did you even read this?</div>
+    <div class="bubble card b2" data-cue="someone#2" data-anim="pop"><small>in the comments</small>Did an AI write this?</div>
+    <div class="bubble card b3" data-cue="says" data-anim="pop"><small>at standup</small>Does anyone understand this?</div>
+  </div>
+  <div class="h-main" data-cue="understand" data-anim="slam">“You don't understand the code.”</div>
+  <div class="h-fair" data-cue="fair" data-anim="left">✓ a fair worry</div>
+  <div class="h-stamp stamp" data-cue="seventy" data-anim="slam">since 1952</div>
+</section>
+
+<section data-scene="02-1952" data-transition="fade">
+  <div class="p-row">
+    <div class="p-card card" data-cue="Grace" data-anim="up">
+      <div class="tag">1952 · Grace Hopper</div>
+      <div class="name">“A compiler”</div>
+      <div class="quote" data-cue="nobody" data-anim="fade">“I had a running compiler and nobody would touch it.”</div>
+      <div class="quote small" data-cue="arithmetic" data-anim="fade">“They told me computers could only do arithmetic.”</div>
+      <div class="who" data-cue="nobody" data-anim="fade">her words, as reported in 1987</div>
+    </div>
+    <div class="p-card card" data-cue="Backus#1" data-anim="up">
+      <div class="tag">1954 · John Backus, IBM</div>
+      <div class="name">FORTRAN</div>
+      <div class="quote" data-cue="claims" data-anim="fade">“our claims that we would produce efficient object programs were disbelieved.”</div>
+      <div class="who" data-cue="claims" data-anim="fade">Backus, History of FORTRAN, 1978</div>
+      <div class="stamp" data-cue="disbelieved" data-anim="slam">disbelieved</div>
+    </div>
+  </div>
+  <div class="p-priest card" data-cue="priesthood" data-anim="up">
+    <div class="tag">Backus, 1976</div>
+    <div class="quote">“a priesthood guarding skills and mysteries far too complex for ordinary mortals”</div>
+  </div>
+</section>
+
+<section data-scene="03-it-won" data-transition="slide">
+  <div class="w-line">
+    <div class="w-card card" data-cue="shipped" data-anim="up">
+      <div class="big">1957</div>
+      <div class="what">FORTRAN ships</div>
+    </div>
+    <div class="w-card card" data-cue="survey" data-anim="up">
+      <div class="big g" data-cue="half#1" data-anim="count">over 50%</div>
+      <div class="what">of 26 surveyed IBM 704 sites used it for more than half their problems</div>
+      <div class="who">April 1958 survey, cited by Backus</div>
+    </div>
+    <div class="w-card card" data-cue="machine#1" data-anim="up">
+      <div class="big g">over 50%</div>
+      <div class="what">of the machine instructions on those machines came from the compiler</div>
+      <div class="who">November 1958 report, cited by Backus</div>
+    </div>
+  </div>
+  <div class="w-ask" data-cue="last" data-anim="fade">When did you last read your compiler's machine code?</div>
+  <div class="meme-wrap" data-cue="Nobody" data-anim="fade">
+    <div class="dim"></div>
+    <figure class="ss-meme" data-meme="drake" data-cue="Nobody" data-anim="pop" >
+      <span>Read every machine instruction</span>
+      <span data-cue="understand" data-anim="pop">Check the program does its job</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="04-theory" data-transition="rise">
+  <div class="t-card card" data-cue="Naur" data-anim="up">
+    <div class="tag">1985 · Peter Naur · “Programming as Theory Building”</div>
+    <div class="quote" data-cue="building" data-anim="fade">Programming is building a theory of how a program handles things in the world.</div>
+  </div>
+  <div class="t-scale">
+    <div class="t-box card theory" data-cue="matters" data-anim="grow">the theory<small>what it does, for whom, and why</small></div>
+    <div class="t-box card text" data-cue="text" data-anim="up">the program text</div>
+  </div>
+  <div class="meme-wrap" data-cue="Wait" data-anim="fade">
+    <div class="dim"></div>
+    <figure class="ss-meme" data-meme="astronaut" data-cue="Wait" data-anim="zoom" style="--meme-height: 900px">
+      <span>Wait, it was never about the code?</span>
+      <span data-cue="Always" data-anim="slam">Always has been</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="05-where-it-breaks" data-transition="wipe">
+  <div class="k-cols">
+    <div class="k-col card" data-cue="deterministic" data-anim="left">
+      <div class="tag">a compiler</div>
+      <div class="name">Same input, same output</div>
+      <div class="runs" data-cue="hundred" data-anim="stagger">
+        <div class="run">run 1 <b>the same bugs</b></div>
+        <div class="run">run 2 <b>the same bugs</b></div>
+        <div class="run">run 100 <b>the same bugs</b></div>
+      </div>
+      <div class="who">after Martin Fowler, 2025</div>
+    </div>
+    <div class="k-col card model" data-cue="model" data-anim="right">
+      <div class="tag">an AI model</div>
+      <div class="name">Same prompt, new program</div>
+      <div class="runs" data-cue="twice" data-anim="stagger">
+        <div class="run">ask 1 <b>program A</b></div>
+        <div class="run">ask 2 <b>program B</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="k-dij card" data-cue="Dijkstra" data-anim="up">
+    <div class="quote">“making statements the nonsense of which is not obvious”</div>
+    <div class="who">Edsger Dijkstra, EWD 667, 1978, on programming in plain language</div>
+  </div>
+  <div class="meme-wrap" data-cue="trust#1" data-anim="fade">
+    <div class="dim"></div>
+    <figure class="ss-meme" data-meme="gru" data-cue="trust#1" data-anim="pop" >
+      <span>Describe the app in English</span>
+      <span>The agent builds it</span>
+      <span>Ship it without running it</span>
+      <span>Ship it without running it</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="06-the-numbers" data-transition="slide">
+  <div class="n-row">
+    <div class="n-card card" data-cue="Veracode" data-anim="up">
+      <div class="num" data-cue="forty" data-anim="count">45%</div>
+      <div class="what">of AI-written code had a security flaw</div>
+      <div class="who">Veracode, 2025: 80 coding tasks, 4 languages; a vendor's own test</div>
+    </div>
+    <div class="n-card card" data-cue="METR#1" data-anim="up">
+      <div class="num" data-cue="nineteen" data-anim="count">19%</div>
+      <div class="what">slower with AI</div>
+      <div class="felt" data-cue="believed" data-anim="fade">felt 20% faster</div>
+      <div class="stamp" data-cue="date" data-anim="slam">out of date</div>
+      <div class="who">METR, July 2025: 16 experienced open-source developers, early-2025 tools</div>
+    </div>
+    <div class="n-card card" data-cue="Anthropic" data-anim="up">
+      <div class="num" data-cue="seventeen" data-anim="count">17%</div>
+      <div class="what">lower quiz score on a library learned with AI</div>
+      <div class="who">Anthropic, January 2026: 52 mostly junior engineers learning Trio</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="07-oversight" data-transition="fade">
+  <div class="o-chips">
+    <div class="ss-chip hot" data-cue="security" data-anim="pop">a security hole</div>
+    <div class="ss-chip hot" data-cue="slower" data-anim="pop">a slower week</div>
+    <div class="ss-chip hot" data-cue="Trouble" data-anim="pop">trouble explaining it</div>
+  </div>
+  <div class="o-fix">
+    <div class="no" data-cue="Reading" data-anim="fade">read every line, once</div>
+    <div class="yes" data-cue="Checking" data-anim="left">check what it does, every time it changes</div>
+    <div class="yes" data-cue="asking" data-anim="left">ask why when it surprises you</div>
+  </div>
+  <div class="o-k">
+    <div class="card" data-cue="Karpathy" data-anim="up">
+      <div class="quote">“forget that the code even exists”</div>
+      <div class="who">Andrej Karpathy, coining vibe coding, Feb 2025</div>
+    </div>
+    <div class="arrow" data-cue="agentic" data-anim="fade">→</div>
+    <div class="card" data-cue="agentic" data-anim="up">
+      <div class="quote">“orchestrating agents who do and acting as oversight”</div>
+      <div class="who">Karpathy, on agentic engineering, Feb 2026</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="08-what-to-know" data-transition="rise">
+  <div class="q-list">
+    <div class="q card" data-cue="person" data-anim="left">What does it do for the person using it?</div>
+    <div class="q card" data-cue="never" data-anim="left">What must it never do?
+      <div class="sub" data-cue="money" data-anim="stagger"><span>their money</span><span>their data</span><span>their account</span></div>
+    </div>
+    <div class="q card" data-cue="know" data-anim="left">How do you know?
+      <div class="sub" data-cue="test" data-anim="stagger"><span class="ev">a test that fails when it's wrong</span><span class="ev">a number you measured</span><span class="ev">a run you watched</span></div>
+    </div>
+  </div>
+  <div class="q-law card" data-cue="Spolsky" data-anim="right">
+    <div class="tag">Joel Spolsky, 2002</div>
+    <div class="quote">“All non-trivial abstractions, to some degree, are leaky.”</div>
+  </div>
+  <div class="meme-wrap" data-cue="leaks" data-anim="fade">
+    <div class="dim"></div>
+    <figure class="ss-meme" data-meme="exit" data-cue="leaks" data-anim="pop" >
+      <span>Read all 40,000 lines</span>
+      <span>Test the behavior, read where it leaks</span>
+      <span>Me</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="09-close" data-transition="fade">
+  <div class="c-q" data-cue="question" data-anim="up">Do you understand <em>what it does</em>, and <em>how do you know</em>?</div>
+  <div class="c-then">
+    <span class="stamp" data-cue="compiler" data-anim="slam">1957</span>
+    <span class="stamp" data-cue="still" data-anim="slam">today</span>
+  </div>
+  <div class="c-made" data-cue="ShipShow" data-anim="up">
+    <div class="name">Made with ShipShow</div>
+    <div class="url">github.com/latent-variable/shipshow</div>
+    <div class="credit">Voice: Lino Valdovinos, cloned with OmniVoice · Meme templates: the memegen catalog</div>
+  </div>
+</section>
