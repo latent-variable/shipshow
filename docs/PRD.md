@@ -86,7 +86,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 
 | ID | Requirement | Status |
 |---|---|---|
-| F17 | Package as a Claude Code plugin: `.claude-plugin/plugin.json` and `marketplace.json`, all skills, a `critic` agent with Read, Grep, Glob, Bash and Skill that is told not to write (not enforced); validates (one expected warning: no `version`, deliberate) | done. Standalone in any repo: `code-context`, `change-context`, `evidence-standard`. The rest produce an artifact only the pipeline consumes (a brief, a plan, a script, a hand-back) or judge one, and need this repo cloned (open question 3). Packaging limits in DESIGN D13 |
+| F17 | Package as a Claude Code plugin: `.claude-plugin/plugin.json` and `marketplace.json`, all skills, a `critic` agent with Read, Grep, Glob, Bash and Skill that cannot Write or Edit (Bash still can: DESIGN D45); validates (one expected warning: no `version`, deliberate) | done. Standalone in any repo: `code-context`, `change-context`, `evidence-standard`. The rest produce an artifact only the pipeline consumes (a brief, a plan, a script, a hand-back) or judge one, and need this repo cloned (open question 3). Packaging limits in DESIGN D13 |
 | F18 | A sample application that makes the problem recognisable: `sample_application/`, a toy ad-spend pacer built by three agents in one day, each change correct for its task, with a bug only their interaction shows, a replayable git history and the hand-off notes a manager would have received | done |
 | F19 | Take multimodal inputs (images, audio, video, documents) as evidence for a video | **open**: nothing we can read says the company has multimodal data |
 | F23 | A video's look is a theme (`themes/shipshow`, `paper`, `launch`, `buildday`, a client's in `local/themes/`) with motion and effects, made from a brand by the `theme` skill (main, #8) | done |
@@ -97,8 +97,11 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F28 | Voices that read every word: OmniVoice takes are generated at their natural length and stretched to the speed, trimmed of dead air, and re-voiced if silent; `eve` is a built-in voice (DESIGN D31) | done; measured with Whisper, no dropped words in about 150 sentences |
 | F29 | A decision video made through the real handoff, as the demo: a brief about a fictional code base, a fresh explainer agent, critics (`videos/invoice-leak`, `examples/ledgerly`; DESIGN D34) | done |
 | F30 | A video ends on its finished frame, so a paused or ended player shows the answer while people discuss it; `hold` adds still seconds after the last word (DESIGN D36) | done |
+| F35 | Every voiced take is checked: OmniVoice takes are cut of the model's opening burst and voiced again when they shout or start with no lead-in; every take of either engine is levelled (Kokoro's in place, key unchanged); with the optional faster-whisper (`npm run setup:hearback`) each take is heard back, OmniVoice keeps the best of three, and the review packet lists sentences under 0.97 (DESIGN D44) | done; measured on how-it-works with both engines, the listening not verifiable by an agent |
 | F31 | Apply Anthropic's agent best practices: a smaller always-on context, hooks that enforce the hard rules, a read-only critic in fact, per-run results and evals with an independent judge. The step-by-step plan, with sources and what is unconfirmed, is `docs/PLAN.md` | planned |
+| F32 | The hard rules are enforced, not only written: tracked project hooks refuse deleting and history-rewriting commands, edits to the demo's bugs and to recorded runs, and end a session on failing tests (first steps of F31; DESIGN D41) | done |
 | F33 | A meme can land a beat: `<figure class="ss-meme" data-meme="<memegen id>">` with a span per line; the build fetches the template's config and clean picture from memegen (MIT) into a user cache, ShipShow draws each line itself (white with a black outline, fitted to the template's box at render time) so a line can arrive on its own word; `npm run memes` searches the catalog; the review packet lists each meme's template and source for credit (DESIGN D42). The template pictures are third-party and fetched at build, never committed; publishing a video with memes relies on fair use and commentary norms and is the publisher's call | done |
+| F36 | The judge cannot rewrite what it judges: the `critic` agent has Write, Edit and NotebookEdit denied, a turn cap and a default model (plan steps 3.1 and 3.2, DESIGN D45) | done; the Bash half (no writes outside a scratch directory) is open |
 | F20 | Per-person preferences and private videos stay local (`tailor`, `local/`) | done in this repo; elsewhere a skill checks `local/` is ignored and uses `.git/info/exclude` |
 | F21 | Run code to verify a claim without harm: a sandbox script, a faithful scratch copy, no network, writes confined (`evidence-standard`) | done on macOS; Linux untested |
 | F22 | Scaffold and diagnose: `npm run new` from `template/`, `npm run setup` (picks a Python in 3.10 to 3.13, the range the pinned Kokoro supports, and upgrades the new venv's pip before installing), `npm run doctor` for what the machine lacks, a draft render mode | done |
@@ -123,7 +126,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 
 ## Out of scope for now
 
-- Speech recognition. Timing comes from voicing each sentence separately (DESIGN D1).
+- Speech recognition for timing. Timing comes from voicing each sentence separately (DESIGN D1); an optional ASR only verifies takes (F35).
 - Publishing renders or audio. Generated files are never committed.
 - A hosted service.
 
