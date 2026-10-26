@@ -567,7 +567,7 @@ Know Your Meme page): they are fetched at build, never committed, and `videos/*/
 packet's `source` is there so it can be credited. Fonts: Titillium Web and Anton are SIL OFL.
 **Costs.** A first build of a new template needs the network (or a mirror); a cached one does not. The config is parsed by a
 small reader for memegen's flat YAML, not a YAML library, so a template with a richer config than the 211 today (every one
-has a `text:` list of maps) needs it extended. Templates with `overlay` image slots keep the plain picture, with no overlay. A line too long for its box even at 6 px is clipped to the box (`data-overflow`) and logged as a warning, so the frames show the fault where it is.
+has a `text:` list of maps) needs it extended. Templates with `overlay` image slots keep the plain picture, with no overlay. A line too long for its box even at 6 px is clipped to the box (`data-overflow`) and logged as a warning, so the frames show the fault where it is. A word never breaks inside itself (`overflow-wrap: normal`): with `break-word` the fitter took the largest size at which "ENGINEERING" fit by splitting it across two lines (never-about-the-code, 2026-10-26), so now it shrinks until the longest word fits whole. A line also keeps a 2% margin each side: at full width, "ENGINEERING" ended 4 px from the picture's edge (round 5).
 An id is checked to be a plain name before it reaches the cache path, and a colour from a config is accepted only as a name or
 hex, since both go into the page.
 
@@ -585,6 +585,16 @@ among the tools it saw, which this change did not cause (`tools` is unchanged) a
 plugin-shipped agent's own hooks run is unconfirmed, so the Bash limit stays a stated one. **Costs.** A critic that needs more than 40 turns
 stops early and returns what it has; raise `maxTurns` if a longer video needs it.
 
+
+### D46. A pause after one scene, not only at the end (2026-10-26)
+**Decision.** `video.json` `"pauses": {"<scene>": seconds}` adds plain seconds (not scaled by speed, 0 to 10) after that scene's
+last sentence: the scene lasts longer, its sentences do not move, and every later scene starts that much later. `bin/voice.mjs`
+adds it where it adds `tail`; `bin/lib.mjs` refuses a value that is not a number in range.
+**Why.** `never-about-the-code` puts memes on punchlines that end their scenes, and the critics found every one cut away before it
+could be read (round 1, pacing). `gap`, `lead` and `tail` apply to every scene, and `hold` only to the last, so the only way to give
+one punchline a beat was to slow the whole video. product-videos has the same thing as a per-scene `hold`. **Costs.** A long pause
+is dead air for the ear: at 1.6 to 2.2 s on top of the scene gap, round 2's pacing critic heard four three-second silences, so
+the video settled on 0.8 to 1.3 s.
 
 ## Behaviour
 

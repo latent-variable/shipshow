@@ -1,0 +1,1 @@
+Look at what those measure: a security flaw, slower work, lower quiz scores. I'd argue reading every line once doesn't fix any of that. Checking what the code does, every time it changes, does. So does asking why when it surprises you. Even Andrej Karpathy, who coined vibe coding, now prefers the name agentic engineering, with you acting as oversight.

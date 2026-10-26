@@ -131,6 +131,7 @@ export function config(dir, argv = process.argv) {
     gap: 0.35,         // between sentences
     tail: 0.9,         // after a scene's last sentence
     hold: 0,           // still frame after the video's last word, in plain seconds (not scaled by speed)
+    pauses: {},        // extra plain seconds after a scene's last sentence: {"04-theory": 2}
     ...JSON.parse(readFileSync(join(dir, "video.json"), "utf8")),
   };
   if (flag("engine", argv) !== undefined) cfg.engine = flag("engine", argv);
@@ -139,6 +140,9 @@ export function config(dir, argv = process.argv) {
   if (flag("speed", argv) !== undefined) cfg.speed = Number(flag("speed", argv));
   if (flag("theme", argv) !== undefined) cfg.theme = flag("theme", argv);
   if (!(cfg.speed >= 0.5 && cfg.speed <= 2)) die(`speed ${cfg.speed} is outside 0.5 to 2`);
+  for (const [id, sec] of Object.entries(cfg.pauses || {})) {
+    if (!(typeof sec === "number" && sec >= 0 && sec <= 10)) die(`pauses["${id}"] is ${JSON.stringify(sec)}; it takes 0 to 10 seconds`);
+  }
   if (cfg.engine === "omnivoice") {
     // A Kokoro voice id (af_heart) under this engine is the template's or a person's default, not a
     // choice: it gives way to omnivoice's own. A name that is neither is a typo, and says so.

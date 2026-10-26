@@ -1,0 +1,1 @@
+So what does a programmer need to understand? In 1985, Peter Naur gave an answer. Programming, he wrote, is building a theory of how a program handles things in the world. In my words: what it does, what it must never do, and how you know. That theory, he said, matters more than the program text. Wait. It was never about the code? Always has been.

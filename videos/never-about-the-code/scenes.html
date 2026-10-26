@@ -1,0 +1,402 @@
+<style>
+  /* Layout only; colour, type and motion come from the paper theme. An archive look: index cards, date
+     stamps, quotes. Red is the criticism and the verdict stamps, blue is a source, green is what holds up.
+     Every scene is a centred column (.stage) so nothing overlaps and the frame is used top to bottom. */
+  .stage { position: absolute; inset: 50px var(--pad) 40px; display: flex; flex-direction: column; justify-content: center; gap: 36px; }
+  .row { display: flex; gap: 40px; align-items: stretch; }
+  .row > * { flex: 1; }
+  .card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 34px 40px; }
+  .tag { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-2); }
+  .who { font-family: var(--font-mono); font-size: 30px; color: var(--muted); margin-top: 18px; line-height: 1.35; }
+  .quote { font-family: var(--font-display); font-style: italic; font-size: 48px; line-height: 1.22; margin-top: 18px; text-wrap: balance; }
+  .title { font-family: var(--font-display); font-weight: 700; font-size: 64px; line-height: 1.08; margin-top: 12px; }
+  .stamp { display: inline-block; padding: 8px 26px; border: 5px solid var(--accent); border-radius: 8px; color: var(--accent); font-family: var(--font-mono); font-weight: 700; font-size: 40px; letter-spacing: 0.14em; text-transform: uppercase; background: var(--card); white-space: nowrap; }
+  .stamp.good { border-color: var(--good); color: var(--good); }
+  .big { font-family: var(--font-display); font-weight: 700; letter-spacing: var(--display-tracking); line-height: 1.05; }
+  .center { text-align: center; }
+  .meme-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .scrim { position: absolute; inset: 0 0 -180px 0; background: var(--bg); }
+  .ss-meme { --meme-height: 820px; }
+
+  /* 01-hook */
+  .bubbles { display: flex; justify-content: space-between; gap: 30px; }
+  .bubble { flex: none; padding: 22px 30px; font-size: 42px; font-weight: 600; border-radius: 22px 22px 22px 4px; white-space: nowrap; }
+  .bubble small { display: block; font-family: var(--font-mono); font-size: 28px; font-weight: 500; color: var(--muted); margin-bottom: 6px; }
+  .bubble.mid { margin-top: 50px; }
+  .hook { font-size: 124px; color: var(--accent); text-align: center; }
+  .verdicts { display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; gap: 36px; font-size: 44px; font-weight: 650; white-space: nowrap; }
+  .verdicts .fair { color: var(--good); }
+  .verdicts .wrong { color: var(--ink); }
+  .stamp.tilt { transform: rotate(-6deg); font-size: 44px; }
+  .then .stamp { transform: rotate(-6deg); font-size: 56px; }
+
+  /* 02-1952 */
+  .person { padding: 26px 34px; }
+  .person .title { font-size: 54px; }
+  .person .quote { font-size: 40px; margin-top: 12px; }
+  .person .who { margin-top: 10px; }
+  .person .stamp { margin-top: 16px; transform: rotate(-4deg); font-size: 34px; }
+  .callout { display: flex; justify-content: center; align-items: baseline; gap: 34px; }
+  .callout .big { font-size: 60px; color: var(--accent); }
+  .callout .sf { font-size: 48px; font-weight: 650; color: var(--ink); }
+
+  /* 03-it-won */
+  .stat .num { font-family: var(--font-display); font-weight: 700; font-size: 112px; line-height: 1; white-space: nowrap; }
+  .stat .num.g { color: var(--good); }
+  .stat .what { font-size: 40px; font-weight: 600; line-height: 1.22; margin-top: 18px; }
+
+  /* 04-theory, 05-dead */
+  .paraphrase { font-family: var(--font-display); font-size: 64px; line-height: 1.18; margin-top: 18px; }
+  .scale { display: flex; gap: 40px; align-items: flex-end; }
+  .scale .theory { flex: 1.8; min-height: 230px; border-color: var(--good); color: var(--good); font-size: 64px; font-weight: 700; }
+  .scale .text { flex: 1; min-height: 130px; color: var(--muted); font-size: 44px; font-weight: 600; }
+  .dead { font-size: 84px; text-align: center; }
+  .dead em { font-style: normal; color: var(--accent); }
+  .hold { font-size: 56px; font-weight: 650; color: var(--good); text-align: center; }
+
+  /* 06-where-it-breaks */
+  .runs { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
+  .run { display: flex; justify-content: space-between; padding: 14px 24px; border-radius: 8px; background: var(--code-bg); font-family: var(--font-mono); font-size: 36px; color: var(--code-ink); }
+  .run b { color: var(--good); }
+  .agent .run b { color: var(--accent); }
+
+  /* 07-the-numbers */
+  .num-card { display: flex; flex-direction: column; min-height: 600px; }
+  .num-card .num { font-family: var(--font-display); font-weight: 700; font-size: 170px; line-height: 1; color: var(--accent); }
+  .num-card .what { font-size: 44px; font-weight: 650; line-height: 1.18; margin-top: 16px; }
+  .num-card .felt { font-size: 40px; color: var(--muted); margin-top: 10px; }
+  .num-card .stamp { align-self: flex-start; margin-top: 18px; transform: rotate(-4deg); font-size: 34px; }
+  .num-card .who { margin-top: auto; padding-top: 18px; }
+
+  /* 08-oversight */
+  .chips { display: flex; justify-content: center; gap: 30px; }
+  .chips .ss-chip { font-size: 44px; }
+  .fix { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+  .fix div { font-size: 58px; font-weight: 650; }
+  .fix .no { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--accent); text-decoration-thickness: 5px; }
+  .fix .yes { color: var(--good); }
+  .karp { display: grid; grid-template-columns: 1fr 70px 1fr; align-items: center; gap: 10px; }
+  .karp .arrow { font-size: 64px; text-align: center; color: var(--ink); }
+
+  /* 09-what-to-know */
+  .qs { display: flex; flex-direction: column; gap: 14px; }
+  .q { font-size: 44px; font-weight: 650; padding: 16px 30px; }
+  .q .sub { display: flex; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
+  .q .sub span { font-size: 32px; font-weight: 600; padding: 8px 20px; border-radius: 6px; background: var(--code-bg); color: var(--accent); }
+  .q .sub span.ev { color: var(--good); }
+  .limit { font-size: 36px; font-weight: 600; color: var(--muted); text-align: center; }
+  .bridge { font-size: 48px; font-weight: 650; color: var(--good); text-align: center; }
+
+  /* 10-leaks */
+  .down { display: flex; justify-content: center; align-items: center; gap: 30px; font-size: 56px; font-weight: 650; }
+  .down .arrow { font-size: 90px; color: var(--ink); }
+  .law .quote { font-size: 68px; text-align: center; }
+  .law .tag { text-align: center; }
+
+  /* 06 headline, 09 test, 10 surprise */
+  .turn { font-size: 60px; text-align: center; }
+  .testcard { font-family: var(--font-mono); font-size: 30px; padding: 14px 24px; }
+  .testcard .name { color: var(--ink); }
+  .testcard .fail { color: var(--accent); font-weight: 700; margin-top: 10px; }
+  .testcard .label { font-family: var(--font); font-size: 28px; color: var(--muted); margin-bottom: 8px; }
+  .surprise { display: flex; justify-content: center; gap: 40px; align-items: stretch; }
+  .surprise .card { font-size: 54px; font-weight: 650; flex: 1; }
+  .surprise .label { font-family: var(--font-mono); font-size: 30px; color: var(--muted); margin-bottom: 10px; }
+
+  /* 03 and 07: a list, each row arriving whole when it is named */
+  .list { display: flex; flex-direction: column; gap: 22px; }
+  .lrow { display: grid; grid-template-columns: 470px 1fr; align-items: center; column-gap: 40px; padding: 22px 36px; }
+  .lrow .num { font-family: var(--font-display); font-weight: 700; font-size: 100px; line-height: 1; white-space: nowrap; color: var(--accent); }
+  .lrow .num.g { color: var(--good); }
+  .nums .lrow { grid-template-columns: 260px 1fr; }
+  .lrow .num.ink { color: var(--ink); }
+  .lrow .what { font-size: 42px; font-weight: 650; line-height: 1.2; }
+  .lrow .who { margin-top: 8px; }
+  .lrow .felt { font-size: 36px; color: var(--muted); margin-top: 6px; }
+  .lrow .stamp { font-size: 30px; transform: rotate(-4deg); margin-left: 18px; vertical-align: middle; }
+  .bigquote { position: relative; max-width: 1500px; text-align: center; padding: 50px 60px; }
+  .bigquote .quote { font-size: 68px; }
+  .bigquote .quote em { color: var(--accent); }
+
+  /* 11-close */
+  .ask { font-size: 96px; text-align: center; }
+  .ask em { font-style: normal; color: var(--good); }
+  .then { display: flex; justify-content: center; gap: 34px; }
+  .made { text-align: center; }
+  .made .name { font-family: var(--font-display); font-weight: 700; font-size: 60px; }
+  .made .url { font-family: var(--font-mono); font-size: 36px; color: var(--accent-2); margin-top: 8px; }
+  .made .credit { font-size: 30px; color: var(--muted); margin-top: 12px; }
+</style>
+
+<section data-scene="01-hook">
+  <div class="stage">
+    <div class="bubbles">
+      <div class="bubble card" data-cue="ships" data-anim="pop"><small>on a pull request</small>Did you even read this?</div>
+      <div class="bubble card mid" data-cue="someone#2" data-anim="pop"><small>in the comments</small>Did an AI write this?</div>
+      <div class="bubble card" data-cue="says" data-anim="pop"><small>at standup</small>Does anyone understand it?</div>
+    </div>
+    <div class="hook big" data-cue="understand" data-anim="slam">“You don't understand the code.”</div>
+    <div class="verdicts">
+      <span class="fair" data-cue="fair" data-anim="left">✓ a fair worry</span>
+      <span class="stamp tilt" data-cue="compilers" data-anim="slam" data-sfx="thump">first compilers · 1952</span>
+      <span class="wrong" data-cue="wrong" data-anim="right">the wrong question?</span>
+    </div>
+  </div>
+</section>
+
+<section data-scene="02-1952" data-transition="fade">
+  <div class="stage" style="gap: 22px">
+    <div class="row">
+      <div class="card person" data-cue="Hopper" data-anim="up">
+        <div class="tag">1952 · Grace Hopper</div>
+        <div class="title">“A compiler”</div>
+        <div class="quote" data-cue="nobody" data-anim="fade">“I had a running compiler and nobody would touch it.”</div>
+        <div class="who" data-cue="nobody" data-anim="fade">her words, as reported in 1987</div>
+      </div>
+      <div class="card person" id="backus" data-cue="Backus#1" data-anim="up">
+        <div class="tag">1954 · John Backus · IBM</div>
+        <div class="title">FORTRAN</div>
+        <div class="quote" data-cue="believe" data-anim="fade">“our claims that we would produce efficient object programs were disbelieved.”</div>
+        <div class="who" data-cue="believe" data-anim="fade">his words, written in 1978</div>
+        <div class="stamp" data-cue="efficient" data-anim="slam" data-sfx="thump">disbelieved</div>
+      </div>
+    </div>
+    <div class="card" data-cue="priesthood" data-anim="up">
+      <div class="tag">1976 · John Backus</div>
+      <div class="quote" style="font-size: 44px">“a priesthood guarding skills and mysteries far too complex for ordinary mortals”</div>
+    </div>
+    <div class="callout">
+      <span class="big" data-cue="trust" data-anim="pop">Don't trust code you didn't write by hand.</span>
+      <span class="sf" data-cue="familiar" data-anim="fade">Sound familiar?</span>
+    </div>
+  </div>
+  <div class="meme-wrap" id="pigeon" data-cue="told" data-anim="fade">
+    <div class="scrim"></div>
+    <figure class="ss-meme" data-meme="pigeon" data-cue="told" data-anim="pop">
+      <span>The doubters</span>
+      <span>a compiler</span>
+      <span data-cue="arithmetic" data-anim="pop">Is this arithmetic?</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="03-it-won" data-transition="slide">
+  <div class="stage">
+    <div class="list">
+      <div class="card lrow" data-cue="shipped" data-anim="up">
+        <div class="num ink">1957</div>
+        <div class="what">FORTRAN ships</div>
+      </div>
+      <div class="card lrow" data-cue="survey" data-anim="up">
+        <div class="num g">over 50%</div>
+        <div><div class="what">of 26 surveyed IBM 704 installations used it for most of their problems</div><div class="who">April 1958 survey, cited by Backus</div></div>
+      </div>
+      <div class="card lrow" data-cue="sixty" data-anim="up">
+        <div class="num g">over 50%</div>
+        <div><div class="what">of machine instructions at about 60 installations came from the compiler</div><div class="who">fall 1958, cited by Backus</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="meme-wrap covers" data-cue="last" data-anim="fade">
+    <div class="scrim"></div>
+    <figure class="ss-meme" data-meme="drake" data-cue="last" data-anim="pop" data-sfx="whoosh" data-sfx-offset="0.2" data-sfx-gain="4">
+      <span>Read every line of machine code</span>
+      <span data-cue="never" data-anim="pop">Check the program does its job</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="04-theory" data-transition="rise">
+  <div class="stage">
+    <div class="turn big" data-cue="programmer" data-anim="up">What does a programmer need to understand?</div>
+    <div class="card" data-cue="building" data-anim="up">
+      <div class="tag">1985 · Peter Naur · Programming as Theory Building</div>
+      <div class="paraphrase">Programming is building a theory of how a program handles things in the world.</div>
+    </div>
+    <div class="scale">
+      <div class="card theory" data-cue="words" data-anim="grow">the theory<div style="font-size: 36px; font-weight: 600; margin-top: 10px">what it does, what it must never do, how you know</div></div>
+      <div class="card text" data-cue="matters" data-anim="up">the program text</div>
+    </div>
+  </div>
+  <div class="meme-wrap covers" data-cue="Wait" data-anim="fade">
+    <div class="scrim"></div>
+    <figure class="ss-meme" data-meme="astronaut" data-cue="Wait" data-anim="zoom" style="--meme-height: 840px">
+      <span data-cue="never#2" data-anim="pop">Wait, it was never about the code?</span>
+      <span data-cue="been" data-anim="slam" data-sfx="boom">Always has been</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="05-dead" data-transition="fade">
+  <div class="stage">
+    <div class="tag center" data-cue="warning" data-anim="fade">1985 · Peter Naur · paraphrased</div>
+    <div class="dead big" data-cue="warning" data-anim="up">A program nobody holds the theory of is <em>dead</em>, even while it runs.</div>
+    <div class="hold" data-cue="somebody" data-anim="up">Somebody still has to hold the theory.</div>
+  </div>
+</section>
+
+<section data-scene="06-where-it-breaks" data-transition="slide">
+  <div class="stage">
+    <div class="turn big" data-cue="comparison" data-anim="slam">Where the comparison breaks</div>
+    <div class="row">
+      <div class="card" data-cue="Fowler" data-anim="left">
+        <div class="tag">2025 · Fowler · a compiler</div>
+        <div class="title">Same input, same output</div>
+        <div class="runs">
+          <div class="run">run 1 <b>the same bugs</b></div>
+          <div class="run">run 2 <b>the same bugs</b></div>
+          <div class="run">run 100 <b>the same bugs</b></div>
+        </div>
+      </div>
+      <div class="card agent" data-cue="agent#1" data-anim="right">
+        <div class="tag">an AI agent</div>
+        <div class="title">Same prompt, new program</div>
+        <div class="runs">
+          <div class="run">ask 1 <b>program A</b></div>
+          <div class="run">ask 2 <b>program B</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="meme-wrap covers" data-cue="test" data-anim="fade">
+    <div class="scrim"></div>
+    <figure class="ss-meme" data-meme="gru" data-cue="test" data-anim="pop" data-sfx="swish" data-sfx-offset="0.3" data-sfx-gain="5">
+      <span>Describe it in English</span>
+      <span>Agent builds it</span>
+      <span>Test it once</span>
+      <span data-cue="every#2" data-anim="pop">Test it once?</span>
+    </figure>
+  </div>
+  <div class="meme-wrap" data-cue="Dijkstra" data-anim="fade">
+    <div class="scrim"></div>
+    <div class="card bigquote">
+      <div class="tag">1978 · Edsger Dijkstra · on programming in plain language</div>
+      <div class="quote">“making statements the <em>nonsense</em> of which is <em>not obvious</em>”</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="07-the-numbers" data-transition="slide">
+  <div class="stage">
+    <div class="turn big" data-cue="studies" data-anim="up">The studies</div>
+    <div class="list nums">
+      <div class="card lrow" data-cue="Veracode" data-anim="up">
+        <div class="num">45%</div>
+        <div><div class="what">of AI-written code had a security flaw</div><div class="who">Veracode 2025 · 80 tasks, 4 languages · vendor's test</div></div>
+      </div>
+      <div class="card lrow" data-cue="METR#1" data-anim="up">
+        <div class="num">19%</div>
+        <div><div class="what">longer with AI <span class="stamp" id="stale" data-cue="date" data-anim="slam" data-sfx="thump">out of date</span></div><div class="felt">and they felt 20% faster</div><div class="who">METR 2025 · 16 experienced open-source developers</div></div>
+      </div>
+      <div class="card lrow" data-cue="Anthropic" data-anim="up">
+        <div class="num">17%</div>
+        <div><div class="what">lower quiz score on a library learned with AI</div><div class="who">Anthropic 2026 · 52 mostly junior engineers</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="fine" data-cue="believed" data-anim="fade">
+    <div class="scrim"></div>
+    <figure class="ss-meme" data-meme="fine" data-cue="believed" data-anim="pop">
+      <span>19% longer</span>
+      <span>I feel 20% faster</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="08-oversight" data-transition="fade">
+  <div class="stage">
+    <div class="chips">
+      <div class="ss-chip hot" data-cue="security" data-anim="pop">a security flaw</div>
+      <div class="ss-chip hot" data-cue="slower" data-anim="pop">slower work</div>
+      <div class="ss-chip hot" data-cue="lower" data-anim="pop">lower quiz scores</div>
+    </div>
+    <div class="fix">
+      <div class="no" data-cue="reading" data-anim="fade">read every line, once</div>
+      <div class="yes" data-cue="Checking" data-anim="left">check what it does, every time it changes</div>
+      <div class="yes" data-cue="asking" data-anim="left">ask why when it surprises you</div>
+    </div>
+    <div class="card" data-cue="Karpathy" data-anim="up">
+      <div class="tag">2026 · Andrej Karpathy · on agentic engineering</div>
+      <div class="quote" style="font-size: 46px">“orchestrating agents who do and acting as oversight”</div>
+    </div>
+  </div>
+  <div class="meme-wrap covers" data-cue="name" data-anim="fade">
+    <div class="scrim"></div>
+    <figure class="ss-meme" data-meme="pooh" data-cue="name" data-anim="pop">
+      <span>Vibe coding</span>
+      <span data-cue="agentic" data-anim="pop" data-sfx="swish" data-sfx-gain="5">Agentic engineering</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="09-what-to-know" data-transition="rise">
+  <div class="stage" style="gap: 20px; inset: 30px var(--pad) 24px">
+    <div class="tag center" data-cue="understanding" data-anim="fade">My three questions, after Naur</div>
+    <div class="bridge" data-cue="understanding" data-anim="up">Hold the theory: answer three questions, and prove the answers.</div>
+    <div class="qs">
+      <div class="q card" data-cue="What#2" data-anim="left">What does it do for the person using it?</div>
+      <div class="q card" data-cue="What#3" data-anim="left">What must it never do?
+        <div class="sub"><span data-cue="money" data-anim="pop">their money</span><span data-cue="data" data-anim="pop">their data</span><span data-cue="account" data-anim="pop">their account</span></div>
+      </div>
+      <div class="q card" data-cue="know" data-anim="left">How do you know?
+        <div class="testcard card" data-cue="test" data-anim="pop" style="margin-top: 14px; box-shadow: none">
+          <div class="label">an example test</div>
+          <div class="name">a customer cannot read another customer's invoice</div>
+          <div class="fail" data-cue="invoice" data-anim="slam" data-sfx="thump">FAIL · got the invoice, expected "not found"</div>
+        </div>
+        <div class="sub"><span class="ev" data-cue="number" data-anim="pop">a number you measured</span><span class="ev" data-cue="run#1" data-anim="pop">a run you watched</span></div>
+      </div>
+    </div>
+    <div class="limit" data-cue="write" data-anim="fade">someone writes and reruns the checks · no check catches what nobody asked</div>
+  </div>
+</section>
+
+<section data-scene="10-leaks" data-transition="slide">
+  <div class="stage">
+    <div class="turn big" data-cue="surprises" data-anim="up">When it surprises you, go down a level</div>
+    <div class="surprise">
+      <div class="card" data-cue="report" data-anim="left"><div class="label">a surprise, for example</div>a report suddenly takes 40 seconds</div>
+      <div class="card" data-cue="query" data-anim="right"><div class="label">go down a level</div>open the query the agent wrote</div>
+    </div>
+    <div class="card law" data-cue="Spolsky" data-anim="up">
+      <div class="tag">2002 · Joel Spolsky · the law of leaky abstractions</div>
+      <div class="quote">“All non-trivial abstractions, to some degree, are leaky.”</div>
+    </div>
+  </div>
+  <div class="meme-wrap covers" data-cue="matters" data-anim="fade">
+    <div class="scrim"></div>
+    <figure class="ss-meme" data-meme="exit" data-cue="matters" data-anim="pop" data-sfx="whoosh" data-sfx-gain="4">
+      <span>Read all the code</span>
+      <span>Read it where it leaks</span>
+      <span>Me</span>
+    </figure>
+  </div>
+</section>
+
+<section data-scene="11-close" data-transition="fade">
+  <div class="stage">
+    <div class="ask big" data-cue="+0.4" data-anim="up">Do you understand <em>what it does</em>, and <em>how do you know</em>?</div>
+    <div class="then">
+      <span class="stamp good" data-cue="compiler" data-anim="slam">1952</span>
+      <span class="stamp good" data-cue="is" data-anim="slam" data-sfx="sting">today</span>
+    </div>
+    <div class="made" id="made" data-cue="+14.0" data-anim="fade">
+      <div class="name">Made with ShipShow</div>
+      <div class="url">github.com/latent-variable/shipshow</div>
+      <div class="credit">Voice: Lino Valdovinos, cloned · Meme templates: memegen</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // The two memes that land mid-scene leave before the next thing is named.
+  const at = (sel) => +document.querySelector(sel).dataset.at;
+  tl.to("#pigeon", { opacity: 0, duration: 0.35 }, at("#backus") - 0.45);
+  tl.to("#fine", { opacity: 0, duration: 0.35 }, at("#stale") - 0.4);
+  // Behind a meme that stays to the end of its scene, the scene's own content fades once covered,
+  // so nothing sits under the picture.
+  document.querySelectorAll(".meme-wrap.covers").forEach((wrap) => {
+    const scene = wrap.parentElement;
+    tl.to(scene.querySelector(".stage"), { opacity: 0, duration: 0.2 }, +wrap.dataset.at + 0.4);
+  });
+</script>

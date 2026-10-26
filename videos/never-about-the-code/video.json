@@ -1,0 +1,43 @@
+{
+  "title": "It was never about the code",
+  "kind": "feature",
+  "importance": "high",
+  "importance_reason": "public: Lino's YouTube channel, in his own voice, making historical and research claims a viewer may repeat",
+  "audience": "A developer or tech lead on YouTube who uses AI coding agents, or argues against them, and has heard 'you don't understand the code'. Knows what a compiler is; may not know the 1950s history. After watching, they can answer that criticism with the history, its fair limits, and a better question: do you understand what it does, and how do you know?",
+  "theme": "paper",
+  "engine": "omnivoice",
+  "voice": "lino",
+  "speed": 1.2,
+  "say": {
+    "1952": "nineteen fifty two",
+    "1954": "nineteen fifty four",
+    "1957": "nineteen fifty seven",
+    "1958": "nineteen fifty eight",
+    "1978": "nineteen seventy eight",
+    "1985": "nineteen eighty five",
+    "2025": "twenty twenty five",
+    "704": "seven oh four",
+    "IBM": "I B M",
+    "FORTRAN": "Fortran",
+    "METR": "meter",
+    "METR's": "meter's",
+    "Naur": "Now-er",
+    "Dijkstra": "Dike-stra",
+    "ShipShow": "Ship Show"
+  },
+  "music": {
+    "file": "local/music/never-about-the-code-bed.wav",
+    "volume": 0.18,
+    "duck": 0.3
+  },
+  "pauses": {
+    "01-hook": 0.5,
+    "03-it-won": 0.8,
+    "04-theory": 0.8,
+    "06-where-it-breaks": 0.8,
+    "08-oversight": 0.8,
+    "10-leaks": 0.83,
+    "05-dead": 0.6
+  },
+  "hold": 11
+}

@@ -1,0 +1,163 @@
+# Review: never-about-the-code
+
+Plan: `thorough` (importance high: Lino's YouTube channel, in his voice). Critics: accuracy, clarity, pacing, sync, visuals,
+consistency, engagement; Sonnet, Opus for the last round's clarity, visuals and engagement; at most 4 rounds; until no blocking or
+objective major finding is left. Every critic is a fresh agent that never saw the build.
+
+## Round 1: 52 findings (1 blocking, 29 major, 22 minor); all seven critics
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | fail | 0 / 4 / 3 |
+| clarity | fail | 0 / 6 / 2 |
+| pacing | fail | 0 / 6 / 1 |
+| sync | fail | 0 / 1 / 8 |
+| visuals | fail | 1 / 4 / 3 |
+| consistency | fail | 0 / 2 / 3 |
+| engagement | fail | 0 / 6 / 2 |
+
+Sound effects were not in this build (the pipeline PR was still open); round 2 judges them.
+
+**Fixed.** The script was rewritten into eleven scenes. The hook states the position as the narrator's view (clarity-1,
+accuracy-2); scene 02 says the bridge to today aloud and gains a meme (clarity-2, engagement-1); "those machines" in 1958 is now
+"about sixty installations" with its population on screen (accuracy-1); "settled it" became "spread fast" (accuracy-6); Naur's own
+warning, a program nobody holds the theory of is dead, has its own scene (accuracy-3, clarity-3); determinism is explained as
+"check a compiler once, an agent every time" (clarity-4); scene 07 opens on what the studies show and says what to do with the
+out-of-date one (clarity-5); opinion lines are in the first person (accuracy-4); the recap matches the studies (accuracy-5); the
+Karpathy line is split and says "favorite name" (clarity-8, accuracy-7); the limit of the thesis is said (clarity-6); "agent" is
+used throughout, FORTRAN is one spelling, the close's stamp matches the hook (consistency-1 to -3). The ending is the question, and
+the ShipShow credit is a silent end card held four seconds (engagement-6, pacing-5). Every scene is a centred column at larger
+sizes, every source line 28 px or more, the overlap removed, meme backdrops solid and the content behind them faded (visuals-1 to
+-8). Each meme gets time to read: a new `pauses` setting adds a beat after its scene (pacing-1 to -4, -6; engagement-4, -8). Two
+memes were added (engagement-3); cues land on their own words (sync-1 to -9).
+
+**Declined.** engagement-5 asked for more varied entrances; the layouts now vary by scene and the entrances follow what each thing
+is. Round 2 judges whether that is enough.
+
+## Round 2: 33 findings (0 blocking, 15 major, 18 minor); all seven critics
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | fail | 0 / 1 / 3 |
+| clarity | fail | 0 / 5 / 3 |
+| pacing | fail | 0 / 4 / 0 |
+| sync | fail | 0 / 3 / 2 |
+| visuals | fail | 0 / 1 / 3 |
+| consistency | pass | 0 / 0 / 4 |
+| engagement | fail | 0 / 2 / 4 |
+
+**Fixed.** The three questions are said and labelled as the narrator's, after Naur (accuracy-1); Hopper "had what she called a
+compiler", the meme's doubters are unnamed, Spolsky keeps "to some degree", the assembly line says what S1 supports, and the close
+is in the first person (accuracy-2 to -4). "Theory" is glossed in plain words where it is introduced (clarity-1); scene 09 says how
+someone holds the theory of code they did not type (clarity-2); the Karpathy aside is one sentence with a Pooh meme on the naming
+(clarity-3, engagement-1, -3); the cost and the limit are named (clarity-4); "check" became "test the output", with why once is
+enough for a compiler (clarity-5); METR's caveat says which way it cuts (clarity-6); scene 10 names the abstraction and the leak
+(clarity-7); FORTRAN is introduced as a compiler (clarity-8). Pauses were cut to 0.8 to 1.3 s and the end card held seven seconds
+(pacing-1 to -4). The boom lands with "been" and the sting with "today" (sync-1, -2); a headline opens scene 06 (sync-3); the
+astronaut's first line arrives on its own words (sync-4). Rows of cards appear together and fill in, so no frame builds from the
+left (visuals-1, -2); scene 09 shows an example failing test and scene 10 an example surprise (engagement-2); the hook promises the
+better question (engagement-6). Blue is kept for sources only; the closing stamps match the hook's; source labels sit above every
+quote; the compiler's output has one name in the meme (consistency-1 to -4). Found while fixing: the meme fitter split
+"ENGINEERING" across two lines, because `overflow-wrap: break-word` let a long word "fit"; the kit now keeps words whole.
+
+**Accepted.** sync-5 (some meme panels land together on one cue): the panels set up a line the narration has just said.
+
+## Round 3: 27 findings (2 blocking, 7 major, 18 minor); all seven critics
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 3 |
+| clarity | fail | 0 / 3 / 2 |
+| pacing | fail | 0 / 3 / 0 |
+| sync | fail | 0 / 1 / 5 |
+| visuals | fail | 2 / 2 / 1 |
+| consistency | pass | 0 / 0 / 3 |
+| engagement | pass | 0 / 0 / 4 |
+
+The accuracy floor holds from this round on.
+
+**Fixed.** The round-2 headline pushed scene 06 past the frame, clipping the headline and the Dijkstra card (visuals-1, -2,
+blocking): the scene now runs comparison, then the Gru meme, then Dijkstra's warning as its own full-frame beat, which also
+puts "test once, test every time" straight after determinism and ties Dijkstra to prompts (clarity-2). A bug found while
+fixing it: the Dijkstra card first rendered blank, because the backdrop is positioned and the card was not; the kit's
+`highlight` then drew a bar through the quote, so the key words are red instead. The hook signposts where the better question
+comes from (clarity-1); scene 10 speaks its example (clarity-3, sync-5). The stat rows in 03 and 07 are a list that arrives a
+row at a time, complete, so no empty card is ever on screen (visuals-4, sync-4, engagement-2). Pauses are 0.8 s except 1.1 s
+after scene 10's meme, and the end holds nine seconds (pacing-1 to -3). The Pooh meme's label lands on "agentic" (sync-1); the
+credits come after the last stamp (sync-6). Swishes and whooshes are 4 to 5 dB louder (engagement-4). "Around 1954",
+"installations" throughout, "a security flaw" in the recap, "I'd say" on the test-once line, "Whenever" in the hook, and one
+year-first form for every source label (accuracy-1 to -3, consistency-1 to -3).
+
+**Declined.** visuals-3 measured source lines, tags and credits at about 20 px from one-third-scale contact sheets; the styles
+set them at 30 px (`.who`, `.tag`, credits), 32 px (tags) and 36 px (the limit line), and the full-size frames show them at that
+size. sync-3 (Drake's "Check the program does its job" before the narration says it): it sets up scene 08's "checking what the
+code does", and the meme restates the scene's question. clarity-4, -5: the Karpathy line now names the swap the Pooh meme shows,
+and the two adoption figures are separate sentences.
+
+## Round 4: 23 findings (0 blocking, 5 major, 18 minor); all seven critics, Opus for clarity, visuals and engagement
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 3 |
+| clarity (Opus) | pass | 0 / 0 / 3 |
+| pacing | fail | 0 / 2 / 1 |
+| sync | pass | 0 / 0 / 3 |
+| visuals (Opus) | fail | 0 / 3 / 3 |
+| consistency | pass | 0 / 0 / 6 |
+| engagement (Opus) | pass | 0 / 0 / 2 |
+
+The plan's cap. The two critics left failing raised objective, mechanical majors, so they were fixed and a fresh pacing and visuals
+critic judge the result (round 5, below), with accuracy for the three lines that changed.
+
+**Fixed.** Each stat row now arrives with its number (visuals-1); the number column is wide enough for "over 50%" (visuals-2);
+cards arrive with their first content, never as a label alone (visuals-3); scene 02 no longer overflows its frame, which pinned it
+to the top edge (visuals-4: measured in a headless browser, 827 px of content in an 810 px stage; now 696), every scene's stage
+was measured the same way and all fit; quotes wrap balanced (visuals-5); the Fowler label is short (visuals-6). The gap after scene
+10 is 2.0 s and the end card holds eleven seconds (pacing-1, -3); pacing-2 was the meme counted twice (its wrapper and the figure),
+and it now has no flag. Also taken: "many of them" saw themselves as a priesthood (accuracy-1), "because you skipped the machine
+code" (clarity-2), "And an agent will build the nonsense, too." (clarity-3), the hook's stamp names the first compilers on the word
+(engagement-1), the credits wait 1.5 s after the last stamp (engagement-2), "paraphrased" for Naur and year-first source labels
+(consistency-1 to -3).
+
+**Accepted, minor.** The close keeps two questions for the three (consistency-4: "what it must never do" is inside "what it
+does"); "test" and "check" both stay (consistency-5); only two scenes carry a heading (consistency-6); sync-1 to -3 (a headline
+and two meme panels a second or two ahead of their words); accuracy-2, -3 and clarity-1 (said as the narrator's view).
+
+## Round 5: past the cap, a fresh check of the round-4 fixes; pacing, accuracy, visuals (Opus)
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 1 |
+| pacing | pass | 0 / 0 / 2 |
+| visuals (Opus) | fail | 0 / 2 / 6 |
+
+Visuals sampled the rendered MP4, not only the packet's stills, and found what the stills cannot show: several scenes opened on
+an empty page for 3 to 8 seconds before their first cue (scene 04 for 8 s, the close for 4.4 s).
+
+**Fixed.** Every scene now puts something on screen within two seconds of its start, the transition included: a heading for 04,
+07 and 10, the first line of 05 and 09 on their first sentence, the close's question at once (visuals-1, -2, -3). The backdrop
+behind memes covers the caption band too, so the dot grid no longer stops in a hard line (visuals-4); the DISBELIEVED stamp lands
+after its quote (visuals-6); the Veracode source fits on one line and the studies' number column is narrower (visuals-7); meme
+lines keep a 2% margin from the picture's edge (visuals-8), done by making the line 96% of its box (a first attempt compared the
+text with 96% of a full-width line, which can never pass, and the layout check caught every meme falling to the minimum size).
+
+**Accepted.** visuals-5: the Fowler card waits on the left for the agent card while the voice explains determinism.
+pacing-1 is #62 (the packet counts a meme twice); pacing-2 is a 0.01 s rounding flag.
+
+## Round 6: visuals (Opus), a fresh check of the round-5 fixes on the finished render
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| visuals (Opus) | pass | 0 / 0 / 3 |
+
+**Fixed.** visuals-1: scenes 06 and 10 used the `wipe` transition, whose clip held the backdrop above the caption band, so the dot
+grid showed below the memes there; both use `slide` now, and stills from the render show no dots above or below the picture.
+visuals-2: "and they felt 20% faster" arrives with its row, so the card has no gap. **Accepted.** visuals-3: scene 09's heading
+waits alone for its first question while the voice says it.
+
+## State
+
+Every critic passes: accuracy (the floor, from round 3), clarity, pacing, sync, visuals, consistency and engagement. Clarity,
+visuals and engagement were judged by Opus in the last rounds; the rest by Sonnet. The finished mix was transcribed by Whisper
+against the script (0.977 word match; the gap is digits written as numbers). Nobody has listened to it: the voice, the music bed
+and the sounds are measured, not heard.
