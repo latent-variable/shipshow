@@ -10,7 +10,7 @@ import { basename, join } from "node:path";
 import { BASE_SPM, BASE_WPM, HF, REPO, config, die, reviewPlan, round, run, syllables, videoDir } from "./lib.mjs";
 import { memesIn } from "./meme.mjs";
 import { voiceCheckSection } from "./hearback.mjs";
-import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, stillStretches, words } from "./measure.mjs";
+import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
 
 
 const dir = videoDir(process.argv[2]);
@@ -115,6 +115,16 @@ out.push(md(timing.scenes.map((sc) => {
   const st = stillStretches(sc, cues.filter((c) => c.scene === sc.id).map((c) => c.at));
   return [sc.id, round(st.seconds), `${round(st.from)} s to ${round(st.to)} s`];
 }), ["scene", "longest still stretch (s)", "between"]), "");
+// Sound effects: bin/sfx.mjs wrote assets/sfx.json when it built the page.
+const sfxRecord = existsSync(join(dir, "assets", "sfx.json")) ? JSON.parse(readFileSync(join(dir, "assets", "sfx.json"), "utf8")) : { events: [] };
+out.push("## Sound effects", "");
+if (sfxRecord.events.length) {
+  const perMin = round(sfxRecord.events.length / (timing.total / 60));
+  out.push(`${sfxRecord.events.length} sounds in ${timing.total} s (${perMin} a minute), set ${sfxRecord.under} dB under the voice (${sfxRecord.reference} LUFS), pitched sounds in ${sfxRecord.tonic}${sfxRecord.key ? `, the bed's key (${sfxRecord.key.heard})` : ""}. \`at\` is where the sound lands; "audible" is the span in which it is within 20 dB of its own peak. The build refuses a run of one sound and any sound audible over a sentence's first word, so those cannot appear here; what is left to judge is whether each sound marks a thing moving, landing or arriving, whether it is felt rather than heard, and whether it lands with the picture.`, "");
+  out.push(md(soundRows(sfxRecord, timing), ["at (s)", "scene", "sound", "on", "being said", "level", "audible", "flag"]), "");
+} else {
+  out.push("This video has no sound effects.", "");
+}
 out.push("## Frames", "", `In \`review/frames/\`, ${frames.length} stills (${frameMode === "scenes" ? "mid-scene and scene end only" : "after each cue and at each scene end"}); ${sheets.map((f) => `\`${f}\``).join(", ")} show them together.`, "");
 const sceneEnd = (t) => timing.scenes.some((s) => Math.abs(s.start + s.duration - 0.4 - t) < 0.01);
 const near = (t) => cues.filter((c) => Math.abs(c.at + settleFor(c.anim) - t) < 0.01).map((c) => `after \`${c.cue}\``).join(", ") || (sceneEnd(t) ? "scene end" : "mid-scene");
@@ -123,4 +133,4 @@ out.push(md(frames.map((f) => {
   return [f, t, sceneAt(t).id, near(t), sentenceAt(t)?.text || "(pause)"];
 }), ["file", "at (s)", "scene", "taken", "being said"]), "");
 writeFileSync(join(dir, "review", "packet.md"), out.join("\n"));
-console.log(`review/packet.md: ${cues.length} cues, ${frames.length} frames`);
+console.log(`review/packet.md: ${cues.length} cues, ${sfxRecord.events.length} sounds, ${frames.length} frames`);

@@ -1,0 +1,15 @@
+{
+  "about": "ShipShow's default sound kit. Every sound is synthesized by bin/sounds.mjs, so it is ours and the same on every render. `gain` is dB from the level video.json sfx.under sets (14 dB below the voice by default); `anchor` is which moment lands on the cue: \"peak\" (the loudest) or \"start\". A theme's sfx.json or a kit in local/sfx/ adds to or replaces these by name. A sound marks a thing moving, landing or arriving, never each item of a list, and never a sentence's first word (bin/sfx.mjs refuses both).",
+  "tonic": "C",
+  "sounds": {
+    "swish": { "voice": "swish", "gain": -9, "about": "A short rush of air, 0.3 s, swelling then falling. Something slides or rises into place." },
+    "whoosh": { "voice": "swish", "length": 0.5, "lo": 450, "hi": 3200, "peak_at": 0.6, "gain": -6, "about": "A longer, lower swish, 0.5 s. A big thing sweeping in: a scene's main picture." },
+    "thump": { "voice": "thump", "gain": -2, "about": "A soft low landing, 0.2 s: a note falling from 170 to 68 Hz with a small knock. Something set down." },
+    "up": { "voice": "arpeggio", "octave": 5, "steps": [3, 5], "gap": 0.12, "length": 1.2, "gain": -3, "about": "Two rising bell notes in the bed's key. A good result, a step forward." },
+    "sting": { "voice": "arpeggio", "octave": 5, "steps": [0, 2, 3, 5], "gap": 0.11, "length": 1.8, "decay": 0.7, "gain": -1, "about": "Four rising bell notes, 1.8 s. An arrival: the thing the video was about." },
+    "boom": { "voice": "boom", "gain": 0, "about": "A deep bass hit, 1.7 s, in the spirit of the vine boom: a sine that falls from a punch to a 42 Hz sub, soft-clipped so it has harmonics a laptop can play, a growl an octave up and a click. For a punchline; leave a pause of about a second after it." },
+    "scratch": { "voice": "scratch", "anchor": "start", "gain": -3, "about": "A record scratch, 0.55 s: a buzz read off a platter dragged forward, back, forward and stopped, so it swoops up and down and winds to nothing. For the moment the story stops short." },
+    "sad_trombone": { "voice": "sad_trombone", "anchor": "start", "gain": -2, "about": "Wah wah wah waaah, 2.8 s: four brass notes falling a half step each under an opening and closing vowel, the last long, sagging and shaking. For a letdown; needs a long pause after it." },
+    "ding": { "voice": "ding", "octave": 6, "step": 0, "gain": -4, "about": "A bright bell, 1.3 s: a struck bar's partials with a shimmering pair, in the bed's key. A right answer, or a desk bell." }
+  }
+}
