@@ -150,6 +150,7 @@ for (const s of plan) {
     t += dur + (i < s.sentences.length - 1 ? cfg.gap / cfg.speed : 0);
   });
   t += cfg.tail / cfg.speed;
+  t += cfg.pauses[s.id] || 0;                         // a beat after this scene: a meme or a stamp is read in it
   if (s === plan[plan.length - 1]) t += cfg.hold;   // the finished last frame stays up
   scene.duration = round(t - scene.start);
   timing.scenes.push(scene);
