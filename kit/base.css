@@ -74,6 +74,7 @@ body { background: var(--bg); overflow: hidden; }
 }
 .ss-meme-img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .ss-meme-box { position: absolute; display: flex; align-items: center; justify-content: center; transform: rotate(var(--rot, 0deg)); }
+.ss-meme-box[data-overflow] { overflow: hidden; }
 .ss-meme-line {
   display: block; width: 100%; padding: 0.04em 0.14em; line-height: 1.04; overflow-wrap: break-word;
   font-family: "Titillium Web", "Arial Black", sans-serif; font-weight: 900; text-transform: var(--meme-case, uppercase);

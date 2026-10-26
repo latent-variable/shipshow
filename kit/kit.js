@@ -122,6 +122,10 @@
           const fits = (px) => { line.style.fontSize = px + "px"; return line.scrollWidth <= w + 0.5 && line.scrollHeight <= h + 0.5; };
           let lo = 6, hi = Math.max(8, Math.floor(h * cap * 3));
           while (lo < hi) { const mid = Math.ceil((lo + hi) / 2); if (fits(mid)) lo = mid; else hi = mid - 1; }
+          // Too long for its box even at the smallest size: keep it inside the box and say so,
+          // so the frames show a clipped line rather than text spilling across the picture.
+          if (!fits(lo)) { box.dataset.overflow = "1"; console.warn(`meme line too long for its box: "${line.textContent}"`); }
+          else delete box.dataset.overflow;
           line.style.fontSize = lo + "px";
         });
       };
