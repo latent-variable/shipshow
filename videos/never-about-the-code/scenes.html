@@ -90,7 +90,7 @@
   .law .tag { text-align: center; }
 
   /* 06 headline, 09 test, 10 surprise */
-  .turn { font-size: 72px; text-align: center; }
+  .turn { font-size: 60px; text-align: center; }
   .testcard { font-family: var(--font-mono); font-size: 30px; padding: 14px 24px; }
   .testcard .name { color: var(--ink); }
   .testcard .fail { color: var(--accent); font-weight: 700; margin-top: 10px; }
@@ -98,6 +98,20 @@
   .surprise { display: flex; justify-content: center; gap: 40px; align-items: stretch; }
   .surprise .card { font-size: 54px; font-weight: 650; flex: 1; }
   .surprise .label { font-family: var(--font-mono); font-size: 30px; color: var(--muted); margin-bottom: 10px; }
+
+  /* 03 and 07: a list, each row arriving whole when it is named */
+  .list { display: flex; flex-direction: column; gap: 22px; }
+  .lrow { display: grid; grid-template-columns: 400px 1fr; align-items: center; column-gap: 40px; padding: 22px 36px; }
+  .lrow .num { font-family: var(--font-display); font-weight: 700; font-size: 104px; line-height: 1; white-space: nowrap; color: var(--accent); }
+  .lrow .num.g { color: var(--good); }
+  .lrow .num.ink { color: var(--ink); }
+  .lrow .what { font-size: 42px; font-weight: 650; line-height: 1.2; }
+  .lrow .who { margin-top: 8px; }
+  .lrow .felt { font-size: 36px; color: var(--muted); margin-top: 6px; }
+  .lrow .stamp { font-size: 30px; transform: rotate(-4deg); margin-left: 18px; vertical-align: middle; }
+  .bigquote { position: relative; max-width: 1500px; text-align: center; padding: 50px 60px; }
+  .bigquote .quote { font-size: 68px; }
+  .bigquote .quote em { color: var(--accent); }
 
   /* 11-close */
   .ask { font-size: 96px; text-align: center; }
@@ -142,7 +156,7 @@
       </div>
     </div>
     <div class="card" data-cue="priesthood" data-anim="up">
-      <div class="tag">Backus, 1976</div>
+      <div class="tag">1976 · John Backus</div>
       <div class="quote" style="font-size: 44px">“a priesthood guarding skills and mysteries far too complex for ordinary mortals”</div>
     </div>
     <div class="callout">
@@ -162,26 +176,24 @@
 
 <section data-scene="03-it-won" data-transition="slide">
   <div class="stage">
-    <div class="row">
-      <div class="card stat" data-cue="FORTRAN" data-anim="up" style="flex: 0.75">
-        <div class="num" data-cue="shipped" data-anim="pop">1957</div>
-        <div class="what" data-cue="shipped" data-anim="fade">FORTRAN ships</div>
+    <div class="list">
+      <div class="card lrow" data-cue="shipped" data-anim="up">
+        <div class="num ink">1957</div>
+        <div class="what">FORTRAN ships</div>
       </div>
-      <div class="card stat" data-cue="FORTRAN" data-anim="up">
-        <div class="num g" data-cue="half#1" data-anim="count">over 50%</div>
-        <div class="what" data-cue="survey" data-anim="fade">of 26 surveyed IBM 704 sites used it for more than half their problems</div>
-        <div class="who" data-cue="survey" data-anim="fade">April 1958 survey, cited by Backus</div>
+      <div class="card lrow" data-cue="survey" data-anim="up">
+        <div class="num g" data-cue="half" data-anim="count">over 50%</div>
+        <div><div class="what">of 26 surveyed IBM 704 installations used it for most of their problems</div><div class="who">April 1958 survey, cited by Backus</div></div>
       </div>
-      <div class="card stat" data-cue="FORTRAN" data-anim="up">
-        <div class="num g" data-cue="installations" data-anim="pop">over 50%</div>
-        <div class="what" data-cue="installations" data-anim="fade">of machine instructions at about 60 installations came from the compiler</div>
-        <div class="who" data-cue="installations" data-anim="fade">fall 1958, cited by Backus</div>
+      <div class="card lrow" data-cue="sixty" data-anim="up">
+        <div class="num g">over 50%</div>
+        <div><div class="what">of machine instructions at about 60 installations came from the compiler</div><div class="who">fall 1958, cited by Backus</div></div>
       </div>
     </div>
   </div>
   <div class="meme-wrap covers" data-cue="last" data-anim="fade">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-meme="drake" data-cue="last" data-anim="pop" data-sfx="whoosh" data-sfx-offset="0.2">
+    <figure class="ss-meme" data-meme="drake" data-cue="last" data-anim="pop" data-sfx="whoosh" data-sfx-offset="0.2" data-sfx-gain="4">
       <span>Read every line of machine code</span>
       <span data-cue="never" data-anim="pop">Check the program does its job</span>
     </figure>
@@ -210,7 +222,7 @@
 
 <section data-scene="05-dead" data-transition="fade">
   <div class="stage">
-    <div class="tag center" data-cue="Naur" data-anim="fade">Naur, 1985, in our words</div>
+    <div class="tag center" data-cue="Naur" data-anim="fade">1985 · Peter Naur · in our words</div>
     <div class="dead big" data-cue="nobody" data-anim="up">A program nobody holds the theory of is <em>dead</em>, even while it runs.</div>
     <div class="hold" data-cue="somebody" data-anim="up">Somebody still has to hold the theory.</div>
   </div>
@@ -221,14 +233,13 @@
     <div class="turn big" data-cue="comparison" data-anim="slam">Where the comparison breaks</div>
     <div class="row">
       <div class="card" data-cue="Fowler" data-anim="left">
-        <div class="tag">a compiler</div>
+        <div class="tag">a compiler · after Martin Fowler, 2025</div>
         <div class="title">Same input, same output</div>
         <div class="runs" data-cue="hundred" data-anim="stagger">
           <div class="run">run 1 <b>the same bugs</b></div>
           <div class="run">run 2 <b>the same bugs</b></div>
           <div class="run">run 100 <b>the same bugs</b></div>
         </div>
-        <div class="who">after Martin Fowler, 2025</div>
       </div>
       <div class="card agent" data-cue="agent#1" data-anim="right">
         <div class="tag">an AI agent</div>
@@ -239,41 +250,39 @@
         </div>
       </div>
     </div>
-    <div class="card" data-cue="Dijkstra" data-anim="up">
-      <div class="tag">Edsger Dijkstra, 1978, on programming in plain language</div>
-      <div class="quote" data-cue="nonsense" data-anim="highlight">“making statements the nonsense of which is not obvious”</div>
-    </div>
   </div>
-  <div class="meme-wrap covers" data-cue="output#1" data-anim="fade">
+  <div class="meme-wrap covers" data-cue="test" data-anim="fade">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-meme="gru" data-cue="output#1" data-anim="pop" data-sfx="swish">
+    <figure class="ss-meme" data-meme="gru" data-cue="test" data-anim="pop" data-sfx="swish" data-sfx-offset="0.3" data-sfx-gain="5">
       <span>Describe it in English</span>
       <span>Agent builds it</span>
       <span>Test it once</span>
       <span data-cue="every#2" data-anim="pop">Test it once?</span>
     </figure>
   </div>
+  <div class="meme-wrap" data-cue="Dijkstra" data-anim="fade">
+    <div class="scrim"></div>
+    <div class="card bigquote">
+      <div class="tag">1978 · Edsger Dijkstra · on programming in plain language</div>
+      <div class="quote">“making statements the <em>nonsense</em> of which is <em>not obvious</em>”</div>
+    </div>
+  </div>
 </section>
 
 <section data-scene="07-the-numbers" data-transition="slide">
   <div class="stage">
-    <div class="row">
-      <div class="card num-card" data-cue="studies" data-anim="up">
+    <div class="list">
+      <div class="card lrow" data-cue="Veracode" data-anim="up">
         <div class="num" data-cue="forty" data-anim="count">45%</div>
-        <div class="what" data-cue="forty" data-anim="fade">of AI-written code had a security flaw</div>
-        <div class="who" data-cue="Veracode" data-anim="fade">Veracode 2025 · 80 tasks, 4 languages · a vendor's own test</div>
+        <div><div class="what">of AI-written code had a security flaw</div><div class="who">Veracode 2025 · 80 tasks, 4 languages · a vendor's own test</div></div>
       </div>
-      <div class="card num-card" data-cue="studies" data-anim="up">
+      <div class="card lrow" data-cue="METR#1" data-anim="up">
         <div class="num" data-cue="nineteen" data-anim="count">19%</div>
-        <div class="what" data-cue="nineteen" data-anim="fade">longer with AI</div>
-        <div class="felt" data-cue="believed" data-anim="fade">felt 20% faster</div>
-        <div class="stamp" id="stale" data-cue="date" data-anim="slam" data-sfx="thump">out of date</div>
-        <div class="who" data-cue="METR#1" data-anim="fade">METR 2025 · 16 experienced open-source developers</div>
+        <div><div class="what">longer with AI <span class="stamp" id="stale" data-cue="date" data-anim="slam" data-sfx="thump">out of date</span></div><div class="felt" data-cue="believed" data-anim="fade">and they felt 20% faster</div><div class="who">METR 2025 · 16 experienced open-source developers</div></div>
       </div>
-      <div class="card num-card" data-cue="studies" data-anim="up">
+      <div class="card lrow" data-cue="Anthropic" data-anim="up">
         <div class="num" data-cue="seventeen" data-anim="count">17%</div>
-        <div class="what" data-cue="seventeen" data-anim="fade">lower quiz score on a library learned with AI</div>
-        <div class="who" data-cue="Anthropic" data-anim="fade">Anthropic 2026 · 52 mostly junior engineers</div>
+        <div><div class="what">lower quiz score on a library learned with AI</div><div class="who">Anthropic 2026 · 52 mostly junior engineers</div></div>
       </div>
     </div>
   </div>
@@ -289,7 +298,7 @@
 <section data-scene="08-oversight" data-transition="fade">
   <div class="stage">
     <div class="chips">
-      <div class="ss-chip hot" data-cue="security" data-anim="pop">a security hole</div>
+      <div class="ss-chip hot" data-cue="security" data-anim="pop">a security flaw</div>
       <div class="ss-chip hot" data-cue="slower" data-anim="pop">slower work</div>
       <div class="ss-chip hot" data-cue="lower" data-anim="pop">lower quiz scores</div>
     </div>
@@ -299,15 +308,15 @@
       <div class="yes" data-cue="asking" data-anim="left">ask why when it surprises you</div>
     </div>
     <div class="card" data-cue="Karpathy" data-anim="up">
-      <div class="tag">Andrej Karpathy, 2026, on agentic engineering</div>
+      <div class="tag">2026 · Andrej Karpathy · on agentic engineering</div>
       <div class="quote" style="font-size: 46px">“orchestrating agents who do and acting as oversight”</div>
     </div>
   </div>
-  <div class="meme-wrap covers" data-cue="agentic" data-anim="fade">
+  <div class="meme-wrap covers" data-cue="name" data-anim="fade">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-meme="pooh" data-cue="agentic" data-anim="pop" data-sfx="swish">
+    <figure class="ss-meme" data-meme="pooh" data-cue="name" data-anim="pop">
       <span>Vibe coding</span>
-      <span data-cue="oversight" data-anim="pop">Agentic engineering</span>
+      <span data-cue="agentic" data-anim="pop" data-sfx="swish" data-sfx-gain="5">Agentic engineering</span>
     </figure>
   </div>
 </section>
@@ -337,17 +346,17 @@
 <section data-scene="10-leaks" data-transition="wipe">
   <div class="stage">
     <div class="surprise">
-      <div class="card" data-cue="surprises" data-anim="left"><div class="label">a surprise, for example</div>one report takes 40 seconds</div>
-      <div class="card" data-cue="level" data-anim="right"><div class="label">go down a level</div>read the query behind it</div>
+      <div class="card" data-cue="report" data-anim="left"><div class="label">a surprise, for example</div>a report suddenly takes 40 seconds</div>
+      <div class="card" data-cue="query" data-anim="right"><div class="label">go down a level</div>open the query the agent wrote</div>
     </div>
     <div class="card law" data-cue="Spolsky" data-anim="up">
-      <div class="tag">Joel Spolsky, 2002, the law of leaky abstractions</div>
+      <div class="tag">2002 · Joel Spolsky · the law of leaky abstractions</div>
       <div class="quote">“All non-trivial abstractions, to some degree, are leaky.”</div>
     </div>
   </div>
   <div class="meme-wrap covers" data-cue="matters" data-anim="fade">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-meme="exit" data-cue="matters" data-anim="pop" data-sfx="whoosh">
+    <figure class="ss-meme" data-meme="exit" data-cue="matters" data-anim="pop" data-sfx="whoosh" data-sfx-gain="4">
       <span>Read all the code</span>
       <span>Read it where it leaks</span>
       <span>Me</span>
@@ -362,7 +371,7 @@
       <span class="stamp good" data-cue="compiler" data-anim="slam">1952</span>
       <span class="stamp good" data-cue="is" data-anim="slam" data-sfx="sting">today</span>
     </div>
-    <div class="made" data-cue="arrived" data-anim="fade">
+    <div class="made" data-cue="is" data-anim="fade">
       <div class="name">Made with ShipShow</div>
       <div class="url">github.com/latent-variable/shipshow</div>
       <div class="credit">Voice: Lino Valdovinos, cloned · Meme templates: memegen</div>

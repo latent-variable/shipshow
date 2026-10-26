@@ -61,3 +61,35 @@ quote; the compiler's output has one name in the meme (consistency-1 to -4). Fou
 "ENGINEERING" across two lines, because `overflow-wrap: break-word` let a long word "fit"; the kit now keeps words whole.
 
 **Accepted.** sync-5 (some meme panels land together on one cue): the panels set up a line the narration has just said.
+
+## Round 3: 27 findings (2 blocking, 7 major, 18 minor); all seven critics
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 3 |
+| clarity | fail | 0 / 3 / 2 |
+| pacing | fail | 0 / 3 / 0 |
+| sync | fail | 0 / 1 / 5 |
+| visuals | fail | 2 / 2 / 1 |
+| consistency | pass | 0 / 0 / 3 |
+| engagement | pass | 0 / 0 / 4 |
+
+The accuracy floor holds from this round on.
+
+**Fixed.** The round-2 headline pushed scene 06 past the frame, clipping the headline and the Dijkstra card (visuals-1, -2,
+blocking): the scene now runs comparison, then the Gru meme, then Dijkstra's warning as its own full-frame beat, which also
+puts "test once, test every time" straight after determinism and ties Dijkstra to prompts (clarity-2). A bug found while
+fixing it: the Dijkstra card first rendered blank, because the backdrop is positioned and the card was not; the kit's
+`highlight` then drew a bar through the quote, so the key words are red instead. The hook signposts where the better question
+comes from (clarity-1); scene 10 speaks its example (clarity-3, sync-5). The stat rows in 03 and 07 are a list that arrives a
+row at a time, complete, so no empty card is ever on screen (visuals-4, sync-4, engagement-2). Pauses are 0.8 s except 1.1 s
+after scene 10's meme, and the end holds nine seconds (pacing-1 to -3). The Pooh meme's label lands on "agentic" (sync-1); the
+credits come after the last stamp (sync-6). Swishes and whooshes are 4 to 5 dB louder (engagement-4). "Around 1954",
+"installations" throughout, "a security flaw" in the recap, "I'd say" on the test-once line, "Whenever" in the hook, and one
+year-first form for every source label (accuracy-1 to -3, consistency-1 to -3).
+
+**Declined.** visuals-3 measured source lines, tags and credits at about 20 px from one-third-scale contact sheets; the styles
+set them at 30 px (`.who`, `.tag`, credits), 32 px (tags) and 36 px (the limit line), and the full-size frames show them at that
+size. sync-3 (Drake's "Check the program does its job" before the narration says it): it sets up scene 08's "checking what the
+code does", and the meme restates the scene's question. clarity-4, -5: the Karpathy line now names the swap the Pooh meme shows,
+and the two adoption figures are separate sentences.

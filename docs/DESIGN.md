@@ -586,6 +586,16 @@ plugin-shipped agent's own hooks run is unconfirmed, so the Bash limit stays a s
 stops early and returns what it has; raise `maxTurns` if a longer video needs it.
 
 
+### D46. A pause after one scene, not only at the end (2026-10-26)
+**Decision.** `video.json` `"pauses": {"<scene>": seconds}` adds plain seconds (not scaled by speed, 0 to 10) after that scene's
+last sentence: the scene lasts longer, its sentences do not move, and every later scene starts that much later. `bin/voice.mjs`
+adds it where it adds `tail`; `bin/lib.mjs` refuses a value that is not a number in range.
+**Why.** `never-about-the-code` puts memes on punchlines that end their scenes, and the critics found every one cut away before it
+could be read (round 1, pacing). `gap`, `lead` and `tail` apply to every scene, and `hold` only to the last, so the only way to give
+one punchline a beat was to slow the whole video. product-videos has the same thing as a per-scene `hold`. **Costs.** A long pause
+is dead air for the ear: at 1.6 to 2.2 s on top of the scene gap, round 2's pacing critic heard four three-second silences, so
+the video settled on 0.8 to 1.3 s.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

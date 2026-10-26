@@ -1161,3 +1161,25 @@ test("hold keeps the last frame up after the video's last word, and moves nothin
   assert.equal(Math.round((after.scenes[last].duration - before.scenes[last].duration) * 100) / 100, 2.5);
   assert.deepEqual(after.scenes.slice(0, last), before.scenes.slice(0, last), "earlier scenes keep their times");
 });
+
+test("pauses add a beat after one scene: that scene grows, later scenes move by it, earlier ones do not", () => {
+  const dir = newVideo(), local = fakeLocal(), py = fakeWorker();
+  const cfg = JSON.parse(readFileSync(join(dir, "video.json"), "utf8"));
+  const timing = (pauses) => {
+    writeFileSync(join(dir, "video.json"), JSON.stringify({ ...cfg, engine: "omnivoice", pauses }));
+    const r = voiceRun(dir, local, py);
+    return { r, t: r.status === 0 ? JSON.parse(readFileSync(join(dir, "timing.json"), "utf8")) : null };
+  };
+  const before = timing({}).t;
+  assert.ok(before.scenes.length >= 2, "the template has at least two scenes");
+  const first = before.scenes[0].id;
+  const after = timing({ [first]: 1.5 }).t;
+  const r2 = (x) => Math.round(x * 100) / 100;
+  assert.equal(r2(after.scenes[0].duration - before.scenes[0].duration), 1.5, "the paused scene is 1.5 s longer");
+  assert.deepEqual(after.scenes[0].sentences, before.scenes[0].sentences, "its sentences do not move");
+  assert.equal(r2(after.scenes[1].start - before.scenes[1].start), 1.5, "the next scene starts 1.5 s later");
+  assert.equal(r2(after.total - before.total), 1.5);
+  const bad = timing({ [first]: "long" });
+  assert.notEqual(bad.r.status, 0, "a pause that is not a number stops the voice step");
+  assert.match(bad.r.stderr, /pauses\[".*"\] is "long"; it takes 0 to 10 seconds/);
+});

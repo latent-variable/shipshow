@@ -33,10 +33,10 @@
   "pauses": {
     "01-hook": 0.5,
     "03-it-won": 0.8,
-    "04-theory": 1.0,
-    "06-where-it-breaks": 1.3,
-    "08-oversight": 1.0,
-    "10-leaks": 0.8
+    "04-theory": 0.8,
+    "06-where-it-breaks": 0.8,
+    "08-oversight": 0.8,
+    "10-leaks": 1.1
   },
-  "hold": 7
+  "hold": 9
 }
