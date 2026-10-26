@@ -111,7 +111,10 @@
     <div class="step" data-cue="records"><b>record</b><span>HyperFrames records it to an MP4</span></div>
   </div>
   <div class="render-cmd wide" data-cue="One" data-anim="fade"><span class="cmd mono">npm run make -- videos/how-it-works</span></div>
-  <div class="takeaway wide" style="top: 790px" data-cue="Change">Change one sentence: <em data-cue="only" data-anim="highlight">only that sentence</em> is voiced again.</div>
+  <figure class="ss-meme" id="drake" data-meme="drake" data-cue="Change" data-anim="pop" style="--meme-height: 640px; top: 150px; bottom: auto; margin-bottom: 0">
+    <span>Redo the whole script</span>
+    <span data-cue="only" data-anim="fade">Redo only what changed</span>
+  </figure>
 </section>
 
 <section data-scene="05-close" data-transition="zoom" data-camera="none">
@@ -128,3 +131,8 @@
   </div>
 </section>
 
+
+<script>
+  // The meme is the punchline: the steps behind it step back when it lands.
+  tl.to("section[data-scene='04-render'] .steps, section[data-scene='04-render'] .render-cmd", { opacity: 0.12, duration: 0.3 }, +document.getElementById("drake").dataset.at);
+</script>

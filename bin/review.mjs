@@ -8,6 +8,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { BASE_SPM, BASE_WPM, HF, REPO, config, die, reviewPlan, round, run, syllables, videoDir } from "./lib.mjs";
+import { memesIn } from "./meme.mjs";
 import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, stillStretches, words } from "./measure.mjs";
 
 
@@ -102,6 +103,11 @@ out.push(md(cues.map((c) => {
   const flags = [c.up < need ? `short: stays up ${c.up}` : "", q.late ? `late: read by ${round(q.readBy)} s, the scene ends at ${round(sceneEndOf(c.scene))} s` : ""].filter(Boolean);
   return [c.at, c.scene, `\`${c.cue}\``, c.text.slice(0, 90), c.saying, `${c.up} s`, `${need} s`, flags.length ? `(${flags.join("; ")})` : ""];
 }), ["at (s)", "scene", "cue", "on screen", "being said", "stays up", "needs", "flag"]), "");
+const memes = memesIn(html);
+if (memes.length) {
+  out.push("## Memes", "", "Each meme is a memegen template whose picture is a third-party image, fetched at build. Credit it in `sources.md` (template and source), and judge that its text is short and readable (`critic-visuals`).", "");
+  out.push(md(memes.map((x) => [`\`${x.id}\``, x.name, x.source, x.lines.map((l) => l || "(blank)").join(" / ")]), ["template", "name", "source", "lines"]), "");
+}
 out.push("## Stillness", "", "The longest stretch of each scene in which nothing new appears: the scene's start, each cue and its end are the moments something changes.", "");
 out.push(md(timing.scenes.map((sc) => {
   const st = stillStretches(sc, cues.filter((c) => c.scene === sc.id).map((c) => c.at));

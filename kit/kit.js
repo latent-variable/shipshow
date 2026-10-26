@@ -111,6 +111,23 @@
         }
       });
 
+      // Memes (bin/meme.mjs): each line is fitted to its box, the largest size whose wrapped text
+      // fits both ways, so a line stays crisp and inside the picture. Layout only, no randomness:
+      // the same fonts give the same sizes. Run now and again once the fonts are in.
+      const fitMemes = () => {
+        const cap = parseFloat(token("--meme-max-font", "0.9"));   // of the box's height, per line of text
+        document.querySelectorAll(".ss-meme-box").forEach((box) => {
+          const line = box.firstElementChild, h = box.clientHeight, w = box.clientWidth;
+          if (!h || !w) return;
+          const fits = (px) => { line.style.fontSize = px + "px"; return line.scrollWidth <= w + 0.5 && line.scrollHeight <= h + 0.5; };
+          let lo = 6, hi = Math.max(8, Math.floor(h * cap * 3));
+          while (lo < hi) { const mid = Math.ceil((lo + hi) / 2); if (fits(mid)) lo = mid; else hi = mid - 1; }
+          line.style.fontSize = lo + "px";
+        });
+      };
+      fitMemes();
+      if (document.fonts) document.fonts.ready.then(fitMemes);
+
       // Each element with a cue arrives when the voice reaches its word. data-anim picks how;
       // without one it gets the theme's --entrance.
       const SIMPLE = {
