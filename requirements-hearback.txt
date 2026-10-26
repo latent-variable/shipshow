@@ -1,0 +1,4 @@
+# The hear-back check (bin/hearback.py): faster-whisper transcribes every voiced take and the
+# transcript is compared with the script. Optional and verification only (timing never uses it);
+# works with either engine. Installed by `npm run setup:hearback`, and by `npm run setup:omnivoice`.
+faster-whisper==1.2.1
