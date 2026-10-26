@@ -41,7 +41,7 @@ export function syllables(word) {
 export const DEFAULT_SPEED = 1.25;
 
 /** A --name value from the command line: `--speed 1.4` or `--speed=1.4`; undefined if absent. */
-export function flag(name, argv = process.argv) {
+function flag(name, argv = process.argv) {
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === `--${name}`) return argv[i + 1];
     if (argv[i].startsWith(`--${name}=`)) return argv[i].slice(name.length + 3);
