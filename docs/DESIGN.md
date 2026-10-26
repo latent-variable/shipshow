@@ -392,6 +392,25 @@ sentence; cut at exactly 10 s it ended mid-word and short lines came out silent.
 **Costs.** A changed speed re-voices every take, as before. `atempo` past about 1.5 starts to smear consonants; the
 tested range stays 1.0 to 1.3.
 
+### D43. Sound effects are placed on cues, refuse two habits, and are set against the voice (2026-10-26)
+**Decision.** Ported in spirit from DAIS product-videos (`studio/sfx.py`), fitted to ShipShow, where every cued element's time
+(`data-at`) and every sentence's start are already known at build, so nothing is measured from a browser. `data-sfx="name"`
+on a cued element (offset, gain, step in `data-sfx-*`) or `sfx(name, time, {gain, step})` in the scene script; the script is
+read as text, with `cueAt`, `sceneStart` and `sceneEnd` evaluated in a sandbox, so CI needs no Chrome (kit.js defines the same
+helpers and a no-op `sfx` so the page still runs). `bin/sfx.mjs` writes `assets/sfx.wav` (stereo, 48 kHz, track 32, as the
+music bed) and `assets/sfx.json`. Synthesis is Node (`bin/sounds.mjs`), seeded, so a render repeats and CI tests it; there is
+no Python. **Two refusals**, both Lino's: a run (3 of one sound within 1.25 s: a rising tick on each of 17 checks distracted,
+2026-10-24) and any sound audible (within 20 dB of its own peak) from 0.05 s before to 0.45 s after a sentence's first word
+(read as a glitch in the voice, 2026-10-26). A refusal names how far to move the sound. **Level** is relative and measured
+(K-weighted 400 ms momentary loudness, checked against ffmpeg's ebur128 in a test): `under` dB, 14 by default, below the voice's
+integrated loudness, plus the kit's and the call's gain. Pitched sounds take the key of the bed (Krumhansl-Kessler over its
+chroma) or `sfx.tonic`. A sound's `anchor` is `peak` (a swish swells to its cue) or `start` (a trombone begins at it).
+**Why not.** A browser to read `sfx()` times (heavy, absent in CI, a second copy of the timing); sound files only (licences,
+cannot be tuned); a limit of N sounds a minute (a count cannot tell a landing from a list). **Alternatives kept open.** Sounds on
+the first word are allowed by nothing; a person who disagrees turns sound off or edits the kit.
+**Not verified.** How the sounds sound: every synthesis was checked by spectrum, envelope and click tests, and no agent can
+listen. The boom, scratch and trombone are the likeliest to want a person's ear and a tweak in `kit/sfx.json`.
+
 ### D44. Every take is cleaned, levelled and, optionally, heard back (2026-10-26)
 **Decision.** Ported from DAIS product-videos, where the owner heard these faults in published videos before anything
 measured them. `bin/voicecheck.py`: OmniVoice takes have the opening burst cut at the silence after it, are voiced again
@@ -557,6 +576,7 @@ What an agent or person observes. Each line is checkable against the cited file.
 - `voice` also levels every take and, with faster-whisper installed, hears each back (`bin/voice.mjs`,
   `bin/hearback.py`, `bin/voicecheck.py`; D44): it prints `LISTEN` for a sentence under 0.97 or kept with a fault, and
   records them in `timing.json` `voiceCheck`, which `review` prints as *Voice checks*.
+- `build` also places sound effects (D43): a `data-sfx` or `sfx()` call becomes a sound in `assets/sfx.wav`, peaking (or starting) at the cue; it stops on a run of one sound, on a sound over a sentence's first word, and on an unknown sound; `"sfx": false` turns it off. `review` lists each sound with its time, scene, level against the voice and audible span under *Sound effects*.
 - `render` writes `out/<name>.mp4`; `make` chains voice, build, lint and render.
 - `review` writes `review/packet.md` (words a minute while speaking, every pause, every cue's
   time and reading time, with code counted in tokens, the longest still stretch of each scene) and

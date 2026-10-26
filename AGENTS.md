@@ -136,7 +136,7 @@ A change to `bin/`, `kit/` or `template/` is validated by running `make` and `re
 |---|---|
 | `script/01-intro.txt`, `02-...` | One file per scene, read aloud in file-name order. A sentence ends at `.`, `!` or `?` and a space |
 | `scenes.html` | One `<section data-scene="01-intro">` per script file, a `<style>` for the look, optionally a `<script>` |
-| `video.json` | `title`, `kind` (`decision`, `feature`, `release`), `importance` and `importance_reason` (set by the builder), `shows_code` (puts `critic-grounding` on the floor; read from `scenes.html` when absent: a `<pre>`, `<code>` or `.ss-code` sets it, and `false` cannot lower it), `voice`, `speed`, `theme`, `flair`, `review`, `say`, `audience`; optional `lead`, `gap`, `tail` (seconds of pause), `hold` (still seconds after the last word; the last scene never fades), `seed` |
+| `video.json` | `title`, `kind` (`decision`, `feature`, `release`), `importance` and `importance_reason` (set by the builder), `sfx` (sound effects: `false`, a kit name, or `{kit, under, tonic}`), `shows_code` (puts `critic-grounding` on the floor; read from `scenes.html` when absent: a `<pre>`, `<code>` or `.ss-code` sets it, and `false` cannot lower it), `voice`, `speed`, `theme`, `flair`, `review`, `say`, `audience`; optional `lead`, `gap`, `tail` (seconds of pause), `hold` (still seconds after the last word; the last scene never fades), `seed` |
 | `sources.md` | Every claim the video makes, with its source |
 | `critics.md` | This video's own bar, applied by every critic |
 | `brief.md` | A decision video's handoff from the agent that asked for it |
@@ -213,6 +213,25 @@ committed. Check a generated track for vocals before using it under narration (W
 words is the sign); MiniMax Music 3 sang on its first take for why-shipshow despite
 `--instrumental`.
 
+**Sound effects.** A sound marks a thing moving, landing or arriving; it is felt, never heard over the
+words. Place one on a cued element, `<div data-cue="Kokoro" data-sfx="whoosh">` (`data-sfx-offset="0.2"` seconds
+later or earlier, `data-sfx-gain="-3"` dB, `data-sfx-step="2"` scale steps for a pitched sound), or from
+`scenes.html`'s `<script>`: `sfx("thump", cueAt("#id") + 0.3, {gain: -3})`, with `cueAt("#id")` an element's
+`data-at` and `sceneStart("scene")` / `sceneEnd("scene")` a scene's edges. The build reads those calls from the
+script's TEXT (not run), so the time is a number or those helpers plus or minus one; a call in a loop is an error.
+`bin/sfx.mjs` mixes `assets/sfx.wav` (the music bed's pattern; track 32) and writes `assets/sfx.json`, which
+`review` lists as *Sound effects*. It **refuses** a run of one sound (3 within 1.25 s of each other: Lino,
+2026-10-24) and any sound audible from 0.05 s before to 0.45 s after a sentence's first word (a glitch in the
+voice: Lino, 2026-10-26); the message says how far to move it. Level is measured: each sound's loudest 400 ms
+(EBU R128 momentary) lands `under` dB (default 14) below the voice's integrated loudness, plus the kit's gain.
+Pitched sounds play the bed's key, measured from the music (or `sfx.tonic`, else the kit's, else C). Sounds are
+synthesized by `bin/sounds.mjs` (ours, no licence; `node bin/sounds.mjs preview kit/sfx.json out.wav` plays the
+kit). The default kit `kit/sfx.json`: `swish`, `whoosh`, `thump`, `up`, `sting`, and for a punchline `boom`,
+`scratch`, `sad_trombone`, `ding`; each says what it is. A theme's `sfx.json`, a kit in `local/sfx/<name>.json`
+(`"sfx": {"kit": "<name>"}`), or a `{"file": "x.wav"}` sound (found beside the kit, in `local/sfx/`, the theme or
+the video) adds to or replaces it by name. `"sfx": false` in `video.json` or `local/config.json` turns sound off.
+Leave a pause after `boom` (about 1 s) and `sad_trombone` (about 2.5 s): `gap` in `video.json`.
+
 **Speed.** A multiplier on ShipShow's base pace (Kokoro at 0.85, OmniVoice at its own 1.0: both about 160 words
 a minute), not either engine's own: 1.25 by default. OmniVoice takes 1.0 to 1.3, the range it was tested at. The packet
 measures pace in syllables a minute (base about 210, `BASE_SPM`), since words a minute runs high on short words.
@@ -233,8 +252,8 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ## Layout
 
 ```
-bin/        voice, build, render, make, review, critics, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take
-kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects)
+bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take
+kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects), sfx.json (the default sound kit)
 themes/     shipshow, paper, launch and buildday; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono: SIL OFL)
 skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
 template/   what npm run new copies

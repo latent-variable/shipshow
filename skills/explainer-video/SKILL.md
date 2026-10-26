@@ -154,6 +154,13 @@ made for its subject, not stamped from a template.
   sentence turns on, `stagger` for a list, `pulse` for the one thing to remember. A screen
   where nothing moves for more than about eight seconds while the voice goes on is losing
   the viewer.
+- **Sound, sparingly.** Most videos need two or three sounds, many none. A sound marks a thing
+  moving, landing or arriving (`data-sfx="whoosh"` on a cued element, or `sfx()` in the script),
+  never each item of a list, and never a sentence's first word: the build refuses both. Pick the one
+  arrival the video turns on. Set them with the kit's names (`kit/sfx.json` says what each is); for a
+  joke, `boom`, `scratch`, `sad_trombone` and `ding` go in the pause after the punchline, so lengthen
+  that pause (`gap`). You cannot listen: read the packet's *Sound effects* table for time, level and
+  what is being said, and say in the hand-back that nobody heard it.
 - **One memorable moment**: a picture that is the idea (a ship leaving a storm of pull
   requests), not a card that names it.
 
