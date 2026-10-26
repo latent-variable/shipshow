@@ -463,7 +463,14 @@ project settings and rules cannot be committed. Nothing in the plan is done.
 cost or critic agreement is recorded. **Costs.** None yet; each step names how to tell it worked and the unconfirmed items
 to check first (plugin-shipped agent hooks, how a missing `version` resolves).
 
-### D40. Project hooks enforce the rules that were only prose (2026-10-17; plan steps 2.0 to 2.3, 2.7 of `docs/PLAN.md`)
+### D40. CI installs a pinned static ffmpeg, not the apt package (2026-10-26)
+**Decision.** The `test` job downloads ffmpeg 6.0.1's static build (johnvansickle.com old-releases, a stable URL), checks its
+SHA-256, and installs `ffmpeg` and `ffprobe` into `/usr/local/bin`; the step has a five minute limit and the job fifteen.
+**Why.** `apt-get update && apt-get install ffmpeg` sat silent on the Ubuntu mirror for 33 minutes on main and 26 on the
+security-gate branch (2026-10-26), and stalled again on #55, while the same step usually takes under a minute. **Costs.** The
+version is pinned and moves only by hand; the host is one person's site, so a dead URL fails the step loudly in seconds.
+
+### D41. Project hooks enforce the rules that were only prose (2026-10-17; plan steps 2.0 to 2.3, 2.7 of `docs/PLAN.md`)
 **Decision.** `.claude/settings.json` and `.claude/hooks/` are tracked (`.gitignore` ignores only `.claude/skills/`, the links
 `npm install` makes, and `.claude/settings.local.json`). Three hooks: **`guard-bash`** (PreToolUse on Bash) refuses `rm`,
 `unlink`, `shred`, `find -delete`, and the git commands that discard or rewrite work (`restore`, `clean`, `reset --hard`,
@@ -478,7 +485,7 @@ left holes. `guard-bash` now (1) refuses a command that names a protected path a
 `sed -i`, `perl -i`, `cp`/`mv`/`install`/`ln`/`rsync` destination, `truncate`, `dd of=`, `patch`, and inline `python -c` or
 `node -e` that names one and writes), using `protect-files`' own rule and override; (2) refuses a command that reads `.env*`
 or `local/voices` (`cat`, `head`, `grep`, `sed -n`, `< file`, a `cp` source, inline interpreter code); (3) splits on grouping
-parens, so `(rm f)` and `<(rm f)` are seen. It follows a simple `cd`. Copying a clip INTO `local/voices` (`cp`, `mv`, `>`)
+parens, so `(rm f)` and `<(rm f)` are seen, and scans a heredoc fed to a shell (`bash <<EOF`). It follows a simple `cd`. Copying a clip INTO `local/voices` (`cp`, `mv`, `>`)
 stays allowed, and the voice pipeline reads the clips from node, never from a command line, so it is untouched. **It is a
 seatbelt, not a sandbox**: it reads the command text, so a path built in a variable, a glob that expands to it, a script
 that writes it inside, a heredoc fed to python, or `grep -r x .` from the root get through. Real isolation is `sandbox-run.sh`.
@@ -494,7 +501,7 @@ built from a variable, gets through; it is a seatbelt, not a sandbox (`sandbox-r
 (`doctor` says), and a machine without it hears about it at every first stop. Hooks run in the person's session and are
 loaded when it starts.
 
-### D41. The critic cannot Write or Edit, and stops after 40 turns (2026-10-17; supersedes the critic agent paragraph of D13)
+### D45. The critic cannot Write or Edit, and stops after 40 turns (2026-10-17; supersedes the critic agent paragraph of D13)
 **Decision.** `agents/critic.md` adds `disallowedTools: ["Write", "Edit", "NotebookEdit"]`, `maxTurns: 40` and `model: sonnet`
 (was `inherit`). The loop's `model` dial still overrides the agent's model, so a person who asks for another judge gets it.
 D13 said the critic was "told, not enforced"; the writing tools are now enforced, Bash is not (it can still redirect or
@@ -507,6 +514,7 @@ among the tools it saw, which this change did not cause (`tools` is unchanged) a
 **Not done.** A frontmatter hook to deny Bash writes outside a scratch directory (plan step 3.1's second half): whether a
 plugin-shipped agent's own hooks run is unconfirmed, so the Bash limit stays a stated one. **Costs.** A critic that needs more than 40 turns
 stops early and returns what it has; raise `maxTurns` if a longer video needs it.
+
 
 ## Behaviour
 

@@ -67,12 +67,13 @@ function gitReason(args) {
 // A heredoc body is text, not commands: cut it out of the command. One with a quoted delimiter is inert (nothing in
 // it runs); one without can hold $( ) and backticks, which still run, so those bodies are returned to be scanned.
 export function splitHeredocs(cmd) {
-  const bodies = [];
+  const bodies = [], all = [];
   const rest = cmd.replace(/<<-?[ \t]*(['"]?)([A-Za-z_][A-Za-z0-9_]*)\1[^\n]*\n([\s\S]*?)(?:\n[ \t]*\2[ \t]*(?=\n|$)|$)/g, (m, q, _tag, body) => {
+    all.push(body);
     if (!q) bodies.push(body);
     return m.slice(0, m.indexOf("\n"));
   });
-  return { rest, bodies };
+  return { rest, bodies, all };
 }
 
 // The text of each $( ) and backtick substitution outside single quotes, where it would not run.
@@ -162,7 +163,8 @@ function readReason(base, w, ctx) {
 export function reason(full, depth = 0, ctx = { root: resolve(process.env.CLAUDE_PROJECT_DIR || process.cwd()), cwd: null }) {
   if (depth > 3) return null;
   ctx = { ...ctx, cwd: ctx.cwd || ctx.root };
-  const { rest: cmd, bodies } = splitHeredocs(full);
+  const { rest: cmd, bodies, all } = splitHeredocs(full);
+  let feedsShell = false;
   for (const inner of [...substitutions(cmd), ...bodies.flatMap(substitutions)]) {
     const r = reason(inner, depth + 1, ctx);
     if (r) return r;
@@ -182,6 +184,7 @@ export function reason(full, depth = 0, ctx = { root: resolve(process.env.CLAUDE
     if (["rm", "unlink", "shred"].includes(base)) return `${base} deletes files, and this repo's scripts and agents never do: move it aside with mv (AGENTS.md, Traps)`;
     if (base === "find" && (w.includes("-delete") || (w.includes("-exec") && w.some((x) => ["rm", "unlink"].includes(x))))) return "find with -delete or -exec rm deletes files: move them aside instead";
     if (base === "git") { const r = gitReason(w.slice(1)); if (r) return r; }
+    if (SHELLS.has(base) && !w.includes("-c") && all.length) feedsShell = true;   // bash <<EOF: the body runs, quoted delimiter or not
     if (SHELLS.has(base)) {
       const i = w.indexOf("-c");
       if (i > 0 && w[i + 1]) { const r = reason(w[i + 1], depth + 1, ctx); if (r) return r; }
@@ -191,6 +194,7 @@ export function reason(full, depth = 0, ctx = { root: resolve(process.env.CLAUDE
     if (wr) return wr;
     if (process.env.SHIPSHOW_ALLOW_PRIVATE !== "1") { const rr = readReason(base, w, ctx); if (rr) return rr; }
   }
+  if (feedsShell) for (const b of all) { const r = reason(b, depth + 1, ctx); if (r) return r; }
   return null;
 }
 

@@ -36,8 +36,8 @@ test("hooks: the Bash guard refuses what deletes or rewrites work, and lets ordi
 });
 
 test("hooks: the Bash guard sees deletes inside groups and process substitution", () => {
-  for (const c of ["(rm -f a)", "cat <(rm -f a)", "{ rm a; }", "if true; then rm a; fi", "echo x > >(rm a)", "(cd x && rm a)", "true && (git clean -fd)"]) assert.equal(bash(c).status, 2, `${c} should be refused`);
-  for (const c of ["(cd docs && ls)", "echo '(rm a)'", "diff <(ls a) <(ls b)", "{ echo hi; }"]) assert.equal(bash(c).status, 0, `${c} should pass`);
+  for (const c of ["(rm -f a)", "cat <(rm -f a)", "{ rm a; }", "if true; then rm a; fi", "echo x > >(rm a)", "(cd x && rm a)", "true && (git clean -fd)", "bash <<'EOF'\nrm a\nEOF", "sh <<EOF\nsed -i s/a/b/ package-lock.json\nEOF"]) assert.equal(bash(c).status, 2, `${c} should be refused`);
+  for (const c of ["(cd docs && ls)", "echo '(rm a)'", "diff <(ls a) <(ls b)", "{ echo hi; }", "bash <<'EOF'\necho fine\nEOF"]) assert.equal(bash(c).status, 0, `${c} should pass`);
 });
 
 test("hooks: the Bash guard refuses writes to what the file guard protects (a seatbelt, not a sandbox)", () => {
