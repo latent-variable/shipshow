@@ -27,6 +27,7 @@
   --heading-top: 110px;
   --heading-size: 76px;
   --heading-align: left;
+  --meme-height: 760px;       /* a meme's height in a scene; its width follows the picture */
   --radius: 22px;
   --border: 2px;
   --shadow: none;

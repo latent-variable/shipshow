@@ -527,6 +527,31 @@ built from a variable, gets through; it is a seatbelt, not a sandbox (`sandbox-r
 (`doctor` says), and a machine without it hears about it at every first stop. Hooks run in the person's session and are
 loaded when it starts.
 
+### D42. Memes come from the memegen catalog, and ShipShow draws the text (2026-10-26)
+**Decision.** A `<figure class="ss-meme" data-meme="<id>">` with a span per line is a meme. `bin/meme.mjs` fetches the
+template's `config.yml` (the text boxes: `anchor_x`, `anchor_y`, `scale_x`, `scale_y`, `angle`, `align`, `color`, `font`) and
+its clean `default.<ext>` from github.com/jacebrowning/memegen (extension tried in turn: jpg, png, gif, jpeg), once, into
+`~/.cache/shipshow/memes/<id>/`; `bin/build.mjs` copies the picture to `assets/memes/`, and positions each span by its box in
+percent of the picture with the box's angle; spans fill boxes in order. `kit/kit.js` fits each line to its box (the largest
+font size at which the wrapped text fits both ways), synchronously and again when the fonts are ready, then the cue engine
+animates each span on its own word. Text is white with a black outline (black text gets white), upper case, Titillium Web Black
+or SemiBold (memegen's `thick` and `thin`), Anton for `impact`; the font files and their OFL licences are in `kit/fonts/`.
+`npm run memes` searches the catalog (cached, `--refresh`); `SHIPSHOW_MEMEGEN_API`, `SHIPSHOW_MEMEGEN_FILES` and
+`SHIPSHOW_MEMES_CACHE` move the catalog, the repo's files and the cache, and either source may be a folder, which is also how
+the tests run without a network. The review packet lists each meme's template, name and source.
+**Why.** Memegen's own rendered images carry a "Memegen.link" watermark and bake the text in, so a line cannot arrive on its
+word and the text is a raster at the picture's size. Drawing it ourselves keeps it crisp at 1920 by 1080 and cueable. Reading
+the config at build time keeps the catalog out of this repo: the whole 211-template catalog follows memegen without a copy.
+**Licensing.** Memegen's code and configs are MIT. The template images are third-party pictures (each template's `source` is a
+Know Your Meme page): they are fetched at build, never committed, and `videos/*/assets/` is ignored, which covers
+`assets/memes/`. Publishing a video with memes relies on fair use and commentary norms; that is the publisher's call, and the
+packet's `source` is there so it can be credited. Fonts: Titillium Web and Anton are SIL OFL.
+**Costs.** A first build of a new template needs the network (or a mirror); a cached one does not. The config is parsed by a
+small reader for memegen's flat YAML, not a YAML library, so a template with a richer config than the 211 today (every one
+has a `text:` list of maps) needs it extended. Templates with `overlay` image slots keep the plain picture, with no overlay. A line too long for its box even at 6 px is clipped to the box (`data-overflow`) and logged as a warning, so the frames show the fault where it is.
+An id is checked to be a plain name before it reaches the cache path, and a colour from a config is accepted only as a name or
+hex, since both go into the page.
+
 ### D45. The critic cannot Write or Edit, and stops after 40 turns (2026-10-17; supersedes the critic agent paragraph of D13)
 **Decision.** `agents/critic.md` adds `disallowedTools: ["Write", "Edit", "NotebookEdit"]`, `maxTurns: 40` and `model: sonnet`
 (was `inherit`). The loop's `model` dial still overrides the agent's model, so a person who asks for another judge gets it.
@@ -554,6 +579,8 @@ What an agent or person observes. Each line is checkable against the cited file.
   scene never says and warns when a bare cue word occurs more than once in its scene. A cue
   matches the start of a spoken word across the whole scene, so use `word#n` or a distinctive
   word.
+- `build` expands each `ss-meme` figure (D42): an unknown template, an unreachable source with nothing cached, or more spans than
+  the template has boxes stops it naming the scene; `review` lists each meme's template and source; `memes <words>` searches the catalog.
 - `voice` also levels every take and, with faster-whisper installed, hears each back (`bin/voice.mjs`,
   `bin/hearback.py`, `bin/voicecheck.py`; D44): it prints `LISTEN` for a sentence under 0.97 or kept with a fault, and
   records them in `timing.json` `voiceCheck`, which `review` prints as *Voice checks*.

@@ -1,0 +1,32 @@
+name: Tiny Test Meme
+source: https://example.com/memes/tiny
+keywords:
+  - fixture
+  - "tiny thing"
+text:
+  - style: default
+    color: white
+    font: thick
+    anchor_x: 0.1
+    anchor_y: 0.05
+    angle: 0.0
+    scale_x: 0.8
+    scale_y: 0.2
+    align: center
+    start: 0.0
+    stop: 1.0
+  - style: default
+    color: black
+    font: thin
+    anchor_x: 0.25
+    anchor_y: 0.7
+    angle: -12.0
+    scale_x: 0.5
+    scale_y: 0.25
+    align: left
+    start: 0.0
+    stop: 1.0
+example:
+  - top
+  - bottom
+overlay: []
