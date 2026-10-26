@@ -4,7 +4,8 @@
 
 jobs.json, written by bin/voice.mjs:
   {"speed": 1.25, "voice": {"name": "caro_davy"} | {"name": "lino", "wav": "...", "text": "..."},
-   "cache": "<dir for the trimmed reference>", "jobs": [{"text": "...", "wav": "...", "seed": 1}]}
+   "cache": "<dir for the trimmed reference>", "hearback": true, "min": 0.9,
+   "jobs": [{"text": "...", "wav": "...", "seed": 1, "key": "..."}]}
 
 OmniVoice clones every voice from a short recording, so a voice here is a recording: a clone is
 a clip in local/voices/, a built-in one a clip from kyutai/tts-voices (bin/omnivoice-voices.json).
@@ -17,6 +18,15 @@ given, and a window cut to 1.3x its natural length dropped or garbled words in 7
 (measured 2026-10-17 with Whisper); generating at the natural length and then time-stretching
 the take (ffmpeg atempo, pitch kept) dropped none. The padding's silence at a take's edges is
 trimmed. A take that comes out silent, which a short line can, is voiced again with another seed.
+
+The models sample, so every take is checked before it is kept (bin/voicecheck.py, ported from DAIS
+product-videos, where the owner heard these in published videos): the burst of noise OmniVoice opens
+every take with is cut at the silence after it, a take whose voice runs straight out of the burst or
+that shouts is voiced again with another seed, and the kept take is set to one speech level. When
+faster-whisper is installed (bin/hearback.py, `npm run setup:hearback`) the take is also heard back
+and compared with its text; the best of three is kept, and a take still under the threshold is
+reported in its `.check` file. Without it the first two still run. A voice with no transcript is
+given one by hearing its reference back (the model clones better with the words spoken in it).
 """
 import json
 import re
@@ -27,6 +37,9 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
+import hearback
+import voicecheck
+
 SPEC = json.loads((Path(__file__).parent / "omnivoice-voices.json").read_text())
 # 16 steps is twice as fast and dropped and repeated words on a long line (measured in a
 # bake-off against Pocket and Qwen3-TTS); 32 does not.
@@ -35,7 +48,12 @@ SR = 24000
 REF_SECONDS = 10.0
 SILENT_DB = -45.0   # a take whose loudest moment is below this is silence, not speech
 EDGES = (0.06, 0.12)   # seconds of quiet kept before and after the words
-TRIES = 3
+TRIES = 3         # silent takes: voiced again with another seed
+# A take that opens on the burst or shouts: another seed, up to this many. Some voices start speaking at
+# the first sample on every seed (a clone cut from a clip with no lead-in did: 1 clean take in 24), so
+# more tries cost time and change nothing; such a take is trimmed and reported to listen to.
+CLEAN_TRIES = 3
+HEAR_TRIES = 3    # takes compared with the text, when faster-whisper is installed
 
 
 def probe_seconds(clip):
@@ -123,6 +141,55 @@ def stretch(audio, speed):
     return np.frombuffer(r.stdout, dtype=np.float32)
 
 
+def transcript(model, tokens, clip, name, cache):
+    """The words spoken in a voice's reference, heard from the reference as the model sees it: decoded
+    from its tokens, not the original file, or words the model never got leak into the take (DAIS).
+    Cached beside the reference, keyed by the clip's bytes."""
+    import hashlib
+    import mlx.core as mx
+    key = hashlib.sha256(Path(clip).read_bytes()).hexdigest()[:16]
+    saved = Path(cache) / f"{name}-transcript.json"
+    if saved.exists() and json.loads(saved.read_text()).get("key") == key:
+        return json.loads(saved.read_text())["text"]
+    text = hearback.hear(hearback.samples_from(np.array(model.audio_tokenizer.decode(tokens).astype(mx.float32)).reshape(-1), SR))
+    saved.write_text(json.dumps({"key": key, "text": text}, indent=1) + "\n")
+    return text
+
+
+def one_take(model, tokens, ref_text, estimator, job, round_):
+    """(audio, faults): the sentence voiced until it starts clean and does not shout, up to CLEAN_TRIES
+    seeds. `audio` is the clean take, at the model's natural length, unstretched. What is still wrong
+    after that is returned as words."""
+    import mlx.core as mx
+    audio, faults = None, []
+    for k in range(CLEAN_TRIES):
+        faults = []
+        for attempt in range(TRIES):
+            mx.random.seed(job["seed"] + (round_ * CLEAN_TRIES * TRIES + k * TRIES + attempt) * 7919)
+            out = list(model.generate(text=job["text"], language="english", ref_tokens=tokens, ref_text=ref_text,
+                                      num_steps=STEPS, duration_s=seconds_for(estimator, job["text"])))
+            raw = np.concatenate([np.array(r.audio, dtype=np.float32) for r in out])
+            peak = 20 * np.log10(max(float(np.abs(raw).max()), 1e-9))
+            if peak > SILENT_DB:
+                break
+            print(f"take came out silent ({peak:.0f} dB); voicing it again", file=sys.stderr, flush=True)
+        else:
+            raise SystemExit(f"OmniVoice gave silence {TRIES} times for: {job['text']}")
+        audio, ok = voicecheck.clean(raw, SR)
+        loud = voicecheck.shout(audio, SR)
+        if ok and not loud:
+            return audio, []
+        faults = ([] if ok else ["starts at once, with no lead-in after the model's opening burst, so its first syllable may sound clipped"]) + ([loud] if loud else [])
+    if faults and faults[0].startswith("starts at once"):
+        audio = voicecheck.trim(audio, SR)
+    return audio, faults
+
+
+def finish(audio, speed):
+    """The kept take as played: silence at its edges trimmed, stretched to speed, one speech level."""
+    return voicecheck.level(stretch(trim(audio), speed), SR)
+
+
 def main(spec_path):
     import mlx.core as mx
     from huggingface_hub import snapshot_download
@@ -131,25 +198,32 @@ def main(spec_path):
     from mlx_audio.tts.utils import load_model
 
     spec = json.loads(Path(spec_path).read_text())
+    hear_on = spec.get("hearback", True) and hearback.available()
+    floor = spec.get("min", hearback.MIN)
     clip, ref_text = reference(spec["voice"], spec["cache"])
     model = load_model(snapshot_download(SPEC["model"], revision=SPEC["revision"]))
     tokens = create_voice_clone_prompt(str(clip), tokenizer=model.audio_tokenizer, max_duration_s=REF_SECONDS)
     mx.eval(tokens)
+    if not ref_text and hear_on:
+        Path(spec["cache"]).mkdir(parents=True, exist_ok=True)
+        ref_text = transcript(model, tokens, clip, spec["voice"]["name"], spec["cache"])
+        print(f"reference heard as: {ref_text}", flush=True)
     estimator = RuleDurationEstimator()
     for i, job in enumerate(spec["jobs"], 1):
-        for attempt in range(TRIES):
-            mx.random.seed(job["seed"] + attempt * 7919)
-            out = list(model.generate(text=job["text"], language="english", ref_tokens=tokens, ref_text=ref_text,
-                                      num_steps=STEPS, duration_s=seconds_for(estimator, job["text"])))
-            audio = np.concatenate([np.array(r.audio, dtype=np.float32) for r in out])
-            peak = 20 * np.log10(max(float(np.abs(audio).max()), 1e-9))
-            if peak > SILENT_DB:
-                break
-            print(f"take {i} came out silent ({peak:.0f} dB); voicing it again", file=sys.stderr, flush=True)
-        else:
-            raise SystemExit(f"OmniVoice gave silence {TRIES} times for: {job['text']}")
-        sf.write(job["wav"], stretch(trim(audio), spec["speed"]), SR)
-        print(f"voiced {i}/{len(spec['jobs'])}", flush=True)
+        best = None
+        for round_ in range(HEAR_TRIES if hear_on else 1):
+            audio, faults = one_take(model, tokens, ref_text, estimator, job, round_)
+            final = finish(audio, spec["speed"])
+            got, heard = hearback.score(job["text"], hearback.samples_from(final, SR)) if hear_on else (None, "")
+            rank = (not faults, got is None or got >= floor, got or 0.0)
+            if best is None or rank > best[0]:
+                best = (rank, final, faults, got, heard)
+            if got is None or got >= floor:
+                break    # a fault one_take could not clear is not cleared by another hearing
+        _, final, faults, got, heard = best
+        sf.write(job["wav"], final, SR, subtype="PCM_16")
+        hearback.write_check(job["wav"], job.get("key", ""), job["text"], got, heard, faults)
+        print(f"voiced {i}/{len(spec['jobs'])}" + (f" ({got:.0%} heard back)" if got is not None else ""), flush=True)
 
 
 if __name__ == "__main__":

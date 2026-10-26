@@ -8,6 +8,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { BASE_SPM, BASE_WPM, HF, REPO, config, die, reviewPlan, round, run, syllables, videoDir } from "./lib.mjs";
+import { voiceCheckSection } from "./hearback.mjs";
 import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
 
 
@@ -87,6 +88,7 @@ for (const s of timing.scenes) {
   for (const x of s.sentences) out.push(`- ${x.start} s, ${x.duration} s: ${x.text}`);
   out.push("");
 }
+out.push(...voiceCheckSection(timing.voiceCheck));   // bin/voice.mjs: what hearing the takes back found
 out.push("## Pauses", "", "Silence before each sentence, and after the last.", "", md(pauses.map((p) => [p.at, p.length, p.between]), ["at (s)", "seconds", "between"]), "");
 out.push("## Cues", "", `Each element that arrives on a word: when it lands, what is being said then, and how long it stays up. Reading time assumes ${READ_WPS} words a second for prose and ${READ_CODE_TPS} identifier tokens a second for code; "short" means it leaves before a viewer could read it while listening, and "late" means that, reading in order, the viewer cannot finish it before its scene ends.`, "");
 // Reading is queued: a viewer reads in order, so text that lands together or in quick succession waits.
