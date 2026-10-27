@@ -1,5 +1,5 @@
 [dry] Now, before you rewrite your SAT solver.
-[matter-of-fact] The square root of log n grows painfully slowly. At a million switches, it's under four. And the big O hides constants that can eat all of that.
-[mock-dramatic] In the paper's own worked example of its settings, the machinery only switches on when there are more switches than a number with about three billion digits.
+[matter-of-fact] The square root of log n grows painfully slowly. At a million switches, using the natural log, it's about three point seven. And the big O hides constants that can eat all of that.
+[mock-dramatic] Run the numbers on the paper's own worked example, and its machinery needs more switches than a number with about three billion digits.
 [deadpan] Below that, it falls back to trying everything.
 [clear] This is a galactic algorithm. It changes what's possible in principle. OpenAI says practical speedups will take a lot more research.

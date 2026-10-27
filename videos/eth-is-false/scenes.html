@@ -1,50 +1,59 @@
 <style>
-  /* Layout only: colour, type, dust and grain come from the chalk theme's tokens. Chalk yellow (--accent) is the thing to look
-     at, blue (--accent-2) a source or a label, pink (--accent-3) the hypothesis being challenged, green (--good) what still
-     stands, red (--bad) what fell. Math is set in the display face, italic for variables. */
+  /* Layout only: colour, type, dust and grain come from the chalk theme's tokens. One meaning per colour:
+     pink (--accent-3) is ETH and its family, the hypothesis under attack; red (--bad) is what refutes or rules out;
+     green (--good) is what still stands; yellow (--accent) is the thing to look at, and a caution stamp; blue
+     (--accent-2) is a source or the new machinery. Math is set in the display face, italic for variables. Every
+     supporting line is at least 28 px. */
   .stage { position: absolute; inset: 40px var(--pad) 30px; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
   .row { display: flex; gap: 30px; align-items: center; justify-content: center; }
   .col { display: flex; flex-direction: column; gap: 22px; }
   .card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 26px 36px; }
-  .tag { font-family: var(--font-mono); font-size: 28px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-2); }
-  .src { font-family: var(--font-mono); font-size: 26px; color: var(--muted); margin-top: 10px; line-height: 1.3; }
+  .tag { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-2); }
+  .src { font-family: var(--font-mono); font-size: 28px; color: var(--muted); margin-top: 10px; line-height: 1.3; }
   .big { font-family: var(--font-display); font-weight: 600; letter-spacing: var(--display-tracking); line-height: 1.05; }
   .math { font-family: var(--font-display); font-weight: 600; white-space: nowrap; }
   .math i { font-style: italic; }
   .math sup { font-size: 0.6em; vertical-align: 0.75em; line-height: 0; }
   .math sub { font-size: 0.6em; vertical-align: -0.25em; line-height: 0; }
-  .chip { display: inline-block; padding: 16px 28px; background: var(--card); border: var(--border) solid var(--line); border-radius: 14px; font-size: 36px; font-weight: 700; white-space: nowrap; }
+  .chip { display: inline-block; padding: 16px 28px; background: var(--card); border: var(--border) solid var(--line); border-radius: 14px; font-size: 38px; font-weight: 700; white-space: nowrap; }
   .chip.hot { border-color: var(--accent); color: var(--accent); }
   .chip.blue { border-color: var(--accent-2); color: var(--accent-2); }
+  .chip.pink { border-color: var(--accent-3); color: var(--accent-3); }
   .chip.dead { border-color: var(--bad); color: var(--bad); text-decoration: line-through; text-decoration-thickness: 5px; }
   .chip.alive { border-color: var(--good); color: var(--good); }
-  .stamp { display: inline-block; padding: 8px 26px; border: 6px solid var(--bad); border-radius: 10px; color: var(--bad); font-family: var(--font-mono); font-weight: 600; font-size: 44px; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; transform: rotate(-6deg); }
+  .stamp { display: inline-block; padding: 8px 26px; border: 6px solid var(--bad); border-radius: 10px; color: var(--bad); font-family: var(--font-mono); font-weight: 600; font-size: 46px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; transform: rotate(-5deg); }
   .stamp.yellow { border-color: var(--accent); color: var(--accent); }
   .stamp.green { border-color: var(--good); color: var(--good); }
+  .stamp.pink { border-color: var(--accent-3); color: var(--accent-3); }
   .center { text-align: center; }
   .meme-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-  .ss-meme { --meme-height: 700px; }
-  .stage .ss-portrait { --portrait-height: 290px; position: relative; inset: auto; margin: 0; max-width: none; flex: none; font-size: 30px; }
-  .stage .ss-portrait figcaption small { font-size: 24px; }
-  .stage .ss-portrait-credit { font-size: 19px; line-height: 1.25; background: rgba(6, 10, 8, 0.82); padding: 5px 8px; }
-  .namecard { width: 230px; height: 250px; border: 8px solid var(--frame); border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--card); padding: 16px; }
-  .namecard b { font-family: var(--font-display); font-size: 38px; line-height: 1.1; }
-  .namecard small { font-size: 22px; color: var(--muted); margin-top: 10px; }
+  .ss-meme { --meme-height: 860px; }
+  .stage .ss-portrait { --portrait-height: 290px; position: relative; inset: auto; margin: 0; max-width: none; flex: none; font-size: 32px; }
+  .stage .ss-portrait figcaption small { font-size: 28px; }
+  .stage .ss-portrait-credit { font-size: 20px; line-height: 1.25; background: rgba(6, 10, 8, 0.85); padding: 5px 8px; }
+  .namecard { width: 300px; height: 290px; border: 8px solid var(--frame); border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--card); padding: 18px; }
+  .namecard b { font-family: var(--font-display); font-size: 36px; line-height: 1.15; }
+  .namecard small { font-size: 28px; color: var(--muted); margin-top: 12px; line-height: 1.25; }
   .phase { position: absolute; inset: 0; }
 
   /* 01-hook */
-  .preprint { width: 1300px; margin: 0 auto; padding: 44px 60px 54px; text-align: center; background: #efeee6; color: #1b211e; border-radius: 6px; box-shadow: 0 30px 70px rgba(3, 8, 6, 0.6); transform: rotate(-1.2deg); position: relative; }
-  .preprint .who { font-family: var(--font-mono); font-size: 28px; letter-spacing: 0.14em; color: #4b5a52; }
-  .preprint .title { font-family: var(--font-display); font-weight: 600; font-size: 82px; line-height: 1.05; margin-top: 18px; }
-  .preprint .stamp { position: absolute; right: 70px; bottom: -40px; font-size: 76px; background: rgba(239, 238, 230, 0.9); }
-  .facts { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
-  .sign { width: 520px; margin: 0 auto; background: #f4f3ec; color: #111; border: 10px solid #111; outline: 6px solid #f4f3ec; border-radius: 22px; padding: 28px 20px 34px; text-align: center; position: relative; }
-  .sign .t { font-family: var(--font); font-weight: 800; font-size: 54px; line-height: 1.05; letter-spacing: 0.04em; }
-  .sign .v { font-family: var(--font-display); font-weight: 600; font-size: 120px; line-height: 1.1; margin-top: 8px; }
-  .sign .v sup { font-size: 0.5em; vertical-align: 1em; line-height: 0; }
-  .sign .x { position: absolute; left: -40px; right: -40px; top: 50%; height: 16px; background: var(--bad); transform: rotate(-24deg); border-radius: 8px; transform-origin: left center; }
-  .sign-cap { font-size: 40px; font-weight: 700; margin-top: 34px; text-align: center; }
-  .sign-cap em { font-style: normal; color: var(--accent); }
+  .preprint { width: 1400px; margin: 0 auto; padding: 46px 380px 56px 70px; background: #efeee6; color: #1b211e; border-radius: 6px; box-shadow: 0 30px 70px rgba(3, 8, 6, 0.6); transform: rotate(-1.2deg); position: relative; }
+  .preprint .who { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.12em; color: #4b5a52; }
+  .preprint .title { font-family: var(--font-display); font-weight: 600; font-size: 84px; line-height: 1.05; margin-top: 18px; }
+  .preprint .stamp { position: absolute; right: 50px; top: 50%; margin-top: -60px; font-size: 84px; background: rgba(239, 238, 230, 0.92); }
+  .facts { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
+  .floor-wrap { width: 1300px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; }
+  .floorline { width: 1300px; height: 14px; border-radius: 7px; background: var(--accent-3); position: relative; }
+  .floorlabel { font-family: var(--font-display); font-size: 56px; color: var(--accent-3); margin-top: 18px; }
+  .floorlabel sup { font-size: 0.6em; vertical-align: 0.75em; line-height: 0; }
+  .crack { position: absolute; left: 50%; top: -60px; width: 18px; height: 260px; margin-left: -9px; background: var(--bg); transform: rotate(14deg); transform-origin: top center; box-shadow: 0 0 0 5px var(--bad); }
+
+  /* stacked paper slips (01, 07) */
+  .stack { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .paper-slip { width: 640px; padding: 14px 24px; font-family: var(--font-mono); font-size: 28px; background: #e9e8de; color: #23302a; border-radius: 4px; box-shadow: 0 8px 20px rgba(3, 8, 6, 0.4); }
+  .paper-slip:nth-child(odd) { transform: rotate(-1.2deg); }
+  .paper-slip:nth-child(even) { transform: rotate(1deg); }
+  .slipnote { font-family: var(--font-mono); font-size: 28px; color: var(--muted); }
 
   /* 02-puzzle */
   .switches { display: flex; gap: 48px; justify-content: center; }
@@ -52,180 +61,183 @@
   .sw .name { font-family: var(--font-display); font-size: 60px; font-style: italic; }
   .sw .track { width: 150px; height: 78px; border-radius: 39px; border: 4px solid var(--ink); position: relative; background: rgba(242, 240, 230, 0.06); }
   .sw .knob { position: absolute; top: 7px; left: 8px; width: 56px; height: 56px; border-radius: 50%; background: var(--muted); }
-  .sw .state { font-family: var(--font-mono); font-size: 26px; color: var(--muted); }
+  .vocab { font-family: var(--font-mono); font-size: 28px; color: var(--accent-2); text-align: center; }
   .rules { display: flex; gap: 26px; justify-content: center; }
   .rule { padding: 24px 34px; font-size: 44px; font-weight: 700; position: relative; }
   .rule .or { color: var(--muted); font-weight: 500; }
-  .rule .ok { position: absolute; right: -18px; top: -26px; font-size: 64px; color: var(--good); }
-  .rule .lbl { display: block; font-family: var(--font-mono); font-size: 26px; color: var(--muted); font-weight: 500; margin-top: 6px; }
+  .rule .ok { position: absolute; right: -18px; top: -30px; font-size: 70px; color: var(--good); }
 
   /* 03-doubling */
-  .count-row { display: grid; grid-template-columns: 330px 1fr; align-items: center; gap: 30px; }
+  .counts { display: flex; flex-direction: column; gap: 26px; width: 1500px; margin: 0 auto; }
+  .count-row { display: grid; grid-template-columns: 340px 1fr; align-items: center; gap: 30px; }
   .count-row .n { font-family: var(--font-display); font-weight: 600; font-size: 72px; text-align: right; }
-  .count-row .n small { font-family: var(--font); font-size: 30px; color: var(--muted); }
+  .count-row .n small { font-family: var(--font); font-size: 32px; color: var(--muted); }
   .count-row .v { font-family: var(--font-mono); font-size: 58px; color: var(--accent); }
-  .count-row .v small { font-family: var(--font); font-size: 30px; color: var(--muted); margin-left: 16px; }
-  .digits { font-family: var(--font-mono); font-size: 46px; line-height: 1.3; color: var(--accent); word-break: break-all; white-space: normal; max-width: 1180px; }
+  .count-row .v small { font-family: var(--font); font-size: 32px; color: var(--muted); margin-left: 16px; }
+  .digits { font-family: var(--font-mono); font-size: 46px; line-height: 1.3; color: var(--accent); word-break: break-all; white-space: normal; }
   .doubling { font-family: var(--font-display); font-size: 64px; text-align: center; }
   .doubling em { font-style: normal; color: var(--accent); }
 
   /* 04-p-vs-np */
   .pnp { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
   .pnp .card .big { font-size: 96px; }
-  .pnp .card .what { font-size: 40px; font-weight: 700; margin-top: 8px; }
-  .pnp .card .how { font-size: 30px; color: var(--muted); margin-top: 8px; }
+  .pnp .card .what { font-size: 42px; font-weight: 700; margin-top: 8px; }
+  .pnp .card .how { font-size: 32px; color: var(--muted); margin-top: 8px; }
   .cook { display: flex; gap: 30px; align-items: center; }
-  .cook .card { flex: 1; font-size: 38px; font-weight: 700; line-height: 1.25; }
+  .cook .card { flex: 1; font-size: 40px; font-weight: 700; line-height: 1.25; }
   .poll { display: flex; align-items: center; gap: 30px; }
-  .poll .pct { font-family: var(--font-display); font-weight: 600; font-size: 110px; color: var(--accent); }
-  .poll .lab { font-size: 36px; font-weight: 700; }
+  .poll .pct { font-family: var(--font-display); font-weight: 600; font-size: 120px; color: var(--accent); }
+  .poll .lab { font-size: 40px; font-weight: 700; }
 
-  /* 05-the-bet */
-  .bet { display: grid; grid-template-columns: 1fr 520px; gap: 40px; align-items: center; }
+  /* 05-the-bet, 05b-eth: the ladder */
   .ladder { display: flex; flex-direction: column-reverse; gap: 18px; }
-  .rung { display: grid; grid-template-columns: 300px 1fr; align-items: center; gap: 20px; padding: 22px 32px; }
+  .rung { display: grid; grid-template-columns: 300px 1fr; align-items: center; gap: 20px; padding: 24px 34px; }
   .rung .k { font-size: 32px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
-  .rung .math { font-size: 76px; }
+  .rung .math { font-size: 80px; }
   .rung.poly { border-color: var(--good); }
   .rung.mid { border-color: var(--accent-2); }
   .rung.exp { border-color: var(--accent-3); }
-  .note { font-size: 34px; font-weight: 700; padding: 12px 22px; border-left: 6px solid; margin-left: 30px; }
+  .note { font-size: 38px; font-weight: 700; padding: 12px 22px; border-left: 6px solid; margin-left: 30px; }
   .note.green { border-color: var(--good); color: var(--good); }
   .note.pink { border-color: var(--accent-3); color: var(--accent-3); }
-  .people { display: flex; gap: 22px; justify-content: center; }
-  .eth-title { font-size: 46px; text-align: center; margin-top: 18px; }
+  .bet { display: grid; grid-template-columns: 760px 1fr; gap: 50px; align-items: center; }
+  .bet .rung { padding: 16px 26px; grid-template-columns: 220px 1fr; }
+  .bet .rung .math { font-size: 58px; }
+  .bet .rung .k { font-size: 28px; }
+  .people { display: flex; gap: 20px; justify-content: center; }
+  .eth-title { font-size: 52px; text-align: center; }
   .eth-title em { font-style: normal; color: var(--accent-3); }
 
   /* 06-the-race */
   .race text { font-family: var(--font); }
-  .race .lab { font-size: 34px; font-weight: 700; fill: var(--ink); }
-  .race .sub { font-size: 26px; fill: var(--muted); font-family: var(--font-mono); }
-  .race .val { font-size: 46px; font-weight: 600; fill: var(--accent); font-family: var(--font-display); }
+  .race .lab { font-size: 36px; font-weight: 700; fill: var(--ink); }
+  .race .sub { font-size: 28px; fill: var(--muted); font-family: var(--font-mono); }
+  .race .val { font-size: 48px; font-weight: 600; fill: var(--accent); font-family: var(--font-display); }
   .race .axis { stroke: var(--muted); stroke-width: 3; }
-  .race .tick { font-size: 30px; fill: var(--muted); font-family: var(--font-mono); }
+  .race .tick { font-size: 32px; fill: var(--muted); font-family: var(--font-mono); }
   .race .bar { fill: var(--accent-2); }
   .race .bar.brute { fill: var(--muted); }
   .race .floor { fill: var(--accent-3); opacity: 0.22; }
   .race .floorline { stroke: var(--accent-3); stroke-width: 4; stroke-dasharray: 14 10; }
-  .race .floortext { font-size: 32px; font-weight: 800; fill: var(--accent-3); }
+  .race .floortext { font-size: 34px; font-weight: 800; fill: var(--accent-3); }
 
   /* 07-built-on-it */
-  .built { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: end; }
-  .stack { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-  .paper-slip { width: 560px; padding: 14px 24px; font-family: var(--font-mono); font-size: 26px; background: #e9e8de; color: #23302a; border-radius: 4px; box-shadow: 0 8px 20px rgba(3, 8, 6, 0.4); }
-  .paper-slip:nth-child(odd) { transform: rotate(-1.2deg); }
-  .paper-slip:nth-child(even) { transform: rotate(1deg); }
-  .slab { width: 640px; padding: 22px; text-align: center; font-family: var(--font-display); font-weight: 600; font-size: 54px; border: 4px solid var(--accent-3); color: var(--accent-3); border-radius: 12px; background: rgba(246, 161, 184, 0.08); }
-  .fields { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; max-width: 640px; }
-  .fields .chip { font-size: 30px; padding: 12px 22px; }
-  .ed { font-size: 36px; font-weight: 700; line-height: 1.3; }
-  .ed small { display: block; font-size: 26px; color: var(--muted); font-weight: 500; margin-top: 10px; font-family: var(--font-mono); }
-  .grid { display: grid; grid-template-columns: repeat(8, 40px); gap: 8px; margin-top: 20px; }
+  .built { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+  .slab { width: 680px; padding: 22px; text-align: center; font-family: var(--font-display); font-weight: 600; font-size: 56px; border: 4px solid var(--accent-3); color: var(--accent-3); border-radius: 12px; background: rgba(246, 161, 184, 0.08); }
+  .fields { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; max-width: 680px; }
+  .fields .chip { font-size: 32px; padding: 12px 22px; }
+  .ed { font-size: 38px; font-weight: 700; line-height: 1.3; }
+  .ed small { display: block; font-size: 28px; color: var(--muted); font-weight: 500; margin-top: 10px; font-family: var(--font-mono); }
+  .seth { font-size: 36px; font-weight: 700; color: var(--accent-3); }
+  .grid { display: grid; grid-template-columns: repeat(8, 40px); gap: 8px; margin-top: 18px; align-items: center; }
   .grid i { width: 40px; height: 40px; border-radius: 6px; background: rgba(143, 211, 244, 0.25); display: block; }
-  .closed { position: absolute; right: 120px; top: 70px; }
+  .gridlab { font-family: var(--font-mono); font-size: 28px; color: var(--muted); margin-top: 8px; }
 
-  /* 08-the-claim */
+  /* 08-the-claim, 08b-counting */
   .thm { font-size: 36px; }
-  .thm .math { font-size: 62px; color: var(--accent); display: block; margin-top: 12px; }
-  .claim { display: grid; grid-template-columns: 640px 1fr; gap: 36px; align-items: center; }
-  .claim .col .chip { font-size: 34px; }
-  .xp { font-size: 54px; text-align: left; }
-  .xp .old { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--bad); text-decoration-thickness: 5px; }
-  .floorplot text { font-family: var(--font-mono); font-size: 26px; fill: var(--muted); }
+  .thm .math { font-size: 64px; color: var(--accent); display: block; margin-top: 12px; }
+  .claim { display: grid; grid-template-columns: 700px 1fr; gap: 36px; align-items: center; }
+  .xp { font-size: 96px; }
+  .xp .old { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--bad); text-decoration-thickness: 6px; }
+  .xp .new { color: var(--accent); }
+  .floorplot text { font-family: var(--font-mono); font-size: 28px; fill: var(--muted); }
   .floorplot .lin { stroke: var(--accent-3); stroke-width: 4; stroke-dasharray: 12 9; fill: none; }
   .floorplot .cur { stroke: var(--accent); stroke-width: 7; fill: none; stroke-linecap: round; }
   .floorplot .ax { stroke: var(--muted); stroke-width: 3; }
-  .floorplot .lbl { font-family: var(--font); font-size: 30px; font-weight: 700; }
+  .floorplot .lbl { font-family: var(--font); font-size: 32px; font-weight: 700; }
   .cousins { display: flex; gap: 18px; justify-content: center; }
-  .cousins .chip { font-size: 32px; }
+  .counting { font-size: 60px; text-align: center; }
+  .counting em { font-style: normal; color: var(--accent); }
 
   /* 09-split */
   .rule2poly { display: flex; align-items: center; gap: 30px; justify-content: center; }
-  .rule2poly .math { font-size: 56px; }
-  .arrow { font-size: 60px; color: var(--muted); }
-  .sumline { font-size: 64px; text-align: center; }
-  .sumline small { display: block; font-family: var(--font); font-size: 30px; color: var(--muted); font-weight: 500; margin-top: 6px; }
-  .groups { display: flex; gap: 40px; justify-content: center; position: relative; }
-  .grp { width: 440px; padding: 30px; border: 4px dashed var(--accent-2); border-radius: 18px; text-align: center; }
+  .rule2poly .math { font-size: 64px; }
+  .arrow { font-size: 64px; color: var(--muted); }
+  .sumline { font-size: 68px; text-align: center; }
+  .sumline small { display: block; font-family: var(--font-mono); font-size: 28px; color: var(--muted); font-weight: 500; margin-top: 8px; }
+  .groups { display: flex; gap: 60px; justify-content: center; position: relative; }
+  .grp { width: 440px; padding: 30px; border: 4px dashed var(--accent-2); border-radius: 18px; text-align: center; background: var(--bg); position: relative; z-index: 1; }
   .grp .dots { display: flex; gap: 14px; justify-content: center; margin-bottom: 12px; }
   .grp .dots i { width: 44px; height: 44px; border-radius: 50%; border: 4px solid var(--ink); display: block; }
   .grp .n { font-family: var(--font-display); font-size: 60px; font-style: italic; }
-  .mult { font-size: 54px; text-align: center; }
+  .mult { font-size: 60px; text-align: center; }
   .mult em { font-style: normal; color: var(--accent); }
-  .crosses { position: absolute; inset: 0; pointer-events: none; }
+  .crosses { position: absolute; left: 0; right: 0; top: -40px; bottom: -40px; width: 100%; height: calc(100% + 80px); pointer-events: none; z-index: 0; }
 
   /* 10-the-dial */
-  .dialrow { display: grid; grid-template-columns: 520px 1fr; gap: 50px; align-items: center; }
-  .dial text { font-family: var(--font-mono); font-size: 42px; fill: var(--ink); }
+  .dialrow { display: grid; grid-template-columns: 600px 1fr; gap: 60px; align-items: center; }
+  .dial text { font-family: var(--font-mono); font-size: 44px; fill: var(--ink); }
   .dial .face { fill: var(--card); stroke: var(--ink); stroke-width: 5; }
   .dial .needle { stroke: var(--accent); stroke-width: 10; stroke-linecap: round; }
   .dial .hub { fill: var(--accent); }
   .dial .zero { fill: var(--accent-3); font-weight: 600; }
-  .panel { font-size: 38px; font-weight: 700; line-height: 1.3; }
-  .panel small { display: block; font-size: 28px; font-weight: 500; color: var(--muted); }
-  .bus { padding: 18px 26px; border: 4px solid var(--accent); border-radius: 12px; color: var(--accent); font-size: 34px; font-weight: 800; text-align: center; }
+  .panel { font-size: 40px; font-weight: 700; line-height: 1.3; }
+  .panel small { display: block; font-size: 30px; font-weight: 500; color: var(--muted); }
+  .bus { padding: 18px 26px; border: 4px solid var(--accent-2); border-radius: 12px; color: var(--accent-2); font-size: 36px; font-weight: 800; text-align: center; }
   .mini-groups { display: flex; gap: 24px; }
-  .mini-groups .grp { width: 220px; padding: 14px; }
-  .mini-groups .grp .dots i { width: 26px; height: 26px; border-width: 3px; }
-  .nozero { font-size: 40px; font-weight: 800; color: var(--bad); }
+  .mini-groups .grp { width: 240px; padding: 16px; }
+  .mini-groups .grp .dots i { width: 30px; height: 30px; border-width: 3px; }
+  .nozero { font-size: 42px; font-weight: 800; color: var(--bad); }
 
-  /* 11-read-off-zero */
-  .plot text { font-family: var(--font-mono); font-size: 30px; fill: var(--muted); }
+  /* 11-read-off-zero, 11b-three-costs */
+  .plot text { font-family: var(--font-mono); font-size: 32px; fill: var(--muted); }
   .plot .ax { stroke: var(--muted); stroke-width: 3; }
   .plot .curve { stroke: var(--accent-2); stroke-width: 6; fill: none; }
   .plot .ext { stroke: var(--accent); stroke-width: 6; fill: none; stroke-dasharray: 4 14; stroke-linecap: round; }
   .plot .pt { fill: var(--ink); }
+  .plot .tan { stroke: var(--accent); stroke-width: 5; stroke-linecap: round; }
   .plot .z { fill: var(--accent); }
-  .plot .zl { font-family: var(--font); font-size: 36px; font-weight: 800; fill: var(--accent); }
+  .plot .zl { font-family: var(--font); font-size: 40px; font-weight: 800; fill: var(--accent); }
   .readoff { display: grid; grid-template-columns: 1100px 1fr; gap: 30px; align-items: center; }
-  .fix { font-size: 34px; font-weight: 700; line-height: 1.5; }
-  .fix .math { font-size: 40px; }
+  .fix { font-size: 38px; font-weight: 700; line-height: 1.35; display: flex; flex-direction: column; gap: 22px; }
   .costs { display: flex; gap: 20px; justify-content: center; }
-  .costs .chip { font-size: 40px; }
-  .result { font-size: 100px; text-align: center; }
+  .result { font-size: 110px; text-align: center; }
   .result .math { color: var(--accent); }
 
   /* 12-galactic */
   .gal { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
   .huge { font-size: 64px; }
-  .huge small { display: block; font-family: var(--font-mono); font-size: 26px; color: var(--muted); margin-top: 10px; font-weight: 500; }
-  .fallback { font-family: var(--font-mono); font-size: 38px; padding: 22px 30px; background: var(--code-bg); color: var(--code-ink); border-radius: var(--radius); border: var(--border) solid var(--line); }
+  .huge small { display: block; font-family: var(--font-mono); font-size: 28px; color: var(--muted); margin-top: 10px; font-weight: 500; line-height: 1.35; }
+  .digitsbig { font-family: var(--font-display); font-weight: 600; font-size: 110px; color: var(--accent); line-height: 1; }
+  .fallback { font-family: var(--font-mono); font-size: 40px; padding: 22px 30px; background: var(--code-bg); color: var(--code-ink); border-radius: var(--radius); border: var(--border) solid var(--line); }
   .fallback b { color: var(--accent-2); font-weight: 600; }
-  .quote { font-family: var(--font-display); font-size: 42px; line-height: 1.25; }
+  .quote { font-family: var(--font-display); font-size: 60px; line-height: 1.2; text-align: center; }
   .quote em { font-style: normal; color: var(--accent); }
 
-  /* 13-what-it-means */
-  .q { font-size: 110px; text-align: center; }
+  /* 13-what-it-means, 13b-twist */
+  .q { font-size: 120px; text-align: center; }
   .tower { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .block { width: 760px; padding: 24px; text-align: center; font-family: var(--font-display); font-weight: 600; font-size: 52px; border-radius: 12px; border: 4px solid; position: relative; }
-  .block small { display: block; font-family: var(--font); font-size: 28px; font-weight: 600; margin-top: 4px; }
+  .block { width: 760px; padding: 24px; text-align: center; font-family: var(--font-display); font-weight: 600; font-size: 56px; border-radius: 12px; border: 4px solid; position: relative; }
+  .block small { display: block; font-family: var(--font); font-size: 30px; font-weight: 600; margin-top: 4px; }
   .block.base { border-color: var(--good); color: var(--good); background: rgba(168, 230, 163, 0.07); }
   .block.top { border-color: var(--accent-3); color: var(--accent-3); }
   .block .strike { position: absolute; left: -20px; right: -20px; top: 50%; height: 10px; background: var(--bad); border-radius: 5px; transform: rotate(-4deg); transform-origin: left center; }
   .meaning { display: grid; grid-template-columns: 820px 1fr; gap: 40px; align-items: center; }
+  .term { font-family: var(--font-mono); font-size: 40px; padding: 24px 30px; background: var(--code-bg); color: var(--code-ink); border-radius: var(--radius); border: var(--border) solid var(--line); display: flex; align-items: center; gap: 30px; }
+  .term b { color: var(--good); font-weight: 600; }
   .wil { display: flex; gap: 30px; align-items: center; }
-  .wil .card { font-size: 36px; font-weight: 700; line-height: 1.3; }
+  .wil .card { font-size: 38px; font-weight: 700; line-height: 1.3; }
 
-  /* 14-trust */
-  .lean { font-size: 25px; line-height: 1.45; padding: 24px 30px; }
-  .lean::before { margin-bottom: 10px; }
-  .leanhead { font-size: 30px; font-weight: 700; margin-bottom: 14px; }
-  .leanhead small { font-family: var(--font-mono); font-size: 24px; color: var(--muted); font-weight: 500; display: block; margin-top: 4px; }
-  .trustrow { display: flex; gap: 26px; justify-content: center; align-items: center; }
-  .withdrawn { font-size: 34px; font-weight: 700; border-color: var(--bad); }
-  .checkers { display: flex; gap: 30px; justify-content: center; align-items: flex-end; }
+  /* 14-trust, 14b-who-checks */
+  .lean { font-size: 28px; line-height: 1.45; padding: 24px 30px; }
+  .lean::before { margin-bottom: 10px; font-size: 24px; }
+  .leanhead { font-size: 36px; font-weight: 700; }
+  .leanhead small { font-family: var(--font-mono); font-size: 28px; color: var(--muted); font-weight: 500; display: block; margin-top: 4px; }
+  .trustrow { display: flex; gap: 22px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .withdrawn { font-size: 40px; font-weight: 700; border-color: var(--bad); }
+  .checkers { display: flex; gap: 36px; justify-content: center; align-items: flex-end; }
   .obit { text-align: center; margin-top: 10px; }
 
   /* 15-close */
-  .watch { display: flex; flex-direction: column; gap: 22px; width: 1300px; margin: 0 auto; }
-  .watch .item { display: flex; gap: 26px; align-items: center; font-size: 44px; font-weight: 700; }
+  .watch { display: flex; flex-direction: column; gap: 24px; width: 1400px; margin: 0 auto; }
+  .watch .item { display: flex; gap: 26px; align-items: center; font-size: 46px; font-weight: 700; }
   .watch .box { width: 56px; height: 56px; border: 5px solid var(--accent); border-radius: 10px; flex: none; }
-  .last { font-size: 96px; text-align: center; }
+  .last { font-size: 100px; text-align: center; }
   .last .old { color: var(--muted); }
   .last em { font-style: normal; color: var(--accent); }
 </style>
 
-<!-- 01: the title, the stamp, the speed limit -->
+<!-- 01: the title, the stamp, the floor -->
 <section data-scene="01-hook">
   <div class="phase" id="p01a">
     <div class="stage">
@@ -238,18 +250,21 @@
         <div class="chip" data-cue="authors" data-anim="pop">no human authors</div>
         <div class="chip" data-cue="unreleased" data-anim="pop">an unreleased AI model</div>
         <div class="chip blue" data-cue="verified" data-anim="pop">verified in Lean, says OpenAI</div>
-        <div class="chip hot" data-cue="checking" data-anim="pop">checked by the people who proposed it</div>
+        <div class="chip hot" data-cue="checking" data-anim="pop">being checked by two of its three proposers</div>
       </div>
     </div>
   </div>
   <div class="phase" id="p01b">
     <div class="stage">
-      <div class="sign" id="sign" data-cue="speed" data-anim="slam">
-        <div class="t">SPEED LIMIT</div>
-        <div class="v">c<sup><i>n</i></sup></div>
-        <div class="x" id="signx" data-cue="gone." data-anim="grow"></div>
+      <div class="floor-wrap">
+        <div class="stack" data-cue="Hundreds" data-anim="stagger">
+          <div class="paper-slip">… cannot be solved faster, unless ETH is false</div>
+          <div class="paper-slip">… unless ETH is false</div>
+          <div class="paper-slip">… assuming ETH</div>
+        </div>
+        <div class="floorline" data-cue="floor" data-anim="grow"><div class="crack" data-cue="gone." data-anim="grow"></div></div>
+        <div class="floorlabel" data-cue="floor" data-anim="fade">ETH: time is at least <i>c</i><sup><i>n</i></sup></div>
       </div>
-      <div class="sign-cap" data-cue="Hundreds" data-anim="up">hundreds of papers: <em>this can't get faster</em></div>
     </div>
   </div>
 </section>
@@ -257,24 +272,30 @@
 <!-- 02: switches, rules, SAT -->
 <section data-scene="02-puzzle">
   <div class="stage">
-    <div class="switches" data-cue="switches," data-anim="stagger">
-      <div class="sw"><div class="name">A</div><div class="track"><div class="knob k-on"></div></div></div>
-      <div class="sw"><div class="name">B</div><div class="track"><div class="knob k-on"></div></div></div>
-      <div class="sw"><div class="name">C</div><div class="track"><div class="knob k-on"></div></div></div>
-      <div class="sw"><div class="name">D</div><div class="track"><div class="knob"></div></div></div>
-      <div class="sw"><div class="name">E</div><div class="track"><div class="knob"></div></div></div>
-      <div class="sw"><div class="name">F</div><div class="track"><div class="knob"></div></div></div>
+    <div class="col" style="gap: 12px">
+      <div class="switches" data-cue="switches," data-anim="stagger">
+        <div class="sw"><div class="name">A</div><div class="track"><div class="knob k-on"></div></div></div>
+        <div class="sw"><div class="name">B</div><div class="track"><div class="knob k-on"></div></div></div>
+        <div class="sw"><div class="name">C</div><div class="track"><div class="knob k-on"></div></div></div>
+        <div class="sw"><div class="name">D</div><div class="track"><div class="knob"></div></div></div>
+        <div class="sw"><div class="name">E</div><div class="track"><div class="knob"></div></div></div>
+        <div class="sw"><div class="name">F</div><div class="track"><div class="knob"></div></div></div>
+      </div>
+      <div class="vocab" data-cue="switches," data-anim="fade">in the papers: variables</div>
     </div>
-    <div class="rules" data-cue="rules." data-anim="stagger">
-      <div class="rule card">A on <span class="or">or</span> C off <span class="or">or</span> D on<span class="lbl">rule 1: at least one</span><span class="ok" data-cue="happy." data-anim="pop">✓</span></div>
-      <div class="rule card">A off <span class="or">or</span> B on <span class="or">or</span> E on<span class="lbl">rule 2: at least one</span><span class="ok" data-cue="happy." data-anim="pop">✓</span></div>
-      <div class="rule card">C on <span class="or">or</span> E off <span class="or">or</span> F on<span class="lbl">rule 3: at least one</span><span class="ok" data-cue="happy." data-anim="pop">✓</span></div>
+    <div class="col" style="gap: 12px">
+      <div class="rules" data-cue="rules." data-anim="stagger" id="rules02">
+        <div class="rule card">A on <span class="or">or</span> C off <span class="or">or</span> D on<span class="ok">✓</span></div>
+        <div class="rule card">A off <span class="or">or</span> B on <span class="or">or</span> E on<span class="ok">✓</span></div>
+        <div class="rule card">C on <span class="or">or</span> E off <span class="or">or</span> F on<span class="ok">✓</span></div>
+      </div>
+      <div class="vocab" data-cue="rules." data-anim="fade">in the papers: clauses · each needs at least one</div>
     </div>
     <div class="row">
       <div class="chip hot" data-cue="SAT." data-anim="pop">SAT</div>
-      <div class="chip hot" data-cue="3-SAT." data-anim="pop">3-SAT: three switches per rule</div>
+      <div class="chip hot" data-cue="3-SAT." data-anim="pop">3-SAT: three per rule</div>
       <div class="chip alive" data-cue="Checking" data-anim="pop">check an answer: easy</div>
-      <div class="chip" data-cue="Finding" data-anim="pop">find one: <span class="math"><i>2<sup>n</sup></i></span>&nbsp;settings</div>
+      <div class="chip" data-cue="settings." data-anim="pop">find one: <span class="math">&nbsp;2<sup><i>n</i></sup></span>&nbsp;settings</div>
     </div>
   </div>
 </section>
@@ -283,9 +304,11 @@
 <section data-scene="03-doubling">
   <div class="stage">
     <div class="doubling" data-cue="doubles" data-anim="pop">one more switch = <em>twice the work</em></div>
-    <div class="count-row" data-cue="Ten" data-anim="up"><div class="n">10 <small>switches</small></div><div class="v">1,024</div></div>
-    <div class="count-row" data-cue="Fifty" data-anim="up"><div class="n">50 <small>switches</small></div><div class="v">1,125,899,906,842,624<small>about a quadrillion</small></div></div>
-    <div class="count-row" data-cue="Three" data-anim="up"><div class="n">300 <small>switches</small></div><div class="digits" data-cue="ninety" data-anim="type">2037035976334486086268445688409378161051468393665936250636140449354381299763336706183397376</div></div>
+    <div class="counts">
+      <div class="count-row" data-cue="Ten" data-anim="up"><div class="n">10 <small>switches</small></div><div class="v">1,024</div></div>
+      <div class="count-row" data-cue="Fifty" data-anim="up"><div class="n">50 <small>switches</small></div><div class="v">1,125,899,906,842,624<small>about a quadrillion</small></div></div>
+      <div class="count-row" data-cue="Three" data-anim="up"><div class="n">300 <small>switches</small></div><div class="digits" data-cue="ninety" data-anim="type">2037035976334486086268445688409378161051468393665936250636140449354381299763336706183397376</div></div>
+    </div>
     <div class="row"><div class="stamp" data-cue="computer" data-anim="slam">not happening</div><div class="chip hot" data-cue="smarter" data-anim="pop">be smarter than trying everything</div></div>
   </div>
 </section>
@@ -304,29 +327,43 @@
       </div>
       <div class="card poll" data-cue="Eighty" data-anim="up">
         <div class="pct" data-cue="Eighty" data-anim="count">88%</div>
-        <div><div class="lab">said P ≠ NP</div><div class="src">Gasarch poll, SIGACT News, 2019<br>124 answers</div><div class="stamp yellow" style="font-size: 34px; margin-top: 14px" data-cue="prove" data-anim="slam">unproved</div></div>
+        <div><div class="lab">said P ≠ NP</div><div class="src">Gasarch poll, SIGACT News,<br>2019 · 124 answers</div><div class="stamp yellow" style="font-size: 36px; margin-top: 14px" data-cue="prove" data-anim="slam">unproved</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 05: the middle ground, and ETH's bet -->
+<!-- 05: the middle ground -->
 <section data-scene="05-the-bet">
   <div class="stage">
+    <div class="ladder" style="width: 1300px; margin: 0 auto">
+      <div class="rung card poly" data-cue="polynomial" data-anim="up"><div class="k">polynomial</div><div class="math"><i>n</i><sup>3</sup></div></div>
+      <div class="note green" data-cue="only" data-anim="left">P ≠ NP says only: SAT is not down here</div>
+      <div class="rung card mid" data-cue="middle" data-anim="up"><div class="k">the middle</div><div class="math" data-cue="square" data-anim="pop">2<sup>√<i>n</i></sup></div></div>
+      <div class="rung card exp" data-cue="exponential," data-anim="up"><div class="k">exponential</div><div class="math"><i>c</i><sup><i>n</i></sup> <span style="font-size: 0.55em">for any <i>c</i> &gt; 1, even 1.001<sup><i>n</i></sup></span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05b: ETH, the sharper bet -->
+<section data-scene="05b-eth">
+  <div class="stage">
     <div class="bet">
-      <div class="ladder">
-        <div class="rung card poly" data-cue="polynomial" data-anim="up"><div class="k">polynomial</div><div class="math"><i>n</i><sup>3</sup></div></div>
-        <div class="note green" data-cue="only" data-anim="left">P ≠ NP says only: SAT is not down here</div>
-        <div class="rung card mid" data-cue="middle" data-anim="up"><div class="k">the middle</div><div class="math" data-cue="square" data-anim="pop">2<sup>√<i>n</i></sup></div></div>
-        <div class="rung card exp" data-cue="exponential" data-anim="up"><div class="k">exponential</div><div class="math"><i>c</i><sup><i>n</i></sup>, <span style="font-size: 0.6em">some <i>c</i> &gt; 1</span></div></div>
-        <div class="note pink" data-cue="raised" data-anim="left">ETH: 3-SAT is up here</div>
+      <div class="ladder" data-cue="+0.1" data-anim="fade">
+        <div class="rung card poly"><div class="k">polynomial</div><div class="math"><i>n</i><sup>3</sup></div></div>
+        <div class="rung card mid"><div class="k">the middle</div><div class="math">2<sup>√<i>n</i></sup></div></div>
+        <div class="rung card exp"><div class="k">exponential</div><div class="math"><i>c</i><sup><i>n</i></sup>, <i>c</i> &gt; 1</div></div>
+        <div class="note pink" data-cue="middle" data-anim="left">ETH: 3-SAT is up here</div>
       </div>
       <div class="col">
-        <div class="people" data-cue="Impagliazzo" data-anim="up">
-          <figure class="ss-portrait" data-commons="File:Russell Impagliazzo at the DIMACS Workshop on Cryptography.jpg"><figcaption>Russell Impagliazzo<small>UC San Diego</small></figcaption></figure>
-          <div class="namecard" data-cue="Paturi" data-anim="pop"><b>Ramamohan Paturi</b><small>UC San Diego<br>(no free photo)</small></div>
+        <div class="people">
+          <figure class="ss-portrait" data-commons="File:Russell Impagliazzo at the DIMACS Workshop on Cryptography.jpg" data-cue="Impagliazzo," data-anim="pop"><figcaption>Russell Impagliazzo<small>UC San Diego</small></figcaption></figure>
+          <div class="col" style="gap: 14px">
+            <div class="namecard" style="height: 140px; width: 320px" data-cue="Paturi" data-anim="pop"><b>Ramamohan Paturi</b><small>UC San Diego</small></div>
+            <div class="namecard" style="height: 140px; width: 320px" data-cue="Zane" data-anim="pop"><b>Francis Zane</b><small>no free photos</small></div>
+          </div>
         </div>
-        <div class="src center" data-cue="published" data-anim="fade">"On the Complexity of k-SAT", 2001<br>with Francis Zane: the Strong ETH, 2001</div>
+        <div class="src center" data-cue="Zane" data-anim="fade">2001: "On the Complexity of k-SAT"<br>and "Which Problems Have Strongly<br>Exponential Complexity?"</div>
         <div class="big eth-title" data-cue="Hypothesis" data-anim="pop">the <em>Exponential Time Hypothesis</em></div>
       </div>
     </div>
@@ -336,18 +373,18 @@
 <!-- 06: the records, and the floor -->
 <section data-scene="06-the-race">
   <div class="stage">
-    <div class="tag" data-cue="+0.1" data-anim="fade">3-SAT records: time grows like <span class="math" style="text-transform: none">b<sup><i>n</i></sup></span>, bar = how far b is above 1</div>
-    <svg class="race" viewBox="0 0 1620 640" width="1620" height="640" style="width: 100%; height: auto; flex: none">
-      <!-- axis: x = 420 at b = 1, x = 1560 at b = 2 (1140 px per unit) -->
-      <rect class="floor" x="420" y="20" width="140" height="560" data-cue="floor" data-anim="fade"/>
-      <line class="floorline" x1="560" y1="20" x2="560" y2="580" data-cue="floor" data-anim="draw"/>
-      <text class="floortext" x="580" y="620" data-cue="floor" data-anim="fade">ETH: a floor somewhere above 1</text>
+    <div class="tag" data-cue="+0.1" data-anim="fade">3-SAT records: time grows like <span class="math" style="text-transform: none"><i>c</i><sup><i>n</i></sup></span> · each bar shows how far <span style="text-transform: none"><i>c</i></span> is above 1</div>
+    <svg class="race" viewBox="0 0 1620 640" style="width: 100%; height: auto; flex: none">
+      <!-- axis: x = 420 at c = 1, x = 1560 at c = 2 (1140 px per unit); bar width = 1140 × (c − 1) -->
+      <rect class="floor" x="420" y="20" width="140" height="560" data-cue="ETH" data-anim="fade"/>
+      <line class="floorline" x1="560" y1="20" x2="560" y2="580" data-cue="ETH" data-anim="fade"/>
+      <text class="floortext" x="580" y="625" data-cue="ETH" data-anim="fade">ETH: a floor somewhere above 1</text>
       <line class="axis" x1="420" y1="20" x2="420" y2="580"/>
-      <text class="tick" x="420" y="620" text-anchor="middle">1</text>
-      <g data-cue="everything" data-anim="left"><text class="lab" x="390" y="88" text-anchor="end">try everything</text><text class="sub" x="390" y="122" text-anchor="end">brute force</text><rect class="bar brute" x="420" y="56" width="1140" height="78" rx="8"/><text class="val" x="1530" y="111" text-anchor="end" style="fill: var(--bg)">2</text></g>
-      <g data-cue="Schöning's" data-anim="left"><text class="lab" x="390" y="228" text-anchor="end">Schöning</text><text class="sub" x="390" y="262" text-anchor="end">1999, random walk</text><rect class="bar" x="420" y="196" width="381" height="78" rx="8"/><text class="val" x="820" y="251">1.334</text></g>
-      <g data-cue="records" data-anim="left"><text class="lab" x="390" y="368" text-anchor="end">Hertli</text><text class="sub" x="390" y="402" text-anchor="end">PPSZ, 2011</text><rect class="bar" x="420" y="336" width="351" height="78" rx="8"/><text class="val" x="790" y="391">1.308</text></g>
-      <g data-cue="seven" data-anim="left"><text class="lab" x="390" y="508" text-anchor="end">Jiang, Cai</text><text class="sub" x="390" y="542" text-anchor="end">2026 preprint</text><rect class="bar" x="420" y="476" width="350" height="78" rx="8"/><text class="val" x="790" y="531">1.307</text></g>
+      <text class="tick" x="420" y="625" text-anchor="middle">1</text>
+      <g data-cue="everything" data-anim="left"><text class="lab" x="390" y="88" text-anchor="end">try everything</text><text class="sub" x="390" y="124" text-anchor="end">brute force</text><rect class="bar brute" x="420" y="56" width="1140" height="78" rx="8"/><text class="val" x="1530" y="112" text-anchor="end" style="fill: var(--bg)">2</text></g>
+      <g data-cue="Schöning's" data-anim="left"><text class="lab" x="390" y="228" text-anchor="end">Schöning</text><text class="sub" x="390" y="264" text-anchor="end">1999 · 4/3</text><rect class="bar" x="420" y="196" width="380" height="78" rx="8"/><text class="val" x="820" y="252">1.333</text></g>
+      <g data-cue="records" data-anim="left"><text class="lab" x="390" y="368" text-anchor="end">Hertli</text><text class="sub" x="390" y="404" text-anchor="end">PPSZ, 2011</text><rect class="bar" x="420" y="336" width="351" height="78" rx="8"/><text class="val" x="790" y="392">1.308</text></g>
+      <g data-cue="seven" data-anim="left"><text class="lab" x="390" y="508" text-anchor="end">Jiang, Cai</text><text class="sub" x="390" y="544" text-anchor="end">2026 preprint</text><rect class="bar" x="420" y="476" width="350" height="78" rx="8"/><text class="val" x="790" y="532">1.307</text></g>
     </svg>
   </div>
 </section>
@@ -359,50 +396,59 @@
       <div class="col" style="align-items: center">
         <div class="stack" data-cue="Hundreds" data-anim="stagger">
           <div class="paper-slip">… cannot be solved faster, unless ETH is false</div>
-          <div class="paper-slip">… no algorithm in this time, unless ETH fails</div>
-          <div class="paper-slip">… this bound is tight, assuming ETH</div>
-          <div class="paper-slip">… unless ETH is false</div>
+          <div class="paper-slip">… no faster algorithm, assuming ETH</div>
+          <div class="paper-slip">… this bound is tight, unless ETH fails</div>
         </div>
+        <div class="slipnote" data-cue="Hundreds" data-anim="fade">typical phrasing, not quotes</div>
         <div class="slab" data-cue="+0.1" data-anim="up">ETH</div>
         <div class="fields" data-cue="Graph" data-anim="stagger"><div class="chip">graph theory</div><div class="chip">computational biology</div><div class="chip">databases</div><div class="chip">geometry</div></div>
       </div>
       <div class="col">
         <div class="slab" style="width: 100%" data-cue="Strong" data-anim="up">the Strong ETH</div>
+        <div class="seth" data-cue="longer," data-anim="up">longer rules: almost no escape from trying everything</div>
         <div class="card ed" data-cue="edit" data-anim="up">edit distance: no algorithm much faster than quadratic, unless the Strong ETH is false
-          <small>Backurs, Indyk · STOC 2015, SICOMP 2018</small>
-          <div class="grid" data-cue="quadratic." data-anim="stagger"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <small>Backurs, Indyk · STOC 2015 · SICOMP 2018</small>
+          <div class="grid" data-cue="quadratic." data-anim="stagger"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="gridlab" data-cue="quadratic." data-anim="fade">string × string table: n² cells</div>
         </div>
       </div>
     </div>
+    <div class="row"><div class="stamp pink" data-cue="arguments" data-anim="slam">where arguments stopped</div></div>
   </div>
-  <div class="stamp yellow closed" data-cue="argument" data-anim="slam">case closed</div>
 </section>
 
 <!-- 08: the claim -->
 <section data-scene="08-the-claim">
   <div class="stage">
-    <div class="card thm" data-cue="paper." data-anim="up"><span class="tag">Theorem 1.1, page 2 · counts a k-SAT formula with n switches and m rules</span>
+    <div class="card thm" data-cue="paper." data-anim="up"><span class="tag">Theorem 1.1 · counts a k-SAT formula with n switches and m rules</span>
       <span class="math">time ≤ (<i>n</i>+<i>m</i>)<sup><i>O</i>(1)</sup> · 2<sup><i>O</i>(<i>n</i> log log <i>n</i> / √log <i>n</i>)</sup></span></div>
     <div class="claim">
-      <div class="col">
-        <div class="row" style="justify-content: flex-start"><div class="chip" data-cue="size" data-anim="pop">any fixed rule size</div><div class="chip" data-cue="deterministic," data-anim="pop">deterministic</div></div>
-        <div class="row" style="justify-content: flex-start"><div class="chip" data-cue="memory." data-anim="pop">polynomial memory</div></div>
-        <div class="xp math" data-cue="something" data-anim="up">2<sup><span class="old" data-cue="anymore." data-anim="highlight"><i>n</i></span></sup> → 2<sup data-cue="roughly" data-anim="pop"><i>n</i> / √log <i>n</i></sup></div>
-        <div class="chip hot" data-cue="counts" data-anim="pop">counts every solution, exactly</div>
+      <div class="col" style="align-items: flex-start">
+        <div class="chip" data-cue="size," data-anim="pop">any fixed rule size</div>
+        <div class="xp math" data-cue="something" data-anim="up">2<sup class="old"><i>n</i></sup> <span data-cue="roughly" data-anim="pop">→ 2<sup class="new"><i>n</i> / √log <i>n</i></sup></span></div>
+        <div class="stamp" data-cue="gone." data-anim="slam" data-sfx="thump" data-sfx-offset="0.05">no floor, if it holds</div>
       </div>
-      <svg class="floorplot" viewBox="0 0 820 420" width="820" height="420">
+      <svg class="floorplot" viewBox="0 0 820 440" width="820" height="440">
         <line class="ax" x1="60" y1="380" x2="800" y2="380"/><line class="ax" x1="60" y1="20" x2="60" y2="380"/>
-        <text x="790" y="412" text-anchor="end">n →</text><text x="70" y="40">exponent</text>
-        <path class="lin" d="M60 380 L800 60" data-cue="exponent" data-anim="draw"/><text class="lbl" x="560" y="120" style="fill: var(--accent-3)">c · n, any c &gt; 0</text>
-        <path class="cur" d="M60 380 C 220 120, 420 210, 800 240" data-cue="slower" data-anim="draw"/><text class="lbl" x="560" y="290" style="fill: var(--accent)">n / √log n</text>
-        <text x="410" y="412" text-anchor="middle">schematic, not to scale</text>
+        <text x="790" y="420" text-anchor="end">n →</text><text x="74" y="44">exponent</text>
+        <path class="lin" d="M60 380 L800 60" data-cue="constant" data-anim="draw"/><text class="lbl" x="420" y="150" style="fill: var(--accent-3)">c · n, any c &gt; 0</text>
+        <path class="cur" d="M60 380 C 220 120, 420 210, 800 250" data-cue="slower" data-anim="draw"/><text class="lbl" x="560" y="310" style="fill: var(--accent)">n / √log n</text>
+        <text x="420" y="420" text-anchor="middle">schematic</text>
       </svg>
     </div>
+  </div>
+</section>
+
+<!-- 08b: it counts -->
+<section data-scene="08b-counting">
+  <div class="stage">
+    <div class="counting big" data-cue="counts" data-anim="pop">it <em>counts</em> every satisfying setting, exactly</div>
+    <div class="row"><div class="chip blue" data-cue="Counting" data-anim="pop">counting (#SAT) is at least as hard as deciding</div></div>
     <div class="cousins" data-cue="takes" data-anim="stagger">
       <div class="chip dead">ETH</div><div class="chip dead">Strong ETH</div><div class="chip dead">Gap-ETH</div><div class="chip dead">NSETH</div><div class="chip dead">#ETH</div>
     </div>
+    <div class="src center" data-cue="relatives," data-anim="fade">the paper, section 1.1 · all refuted if the proof holds</div>
   </div>
-  <div class="stamp" style="position: absolute; right: 150px; top: 330px" data-cue="gone." data-anim="slam" data-sfx="thump" data-sfx-offset="0.05">no floor, if it holds</div>
 </section>
 
 <!-- 09: counting as a sum, and the split -->
@@ -414,8 +460,8 @@
         <div class="arrow">→</div>
         <div class="math" style="color: var(--accent)">1 − (1 − <i>A</i>) · <i>B</i> · (1 − <i>C</i>)</div>
       </div>
-      <div class="row"><div class="chip alive" data-cue="happy" data-anim="pop">happy: 1</div><div class="chip dead" style="text-decoration: none" data-cue="isn't." data-anim="pop">unhappy: 0</div></div>
-      <div class="sumline math" data-cue="Add" data-anim="up">count = Σ<sub>all settings</sub> rule<sub>1</sub> × rule<sub>2</sub> × … × rule<sub><i>m</i></sub><small>example from the paper, section 2.2</small></div>
+      <div class="row"><div class="chip alive" data-cue="happy" data-anim="pop">happy: 1</div><div class="chip" style="border-color: var(--bad); color: var(--bad)" data-cue="isn't." data-anim="pop">unhappy: 0</div></div>
+      <div class="sumline math" data-cue="Add" data-anim="up">count = Σ<sub>every setting</sub> rule<sub>1</sub> × rule<sub>2</sub> × … × rule<sub><i>m</i></sub><small>the paper's own example, section 2.2</small></div>
       <div class="row"><div class="stamp" data-cue="still" data-anim="slam">2<sup style="font-size: 0.6em">n</sup> terms</div></div>
     </div>
   </div>
@@ -425,7 +471,7 @@
         <div class="grp"><div class="dots"><i></i><i></i><i></i><i></i></div><div class="n">N<sub>1</sub></div></div>
         <div class="grp"><div class="dots"><i></i><i></i><i></i><i></i></div><div class="n">N<sub>2</sub></div></div>
         <div class="grp"><div class="dots"><i></i><i></i><i></i><i></i></div><div class="n">N<sub>3</sub></div></div>
-        <svg class="crosses" viewBox="0 0 1300 160" preserveAspectRatio="none" data-cue="everywhere." data-anim="draw"><path d="M300 60 C 420 5, 520 5, 640 70" stroke="var(--bad)" stroke-width="8" fill="none"/><path d="M700 100 C 820 150, 930 150, 1040 70" stroke="var(--bad)" stroke-width="8" fill="none"/><path d="M200 120 C 500 158, 900 158, 1150 110" stroke="var(--bad)" stroke-width="8" fill="none"/></svg>
+        <svg class="crosses" viewBox="0 0 1440 260" preserveAspectRatio="none" data-cue="everywhere." data-anim="draw"><path d="M380 40 C 440 0, 520 0, 560 40" stroke="var(--bad)" stroke-width="9" fill="none"/><path d="M880 220 C 940 260, 1000 260, 1060 220" stroke="var(--bad)" stroke-width="9" fill="none"/><path d="M300 230 C 600 262, 900 262, 1150 230" stroke="var(--bad)" stroke-width="9" fill="none"/></svg>
       </div>
       <div class="mult math" data-cue="multiply#2" data-anim="up">count = <i>N</i><sub>1</sub> × <i>N</i><sub>2</sub> × <i>N</i><sub>3</sub></div>
       <div class="mult" data-cue="brute" data-anim="up"><span class="math">a few × 2<sup>small</sup></span> <em>instead of</em> <span class="math">2<sup><i>n</i></sup></span></div>
@@ -438,28 +484,29 @@
 <section data-scene="10-the-dial">
   <div class="stage">
     <div class="dialrow">
-      <svg class="dial" viewBox="0 0 520 520" width="520" height="520" data-cue="dial." data-anim="pop">
+      <svg class="dial" viewBox="0 0 520 540" width="600" height="623" data-cue="dial," data-anim="pop">
         <circle class="face" cx="260" cy="270" r="200"/>
-        <text class="zero" x="96" y="402" text-anchor="middle">0</text>
-        <text x="62" y="250" text-anchor="middle">1</text>
-        <text x="120" y="110" text-anchor="middle">2</text>
-        <text x="260" y="55" text-anchor="middle">3</text>
-        <text x="400" y="110" text-anchor="middle">4</text>
-        <text x="458" y="250" text-anchor="middle">5</text>
-        <text x="424" y="402" text-anchor="middle">…</text>
-        <text x="260" y="500" text-anchor="middle" style="font-size: 40px; fill: var(--accent)">T</text>
+        <text class="zero" x="96" y="405" text-anchor="middle">0</text>
+        <text x="58" y="255" text-anchor="middle">1</text>
+        <text x="118" y="112" text-anchor="middle">2</text>
+        <text x="260" y="56" text-anchor="middle">3</text>
+        <text x="402" y="112" text-anchor="middle">4</text>
+        <text x="462" y="255" text-anchor="middle">5</text>
+        <text x="424" y="405" text-anchor="middle">…</text>
+        <text x="260" y="525" text-anchor="middle" style="font-size: 50px; fill: var(--accent)">T</text>
         <g id="needle"><line class="needle" x1="260" y1="270" x2="150" y2="380"/></g>
         <circle class="hub" cx="260" cy="270" r="20"/>
       </svg>
       <div class="col">
-        <div class="panel card" data-cue="zero," data-anim="up">T = 0: the original formula<small>every rule reads its own switches, groups tangled</small></div>
+        <div class="panel card" data-cue="zero," data-anim="up">T = 0: the original formula<small>rules cross between groups</small></div>
+        <div class="panel" data-cue="chosen" data-anim="up">T = 1, 2, 3 …: the rules, rewritten</div>
         <div class="mini-groups" data-cue="chosen" data-anim="stagger">
           <div class="grp"><div class="dots"><i></i><i></i><i></i></div></div>
           <div class="grp"><div class="dots"><i></i><i></i><i></i></div></div>
           <div class="grp"><div class="dots"><i></i><i></i><i></i></div></div>
         </div>
-        <div class="bus" data-cue="summaries" data-anim="grow">shared summaries: a note on each group</div>
-        <div class="panel" data-cue="Try" data-anim="up">try every value of the notes<small>for each one, count every group alone and multiply</small></div>
+        <div class="bus" data-cue="summary" data-anim="grow">shared summaries: a short note on each group</div>
+        <div class="panel" data-cue="few#2" data-anim="up">try every note<small>for each one, count every group alone</small></div>
         <div class="nozero" data-cue="catch?" data-anim="pop">✗ at T = 0 this shortcut doesn't apply</div>
       </div>
     </div>
@@ -468,34 +515,38 @@
 
 <!-- 11: read the answer off zero -->
 <section data-scene="11-read-off-zero">
-  <div class="phase" id="p11a">
-    <div class="stage">
-      <div class="readoff">
-        <svg class="plot" viewBox="0 0 1100 600" width="1100" height="600">
-          <line class="ax" x1="100" y1="540" x2="1080" y2="540"/><line class="ax" x1="100" y1="20" x2="100" y2="540"/>
-          <text x="100" y="580" text-anchor="middle">0</text><text x="260" y="580" text-anchor="middle">1</text><text x="420" y="580" text-anchor="middle">2</text><text x="580" y="580" text-anchor="middle">3</text><text x="740" y="580" text-anchor="middle">4</text><text x="900" y="580" text-anchor="middle">5</text>
-          <text x="1070" y="520" text-anchor="end">dial T</text><text x="115" y="44">count H(T)</text>
-          <path class="curve" d="M260 300 C 330 120, 420 140, 500 230 S 650 420, 740 330 S 860 150, 960 200" data-cue="curve," data-anim="draw"/>
-          <g data-cue="one," data-anim="stagger"><circle class="pt" cx="260" cy="300" r="15"/><circle class="pt" cx="420" cy="166" r="15"/><circle class="pt" cx="580" cy="320" r="15"/><circle class="pt" cx="740" cy="330" r="15"/><circle class="pt" cx="900" cy="176" r="15"/></g>
-          <path class="ext" d="M260 300 C 210 420, 150 450, 100 440" data-cue="zero." data-anim="fade"/>
-          <g data-cue="zero." data-anim="pop"><circle class="z" cx="100" cy="440" r="22"/><text class="zl" x="135" y="470">H(0) = the exact count</text></g>
-        </svg>
-        <div class="fix">
-          <div data-cue="Two" data-anim="up">2 points fix a line</div>
-          <div data-cue="derivatives." data-anim="up">here: at each easy point,<br>the value <span class="ss-em">and a stack of derivatives</span></div>
-          <div class="src" data-cue="one," data-anim="fade">T = 1 … Q · values alone would not be enough (paper, 2.5)</div>
-        </div>
+  <div class="stage">
+    <div class="readoff">
+      <svg class="plot" viewBox="0 0 1100 640" width="1100" height="640">
+        <line class="ax" x1="100" y1="560" x2="1080" y2="560"/><line class="ax" x1="100" y1="20" x2="100" y2="560"/>
+        <text x="100" y="605" text-anchor="middle">0</text><text x="260" y="605" text-anchor="middle">1</text><text x="420" y="605" text-anchor="middle">2</text><text x="580" y="605" text-anchor="middle">3</text><text x="740" y="605" text-anchor="middle">4</text><text x="900" y="605" text-anchor="middle">5</text>
+        <text x="1070" y="540" text-anchor="end">dial T</text><text x="118" y="50">total H(T)</text>
+        <path class="curve" d="M260 320 C 330 140, 420 160, 500 250 S 650 440, 740 350 S 860 170, 960 220" data-cue="curve." data-anim="draw"/>
+        <g data-cue="easy" data-anim="stagger"><circle class="pt" cx="260" cy="320" r="16"/><circle class="pt" cx="420" cy="186" r="16"/><circle class="pt" cx="580" cy="340" r="16"/><circle class="pt" cx="740" cy="350" r="16"/><circle class="pt" cx="900" cy="196" r="16"/></g>
+        <g data-cue="slope," data-anim="stagger"><line class="tan" x1="210" y1="400" x2="310" y2="240"/><line class="tan" x1="360" y1="186" x2="480" y2="186"/><line class="tan" x1="530" y1="285" x2="630" y2="395"/><line class="tan" x1="690" y1="380" x2="790" y2="320"/><line class="tan" x1="850" y1="190" x2="950" y2="202"/></g>
+        <path class="ext" d="M260 320 C 210 440, 150 470, 100 460" data-cue="zero." data-anim="fade"/>
+        <g data-cue="zero." data-anim="pop"><circle class="z" cx="100" cy="460" r="24"/><text class="zl" x="136" y="500">H(0) = the exact count</text></g>
+      </svg>
+      <div class="fix">
+        <div data-cue="Two" data-anim="up">2 points fix a line</div>
+        <div data-cue="Values" data-anim="up">values alone aren't enough here</div>
+        <div data-cue="derivatives:" data-anim="up" style="color: var(--accent)">so at each easy point: the slope, the slope of the slope, …</div>
+        <div class="src" data-cue="Values" data-anim="fade">the paper, section 2.5</div>
       </div>
     </div>
   </div>
+</section>
+
+<!-- 11b: three costs, and the recap -->
+<section data-scene="11b-three-costs">
   <div class="phase" id="p11b">
     <div class="stage">
-      <div class="costs" data-cue="hard" data-anim="stagger"><div class="chip">derivatives at each point</div><div class="chip">notes to try</div><div class="chip">group size</div></div>
+      <div class="costs" data-cue="three" data-anim="stagger"><div class="chip blue">derivatives at each point</div><div class="chip blue">notes to try</div><div class="chip blue">group size</div></div>
       <div class="result" data-cue="Squeeze" data-anim="pop">time ≈ <span class="math">2<sup><i>n</i> / √log <i>n</i></sup></span></div>
-      <div class="src center" data-cue="roughly" data-anim="fade">up to log log factors; the paper's section 2.6</div>
+      <div class="src center" data-cue="roughly" data-anim="fade">log is the natural log · up to log log factors · the paper, section 2.6</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m11" data-cue="root" data-anim="pop" data-sfx="ding" data-sfx-offset="0.25">
+  <div class="meme-wrap" id="m11" data-cue="Simple," data-anim="pop" data-sfx="ding" data-sfx-offset="0.7">
     <figure class="ss-meme" data-meme="gb"><span>try every setting</span><span>split into groups</span><span>add a dial</span><span>read the answer off zero</span></figure>
   </div>
 </section>
@@ -506,11 +557,11 @@
     <div class="stage">
       <div class="gal">
         <div class="col">
-          <div class="big huge" data-cue="million" data-anim="up"><span class="math">√ln(1,000,000) ≈ 3.7</span><small>at a million switches, n / √log n is about n / 3.7</small></div>
+          <div class="big huge" data-cue="million" data-anim="up"><span class="math">√ln(1,000,000) ≈ 3.7</span><small>at a million switches:<br>the exponent n / √log n is about n / 3.7</small></div>
           <div class="chip" data-cue="constants" data-anim="pop">the big O hides constants</div>
         </div>
         <div class="col">
-          <div class="card huge" data-cue="billion" data-anim="up"><span class="math" style="font-size: 54px">n &gt; 2<sup>10,900,000,000</sup></span><small>about 3.3 billion digits · our arithmetic<br>on the paper's worked parameters, eq. 2.19</small></div>
+          <div class="card" data-cue="worked" data-anim="up"><div class="digitsbig" data-cue="billion" data-anim="count">3,300,000,000</div><div class="huge" style="font-size: 44px; margin-top: 8px">digits in the number of switches needed<small>our arithmetic on the paper's worked example (eq. 2.19): n &gt; 2<sup>10,900,000,000</sup></small></div></div>
           <div class="fallback" data-cue="Below" data-anim="up"><b>below that:</b> try everything</div>
         </div>
       </div>
@@ -521,77 +572,89 @@
   </div>
   <div class="phase" id="p12b">
     <div class="stage">
-      <div class="card" data-cue="OpenAI" data-anim="up"><div class="quote">"Finding such algorithms, and turning theoretical advances into practical improvements, will require <em>significant further research</em>."</div><div class="src">OpenAI, October 26, 2026</div></div>
+      <div class="card" data-cue="OpenAI" data-anim="up"><div class="quote">practical improvements "will require <em>significant further research</em>"</div><div class="src center">OpenAI, October 26, 2026</div></div>
     </div>
   </div>
 </section>
 
 <!-- 13: what it means -->
 <section data-scene="13-what-it-means">
+  <div class="stage">
+    <div class="meaning">
+      <div class="tower">
+        <div class="block top" data-cue="bigger" data-anim="up">the Strong ETH<div class="strike" data-cue="fell." data-anim="grow"></div></div>
+        <div class="block top" data-cue="bigger" data-anim="up">ETH<div class="strike" data-cue="fell." data-anim="grow"></div></div>
+        <div class="block base" data-cue="untouched." data-anim="up">P ≠ NP<small>still standing, still open</small></div>
+      </div>
+      <div class="col">
+        <div class="q big" data-cue="+0.1" data-anim="pop">P = NP?</div>
+        <div class="stamp green" style="font-size: 64px; align-self: center" data-cue="No." data-anim="slam">no</div>
+        <div class="card" style="font-size: 36px; font-weight: 700" data-cue="automatically" data-anim="up">it doesn't automatically speed up every NP problem: reductions blow up the size<div class="src">the paper, section 1, after Corollary 1.2</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13b: those papers, and the twist -->
+<section data-scene="13b-twist">
   <div class="phase" id="p13a">
     <div class="stage">
-      <div class="meaning">
-        <div class="tower">
-          <div class="block top" data-cue="stronger" data-anim="up">the Strong ETH<div class="strike" data-cue="fell." data-anim="grow"></div></div>
-          <div class="block top" data-cue="stronger" data-anim="up">ETH<div class="strike" data-cue="fell." data-anim="grow"></div></div>
-          <div class="block base" data-cue="untouched." data-anim="up">P ≠ NP<small>still standing, still open</small></div>
-        </div>
-        <div class="col">
-          <div class="q big" data-cue="+0.1" data-anim="pop">P = NP?</div>
-          <div class="stamp green" style="font-size: 60px; align-self: center" data-cue="No." data-anim="slam">no</div>
-          <div class="card" style="font-size: 32px; font-weight: 700" data-cue="reductions" data-anim="up">2<sup>o(n)</sup> doesn't automatically survive the usual reductions<div class="src">the paper, section 1, after Corollary 1.2</div></div>
-        </div>
-      </div>
+      <div class="card ed" data-cue="hundreds" data-anim="up">those hundreds of results: <span style="color: var(--good)">not false</span>, but one reason fewer; some rest on weaker assumptions that may still hold
+        <small>the paper, section 1.1.3: e.g. the Orthogonal Vectors Conjecture</small></div>
+      <div class="row"><div class="chip" data-cue="diff" data-anim="pop">your diff tool: <span style="color: var(--good)">same speed as yesterday</span></div></div>
     </div>
   </div>
   <div class="phase" id="p13b">
     <div class="stage">
-      <div class="card ed" data-cue="edit" data-anim="up">edit distance: its Strong ETH bound is gone; some bounds like it rest on weaker assumptions that still stand
-        <small>the paper, section 1.1.3: e.g. the Orthogonal Vectors Conjecture</small></div>
       <div class="wil" data-cue="Williams" data-anim="up">
         <figure class="ss-portrait" data-commons="File:Ryan Williams at Dagstuhl 10441.jpg"><figcaption>Ryan Williams<small>MIT</small></figcaption></figure>
-        <div class="card">if ETH is false, some problems in E<sup>NP</sup> have no linear-size circuits<div class="src">Williams, STOC 2010 · applied in the paper, Corollary C.1</div></div>
+        <div class="card">if ETH is false, some problems in E<sup>NP</sup> have no circuits of linear size<div class="src">Williams, STOC 2010 · applied in the paper, Corollary C.1</div></div>
       </div>
       <div class="row"><div class="stamp yellow" data-cue="hard." data-anim="slam">fast algorithm ⇒ hardness</div></div>
     </div>
   </div>
 </section>
 
-<!-- 14: trust -->
+<!-- 14: what Lean checks -->
 <section data-scene="14-trust">
   <div class="phase" id="p14a">
     <div class="stage" style="gap: 22px">
-      <div class="leanhead" data-cue="Lean," data-anim="up">The statement OpenAI's Lean proof must match<small>openai/math @ 7ef5c0c · the comparator challenge</small></div>
-      <pre class="ss-code lean" data-source="lean/ComparatorChallenges/SubexponentialSAT.lean" data-ranges="194,199,203-204,210-211" data-cue="Lean," data-anim="fade">theorem exact_count_and_sat (k : ℕ) (hk : 2 ≤ k) :
+      <div class="leanhead" data-cue="Lean," data-anim="up">The statement OpenAI's Lean proof must match<small>openai/math @ 7ef5c0c · the comparator challenge, theorem exact_count_and_sat</small></div>
+      <pre class="ss-code lean" data-source="lean/ComparatorChallenges/SubexponentialSAT.lean" data-ranges="199,203-204,210-211,216-217" data-cue="Lean," data-anim="fade">∀ (n : ℕ) (F : SAT.CNF (Fin n)), SAT.WidthAtMost k F →
 …
-      ∀ (n : ℕ) (F : SAT.CNF (Fin n)), SAT.WidthAtMost k F →
+    <span data-cue="count," data-anim="highlight">final.config.tapes countTape =
+      Turing.Tape.mk₁ ((countWord (SAT.count F)).map some) ∧</span>
 …
-          final.config.tapes countTape =
-            Turing.Tape.mk₁ ((countWord (SAT.count F)).map some) ∧
+    <span data-cue="time" data-anim="highlight">(time : ℝ) ≤ OAI.Algorithms.SubexponentialSAT.SqrtLog.Statement.runtimeBound C A d
+      (Encoding.formulaBitLength F) n ∧</span>
 …
-          (time : ℝ) ≤ OAI.Algorithms.SubexponentialSAT.SqrtLog.Statement.runtimeBound C A d
-            (Encoding.formulaBitLength F) n ∧</pre>
+      <span data-cue="memory." data-anim="highlight">(visitedSpace intermediate : ℝ) ≤
+        S * ((Encoding.formulaBitLength F : ℝ) + 1) ^ e := by</span></pre>
       <div class="trustrow">
         <div class="chip blue" data-cue="count," data-anim="pop">the exact count</div>
-        <div class="chip blue" data-cue="time" data-anim="pop">the time bound</div>
-        <div class="chip blue" data-cue="memory." data-anim="pop">polynomial memory</div>
+        <div class="chip blue" data-cue="time" data-anim="pop">time far below 2<sup>n</sup></div>
+        <div class="chip blue" data-cue="memory." data-anim="pop">little memory</div>
         <div class="chip" data-cue="weaker" data-anim="pop">a bit weaker than the paper's best</div>
       </div>
     </div>
   </div>
   <div class="phase" id="p14b">
     <div class="stage">
-      <div class="trustrow">
-        <div class="card withdrawn" data-cue="pulled" data-anim="up">October 7: three of OpenAI's AI papers withdrawn<div class="src">a sign error · algebraic geometry, not this paper</div></div>
-        <div class="stamp yellow" data-cue="signal." data-anim="slam">not peer reviewed yet</div>
-      </div>
-      <div class="checkers">
-        <figure class="ss-portrait" data-commons="File:Russell Impagliazzo at the DIMACS Workshop on Cryptography.jpg" data-cue="Impagliazzo" data-anim="pop"><figcaption>Russell Impagliazzo<small>proposed ETH</small></figcaption></figure>
-        <div class="namecard" data-cue="Paturi," data-anim="pop"><b>Ramamohan Paturi</b><small>proposed ETH</small></div>
-        <figure class="ss-portrait" data-commons="File:Ryan Williams at Dagstuhl 10441.jpg" data-cue="Williams," data-anim="pop"><figcaption>Ryan Williams<small>refuted a version of the Strong ETH, 2016</small></figcaption></figure>
-      </div>
-      <div class="obit"><div class="stamp" data-cue="obituary." data-anim="slam">proofreading its obituary</div></div>
+      <div class="card withdrawn" style="align-self: center" data-cue="pulled" data-anim="up">October 7: three of OpenAI's AI papers withdrawn<div class="src">a sign error · algebraic geometry, not this paper</div></div>
+      <div class="row"><div class="stamp yellow" data-cue="signal." data-anim="slam">not peer reviewed yet</div></div>
     </div>
+  </div>
+</section>
+
+<!-- 14b: who is checking -->
+<section data-scene="14b-who-checks">
+  <div class="stage">
+    <div class="checkers">
+      <figure class="ss-portrait" data-commons="File:Russell Impagliazzo at the DIMACS Workshop on Cryptography.jpg" data-cue="Impagliazzo" data-anim="pop"><figcaption>Russell Impagliazzo<small>proposed ETH</small></figcaption></figure>
+      <div class="namecard" data-cue="Paturi," data-anim="pop"><b>Ramamohan Paturi</b><small>proposed ETH</small></div>
+      <figure class="ss-portrait" data-commons="File:Ryan Williams at Dagstuhl 10441.jpg" data-cue="Williams," data-anim="pop"><figcaption>Ryan Williams<small>2016: refuted MA-SETH,<br>a cousin of the Strong ETH</small></figcaption></figure>
+    </div>
+    <div class="obit"><div class="stamp" data-cue="obituary." data-anim="slam">proofreading its obituary</div></div>
   </div>
 </section>
 
@@ -605,33 +668,35 @@
         <div class="item" data-cue="page." data-anim="left"><div class="box"></div>the core idea, explained in one page</div>
         <div class="item" data-cue="survive" data-anim="left"><div class="box"></div>which results survive on weaker assumptions</div>
       </div>
+      <div class="row"><div class="chip hot" data-cue="Until" data-anim="pop">keep your SAT solver · doubt anyone selling P = NP</div></div>
     </div>
   </div>
   <div class="phase" id="p15b">
     <div class="stage">
       <div class="last big" data-cue="quarter" data-anim="up"><span class="old">"unless ETH is false"</span></div>
-      <div class="last big" style="font-size: 80px" data-cue="starts" data-anim="slam" data-sfx="thump" data-sfx-offset="0.4">now it <em>starts</em> the argument</div>
+      <div class="last big" style="font-size: 84px" data-cue="starts." data-anim="slam" data-sfx="thump" data-sfx-offset="0.15">now it's where one <em>starts</em></div>
     </div>
   </div>
 </section>
 
 <script>
   // Scenes in two phases: the first steps aside just before the second arrives.
-  tl.to("#p01a", { opacity: 0, duration: 0.35 }, cueAt("#sign") - 0.4);
+  tl.to("#p01a", { opacity: 0, duration: 0.35 }, cueAt("#p01b .floorline") - 0.4);
   tl.to("#p09a", { opacity: 0, duration: 0.35 }, cueAt("#p09b .groups") - 0.4);
-  tl.to("#p11a", { opacity: 0, duration: 0.35 }, cueAt("#p11b .costs") - 0.4);
   tl.to("#p11b", { opacity: 0, duration: 0.3 }, cueAt("#m11") - 0.3);
   tl.to("#p12a", { opacity: 0, duration: 0.3 }, cueAt("#m12") - 0.3);
   tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#m12") + 4.2);
-  tl.to("#p13a", { opacity: 0, duration: 0.35 }, cueAt("#p13b .ed") - 0.4);
+  tl.to("#p13a", { opacity: 0, duration: 0.35 }, cueAt("#p13b .wil") - 0.4);
   tl.to("#p14a", { opacity: 0, duration: 0.35 }, cueAt("#p14b .withdrawn") - 0.4);
   tl.to("#p15a", { opacity: 0, duration: 0.35 }, cueAt("#p15b .last") - 0.4);
 
-  // 02: the switches flip to a setting that makes every rule happy (A, B, C on).
-  tl.to("#p02 .knob.k-on, [data-scene='02-puzzle'] .knob.k-on", { x: 72, backgroundColor: "#ffd66b", duration: 0.4 }, cueAt("[data-scene='02-puzzle'] .ok") - 0.5);
+  // 02: the switches flip to a setting that makes every rule happy (A, B, C on), and the rules get their ticks.
+  tl.set("#rules02 .ok", { opacity: 0 }, 0);
+  tl.to("[data-scene='02-puzzle'] .knob.k-on", { x: 72, backgroundColor: "#ffd66b", duration: 0.4 }, cueAt("[data-scene='02-puzzle'] .chip.hot") - 1.6);
+  tl.to("#rules02 .ok", { opacity: 1, duration: 0.25, stagger: 0.12 }, cueAt("[data-scene='02-puzzle'] .chip.hot") - 1.1);
 
-  // 10: the needle points at 0, turns to 1 for the easy settings, sweeps, and comes back to 0 for the catch.
-  // Angles from the needle's rest at 0: 1 is +51 degrees, 5 is +219.
+  // 10: the needle rests at 0, turns to 1 for the chosen points, sweeps to 5, and comes back to 0 for the catch.
+  // Angles from the rest position: 1 is +51 degrees, 5 is +219.
   tl.to("#needle", { rotation: 51, svgOrigin: "260 270", duration: 0.6 }, cueAt("[data-scene='10-the-dial'] .mini-groups"));
   tl.to("#needle", { rotation: 219, svgOrigin: "260 270", duration: 2.2, ease: "power1.inOut" }, cueAt("[data-scene='10-the-dial'] .bus") + 1.2);
   tl.to("#needle", { rotation: 0, svgOrigin: "260 270", duration: 0.7 }, cueAt("[data-scene='10-the-dial'] .nozero") - 0.2);

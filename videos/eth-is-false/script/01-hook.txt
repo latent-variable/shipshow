@@ -1,5 +1,5 @@
 [energetic, a little stunned] On October twenty sixth, OpenAI posted a paper with a very rude title.
 [deadpan] The Exponential Time Hypothesis is False.
 [matter-of-fact] No human authors. An unreleased AI model wrote it, and OpenAI says a proof checker has already verified it.
-[amused] And two of the people now checking it are two of the three who proposed the hypothesis.
-[sincere] For twenty five years, this hypothesis worked like a speed limit. Hundreds of papers leaned on it to argue that problems can't get faster. If this holds up, that limit is gone.
+[amused] And the people checking it now include two of the three who proposed the hypothesis.
+[sincere] For twenty five years, this hypothesis was a floor under how fast some problems could ever get. Hundreds of papers stood on it. If this holds up, the floor is gone.

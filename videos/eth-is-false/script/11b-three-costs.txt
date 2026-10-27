@@ -1,0 +1,4 @@
+[matter-of-fact] The hard part is three costs at once.
+[clear] How many derivatives you need at each point. How many notes you have to try. And how big each group gets.
+[clear] Squeeze all three together, and the exponent drops to roughly n over the square root of log n.
+[deadpan] Simple, right?

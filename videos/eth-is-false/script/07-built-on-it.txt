@@ -1,5 +1,6 @@
 [matter-of-fact] So people built on it. Hundreds of papers say, this can't be done faster, unless ETH is false.
 [clear] Graph theory, computational biology, databases, geometry.
-[playful] Its big sibling, the Strong ETH, went further. It was the standard reason to say edit distance, how many edits turn one string into another, can't be done much faster than quadratic.
+[playful] Its big sibling, the Strong ETH, went further. As rules get longer, you basically can't beat trying everything.
+[clear] It was the standard reason to say edit distance, how many edits turn one string into another, can't be done much faster than quadratic.
 [deadpan] Unless the Strong ETH is false.
-[serious] For a quarter century, once a paper said unless ETH is false, the argument was over.
+[serious] For a quarter century, unless ETH is false is where most arguments stopped.

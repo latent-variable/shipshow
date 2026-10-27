@@ -1,7 +1,4 @@
 [clear, explaining] So, does this mean P equals NP?
 [firm] No. Even with that squeezed exponent, it's slower than any polynomial. P versus NP is untouched.
 [matter-of-fact] And the paper says this doesn't automatically speed up every NP problem, because the usual reductions can blow up the size.
-[thoughtful] But ETH was the stronger bet, sitting on top of P not equal to NP. Almost everyone believed it. If this proof holds, it just fell.
-[matter-of-fact] And edit distance? It just lost one reason it's stuck. Some lower bounds like it also follow from weaker assumptions that may still hold. Either way, your diff tool didn't get faster.
-[playful] And there's a twist. Ryan Williams proved in 2010 that if ETH is false, some problems can't be solved by small circuits.
-[smug] So a faster algorithm also proves something is hard.
+[thoughtful] But ETH was the bigger bet, sitting on top of P not equal to NP. Most people believed it. If this proof holds, it just fell.
