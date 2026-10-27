@@ -31,7 +31,7 @@ import { pathToFileURL } from "node:url";
 import { die, REPO } from "./lib.mjs";
 import { imageSize } from "./meme.mjs";
 
-export const VERSION = 6;   // how a capture is taken: bump when that changes, so cached shots are taken again
+export const VERSION = 7;   // how a capture is taken: bump when that changes, so cached shots are taken again
 export const cacheDir = () => process.env.SHIPSHOW_SHOTS_CACHE || join(homedir(), ".cache", "shipshow", "shots");
 const SCALE = 2;            // device pixels per CSS px: sharp when the figure is drawn larger than the page was
 const TIMEOUT = 30000;
@@ -158,7 +158,13 @@ function locate({ select, find, hide, pad, lines }) {
     }
     mark = mark.map((m) => ({ x: m.left + sx - clip.x, y: m.top + sy - clip.y, w: m.right - m.left, h: m.bottom - m.top }));
   }
-  return { clip, mark, title: document.title };
+  // Whether the page is light where it was captured: the first background up the tree that is not transparent.
+  let light = true;
+  for (let e = parts[0] || block || document.body; e; e = e.parentElement) {
+    const m = getComputedStyle(e).backgroundColor.match(/[\d.]+/g);
+    if (m && (m.length < 4 || +m[3] > 0.5)) { light = (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) / 255 > 0.5; break; }
+  }
+  return { clip, mark, title: document.title, light };
 }
 
 /** Takes the screenshot: {png (Buffer), meta}. Throws with what went wrong. */
@@ -178,7 +184,7 @@ async function capture(spec) {
     if (clip.width < 10 || clip.height < 10) throw new Error(`the element to capture is ${clip.width} by ${clip.height} px: nothing to show`);
     const png = Buffer.from(await page.screenshot({ clip, captureBeyondViewport: true, omitBackground: true, type: "png" }));
     const mark = found.mark && found.mark.map((m) => ({ x: m.x / clip.width, y: m.y / clip.height, w: m.w / clip.width, h: m.h / clip.height }));
-    return { png, meta: { url: spec.url, select: spec.select, find: spec.find, title: found.title, capturedAt: new Date().toISOString().slice(0, 10), mark } };
+    return { png, meta: { url: spec.url, select: spec.select, find: spec.find, title: found.title, capturedAt: new Date().toISOString().slice(0, 10), mark, light: found.light } };
   } finally { await browser.close(); }
 }
 
@@ -204,6 +210,7 @@ const pct = (v) => `${Math.round(v * 10000) / 100}%`;
 export function figureHtml(attrs, inner, shot) {
   const cls = (attrs.match(/class="([^"]*)"/) || [, ""])[1].split(/\s+/).filter(Boolean);
   if (!cls.includes("ss-shot")) cls.unshift("ss-shot");
+  if (shot.meta.light) cls.push("ss-shot-light");   // the marker multiplies under dark ink instead of washing it out
   const style = (attrs.match(/style="([^"]*)"/) || [, ""])[1];
   const markCue = attrOf(attrs, "data-mark-cue");
   const rest = attrs.replace(/\s*(class|style|data-mark-cue)="[^"]*"/g, "");

@@ -130,6 +130,7 @@ test("a local page is captured, the block holding the words cut out and the word
     const shot = await loadShot(shotSpec(`data-shot="page.html" data-find="YOU MUST understand   your code" data-width="400" data-pad="0"`, dir));
     assert.equal(shot.size.w, 800, "the paragraph, at 2 device pixels per CSS pixel");
     assert.ok(shot.size.h > 40 && shot.size.h < 400, `the paragraph only, not the page: ${shot.size.h} px high`);
+    assert.equal(shot.meta.light, true, "a white page is light");
     assert.ok(shot.meta.mark.length >= 1 && shot.meta.mark.every((m) => m.x >= 0 && m.y >= 0 && m.x + m.w <= 1.001 && m.y + m.h <= 1.001), JSON.stringify(shot.meta.mark));
     // data-lines keeps the lines holding the words: one line here, against the whole paragraph.
     const line = await loadShot(shotSpec(`data-shot="page.html" data-find="If you can't explain" data-lines="0" data-width="400" data-pad="0"`, dir));

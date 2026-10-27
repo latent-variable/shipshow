@@ -1,2 +1,2 @@
-[matter-of-fact] When OCaml's maintainers closed a thirteen thousand line AI pull request, one of them put it plainly: hard to review, and very lightly tested.
+[matter-of-fact] When a maintainer closed OCaml's thirteen thousand line AI pull request, he wrote, among other things: hard to review, and very lightly tested.
 [knowing] Code that passes tests, he wrote, is only twenty percent of the work. The other eighty is getting it discussed, reviewed and integrated.
