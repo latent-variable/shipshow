@@ -247,6 +247,7 @@ test("a clip with a crop is cropped to the expected size, looped over its window
   assert.deepEqual([probe(file).w, probe(file).h], [64, 72]);        // 96 rows less the white band's 24
   assert.ok(Math.abs(probe(file).frames - Math.ceil(+attr(tag, "data-duration") * 30)) <= 1);   // a 1 s clip, looped to about 5.5 s
   assert.match(html, /style="--ar:0.8889;/);
+  assert.match(html, /@font-face[^}]*anton-latin-400-normal/, "a scene with only a clip still loads the meme fonts");
   // The bands are drawn at the top and the bottom, each on its own cue.
   const boxes = [...html.matchAll(/<span class="ss-meme-box" data-font="\w+" style="([^"]*)"><span class="ss-meme-line"([^>]*)>([^<]*)/g)];
   assert.equal(boxes.length, 2);
