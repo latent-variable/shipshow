@@ -2,4 +2,4 @@
 [playful] And a list of rules. Each rule names a few switches, and at least one of them has to be set its way.
 [matter-of-fact] Find a setting that makes every rule happy. That's SAT. Three switches per rule, and it's 3-SAT.
 [dry] Checking an answer is easy.
-[serious] Finding one is hard. With n switches, there are two to the n settings.
+[serious] Finding one seems hard. With n switches, there are two to the n settings.

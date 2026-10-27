@@ -57,3 +57,36 @@ What changed (script revised and re-voiced; scenes rebuilt):
   sits beside the title; the "no floor" stamp left the chart; Paturi's card fits his name; crossing rules run behind the group boxes; the
   dial is larger; memes at 860 px; the Lean excerpt shows four statement lines at 28 px with each part highlighted as it is named
   (count, time, memory; grounding's minor: the memory clause, lines 216 to 217, is now shown); cues moved onto the words that name them.
+
+## Round 2: 0 blocking, 17 major; all eight critics (clarity, sync and grounding pass)
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | fail | 0 / 1 / 6 |
+| clarity | pass | 0 / 2 / 6 |
+| pacing | fail | 0 / 5 / 4 |
+| sync | pass | 0 / 0 / 6 |
+| visuals | fail | 0 / 2 / 5 |
+| consistency | fail | 0 / 2 / 5 |
+| engagement | fail | 0 / 5 / 2 |
+| grounding | pass | 0 / 0 / 2 |
+
+Between rounds the branch was rebased onto main (#78: screenshots, the signal theme, Drama 3's hiss fixes). Drama's take rules moved
+from 1 to 3, so every line was voiced again under the new stall check; main's credit rule (D57) moves photo credits off the photos
+and into the video's description, which settles visuals' credit finding. The chalk theme's decision is now D59.
+
+What changed:
+- **Accuracy.** "Not false" is gone: those papers "lost one of their reasons", some "still backed by weaker assumptions that may hold"
+  (the paper says no more). The checkers are a group "set up to check it" (OpenAI's words are future tense); Williams' result carries no
+  year (the cited theorem is in the 2013 journal version); the record bars say "randomized"; scene 14 says "OpenAI says it formalized" and
+  "the statement that proof has to match"; scene 12 says "the overview example", "for anything smaller", "if it holds"; "seems hard",
+  "several small brute forces", "chosen points".
+- **Clarity and engagement.** The dial "slides from the problem you want to problems you can count"; the notes are short, so few; the
+  curve "has far more bends than we have points", so slopes make up the difference; the three costs are three knobs, "turn one knob, and
+  another one bites"; 08 opens with "It gives an algorithm"; 14b says "a close relative of the Strong ETH".
+- **Pacing.** The 6.4 s silence in 02 was a Drama stall (the re-voice under the new rules retakes it); the pause after the meme is 1.3 s;
+  01, 10 and 12 lose words.
+- **Consistency.** The multiplier in 08's chart is "constant × n" (c stays the base); one rule is "a little piece of algebra", the whole
+  list is "the problem", and "polynomial" is kept for the dial's curve; Terms updated.
+- **Visuals and sync.** 07's stamp moved off the caption into the Strong ETH column; memes at 780 px; source lines at 30 px; name cards
+  padded; Cook's caption breaks before "NP-complete"; the Lean scene sits lower; cues on "hard", "even", "never", "weaker".

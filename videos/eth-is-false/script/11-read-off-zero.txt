@@ -1,5 +1,5 @@
-[sly] Here's the trick. As you turn the dial, the total traces out a polynomial curve.
+[sly] Here's the trick. As you turn the dial, the total traces out a smooth curve, a polynomial in T.
 [clear, explaining] And a polynomial is pinned down once you know enough about it. Two points fix a line.
-[clear] Values alone aren't enough here. So at each easy point, you also compute a stack of derivatives: the slope, the slope of the slope, and so on.
+[clear] But this curve has far more bends than we have points. So at each easy point, you also compute its slope, the slope of the slope, and so on, to make up the difference.
 [excited] Do that at one, two, three and so on, solve for the curve, and read off its value at zero.
 [smug] That's the exact count.

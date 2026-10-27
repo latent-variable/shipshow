@@ -14,10 +14,7 @@
     "3-SAT": "three sat",
     "SAT": "sat",
     "OpenAI": "Open A I",
-    "Impagliazzo": "Impa-lyat-so",
-    "Paturi": "Pa-too-ree",
-    "Ramamohan": "Rama-mohan",
-    "Schöning's": "Shuh-ning's",
+    "Impagliazzo": "Impalyatso",
     "1971": "nineteen seventy one",
     "1999": "nineteen ninety nine",
     "2001": "two thousand one",
@@ -38,6 +35,6 @@
     "duck": 0.35
   },
   "pauses": {
-    "11b-three-costs": 2.5
+    "11b-three-costs": 1.3
   }
 }
