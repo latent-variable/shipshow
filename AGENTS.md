@@ -24,8 +24,8 @@ The skills in `skills/` are the team's baseline. Each person tailors on top of t
 | `docs/PRD.md`, `docs/DESIGN.md` | The requirements, and the design decisions and behaviour. Kept current (*Docs that stay current*) |
 | `skills/` | Every skill. `npm install` links them into `.claude/skills/` for Claude Code; other agents read them here |
 | `videos/<name>/` | One video: `script/`, `scenes.html`, `video.json`, `sources.md`, `critics.md`, `REVIEW.md` |
-| `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; `memes` (search the memegen catalog, with `meme.mjs` behind it and `build`); and `usage` (token and context tracking) |
-| `kit/` | The page, base styles and timeline every video shares; `kit/fonts/` holds the meme fonts (Titillium Web, Anton: SIL OFL, licences beside them) |
+| `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; `memes` (search the memegen catalog, with `meme.mjs` behind it and `build`); `portrait.mjs` (Commons photos, credit and licence gate, called by `build` and `review`); and `usage` (token and context tracking) |
+| `kit/` | The page, base styles (including `ss-portrait`) and timeline every video shares; `kit/fonts/` holds the meme fonts (Titillium Web, Anton: SIL OFL, licences beside them) |
 | `themes/` | Shared themes (`shipshow`, `paper`, `launch`, `buildday`); a client's goes in `local/themes/` |
 | `template/` | What `npm run new` copies |
 | `examples/` | Fictional code bases for example videos: `ledgerly`, the invoicing API behind `videos/invoice-leak` |
@@ -222,6 +222,19 @@ width and height), centred in the scene window, rounded and framed by the theme.
 third-party: fetched, never committed (`assets/` is ignored), and a published video relies on fair use and
 commentary norms, which is the publisher's call (DESIGN D42). The review packet lists each meme's template and
 `source`; credit both in `sources.md`.
+
+**Portraits.** To show who is being talked about: `<figure class="ss-portrait" data-commons="File:Edsger Wybe Dijkstra.jpg" data-cue="Dijkstra" data-anim="pop"><figcaption>Edsger Dijkstra<small>1930-2002 · structured programming</small></figcaption></figure>`
+(the name is the Commons file page's title; the figcaption is yours and optional). The build (`bin/portrait.mjs`) asks the Commons API
+for the file's thumbnail (900 px wide), author and licence once, keeps both in `~/.cache/shipshow/commons/` (`SHIPSHOW_COMMONS_CACHE`;
+`SHIPSHOW_COMMONS_API` moves the endpoint, or is a folder of replies, which is how the tests run), copies the picture to the video's
+`assets/portraits/`, and draws a credit on the photo's foot: `Photo: James S. Davis · public domain`, `Photo: Hamilton Richards · CC BY-SA 3.0`.
+**The licence gate** accepts public domain, CC0, CC BY and CC BY-SA of any version; anything else (non-free, fair use, NC, ND, GFDL, a licence
+Commons does not state), and a CC file with no author, stops the build naming the scene and the file. The gate runs on every build, cached or not.
+`review` lists each portrait's file page, author, licence and licence link under *Portraits*: copy them into `sources.md`. Size: `--portrait-height`
+(640 px; theme or figure style). `ss-portrait-gray` and `ss-portrait-duo` (the theme's accent) treat an old or mismatched photo. A figure is
+centred in the scene window; to place two side by side, wrap them in a flex row and give each `position: relative; inset: auto; margin: 0`.
+A portrait is a person's photo: the pictures are third-party, fetched, never committed, and Commons' metadata is only as good as its uploader
+(some Karpathy and Sanfilippo files are YouTube stills): read the file page before publishing.
 
 **Music.** `video.json` `"music": {"file", "volume", "duck"}` puts a bed under the narration:
 the build decodes it with ffmpeg, loops it to length, lowers it while the voice speaks (from the
