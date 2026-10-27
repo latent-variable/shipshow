@@ -255,3 +255,21 @@ print(ok, len(take) - len(out) > int(sr * 0.03))
   assert.equal(Number(diff), 0, "the reference is the recording, sample for sample (it was denoised, which made the voice hollow)");
   assert.equal(verdict, "True True", "the hiss after the burst counts as the silence to cut at, so the take is clean and its burst is cut");
 });
+
+test("drama: a stall of the clone's hiss inside a take counts as a gap, and a take's ordinary pauses do not", { skip: !numeric && "no python with numpy and soundfile" }, () => {
+  // Voice at about -20 dBFS, a 3 s stall of hiss at -40 dBFS (above SILENT, so read as voice before), then voice again.
+  const r = python(numeric, `
+import numpy as np, drama
+sr = 24000; rng = np.random.default_rng(1)
+def voice(s): t = np.arange(int(sr * s)) / sr; return (0.14 * np.sin(2 * np.pi * 180 * t) * (0.6 + 0.4 * np.sin(2 * np.pi * 3 * t))).astype(np.float32)
+hiss = lambda s: (rng.standard_normal(int(sr * s)) * 0.01).astype(np.float32)
+stalled = np.concatenate([hiss(0.2), voice(1.5), hiss(3.0), voice(1.2), hiss(0.2)])
+paused = np.concatenate([hiss(0.2), voice(1.5), hiss(0.5), voice(1.2), hiss(0.6), voice(1.0), hiss(0.2)])
+for a in (stalled, paused):
+    print(round(drama.longest_gap(a, sr, drama.voiced(a, sr)), 1))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [stalled, paused] = r.stdout.trim().split("\n").map(Number);
+  assert.ok(stalled > 2.0, `the 3 s stall of hiss reads as a gap over GAP_DROP: ${stalled} s`);
+  assert.ok(paused < 1.0, `half-second pauses are not a stall: ${paused} s`);
+});

@@ -50,6 +50,11 @@ REF_MAX = 30.0        # Drama 3 takes a 3 to 30 s reference
 TRIES = 3             # silent or word-dropping takes: made again with the next seed
 TAIL_DROP = 3.0       # seconds of silence at a take's end: words were dropped
 GAP_DROP = 2.0        # seconds of silence inside a take: the model stalled, and the words after it are usually gone
+# Silence inside a take is read against the voice too: anything GAP_BELOW_VOICE dB under the take's loud level (its 90th
+# percentile) counts. A take that is mostly the clone's hiss has its "quiet" level pinned at SILENT while the hiss sits near
+# -40 dBFS, so a 3 s stall of hiss read as voice (never-about-the-code, "Both true. So ... you don't trust the output",
+# 2026-10-27). Over the video's 62 takes, 18 dB caught that stall alone: the next longest gap was 1.5 s.
+GAP_BELOW_VOICE = 18.0
 # Takes compared with the text, when faster-whisper is installed. Drama 3 drops words often enough that this is the check
 # that makes it usable (measured 2026-10-27 on the owner's clone, one line three seeds each: a short last sentence was
 # dropped on 1 of 3 seeds with no direction at all, a direction in the middle of a line dropped the rest of it on 5 of 6,
@@ -111,11 +116,13 @@ def voiced(audio, sr):
 
 
 def longest_gap(audio, sr, span):
-    """The longest run of silence between the voice's first and last sound, in seconds."""
+    """The longest run of silence between the voice's first and last sound, in seconds: quieter than the take's own
+    background, or GAP_BELOW_VOICE dB under its voice, whichever is louder."""
     lv, _ = levels(audio, sr)
-    quiet = max(voicecheck.quiet_level(list(lv)), voicecheck.SILENT)
+    inner = lv[span[0]:span[1] + 1]
+    quiet = max(voicecheck.quiet_level(list(lv)), voicecheck.SILENT, float(np.percentile(inner, 90)) - GAP_BELOW_VOICE if len(inner) else voicecheck.SILENT)
     longest = run = 0
-    for v in lv[span[0]:span[1] + 1]:
+    for v in inner:
         run = run + 1 if v <= quiet else 0
         longest = max(longest, run)
     return longest * 0.01

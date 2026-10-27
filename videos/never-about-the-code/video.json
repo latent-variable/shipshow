@@ -42,7 +42,7 @@
   },
   "pauses": {
     "04-impossible": 0.5,
-    "08-the-trade": 1.4,
+    "08-the-trade": 0.9,
     "09-now": 0.5,
     "13-close": 0.7
   },

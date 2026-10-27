@@ -135,7 +135,7 @@ body { background: var(--bg); overflow: hidden; }
 .ss-shot {
   position: absolute; inset: 0; margin: auto; height: fit-content; display: flex; flex-direction: column; gap: 0.6em;
   width: min(var(--shot-width, 1500px), calc(100% - 2 * var(--pad)), calc((var(--shot-max-height, 860px) - 64px) * var(--ar, 1.6)));
-  font-size: 30px;
+  font-size: 34px;
 }
 .ss-shot-bar {
   display: flex; align-items: center; gap: 0.6em; padding: 0.45em 0.9em; border-radius: var(--radius) var(--radius) 0 0;

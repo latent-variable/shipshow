@@ -800,7 +800,12 @@ cloning without consent; the weights are downloaded by whoever runs it, never sh
 by ear: hear-back proves the words, not the tone. **Names (2026-10-27).** A `say` respelling with a hyphen is read as two words:
 the owner heard "Dike-stra" as "Di... kistra", and Whisper heard it as "Dekeestra" and "Dikestra". Voiced twice each, "Dykstra"
 came back as the name both times and "Dijkstra" as written once in two; Veracode, Quattro and Redis were right as written. So with
-Drama a name is written as it is spelled, and respelled only as one word, checked by voicing it.
+Drama a name is written as it is spelled, and respelled only as one word, checked by voicing it. **Stalls of hiss
+(2026-10-27).** A take that is mostly the clone's hiss has its quiet level pinned at SILENT (-45 dBFS) while the hiss sits near
+-40, so a 3 s stall of hiss inside "Both true. So ... you don't trust the output" read as voice, passed every check, and only a
+sync critic heard the dead air. Silence inside a take is now also anything 18 dB under the take's loud level (its 90th percentile,
+`GAP_BELOW_VOICE`): over that video's 62 takes it caught the stall alone (2.5 s; the next longest gap was 1.5 s). `DRAMA_RULES`
+went to 2, so every Drama take is made again under it once.
 
 ### D56. A quote is shown where it was said: screenshots taken at build (2026-10-27)
 **Decision.** `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of a real page. `bin/shot.mjs`
