@@ -3,6 +3,13 @@
 Every critic applies these on top of its skill. The first cut was rejected by Lino on 2026-10-26; the first five lines are what
 he said was wrong with it, so they are the bar this version is judged by first.
 
+- **The message leads (the owner, on the third cut).** The narration tells one story; quotes and numbers are shown as evidence,
+  never recited one after another ("the guy who wrote this said this, a decade later..."). Every visual supports the message; a
+  visual that is there to look impressive is a finding.
+- **Thoughts land together.** Each script line is one take: sentences meant to be heard together are on one line, and a join
+  between lines must not cut a thought in half.
+- **Memes carry the message and breathe.** A meme rides the line it makes a point about, with the voice running under it for
+  about 3 to 4 s; a meme dropped on the last word of a line as a stitch between scenes is a finding.
 - **Fireship energy (the owner, 2026-10-27, on the second cut).** Punchy, fast, straight to the point, and funny first: "funny
   is better than anything else". People are introduced with a fun line, not a citation; quotes are few and short. A slow, serious or
   lecture-like stretch is a finding. Fast narration is wanted, not a fault, as long as each sentence can be followed.

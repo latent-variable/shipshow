@@ -204,3 +204,47 @@ message, not stitch scenes together; and the narration should say the message, w
 beneath you, rots your brain, becomes the bar), with the quotes on screen; each meme rides the middle of its line for 3 to 4 s. A
 fresh Opus critic read the script cold first ("not yet": scene 10 still recited, claims split from their evidence by a breath,
 memes on the last word); its structure and lines went in. 642 words, 13 scenes, 4:02; every take heard back clean.
+
+## Round 1 (fresh agents: accuracy, pacing, sync, consistency on Sonnet; clarity, visuals, engagement on Opus)
+
+| Critic | Verdict | What it found, and what changed |
+|---|---|---|
+| accuracy | pass (0 blocking, 2 major) | Karpathy's "just don't work" needed his context: the card now says "not intern-level yet" (S12). The moth photo's "her team" was not in the sources: the photo is gone. |
+| visuals | fail (2 blocking, 6 major) | The moth photo covered the stage pills and Hopper's quote and no line was about it: removed. The method's steps 2 to 4 were unnumbered, dim side labels: the terminal rows are numbered 2, 3, 4 and the planted-bug row reads "caught ✓" in green. |
+| engagement | fail (0 blocking, 4 major) | The four stages were never brought back to AI: scene 10 opens on "you don't understand the code is stage three; stage four is here", with the tracker's third pill renamed to the quote. Memes buried their payoffs: see pacing. |
+| clarity | fail | Same as visuals on the method: numbered. |
+| consistency | pass (0 blocking, 2 major) | Numbering: fixed as above. |
+| sync | fix (0 blocking, 4 major) | m03 never faded and hid the Plain English rung; m08 hid "he understood what his program did"; m11 landed on the last word and covered the Veracode card. Every meme now fades 2.2 to 3.6 s after it lands, before the evidence it sat on is named; the Nanami meme rides "four", the Fort Knox one "exactly". |
+| pacing | fail (0 blocking, 4 major) | M1 is the meme cover above. M2 to M4 (02, 07 and 04-05 dense): left to round 2 to judge after the meme fixes. |
+
+Also fixed after looking at the frames: the stage tracker in 05 did not light stage three (two strips stacked out of line; now one strip whose pills change on "three,"), the scene-10 strip wrapped to two lines, scene 10 opened on an empty screen for eight seconds, and the skeptic cards sat empty until each person was named (each card now arrives with its person).
+
+## Round 2 (all seven again: every one failed round 1 or had its ground touched)
+
+| Critic | Verdict | What it found, and what changed |
+|---|---|---|
+| accuracy | pass (0 major, 2 minor) | "with no security guidance" and Mel against the optimizing assembler now quote their sources in `sources.md` (S17, S7). |
+| consistency | pass (3 minor) | The scene-10 pill showed the quote twice: it reads "rots your brain" again and the big line carries the quote. Stale scene selectors left (no visible effect). |
+| sync | pass (5 minor) | "trust the tests" now arrives on its own "trust"; the late-2025 METR points wait for "2026"; the by-hand bar lands on "days". The two thumps 0.5 to 0.65 s after their word are kept on purpose. |
+| clarity | pass (6 minor) | Hopper's "computers only do arithmetic" is now said as what they said; METR's measure is split into how it times tasks and what it asks; scene 10 says the complaint is stage three and the work moved on to stage four; the planted-bug row is green and reads "planted bug: caught ✓"; the hook card reads "the same line, about compilers, 1950s". "Quattro" stays on the card and in the line (declined: his app's name, and the point lands without it). |
+| engagement | fail (1 major, 4 minor) | The METR meme still covered "doubling every three months": it fades 2 s after it lands and 09 holds 1.2 s before the next scene. Empty openings in 03, 08 and 12 now have their first card on the first words. |
+| pacing | fail (4 major) | 02 lost "Quick refresher." and 12 lost "Yes, on purpose."; 04 holds 0.5 s and 08 0.6 s after their last line so the quote and the payoff can be read; Ritchie and Thompson's photos are gone from 07 (named by nobody), which leaves its cards room. 11 and 12 stay above the target: the owner asked for a Fireship pace, and every take was heard back clean. |
+| visuals | fail (1 blocking, 2 major, 6 minor) | The step labels ran out of the terminal: the rows are now a test name ("invoices stay private") and a right-aligned label inside the card. The METR annotation moved off the gridline; the close's lines fit. Credit bands on the photos are the kit's (accepted: legible at 1080p). |
+
+Then a fresh verifier checked every round-2 blocking and major finding against the rebuilt frames: see Round 3.
+
+## Round 3 (a fresh Sonnet verifier, every round-2 blocking and major finding against the rebuilt frames)
+
+Verdict: 0 open blocking, 1 open major, 1 new. The terminal labels, the METR meme, the empty openings in 12 and 13 and the
+engagement major are fixed. Open: in 02 the "No." gag had no beat ("have you ever read them?" and "No." in one take, 0.0 s apart):
+the question is now its own line, so "No." comes after a 0.4 s pause. New: 09 showed bare axes for about 7 s while the voice defined
+METR's measure: "human expert" now highlights on its word and "half the time: the agent finishes 1 task in 2" fills the chart until
+the twelve-hour point arrives (it fades first, since the two would collide; checked in the frames).
+
+**Accepted at the cap of this cut, with reasons:**
+- Pace: 02, 07, 11 and 12 run about 290 to 310 syllables a minute against a 241 target. The owner asked for a Fireship pace, every
+  take heard back clean, and the memes and key cards now each hold long enough to read. His listen decides it.
+- The Nanami meme in 08 still covers the 4 h and 3 days bars for about 2 s; they then stay up for 8 s.
+- Photo credit bands are the kit's size (about 20 px); legible at 1080p.
+- "Quattro" is said without being explained; the card and the point carry it.
+- The duplicated "so, can you?" (on screen and in the caption) is the last line, and kept on purpose.
