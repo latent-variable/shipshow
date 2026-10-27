@@ -120,3 +120,39 @@ What changed:
 - **Visuals.** The floor band in 06 stays faint (`fill` with alpha, so the fade does not make it opaque); the dial's numbers sit off the rim;
   08's labels arrive with their marks; the exponent of 2 is written out at full size; the Lean file label is 28 px; 14b aligns on the photo
   tops; the close's heading sits over its list; 02's chips sit on their own centred row; the hook's crack no longer crosses the label.
+
+## Round 4 (the cap): 1 blocking, 13 major; seven critics. Opus for clarity, visuals and engagement
+
+| Critic | Model | Verdict | Blocking / major / minor |
+|---|---|---|---|
+| accuracy | Sonnet | fail | 0 / 2 / 5 |
+| clarity | Opus | fail | 0 / 1 / 6 |
+| pacing | Sonnet | fail | 0 / 5 / 2 |
+| sync | Sonnet | pass | 0 / 0 / 6 |
+| visuals | Opus | fail | 1 / 1 / 6 |
+| consistency | Sonnet | pass | 0 / 0 / 2 |
+| engagement | Opus | fail | 0 / 3 / 2 |
+
+Fixed after the cap:
+- **Accuracy (the floor, re-checked past the cap below).** "It's slower than any polynomial" described the paper's upper bound as the
+  algorithm's speed; now "its guarantee is still bigger than any polynomial, so it gives no polynomial algorithm". "Divides the exponent by
+  3.7" ignored Theorem 1.1's log log factor; now "it's only about three point seven, and a log log factor and the hidden constants eat into
+  even that". Minors: "the best-known reason" for edit distance; "≈ 3.3 billion" on the counter; "its conditions only start to hold";
+  "for each rule size, one machine counts the satisfying settings exactly ... only polynomial memory".
+- **Visuals (blocking).** The Jiang and Cai label ran off the chart and lost "2026": "preprint" moved to the name, the label is "2026 ·
+  randomized". The Lean file label rendered at 17 px because the kit's rule outranked the scene's: the scene's selector now matches the
+  kit's, at 28 px. Also: the ticks sit inside their rule cards, the edit-distance table is a 4 × 4 grid, the scene under the meme dims to 6%.
+- **Clarity.** Scene 14 now names the remaining doubt before its verdict: "So far, that's OpenAI's word. The people lined up to check it
+  haven't reported yet."
+- **Engagement.** The groups light up on "alone" and the dial swings back to zero on "The catch?"; scene 13's card arrives in three pieces on
+  their words and P ≠ NP on "polynomial"; the dashed c-to-the-n line lands on "base".
+
+**Accepted at the cap, with reasons:**
+- Pace: 09, 12 and 14b run 15 to 20% over the 252 syllables-a-minute target. The owner asked for Fireship pace on his last channel video
+  and accepted 19 to 23% there; every take is heard back; no scene is over 40 s and no still over 9.5 s. His listen decides it.
+- The 2.16 s beat after "Simple, right?" holds the galaxy-brain meme (four lines) and its ding; shorter, the meme is not readable.
+- The 08b citation line lands within 1 s of the scene end; the voice says the same ("if it holds").
+- The hook names two of the three group leads (Williams is named in 14b); "most researchers" for a poll of 124 (the source is on screen).
+- Engagement's minors: three small knobs instead of a picture of knobs in 11b, and dry asides rather than a third meme in 09 to 11.
+- Visuals' minors: 11b's chips sit high until the formula arrives; 12's columns shift when the second arrives; 09's long arc sits close to
+  the count line.

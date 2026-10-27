@@ -63,9 +63,9 @@
   .sw .knob { position: absolute; top: 7px; left: 8px; width: 56px; height: 56px; border-radius: 50%; background: var(--muted); }
   .vocab { font-family: var(--font-mono); font-size: 28px; color: var(--accent-2); text-align: center; }
   .rules { display: flex; gap: 26px; justify-content: center; }
-  .rule { padding: 24px 34px; font-size: 44px; font-weight: 700; position: relative; }
+  .rule { padding: 24px 76px 24px 34px; font-size: 44px; font-weight: 700; position: relative; }
   .rule .or { color: var(--muted); font-weight: 500; }
-  .rule .ok { position: absolute; right: -18px; top: -30px; font-size: 70px; color: var(--good); }
+  .rule .ok { position: absolute; right: 14px; top: 50%; margin-top: -42px; font-size: 64px; color: var(--good); }
 
   /* 03-doubling */
   .counts { display: flex; flex-direction: column; gap: 26px; width: 1500px; margin: 0 auto; }
@@ -129,7 +129,7 @@
   .ed { font-size: 38px; font-weight: 700; line-height: 1.3; }
   .ed small { display: block; font-size: 28px; color: var(--muted); font-weight: 500; margin-top: 10px; font-family: var(--font-mono); }
   .seth { font-size: 36px; font-weight: 700; color: var(--accent-3); }
-  .grid { display: grid; grid-template-columns: repeat(8, 40px); gap: 8px; margin-top: 18px; align-items: center; }
+  .grid { display: grid; grid-template-columns: repeat(4, 40px); gap: 8px; margin-top: 18px; align-items: center; }
   .grid i { width: 40px; height: 40px; border-radius: 6px; background: rgba(143, 211, 244, 0.25); display: block; }
   .gridlab { font-family: var(--font-mono); font-size: 28px; color: var(--muted); margin-top: 8px; }
 
@@ -191,6 +191,7 @@
   .readoff { display: grid; grid-template-columns: 1100px 1fr; gap: 30px; align-items: center; }
   .fix { font-size: 38px; font-weight: 700; line-height: 1.35; display: flex; flex-direction: column; gap: 22px; }
   .costs { display: flex; gap: 20px; justify-content: center; }
+  .costs .chip { font-size: 44px; }
   .result { font-size: 110px; text-align: center; }
   .result .math { color: var(--accent); }
 
@@ -220,7 +221,7 @@
 
   /* 14-trust, 14b-who-checks */
   .lean { font-size: 28px; line-height: 1.45; padding: 24px 30px; }
-  .lean::before { margin-bottom: 10px; font-size: 28px; }
+  .ss-code.lean[data-source][data-ranges]:not([data-source=""]):not([data-ranges=""])::before { margin-bottom: 10px; font-size: 28px; }
   .leanhead { font-size: 36px; font-weight: 700; }
   .leanhead small { font-family: var(--font-mono); font-size: 28px; color: var(--muted); font-weight: 500; display: block; margin-top: 4px; }
   .trustrow { display: flex; gap: 22px; justify-content: center; align-items: center; flex-wrap: wrap; }
@@ -388,7 +389,7 @@
       <g data-cue="everything" data-anim="left"><text class="lab" x="390" y="88" text-anchor="end">try everything</text><text class="sub" x="390" y="124" text-anchor="end">brute force</text><rect class="bar brute" x="420" y="56" width="1140" height="78" rx="8"/><text class="val" x="1530" y="112" text-anchor="end" style="fill: var(--bg)">2</text></g>
       <g data-cue="Schöning's" data-anim="left"><text class="lab" x="390" y="228" text-anchor="end">Schöning</text><text class="sub" x="390" y="264" text-anchor="end">1999 · 4/3 · randomized</text><rect class="bar" x="420" y="196" width="380" height="78" rx="8"/><text class="val" x="820" y="252">1.333</text></g>
       <g data-cue="records" data-anim="left"><text class="lab" x="390" y="368" text-anchor="end">Hertli</text><text class="sub" x="390" y="404" text-anchor="end">PPSZ 2011 · randomized</text><rect class="bar" x="420" y="336" width="351" height="78" rx="8"/><text class="val" x="790" y="392">1.308</text></g>
-      <g data-cue="seven" data-anim="left"><text class="lab" x="390" y="508" text-anchor="end">Jiang, Cai</text><text class="sub" x="390" y="544" text-anchor="end">2026 preprint · randomized</text><rect class="bar" x="420" y="476" width="350" height="78" rx="8"/><text class="val" x="790" y="532">1.307</text></g>
+      <g data-cue="seven" data-anim="left"><text class="lab" x="390" y="508" text-anchor="end">Jiang, Cai, preprint</text><text class="sub" x="390" y="544" text-anchor="end">2026 · randomized</text><rect class="bar" x="420" y="476" width="350" height="78" rx="8"/><text class="val" x="790" y="532">1.307</text></g>
     </svg>
   </div>
 </section>
@@ -437,7 +438,7 @@
       <svg class="floorplot" viewBox="0 0 820 440" width="820" height="440">
         <line class="ax" x1="60" y1="380" x2="800" y2="380"/><line class="ax" x1="60" y1="20" x2="60" y2="380"/>
         <text x="790" y="420" text-anchor="end">n →</text><text x="74" y="44">exponent</text>
-        <g data-cue="constant" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="80" text-anchor="end" style="fill: var(--accent-3)">c to the n = 2 to the (constant × n)</text></g>
+        <g data-cue="base" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="80" text-anchor="end" style="fill: var(--accent-3)">c to the n = 2 to the (constant × n)</text></g>
         <path class="cur" d="M60 380 C 180 200, 400 170, 800 160" data-cue="slower" data-anim="draw"/><text class="lbl" x="790" y="210" text-anchor="end" style="fill: var(--accent)" data-cue="slower" data-anim="fade">n / √log n</text>
         <circle cx="520" cy="170" r="12" style="fill: var(--bad)" data-cue="eventually" data-anim="pop"/>
         <text x="420" y="420" text-anchor="middle">schematic</text>
@@ -513,7 +514,8 @@
           <div class="grp"><div class="dots"><i></i><i></i><i></i></div></div>
         </div>
         <div class="bus" data-cue="summary" data-anim="grow">shared summaries: a short note on each group</div>
-        <div class="panel" data-cue="few" data-anim="up">try every note<small>for each one, count every group alone</small></div>
+        <div class="panel" data-cue="few" data-anim="up">try every note<small>for each one, count every group <span id="alone10" data-cue="alone." data-anim="highlight">alone</span></small></div>
+        <span id="catch10" data-cue="catch?" data-anim="fade"></span>
         <div class="nozero" data-cue="never" data-anim="pop">✗ at T = 0 this shortcut doesn't apply</div>
       </div>
     </div>
@@ -565,12 +567,12 @@
     <div class="stage">
       <div class="gal">
         <div class="col">
-          <div class="tag" data-cue="+0.1" data-anim="fade">before you rewrite your SAT solver…</div>
-          <div class="big huge" data-cue="slowly." data-anim="up"><span class="math">√log(1,000,000) ≈ 3.7</span><small data-cue="million" data-anim="fade">a million switches: the exponent is only<br>divided by about 3.7 · log is the natural log</small></div>
-          <div class="chip" data-cue="constants" data-anim="pop">the big O hides constants</div>
+          <div class="tag" style="white-space: nowrap; letter-spacing: 0.04em" data-cue="+0.1" data-anim="fade">before you rewrite your SAT solver…</div>
+          <div class="big huge" data-cue="slowly." data-anim="up"><span class="math">√log(1,000,000) ≈ 3.7</span><small data-cue="million" data-anim="fade">at a million switches · natural log<br>a log log factor and hidden constants eat into it</small></div>
+          <div class="chip" data-cue="constants" data-anim="pop">log log factor + hidden constants</div>
         </div>
         <div class="col">
-          <div class="card" data-cue="parameter" data-anim="up"><div class="digitsbig" data-cue="billion" data-anim="count">3,300,000,000</div><div class="huge" style="font-size: 44px; margin-top: 8px">digits in the number of switches<br>before the construction works<small>with the overview's parameter choice (eq. 2.19),<br>our arithmetic: n &gt; 2 to the 10.9 billion</small></div></div>
+          <div class="card" data-cue="example" data-anim="up"><div class="digitsbig" data-cue="billion" data-anim="pop">≈ 3.3 billion</div><div class="huge" style="font-size: 44px; margin-top: 8px">digits in the number of switches<br>before its conditions hold<small>with the paper's worked example numbers (eq. 2.19),<br>our arithmetic: n &gt; 2 to the 10.9 billion</small></div></div>
           <div class="stamp yellow" style="align-self: center" data-cue="typo." data-anim="slam">not a typo</div>
         </div>
       </div>
@@ -591,13 +593,16 @@
   <div class="stage">
     <div class="meaning">
       <div class="tower">
-        <div class="block top" data-cue="bigger#2" data-anim="up">ETH<div class="strike" data-cue="fell." data-anim="grow"></div></div>
-        <div class="block base" data-cue="untouched." data-anim="up">P ≠ NP<small>still standing, still open</small></div>
+        <div class="block top" data-cue="bigger#3" data-anim="up">ETH<div class="strike" data-cue="fell." data-anim="grow"></div></div>
+        <div class="block base" data-cue="polynomial" data-anim="up">P ≠ NP<small>still standing, still open</small></div>
       </div>
       <div class="col">
         <div class="q big" data-cue="+0.1" data-anim="pop">P = NP?</div>
         <div class="stamp green" style="font-size: 64px; align-self: center" data-cue="No." data-anim="slam">no</div>
-        <div class="card" style="font-size: 36px; font-weight: 700" data-cue="translating" data-anim="up">crack SAT, crack NP: by translating into SAT, which makes problems bigger; a speedup this small doesn't automatically survive<div class="src">the paper, section 1, after Corollary&nbsp;1.2</div></div>
+        <div class="card" style="font-size: 36px; font-weight: 700" data-cue="translating" data-anim="up">crack SAT, crack NP: by translating into SAT
+          <div data-cue="bigger#2" data-anim="up" style="margin-top: 8px">which can make problems much bigger</div>
+          <div data-cue="survive" data-anim="up" style="margin-top: 8px; color: var(--accent)">a speedup this small doesn't automatically survive</div>
+          <div class="src">the paper, section 1, after Corollary&nbsp;1.2</div></div>
       </div>
     </div>
   </div>
@@ -640,9 +645,9 @@
       <span data-cue="memory." data-anim="highlight">(visitedSpace intermediate : ℝ) ≤
         S * ((Encoding.formulaBitLength F : ℝ) + 1) ^ e := by</span></pre>
       <div class="trustrow">
-        <div class="chip blue" data-cue="counts" data-anim="pop">the exact count</div>
+        <div class="chip blue" data-cue="counts" data-anim="pop">the exact count, for each rule size</div>
         <div class="chip blue" data-cue="beats" data-anim="pop">beats c<sup>n</sup> for every c &gt; 1</div>
-        <div class="chip blue" data-cue="memory." data-anim="pop">little memory</div>
+        <div class="chip blue" data-cue="memory." data-anim="pop">polynomial memory</div>
         <div class="chip" data-cue="weaker" data-anim="pop">a bit weaker than the paper's best</div>
       </div>
     </div>
@@ -650,7 +655,8 @@
   <div class="phase" id="p14b">
     <div class="stage">
       <div class="card withdrawn" style="align-self: center" data-cue="pulled" data-anim="up">October 7: three of OpenAI's AI papers withdrawn<div class="src">a sign error · algebraic geometry, not this paper</div></div>
-      <div class="row"><div class="stamp yellow" data-cue="signal." data-anim="slam">not peer reviewed yet</div></div>
+      <div class="chip" style="align-self: center" data-cue="far," data-anim="pop">so far, OpenAI's word: the checkers haven't reported</div>
+      <div class="row"><div class="stamp yellow" data-cue="peer" data-anim="slam">not peer reviewed yet</div></div>
     </div>
   </div>
 </section>
@@ -692,7 +698,7 @@
   // Scenes in two phases: the first steps aside just before the second arrives.
   tl.to("#p01a", { opacity: 0, duration: 0.35 }, cueAt("#p01b .floorline") - 0.4);
   tl.to("#p09a", { opacity: 0, duration: 0.35 }, cueAt("#p09b .groups") - 0.4);
-  tl.to("[data-scene='07-built-on-it'] .stage", { opacity: 0.15, duration: 0.3 }, cueAt("#m07") - 0.2);
+  tl.to("[data-scene='07-built-on-it'] .stage", { opacity: 0.06, duration: 0.3 }, cueAt("#m07") - 0.2);
   tl.to("#p11b", { opacity: 0, duration: 0.3 }, cueAt("#m11") - 0.3);
   tl.to("#p12a", { opacity: 0, duration: 0.3 }, cueAt("#m12") - 0.3);
   tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#m12") + 4.2);
@@ -709,5 +715,6 @@
   // Angles from the rest position: 1 is +51 degrees, 5 is +219.
   tl.to("#needle", { rotation: 51, svgOrigin: "260 270", duration: 0.6 }, cueAt("[data-scene='10-the-dial'] .mini-groups"));
   tl.to("#needle", { rotation: 219, svgOrigin: "260 270", duration: 2.2, ease: "power1.inOut" }, cueAt("[data-scene='10-the-dial'] .bus") + 1.2);
-  tl.to("#needle", { rotation: 0, svgOrigin: "260 270", duration: 0.7 }, cueAt("[data-scene='10-the-dial'] .nozero") - 0.2);
+  tl.to("[data-scene='10-the-dial'] .mini-groups .grp", { backgroundColor: "rgba(143, 211, 244, 0.22)", duration: 0.3, stagger: 0.25 }, cueAt("#alone10"));
+  tl.to("#needle", { rotation: 0, svgOrigin: "260 270", duration: 0.7 }, cueAt("#catch10"));
 </script>
