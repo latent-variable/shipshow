@@ -135,7 +135,7 @@ A change to `bin/`, `kit/` or `template/` is validated by running `make` and `re
 
 | File | What it is |
 |---|---|
-| `script/01-intro.txt`, `02-...` | One file per scene, read aloud in file-name order. A sentence ends at `.`, `!` or `?` and a space |
+| `script/01-intro.txt`, `02-...` | One file per scene, read aloud in file-name order. A sentence ends at `.`, `!` or `?` and a space. With OmniVoice runs, write one thought per line: each line is one take, so sentences meant to land together are voiced together (`lineRuns`, D54; a line over 70 words is split) |
 | `scenes.html` | One `<section data-scene="01-intro">` per script file, a `<style>` for the look, optionally a `<script>` |
 | `video.json` | `title`, `kind` (`decision`, `feature`, `release`), `importance` and `importance_reason` (set by the builder), `sfx` (sound effects: `false`, a kit name, or `{kit, under, tonic}`), `shows_code` (puts `critic-grounding` on the floor; read from `scenes.html` when absent: a `<pre>`, `<code>` or `.ss-code` sets it, and `false` cannot lower it), `voice`, `speed`, `theme`, `flair`, `review`, `say`, `audience`; optional `lead`, `gap`, `tail` (seconds of pause), `pauses` (`{"<scene>": seconds}`: a beat after one scene, so a meme or a stamp at its end can be read), `hold` (still seconds after the last word; the last scene never fades), `seed`, `loudness` (LUFS the render is mastered to; -14 by default, `false` for none) |
 | `sources.md` | Every claim the video makes, with its source |

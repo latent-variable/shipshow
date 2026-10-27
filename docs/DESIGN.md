@@ -766,6 +766,14 @@ takes).** Fixed threshold: 6 of 6 runs flagged and trimmed. Background-relative,
 under: 0 of 6, every run heard back at 97% or more. 0.35 s of extra start room (product-videos' LEAD) made no difference to the flags
 and slowed the read, so it was not kept. **Lesson.** A change to how the voice sounds is judged by ear before it ships; D47's
 numbers improved while the voice got worse, and nobody listened until the video was done.
+
+### D54. With runs, a script line is a take (2026-10-27)
+**Decision.** When a scene's script file has more than one line, and every line ends its last sentence, `voice` makes each line one
+take (`lineRuns` in `bin/lib.mjs`); a line over 70 words (`LINE_MAX`) is split by the old rule. A one-paragraph file keeps the
+45-word runs of D47. **Why.** On the third cut of never-about-the-code the owner heard sentences "broken up in awkward places ...
+they don't sound like they're meant to be one after the other": a word count cut thoughts in half and joined unrelated ones. The
+writer knows where a thought ends; a line break says so. **Costs.** A long line is a long take, where OmniVoice drops words more often
+(D47's measurements); hear-back's best of three and the 97% flag still catch it, and lines over 70 words are split.
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

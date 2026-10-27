@@ -25,7 +25,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { REPO, HF, VENV_PY, breathe, config, die, groupRuns, pythonExists, readWav, round, run, scenes, sentences, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
+import { REPO, HF, VENV_PY, breathe, config, die, lineRuns, pythonExists, readWav, round, run, scenes, sentences, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
@@ -57,7 +57,8 @@ const jobs = [];
 const plan = scenes(dir).map((s) => {
   const texts = sentences(s.text);
   const says = texts.map((t) => spoken(t, cfg.say));
-  const groups = RUNS ? groupRuns(says) : texts.map((_, i) => [i]);
+  // a script written one thought per line is voiced a line at a time (lineRuns); otherwise up to 45 words a take
+  const groups = RUNS ? lineRuns(s.text, says).runs : texts.map((_, i) => [i]);
   return {
     id: s.id,
     units: groups.map((idx, n) => {
