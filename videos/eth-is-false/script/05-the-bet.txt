@@ -1,0 +1,6 @@
+[clear, explaining] But here's what people miss. P not equal to NP only says SAT can't be solved in polynomial time.
+[curious] Between polynomial and exponential, there's a huge middle ground.
+[matter-of-fact] Two to the square root of n, for example. Slower than any polynomial, but faster than any exponential, even one point zero zero one to the n.
+[storyteller] So Russell Impagliazzo and Ramamohan Paturi made a sharper bet, published in 2001.
+[firm] 3-SAT is not in that middle. It needs truly exponential time: some number bigger than one, raised to the n.
+[dry] They called it the Exponential Time Hypothesis. ETH.

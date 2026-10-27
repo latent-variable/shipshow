@@ -1,0 +1,6 @@
+[firm] Then, the paper.
+[clear, explaining] It handles rules of any size, three switches, four, ten, as long as the size is fixed. It's deterministic, and it uses polynomial memory.
+[clear] And the speed. Still two to the something, but the something isn't n anymore. It grows roughly like n over the square root of log n.
+[clear] That exponent grows slower than any constant times n. So whatever floor you pick, eventually it gets under it. If it's right, the floor is gone.
+[impressed] And it doesn't just find one answer. It counts every satisfying setting, exactly. Counting is supposed to be even harder.
+[dry] So it takes out ETH, the Strong ETH, and a whole family of cousins, in one paper.

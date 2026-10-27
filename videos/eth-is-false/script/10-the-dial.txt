@@ -1,0 +1,5 @@
+[storyteller] So the paper adds a dial. Call it T.
+[clear] At T equals zero, the formula is exactly the original.
+[clear, explaining] At a few chosen settings, one, two, three and so on, the rules get rewritten. A rule that reaches into another group stops reading those switches directly. It reads shared summaries instead, like a note on what that group is doing.
+[matter-of-fact] Try every value of those notes, one at a time. With the notes fixed, the groups stop needing each other, and the fast count works.
+[dry] The catch? It works at those chosen settings, never at zero. The one place you need the answer.

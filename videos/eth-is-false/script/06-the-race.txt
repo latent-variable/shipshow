@@ -1,0 +1,4 @@
+[storyteller] And for twenty five years, the evidence looked good.
+[matter-of-fact] Trying everything is two to the n. In 1999, Schöning's random walk got 3-SAT down to about one point three three to the n. Still exponential, but way smaller than two.
+[dry] A few more records since, down to one point three oh seven this year. Every one shaved a hair. Nobody got near one.
+[serious] ETH says nobody ever will. The base has a floor above one, and no algorithm gets under it.

@@ -1,0 +1,7 @@
+[serious] So, should you believe it?
+[clear, explaining] OpenAI wrote the proof in Lean, a language where a computer checks every step. The statement covers the claim on a real Turing machine: the exact count, a subexponential time bound, and polynomial memory.
+[dry] The bound it checks is a bit weaker than the paper's best. Still enough to sink ETH.
+[matter-of-fact] But OpenAI's same collection pulled three other papers on October seventh, after a sign error was found.
+[dry] So it's a strong signal. It's not peer review yet.
+[sincere] And look who's checking. Impagliazzo and Paturi, who proposed ETH, and Ryan Williams, who refuted a version of the Strong ETH back in 2016.
+[deadpan] The people who wrote the hypothesis are proofreading its obituary.

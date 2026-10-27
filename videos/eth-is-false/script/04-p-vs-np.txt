@@ -1,0 +1,5 @@
+[clear, explaining] Quick refresher on P versus NP.
+[matter-of-fact] P is the problems a computer solves fast, where the work grows like n squared or n cubed, not doubling with every switch. NP is the problems where you can check an answer fast.
+[serious] In 1971, Stephen Cook showed SAT is the hardest of that whole bunch. Crack it fast, and you crack all of NP fast.
+[dry] Most researchers bet nobody ever will. Eighty eight percent, in a 2019 poll.
+[deadpan] Over fifty years, and nobody can prove it either way.

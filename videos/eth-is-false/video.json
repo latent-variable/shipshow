@@ -1,0 +1,40 @@
+{
+  "title": "The Exponential Time Hypothesis is False",
+  "kind": "feature",
+  "importance": "high",
+  "importance_reason": "public: Lino's YouTube channel, in his own voice, explaining a complexity-theory result experts are still checking; a viewer may repeat any claim",
+  "audience": "A developer on YouTube who knows roughly what P versus NP is, or has heard of it, and saw the headline that an AI refuted the Exponential Time Hypothesis. After watching, they can say what 3-SAT and ETH are, how ETH relates to P versus NP, what the paper claims and the core idea of how, why it does not make SAT solvers faster or settle P versus NP, and how far to trust it today.",
+  "theme": "chalk",
+  "engine": "drama",
+  "voice": "lino-long",
+  "speed": 1.2,
+  "say": {
+    "ETH": "E T H",
+    "NP": "N P",
+    "3-SAT": "three sat",
+    "SAT": "sat",
+    "OpenAI": "Open A I",
+    "Impagliazzo": "Impa-lyat-so",
+    "Paturi": "Pa-too-ree",
+    "Ramamohan": "Rama-mohan",
+    "Schöning's": "Shuh-ning's",
+    "1971": "nineteen seventy one",
+    "1999": "nineteen ninety nine",
+    "2001": "two thousand one",
+    "2010": "twenty ten",
+    "2016": "twenty sixteen",
+    "2019": "twenty nineteen",
+    "n": "en",
+    "T": "tee"
+  },
+  "gap": 0.35,
+  "hold": 3,
+  "flair": {
+    "ambient": "blobs dust vignette grain"
+  },
+  "music": {
+    "file": "local/music/eth-is-false-bed.wav",
+    "volume": 0.18,
+    "duck": 0.35
+  }
+}

@@ -1,0 +1,6 @@
+[sly] Here's the trick. The whole sum, as a function of the dial, is a polynomial, and the paper keeps its degree under control.
+[clear, explaining] A polynomial is pinned down once you know enough about it. Two points fix a line. Here, at each easy setting, you compute the value and a whole stack of its derivatives.
+[excited] Do that at one, two, three and so on, solve for the curve, and read off its value at zero.
+[smug] That's the exact count.
+[matter-of-fact] The hard part is three costs at once: how many derivatives you need at each point, how many notes you try, and how big each group is.
+[clear] Squeeze all three together, and the exponent drops to roughly n over the square root of log n.
