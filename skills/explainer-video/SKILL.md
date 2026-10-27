@@ -3,9 +3,9 @@ name: explainer-video
 description: >
   Make or update a narrated explainer video in this repo: facts from a source of record,
   a script, scenes, a Kokoro, OmniVoice or Drama 3 voice, a HyperFrames render, then the critic loop until the
-  video's critics pass. Three kinds: a decision video an agent makes mid-work so a person
-  can make a call, a feature explainer (how something in a code base works), and a release
-  explainer. Load when asked for an explainer, a release video, a "video of how X works",
+  video's critics pass. Four kinds: a decision video an agent makes mid-work so a person
+  can make a call, a feature explainer (how something in a code base works), a release
+  explainer, and an essay (an idea argued in your own voice, made to share). Load when asked for an explainer, a release video, a "video of how X works",
   or a video to decide something, or to update one.
 ---
 
@@ -30,6 +30,7 @@ skill). They tailor taste, never the truth bar.
 | **Decision** | An agent working on a feature needs a person's call and wants them confident making it | The code base and the brief | `critic-decision` |
 | **Feature** | Someone wants to know how a feature or system in a code base works | The code base | |
 | **Release** | A project ships and its developers need to know what changed | The release, changelog and pull requests | |
+| **Essay** | Someone wants to share an idea or argue a point in their own voice, to publish or pass around | Published sources: papers, posts, records, the author's own account marked as opinion | `critic-engagement` weighs most |
 
 **Where it lives** (`evidence-standard`). A video about this repo or the sample app (`sample_application/`, original code written for it),
 or one we mean to publish (an example decision video about `examples/`, like `videos/invoice-leak`), goes in
@@ -56,6 +57,20 @@ to a fresh explainer agent, so the video is made by one that has not absorbed it
    run to three minutes; `critic-pacing`'s scene-length limit still holds.
 4. **It hands back** with `explain-handoff`: status, the MP4's path, the pick, and what the code
    overruled or could not settle. The person watches, decides, and the working agent carries on.
+
+### An essay, in your own voice
+
+A video someone makes to convey their ideas: an opinion piece for their channel, a paper explained, a case made to a
+team. Facts still come from `sources.md`; the author's view is tagged **opinion** there and said as theirs. It is
+voiced in the author's own clone where they consented (Drama 3, directed), and **the priority is that it is fun to
+watch**, on top of true.
+
+- **Built in sections**, the acts of the argument (`explain-concept`: a longer video is acts). Each section gets its
+  own **mood** (`AGENTS.md`, *Moods*): a look and a music bed made for what it says, so a viewer feels the turn
+  without being told: a 1950s file drawer for the history (`archive` theme), something urgent for the objection.
+- **Music per section** from `local-imagegen`'s ACE-Step (instrumental, the section's length or longer, a couple of
+  seeds), checked for singing with Whisper before it goes under a voice. It lives in `local/music/`, never committed.
+- Every joke is directed as one take; every quote is shown where it was said.
 
 ## 1. Facts first: `sources.md`
 
@@ -148,8 +163,9 @@ Information is not enough; the viewer has to want to keep watching. Each video s
 made for its subject, not stamped from a template.
 
 - **Theme** for the client or audience (`skills/theme`); the shipped ones are `shipshow`, `paper`,
-  `launch`, `buildday` (karaoke captions), `lofi` (a late-night study room) and `signal` (near-black, a highlighter
-  yellow, big type: for a video that argues a point with evidence).
+  `launch`, `buildday` (karaoke captions), `lofi` (a late-night study room), `signal` (near-black, a highlighter
+  yellow, big type: for a video that argues a point with evidence), `chalk` (a blackboard, for theory) and `archive`
+  (a 1950s file drawer: sepia paper and typewriter, for history, often as one section's mood).
 - **Flair** in `video.json` for this video's own motion: `"flair": {"transition": "wipe",
   "camera": "push", "ambient": "grid"}`. A section's `data-transition` changes one scene;
   varying them keeps the cuts alive.
@@ -192,7 +208,7 @@ you can see is broken.
 ## 5. The critic loop
 
 Decide how much review it deserves: set `video.json` `"kind"` (`decision`, `feature`,
-`release`), `"importance"` (`low`, `normal`, `high`) and a one-line `"importance_reason"`,
+`release`, `essay`), `"importance"` (`low`, `normal`, `high`) and a one-line `"importance_reason"`,
 judged as `critic-loop` says (*How much review*). `npm run critics -- <folder>` prints the
 plan that follows from it. Then run `skills/critic-loop` to that plan, with the
 video's own `critics.md`. Fix what they find, rebuild, regenerate the packet, run fresh

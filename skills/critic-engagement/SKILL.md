@@ -34,15 +34,16 @@ reason for pressing play, and watch it as them.
 - **major:** every scene enters and moves the same way, so the video feels stamped from a
   template rather than made for its subject.
 - **major:** in a video longer than about three minutes, its acts (the setup, the history, the turn, the consequences) all
-  look and sound alike: one colour, one background and one music bed from start to end. Each act gets its own feel through
-  `video.json` `moods` (DESIGN D61), and a change of mood lands where the act turns. The owner, 2026-10-27, on a ten-minute
+  look and sound alike: one colour, one background and one music bed from start to end; or an act's look or music fights
+  what it says (bouncy music under a security failure). Each act gets its own feel through
+  `video.json` `moods` (DESIGN D61; the packet's *Moods* table), and a change of mood lands where the act turns. The owner, 2026-10-27, on a ten-minute
   explainer: every section felt the same.
 - **major:** an act opens on a signpost ("so how does it work?", "quick refresher on X") instead of a hook: a question, a
   turn, a picture that gives a reason to keep watching. Same review.
 - **major:** a concept is shown only where it works. When the viewer needs to know what failure looks like (no answer, a
   conflict, a crash) and why it matters to someone, the video shows it; growth or scale the video leans on is drawn as a
   chart, not only said. Same review, on 3-SAT and exponential growth.
-- **major:** for a video meant to be fun, a stretch of about thirty seconds with no joke, picture gag or turn.
+- **major:** for a video meant to be fun (every essay is: it is watched by choice), a stretch of about thirty seconds with no joke, picture gag or turn.
 - **minor:** motion that competes with the words: an effect on something the voice is not
   talking about, or so much movement the viewer cannot read.
 - **minor:** an opening or ending that is generic (a title card, "thanks for watching")

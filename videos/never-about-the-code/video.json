@@ -1,6 +1,6 @@
 {
   "title": "It was never about the code",
-  "kind": "feature",
+  "kind": "essay",
   "importance": "high",
   "importance_reason": "public: Lino's YouTube channel, in his own voice, making historical and research claims a viewer may repeat",
   "audience": "A developer or tech lead on YouTube who uses AI coding agents, or argues against them, and has heard 'you don't understand the code'. Knows roughly what a compiler is; may not know the history. After watching, they can answer that criticism with what each earlier layer's skeptics said, why the layer won anyway, where AI coding stands in 2026, and a better question: do you understand what it does, and how do you know?",
@@ -47,5 +47,61 @@
     "13-close": 0.7
   },
   "hold": 4,
-  "gap": 0.35
+  "gap": 0.35,
+  "moods": {
+    "today": {
+      "theme": "signal",
+      "music": {
+        "file": "local/music/never-about-the-code-lofi.wav",
+        "volume": 0.2,
+        "duck": 0.35
+      }
+    },
+    "archive": {
+      "theme": "archive",
+      "music": {
+        "file": "local/music/nac-archive-s7.wav",
+        "volume": 0.18,
+        "duck": 0.35
+      }
+    },
+    "now": {
+      "theme": "launch",
+      "look": {
+        "--accent-3": "#4de8ff",
+        "--shot-mark": "#4de8ff",
+        "--cap-hot": "#4de8ff",
+        "--progress-fill": "#4de8ff"
+      },
+      "music": {
+        "file": "local/music/nac-now-s21.wav",
+        "volume": 0.18,
+        "duck": 0.35
+      }
+    },
+    "objection": {
+      "theme": "signal",
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #2b0f12 0%, #140708 55%, #080404 100%)",
+        "--bg": "#120607",
+        "--card": "#1d0f11",
+        "--line": "#3d1e22",
+        "--accent": "#ff4040",
+        "--vignette-color": "#200000"
+      },
+      "music": {
+        "file": "local/music/nac-objection-s7.wav",
+        "volume": 0.22,
+        "duck": 0.35
+      }
+    },
+    "workshop": {
+      "theme": "buildday",
+      "music": {
+        "file": "local/music/nac-workshop-s21.wav",
+        "volume": 0.16,
+        "duck": 0.35
+      }
+    }
+  }
 }

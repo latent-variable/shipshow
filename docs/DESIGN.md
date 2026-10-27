@@ -158,8 +158,8 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 **Facts from the docs that shaped it.** Only `name` is required, in kebab-case, and may not start
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
-every turn (measured: 22 skills, 7,891 characters, about 1,973 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 217). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+every turn (measured: 22 skills, 7,957 characters, about 1,989 tokens), so descriptions stay short
+and SKILL.md under 500 lines (longest 233). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -903,6 +903,21 @@ change. A token with no base value switches at the midpoint. A video cannot retu
 restates it. **Tested** by `test/moods.test.mjs` (carry-forward, unknown names, namespaced fonts and files, midpoint switches,
 tweens, synthetic tones before, during and after a music boundary), and a three-scene Kokoro demo built, checked and rendered:
 frames at each boundary show navy turning into the paper theme's cream and serif type, then a lofi night with stars.
+### D61. The essay: a video to share an idea, in sections with their own moods; the archive theme (2026-10-27)
+**Decision.** A fourth kind, `"kind": "essay"`: a video someone makes to convey their own ideas, in their own voice, to
+publish or pass around (an opinion piece for a channel, a paper explained). It is reviewed like a feature video (`standard`
+by default, accuracy on the floor), but the skills set a further bar: it is built in sections, the acts of the argument, and
+each section gets its own mood (a look and a music bed made for what it says; moods are D60), so no two neighbouring sections
+look or sound alike; and enjoyment is judged on top of truth (`critic-engagement`). `themes/archive` is the first theme made
+to be a section's mood: sepia paper, typewriter ink, a red stamp and IBM blue, Playfair Display and Courier Prime (SIL OFL).
+**Why.** The owner on never-about-the-code's sixth cut (2026-10-27): "each section ... should have dedicated looks and
+feels and should be accompanied by music, relevant music, to help convey the specific message ... the priority is that it
+should be fun", and "this type of explainer video, make your own explainer video that you can share with others in your
+voice to convey your ideas, is another thing that we're doing now ... that we need to make sure is properly documented".
+Neither of his two channel videos (never-about-the-code, eth-is-false) is a decision, feature or release video; both were
+filed as `feature`. **Costs.** The kind changes no code path but the check that accepts it; the bar lives in the skills. Each
+section's music is generated per video (ACE-Step, local, MIT) and kept in `local/music/`, so a teammate without it builds in
+silence for those sections (D60's warning).
 
 ## Behaviour
 
