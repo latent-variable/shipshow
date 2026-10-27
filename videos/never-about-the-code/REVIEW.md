@@ -409,3 +409,19 @@ January 2023 (S33, S34) and ends on the opening's charge. Every line voiced agai
 | clarity | pass (3 minor) | The callback is now on screen too ("You don't understand the code." under the stamp, on a solid card); the ladder's side labels read "write less, trust more" at the top and "write it all" at the bottom, so no end reads as more trust for machine code |
 | visuals | revise (1 major) | Solid panels stopped at the scene window and cut the workshop horizon with a hard line: a solid panel now fades out at its foot. Archive caption strip darker. The Copilot mark sliding across other words mid-sweep is the kit's, for every marked screenshot (noted, not fixed here) |
 | engagement | revise (2 major) | About a minute with no gag (objection to workshop): a "+13,323 −0, lines to review" diff stat slams on "thirteen thousand" (S25), the review step shows its three rounds (S29), the rewind gets a VHS teal tint, and "Always has been" stays up 3.2 s. **For the owner:** opening the workshop on the bug story instead of "So here's how I actually do that eighty percent", and a dry line in his process, both change his own words about how he works |
+
+**Round 3** (fresh Sonnet verifiers on the round-2 fixes):
+
+| critic | verdict | what changed |
+|---|---|---|
+| visuals | revise (1 major) | The horizon was whole in 12 but still cut under the meme in 12b, and the rewind's tint stopped at the caption band: every panel (`.scrim`) and the VHS lines now fade out at their foot with a mask. Everything else from round 2 confirmed |
+| engagement | revise (1 major) | The dry stretch is about 40 s now (258 to 309 s); what is left is the two script changes held for the owner. The diff stat is bigger, and "Fixed before it merged" gets a ding |
+
+**Found by the builder after round 3: moods greyed the picture.** Comparing the seventh cut with the sixth, the opening's blacks
+had lifted (mean luma 44 against 25) and the MP4 was 1.2 GB. A mood's overlay was a stacking context, so its grain blended with
+nothing (D61, *Trap*). Fixed in `kit/base.css` with a test; luma back to 26. Every frame the critics judged in rounds 1 to 3 was a
+little greyer than it renders now; nothing they found depended on it.
+
+**At the cap, for the owner:** opening the workshop on the bug story, and a dry line in his process (engagement, rounds 2 and 3);
+the four stages resting on the Fortran era, "just agree", and what "verify" proves (clarity, round 1, his argument); the scenes
+that run fast at speed 1.2 (pacing, every cut).
