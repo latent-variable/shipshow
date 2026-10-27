@@ -804,8 +804,10 @@ Drama a name is written as it is spelled, and respelled only as one word, checke
 (2026-10-27).** A take that is mostly the clone's hiss has its quiet level pinned at SILENT (-45 dBFS) while the hiss sits near
 -40, so a 3 s stall of hiss inside "Both true. So ... you don't trust the output" read as voice, passed every check, and only a
 sync critic heard the dead air. Silence inside a take is now also anything 18 dB under the take's loud level (its 90th percentile,
-`GAP_BELOW_VOICE`): over that video's 62 takes it caught the stall alone (2.5 s; the next longest gap was 1.5 s). `DRAMA_RULES`
-went to 2, so every Drama take is made again under it once.
+`GAP_BELOW_VOICE`): over that video's 62 takes it caught the stall alone (2.5 s; the next longest gap was 1.5 s). The same flaw kept a take's edges: one opened on 2 s of hiss (-33 to -37 dBFS, inside 18 dB of the voice), so a
+take's edges are now where its level holds 15 dB under the voice for 50 ms, walked back up to 0.25 s while within 6 dB of that
+line so a soft first syllable stays (D53); on all 62 takes the start found was within 0.1 s of Whisper's first word. `DRAMA_RULES`
+went to 3, so every Drama take is made again under both once.
 
 ### D56. A quote is shown where it was said: screenshots taken at build (2026-10-27)
 **Decision.** `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of a real page. `bin/shot.mjs`

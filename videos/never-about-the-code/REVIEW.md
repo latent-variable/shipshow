@@ -339,3 +339,15 @@ not have stopped"), with minor notes only.
 | clarity, consistency | pass | ShipShow is now named aloud in scene 12, since the screen names it. |
 | sync | pass | The Fort Knox meme leaves sooner; Backus's quote shows on "themselves", before its meme. |
 | accuracy | pass | "Nobody read the machine code either" kept as the thesis line, an opinion whose scope the struck-out compiler output on screen shows. |
+
+## Round 4, the plan's cap (fresh agents: accuracy, pacing, sync on Sonnet; visuals on Opus)
+
+| Critic | Verdict | What it found, and what changed |
+|---|---|---|
+| accuracy | pass (1 minor) | "Switch off one check, and some cloned voices stopped working" kept: a fair plain reading of the ledger row. |
+| visuals | revise (1 major, 7 minor) | Scene 10 opened on its tabs alone: the quote is now up from the start. Screenshot captions and bars are larger (kit); the thesis breaks after "what it does,"; "same here." is large. Kept: the IBM, ladder and scene 12 openings each hold a heading or the axis for 3 to 5 s, and a stray list bullet at the EWD captures' edge. |
+| sync | revise (2 major, 4 minor) | **A 3 s stall of hiss inside "Both true. So ... you don't trust the output"**: Drama's retake check read the hiss as voice. Fixed in ShipShow (silence is now also 18 dB under the voice; D55, a test, `DRAMA_RULES` 2), so every take was voiced again under it. Also: Hopper's "nobody would touch it" lands on "nobody", the 20/80 mark on "only", the astronaut meme after "verifying", the Fort Knox meme up 1.9 s. Kept: the record scratch 0.4 s before its meme (the build forbids it over "Wait."), and the checks card on "Fixed" (round 2's pacing call). |
+| pacing | fail (3 major) | The beat after "Sound familiar?" stacked to 2.7 s: now 0.9 s on top of the scene gap. **Accepted for the owner's ear**: 05b and 06 run 19 to 21% slow because of the directed delivery (the wry Dijkstra line, the double take with its 1.9 s beat); re-taking for speed would trade the delivery he praised for a number. The fast scenes (02, 07, 11b, 12, 12b, 13 at 15 to 21% over) are his pace. |
+
+**Open at the cap, for the owner's listen:** the Dijkstra line and the double take in 06 (slow on purpose?), the 1.9 s beat
+before "Yesterday's insult", and every line's delivery: all 62 takes are new since the stall fix.

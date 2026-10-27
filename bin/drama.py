@@ -55,6 +55,11 @@ GAP_DROP = 2.0        # seconds of silence inside a take: the model stalled, and
 # -40 dBFS, so a 3 s stall of hiss read as voice (never-about-the-code, "Both true. So ... you don't trust the output",
 # 2026-10-27). Over the video's 62 takes, 18 dB caught that stall alone: the next longest gap was 1.5 s.
 GAP_BELOW_VOICE = 18.0
+# A take's edges are found the same way, 15 dB under the voice and held for EDGE_RUN windows (50 ms), then walked back (and
+# forward) up to EDGE_BACK windows while the level stays within 6 dB of that line, so a soft first syllable is kept (D53). The
+# clone's hiss swings from -33 to -37 dBFS, inside 18 dB of a voice near -17: a take opened on 2 s of it and kept it all (the
+# DHH line, 2026-10-27). Checked against Whisper's first word on all 62 takes: the start found is never 0.15 s late.
+EDGE_BELOW_VOICE, EDGE_RUN, EDGE_BACK = 15.0, 5, 25
 # Takes compared with the text, when faster-whisper is installed. Drama 3 drops words often enough that this is the check
 # that makes it usable (measured 2026-10-27 on the owner's clone, one line three seeds each: a short last sentence was
 # dropped on 1 of 3 seeds with no direction at all, a direction in the middle of a line dropped the rest of it on 5 of 6,
@@ -107,12 +112,29 @@ def levels(audio, sr):
     return 20 * np.log10(np.sqrt((frames ** 2).mean(axis=1)) + 1e-9), win
 
 
+def silence_level(lv, below=GAP_BELOW_VOICE):
+    """What counts as silence in a take, dBFS: under its own background (voicecheck.quiet_level), under SILENT, or
+    GAP_BELOW_VOICE dB under its voice (the 90th percentile), whichever is loudest. The last is what tells the clone's hiss
+    from speech when the hiss sits over SILENT."""
+    quiet = max(voicecheck.quiet_level(list(lv)), voicecheck.SILENT)
+    return max(quiet, float(np.percentile(lv, 90)) - below) if len(lv) else quiet
+
+
 def voiced(audio, sr):
-    """(first, last) 10 ms window louder than the take's own background, or None for a silent take."""
+    """(first, last) 10 ms window louder than silence_level, or None for a silent take. Edges are trimmed to these, so a
+    take that opens on 2 s of hiss is not kept with the hiss (never-about-the-code, the DHH line, 2026-10-27)."""
     lv, _ = levels(audio, sr)
-    quiet = voicecheck.quiet_level(list(lv))
-    loud = np.nonzero(lv > max(quiet, voicecheck.SILENT))[0]
-    return (int(loud[0]), int(loud[-1])) if len(loud) else None
+    q = silence_level(lv, EDGE_BELOW_VOICE)
+    loud = lv > q
+    held = np.convolve(loud.astype(int), np.ones(EDGE_RUN, dtype=int), "valid") == EDGE_RUN   # held[i]: i..i+RUN-1 all loud
+    starts = np.nonzero(held)[0]
+    if not len(starts):
+        return None
+    first, last = int(starts[0]), int(starts[-1]) + EDGE_RUN - 1
+    for _ in range(EDGE_BACK):
+        if first > 0 and lv[first - 1] > q - 6: first -= 1
+        if last < len(lv) - 1 and lv[last + 1] > q - 6: last += 1
+    return first, last
 
 
 def longest_gap(audio, sr, span):
@@ -120,7 +142,7 @@ def longest_gap(audio, sr, span):
     background, or GAP_BELOW_VOICE dB under its voice, whichever is louder."""
     lv, _ = levels(audio, sr)
     inner = lv[span[0]:span[1] + 1]
-    quiet = max(voicecheck.quiet_level(list(lv)), voicecheck.SILENT, float(np.percentile(inner, 90)) - GAP_BELOW_VOICE if len(inner) else voicecheck.SILENT)
+    quiet = silence_level(lv)
     longest = run = 0
     for v in inner:
         run = run + 1 if v <= quiet else 0

@@ -267,9 +267,12 @@ stalled = np.concatenate([hiss(0.2), voice(1.5), hiss(3.0), voice(1.2), hiss(0.2
 paused = np.concatenate([hiss(0.2), voice(1.5), hiss(0.5), voice(1.2), hiss(0.6), voice(1.0), hiss(0.2)])
 for a in (stalled, paused):
     print(round(drama.longest_gap(a, sr, drama.voiced(a, sr)), 1))
+lead = np.concatenate([hiss(2.0), voice(1.5), hiss(0.2)])
+print(round(drama.voiced(lead, sr)[0] * 0.01, 1))
 `);
   assert.equal(r.status, 0, r.stderr);
-  const [stalled, paused] = r.stdout.trim().split("\n").map(Number);
+  const [stalled, paused, leadIn] = r.stdout.trim().split("\n").map(Number);
+  assert.ok(leadIn >= 1.7, `2 s of hiss before the first word is not voice, so trim() cuts it: the voice starts at ${leadIn} s`);
   assert.ok(stalled > 2.0, `the 3 s stall of hiss reads as a gap over GAP_DROP: ${stalled} s`);
   assert.ok(paused < 1.0, `half-second pauses are not a stall: ${paused} s`);
 });
