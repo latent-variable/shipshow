@@ -147,3 +147,23 @@ Rewritten in that style (759 words, 12 scenes, speed 1.15): people get a fun one
 to harmful, Karpathy coining vibe coding, DHH racing at Le Mans), quotes cut to a few short ones, scene 11 is his verification method,
 the close is "just agree, then show them the test". A fresh Opus critic read the script cold first ("not yet, but close": 09 a stack
 of quotes, 07 a lecture, a defensive close); its lines went in, except two that overreached the sources.
+
+## Cut 3, round 1: 0 blocking, 17 major; accuracy, pacing, sync and consistency pass
+
+| Critic | Model | Verdict | Blocking / major / minor |
+|---|---|---|---|
+| accuracy | Sonnet | pass | 0 / 2 / 6 |
+| clarity | Opus | fail | 0 / 2 / 9 |
+| pacing | Sonnet | pass | 0 / 4 / 6 |
+| sync | Sonnet | pass | 0 / 1 / 5 |
+| visuals | Opus | fail | 0 / 2 / 5 |
+| consistency | Sonnet | pass | 0 / 0 / 5 |
+| engagement | Opus | fail | 0 / 6 / 9 |
+
+What changed: the close says what it was always about ("what it does, and whether you can prove it"); METR introduced as "an AI
+research lab" and its measure split in two; the Unix growth is the rewrite's; the 1957 story is "IBM's own case study, so, grain
+of salt", and the 1958 statistic left the narration; "on average" spoken for the 56%. The hook is a mock pull-request comment with
+its upvotes counting; Hopper and Backus take the frame one after the other, with the 1947 logbook photo (public domain, NSWC
+Dahlgren) on "moth"; the chart draws as the years are said; the skeptics arrive together; the payoff is a test run going red, green,
+then red on the planted bug ("reading isn't proof"); the blurry IShowSpeed clip replaced by Pedro Pascal. Memes that land at a scene's
+end get a beat after it; the Suspicious Guy meme moved to "strategy." so the caught bug is seen.

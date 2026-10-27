@@ -62,6 +62,7 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 | 10 | In Veracode's 2026 report, with no security guidance, model code passed only 56% of the time, on average | S17 (an average across the models Veracode has tested) |
 | 10, 11 | Don't trust the output, trust the tests; the verification method (done and never, tests that fail first, the agent makes them pass, break the code on purpose to prove the tests catch it) | **opinion**, Lino's own method |
 | 12 | Nobody read the machine code either; it was never about the code, it was always about what it does and whether you can prove it | **opinion**, the close |
+| 11 | "That list is the real work, because tests only catch what's on it" | **opinion**, the method's limit, said so the close's "prove it" does not overclaim |
 | 11 | The `npm test` lines on screen | an illustration, labelled as one; not a real run |
 
 ## Portraits

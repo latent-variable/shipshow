@@ -28,7 +28,7 @@
   .entry.noface { grid-template-columns: 190px 1fr; }
 
   /* 01-hook */
-  .hook { font-size: 120px; text-align: center; color: var(--accent); }
+  .hook { font-size: 100px; text-align: center; color: var(--accent); }
   .then-now { display: flex; gap: 40px; justify-content: center; }
   .then-now .card { flex: 0 1 640px; text-align: center; }
   .then-now .yr { font-family: var(--font-display); font-weight: 700; font-size: 84px; line-height: 1; color: var(--accent); }
@@ -89,6 +89,7 @@
   .chart .trend { stroke: var(--good); stroke-width: 6; fill: none; stroke-linecap: round; }
   .chart .dot { fill: var(--good); }
   .chart .range { stroke: var(--good); stroke-width: 4; opacity: 0.55; }
+  .chart .band { fill: var(--good); opacity: 0.22; }
   .chart-title { display: flex; justify-content: space-between; align-items: baseline; }
   .chart-title .big { font-size: 56px; }
   .chart-note { font-family: var(--font-mono); font-size: 28px; color: var(--muted); text-align: center; line-height: 1.5; }
@@ -159,7 +160,7 @@
   [data-scene="11-verify"] .stage { gap: 20px; }
   .close-title { font-size: 110px; text-align: center; }
 
-  .pr { width: 1100px; margin: 0 auto; padding: 0; overflow: hidden; }
+  .pr { width: 1100px; margin: 0 auto; padding: 0; flex: none; }
   .pr .head { display: flex; align-items: center; gap: 18px; padding: 18px 26px; border-bottom: 2px solid var(--line); font-family: var(--font-mono); font-size: 28px; color: var(--muted); }
   .pr .head b { color: var(--ink); }
   .pr .av { width: 46px; height: 46px; border-radius: 50%; background: var(--accent-2); }
@@ -253,13 +254,14 @@
 
 <section data-scene="04-priesthood">
   <div class="stage">
+    <div class="tag center" data-cue="+0.1" data-anim="fade">the evidence</div>
     <div class="exhibits">
-      <div class="entry card" id="exA" data-cue="+0.1" data-anim="up">
+      <div class="entry card" id="exA" data-cue="Hopper." data-anim="up">
         <div class="exhibit">exhibit A</div>
         <figure class="ss-portrait" data-commons="File:Commodore Grace M. Hopper, USN (covered) head and shoulders crop.jpg" data-cue="Hopper." data-anim="pop"><figcaption>Grace Hopper<small>Navy officer · compiler pioneer</small></figcaption></figure>
-        <div><div class="quote" data-cue="1952" data-anim="fade">1952: a working compiler, and “nobody would <em>touch it</em>.”</div><div class="fun" data-cue="arithmetic," data-anim="fade">“computers could only do arithmetic”</div></div>
+        <div><div class="quote" data-cue="working" data-anim="fade">1952: a working compiler, and “nobody would <em>touch it</em>.”</div><div class="fun" data-cue="arithmetic," data-anim="fade">“computers could only do arithmetic”</div></div>
       </div>
-      <div class="entry card" id="exB" data-cue="Exhibit#2" data-anim="up">
+      <div class="entry card" id="exB" data-cue="Backus," data-anim="up">
         <div class="exhibit">exhibit B</div>
         <figure class="ss-portrait" data-commons="File:John Backus 2.jpg" data-cue="Backus," data-anim="pop"><figcaption>John Backus<small>built Fortran</small></figcaption></figure>
         <div><div class="quote" data-cue="priesthood." data-anim="fade">programmers as “a priesthood”</div><div class="quote" data-cue="foolish" data-anim="fade" style="margin-top: 18px">machines writing efficient code: “a <em>foolish and arrogant dream</em>”</div></div>
@@ -327,7 +329,7 @@
 
 <section data-scene="08-now">
   <div class="stage">
-    <div class="chart-title" data-cue="+0.1" data-anim="fade"><div class="big">The longest task AI finishes half the time</div><div class="tag">METR</div></div>
+    <div class="chart-title" data-cue="+0.1" data-anim="fade" style="margin-top: 16px"><div class="big">The longest task AI finishes half the time</div><div class="tag">METR</div></div>
     <div class="chart-note" data-cue="lab," data-anim="fade">METR, an AI research lab · task length = how long a <b>human expert</b> takes it</div>
     <div class="chart" data-cue="METR" data-anim="fade">
       <svg viewBox="0 0 1600 690" preserveAspectRatio="none">
@@ -341,7 +343,7 @@
         <g data-cue="2025," data-anim="pop"><circle class="dot" cx="220" cy="560" r="14"/><text class="pt" x="200" y="610" text-anchor="start">Claude 3.7 Sonnet · 1 h</text></g>
         <path class="trend" data-cue="2026," data-anim="draw" d="M 220 560 L 466 500 L 684 413 L 992 367 L 1227 273"/>
         <g data-cue="hour." data-anim="pop"><circle class="dot" cx="466" cy="500" r="12"/><circle class="dot" cx="684" cy="413" r="12"/><circle class="dot" cx="992" cy="367" r="14"/><text class="pt" x="1012" y="402" text-anchor="start">Claude Opus 4.5 · 5.3 h</text></g>
-        <g data-cue="twelve" data-anim="pop" data-sfx="up" data-sfx-offset="-0.15"><line class="range" x1="1227" x2="1227" y1="374" y2="85"/><circle class="dot" cx="1227" cy="273" r="16"/><text class="pt hi" x="1200" y="246" text-anchor="end">public frontier · ~12 h</text><text class="lbl" x="1200" y="206" text-anchor="end">Feb–Mar 2026 · range 5 to 61 h</text><text class="lbl" x="1200" y="170" text-anchor="end">highly uncertain: the test is near its limit</text></g>
+        <g data-cue="twelve" data-anim="pop" data-sfx="up" data-sfx-offset="-0.15"><rect class="band" x="1197" y="85" width="60" height="289" rx="10"/><circle class="dot" cx="1227" cy="273" r="16"/><text class="pt hi" x="1200" y="246" text-anchor="end">public frontier · ~12 h</text><text class="lbl" x="1200" y="206" text-anchor="end">Feb–Mar 2026 · range 5 to 61 h</text><text class="lbl" x="1200" y="170" text-anchor="end">highly uncertain: the test is near its limit</text></g>
       </svg>
     </div>
     <div class="chart-note" data-cue="doubling" data-anim="up"><b>doubling about every 3 months since 2024</b> · METR Time Horizon 1.1, Jan 2026 · Frontier Risk Report, May 2026</div>
@@ -356,16 +358,16 @@
   <div class="stage">
     <div class="tag center" data-cue="+0.1" data-anim="fade">late 2026: the argument is basically over</div>
     <div class="skeptics">
-      <div class="skeptic card" data-cue="skeptics" data-anim="up">
+      <div class="skeptic card" data-cue="Karpathy," data-anim="up">
         <figure class="ss-portrait" id="p-karpathy" data-commons="File:Andrej Karpathy, OpenAI.png" data-cue="Karpathy," data-anim="pop"><figcaption>Andrej Karpathy<small>coined “vibe coding”</small></figcaption></figure>
         <div class="was" data-cue="work." data-anim="fade">Oct 2025: agents “just don't work”</div>
         <div class="line" data-cue="eighty" data-anim="up">Dec 2025: 80% of his code by agents</div>
       </div>
-      <div class="skeptic card" data-cue="skeptics" data-anim="up">
+      <div class="skeptic card" data-cue="DHH," data-anim="up">
         <figure class="ss-portrait" id="p-dhh" data-commons="File:David Heinemeier Hansson Driver of Abu Dhabi Proton Racing's Porsche 911 RSR (27225732035) (cropped).jpg" data-cue="DHH," data-anim="pop"><figcaption>DHH<small>Rails guy · races at Le Mans</small></figcaption></figure>
         <div class="line" data-cue="dividing" data-anim="up">Opus 4.5: “the dividing line”</div>
       </div>
-      <div class="skeptic card" data-cue="skeptics" data-anim="up">
+      <div class="skeptic card" data-cue="Antirez," data-anim="up">
         <figure class="ss-portrait" id="p-antirez" data-commons="File:Salvatore Sanfilippo.png" data-cue="Antirez," data-anim="pop"><figcaption>Antirez<small>made Redis</small></figcaption></figure>
         <div class="line" data-cue="fun." data-anim="up">writing code by hand: mostly for fun now</div>
         <div class="was" data-cue="bread." data-anim="fade">(like baking your own bread)</div>
@@ -399,8 +401,9 @@
       <div class="cmd">$ npm test   <small>(illustration)</small></div>
       <div class="ln" data-cue="fail." data-anim="fade"><span class="fail">✗ never shows another customer's invoice</span><small>before the agent</small></div>
       <div class="ln" data-cue="pass." data-anim="fade"><span class="pass">✓ never shows another customer's invoice</span><small>agent's fix</small></div>
-      <div class="ln" data-cue="catch" data-anim="fade"><span class="fail">✗ never shows another customer's invoice</span><small>bug I planted: caught</small></div>
+      <div class="ln" data-cue="catch" data-anim="fade"><span class="fail">✗ never shows another customer's invoice</span><small>planted · caught</small></div>
     </div>
+    <div class="who center" data-cue="list" data-anim="fade" style="font-size: 34px; color: var(--accent)">the never list is the real work: tests only catch what's on it</div>
     <div class="proof big" data-cue="proof." data-anim="slam">reading <em>isn't proof.</em></div>
     <div class="punch big" data-cue="planted," data-anim="up" style="font-size: 50px">can't catch a bug <em>you</em> planted? won't catch the one <em>the agent</em> planted.</div>
   </div>
@@ -429,6 +432,6 @@
   tl.to("#m05", { opacity: 0, duration: 0.3 }, cueAt("#m05") + 3.2);
   tl.to("#m10", { opacity: 0, duration: 0.3 }, cueAt("#m10") + 3.2);
   tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 2.6);
-  tl.to("#moth", { opacity: 0, duration: 0.3 }, cueAt("#moth") + 3.0);
+  tl.to("#moth", { opacity: 0, duration: 0.3 }, cueAt("#moth") + 1.4);
   tl.to("#exA", { opacity: 0, duration: 0.3 }, cueAt("#exB") - 0.3);
 </script>
