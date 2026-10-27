@@ -242,7 +242,7 @@ def write_check(wav, key, text, got, heard, faults=(), timing=None):
     """The `.check` file beside a take: what it was judged by, so bin/voice.mjs and the review packet
     can say which sentences to listen to. `score` is None when nothing could hear it back. `timing`, for a
     run of sentences, is bin/wordtime.py's {"sentences", "matched", "words"}."""
-    check = {"key": key, "text": text, "score": None if got is None else round(got, 3), "heard": heard, "faults": list(faults)}
+    check = {"key": key, "text": text, "score": None if got is None else round(got, 3), "heard": heard, "faults": list(faults), "spelledChecked": True}
     if timing is not None:
         check["timing"] = timing
     Path(wav).with_suffix(".check").write_text(json.dumps(check) + "\n")
@@ -255,6 +255,11 @@ def check(items):
         mark = Path(item["wav"]).with_suffix(".check")
         have = json.loads(mark.read_text()) if mark.exists() else {}
         if have.get("key") == item["key"] and have.get("score") is not None:
+            if not have.get("spelledChecked"):   # heard before spelled_out existed: read what was heard again, no new hearing
+                have["faults"] = [f for f in have.get("faults", []) if not f.startswith("spelled out")] + \
+                    [f'spelled out: heard the letters "{g}"' for g in spelled_out(item.get("written", item["text"]), item["text"], have.get("heard", ""))]
+                have["spelledChecked"] = True
+                mark.write_text(json.dumps(have) + "\n")
             continue
         got, heard = score(item["text"], samples_of(item["wav"]))
         faults = [f for f in (have.get("faults", []) if have.get("key") == item["key"] else []) if not f.startswith("spelled out")]

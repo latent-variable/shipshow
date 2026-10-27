@@ -115,7 +115,7 @@ async function voiceAllOmni() {
     hearback: hear,
     min: HEARBACK_MIN,
     pace: RUNS ? PACE : "stretch",
-    jobs: jobs.map((j) => ({ text: j.say, wav: j.wav, key: j.key, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
+    jobs: jobs.map((j) => ({ text: j.say, written: j.text, wav: j.wav, key: j.key, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
   }));
   try {
     await run(py, [join(REPO, "bin", "omnivoice.py"), spec]);
@@ -189,9 +189,10 @@ if (!omni && !drama && pythonExists(py)) {
   }
 }
 if (hear) {
-  const todo = takes.filter((t) => readCheck(t.wav, t.key)?.score == null);
+  // a take heard before letters spelled out were looked for is read again from what was heard (no new hearing)
+  const todo = takes.filter((t) => { const c = readCheck(t.wav, t.key); return c?.score == null || !c.spelledChecked; });
   if (todo.length) {
-    console.log(`hearing ${todo.length} take(s) back with faster-whisper`);
+    console.log(`checking ${todo.length} take(s) with faster-whisper`);
     const r = pyRun("hearback", todo.map((t) => ({ text: t.say, written: t.text, wav: t.wav, key: t.key })));
     if (r.status !== 0) console.warn(`hear-back failed (${(r.stderr || r.stdout).trim().split("\n").pop()}); takes are not checked`);
   }

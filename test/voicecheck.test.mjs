@@ -154,7 +154,7 @@ if (first === "-c") process.exit(second.includes("faster_whisper") ? 0 : 1);
 const spec = JSON.parse(readFileSync(second, "utf8"));
 appendFileSync(second + ".log", JSON.stringify({ script: first.split("/").pop(), spec }) + "\\n");
 const scores = ${JSON.stringify(scores)};
-const check = (j, faults = []) => writeFileSync(j.wav.replace(/\\.wav$/, ".check"), JSON.stringify({ key: j.key, text: j.text, score: scores.find(([w]) => j.text.includes(w))?.[1] ?? 1, heard: "heard: " + j.text, faults }));
+const check = (j, faults = []) => writeFileSync(j.wav.replace(/\\.wav$/, ".check"), JSON.stringify({ key: j.key, text: j.text, score: scores.find(([w]) => j.text.includes(w))?.[1] ?? 1, heard: "heard: " + j.text, faults, spelledChecked: true }));
 if (first.endsWith("omnivoice.py")) {
   for (const j of spec.jobs) { writeWav(j.wav, { rate: 24000, channels: 1, samples: new Int16Array(24000) }); if (spec.hearback) check(j, j.text.includes("second") ? ["a shout at 0.4s, 9.1 dB over its own speech"] : []); }
 } else if (first.endsWith("hearback.py")) {
@@ -406,4 +406,22 @@ print(listen.said("two to the n, and ETH; n-th", {"n": "en", "ETH": "E T H"}))
 `);
   assert.equal(r.status, 0, r.stderr);
   assert.equal(r.stdout.trim(), "two to the en, and E T H; en-th", "the same whole-word swap as bin/lib.mjs spoken()");
+});
+
+test("hear-back: a take checked before spelled_out existed is read again from what was heard, its timing kept", { skip: !plain && "no python3" }, () => {
+  const dir = mkdtempSync(join(tmpdir(), "oldcheck-"));
+  const wav = join(dir, "s-r01.wav");
+  writeFileSync(wav, "");
+  writeFileSync(join(dir, "s-r01.check"), JSON.stringify({ key: "k", text: "two to the en", score: 0.99, heard: "two to the EN", faults: [], timing: { matched: 4, words: 4 } }));
+  const r = python(plain, `
+import hearback, json
+hearback.score = lambda *a: (_ for _ in ()).throw(SystemExit("heard again"))
+hearback.check([{"text": "two to the en", "written": "two to the n", "wav": ${JSON.stringify(wav)}, "key": "k"}])
+print(open(${JSON.stringify(join(dir, "s-r01.check"))}).read())
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const c = JSON.parse(r.stdout);
+  assert.deepEqual(c.faults, ['spelled out: heard the letters "EN"']);
+  assert.equal(c.spelledChecked, true);
+  assert.deepEqual(c.timing, { matched: 4, words: 4 }, "the run's word times are kept");
 });
