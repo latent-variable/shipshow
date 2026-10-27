@@ -36,5 +36,8 @@
     "file": "local/music/eth-is-false-bed.wav",
     "volume": 0.18,
     "duck": 0.35
+  },
+  "pauses": {
+    "11-read-off-zero": 3.0
   }
 }
