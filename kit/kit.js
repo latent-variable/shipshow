@@ -255,6 +255,8 @@
             const container = document.createElement("div"), over = document.createElement("div");
             container.className = "mood-ambient";
             over.className = "mood-overlay";
+            // A mood's own layers keep its colours through a crossfade; the base layers follow the tokens tweened on #root.
+            if (ambientKey !== "base") Object.entries(tokens).forEach(([key, value]) => { if (value) { container.style.setProperty(key, value); over.style.setProperty(key, value); } });
             document.getElementById("ambient").appendChild(container);
             overlay.appendChild(over);
             const seed = ambientKey === "base" ? SEED : moodHash(mood.name);
