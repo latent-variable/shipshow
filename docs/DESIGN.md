@@ -903,11 +903,11 @@ change. A token with no base value switches at the midpoint. A video cannot retu
 restates it. **Tested** by `test/moods.test.mjs` (carry-forward, unknown names, namespaced fonts and files, midpoint switches,
 tweens, synthetic tones before, during and after a music boundary), and a three-scene Kokoro demo built, checked and rendered:
 frames at each boundary show navy turning into the paper theme's cream and serif type, then a lofi night with stars.
-### D61. The essay: a video to share an idea, in sections with their own moods; the archive theme (2026-10-27)
+### D62. The essay: a video to share an idea, in sections with their own moods; the archive theme (2026-10-27)
 **Decision.** A fourth kind, `"kind": "essay"`: a video someone makes to convey their own ideas, in their own voice, to
 publish or pass around (an opinion piece for a channel, a paper explained). It is reviewed like a feature video (`standard`
 by default, accuracy on the floor), but the skills set a further bar: it is built in sections, the acts of the argument, and
-each section gets its own mood (a look and a music bed made for what it says; moods are D60), so no two neighbouring sections
+each section gets its own mood (a look and a music bed made for what it says; moods are D61), so no two neighbouring sections
 look or sound alike; and enjoyment is judged on top of truth (`critic-engagement`). `themes/archive` is the first theme made
 to be a section's mood: sepia paper, typewriter ink, a red stamp and IBM blue, Playfair Display and Courier Prime (SIL OFL).
 **Why.** The owner on never-about-the-code's sixth cut (2026-10-27): "each section ... should have dedicated looks and
@@ -917,7 +917,7 @@ voice to convey your ideas, is another thing that we're doing now ... that we ne
 Neither of his two channel videos (never-about-the-code, eth-is-false) is a decision, feature or release video; both were
 filed as `feature`. **Costs.** The kind changes no code path but the check that accepts it; the bar lives in the skills. Each
 section's music is generated per video (ACE-Step, local, MIT) and kept in `local/music/`, so a teammate without it builds in
-silence for those sections (D60's warning).
+silence for those sections (D61's warning).
 
 ## Behaviour
 
