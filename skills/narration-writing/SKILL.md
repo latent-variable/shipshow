@@ -96,7 +96,7 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
 Measured 2026-10-27 on a clone of the owner, one line three seeds each (D55): `[excited]` widened the pitch range
 from about 2 semitones to 3.5 and quickened the read, `[deadpan]` narrowed it to about 1.5, `[whispers]` dropped
 the level about 6 dB on one seed. Drama 3 drops a short last sentence now and then even with no direction, so every
-take is heard back and retaken until it says every word (`bin/drama.py`); listen to the ones the voice step lists.
+take is heard back and retaken up to five times (`bin/drama.py`); one still under 97% is kept and listed, often for Whisper's spelling of a name, so listen to the ones the voice step lists.
 
 ## Pronunciation
 
