@@ -114,7 +114,7 @@ checks it and voices one word; `-- --hearback` checks the hear-back and hears on
 | Command | What it does |
 |---|---|
 | `npm run new -- <folder>` | A new video from `template/` (`videos/x` for this repo, `local/videos/x` for any other code base) |
-| `npm run voice -- <folder>` | One take per sentence (Kokoro, or OmniVoice: `--engine omnivoice --voice <name>` to try it), levelled and, with hear-back installed, heard back (`--no-hearback` skips it), then `assets/narration.wav` and `timing.json` |
+| `npm run voice -- <folder>` | One take per sentence (Kokoro, or OmniVoice: `--engine omnivoice --voice <name>` to try it; OmniVoice with hear-back installed voices runs of sentences instead), levelled and, with hear-back installed, heard back (`--no-hearback` skips it), then `assets/narration.wav` and `timing.json` |
 | `npm run build -- <folder>` | The HyperFrames composition, `index.html`, from `scenes.html` and the timing |
 | `npm run check -- <folder>` | HyperFrames' own check: lint, layout, motion, caption contrast |
 | `npm run preview -- <folder>` | The HyperFrames studio, to scrub through it |
@@ -169,17 +169,28 @@ write the `.txt` only to correct it). `say` maps a written word to what the engi
 
 **Checks on every take** (ported from DAIS product-videos, where the owner heard these faults in published
 videos; `bin/voicecheck.py`, `bin/hearback.py`, `bin/hearback.mjs`). *Levelling*, both engines: a take's median
-speech is set to -20 dBFS and its peaks capped at -6 dBFS, so no sentence is louder than the next. Kokoro's are
-levelled in place after voicing and their cache key is unchanged (a `.lvl` stamp beside the take records it;
-how-it-works went from a 5.8 dB spread to 0.8). *OmniVoice only*: the opening burst of noise is cut at the
+speech is moved toward -23 dBFS by one gain, held back when it would put the loudest sample over -3 dBFS, so no
+take is clipped or squashed and one with a big peak stays a little quieter (a tanh knee above 0.4 did this before
+and was audible as a close mic on short takes, 2026-10-26). Kokoro's are levelled in place after voicing and their
+cache key is unchanged (a `.lvl` stamp beside the take records it; a take stamped by older rules is voiced again). *OmniVoice only*: the opening burst of noise is cut at the
 silence after it, a take that starts with no lead-in or shouts (a 400 ms stretch over 8 dB above its own median)
 is voiced again with another seed, up to three times, then kept and reported. *Hear-back*, optional
 (`npm run setup:hearback`; `--no-hearback` turns it off): faster-whisper small.en transcribes each take and
 `bin/hearback.py` scores it against the text the engine was told to say, by letters with spaces, punctuation and
 marks gone and numbers spelled out. OmniVoice keeps the best of three; under 0.97 is flagged. Each take's
 `assets/voice/<scene>-<n>.check` holds the result, `timing.json` `voiceCheck` collects it, and `npm run review`
-prints it in the packet's *Voice checks*. It verifies, never times (D1). Without faster-whisper everything else
-still runs and the packet says nobody heard the takes.
+prints it in the packet's *Voice checks*. Without faster-whisper everything else still runs and the packet says
+nobody heard the takes.
+
+**Runs of sentences** (D47). With OmniVoice and hear-back installed, a scene is voiced in runs of whole sentences
+up to 45 words (a longer sentence stands alone), one take per run, `assets/voice/<scene>-r<n>.wav`, because a take
+per sentence restarts the prosody each time and sounded choppy (the owner, 2026-10-26). Each run is retried up to
+five times for a clean start, kept as the best of three by hear-back score, and cached by its own text, so editing
+a sentence re-voices its run. The same Whisper pass that scores the take gives word times (`word_timestamps`);
+`bin/wordtime.py` lays the script's sentences and written words on them (through `say`, with a word Whisper missed
+placed between its neighbours), and they go in `timing.json` as each sentence's `words: [{"w", "at"}]`. `build`
+uses them for cues and captions when present, and the letter share otherwise. Kokoro, and OmniVoice without
+hear-back (or with `--no-hearback`), keep one take per sentence and the letter share, and nothing requires faster-whisper.
 
 **Look.** A theme is `themes/<name>/theme.css` (or `local/themes/<name>/`, which wins): a
 `:root` of tokens for colour, type, spacing, shape, captions and motion; `themes/shipshow`
@@ -284,11 +295,11 @@ Pauses shrink with it. The most specific wins: `--speed` on
 
 ## How the timing works
 
-Kokoro does not report word times, and a speech-recognition model to find them would be a
-second, larger download. So `bin/voice.mjs` voices each sentence on its own and places it on
+Kokoro does not report word times. So `bin/voice.mjs` voices each sentence on its own and places it on
 the track: a sentence's start is exact because we put it there. A word inside a sentence is
 placed by its share of the sentence's letters, close enough for a card to land on the word
-that names it. `bin/build.mjs` turns those times into `data-start` and `data-duration` on each
+that names it. OmniVoice with hear-back voices runs of sentences instead, and the words
+Whisper hears in each run time its sentences and words (see *Runs of sentences*). `bin/build.mjs` turns those times into `data-start` and `data-duration` on each
 scene and caption and `data-at` on each cued element; `kit/kit.js` is the shared GSAP timeline;
 HyperFrames renders the page frame by frame in headless Chrome and muxes in the narration.
 
@@ -317,11 +328,11 @@ local/      gitignored, per person (tailor skill)
 - **espeak-ng fails when its data path is 160 characters or longer** (measured 2026-10-17: 159 works, 160 fails). It reports a missing `.../site-packages//phontab`, not a path error. A venv deep in a temp or worktree path hits this; `doctor` checks the length.
 - **OmniVoice is Apple Silicon only, and opt-in.** `requirements-omnivoice.txt` is separate so Kokoro installs anywhere; `doctor` lists the engine as `opt` until you ask with `--omnivoice`. `bin/omnivoice.py` voices every stale sentence in one process (the model loads once) from a job file `bin/voice.mjs` writes; a user-set `HYPERFRAMES_PYTHON` is its Python too, which is how the tests stand a fake worker in for it. The model and the built-in clips are pinned by revision in `bin/omnivoice-voices.json`.
 - **A clone is somebody's voice.** OmniVoice's own disclaimer prohibits unauthorized cloning and impersonation: clone yourself or someone who agreed. `local/` never leaves the machine, so a clone never reaches this public repo; keep it that way.
-- **OmniVoice drops words when its window is too short, so speed is never applied by shortening it.** It fills the duration it is given: squeezed to 1.3x, 7 of 24 sentences lost or garbled words ("not a" vanished from "not a wall of logs"); generated at its natural length and then time-stretched (ffmpeg `atempo`), none did (measured 2026-10-17 with Whisper, why-shipshow). `bin/omnivoice.py` also trims the padding's silence from each take (13.8 s of a 67 s video was dead air) and re-voices a take that comes out silent. At 16 steps instead of 32 it dropped words on long lines, so `STEPS` stays 32. With faster-whisper installed the pipeline hears each take back and flags a sentence under 0.97 (see *Checks on every take*); a word said wrongly that Whisper mends from context still passes, so listen to the flagged ones and to anything that matters before you ship.
+- **OmniVoice drops words when its window is too short, so a take of one sentence gets its speed after generation.** It fills the duration it is given: squeezed to 1.3x, 7 of 24 sentences lost or garbled words ("not a" vanished from "not a wall of logs"); generated at its natural length and then time-stretched (ffmpeg `atempo`), none did (measured 2026-10-17 with Whisper, why-shipshow). `bin/omnivoice.py` also trims the padding's silence from each take (13.8 s of a 67 s video was dead air) and re-voices a take that comes out silent. At 16 steps instead of 32 it dropped words on long lines, so `STEPS` stays 32. With faster-whisper installed the pipeline hears each take back and flags a sentence under 0.97 (see *Checks on every take*); a word said wrongly that Whisper mends from context still passes, so listen to the flagged ones and to anything that matters before you ship. A run of sentences (D47) is the exception: its window is shortened to the speed (`pace: "window"`), because at 1.2 it heard back as well as atempo (0.998 mean, none under 0.988, 5 runs three times each, 2026-10-26).
 - **A take's identity includes the voice's bytes.** A clip replaced under the same name (or its `.txt` edited) is a different voice, so its takes are voiced again; a Kokoro take's key is unchanged from before OmniVoice, so existing takes stay valid.
-- **Speech recognition checks takes and never times them.** `hyperframes transcribe` built whisper.cpp and then timed out downloading its model after six minutes, so timing still comes from voicing each sentence separately (`bin/voice.mjs`): a word inside a sentence is placed by its share of the letters. Do not add an ASR step to fix a cue a few hundred milliseconds off; split the sentence or use `data-cue="+seconds"`. faster-whisper (`requirements-hearback.txt`, pinned model revision) is a separate, optional verification that no build depends on; never make it required, and never let a Whisper word time reach `timing.json`.
-- **A take's key carries the check rules and the reference transcript** (OmniVoice only): `voicecheck.py` `VERSION` and whether the voice's reference has a transcript (`given`, `heard` or `none`), so changing a rule, or installing or removing hear-back, voices OmniVoice takes again once. Bump `VERSION` when a rule in `voicecheck.py` changes. A clone whose clip starts speaking at its first sample (measured with a VCTK clip, 2026-10-26: 1 clean take in 24, whatever the seed or lead-in) is kept after three tries, trimmed, and listed under *Voice checks* to listen to; a longer lead-in did not help and slowed the voice.
-- **Takes are cached by text, voice and speed** in `assets/voice/<scene>-<n>.key`. Inserting a sentence shifts the number of every later sentence in that scene (numbering restarts per scene), so those re-voice; the cost per take has not been measured.
+- **Whisper times runs of sentences, and only runs.** This reverses "speech recognition checks takes and never times them" (2026-10-26, DESIGN D47). Why: `hyperframes transcribe` (whisper.cpp) timed out downloading its model, but faster-whisper is already installed for hear-back, so timing costs no second download; a take per sentence sounded choppy to the owner; and DAIS product-videos, whose narration he approved, times cues from the same word timestamps. A run's take is heard back with `word_timestamps=True`, never a whole video's track (a window edge dropped a dozen words in product-videos). A Whisper word time reaches `timing.json` only through `bin/wordtime.py`, only for a run, and only as `words`; a sentence take, Kokoro, and the `--no-hearback` path are placed as before. Never make faster-whisper required. A cue a few hundred milliseconds off in a run is Whisper's resolution: use `data-cue="+seconds"`.
+- **A take's key carries the check rules and the reference transcript** (OmniVoice only): `voicecheck.py` `VERSION` and whether the voice's reference has a transcript (`given`, `heard` or `none`), and `REF_PREP` (how a reference is prepared), so changing a rule, or installing or removing hear-back, voices OmniVoice takes again once. Bump `VERSION` when a rule in `voicecheck.py` changes, `REF_PREP` in `bin/voice.mjs` when `quiet()` in `bin/omnivoice.py` does. A clone copies its clip's room: a reference whose background is over -52 dBFS is cleaned of hiss before cloning (the owner's at -39 made every run "starts at once"; cleaned, none; DESIGN D47). A clone whose clip starts speaking at its first sample (measured with a VCTK clip, 2026-10-26: 1 clean take in 24, whatever the seed or lead-in) is kept after three tries, trimmed, and listed under *Voice checks* to listen to; a longer lead-in did not help and slowed the voice.
+- **Takes are cached by text, voice and speed** in `assets/voice/<scene>-<n>.key` (a run: `<scene>-r<n>.key`, keyed by its own text). Inserting a sentence shifts the number of every later sentence in that scene (numbering restarts per scene), so those re-voice, and a run's number shifts the same way; the cost per take has not been measured.
 - **Generated files are gitignored** (`videos/*/assets/`, `review/`, `index.html`, `meta.json`, `timing.json`). Never commit audio, frames or renders.
 - **The name is ShipShow**, one word, two capitals; the repo is `latent-variable/shipshow` (renamed from kokoro-explainers 2026-10-17, and GitHub redirects the old address). A rename also changes the PR reviewer's allowlist (latent-git-agents `config/repos.json` and `tests/repo-allowlist.test.mjs`), or PRs stop being reviewed.
 - **`hyperframes lint` warns `nested_structure_needs_subcomposition` and `timeline_track_too_dense`** on every video. Advisory: each scene is one section on one track by design. Errors still block.

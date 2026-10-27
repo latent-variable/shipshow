@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-10-26 (after memes were added).
+Last reviewed: 2026-10-26 (after runs of sentences were added).
 
 ## Problem
 
@@ -103,6 +103,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F31 | Apply Anthropic's agent best practices: a smaller always-on context, hooks that enforce the hard rules, a read-only critic in fact, per-run results and evals with an independent judge. The step-by-step plan, with sources and what is unconfirmed, is `docs/PLAN.md` | planned |
 | F32 | The hard rules are enforced, not only written: tracked project hooks refuse deleting and history-rewriting commands, edits to the demo's bugs and to recorded runs, and end a session on failing tests (first steps of F31; DESIGN D41) | done |
 | F33 | A meme can land a beat: `<figure class="ss-meme" data-meme="<memegen id>">` with a span per line; the build fetches the template's config and clean picture from memegen (MIT) into a user cache, ShipShow draws each line itself (white with a black outline, fitted to the template's box at render time) so a line can arrive on its own word; `npm run memes` searches the catalog; the review packet lists each meme's template and source for credit (DESIGN D42). The template pictures are third-party and fetched at build, never committed; publishing a video with memes relies on fair use and commentary norms and is the publisher's call | done |
+| F38 | OmniVoice with hear-back voices a scene in runs of whole sentences up to 45 words, one take per run, so the sentences keep one prosody; Whisper's word times from the same hearing place each sentence and written word inside the run (`timing.json` `words`), `build` cues on them; takes are levelled by one gain with a -3 dBFS ceiling, never clipped or squashed. Kokoro, and OmniVoice without faster-whisper, are unchanged (DESIGN D47) | done; measured on a test video in a cloned voice, the listening not verifiable by an agent |
 | F40 | A meme can move: an animated memegen template (`data-meme`) or any GIF, MP4 or WebM (`data-clip` with an optional `data-crop` to cut a caption band) is fetched once, converted by ffmpeg to a cropped 30 fps H.264 video looped to cover the time the figure is on screen, and starts at the figure's cue, frame-seeked so a render is repeatable; top and bottom text is drawn over it as on a still; the packet lists its source (DESIGN D49) | done; frame-identical across renders and within a frame of the source on gif-test, the look to a viewer not verifiable by an agent |
 | F36 | The judge cannot rewrite what it judges: the `critic` agent has Write, Edit and NotebookEdit denied, a turn cap and a default model (plan steps 3.1 and 3.2, DESIGN D45) | done; the Bash half (no writes outside a scratch directory) is open |
 | F37 | A beat after one scene: `video.json` `pauses` gives a scene's last line time to land (a meme, a stamp) without slowing the rest (DESIGN D46) | done |
@@ -122,7 +123,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | N6 | **Cheap to carry.** Each skill's name and description count toward context on every turn once installed, so descriptions stay short and bodies stay under 500 lines | Measured 2026-10-17: 22 skills, 7,882 characters (about 1,971 tokens) of names and descriptions; longest SKILL.md 209 lines (a test checks these figures against the tree) | done |
 | N7 | **Reproducible.** A voice take is cached by text, voice and speed; generated files are gitignored | `assets/voice/*.key` | done |
 | N8 | **Observable.** Token and context use is readable per agent | `npm run usage` | done |
-| N9 | **Tested without Kokoro.** `npm test` runs with no voice model; it is the only thing CI runs | `test/` (51 tests; the sandbox and capture tests run on macOS only, the CI docs check only on a pull request) | done; 7 tests need `npm install` (the cue-and-caption timing test, the caption function-word test, the bare-cue warning test, the flair test, both OmniVoice tests and the `hold` test) |
+| N9 | **Tested without Kokoro.** `npm test` runs with no voice model; it is the only thing CI runs | `test/` (51 tests in `pipeline.test.mjs`, plus the voice-check and run tests in `voicecheck.test.mjs` and `runs.test.mjs`; the sandbox and capture tests run on macOS only, the CI docs check only on a pull request) | done; 7 tests need `npm install` (the cue-and-caption timing test, the caption function-word test, the bare-cue warning test, the flair test, both OmniVoice tests and the `hold` test) |
 | N10 | **Portable.** The pipeline is tested on macOS; CI runs the unit tests on Linux (`ubuntu-latest`) | `README.md`, `.github/workflows/ci.yml` | open: pipeline on Linux untried |
 | N13 | **Third-party pictures stay out of the repo.** Memegen's code and configs are MIT; its template images are third-party pictures, fetched at build into `~/.cache/shipshow/memes` and the video's `assets/memes/` (gitignored: `videos/*/assets/` covers it), never committed. The meme fonts (Titillium Web, Anton) are SIL OFL, shipped with their licences in `kit/fonts/` | `bin/meme.mjs`, `.gitignore`, `kit/fonts/` | done |
 | N11 | **Attribution.** The sample is original (its `SOURCE.md` says what it is and is not based on); Kokoro-82M and HyperFrames are Apache 2.0; GSAP is under its standard licence | `sample_application/SOURCE.md`, `README.md` | done |
@@ -130,7 +131,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 
 ## Out of scope for now
 
-- Speech recognition for timing. Timing comes from voicing each sentence separately (DESIGN D1); an optional ASR only verifies takes (F35).
+- Speech recognition for timing, except in a run of sentences, where the Whisper that already hears the take back also times it (DESIGN D47, F38). Kokoro and a take per sentence are timed from where the take was placed (DESIGN D1).
 - Publishing renders or audio. Generated files are never committed.
 - A hosted service.
 
