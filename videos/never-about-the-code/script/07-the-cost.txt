@@ -1,2 +1,3 @@
-To be fair, the haters had receipts. The best hand tuned code really did run faster, and Unix came out a third bigger after its rewrite in C.
-Right about the cost. Lost anyway. Because machine time is cheap, and you are not.
+[fair-minded] To be fair, the haters had receipts. The best hand tuned code really did run faster, and Unix came out a third bigger after its rewrite in C.
+[blunt] Right about the cost. Lost anyway.
+[warm, with a grin] Because machine time is cheap, and you are not.

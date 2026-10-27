@@ -107,6 +107,14 @@ export function seedFor(name) {
 export const OMNI = JSON.parse(readFileSync(join(REPO, "bin", "omnivoice-voices.json"), "utf8"));
 const OMNI_SPEEDS = [1.0, 1.3];  // the range it was tested at; mlx-audio's own pace at 1.0 is about BASE_WPM
 
+// The optional Drama 3 engine (bin/drama.py): Fish Audio's directed voice, run on MLX in its own venv (.venv-drama,
+// npm run setup:drama). The 4-bit community conversion, pinned; SHIPSHOW_DRAMA_MODEL or local/config.json "dramaModel"
+// names a folder that already holds it. It reads at its own pace, slower than ShipShow's base (a 15 s clone of the owner:
+// about 130 words a minute), and has no speed control, so a take is time-stretched to `speed` after it is made.
+export const DRAMA = { repo: "mlx-community/fish-audio-drama-3-4bit", revision: "cc639e27aba7edb73429d3e3806f471dcd79d316" };
+export const DRAMA_PY = join(REPO, ".venv-drama", "bin", "python");
+const DRAMA_SPEEDS = [0.8, 1.5];
+
 /** A voice for the omnivoice engine: a clone (local/voices/<name>.wav, and <name>.txt beside it
  *  with the words spoken in the clip) or a built-in one. `identity` is what a take was made from,
  *  so a clip replaced under the same name is a different voice and its takes are voiced again.
@@ -128,7 +136,7 @@ export function config(dir, argv = process.argv) {
   const local = localConfig();
   const cfg = {
     title: basename(dir),
-    engine: local.engine || "kokoro",  // "kokoro", or "omnivoice" (higher quality, cloned voices; Apple Silicon)
+    engine: local.engine || "kokoro",  // "kokoro", "omnivoice" (higher quality, cloned voices) or "drama" (directed delivery, cloned voices); both Apple Silicon
     voice: local.voice,                // a Kokoro voice (af_heart) or an omnivoice one (local/voices/<name>.wav, or a built-in)
     speed: local.speed ?? DEFAULT_SPEED,
     theme: local.theme || "shipshow",
@@ -144,23 +152,26 @@ export function config(dir, argv = process.argv) {
   };
   if (flag("engine", argv) !== undefined) cfg.engine = flag("engine", argv);
   if (flag("voice", argv) !== undefined) cfg.voice = flag("voice", argv);
-  if (!["kokoro", "omnivoice"].includes(cfg.engine)) die(`engine is "${cfg.engine}"; it takes kokoro or omnivoice`);
+  if (!["kokoro", "omnivoice", "drama"].includes(cfg.engine)) die(`engine is "${cfg.engine}"; it takes kokoro, omnivoice or drama`);
   if (flag("speed", argv) !== undefined) cfg.speed = Number(flag("speed", argv));
   if (flag("theme", argv) !== undefined) cfg.theme = flag("theme", argv);
   if (!(cfg.speed >= 0.5 && cfg.speed <= 2)) die(`speed ${cfg.speed} is outside 0.5 to 2`);
   for (const [id, sec] of Object.entries(cfg.pauses || {})) {
     if (!(typeof sec === "number" && sec >= 0 && sec <= 10)) die(`pauses["${id}"] is ${JSON.stringify(sec)}; it takes 0 to 10 seconds`);
   }
-  if (cfg.engine === "omnivoice") {
-    // A Kokoro voice id (af_heart) under this engine is the template's or a person's default, not a
-    // choice: it gives way to omnivoice's own. A name that is neither is a typo, and says so.
+  if (cfg.engine === "omnivoice" || cfg.engine === "drama") {
+    // Both clone from a recording: a clip in local/voices/ or one of the built-in ones. A Kokoro voice id (af_heart)
+    // under these engines is the template's or a person's default, not a choice: it gives way to the default clip.
+    // A name that is neither is a typo, and says so.
     cfg.omni = (cfg.voice && omniVoice(cfg.voice)) || (!cfg.voice || /^[a-z]{2}_[a-z]+$/.test(cfg.voice) ? omniVoice(OMNI.default) : undefined);
     if (!cfg.omni) {
       const clones = existsSync(join(localDir(), "voices")) ? readdirSync(join(localDir(), "voices")).filter((f) => f.endsWith(".wav")).map((f) => f.slice(0, -4)) : [];
-      die(`no omnivoice voice "${cfg.voice}": the built-in ones are ${Object.keys(OMNI.builtIn).join(", ")}${clones.length ? `; yours (local/voices/) are ${clones.join(", ")}` : ""}. A clone is a 3 to 10 second recording at local/voices/<name>.wav`);
+      die(`no ${cfg.engine} voice "${cfg.voice}": the built-in ones are ${Object.keys(OMNI.builtIn).join(", ")}${clones.length ? `; yours (local/voices/) are ${clones.join(", ")}` : ""}. A clone is a recording at local/voices/<name>.wav (3 to 10 s for omnivoice, 3 to 30 s for drama)`);
     }
     cfg.voice = cfg.omni.name;
-    if (cfg.speed < OMNI_SPEEDS[0] || cfg.speed > OMNI_SPEEDS[1]) die(`speed ${cfg.speed} is outside ${OMNI_SPEEDS[0]} to ${OMNI_SPEEDS[1]}, the range omnivoice was tested at (kokoro takes 0.5 to 2)`);
+    const [lo, hi] = cfg.engine === "drama" ? DRAMA_SPEEDS : OMNI_SPEEDS;
+    if (cfg.speed < lo || cfg.speed > hi) die(`speed ${cfg.speed} is outside ${lo} to ${hi}, the range ${cfg.engine} was tested at (kokoro takes 0.5 to 2)`);
+    if (cfg.engine === "drama") cfg.dramaModel = process.env.SHIPSHOW_DRAMA_MODEL || local.dramaModel || null;
   } else {
     cfg.voice ||= "af_heart";
   }
@@ -186,6 +197,40 @@ export function scenes(dir) {
 /** A scene's text as sentences. A sentence ends at . ! or ? followed by a space. */
 export function sentences(text) {
   return text.replace(/\s+/g, " ").split(/(?<=[.!?])\s+(?=\S)/).filter(Boolean);
+}
+
+/** A stage direction in a script: `[deadpan]`, `[laughs]`, `[slowly, like it's obvious]`. Drama 3 performs it where it
+ *  stands; nothing else ever shows or says it (DESIGN D55). */
+export const DIRECTION = /\[[^\]\n]*\]/g;
+/** Text with its stage directions taken out, as captions show it and the other engines read it. */
+export const withoutDirections = (text) => text.replace(DIRECTION, " ").replace(/\s+/g, " ").replace(/\s+([,.!?;:])/g, "$1").trim();
+
+/** A scene's sentences with their stage directions: [{text, directed}], `text` without them (what is shown and timed),
+ *  `directed` with them (what Drama 3 is told). A full stop inside a direction never ends a sentence, and a direction
+ *  stays on its own line when every line ends a sentence (each line is then a take, lineRuns): at a line's end
+ *  (`It's fine. [laughs]`) it stays with that line's last sentence. Text whose lines do not each end a sentence is
+ *  one paragraph, as `sentences` reads it. */
+export function directedSentences(text) {
+  const lines = text.split(/\n/).filter((l) => l.trim());
+  const byLine = lines.every((l) => /[.!?]["')\u201d\u2019]*$/.test(withoutDirections(l)));
+  return byLine ? lines.flatMap(directedLine) : directedLine(text);
+}
+function directedLine(text) {
+  const kept = [];
+  const masked = text.replace(DIRECTION, (d) => `\u0000${kept.push(d) - 1}\u0000`);
+  const back = (s) => s.replace(/\u0000(\d+)\u0000/g, (_, i) => kept[+i]);
+  const out = [];
+  for (const piece of sentences(masked).map(back)) {
+    const plain = withoutDirections(piece);
+    if (!plain) {
+      if (out.length) out[out.length - 1].directed += ` ${piece}`;
+      else out.push({ text: "", directed: piece });   // a direction before any words: it joins the first sentence below
+      continue;
+    }
+    if (out.length && !out[out.length - 1].text) out[out.length - 1] = { text: plain, directed: `${out[out.length - 1].directed} ${piece}` };
+    else out.push({ text: plain, directed: piece });
+  }
+  return out.filter((s) => s.text);
 }
 
 /** What Kokoro is told to say for a sentence: video.json "say" applied, whole words only. */
@@ -232,7 +277,7 @@ export const LINE_MAX = 70;
 export function lineRuns(text, says) {
   const lines = text.split(/\n/).map((l) => l.trim()).filter(Boolean);
   if (lines.length < 2) return { runs: groupRuns(says), byLine: false };
-  const counts = lines.map((l) => sentences(l).length);
+  const counts = lines.map((l) => directedSentences(l).length);
   if (counts.reduce((x, y) => x + y, 0) !== says.length) return { runs: groupRuns(says), byLine: false };
   const runs = [];
   let at = 0;

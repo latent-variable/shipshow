@@ -1,0 +1,10 @@
+# Fish Audio Drama 3, the optional directed voice engine (`"engine": "drama"`). Apple Silicon only: it runs on
+# MLX. Its own venv, .venv-drama (`npm run setup:drama`), because Drama 3 needs an mlx-audio newer than the
+# release OmniVoice is pinned to (Blaizzy/mlx-audio#1018, after 0.5.9); the commit is pinned.
+mlx-audio @ git+https://github.com/Blaizzy/mlx-audio@dad2087f790dfe96b07d5aac1405db4b578b411f
+# Hear-back and word times for every take (bin/hearback.py, bin/wordtime.py), and writing the takes.
+faster-whisper==1.2.1
+soundfile==0.14.0
+# Transitive floors (mlx-audio and huggingface_hub pull them in): older releases have known CVEs.
+httpx2>=2.12.0
+httpcore2>=2.10.0

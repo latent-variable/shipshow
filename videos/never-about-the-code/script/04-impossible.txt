@@ -1,1 +1,3 @@
-It always goes in four stages. Stage one, it's impossible. Grace Hopper had a working compiler in 1952, and nobody would touch it, because, they said, computers only do arithmetic.
+[confident] It always goes in four stages.
+[mock-dramatic] Stage one, it's impossible.
+[wry storyteller] Grace Hopper had a working compiler in 1952, and nobody would touch it, because, they said, computers only do arithmetic.

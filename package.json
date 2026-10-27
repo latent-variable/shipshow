@@ -11,6 +11,7 @@
   "scripts": {
     "setup": "node bin/setup.mjs",
     "setup:omnivoice": "[ -x .venv/bin/pip ] || npm run setup && .venv/bin/pip install -r requirements-omnivoice.txt -r requirements-hearback.txt",
+    "setup:drama": "node bin/setup.mjs --drama",
     "setup:hearback": "[ -x .venv/bin/pip ] || npm run setup && .venv/bin/pip install -r requirements-hearback.txt",
     "doctor": "node bin/doctor.mjs",
     "new": "node bin/new.mjs",

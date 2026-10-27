@@ -29,12 +29,13 @@ export function pickPython(candidates = ["python3.13", "python3.12", "python3.11
 
 /** The commands `npm run setup` runs, in order: make .venv unless it exists, upgrade pip, install requirements.txt.
  *  The upgrade comes first because a new venv's pip can be too old to find a current wheel: pip 22.3.1, which
- *  Python 3.10 ships with, cannot find onnxruntime 1.20 and stops with "No matching distribution found". */
-export function setupSteps(repo, pythonCmd, venvExists) {
-  const pip = join(repo, ".venv", "bin", "pip");
+ *  Python 3.10 ships with, cannot find onnxruntime 1.20 and stops with "No matching distribution found".
+ *  `npm run setup:drama` makes .venv-drama the same way from requirements-drama.txt. */
+export function setupSteps(repo, pythonCmd, venvExists, venv = ".venv", requirements = "requirements.txt") {
+  const pip = join(repo, venv, "bin", "pip");
   return [
-    ...(venvExists ? [] : [[pythonCmd, ["-m", "venv", ".venv"]]]),
+    ...(venvExists ? [] : [[pythonCmd, ["-m", "venv", venv]]]),
     [pip, ["install", "--upgrade", "pip"]],
-    [pip, ["install", "-r", "requirements.txt"]],
+    [pip, ["install", "-r", requirements]],
   ];
 }

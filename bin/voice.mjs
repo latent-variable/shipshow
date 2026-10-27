@@ -1,7 +1,9 @@
 // Voice a video's script and time every sentence. Kokoro by default; "engine": "omnivoice" in video.json
-// (or --engine omnivoice) is the higher-quality one. A take is one sentence, except for OmniVoice with
-// hear-back installed: then it is a run of whole sentences (see below).
-//   node bin/voice.mjs videos/<name> [--speed 1.25] [--engine omnivoice] [--voice caro_davy]
+// (or --engine omnivoice) is the higher-quality one, and "drama" (Fish Audio Drama 3) the directed one: it performs
+// the [stage directions] written in the script, which every other engine and every caption leaves out (DESIGN D55).
+// A take is one sentence, except for OmniVoice with hear-back installed, and Drama 3: then it is a run of whole
+// sentences, a line of the script (see below).
+//   node bin/voice.mjs videos/<name> [--speed 1.25] [--engine omnivoice|drama] [--voice caro_davy]
 // Writes, in the video folder (all generated, none committed):
 //   assets/voice/<scene>-<n>.wav   one take per sentence; a take whose text, voice and speed
 //                                  are unchanged is kept, so editing one sentence re-voices one
@@ -25,7 +27,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { REPO, HF, VENV_PY, breathe, config, die, lineRuns, pythonExists, readWav, round, run, scenes, sentences, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
+import { DRAMA, DRAMA_PY, REPO, HF, VENV_PY, breathe, config, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
@@ -37,10 +39,14 @@ const vdir = join(dir, "assets", "voice");
 mkdirSync(vdir, { recursive: true });
 
 const omni = cfg.engine === "omnivoice";
-const py = process.env.HYPERFRAMES_PYTHON || VENV_PY;
+const drama = cfg.engine === "drama";
+// Drama 3 has its own venv (a newer mlx-audio than OmniVoice's pin); it carries faster-whisper too.
+const py = drama ? process.env.SHIPSHOW_DRAMA_PYTHON || DRAMA_PY : process.env.HYPERFRAMES_PYTHON || VENV_PY;
 const noHear = process.argv.includes("--no-hearback");
 const hear = !noHear && hearbackAvailable(py);
-const RUNS = omni && hear;   // OmniVoice voices runs of sentences when it can hear them back (DESIGN D47)
+const RUNS = (omni && hear) || drama;   // OmniVoice voices runs of sentences when it can hear them back (D47); Drama 3 always does (D55)
+// The rules bin/drama.py makes, retakes and finishes a take by. Bump it when they change, so takes are voiced again.
+const DRAMA_RULES = 1;
 // A run takes its speed from a shorter window, as DAIS product-videos does, not from atempo: measured 2026-10-26
 // at speed 1.2 on 5 runs three times each, both heard back at 0.998 and none under 0.988 (DESIGN D47).
 // Measured only up to 1.2; above it (the 1.25 default, up to 1.3) a run is generated at its natural length and
@@ -55,17 +61,23 @@ const PACE = cfg.speed <= WINDOW_MAX + 1e-9 ? "window" : "stretch";
 // Every take (a sentence, or a run of sentences) and whether it is current.
 const jobs = [];
 const plan = scenes(dir).map((s) => {
-  const texts = sentences(s.text);
+  // Stage directions ([deadpan], [laughs]) are Drama 3's: the written and timed text never has them, and only Drama 3 is told them.
+  const ds = directedSentences(s.text);
+  const texts = ds.map((d) => d.text);
   const says = texts.map((t) => spoken(t, cfg.say));
+  const directed = ds.map((d) => spoken(d.directed, cfg.say));
   // a script written one thought per line is voiced a line at a time (lineRuns); otherwise up to 45 words a take
   const groups = RUNS ? lineRuns(s.text, says).runs : texts.map((_, i) => [i]);
   return {
     id: s.id,
     units: groups.map((idx, n) => {
-      const text = idx.map((i) => texts[i]).join(" "), say = idx.map((i) => says[i]).join(" ");
+      const text = idx.map((i) => texts[i]).join(" "), say = idx.map((i) => says[i]).join(" "), told = idx.map((i) => directed[i]).join(" ");
       const wav = join(vdir, RUNS ? `${s.id}-r${String(n + 1).padStart(2, "0")}.wav` : `${s.id}-${String(idx[0] + 1).padStart(2, "0")}.wav`);
       // A Kokoro take's key is unchanged from before omnivoice existed, so its takes stay valid.
-      const key = JSON.stringify(omni
+      const key = JSON.stringify(drama
+        // the model's revision, the clip and its words, and the line as told (directions in): a changed direction voices the line again
+        ? { engine: "drama", text, say: told, voice: cfg.omni.identity, speed: cfg.speed, model: DRAMA.revision, take: "line+stretch", rules: DRAMA_RULES, check: CHECK_VERSION, ref: cfg.omni.text ? "given" : "heard" }
+        : omni
         // check: the rules a take is cut, retaken and levelled by (voicecheck.py VERSION); ref: whether
         // the voice's reference has a transcript, given or heard back, which clones it better; a run's
         // key also carries its written text, since its word times depend on it
@@ -76,7 +88,7 @@ const plan = scenes(dir).map((s) => {
       const lvl = wav.replace(/\.wav$/, ".lvl");
       const older = !omni && existsSync(lvl) && /^v\d+:/.test(readFileSync(lvl, "utf8")) && !readFileSync(lvl, "utf8").startsWith(`v${CHECK_VERSION}:`);
       const fresh = existsSync(wav) && existsSync(keyFile) && readFileSync(keyFile, "utf8") === key && !older;
-      if (!fresh) jobs.push({ say, wav, key, keyFile, parts: RUNS ? idx.map((i) => spokenWords(texts[i], cfg.say)) : undefined });
+      if (!fresh) jobs.push({ say, told, wav, key, keyFile, parts: RUNS ? idx.map((i) => spokenWords(texts[i], cfg.say)) : undefined });
       return { idx, texts: idx.map((i) => texts[i]), text, say, wav, key };
     }),
   };
@@ -113,8 +125,31 @@ async function voiceAllOmni() {
   console.log(`voiced ${jobs.length}/${jobs.length}`);
 }
 
+// Drama 3 loads a model of about 22 GB, so one process voices every stale line too.
+async function voiceAllDrama() {
+  if (!pythonExists(py)) die("drama needs its own venv: npm run setup:drama (Apple Silicon)");
+  const spec = join(dir, "assets", "drama-jobs.json");
+  writeFileSync(spec, JSON.stringify({
+    speed: cfg.speed,
+    voice: { name: cfg.omni.name, wav: cfg.omni.wav, text: cfg.omni.text },
+    model: cfg.dramaModel ? { path: cfg.dramaModel } : DRAMA,
+    hearback: hear,
+    min: HEARBACK_MIN,
+    // keyFile: the worker writes each take's key as soon as the take is kept, so a long run stopped halfway keeps what it made
+    jobs: jobs.map((j) => ({ text: j.told, plain: j.say, wav: j.wav, key: j.key, keyFile: j.keyFile, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
+  }));
+  try {
+    await run(py, [join(REPO, "bin", "drama.py"), spec]);
+  } catch (e) {
+    die(`Drama 3 failed\n${e.message}\nnpm run doctor -- --drama says what is missing.`);
+  }
+  for (const j of jobs) writeFileSync(j.keyFile, j.key);
+  console.log(`voiced ${jobs.length}/${jobs.length}`);
+}
+
 const t0 = Date.now();
-if (omni && jobs.length) await voiceAllOmni();
+if (drama && jobs.length) await voiceAllDrama();
+else if (omni && jobs.length) await voiceAllOmni();
 else {
   let done = 0;
   const queue = [...jobs];
@@ -144,7 +179,7 @@ const pyRun = (script, items, extra = {}) => {
   writeFileSync(spec, JSON.stringify({ items, min: HEARBACK_MIN, ...extra }));
   return spawnSync(py, [join(REPO, "bin", `${script}.py`), ...(script === "voicecheck" ? ["level"] : []), spec], { encoding: "utf8" });
 };
-if (!omni && pythonExists(py)) {
+if (!omni && !drama && pythonExists(py)) {
   const todo = takes.filter((t) => !existsSync(t.wav.replace(/\.wav$/, ".lvl")) || readFileSync(t.wav.replace(/\.wav$/, ".lvl"), "utf8") !== levelStamp(t.key));
   if (todo.length) {
     const r = pyRun("voicecheck", todo.map((t) => ({ wav: t.wav, key: t.key })));
