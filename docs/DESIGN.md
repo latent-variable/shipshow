@@ -728,7 +728,7 @@ run swings on this machine were up to 8 s; the shipped fonts account for much of
 ### D51. A run gets a breath between sentences that ran together (2026-10-27)
 **Decision.** When `voice` lays out a run that Whisper timed, every boundary where sentence k's last word ends less than the
 video's `gap` (divided by speed) before sentence k+1's first word starts gets silence for the difference. It goes in at the
-quietest 10 ms window within 80 ms of the boundary, with a 5 ms fade out and in, so no word is cut; the sentences and words after
+quietest 10 ms window within 80 ms of the boundary, with a 5 ms fade out and in, and only if that window is under -40 dBFS (`BREATH_QUIET_DB`; speech sits around -23), so no word is cut: a boundary with no quiet point near it is left as it is; the sentences and words after
 it move by the same amount in `timing.json`. Nothing is voiced again and the take on disk is unchanged. **Why.** Round 2 of the
 never-about-the-code critics measured gaps of 0 to 0.25 s inside runs (eight of them, four at 0 or 0.02 s) next to 3 s pauses
 between scenes, the rushed-then-stopped rhythm the owner had called choppy. Runs keep one prosody (D47); this keeps their sentences

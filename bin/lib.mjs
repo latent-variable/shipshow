@@ -438,9 +438,11 @@ export function musicBed(dir, music, timing) {
 
 /** A run's take with a breath between its sentences: where Whisper heard sentence k end and k+1 start less than `minGap`
  *  seconds apart, silence is inserted at the quietest 10 ms near the boundary, with 5 ms fades either side, so the voice is
- *  never cut mid-word and its prosody is kept. `bounds` is [[end of sentence k, start of sentence k+1], ...] in seconds into
+ *  never cut mid-word and its prosody is kept; a boundary with no window under BREATH_QUIET_DB near it is left alone. `bounds` is [[end of sentence k, start of sentence k+1], ...] in seconds into
  *  the take. Returns {samples, shifts}: the new interleaved Int16 samples, and for each boundary how many seconds everything
  *  after it moved (cumulative), to add to the times of the sentences that follow. */
+export const BREATH_QUIET_DB = -40;   // a 10 ms window quieter than this (dBFS) is between words; speech sits around -23
+
 export function breathe(samples, rate, channels, bounds, minGap) {
   const frames = samples.length / channels, win = Math.max(1, Math.round(rate * 0.01));
   const energy = (f0) => {
@@ -456,8 +458,12 @@ export function breathe(samples, rate, channels, bounds, minGap) {
       const lo = Math.max(0, Math.round((Math.min(end, start) - 0.08) * rate)), hi = Math.min(frames - win, Math.round((Math.max(end, start) + 0.08) * rate));
       let at = Math.round(((end + start) / 2) * rate), best = Infinity;
       for (let f = lo; f <= hi; f += win) { const e = energy(f); if (e < best) { best = e; at = f + Math.floor(win / 2); } }
-      cuts.push({ at: Math.min(Math.max(at, 0), frames), add: Math.round(need * rate) });
-      total += need;
+      // Only where it is really quiet: a boundary with no window under QUIET_DB near it is left as it is, never cut mid-word.
+      const db = 20 * Math.log10(Math.sqrt(best / (win * channels)) / 32768 + 1e-9);
+      if (db < BREATH_QUIET_DB) {
+        cuts.push({ at: Math.min(Math.max(at, 0), frames), add: Math.round(need * rate) });
+        total += need;
+      }
     }
     return total;
   });
