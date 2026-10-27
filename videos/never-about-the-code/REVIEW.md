@@ -425,3 +425,9 @@ little greyer than it renders now; nothing they found depended on it.
 **At the cap, for the owner:** opening the workshop on the bug story, and a dry line in his process (engagement, rounds 2 and 3);
 the four stages resting on the Fortran era, "just agree", and what "verify" proves (clarity, round 1, his argument); the scenes
 that run fast at speed 1.2 (pacing, every cut).
+
+**Round 4** (a fresh Sonnet verifier, the cap): blacks near-black again (pass), the diff stat legible (pass), but the hard line at
+the caption band was still there. The render had used a stale page: the build had refused a new ding on "Fixed before it merged"
+(a sentence's first word) and the command chain hid the failure. The ding is gone, the page rebuilt, the panels now fade at their
+foot, and the ladder hides while the 2023 flashback is up so nothing shows through the fade. **After the cap** this was checked by
+the builder's own frames (65.8, 74, 79.5, 136 and 311.5 s), not by a critic: the owner's eye is the last check.

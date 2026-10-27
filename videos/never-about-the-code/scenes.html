@@ -236,7 +236,7 @@
 
 <section data-scene="03-ladder">
   <div class="stage">
-    <div class="ladder-wrap" data-cue="+0.1" data-anim="fade">
+    <div class="ladder-wrap" id="lw03" data-cue="+0.1" data-anim="fade">
       <div class="axis" data-cue="+0.2" data-anim="fade"><div>&uarr; write less<br>trust more</div><div class="line"></div><div>write it all</div></div>
       <div class="ladder">
         <div class="rung card" data-cue="Machine" data-anim="up">Machine code <small>numbers</small></div>
@@ -460,7 +460,7 @@
         <div class="step card" data-cue="standing" data-anim="left"><span class="n">4</span><span>standing tests and checks<small>they know the project</small></span></div>
       </div>
       <div class="side">
-        <div class="checks" id="checks" data-cue="Fixed" data-anim="up" data-sfx="ding" data-sfx-offset="0.6">
+        <div class="checks" id="checks" data-cue="Fixed" data-anim="up">
           <div class="ok">✓ npm test</div>
           <div class="ok">✓ security gate</div>
           <div class="ok">✓ the PR's CI</div>
@@ -522,6 +522,8 @@
   tl.to("#m02", { opacity: 0, duration: 0.3 }, cueAt("#m02") + 3.0);
   tl.to("#m03", { opacity: 0, duration: 0.3 }, cueAt("#m03") + 2.6);
   tl.to("#fb03", { opacity: 0, duration: 0.3 }, cueAt("#k23") - 0.3);
+  tl.to("#lw03", { opacity: 0, duration: 0.3 }, cueAt("#fb03") + 0.3);
+  tl.to("#lw03", { opacity: 1, duration: 0.35 }, cueAt("#now26"));
   tl.to("#k23", { opacity: 0, duration: 0.35 }, cueAt("#now26"));
   tl.to("#m05", { opacity: 0, duration: 0.3 }, cueAt("#m05") + 2.3);
   tl.to("#m06", { opacity: 0, duration: 0.3 }, cueAt("#m06") + 3.6);
