@@ -94,3 +94,43 @@ What changed:
   The voice is at speed 1.0, the slowest OmniVoice is run at, and cutting words does not change a rate; Lino's own call for his
   published videos is that 1.0 already drags and 1.1 to 1.25 is what viewers expect (DAIS product-videos, 2026-10-15).
 - **Consistency.** Antirez's concession is green like the other converts'; his name capitalised as narrated.
+
+## Round 4 (the cap): 0 blocking, 13 major; accuracy, clarity and consistency pass
+
+| Critic | Model | Verdict | Blocking / major / minor |
+|---|---|---|---|
+| accuracy | Sonnet | pass | 0 / 0 / 5 |
+| clarity | Opus | pass | 0 / 0 / 7 |
+| pacing | Sonnet | fail | 0 / 5 / 4 |
+| sync | Sonnet | fail | 0 / 2 / 3 |
+| visuals | Opus | fail | 0 / 2 / 6 |
+| consistency | Sonnet | pass | 0 / 0 / 5 |
+| engagement | Opus | fail | 0 / 4 / 5 |
+
+Fixed after the cap, then checked by two fresh verifiers (Opus on scenes 01, 02, 04, 07, 08, 09 and 11; Sonnet on 07 to 09
+after the first found a blocking chart collision and three majors that the fixes themselves had caused):
+- **Sync and engagement.** The Dafoe meme lands after the doubling line is read, so the note and its METR source are seen; the
+  1958 card builds on "sixty", "half", "instructions", "compiler"; 07 opens on "machine time ⇄ programmer time" and the bug card
+  lands on "his Fortran"; the chart's first dot lands on "longest"; the code line types at the scene's start.
+- **Engagement.** Shut Up and Take My Money (2011) replaced by Nanami vibing (Jujutsu Kaisen); five of seven memes are now 2022 or
+  newer clips. The money meme's fade and the 1958 card no longer cover each other.
+- **Visuals.** The chart's box holds its axis labels (they had collided with the doubling note); role tags at 26 px.
+- **Clarity.** "The doubt starts with Grace Hopper" (it was "It starts", heard as Plain English); 07 says what was traded; the
+  1950s card says "something like it", as the narration does; the 56% meme restates the narration.
+- **Pacing.** The Backus and DHH cards cut to what can be read in their time; scene gaps after 04 and 05 under 2 s.
+- **Loudness.** The render came out at -19 LUFS; ShipShow now masters it to -14 (#71, D52).
+
+Accepted or declined at the cap, with the reason:
+- **Speaking rate (pacing, major).** 01, 02, 03, 11 and 12 run 18 to 34% over ShipShow's 210 syllables a minute. Declined: speed
+  is 1.0, the slowest OmniVoice runs at; every sentence gap is at least 0.45 s; Lino's own call for his published videos is that
+  1.0 drags and 1.1 to 1.25 is what viewers expect (DAIS product-videos, 2026-10-15). His ear decides; a slower pass is one
+  `gap` change away.
+- **Portrait credits at about 19 px (visuals, major).** Accepted: each sits on a solid strip and is crisp at 1080p; at 28 px a
+  credit would cover the face on a 200 to 300 px photo. Every credit (author, licence, link) goes in the YouTube description too.
+- **Reading time of the assembly listing and the chart (pacing, major).** Accepted: the listing is four lines and "and 7 more",
+  the point is its length, not its lines; the chart's 2574 s "needs" is the packet counting the chart's text as code.
+- **Minor findings** across critics (date formats, ladder annotations, the 0.2 s "Wait." take, the end-credit line's reading
+  time, METR's "human expert" being partly estimated, Post's letter being satire, "In January" inferred for Antirez) are accepted
+  as they stand; the last three are recorded in `sources.md`.
+
+The floor holds: accuracy passed with no blocking or major finding.
