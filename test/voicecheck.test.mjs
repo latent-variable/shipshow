@@ -230,3 +230,23 @@ for (const j of spec.jobs) writeWav(j.wav, { rate: 24000, channels: 1, samples: 
   assert.match(voiceCheckSection(undefined).join("\n"), /None recorded/);
   assert.ok(existsSync(join(dir, "assets", "narration.wav")));
 });
+
+test("omnivoice reference: a hissy clip is cleaned before cloning, a quiet one is only cut", { skip: !numeric && "no python with numpy and soundfile" }, () => {
+  const dir = mkdtempSync(join(tmpdir(), "kx-ref-"));
+  const r = python(numeric, `
+import numpy as np, soundfile as sf, omnivoice as o
+sr = 24000; rng = np.random.default_rng(1)
+t = np.arange(int(sr * 4.0)) / sr
+voice = (0.2 * np.sin(2 * np.pi * 180 * t) * (np.sin(2 * np.pi * 1.5 * t) > 0)).astype(np.float32)
+hiss = (rng.standard_normal(len(t)) * 0.012).astype(np.float32)
+sf.write(sys.argv[1] + "/hissy.wav", voice + hiss, sr); sf.write(sys.argv[1] + "/quiet.wav", voice + hiss * 0.02, sr)
+a = o.quiet(sys.argv[1] + "/hissy.wav", "hissy", sys.argv[1] + "/cache", 0.0, 4.0)
+b = o.quiet(sys.argv[1] + "/quiet.wav", "quiet", sys.argv[1] + "/cache", 0.0, 4.0)
+print(round(o.noise_floor(sys.argv[1] + "/hissy.wav")), round(o.noise_floor(a)), round(o.noise_floor(sys.argv[1] + "/quiet.wav")), round(o.noise_floor(b)))
+`, [dir]);
+  assert.equal(r.status, 0, r.stderr);
+  const [hissyIn, hissyOut, quietIn, quietOut] = r.stdout.trim().split("\n").pop().split(" ").map(Number);
+  assert.ok(hissyIn > -52, `the hissy clip is over the line: ${hissyIn}`);
+  assert.ok(hissyOut < hissyIn - 6, `the hissy clip is cleaned: ${hissyIn} -> ${hissyOut}`);
+  assert.ok(quietIn < -52 && Math.abs(quietOut - quietIn) <= 1, `a quiet clip is left alone: ${quietIn} -> ${quietOut}`);
+});

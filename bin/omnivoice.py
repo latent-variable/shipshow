@@ -61,6 +61,7 @@ TRIES = 3         # silent takes: voiced again with another seed
 CLEAN_TRIES = 3
 RUN_CLEAN_TRIES = 5   # a run is a longer take, and a clean start is worth more tries (DAIS tries a piece 5 times)
 HEAR_TRIES = 3    # takes compared with the text, when faster-whisper is installed
+NOISY_DB = -52.0  # a reference whose background is louder than this is cleaned of hiss (see quiet())
 
 
 def probe_seconds(clip):
@@ -96,7 +97,7 @@ def reference(voice, cache):
         text = entry.get("text")
     seconds = probe_seconds(clip)
     if seconds <= REF_SECONDS:
-        return clip, text
+        return quiet(clip, voice["name"], cache, 0.0, seconds), text
     # Trim silence at the edges first: it holds no words, so a transcript stays true.
     pauses = silences(clip)
     start = next((e for s, e in pauses if s <= 0.05), 0.0)
@@ -110,11 +111,34 @@ def reference(voice, cache):
         end = max(inner, default=start + REF_SECONDS) + 0.15
         if not inner:
             print(f"warning: {clip} has no pause to cut at before 10 s, so its reference ends mid-word", file=sys.stderr)
+    return quiet(clip, voice["name"], cache, start, end), text
+
+
+def noise_floor(clip):
+    """The clip's background, dBFS: the 10th percentile of its 50 ms windows' levels."""
+    a, sr = sf.read(str(clip), dtype="float32")
+    a = a.mean(axis=1) if a.ndim > 1 else a
+    w = int(sr * 0.05)
+    frames = a[: len(a) // w * w].reshape(-1, w)
+    return float(np.percentile(20 * np.log10(np.sqrt((frames ** 2).mean(axis=1)) + 1e-9), 10))
+
+
+def quiet(clip, name, cache, start, end):
+    """The reference as the model gets it: cut to [start, end], and cleaned of hiss when its background is
+    louder than NOISY_DB. A clone copies the room of its clip: the owner's clip (a -39 dBFS floor) gave takes
+    with no silence after the decoder's opening burst, so all 5 runs of a test video were flagged "starts at
+    once" and cut into their first syllable, heard as choppy. Two mild afftdn passes (floor about -57, speech
+    level unchanged) gave 0 of 5, every run heard back at 97% or more; one stronger pass (nf=-20, nr=30) gave
+    2 of 5 (2026-10-26). The built-in clips sit at -56 to -87 and are left alone."""
     Path(cache).mkdir(parents=True, exist_ok=True)
-    out = Path(cache) / f"{voice['name']}-reference.wav"
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(clip), "-ss", f"{start:.2f}", "-to", f"{end:.2f}",
+    out = Path(cache) / f"{name}-reference.wav"
+    floor = noise_floor(clip)
+    clean = ["-af", "highpass=f=70,afftdn=nf=-25:nr=18,afftdn=nf=-30:nr=18"] if floor > NOISY_DB else []
+    if clean:
+        print(f"reference {Path(clip).name}: background {floor:.0f} dBFS, cleaned of hiss before cloning", flush=True)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(clip), "-ss", f"{start:.2f}", "-to", f"{end:.2f}", *clean,
                     "-ar", str(SR), "-ac", "1", str(out)], check=True)
-    return out, text
+    return out
 
 
 def seconds_for(estimator, text):

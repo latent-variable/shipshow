@@ -65,10 +65,10 @@ test("runs: whole sentences up to 45 words, a longer one alone, in order", () =>
 
 test("omnivoice with hear-back voices runs, each cached by its own text, and says what each written word is said as", () => {
   const dir = longVideo(), py = fakeRunner();
-  let r = voice(dir, py, "--engine", "omnivoice");
+  let r = voice(dir, py, "--engine", "omnivoice", "--speed", "1.2");
   assert.equal(r.status, 0, r.stderr + r.stdout);
   const jobs = jobsLog(dir)[0].jobs;
-  assert.equal(jobsLog(dir)[0].pace, "window", "a run takes its speed from a shorter window");
+  assert.equal(jobsLog(dir)[0].pace, "window", "a run at a measured speed (up to 1.2) takes its speed from a shorter window");
   assert.equal(jobs.length, 4, "scene one is a run of four sentences and a run of two; scene two is a long sentence alone and a short one");
   assert.deepEqual(jobs.map((j) => j.parts.length), [4, 2, 1, 1]);
   assert.deepEqual(jobs.map((j) => j.wav.split("/").pop()), ["01-intro-r01.wav", "01-intro-r02.wav", "02-idea-r01.wav", "02-idea-r02.wav"]);
@@ -77,10 +77,10 @@ test("omnivoice with hear-back voices runs, each cached by its own text, and say
   assert.ok(jobs.every((j) => j.key.includes('"take":"run+')), "a run take is a different take from a sentence take");
 
   // One take per run: editing sentence 5 re-voices its run and nothing else.
-  r = voice(dir, py, "--engine", "omnivoice");
+  r = voice(dir, py, "--engine", "omnivoice", "--speed", "1.2");
   assert.match(r.stdout, /every sentence already voiced/);
   writeFileSync(join(dir, "script", "01-intro.txt"), [1, 2, 3, 4].map(ten).join(" ") + " Sentence five has been rewritten completely. " + ten(6) + "\n");
-  r = voice(dir, py, "--engine", "omnivoice");
+  r = voice(dir, py, "--engine", "omnivoice", "--speed", "1.2");
   const again = jobsLog(dir);
   assert.equal(again.length, 2);
   assert.deepEqual(again[1].jobs.map((j) => j.wav.split("/").pop()), ["01-intro-r02.wav"], "only the edited sentence's run went back to the worker");
@@ -263,5 +263,14 @@ test("a Python named without a path is found on PATH, for the levelling and for 
     assert.equal(hearbackAvailable("kxpython"), true, "a bare command that imports faster_whisper can hear takes back");
   } finally {
     process.env.PATH = saved;
+  }
+});
+
+test("a run above the measured speed is time-stretched, not squeezed", () => {
+  const dir = longVideo(), py = fakeRunner();
+  for (const speed of ["1.25", "1.3"]) {
+    const r = voice(dir, py, "--engine", "omnivoice", "--speed", speed);
+    assert.equal(r.status, 0, r.stderr + r.stdout);
+    assert.equal(jobsLog(dir).at(-1).pace, "stretch", `speed ${speed} was never measured with a shorter window`);
   }
 });

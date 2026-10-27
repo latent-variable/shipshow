@@ -622,7 +622,8 @@ and ends at its last, the last of a take no earlier than 0.1 s before the take e
 (`wordTimes`) and caption lines, and uses the letter share for a sentence without. **Speed** for a run is a shorter window
 (`pace: "window"`), not atempo (D31): at speed 1.2 on the five runs of the test video, three takes each way, both scored a mean
 0.998 heard back and none fell under 0.988, so the squeeze that dropped words at 1.3x on single sentences did not at 1.2 on runs, and
-it is what the owner has heard approved. D31 stands for a take of one sentence. **Unchanged:** Kokoro, and OmniVoice without
+it is what the owner has heard approved. D31 stands for a take of one sentence. The window is used only up to speed 1.2 (`WINDOW_MAX` in `bin/voice.mjs`), the speed it was measured at; above it
+(the 1.25 default, up to 1.3) a run is generated at its natural length and stretched, as D31 says. **Unchanged:** Kokoro, and OmniVoice without
 faster-whisper or with `--no-hearback`, keep one take per sentence, atempo and the letter share.
 **Why this reverses D1.** D1 refused ASR because `hyperframes transcribe` timed out downloading a model. faster-whisper is already
 installed for hear-back, so timing costs no second download; a take per sentence sounded choppy; product-videos times its cues this
@@ -634,7 +635,12 @@ Levelling: samples over 0.4 on the same 14 sentences 16.9% at worst before, 1.0%
 ceiling; run takes sit within 1.4 dB of each other (-23.2 to -24.6 dBFS), while single short sentences under the new rule can end up
 10 dB under their neighbours ("Sound familiar?" -33 dBFS) because their peak is the limit. **Costs and not verified.** A run is
 re-voiced whole for one edited word; hear-back is now timing, so a machine without it falls back to the sentence path and a
-different sound. A clone that starts speaking at the first sample is still "starts at once" on all five runs (five tries do not help).
+different sound. **A hissy reference is cleaned.** The clone copies the room of its clip: the owner's (background -39 dBFS) gave takes with no
+silence after the opening burst, so every run was "starts at once" and the fallback cut 30 ms into its first syllable, heard as
+choppy. `bin/omnivoice.py` `quiet()` measures a reference's background (10th percentile of its 50 ms levels) and, above -52 dBFS,
+runs it through a 70 Hz high-pass and two mild `afftdn` passes (background about -57, speech level unchanged) before cloning: 0 of 5
+runs flagged, against 5 of 5 raw and 2 of 5 with one stronger pass (nf -20, nr 30); every run heard back at 97% or more. The built-in
+clips (-56 to -87) are left alone. `REF_PREP` in the take's key voices takes again when the preparation changes. (Fixes #60.)
 Whisper's word times are good to a tenth of a second and its last words in a take run short. Nobody here can listen: whether runs
 sound less choppy, and whether window beats atempo to the ear, is the owner's to judge.
 

@@ -43,7 +43,14 @@ const hear = !noHear && hearbackAvailable(py);
 const RUNS = omni && hear;   // OmniVoice voices runs of sentences when it can hear them back (DESIGN D47)
 // A run takes its speed from a shorter window, as DAIS product-videos does, not from atempo: measured 2026-10-26
 // at speed 1.2 on 5 runs three times each, both heard back at 0.998 and none under 0.988 (DESIGN D47).
-const PACE = "window";
+// Measured only up to 1.2; above it (the 1.25 default, up to 1.3) a run is generated at its natural length and
+// time-stretched, as one sentence always was: a window squeezed to 1.3x dropped words in 7 of 24 sentences
+// (2026-10-17). Raise WINDOW_MAX only with a hear-back measurement at the new speed.
+const WINDOW_MAX = 1.2;
+// How bin/omnivoice.py prepares a reference (quiet(): a hissy clip is cleaned first). Bump it when that changes,
+// so takes cloned from the old preparation are voiced again.
+const REF_PREP = 1;
+const PACE = cfg.speed <= WINDOW_MAX + 1e-9 ? "window" : "stretch";
 
 // Every take (a sentence, or a run of sentences) and whether it is current.
 const jobs = [];
@@ -61,7 +68,7 @@ const plan = scenes(dir).map((s) => {
         // check: the rules a take is cut, retaken and levelled by (voicecheck.py VERSION); ref: whether
         // the voice's reference has a transcript, given or heard back, which clones it better; a run's
         // key also carries its written text, since its word times depend on it
-        ? { engine: "omnivoice", ...(RUNS ? { text } : {}), say, voice: cfg.omni.identity, speed: cfg.speed, take: RUNS ? `run+${PACE}` : "natural+trim+stretch", check: CHECK_VERSION, ref: cfg.omni.text ? "given" : hear ? "heard" : "none" }
+        ? { engine: "omnivoice", ...(RUNS ? { text } : {}), say, voice: cfg.omni.identity, speed: cfg.speed, take: RUNS ? `run+${PACE}` : "natural+trim+stretch", check: CHECK_VERSION, refPrep: REF_PREP, ref: cfg.omni.text ? "given" : hear ? "heard" : "none" }
         : { say, voice: cfg.voice, speed: cfg.kokoroSpeed });
       const keyFile = wav.replace(/\.wav$/, ".key");
       // A Kokoro take levelled by older rules (voicecheck.py VERSION) was squashed by them: voice it again.
