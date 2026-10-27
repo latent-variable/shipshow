@@ -100,6 +100,23 @@ out.push(...voiceCheckSection(timing.voiceCheck));   // bin/voice.mjs: what hear
   out.push(...listenSection(listen, current));   // bin/listen.py: a second model on the finished track
 }
 out.push("## Pauses", "", "Silence before each sentence, and after the last.", "", md(pauses.map((p) => [p.at, p.length, p.between]), ["at (s)", "seconds", "between"]), "");
+// Moods (D61): which look and music each section has, so a critic can judge where the video turns (critic-engagement).
+if (cfg.moods && Object.keys(cfg.moods).length) {
+  const src = readFileSync(join(dir, "scenes.html"), "utf8");
+  const named = new Map([...src.matchAll(/<section([^>]*)>/g)].map((m) => [m[1].match(/data-scene="([^"]+)"/)?.[1], m[1].match(/data-mood="([^"]*)"/)?.[1]]));
+  const music = (m) => (m ? (typeof m === "string" ? m : m.file) : "").split("/").pop();
+  const rows = [];
+  let current = null, first = timing.scenes[0];
+  const flush = (end) => current !== undefined && rows.push([current ?? "(the video's own)", `${first.id} to ${end.id}`, `${round(first.start)}`, (current ? cfg.moods[current]?.theme : null) ?? cfg.theme ?? "", current ? Object.keys(cfg.moods[current]?.look ?? {}).join(", ") : "", (current ? cfg.moods[current]?.ambient : null) ?? "base", music(current ? cfg.moods[current]?.music : cfg.music) || "(previous)"]);
+  let prev = first;
+  for (const s of timing.scenes) {
+    const name = named.get(s.id);
+    if (name !== undefined && name !== current) { if (s !== timing.scenes[0]) flush(prev); current = name; first = s; }
+    prev = s;
+  }
+  flush(prev);
+  out.push("## Moods", "", "Each section of the video and its mood: the look (a theme, then token overrides), the ambient and the music under it. Neighbouring sections should look and sound different, and each should fit what it says (`critic-engagement`); the look crossfades over 1.2 s and the music over 1.5 s at each change.", "", md(rows, ["mood", "scenes", "starts (s)", "theme", "look overrides", "ambient", "music"]), "");
+}
 out.push("## Cues", "", `Each element that arrives on a word: when it lands, what is being said then, and how long it stays up. Reading time assumes ${READ_WPS} words a second for prose and ${READ_CODE_TPS} identifier tokens a second for code; "short" means it leaves before a viewer could read it while listening, and "late" means that, reading in order, the viewer cannot finish it before its scene ends.`, "");
 // Reading is queued: a viewer reads in order, so text that lands together or in quick succession waits.
 const queued = new Map();

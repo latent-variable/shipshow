@@ -268,6 +268,12 @@ test("critic plan: presets, precedence, a decision video's defaults, and caps va
     assert.equal(d.preset, "quick");
     assert.ok(d.critics.includes("critic-decision"));
     assert.deepEqual(d.floor, ["critic-accuracy", "critic-decision"]);
+    // An essay is reviewed like a feature video, with its engagement critic always in the list but not on the floor.
+    const e = plan({ kind: "essay", review: { preset: "quick" } });
+    assert.equal(plan({ kind: "essay" }).preset, "standard");
+    assert.ok(e.critics.includes("critic-engagement"));
+    assert.deepEqual(e.floor, ["critic-accuracy"]);
+    assert.ok(!plan({ kind: "essay" }, ["--critics", "critic-sync"]).critics.includes("critic-engagement"));
     // local/config.json < video.json < flags
     writeFileSync(join(local, "config.json"), JSON.stringify({ review: { preset: "thorough", rounds: 3 } }));
     assert.equal(plan({}).preset, "thorough");

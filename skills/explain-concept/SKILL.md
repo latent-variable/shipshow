@@ -5,7 +5,7 @@ description: >
   must be able to do afterwards, the one idea per scene, the order a newcomer needs, the
   analogy or example for each, what to cut, and the picture that shows each idea best.
   Load after the facts exist (`sources.md`) and before the script and scenes, for a feature,
-  decision or release video.
+  decision, release or essay video.
 ---
 
 # Explain a concept

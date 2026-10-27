@@ -1,0 +1,84 @@
+/* Archive: a 1950s file drawer. Sepia paper, typewriter ink, a red rubber stamp for the verdict and IBM blue for a
+   source. Playfair Display for headlines (a newspaper's), Courier Prime for text and code (a typewriter's; both SIL
+   Open Font License, in fonts/). Photos and screenshots sit on the page like clippings, with a thin dark edge. Made for
+   history: the part of a video that happened before the viewer was born. Works as a whole theme, or as a mood for one
+   section of a video set in another. */
+@font-face { font-family: "Playfair Display"; font-weight: 700; src: url("fonts/playfair-display-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-weight: 900; src: url("fonts/playfair-display-latin-900-normal.woff2") format("woff2"); }
+@font-face { font-family: "Courier Prime"; font-weight: 400; src: url("fonts/courier-prime-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Courier Prime"; font-weight: 700; src: url("fonts/courier-prime-latin-700-normal.woff2") format("woff2"); }
+
+:root {
+  /* colour */
+  --bg: #ece0c4;
+  --sky: radial-gradient(120% 95% at 50% 35%, #f3e9d2 0%, #e7d8b6 60%, #cdb88d 100%);
+  --ink: #2a1f14;             /* typewriter ink */
+  --muted: #54432d;
+  --accent: #b3261e;          /* the rubber stamp */
+  --accent-2: #1f4e79;        /* a source: IBM blue ink */
+  --accent-3: #8c5800;        /* the thing to look at: dark ochre, readable on paper */
+  --card: #f6eedb;
+  --line: #c9b48c;
+  --code-bg: #e6d8b8;
+  --code-ink: #2a1f14;
+  --good: #2f6b3a;
+  --bad: #b3261e;
+
+  /* type */
+  --font: "Courier Prime", "Courier New", Courier, monospace;
+  --font-display: "Playfair Display", "Iowan Old Style", Georgia, serif;
+  --font-mono: "Courier Prime", "Courier New", Courier, monospace;
+  --display-weight: 900;
+  --display-tracking: -0.01em;
+
+  /* layout and shape */
+  --pad: 130px;
+  --heading-top: 96px;
+  --heading-size: 92px;
+  --heading-align: left;
+  --meme-height: 760px;
+  --radius: 4px;
+  --border: 2px;
+  --shadow: 0 18px 40px rgba(60, 40, 10, 0.28);
+  --code-shadow: 0 0 0 1px #c9b48c, 0 16px 36px rgba(60, 40, 10, 0.25);
+
+  /* clippings: a thin dark edge, a soft paper shadow */
+  --frame: #3a2c1c;
+  --frame-width: 3px;
+  --meme-border: 3px solid #3a2c1c;
+  --meme-radius: 4px;
+  --meme-shadow: 0 24px 60px rgba(60, 40, 10, 0.4);
+  --portrait-radius: 4px;
+  --portrait-frame-width: 3px;
+  --portrait-shadow: 0 22px 50px rgba(60, 40, 10, 0.4);
+  --photo-filter: sepia(0.35) contrast(1.05);
+  --shot-mark: #ffcf4a;
+  --shot-bar: #3a2c1c;
+  --shot-shadow: 0 26px 60px rgba(60, 40, 10, 0.45);
+
+  /* captions: karaoke on a dark ink strip, the spoken word in amber */
+  --cap-bg: rgba(26, 19, 12, 0.94);
+  --cap-ink: #f6eedb;
+  --cap-size: 44px;
+  --cap-radius: 6px;
+  --cap-style: karaoke;
+  --cap-words: 10;
+  --cap-font: "Courier Prime", "Courier New", Courier, monospace;
+  --cap-weight: 700;
+  --cap-hot: #ffcf4a;
+  --cap-border: 1px solid #5a4630;
+
+  /* motion: a newsreel's cuts */
+  --transition: wipe;
+  --entrance: up;
+  --camera: push;
+  --ambient: vignette grain;
+  --ambient-strength: 0.10;
+  --grain-strength: 0.28;
+  --grain-fps: 12;
+  --grain-blend: multiply;
+  --vignette-strength: 0.6;
+  --vignette-color: #3b2a12;
+  --progress: on;
+  --progress-fill: #b3261e;
+}

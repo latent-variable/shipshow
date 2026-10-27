@@ -417,7 +417,7 @@ function dial(key, value) {
 
 export function reviewPlan(cfg, argv = process.argv) {
   const kind = cfg.kind || "feature";
-  if (!["decision", "feature", "release"].includes(kind)) die(`video.json kind is "${kind}"; it takes decision, feature, release`);
+  if (!["decision", "feature", "release", "essay"].includes(kind)) die(`video.json kind is "${kind}"; it takes decision, feature, release, essay`);
   if (cfg.critics) die(`video.json "critics" moved into "review": {"critics": [...]} (skills/critic-loop)`);
   const cli = {};
   for (const k of ["preset", "rounds", "until", "model", "final", "frames", "rerun", "critics"]) if (flag(k, argv) !== undefined) cli[k] = flag(k, argv);
@@ -445,6 +445,8 @@ export function reviewPlan(cfg, argv = process.argv) {
   }
   // The floor's critics run whatever list was asked for: no dial removes them.
   const floor = ["critic-accuracy", ...(kind === "decision" ? ["critic-decision"] : []), ...(cfg.shows_code ? ["critic-grounding"] : [])];
+  // An essay is watched by choice, so its engagement critic runs unless a list was asked for; it is taste, never floor.
+  if (kind === "essay" && !overrides.includes("critics") && !plan.critics.includes("critic-engagement")) plan.critics.push("critic-engagement");
   const added = floor.filter((c) => !plan.critics.includes(c));
   if (added.length) plan.critics = [...added.filter((c) => c === "critic-accuracy"), ...plan.critics, ...added.filter((c) => c !== "critic-accuracy")];
   const taste = plan.critics.filter((c) => TASTE_CRITICS.includes(c));

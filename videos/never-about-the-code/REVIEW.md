@@ -374,3 +374,60 @@ line and the double take in 06; the 1.5 s beat before "Yesterday's insult".
   fixed it in Fortran. Today, that's just called programming. In 1957, it was a bet. Sound familiar?"
 
 Voiced again under the new rules: every sentence heard, no faults. Rendered 5:26, -15.1 LUFS.
+
+## Seventh cut (2026-10-27): an essay in sections, each with its own mood; Karpathy looked back on
+
+**The owner's notes.** Each section needs "dedicated looks and feels" and "relevant music ... to help convey the specific
+message", with fun as the priority; Karpathy's 2023 post should be framed as a look back: ChatGPT had just come out, most of us
+used AI as autocomplete, and he was betting English would be the language; and this kind of video, an idea made to share in your
+own voice, should be documented as its own kind.
+
+**What changed.** `"kind": "essay"` (D62). Six moods (D61): the opening in `signal` over the lofi bed; the history (04 to 08) in
+the new `archive` theme over 1950s big-band swing; now (09, 10) in `launch` with cyan over synthwave; the objection (11, 11b) in
+alarm red over a suspense pulse; the workshop (12, 12b) in `buildday` over boom-bap; the close back in `signal` and the lofi.
+Music: ACE-Step 1.5 (MIT), two seeds per section, each checked with Whisper (no singing) and for level. Scene 03 rewinds to
+January 2023 (S33, S34) and ends on the opening's charge. Every line voiced again under DRAMA_RULES 5 (letters spelled out).
+
+**Round 1** (fresh Sonnet critics, the full packet with its new *Moods* table):
+
+| critic | verdict | what changed |
+|---|---|---|
+| accuracy | revise (1 major, 4 minor) | "suggest the next line of code" sat over a screenshot that goes on to whole methods: now "most of us use AI as fancy autocomplete", the owner's words, which the whole page supports. Minors are earlier cuts' wording, kept |
+| clarity | revise (5 major, 3 minor) | The rewind's point was unsaid: the line now ends "the roasting has already started: you don't understand the code", tying 2023 to the charge. **Declined for the owner**: the four stages resting mostly on Fortran, "just agree" conceding the charge, and what "verify" proves are the argument he approved in cuts five and six |
+| pacing | revise | The new beat after 03 made a 2.2 s silence: 0.9 s to 0.6 s. The fast scenes and dense cards are the earlier cuts', at the owner's speed 1.2 |
+| sync | pass (7 minor) | The 2023 post now leaves on "Now it's 2026" |
+| visuals | revise (4 major) | Archive grey ink darkened (`--muted` #54432d); the Copilot capture shows its whole paragraph, not a cut sentence; the thesis no longer strands "and" on its own line. Small labels elsewhere are earlier cuts', accepted then |
+| consistency | pass (3 minor) | none needed |
+| engagement | revise (3 major) | The OCaml receipt is up from the scene's start; the objection's red pushed harder; sounds 12 dB under the voice, not 14, so the jokes' stings are felt. Its best fit: the archive section and its swing |
+
+**Round 2** (fresh critics; Opus for the last round's clarity, visuals and engagement):
+
+| critic | verdict | what changed |
+|---|---|---|
+| accuracy | pass (3 minor) | "58 merged pull requests" had gone stale: counted again, 65 (S32). "That one line becomes eleven instructions" counts the whole function (kept, as in earlier cuts) |
+| sync and pacing | pass, pass | The "way ahead of his time" stamp and its ding now arrive together on "time." (a sound on the sentence's first word reads as a glitch); the silence after 03 is 1.9 s |
+| clarity | pass (3 minor) | The callback is now on screen too ("You don't understand the code." under the stamp, on a solid card); the ladder's side labels read "write less, trust more" at the top and "write it all" at the bottom, so no end reads as more trust for machine code |
+| visuals | revise (1 major) | Solid panels stopped at the scene window and cut the workshop horizon with a hard line: a solid panel now fades out at its foot. Archive caption strip darker. The Copilot mark sliding across other words mid-sweep is the kit's, for every marked screenshot (noted, not fixed here) |
+| engagement | revise (2 major) | About a minute with no gag (objection to workshop): a "+13,323 −0, lines to review" diff stat slams on "thirteen thousand" (S25), the review step shows its three rounds (S29), the rewind gets a VHS teal tint, and "Always has been" stays up 3.2 s. **For the owner:** opening the workshop on the bug story instead of "So here's how I actually do that eighty percent", and a dry line in his process, both change his own words about how he works |
+
+**Round 3** (fresh Sonnet verifiers on the round-2 fixes):
+
+| critic | verdict | what changed |
+|---|---|---|
+| visuals | revise (1 major) | The horizon was whole in 12 but still cut under the meme in 12b, and the rewind's tint stopped at the caption band: every panel (`.scrim`) and the VHS lines now fade out at their foot with a mask. Everything else from round 2 confirmed |
+| engagement | revise (1 major) | The dry stretch is about 40 s now (258 to 309 s); what is left is the two script changes held for the owner. The diff stat is bigger, and "Fixed before it merged" gets a ding |
+
+**Found by the builder after round 3: moods greyed the picture.** Comparing the seventh cut with the sixth, the opening's blacks
+had lifted (mean luma 44 against 25) and the MP4 was 1.2 GB. A mood's overlay was a stacking context, so its grain blended with
+nothing (D61, *Trap*). Fixed in `kit/base.css` with a test; luma back to 26. Every frame the critics judged in rounds 1 to 3 was a
+little greyer than it renders now; nothing they found depended on it.
+
+**At the cap, for the owner:** opening the workshop on the bug story, and a dry line in his process (engagement, rounds 2 and 3);
+the four stages resting on the Fortran era, "just agree", and what "verify" proves (clarity, round 1, his argument); the scenes
+that run fast at speed 1.2 (pacing, every cut).
+
+**Round 4** (a fresh Sonnet verifier, the cap): blacks near-black again (pass), the diff stat legible (pass), but the hard line at
+the caption band was still there. The render had used a stale page: the build had refused a new ding on "Fixed before it merged"
+(a sentence's first word) and the command chain hid the failure. The ding is gone, the page rebuilt, the panels now fade at their
+foot, and the ladder hides while the 2023 flashback is up so nothing shows through the fade. **After the cap** this was checked by
+the builder's own frames (65.8, 74, 79.5, 136 and 311.5 s), not by a critic: the owner's eye is the last check.
