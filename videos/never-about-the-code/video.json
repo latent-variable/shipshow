@@ -36,11 +36,12 @@
     "duck": 0.35
   },
   "pauses": {
-    "02-compiler": 0.8,
-    "04-priesthood": 1.0,
-    "05-real-programmers": 1.0,
-    "08-now": 0.6,
-    "11-objection": 0.8
+    "02-compiler": 0.5,
+    "04-priesthood": 0.6,
+    "05-real-programmers": 0.6,
+    "08-now": 0.4,
+    "11-objection": 0.4
   },
-  "hold": 5
+  "hold": 5,
+  "gap": 0.45
 }

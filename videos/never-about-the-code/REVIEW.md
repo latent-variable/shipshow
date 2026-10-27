@@ -66,3 +66,31 @@ What changed:
 - **Visuals and consistency.** Chart labels moved off the line and haloed; source lines, axes and the credit line at 28 px or more;
   portrait credits larger and Ritchie and Thompson bigger; every quote card carries its source; the Unix card says rewritten 1973,
   paper 1974; portraits take the theme's print frame (#69).
+
+## Round 3: 1 blocking, 21 major; all seven critics (clarity and engagement pass)
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | fail | 0 / 1 / 4 |
+| clarity | pass | 0 / 0 / 6 |
+| pacing | fail | 0 / 12 / 4 |
+| sync | fail | 0 / 1 / 4 |
+| visuals | fail | 1 / 3 / 4 |
+| consistency | fail | 0 / 1 / 5 |
+| engagement | pass | 0 / 3 / 5 |
+
+What changed:
+- **Visuals (blocking).** The chart's caveat ran off the right edge: the labels now sit left of the point; the Opus 4 and GPT-5
+  labels are gone (their dots stay). Portrait credits sit on a solid strip; source lines, tags and steps at 30 px or more.
+- **Accuracy.** Goldberg is credited only with the co-worker point ("argues"), not with the determinism objection he calls poor;
+  Karpathy "flipped by December", as his post says.
+- **Memes.** Engagement found four of the memes old. Three replaced with 2025 and 2026 formats from Imgflip's clean clips: Jack
+  Black opening the book (A Minecraft Movie) for reading the assembly, Odysseus tied to the mast (The Odyssey) for the priesthood
+  hearing about automatic programming, IShowSpeed's hands over his face for the 56%. The objection's answer cards are never covered.
+- **Sync and engagement.** The Karpathy quote lands on "they"; the Backus card and Goldberg's credit land on their names; the
+  objection gains beats (the "no security guidance" highlight, "treat it like a co-worker's work: check the behavior").
+- **Pacing.** The gap between sentences is 0.45 s, and every sentence inside a run gets it (11 breaths); scene pauses cut to 0.6 s at
+  most. **Declined:** the remaining speaking-rate findings (01, 02, 03, 12 at +23 to +34% over ShipShow's 210 syllables a minute).
+  The voice is at speed 1.0, the slowest OmniVoice is run at, and cutting words does not change a rate; Lino's own call for his
+  published videos is that 1.0 already drags and 1.1 to 1.25 is what viewers expect (DAIS product-videos, 2026-10-15).
+- **Consistency.** Antirez's concession is green like the other converts'; his name capitalised as narrated.
