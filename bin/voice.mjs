@@ -25,7 +25,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { REPO, HF, VENV_PY, config, die, groupRuns, pythonExists, readWav, round, run, scenes, sentences, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
+import { REPO, HF, VENV_PY, breathe, config, die, groupRuns, pythonExists, readWav, round, run, scenes, sentences, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
@@ -164,12 +164,12 @@ if (hear) {
 // is a run that was heard back (the .check file's `timing`), else a take of one sentence is where we put
 // it with its words by their share of the letters (build.mjs), and a run without word times shares the
 // take out by letters.
-function sentenceTimes(unit, at, dur) {
+function sentenceTimes(unit, at, dur, shifts = []) {
   const timed = readCheck(unit.wav, unit.key)?.timing?.sentences;
   if (timed?.length === unit.texts.length) {
     return unit.texts.map((text, k) => {
-      const x = timed[k], start = at + x.start;
-      return { text, start: round(start), duration: round(Math.max(at + x.end - start, 0.05)), words: x.words.map((w) => ({ w: w.w, at: round(at + w.at) })) };
+      const x = timed[k], d = k ? shifts[k - 1] || 0 : 0, start = at + x.start + d;
+      return { text, start: round(start), duration: round(Math.max(at + x.end + d - start, 0.05)), words: x.words.map((w) => ({ w: w.w, at: round(at + w.at + d) })) };
     });
   }
   const letters = unit.texts.map((x) => x.replace(/\s/g, "").length || 1);
@@ -183,7 +183,7 @@ function sentenceTimes(unit, at, dur) {
 }
 
 // Lay the takes out on one track and record where each landed.
-let rate = 0, channels = 0, t = 0;
+let rate = 0, channels = 0, t = 0, breaths = 0;
 const timing = { engine: cfg.engine, voice: cfg.voice, speed: cfg.speed, scenes: [] };
 const placed = [];
 for (const s of plan) {
@@ -193,9 +193,17 @@ for (const s of plan) {
     const wav = readWav(unit.wav);
     if (!rate) ({ rate, channels } = wav);
     if (wav.rate !== rate || wav.channels !== channels) die(`${unit.wav} is ${wav.rate} Hz, the others ${rate} Hz`);
-    const dur = wav.samples.length / channels / rate;
-    placed.push({ at: t, samples: wav.samples });
-    scene.sentences.push(...sentenceTimes(unit, t, dur));
+    // A run keeps one prosody but can run its sentences together: where Whisper heard less than the video's gap between
+    // two of them, a breath of silence goes in at the quietest point between them (bin/lib.mjs breathe, DESIGN D51).
+    const timed = readCheck(unit.wav, unit.key)?.timing?.sentences;
+    let samples = wav.samples, shifts = [];
+    if (timed?.length > 1 && timed.length === unit.texts.length) {
+      ({ samples, shifts } = breathe(wav.samples, rate, channels, timed.slice(1).map((x, k) => [timed[k].end, x.start]), cfg.gap / cfg.speed));
+      breaths += shifts.filter((x, k) => x > (shifts[k - 1] || 0)).length;
+    }
+    const dur = samples.length / channels / rate;
+    placed.push({ at: t, samples });
+    scene.sentences.push(...sentenceTimes(unit, t, dur, shifts));
     t += dur + (i < s.units.length - 1 ? cfg.gap / cfg.speed : 0);
   });
   t += cfg.tail / cfg.speed;
@@ -233,6 +241,7 @@ writeFileSync(join(dir, "timing.json"), JSON.stringify(timing, null, 1) + "\n");
 if (voiceCheck.hearBack) console.log(`heard back: ${voiceCheck.checked} ${voiceCheck.runs ? "run(s)" : "sentence(s)"}, ${voiceCheck.flagged.length} under ${Math.round(HEARBACK_MIN * 100)}%`);
 else console.log(noHear ? "not heard back: hear-back is off (--no-hearback)" : "not heard back (npm run setup:hearback lets the pipeline hear its takes and catch a dropped word)");
 if (voiceCheck.runs) console.log(`voiced in ${voiceCheck.runs.takes} run(s) of sentences; ${voiceCheck.runs.matched} of ${voiceCheck.runs.words} words timed from what was heard, the rest placed between their neighbours`);
+if (breaths) console.log(`${breaths} breath(s) put between sentences that ran together inside a run (at least the video's gap, ${round(cfg.gap / cfg.speed)} s)`);
 for (const f of voiceCheck.flagged) console.log(`  LISTEN ${f.scene} sentence ${f.sentence}: ${Math.round(f.score * 100)}% heard back. Script: "${f.text}" Heard: "${f.heard}"`);
 for (const f of voiceCheck.faults) console.log(`  LISTEN ${f.scene} sentence ${f.sentence}: ${f.faults.join("; ")}`);
 const n = timing.scenes.reduce((a, s) => a + s.sentences.length, 0);

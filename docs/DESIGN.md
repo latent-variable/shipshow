@@ -725,6 +725,18 @@ most of the added 28 ms. A full draft render of how-it-works took 30 to 33 s wit
 run swings on this machine were up to 8 s; the shipped fonts account for much of it (`launch`, which also ships fonts, took
 39 s). The skyline sits behind the bottom 200 px of every scene, so a scene that puts content there sits on buildings.
 
+### D51. A run gets a breath between sentences that ran together (2026-10-27)
+**Decision.** When `voice` lays out a run that Whisper timed, every boundary where sentence k's last word ends less than the
+video's `gap` (divided by speed) before sentence k+1's first word starts gets silence for the difference. It goes in at the
+quietest 10 ms window within 80 ms of the boundary, with a 5 ms fade out and in, so no word is cut; the sentences and words after
+it move by the same amount in `timing.json`. Nothing is voiced again and the take on disk is unchanged. **Why.** Round 2 of the
+never-about-the-code critics measured gaps of 0 to 0.25 s inside runs (eight of them, four at 0 or 0.02 s) next to 3 s pauses
+between scenes, the rushed-then-stopped rhythm the owner had called choppy. Runs keep one prosody (D47); this keeps their sentences
+apart. **Measured (2026-10-27, the 12-scene video, speed 1.0, gap 0.35).** 5 breaths inserted across 23 runs; every one of 66
+sentence gaps now at least 0.34 s (Whisper's word ends are rounded), none under 0.25. **Costs.** The breath is digital silence,
+not room tone, under a music bed it is not heard as a drop; a boundary Whisper placed wrongly gets its breath at the quietest
+point near the wrong place, which is still between words.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

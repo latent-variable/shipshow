@@ -435,3 +435,45 @@ export function musicBed(dir, music, timing) {
   writeWav(join(dir, "assets", "music.wav"), { rate, channels: 2, samples: out });
   return true;
 }
+
+/** A run's take with a breath between its sentences: where Whisper heard sentence k end and k+1 start less than `minGap`
+ *  seconds apart, silence is inserted at the quietest 10 ms near the boundary, with 5 ms fades either side, so the voice is
+ *  never cut mid-word and its prosody is kept. `bounds` is [[end of sentence k, start of sentence k+1], ...] in seconds into
+ *  the take. Returns {samples, shifts}: the new interleaved Int16 samples, and for each boundary how many seconds everything
+ *  after it moved (cumulative), to add to the times of the sentences that follow. */
+export function breathe(samples, rate, channels, bounds, minGap) {
+  const frames = samples.length / channels, win = Math.max(1, Math.round(rate * 0.01));
+  const energy = (f0) => {
+    let e = 0;
+    for (let f = f0; f < Math.min(frames, f0 + win); f++) for (let c = 0; c < channels; c++) e += samples[f * channels + c] ** 2;
+    return e;
+  };
+  const cuts = [];
+  let total = 0;
+  const shifts = bounds.map(([end, start]) => {
+    const need = minGap - Math.max(0, start - end);
+    if (need > 0.02) {
+      const lo = Math.max(0, Math.round((Math.min(end, start) - 0.08) * rate)), hi = Math.min(frames - win, Math.round((Math.max(end, start) + 0.08) * rate));
+      let at = Math.round(((end + start) / 2) * rate), best = Infinity;
+      for (let f = lo; f <= hi; f += win) { const e = energy(f); if (e < best) { best = e; at = f + Math.floor(win / 2); } }
+      cuts.push({ at: Math.min(Math.max(at, 0), frames), add: Math.round(need * rate) });
+      total += need;
+    }
+    return total;
+  });
+  if (!cuts.length) return { samples, shifts };
+  // The take in pieces between the cuts, each faded out at its end and in at its start (5 ms), joined by the silences.
+  const fade = Math.round(rate * 0.005), edges = [0, ...cuts.map((c) => c.at), frames];
+  const out = new Int16Array(samples.length + cuts.reduce((a, c) => a + c.add, 0) * channels);
+  let dst = 0;
+  for (let p = 0; p < edges.length - 1; p++) {
+    const piece = samples.slice(edges[p] * channels, edges[p + 1] * channels), n = piece.length / channels;
+    for (let k = 0; k < Math.min(fade, n); k++) for (let ch = 0; ch < channels; ch++) {
+      if (p > 0) piece[k * channels + ch] = Math.round(piece[k * channels + ch] * (k / fade));
+      if (p < edges.length - 2) piece[(n - 1 - k) * channels + ch] = Math.round(piece[(n - 1 - k) * channels + ch] * (k / fade));
+    }
+    out.set(piece, dst * channels);
+    dst += n + (p < cuts.length ? cuts[p].add : 0);
+  }
+  return { samples: out, shifts };
+}
