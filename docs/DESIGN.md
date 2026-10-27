@@ -596,6 +596,26 @@ one punchline a beat was to slow the whole video. product-videos has the same th
 is dead air for the ear: at 1.6 to 2.2 s on top of the scene gap, round 2's pacing critic heard four three-second silences, so
 the video settled on 0.8 to 1.3 s.
 
+### D48. Portraits come from Wikimedia Commons, behind a licence gate (2026-10-26)
+**Decision.** `<figure class="ss-portrait" data-commons="File:Name.jpg">` is a credited photo. `bin/portrait.mjs` asks the Commons API
+(`prop=imageinfo`, `iiprop=url|extmetadata|size`, `iiurlwidth=900`, a `User-Agent` naming ShipShow, as Wikimedia asks) for the file,
+keeps its thumbnail and a reduced copy of its metadata in `~/.cache/shipshow/commons/<name>-w900/`, and `build` copies the picture to
+`assets/portraits/` and writes the `<img>`, the builder's `<figcaption>` and a credit line. The gate reads `LicenseShortName`, `License`
+and `NonFree`: it accepts public domain (`pd*`), CC0, and CC BY or CC BY-SA with a version (an optional jurisdiction suffix), and refuses
+the rest, including a licence Commons leaves empty. A CC file whose `Artist` is empty is refused (the licence needs a name); a public-domain
+one is credited to its `Credit` text, else "Wikimedia Commons". The gate runs on every build, over the cached metadata too, so tightening it
+reaches files already fetched. `Artist` is stripped of tags and entities before it reaches the page. `review` lists each portrait's file page,
+author, licence and licence link. `SHIPSHOW_COMMONS_API` (a URL, or a folder of replies for tests) and `SHIPSHOW_COMMONS_CACHE` move the source and cache.
+**Why.** A builder would otherwise download, credit and style each photo by hand and get a licence wrong; a CC BY-SA photo without its
+author is a licence breach, and a non-free file is worse. The gate is the point: it fails at build, before a render, with the file named.
+**Look.** `ss-portrait` in `kit/base.css`: the photo in the theme's card, border, radius and shadow, the credit on a dark gradient at its
+foot (white text in every theme, so contrast does not depend on the photo), the name in `--font-display` and the line under it in `--muted`.
+Opt-in `ss-portrait-gray` and `ss-portrait-duo` (grayscale multiplied over `--accent`). Checked on `shipshow` and `paper` (2026-10-26).
+**Costs.** Commons' metadata is as good as its uploaders: a file can be mislabelled (the research note flags two YouTube stills), the gate
+trusts what Commons says, and "no attribution required" public domain files are still credited. A non-image or a very odd thumbnail type
+(TIFF, SVG) is not handled. The first build of a file needs the network; the 900 px thumbnail of a small original is the original, upscaled
+by the frame, so a 238 px photo looks soft at the default size (Backus): set `--portrait-height` smaller.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
@@ -615,6 +635,7 @@ What an agent or person observes. Each line is checkable against the cited file.
   records them in `timing.json` `voiceCheck`, which `review` prints as *Voice checks*.
 - `build` also places sound effects (D43): a `data-sfx` or `sfx()` call becomes a sound in `assets/sfx.wav`, peaking (or starting) at the cue; it stops on a run of one sound, on a sound over a sentence's first word, and on an unknown sound; `"sfx": false` turns it off. `review` lists each sound with its time, scene, level against the voice and audible span under *Sound effects*.
 - `render` writes `out/<name>.mp4`; `make` chains voice, build, lint and render.
+- `build` expands each `ss-portrait` figure (D48): a refused licence, a missing file or an unreachable Commons with nothing cached stops it naming the scene and the file; `review` lists each portrait under *Portraits*.
 - `review` writes `review/packet.md` (words a minute while speaking, every pause, every cue's
   time and reading time, with code counted in tokens, the longest still stretch of each scene) and
   `review/frames/`. The packet measures; the critics judge.
