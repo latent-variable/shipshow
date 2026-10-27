@@ -399,3 +399,13 @@ January 2023 (S33, S34) and ends on the opening's charge. Every line voiced agai
 | visuals | revise (4 major) | Archive grey ink darkened (`--muted` #54432d); the Copilot capture shows its whole paragraph, not a cut sentence; the thesis no longer strands "and" on its own line. Small labels elsewhere are earlier cuts', accepted then |
 | consistency | pass (3 minor) | none needed |
 | engagement | revise (3 major) | The OCaml receipt is up from the scene's start; the objection's red pushed harder; sounds 12 dB under the voice, not 14, so the jokes' stings are felt. Its best fit: the archive section and its swing |
+
+**Round 2** (fresh critics; Opus for the last round's clarity, visuals and engagement):
+
+| critic | verdict | what changed |
+|---|---|---|
+| accuracy | pass (3 minor) | "58 merged pull requests" had gone stale: counted again, 65 (S32). "That one line becomes eleven instructions" counts the whole function (kept, as in earlier cuts) |
+| sync and pacing | pass, pass | The "way ahead of his time" stamp and its ding now arrive together on "time." (a sound on the sentence's first word reads as a glitch); the silence after 03 is 1.9 s |
+| clarity | pass (3 minor) | The callback is now on screen too ("You don't understand the code." under the stamp, on a solid card); the ladder's side labels read "write less, trust more" at the top and "write it all" at the bottom, so no end reads as more trust for machine code |
+| visuals | revise (1 major) | Solid panels stopped at the scene window and cut the workshop horizon with a hard line: a solid panel now fades out at its foot. Archive caption strip darker. The Copilot mark sliding across other words mid-sweep is the kit's, for every marked screenshot (noted, not fixed here) |
+| engagement | revise (2 major) | About a minute with no gag (objection to workshop): a "+13,323 −0, lines to review" diff stat slams on "thirteen thousand" (S25), the review step shows its three rounds (S29), the rewind gets a VHS teal tint, and "Always has been" stays up 3.2 s. **For the owner:** opening the workshop on the bug story instead of "So here's how I actually do that eighty percent", and a dry line in his process, both change his own words about how he works |

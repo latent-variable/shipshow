@@ -903,6 +903,11 @@ change. A token with no base value switches at the midpoint. A video cannot retu
 restates it. **Tested** by `test/moods.test.mjs` (carry-forward, unknown names, namespaced fonts and files, midpoint switches,
 tweens, synthetic tones before, during and after a music boundary), and a three-scene Kokoro demo built, checked and rendered:
 frames at each boundary show navy turning into the paper theme's cream and serif type, then a lofi night with stars.
+**Trap (2026-10-27, never-about-the-code).** `#overlay > *` gives every child `z-index: 1`, so a positioned `.mood-overlay` made a
+stacking context and its grain, set to blend `overlay`, blended with nothing: flat grey noise over the whole picture, the opening's
+blacks lifted from 25 to 44 mean luma and the file eight times larger (1.2 GB for 5.6 min). `.mood-overlay` now sets `z-index:
+auto`, as `#overlay` itself must, and `test/moods.test.mjs` holds it.
+
 ### D62. The essay: a video to share an idea, in sections with their own moods; the archive theme (2026-10-27)
 **Decision.** A fourth kind, `"kind": "essay"`: a video someone makes to convey their own ideas, in their own voice, to
 publish or pass around (an opinion piece for a channel, a paper explained). It is reviewed like a feature video (`standard`

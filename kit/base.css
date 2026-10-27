@@ -165,5 +165,5 @@ body { background: var(--bg); overflow: hidden; }
 /* Mood layers share the canvas and leave scene and caption tracks above them. */
 .mood-backdrop { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: plus-lighter; }
 #ambient .mood-ambient { position: absolute; inset: 0; }
-#overlay .mood-overlay { position: absolute; inset: 0; }
+#overlay .mood-overlay { position: absolute; inset: 0; z-index: auto; }   /* no stacking context: grain must blend with the scenes under it, as on #overlay */
 #overlay .mood-overlay > div { position: absolute; inset: 0; }

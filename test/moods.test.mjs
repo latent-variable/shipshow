@@ -144,3 +144,13 @@ test("ambient mood containers are seeded, reused on return, and base ambient sur
   const fades = a.calls.filter((c) => c.method === "to" && Array.isArray(c.target) && c.args[0].opacity === 1);
   assert.deepEqual(fades.map((c) => c.args[1]), [3.4, 7.4, 11.4]);
 });
+
+test("a mood's overlay layers make no stacking context, so grain blends with the scenes under it", () => {
+  // #overlay > * gets z-index 1; a positioned .mood-overlay with it would isolate its grain, which then blends with
+  // nothing and lays flat grey noise over the picture (never-about-the-code's seventh cut: blacks lifted from 25 to 44
+  // mean luma, the file eight times larger).
+  const css = readFileSync(join(REPO, "kit", "base.css"), "utf8");
+  const rule = css.match(/#overlay \.mood-overlay \{([^}]*)\}/);
+  assert.ok(rule, "base.css has no #overlay .mood-overlay rule");
+  assert.match(rule[1], /z-index:\s*auto/);
+});
