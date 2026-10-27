@@ -180,6 +180,15 @@
   .terminal .fail { color: var(--accent); font-weight: 700; } .terminal .pass { color: var(--good); font-weight: 700; }
   .proof { font-size: 64px; text-align: center; }
   .proof em { font-style: normal; color: var(--accent); }
+
+  /* cut four: the four stages */
+  .stages { display: flex; gap: 14px; justify-content: center; }
+  .stages span { font-family: var(--font-mono); font-size: 26px; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px; border: 2px solid var(--line); border-radius: 999px; color: var(--muted); }
+  .stages span.on { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+  .stages span.done { color: var(--accent); border-color: var(--accent); }
+  .solo { display: flex; gap: 44px; align-items: center; width: 1500px; margin: 0 auto; }
+  .stage .solo .ss-portrait { --portrait-height: 400px; font-size: 34px; }
+  .solo .quote { font-size: 56px; }
 </style>
 
 <section data-scene="01-hook">
@@ -188,13 +197,13 @@
     <div class="pr card" data-cue="2026," data-anim="up">
       <div class="head"><span class="av"></span><b>senior-reviewer</b>&nbsp;commented on PR #4021</div>
       <div class="body">you don't understand the code.</div>
-      <div class="reacts"><span data-cue="comment" data-anim="count">▲ 1204</span><span data-cue="point," data-anim="pop">fair point</span></div>
+      <div class="reacts"><span data-cue="comment" data-anim="count">▲ 1204</span><span data-cue="point." data-anim="pop">fair point</span></div>
     </div>
-    <div class="then-now"><div class="card" data-cue="compilers." data-anim="up" data-sfx="scratch"><div class="tag">something like it, about</div><div class="yr">1950s</div><div class="about">compilers</div></div></div>
+    <div class="then-now"><div class="card" data-cue="compilers," data-anim="up" data-sfx="scratch"><div class="tag">something like it, about</div><div class="yr">1950s</div><div class="about">compilers</div></div></div>
   </div>
-  <div class="meme-wrap" data-cue="animals." data-anim="pop">
+  <div class="meme-wrap" id="m01" data-cue="writing" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="animals." data-anim="pop"><span class="top">1950s programmers</span><span class="bottom">writing machine code by hand</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="writing" data-anim="pop"><span class="top">1950s programmers</span><span class="bottom">writing machine code by hand</span></figure>
   </div>
 </section>
 
@@ -206,7 +215,7 @@
         <div class="src" data-cue="+0.3" data-anim="type">y = m * x + b;</div>
         <div class="steps" data-cue="tiny" data-anim="fade">a processor runs tiny steps:<br>load · multiply · add · store</div>
       </div>
-      <div class="arrow" data-cue="turns" data-anim="left">→</div>
+      <div class="arrow" data-cue="writes" data-anim="left">→</div>
       <div>
         <div class="asm" data-cue="eleven" data-anim="up">
           <div class="asm-head"><span>what the compiler writes</span><b>11</b></div>
@@ -225,9 +234,9 @@
     </div>
     <div class="who center" data-cue="Mac," data-anim="fade">Apple clang 21 · arm64 · -O0 and -O2</div>
   </div>
-  <div class="meme-wrap" id="m02" data-cue="Also" data-anim="pop">
+  <div class="meme-wrap" id="m02" data-cue="read" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/aq7zsi.mp4" data-name="Jack Black opens the book (A Minecraft Movie, 2025)" data-credit="https://imgflip.com/gif-templates" data-cue="Also" data-anim="pop"><span class="top">Me, once a year</span><span class="bottom">opening the assembly</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/aq7zsi.mp4" data-name="Jack Black opens the book (A Minecraft Movie, 2025)" data-credit="https://imgflip.com/gif-templates" data-cue="read" data-anim="pop"><span class="top">Me, once a year</span><span class="bottom">opening the assembly</span></figure>
   </div>
 </section>
 
@@ -241,93 +250,95 @@
         <div class="rung card" data-cue="Fortran," data-anim="up">Fortran <small>1957</small></div>
         <div class="rung card" data-cue="C,#2" data-anim="up">C <small>Unix, 1973</small></div>
         <div class="rung card" data-cue="Python." data-anim="up">Python</div>
-        <div class="rung card top" data-cue="English." data-anim="slam" data-sfx="whoosh">Plain English <small style="color: var(--good)">agents</small></div>
+        <div class="rung card top" data-cue="English," data-anim="slam" data-sfx="whoosh">Plain English <small style="color: var(--good)">agents</small></div>
       </div>
     </div>
   </div>
-  <div class="doubt card" data-cue="roasted" data-anim="pop"><div class="tag" style="color: var(--accent)">every layer</div><div class="big">got roasted</div></div>
-  <div class="meme-wrap" data-cue="roast#2" data-anim="pop">
+  <div class="meme-wrap" id="m03" data-cue="roasted" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/5pzpm5.mp4" data-name="Pedro Pascal crying" data-credit="https://imgflip.com/gif-templates" data-cue="roast#2" data-anim="pop"><span class="top">AI pull requests</span><span class="bottom">reading the comments</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/5pzpm5.mp4" data-name="Pedro Pascal crying" data-credit="https://imgflip.com/gif-templates" data-cue="roasted" data-anim="pop"><span class="top">Every new layer</span><span class="bottom">reading the comments</span></figure>
   </div>
 </section>
 
-<section data-scene="04-priesthood">
+<section data-scene="04-impossible">
   <div class="stage">
-    <div class="tag center" data-cue="+0.1" data-anim="fade">the evidence</div>
-    <div class="exhibits">
-      <div class="entry card" id="exA" data-cue="Hopper." data-anim="up">
-        <div class="exhibit">exhibit A</div>
-        <figure class="ss-portrait" data-commons="File:Commodore Grace M. Hopper, USN (covered) head and shoulders crop.jpg" data-cue="Hopper." data-anim="pop"><figcaption>Grace Hopper<small>Navy officer · compiler pioneer</small></figcaption></figure>
-        <div><div class="quote" data-cue="working" data-anim="fade">1952: a working compiler, and “nobody would <em>touch it</em>.”</div><div class="fun" data-cue="arithmetic," data-anim="fade">“computers could only do arithmetic”</div></div>
-      </div>
-      <div class="entry card" id="exB" data-cue="Backus," data-anim="up">
-        <div class="exhibit">exhibit B</div>
-        <figure class="ss-portrait" data-commons="File:John Backus 2.jpg" data-cue="Backus," data-anim="pop"><figcaption>John Backus<small>built Fortran</small></figcaption></figure>
-        <div><div class="quote" data-cue="priesthood." data-anim="fade">programmers as “a priesthood”</div><div class="quote" data-cue="foolish" data-anim="fade" style="margin-top: 18px">machines writing efficient code: “a <em>foolish and arrogant dream</em>”</div></div>
-      </div>
+    <div class="stages" data-cue="+0.1" data-anim="fade"><span class="on">1 · impossible</span><span class="">2 · beneath you</span><span class="">3 · rots your brain</span><span class="">4 · the bar</span></div>
+    <div class="solo card" data-cue="Hopper" data-anim="up">
+      <figure class="ss-portrait" data-commons="File:Commodore Grace M. Hopper, USN (covered) head and shoulders crop.jpg" data-cue="Hopper" data-anim="pop"><figcaption>Grace Hopper<small>Navy officer · compiler pioneer</small></figcaption></figure>
+      <div><div class="quote" data-cue="working" data-anim="fade">1952: a working compiler, and “nobody would <em>touch it</em>.”</div><div class="fun" data-cue="arithmetic." data-anim="fade" style="font-size: 36px">“They told me computers could only do arithmetic.”</div></div>
     </div>
   </div>
-  <div class="moth" id="moth" data-cue="moth" data-anim="pop"><figure class="ss-portrait" data-commons="File:First Computer Bug, 1945.jpg" data-cue="moth" data-anim="pop"><figcaption>the actual bug<small>Mark II logbook, 9 September 1947</small></figcaption></figure></div>
-  <div class="meme-wrap" data-cue="dream." data-anim="pop" data-sfx="whoosh">
+  <div class="moth" id="moth" data-cue="impossible." data-anim="pop"><figure class="ss-portrait" data-commons="File:First Computer Bug, 1945.jpg" data-cue="impossible." data-anim="pop"><figcaption>her team logged a real moth as a bug<small>Mark II logbook, 9 September 1947</small></figcaption></figure></div>
+</section>
+
+<section data-scene="05-beneath-you">
+  <div class="stage">
+    <div class="stages" data-cue="+0.1" data-anim="fade"><span class="done">1 · impossible</span><span class="on">2 · beneath you</span><span class="">3 · rots your brain</span><span class="">4 · the bar</span></div>
+    <div class="solo card" id="bk" data-cue="Programmers" data-anim="up">
+      <figure class="ss-portrait" data-commons="File:John Backus 2.jpg" data-cue="Programmers" data-anim="pop"><figcaption>John Backus<small>built Fortran, told the story</small></figcaption></figure>
+      <div><div class="quote" data-cue="priesthood," data-anim="fade">programmers as “a priesthood”</div><div class="quote" data-cue="foolish" data-anim="fade" style="margin-top: 18px">automatic coding: “a <em>foolish and arrogant dream</em>”</div></div>
+    </div>
+    <div class="solo card" id="dj" data-cue="three," data-anim="up" style="position: absolute; left: 0; right: 0; top: 200px">
+      <figure class="ss-portrait" data-commons="File:Edsger Wybe Dijkstra.jpg" data-cue="Dijkstra" data-anim="pop"><figcaption>Edsger Dijkstra<small>1975</small></figcaption></figure>
+      <div><div class="quote" data-cue="cripples" data-anim="fade">“The use of COBOL <em>cripples the mind</em>; its teaching should, therefore, be regarded as a criminal offence.”</div><div class="who">EWD 498</div></div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m05" data-cue="priesthood," data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/axqk4y.mp4" data-crop="bottom 7%" data-name="Odysseus and the sirens (The Odyssey, 2026)" data-credit="https://imgflip.com/gif-templates" data-cue="dream." data-anim="pop"><span class="top">The priesthood</span><span class="bottom">hearing about automatic programming</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/axqk4y.mp4" data-crop="bottom 7%" data-name="Odysseus and the sirens (The Odyssey, 2026)" data-credit="https://imgflip.com/gif-templates" data-cue="priesthood," data-anim="pop"><span class="top">The priesthood</span><span class="bottom">hearing about automatic coding</span></figure>
   </div>
 </section>
 
-<section data-scene="05-real-programmers">
+<section data-scene="06-flex">
   <div class="stage">
-    <div class="entry card" data-cue="+0.1" data-anim="up">
-      <div class="yr">1975</div>
-      <figure class="ss-portrait" data-commons="File:Edsger Wybe Dijkstra.jpg" data-cue="Dijkstra," data-anim="pop"><figcaption>Edsger Dijkstra<small>“go to” hater</small></figcaption></figure>
-      <div><div class="quote" data-cue="cripples" data-anim="fade">“The use of COBOL <em>cripples the mind</em>.”</div></div>
-    </div>
+    <div class="stages" data-cue="+0.1" data-anim="fade"><span class="done">1 · impossible</span><span class="done">2 · beneath you</span><span class="done">3 · rots your brain</span><span class="on">4 · the bar</span></div>
     <div class="entry noface card" data-cue="1983," data-anim="up">
       <div class="yr">1983</div>
       <div><div class="quote" data-cue="real" data-anim="fade">“Real Programmers use <em>Fortran</em>. Quiche Eaters use Pascal.”</div><div class="who">a satirical letter in Datamation</div></div>
     </div>
-    <div class="flex big" data-cue="Yesterday's" data-anim="slam">yesterday's foolish dream, today's flex</div>
+    <div class="flex big" data-cue="Yesterday's" data-anim="slam">yesterday's insult, today's flex</div>
   </div>
-  <div class="meme-wrap" id="m05" data-cue="Wait." data-anim="pop" data-sfx="scratch" data-sfx-offset="-0.42">
+  <div class="meme-wrap" id="m06" data-cue="Wait." data-anim="pop" data-sfx="scratch" data-sfx-offset="-0.42">
     <div class="scrim"></div>
     <figure class="ss-meme" data-clip="https://i.imgflip.com/6inpzl.mp4" data-name="No no no wait wait wait" data-credit="https://imgflip.com/gif-templates" data-cue="Wait." data-anim="pop"><span class="top">1957: Fortran? No way</span><span class="bottom">1983: real programmers use Fortran</span></figure>
   </div>
 </section>
 
-<section data-scene="06-the-cost">
+<section data-scene="07-the-cost">
   <div class="stage">
-    <div class="punch big" data-cue="+0.1" data-anim="slam">plot twist: the haters weren't wrong</div>
+    <div class="punch big" data-cue="+0.1" data-anim="slam">the haters had receipts</div>
     <div class="costs">
-      <div class="cost card" data-cue="Mel," data-anim="left"><div class="what">Mel's hand-tuned machine code ran faster than the optimizing assembler's<small>“The Story of Mel”, a 1983 hacker legend</small></div><div class="stamp ink" data-cue="faster." data-anim="pop">true</div></div>
+      <div class="cost card" data-cue="best" data-anim="left"><div class="what">Mel's hand-tuned machine code ran faster than the optimizing assembler's<small>“The Story of Mel”, a 1983 hacker legend</small></div><div class="stamp ink" data-cue="faster," data-anim="pop">true</div></div>
       <div class="cost card" data-cue="Unix" data-anim="left">
-        <div class="what">Unix in C: about a third bigger<small>Ritchie and Thompson: “quite acceptable”</small></div>
+        <div class="what">Unix after its rewrite in C: about a third bigger<small>Ritchie and Thompson: “quite acceptable”</small></div>
         <div class="faces">
           <figure class="ss-portrait" data-commons="File:Dennis Ritchie 2011.jpg" data-cue="Unix" data-anim="pop"><figcaption>Dennis Ritchie</figcaption></figure>
           <figure class="ss-portrait" data-commons="File:Ken Thompson, 2019.jpg" data-cue="Unix" data-anim="pop"><figcaption>Ken Thompson</figcaption></figure>
         </div>
       </div>
     </div>
-    <div class="verdict"><div class="stamp ink" data-cue="right" data-anim="pop">right about the cost</div><div class="stamp" data-cue="lost" data-anim="slam" data-sfx="sad_trombone" data-sfx-offset="1.0">lost anyway</div></div>
+    <div class="verdict"><div class="stamp ink" data-cue="Right" data-anim="pop">right about the cost</div><div class="stamp" data-cue="Lost" data-anim="slam" data-sfx="thump" data-sfx-offset="0.65">lost anyway</div></div>
+    <div class="punch big" data-cue="cheap," data-anim="up">machine time is cheap. <em data-cue="you" data-anim="fade">you are not.</em></div>
   </div>
 </section>
 
-<section data-scene="07-the-trade">
+<section data-scene="08-the-trade">
   <div class="stage">
-    <div class="tag center" data-cue="IBM's" data-anim="fade">IBM's own case study, 1957 · grain of salt</div>
-    <div class="punch big" data-cue="+0.1" data-anim="fade">machine time is cheap. <em data-cue="you" data-anim="fade">you are not.</em></div>
+    <div class="tag center" data-cue="+0.1" data-anim="fade">IBM's own case study, 1957 · IBM grading its own homework</div>
     <div class="bars">
       <div class="bar-row" data-cue="four" data-anim="fade"><div>In Fortran</div><div class="bar fortran" data-cue="four" data-anim="grow">4 hours</div></div>
       <div class="bar-row" data-cue="three" data-anim="fade"><div>By hand</div><div class="bar hand" data-cue="three" data-anim="grow">about 3 days (his estimate)</div></div>
     </div>
+    <div class="fact" data-cue="broke," data-anim="up">the bug? fixed <em>in his Fortran</em></div>
     <div class="fact" data-cue="understood" data-anim="up">he understood <em>what his program did</em>, not what the machine did</div>
   </div>
-  <div class="meme-wrap" data-cue="familiar?" data-anim="pop">
+  <div class="meme-wrap" id="m08" data-cue="understood" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/873a5j.mp4" data-name="Nanami vibing (Jujutsu Kaisen)" data-credit="https://imgflip.com/gif-templates" data-cue="familiar?" data-anim="pop"><span class="top">Fortran users in 1957</span><span class="bottom">home before lunch</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/873a5j.mp4" data-name="Nanami vibing (Jujutsu Kaisen)" data-credit="https://imgflip.com/gif-templates" data-cue="understood" data-anim="pop"><span class="top">Fortran users in 1957</span><span class="bottom">home before lunch</span></figure>
   </div>
 </section>
 
-<section data-scene="08-now">
+<section data-scene="09-now">
   <div class="stage">
     <div class="chart-title" data-cue="+0.1" data-anim="fade" style="margin-top: 16px"><div class="big">The longest task AI finishes half the time</div><div class="tag">METR</div></div>
     <div class="chart-note" data-cue="lab," data-anim="fade">METR, an AI research lab · task length = how long a <b>human expert</b> takes it</div>
@@ -348,73 +359,70 @@
     </div>
     <div class="chart-note" data-cue="doubling" data-anim="up"><b>doubling about every 3 months since 2024</b> · METR Time Horizon 1.1, Jan 2026 · Frontier Risk Report, May 2026</div>
   </div>
-  <div class="meme-wrap" data-cue="months." data-anim="pop">
+  <div class="meme-wrap" id="m09" data-cue="park" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/62yufy.mp4" data-crop="top 29%" data-name="Willem Dafoe looking up" data-credit="https://imgflip.com/gif-templates" data-cue="months." data-anim="pop"><span class="top">Me looking at</span><span class="bottom">the time horizon chart</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/62yufy.mp4" data-crop="top 29%" data-name="Willem Dafoe looking up" data-credit="https://imgflip.com/gif-templates" data-cue="park" data-anim="pop"><span class="top">Me looking at</span><span class="bottom">the error bars</span></figure>
   </div>
 </section>
 
-<section data-scene="09-skeptics">
+<section data-scene="10-skeptics">
   <div class="stage">
-    <div class="tag center" data-cue="+0.1" data-anim="fade">late 2026: the argument is basically over</div>
-    <div class="punch big" data-cue="folded." data-anim="slam" style="color: var(--good)">the skeptics folded.</div>
+    <div class="punch big" data-cue="+0.1" data-anim="slam" style="color: var(--good)">even the doubters switched</div>
     <div class="skeptics">
-      <div class="skeptic card" data-cue="Karpathy," data-anim="up">
-        <figure class="ss-portrait" id="p-karpathy" data-commons="File:Andrej Karpathy, OpenAI.png" data-cue="Karpathy," data-anim="pop"><figcaption>Andrej Karpathy<small>coined “vibe coding”</small></figcaption></figure>
-        <div class="was" data-cue="work." data-anim="fade">Oct 2025: agents “just don't work”</div>
+      <div class="skeptic card" data-cue="Karpathy" data-anim="up">
+        <figure class="ss-portrait" id="p-karpathy" data-commons="File:Andrej Karpathy, OpenAI.png" data-cue="Karpathy" data-anim="pop"><figcaption>Andrej Karpathy<small>coined “vibe coding”</small></figcaption></figure>
+        <div class="was" data-cue="work" data-anim="fade" style="color: var(--accent)">Oct 2025: agents “just don't work”</div>
         <div class="line" data-cue="eighty" data-anim="up">Dec 2025: 80% of his code by agents</div>
       </div>
-      <div class="skeptic card" data-cue="DHH," data-anim="up">
-        <figure class="ss-portrait" id="p-dhh" data-commons="File:David Heinemeier Hansson Driver of Abu Dhabi Proton Racing's Porsche 911 RSR (27225732035) (cropped).jpg" data-cue="DHH," data-anim="pop"><figcaption>DHH<small>Rails guy · races at Le Mans</small></figcaption></figure>
-        <div class="line" data-cue="dividing" data-anim="up">Opus 4.5: “the dividing line”</div>
+      <div class="skeptic card" data-cue="Rails" data-anim="up">
+        <figure class="ss-portrait" id="p-dhh" data-commons="File:David Heinemeier Hansson Driver of Abu Dhabi Proton Racing's Porsche 911 RSR (27225732035) (cropped).jpg" data-cue="Rails" data-anim="pop"><figcaption>DHH<small>the Rails guy · races at Le Mans</small></figcaption></figure>
+        <div class="line" data-cue="Quattro." data-anim="up">“I have not written any of the code that's shipped in Quattro by hand”</div>
       </div>
-      <div class="skeptic card" data-cue="Antirez," data-anim="up">
-        <figure class="ss-portrait" id="p-antirez" data-commons="File:Salvatore Sanfilippo.png" data-cue="Antirez," data-anim="pop"><figcaption>Antirez<small>made Redis</small></figcaption></figure>
-        <div class="line" data-cue="fun." data-anim="up">writing code by hand: mostly for fun now</div>
-        <div class="was" data-cue="bread." data-anim="fade">(like baking your own bread)</div>
+      <div class="skeptic card" data-cue="Redis" data-anim="up">
+        <figure class="ss-portrait" id="p-antirez" data-commons="File:Salvatore Sanfilippo.png" data-cue="Redis" data-anim="pop"><figcaption>Antirez<small>the Redis guy</small></figcaption></figure>
+        <div class="line" data-cue="fun" data-anim="up">“writing the code yourself is no longer sensible, if not to have fun”</div>
       </div>
     </div>
   </div>
 </section>
 
-<section data-scene="10-objection">
+<section data-scene="11-objection">
   <div class="stage">
     <div class="vs">
       <div class="card" data-cue="+0.1" data-anim="left"><div class="tag">a compiler</div><div class="big">same input, same output</div>
         <div class="runs"><div class="run">run 1 <b>program A</b></div><div class="run">run 2 <b>program A</b></div></div></div>
-      <div class="card" data-cue="agents" data-anim="right"><div class="tag">an agent</div><div class="big">same prompt, new program</div>
+      <div class="card" data-cue="Run" data-anim="right"><div class="tag">an agent</div><div class="big">same prompt, new program</div>
         <div class="runs"><div class="run">run 1 <b>program A</b></div><div class="run">run 2 <b>program B</b></div></div></div>
     </div>
-    <div class="pct card" data-cue="Veracode's" data-anim="up"><div class="num">56%</div><div class="what">of model code passed Veracode's security tests, on average, <span data-cue="guidance," data-anim="highlight">with no security guidance</span><div class="who">Veracode, 2026 GenAI Code Security Report</div></div></div>
+    <div class="pct card" data-cue="Veracode's" data-anim="up"><div class="num">56%</div><div class="what">of model code passed Veracode's security tests, on average, <span data-cue="percent" data-anim="highlight">with no security guidance</span><div class="who">Veracode, 2026 GenAI Code Security Report</div></div></div>
     <div class="punch big" data-cue="trust" data-anim="slam">don't trust the output. <em data-cue="tests." data-anim="fade">trust the tests.</em></div>
   </div>
-  <div class="meme-wrap" id="m10" data-cue="percent" data-anim="pop">
+  <div class="meme-wrap" id="m11" data-cue="Knox." data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/atgx12.mp4" data-crop="top 22% bottom 12%" data-name="IShowSpeed hands over face" data-credit="https://imgflip.com/gif-templates" data-cue="percent" data-anim="pop"><span class="top">Model code</span><span class="bottom">passing 56% of security tests</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/atgx12.mp4" data-crop="top 22% bottom 12%" data-name="IShowSpeed hands over face" data-credit="https://imgflip.com/gif-templates" data-cue="Knox." data-anim="pop"><span class="top">Raw model code</span><span class="bottom">Fort Knox it is not</span></figure>
   </div>
 </section>
 
-<section data-scene="11-verify">
+<section data-scene="12-verify">
   <div class="stage">
     <div class="tag center" data-cue="+0.1" data-anim="fade">how I actually verify</div>
-    <div class="step card" data-cue="done" data-anim="left" style="width: 1400px; margin: 0 auto"><span class="n">1</span><span>write down done, and what must <em style="font-style: normal; color: var(--accent)">never</em> happen</span><span class="r" data-cue="invoice." data-anim="fade">no customer sees another's invoice</span></div>
+    <div class="step card" data-cue="never" data-anim="left" style="width: 1400px; margin: 0 auto"><span class="n">1</span><span>write down what must <em style="font-style: normal; color: var(--accent)">never</em> happen</span><span class="r" data-cue="invoice," data-anim="fade">no customer sees another's invoice</span></div>
+    <div class="who center" data-cue="list" data-anim="fade" style="font-size: 34px; color: var(--accent)">the never list is the real work: tests only catch what's on it</div>
     <div class="terminal" data-cue="tests#2" data-anim="up">
       <div class="cmd">$ npm test   <small>(illustration)</small></div>
       <div class="ln" data-cue="fail." data-anim="fade"><span class="fail">✗ never shows another customer's invoice</span><small>before the agent</small></div>
       <div class="ln" data-cue="pass." data-anim="fade"><span class="pass">✓ never shows another customer's invoice</span><small>agent's fix</small></div>
       <div class="ln" data-cue="catch#2" data-anim="fade"><span class="fail">✗ never shows another customer's invoice</span><small>planted · caught</small></div>
     </div>
-    <div class="who center" data-cue="list" data-anim="fade" style="font-size: 34px; color: var(--accent)">the never list is the real work: tests only catch what's on it</div>
-    <div class="proof big" data-cue="proof." data-anim="slam">reading <em>isn't proof.</em></div>
     <div class="punch big" data-cue="planted," data-anim="up" style="font-size: 50px">can't catch a bug <em>you</em> planted? won't catch the one <em>the agent</em> planted.</div>
   </div>
-  <div class="meme-wrap" id="m11" data-cue="strategy." data-anim="pop">
+  <div class="meme-wrap" id="m12" data-cue="Sabotage" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/a754xd.mp4" data-name="Suspicious guy" data-credit="https://imgflip.com/gif-templates" data-cue="strategy." data-anim="pop"><span class="top">Me, planting a bug</span><span class="bottom">in my own code</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/a754xd.mp4" data-name="Suspicious guy" data-credit="https://imgflip.com/gif-templates" data-cue="Sabotage" data-anim="pop"><span class="top">Me, planting a bug</span><span class="bottom">in my own code</span></figure>
   </div>
 </section>
 
-<section data-scene="12-close">
+<section data-scene="13-close">
   <div class="stage">
     <div class="heckle big" data-cue="+0.1" data-anim="fade">“You don't understand the code.”</div>
     <div class="ask big" data-cue="agree." data-anim="slam" style="font-size: 90px">just agree.</div>
@@ -428,11 +436,14 @@
 </section>
 
 <script>
-  // Memes step aside after a few seconds so the cards under them are seen.
-  tl.to("#m02", { opacity: 0, duration: 0.3 }, cueAt("#m02") + 3.0);
-  tl.to("#m05", { opacity: 0, duration: 0.3 }, cueAt("#m05") + 3.2);
-  tl.to("#m10", { opacity: 0, duration: 0.3 }, cueAt("#m10") + 3.2);
-  tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 2.6);
-  tl.to("#moth", { opacity: 0, duration: 0.3 }, cueAt("#moth") + 1.9);
-  tl.to("#exA", { opacity: 0, duration: 0.3 }, cueAt("#exB") - 0.3);
+  // Memes ride their line, then step aside so the evidence under them is seen.
+  tl.to("#m02", { opacity: 0, duration: 0.3 }, cueAt("#m02") + 3.6);
+  tl.to("#m05", { opacity: 0, duration: 0.3 }, cueAt("#m05") + 3.4);
+  tl.to("#m06", { opacity: 0, duration: 0.3 }, cueAt("#m06") + 3.6);
+  tl.to("#m08", { opacity: 0, duration: 0.3 }, cueAt("#m08") + 3.6);
+  tl.to("#m09", { opacity: 0, duration: 0.3 }, cueAt("#m09") + 3.4);
+  tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 3.2);
+  tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#m12") + 3.2);
+  tl.to("#moth", { opacity: 0, duration: 0.3 }, cueAt("#moth") + 2.6);
+  tl.to("#bk", { opacity: 0, duration: 0.3 }, cueAt("#dj") - 0.3);
 </script>

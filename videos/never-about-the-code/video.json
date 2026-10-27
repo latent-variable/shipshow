@@ -41,15 +41,10 @@
     "volume": 0.2,
     "duck": 0.35
   },
-  "pauses": {
-    "06-the-cost": 2.4,
-    "01-hook": 0.8,
-    "07-the-trade": 1.8,
-    "08-now": 1.4,
-    "03-ladder": 1.0,
-    "04-priesthood": 1.0,
-    "02-compiler": 1.4
-  },
+  "pauses": {},
   "hold": 4,
-  "gap": 0.35
+  "gap": 0.35,
+  "flair": {
+    "ambient": "dust vignette grain"
+  }
 }

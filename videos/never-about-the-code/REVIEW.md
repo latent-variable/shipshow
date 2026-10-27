@@ -193,3 +193,14 @@ sentence says "tests" and "catch" first, so the planted-bug line arrived 15 s ea
 the terminal now shows fail at 256.9 s, pass at 260.5 s, caught at 269.0 s. Its major, an empty scene 09 opening, is answered by
 "the skeptics folded." stamping on "folded"; the moth photo stays up 1.9 s. Accepted at that point: scene 09's first 3 s carry only
 its header and the caption; Dijkstra's card shows "1975" for a few seconds before his quote.
+
+# Fourth cut (2026-10-27)
+
+Lino on the third cut: sentences were "broken up in awkward places", so thoughts did not land together (ShipShow #75: a script line
+is now one take); the blue-green gradient and city lights were "flexing", not serving the message (the skyline, light pools and
+scanlines are off for this video: `flair.ambient` is dust, vignette and grain); memes need time to breathe and should carry the
+message, not stitch scenes together; and the narration should say the message, with the quotes shown as evidence, never recited
+("the narrative is the main method"). Rewritten around one story, the four stages every new layer goes through (impossible,
+beneath you, rots your brain, becomes the bar), with the quotes on screen; each meme rides the middle of its line for 3 to 4 s. A
+fresh Opus critic read the script cold first ("not yet": scene 10 still recited, claims split from their evidence by a breath,
+memes on the last word); its structure and lines went in. 642 words, 13 scenes, 4:02; every take heard back clean.

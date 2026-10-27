@@ -1,1 +1,0 @@
-Plot twist. The haters weren't wrong. Mel, the hero of a 1983 hacker legend, refused an optimizing assembler, and his hand tuned code really did run faster. And when Unix was rewritten in C, it came out about a third bigger. They were right about the cost. They lost anyway.

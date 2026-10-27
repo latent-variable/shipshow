@@ -1,0 +1,3 @@
+Okay, but agents aren't deterministic. Run one twice, get two different programs.
+And raw model code is not exactly Fort Knox. In Veracode's 2026 tests, it passed security checks only fifty six percent of the time, on average.
+Both true. Which is exactly why you don't trust the output. You trust the tests.

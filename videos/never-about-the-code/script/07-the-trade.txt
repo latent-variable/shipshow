@@ -1,1 +1,0 @@
-Because machine time is cheap, and you are not. In IBM's own 1957 case study, so, grain of salt, one guy took a one day Fortran course, then finished a job in four hours that he figured would take three days by hand. When it broke, he fixed it in Fortran. He understood what his program did, not what the machine did. Sound familiar?

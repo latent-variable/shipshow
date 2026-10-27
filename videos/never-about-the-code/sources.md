@@ -34,36 +34,31 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 | S23 | David Heinemeier Hansson, en.wikipedia.org/wiki/David_Heinemeier_Hansson: 24 Hours of Le Mans entries 2012 to 2026, GTE Am class win 2014 | page |
 | S18 | The compiler example: `int y(int m, int x, int b) { return m * x + b; }` compiled by Apple clang 21.0.0 (clang-2100.1.1.101) on this Mac, `clang -O0 -S -arch arm64` and `-O2`, directives stripped; both builds checked to return 13 for (2, 5, 3) | run 2026-10-26 |
 
-## Claims (third cut, 2026-10-27: Fireship-style rewrite after Lino's notes on the second)
+## Claims (fourth cut, 2026-10-27: message first, evidence on screen, one thought per take)
 
 | Scene | Claim | Source |
 |---|---|---|
-| 01 | "You don't understand the code" is the top comment on every AI pull request in 2026 | **opinion**, hyperbole as a joke |
-| 01 | Programmers said basically the same thing about compilers in the 1950s, while writing machine code by hand | **opinion** framing; what they said is in 04 (S1, S2, S3) |
-| 02 | A processor runs tiny steps (load, multiply, add, store); `m * x + b` is eleven instructions, two optimized | S18 |
-| 02 | Nobody has read them, nobody says you don't understand your code because of it | **opinion**, a joke |
-| 03 | The ladder; each layer means writing less and trusting more, and each was roasted by the layer below; the comments on plain English are the roast | **opinion**, the video's framing; 04 to 06 give the sourced complaints |
-| 04 | Hopper: Navy officer, compiler pioneer; her team once logged a real moth as a bug (on screen: the logbook photo, 9 September 1947) | S20; S3. Engineers on the Mark II, the machine she worked on, taped it in; the Smithsonian does not say she found it, and the video does not either. The photo is File:First Computer Bug, 1945.jpg (public domain, courtesy of the Naval Surface Warfare Center, Dahlgren), whose description dates it 9 September 1947 and says the operators affixed the moth. S3 has Hopper telling the story with a different machine and year; the video follows the Smithsonian and the photo |
-| 04 | In 1952 she had a working compiler and nobody would touch it; they told her computers could only do arithmetic | S3, reported speech |
-| 04 | Backus built Fortran; programmers saw themselves as "a priesthood"; a machine writing efficient code was "a foolish and arrogant dream" | S1, S2 (section 4); the card quotes the two phrases |
-| 05 | Dijkstra, famous for calling go to harmful, wrote in 1975 that COBOL cripples the mind | S21 (his 1968 letter, its title the editor's); S5 |
-| 05 | 1983: a letter in Datamation, real programmers use Fortran, quiche eaters use Pascal | S6 ("Real Programmers use Fortran. Quiche Eaters use Pascal.") |
-| 05 | "Yesterday's foolish dream, today's flex": 26 years from Fortran (1957) to the letter (1983) | **opinion**, a joke; S1, S6 for the years |
-| 06 | Mel, the hero of a 1983 hacker legend, refused an optimizing assembler; his hand-tuned code ran faster | S7 |
-| 06 | When Unix was rewritten in C it came out about a third bigger; "quite acceptable" | S9 (the rewrite also added multiprogramming and shared reentrant code, so the growth is the rewrite's, not C's alone; the narration says the rewrite) |
-| 07 | IBM's own 1957 case study ("grain of salt"): one programmer, a one-day Fortran course, a job in four hours he figured would take three days by hand; he fixed the bug in Fortran | S4 ("no tracing or memory dumps were used"; the four hours include time in the manual; the authors warn one case history "seldom gives a good measure", which the video says as grain of salt) |
-| 07 | "He understood what his program did, not what the machine did" | **opinion**, the reading of S4 |
-| 08 | METR times real tasks against human experts and finds the longest an agent finishes half the time; early 2025 about an hour; early 2026 roughly twelve hours, wide error bars; doubling about every three months | S10, S11, S19 (as in the second cut; the chart is unchanged). Human times for most long tasks are METR's estimates |
-| 09 | "It's late 2026, and the argument is basically over" | **opinion**, the thesis |
-| 09 | Karpathy coined vibe coding; in October 2025 he said agents just don't work; two months later agents wrote 80% of his code | S22; S12; S13 ("80% agent coding ... in December") |
-| 09 | DHH, the Rails guy, races at Le Mans; says Opus 4.5 was the dividing line | S23; S14 |
-| 09 | Antirez, who made Redis, says writing code by hand now mostly makes sense for fun | S15 ("for most projects, writing the code yourself is no longer sensible, if not to have fun"); the bread line is a joke |
-| 10 | Compilers are deterministic, agents are not: run one twice, get two programs | **opinion**, the usual objection (S16 calls it a poor one; the video only states it) |
-| 10 | In Veracode's 2026 report, with no security guidance, model code passed only 56% of the time, on average | S17 (an average across the models Veracode has tested) |
-| 10, 11 | Don't trust the output, trust the tests; the verification method (done and never, tests that fail first, the agent makes them pass, break the code on purpose to prove the tests catch it) | **opinion**, Lino's own method |
-| 12 | Nobody read the machine code either; it was never about the code, it was always about what it does and whether you can prove it | **opinion**, the close |
-| 11 | "That list is the real work, because tests only catch what's on it" | **opinion**, the method's limit, said so the close's "prove it" does not overclaim |
-| 11 | The `npm test` lines on screen | an illustration, labelled as one; not a real run |
+| 01 | "You don't understand the code" is the top comment on every AI pull request in 2026; programmers said basically the same about compilers in the 1950s | **opinion**, hyperbole and framing; the 1950s doubts are sourced in 04 and 05 |
+| 02 | A processor runs tiny steps; one line becomes eleven instructions, two optimized; nobody reads them | S18; the last is **opinion**, a joke |
+| 03 | The ladder; each layer means writing less and trusting more; each was roasted by the layer below | **opinion**, framing |
+| 04 | "It always goes in four stages": impossible, beneath you, rots your brain, becomes the bar | **opinion**, the video's frame for the evidence in 04 to 06 |
+| 04 | Stage one: Hopper had a working compiler in 1952 and nobody would touch it, because computers only do arithmetic; her team logged a real moth as a bug (logbook photo, 9 September 1947) | S3; S20 and the Commons photo (public domain, NSWC Dahlgren). S3 has Hopper telling the moth story with another machine and year; the video follows the Smithsonian and the photo |
+| 05 | Stage two: programmers saw themselves as a priesthood and called automatic coding a foolish and arrogant dream | S2, section 4 (the card quotes "a priesthood" and "a foolish and arrogant dream") |
+| 05 | Stage three: by 1975 Dijkstra wrote that COBOL cripples the mind and that teaching it should be a criminal offence | S5, quoted whole on the card |
+| 06 | Stage four: by 1983 the joke was that real programmers use Fortran | S6 ("Real Programmers use Fortran. Quiche Eaters use Pascal."), satire |
+| 06 | "Yesterday's insult, today's flex" | **opinion**, a joke |
+| 07 | The haters had receipts: hand-tuned code ran faster (Mel); Unix came out a third bigger after its rewrite in C | S7 ("Mel's always ran faster"); S9 (the rewrite also added features; the narration says the rewrite) |
+| 07 | Right about the cost, lost anyway; machine time is cheap, you are not | **opinion** |
+| 08 | IBM's own 1957 case study ("IBM grading its own homework"): one guy learned Fortran in a day, finished a job in four hours he figured would take three days, fixed the bug in Fortran | S4 (the authors' own case history, which they say seldom gives a good measure; four hours include time in the manual) |
+| 08 | He understood what his program did, not what the machine did | **opinion**, the reading of S4 |
+| 09 | METR, an AI research lab, measures the longest task an agent can finish half the time, in human expert hours; early 2025 about an hour; early 2026 about twelve, wide error bars; doubling about every three months | S10, S11, S19 (human times for most long tasks are METR's estimates; the trend depends on the suite) |
+| 10 | Even the doubters switched: Karpathy, from "agents just don't work" (Oct 2025) to agents writing 80% of his code (Dec 2025), in two months | S12, S13 |
+| 10 | The Rails guy (DHH, races at Le Mans) hasn't hand written any of the code he shipped in Quattro | S14 ("I have not written any of the code that's shipped in Quattro by hand"; he says he reviewed its shape and critical lines); S23 |
+| 10 | The Redis guy (Antirez) says hand coding is mostly for fun now | S15 ("for most projects, writing the code yourself is no longer sensible, if not to have fun"); the bread line is a joke |
+| 11 | Agents are not deterministic: run one twice, get two programs | **opinion**, the usual objection |
+| 11 | In Veracode's 2026 tests raw model code passed security checks only 56% of the time, on average | S17 |
+| 11, 12, 13 | Trust the tests, not the output; the method (write down what must never happen, tests that fail first, the agent makes them pass, break the code on purpose); "the list is the real work, tests only catch what's on it"; it was always about what it does and whether you can prove it | **opinion**, Lino's own method |
+| 12 | The `npm test` lines on screen | an illustration, labelled as one |
 
 ## Portraits
 
