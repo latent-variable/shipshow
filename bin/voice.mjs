@@ -49,7 +49,7 @@ const RUNS = omni && hear;   // OmniVoice voices runs of sentences when it can h
 const WINDOW_MAX = 1.2;
 // How bin/omnivoice.py prepares a reference (quiet(): a hissy clip is cleaned first). Bump it when that changes,
 // so takes cloned from the old preparation are voiced again.
-const REF_PREP = 1;
+const REF_PREP = 2;
 const PACE = cfg.speed <= WINDOW_MAX + 1e-9 ? "window" : "stretch";
 
 // Every take (a sentence, or a run of sentences) and whether it is current.

@@ -33,9 +33,11 @@ from pathlib import Path
 
 import numpy as np
 
-VERSION = 2            # in an OmniVoice take's key and a Kokoro take's .lvl stamp: change a rule below, bump it
+VERSION = 3            # in an OmniVoice take's key and a Kokoro take's .lvl stamp: change a rule below, bump it
 SPEECH_FLOOR = -40.0   # dBFS: a window louder than this is speech, not room
 SILENT = -45.0         # dBFS: a 10 ms window quieter than this is silence
+QUIET_OVER_FLOOR = 6.0 # dB: in a take with a hiss, a window this close to its background is silence too
+VOICE_MARGIN = 8.0     # dB: but silence always stays this far under the take's median 10 ms window
 SHOUT_DB = 8.0         # a 400 ms stretch this far over the take's own median is a shout
 TARGET_DB = -23.0      # the median speech a kept take is moved toward, in dBFS (50 ms windows)
 PEAK_DB = -3.0         # the loudest sample a kept take may reach after levelling
@@ -61,6 +63,17 @@ def speech_level(a, sr):
     return float(np.median(lv)) if lv else SPEECH_FLOOR
 
 
+def quiet_level(levels):
+    """What counts as silence in one take, dBFS: SILENT, or a little over the take's own background when that is louder. A
+    clone copies the room of its clip, hiss included (the owner's sits near -39 dBFS), and a take of it never drops under
+    SILENT, so every take read as starting at once and lost 30 ms of its first syllable to trim() (D53)."""
+    if not len(levels):
+        return SILENT
+    floor, middle = float(np.percentile(levels, 10)), float(np.median(levels))
+    # never within VOICE_MARGIN of the take's middle: a take that is all voice has its voice as its "background"
+    return max(SILENT, min(floor + QUIET_OVER_FLOOR, middle - VOICE_MARGIN))
+
+
 def clean(a, sr):
     """(the take with the decoder's opening burst cut and its ends faded, whether the voice starts
     clean). Usually silence follows the burst and then the voice: the burst is cut at that silence.
@@ -68,11 +81,12 @@ def clean(a, sr):
     sounds clipped, and the take is not clean."""
     a = np.asarray(a, dtype=np.float32).copy()
     lv = [d for _, d in windows(a, sr, 0.01)]
+    quiet = quiet_level(lv)
     need, cut_at = int(GAP / 0.01), None
     for i in range(int(BURST / 0.01) + 1):           # a silence starting within the burst's length
-        if len(lv) >= i + need and all(d < SILENT for d in lv[i:i + need]):
+        if len(lv) >= i + need and all(d < quiet for d in lv[i:i + need]):
             j = i
-            while j < len(lv) and lv[j] < SILENT:
+            while j < len(lv) and lv[j] < quiet:
                 j += 1
             cut_at = max(0, j - 2) * 0.01      # keep 20 ms of the quiet before the voice
             break

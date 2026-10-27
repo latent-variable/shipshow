@@ -231,29 +231,27 @@ for (const j of spec.jobs) writeWav(j.wav, { rate: 24000, channels: 1, samples: 
   assert.ok(existsSync(join(dir, "assets", "narration.wav")));
 });
 
-test("omnivoice reference: a hissy clip is cleaned before cloning, a quiet one is only cut", { skip: !numeric && "no python with numpy and soundfile" }, () => {
+test("omnivoice reference: a hissy clip goes to the model as recorded, and its hiss is not read as a voice that starts at once", { skip: !numeric && "no python with numpy and soundfile" }, () => {
   const dir = mkdtempSync(join(tmpdir(), "kx-ref-"));
   const r = python(numeric, `
-import numpy as np, soundfile as sf, omnivoice as o
+import numpy as np, soundfile as sf, omnivoice as o, voicecheck as v
 sr = 24000; rng = np.random.default_rng(1)
 t = np.arange(int(sr * 4.0)) / sr
 voice = (0.2 * np.sin(2 * np.pi * 180 * t) * (np.sin(2 * np.pi * 1.5 * t) > 0)).astype(np.float32)
-hiss = (rng.standard_normal(len(t)) * 0.012).astype(np.float32)
-sf.write(sys.argv[1] + "/hissy.wav", voice + hiss, sr); sf.write(sys.argv[1] + "/quiet.wav", voice + hiss * 0.02, sr)
-# the same hissy clip padded with digital silence, which must not hide its hiss
-sf.write(sys.argv[1] + "/padded.wav", np.concatenate([np.zeros(sr * 3, np.float32), voice + hiss]), sr)
-p = o.quiet(sys.argv[1] + "/padded.wav", "padded", sys.argv[1] + "/cache", 0.0, 7.0)
-print("padded", round(o.noise_floor(sys.argv[1] + "/padded.wav", 3.0, 7.0)), round(o.noise_floor(p, 3.0, 7.0)))
+hiss = lambda n: (rng.standard_normal(n) * 0.012).astype(np.float32)   # about -38 dBFS, the owner's room
+sf.write(sys.argv[1] + "/hissy.wav", voice + hiss(len(t)), sr)
 a = o.quiet(sys.argv[1] + "/hissy.wav", "hissy", sys.argv[1] + "/cache", 0.0, 4.0)
-b = o.quiet(sys.argv[1] + "/quiet.wav", "quiet", sys.argv[1] + "/cache", 0.0, 4.0)
-print(round(o.noise_floor(sys.argv[1] + "/hissy.wav")), round(o.noise_floor(a)), round(o.noise_floor(sys.argv[1] + "/quiet.wav")), round(o.noise_floor(b)))
+x, _ = sf.read(sys.argv[1] + "/hissy.wav", dtype="float32"); y, _ = sf.read(str(a), dtype="float32")
+print(round(float(np.max(np.abs(x[: len(y)] - y))), 4))
+# a take of a hissy clone: the decoder's burst, 0.2 s of the room's hiss, then the voice
+burst = (rng.standard_normal(int(sr * 0.03)) * 0.3).astype(np.float32)
+tone = (0.2 * np.sin(2 * np.pi * 180 * np.arange(int(sr * 1.0)) / sr)).astype(np.float32)
+take = np.concatenate([burst, hiss(int(sr * 0.2)), tone + hiss(int(sr * 1.0))])
+out, ok = v.clean(take, sr)
+print(ok, len(take) - len(out) > int(sr * 0.03))
 `, [dir]);
   assert.equal(r.status, 0, r.stderr);
-  const lines = r.stdout.trim().split("\n");
-  const [hissyIn, hissyOut, quietIn, quietOut] = lines.pop().split(" ").map(Number);
-  const [, padIn, padOut] = lines.find((l) => l.startsWith("padded")).split(" ").map(Number);
-  assert.ok(padOut < padIn - 6, `digital silence does not hide a hiss: ${padIn} -> ${padOut}`);
-  assert.ok(hissyIn > -52, `the hissy clip is over the line: ${hissyIn}`);
-  assert.ok(hissyOut < hissyIn - 6, `the hissy clip is cleaned: ${hissyIn} -> ${hissyOut}`);
-  assert.ok(quietIn < -52 && Math.abs(quietOut - quietIn) <= 1, `a quiet clip is left alone: ${quietIn} -> ${quietOut}`);
+  const [diff, verdict] = r.stdout.trim().split("\n");
+  assert.equal(Number(diff), 0, "the reference is the recording, sample for sample (it was denoised, which made the voice hollow)");
+  assert.equal(verdict, "True True", "the hiss after the burst counts as the silence to cut at, so the take is clean and its burst is cut");
 });
