@@ -7,7 +7,7 @@
   "theme": "lofi",
   "engine": "omnivoice",
   "voice": "lino",
-  "speed": 1.05,
+  "speed": 1.0,
   "say": {
     "1952": "nineteen fifty two",
     "1954": "nineteen fifty four",
@@ -36,16 +36,11 @@
     "duck": 0.35
   },
   "pauses": {
-    "01-hook": 0.5,
-    "02-compiler": 1.8,
-    "03-ladder": 0.8,
-    "04-priesthood": 2.0,
-    "05-real-programmers": 1.6,
-    "06-the-cost": 0.8,
-    "07-the-trade": 0.6,
-    "08-now": 1.8,
-    "10-objection": 2.2,
-    "11-behavior": 2.2
+    "02-compiler": 0.8,
+    "04-priesthood": 1.0,
+    "05-real-programmers": 1.0,
+    "08-now": 0.6,
+    "11-objection": 0.8
   },
   "hold": 5
 }

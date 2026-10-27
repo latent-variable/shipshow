@@ -6,7 +6,7 @@
   .stage { position: absolute; inset: 60px var(--pad) 60px; display: flex; flex-direction: column; justify-content: center; gap: 32px; }
   .card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 36px; }
   .tag { font-family: var(--font-mono); font-size: 28px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-2); }
-  .who { font-family: var(--font-mono); font-size: 26px; color: var(--muted); margin-top: 12px; line-height: 1.35; }
+  .who { font-family: var(--font-mono); font-size: 28px; color: var(--muted); margin-top: 12px; line-height: 1.35; }
   .quote { font-family: var(--font-display); font-size: 50px; line-height: 1.2; margin-top: 10px; text-wrap: balance; }
   .quote em { font-style: normal; color: var(--accent); }
   .big { font-family: var(--font-display); font-weight: 700; letter-spacing: var(--display-tracking); line-height: 1.05; }
@@ -18,6 +18,7 @@
   .ss-meme { --meme-height: 760px; }
   /* a portrait sits in the layout here, not centred over the scene (the kit default) */
   .stage .ss-portrait { --portrait-height: 300px; position: relative; inset: auto; margin: 0; max-width: none; flex: none; font-size: 30px; }
+  .stage .ss-portrait-credit { font-size: 19px; line-height: 1.25; }
 
   /* dated quote cards: 04, 05 */
   .entry { display: grid; grid-template-columns: 190px auto 1fr; gap: 34px; align-items: center; }
@@ -52,7 +53,7 @@
   .rung { display: flex; justify-content: space-between; align-items: center; padding: 20px 36px; font-size: 46px; font-weight: 650; }
   .rung small { font-family: var(--font-mono); font-size: 26px; color: var(--muted); font-weight: 500; }
   .rung.top { border-color: var(--good); color: var(--good); font-size: 56px; }
-  .axis { display: flex; flex-direction: column; justify-content: space-between; height: 640px; font-family: var(--font-mono); font-size: 28px; color: var(--muted); text-align: center; }
+  .axis { display: flex; flex-direction: column; justify-content: space-between; height: 640px; font-family: var(--font-mono); font-size: 32px; color: var(--muted); text-align: center; }
   .axis .line { flex: 1; width: 4px; margin: 14px auto; background: linear-gradient(var(--good), var(--accent)); border-radius: 2px; }
   .doubt { position: absolute; left: var(--pad); top: 50%; max-width: 470px; transform: translateY(-50%) rotate(-3deg); }
   .doubt .big { font-size: 52px; color: var(--accent); margin-top: 8px; }
@@ -63,7 +64,7 @@
   .cost .what { font-size: 44px; font-weight: 650; line-height: 1.2; }
   .cost .what small { display: block; font-family: var(--font-mono); font-size: 26px; font-weight: 500; color: var(--muted); margin-top: 6px; }
   .cost .faces { display: flex; gap: 14px; }
-  .stage .cost .ss-portrait { --portrait-height: 200px; font-size: 26px; }
+  .stage .cost .ss-portrait { --portrait-height: 250px; font-size: 26px; }
   .verdict { display: flex; justify-content: center; gap: 40px; }
 
   /* 07-the-trade */
@@ -80,8 +81,8 @@
   /* 08-now: the METR chart */
   .chart { position: relative; height: 600px; }
   .chart svg { width: 100%; height: 100%; overflow: visible; }
-  .chart .lbl { font-family: var(--font-mono); font-size: 24px; fill: var(--muted); }
-  .chart .pt { font-family: var(--font); font-size: 28px; font-weight: 650; fill: var(--ink); }
+  .chart .lbl { font-family: var(--font-mono); font-size: 28px; fill: var(--muted); paint-order: stroke; stroke: var(--bg); stroke-width: 8px; stroke-linejoin: round; }
+  .chart .pt { font-family: var(--font); font-size: 30px; font-weight: 650; fill: var(--ink); paint-order: stroke; stroke: var(--bg); stroke-width: 10px; stroke-linejoin: round; }
   .chart .pt.hi { fill: var(--good); font-size: 36px; }
   .chart .grid { stroke: var(--line); stroke-width: 2; }
   .chart .trend { stroke: var(--good); stroke-width: 6; fill: none; stroke-linecap: round; }
@@ -89,7 +90,7 @@
   .chart .range { stroke: var(--good); stroke-width: 4; opacity: 0.55; }
   .chart-title { display: flex; justify-content: space-between; align-items: baseline; }
   .chart-title .big { font-size: 56px; }
-  .chart-note { font-family: var(--font-mono); font-size: 24px; color: var(--muted); text-align: center; line-height: 1.5; }
+  .chart-note { font-family: var(--font-mono); font-size: 28px; color: var(--muted); text-align: center; line-height: 1.5; }
   .chart-note b { color: var(--good); font-weight: 600; }
 
   /* 09-converts */
@@ -98,7 +99,8 @@
   .stage .convert .ss-portrait { --portrait-height: 300px; align-self: center; font-size: 32px; }
   .convert .was { font-size: 30px; color: var(--muted); line-height: 1.3; }
   .convert .now { font-size: 34px; font-weight: 650; line-height: 1.25; color: var(--good); }
-  .convert .when { font-family: var(--font-mono); font-size: 22px; color: var(--muted); }
+  .convert .when { font-family: var(--font-mono); font-size: 26px; color: var(--muted); }
+  .convert .who { font-size: 24px; margin-top: auto; }
   #p-karpathy .ss-portrait-img { object-position: 52% 18%; transform: scale(1.9); transform-origin: 52% 16%; }
   #p-antirez .ss-portrait-img { object-position: 50% 14%; transform: scale(2.4); transform-origin: 54% 12%; }
   #p-dhh .ss-portrait-img { object-position: 50% 10%; }
@@ -129,7 +131,8 @@
   /* 12-close */
   .ask { font-size: 100px; text-align: center; }
   .ask em { font-style: normal; color: var(--good); }
-  .made { text-align: center; font-family: var(--font-mono); font-size: 30px; color: var(--muted); }
+  .made { text-align: center; font-family: var(--font-mono); font-size: 32px; color: var(--muted); }
+  .heckle { font-size: 56px; text-align: center; color: var(--accent); }
 </style>
 
 <section data-scene="01-hook">
@@ -149,7 +152,7 @@
       <div data-cue="+0.1" data-anim="fade">
         <div class="tag">what you write</div>
         <div class="src" data-cue="line" data-anim="type">y = m * x + b;</div>
-        <div class="steps" data-cue="processor" data-anim="fade">a processor runs tiny steps:<br>load · multiply · add · store</div>
+        <div class="steps" data-cue="tiny" data-anim="fade">a processor runs tiny steps:<br>load · multiply · add · store</div>
       </div>
       <div class="arrow" data-cue="writes" data-anim="left">→</div>
       <div>
@@ -184,7 +187,7 @@
         <div class="rung card" data-cue="Machine" data-anim="up">Machine code <small>numbers</small></div>
         <div class="rung card" data-cue="assembly," data-anim="up">Assembly <small>mov, add, jmp</small></div>
         <div class="rung card" data-cue="Fortran," data-anim="up">Fortran <small>1957</small></div>
-        <div class="rung card" data-cue="C," data-anim="up">C <small>Unix, 1973</small></div>
+        <div class="rung card" data-cue="C,#2" data-anim="up">C <small>Unix, 1973</small></div>
         <div class="rung card" data-cue="Python." data-anim="up">Python</div>
         <div class="rung card top" data-cue="English." data-anim="slam" data-sfx="boom" data-sfx-offset="0.4">Plain English <small style="color: var(--good)">agents</small></div>
       </div>
@@ -221,7 +224,7 @@
     </div>
     <div class="entry noface card" data-cue="1983," data-anim="up">
       <div class="yr">1983</div>
-      <div><div class="quote" data-cue="real" data-anim="fade">“Real Programmers use <em>FORTRAN</em>. Quiche Eaters use PASCAL.”</div><div class="who">Ed Post, satirical letter to Datamation, 1983</div></div>
+      <div><div class="quote" data-cue="real" data-anim="fade">“Real Programmers use <em>Fortran</em>. Quiche Eaters use Pascal.”</div><div class="who">Ed Post, satirical letter to Datamation (a computer magazine), 1983</div></div>
     </div>
   </div>
   <div class="meme-wrap" data-cue="Wait." data-anim="pop" data-sfx="scratch" data-sfx-offset="-0.42">
@@ -236,7 +239,7 @@
     <div class="costs">
       <div class="cost card" data-cue="Mel," data-anim="left"><div class="what">Mel's hand-written machine code ran faster than the optimizing assembler's<small>“The Story of Mel”, Ed Nather, 1983</small></div><div class="stamp ink" data-cue="faster." data-anim="pop">true</div></div>
       <div class="cost card" data-cue="Unix" data-anim="left">
-        <div class="what">Unix in C: about a third bigger<small>“quite acceptable”: Ritchie and Thompson, 1974</small></div>
+        <div class="what">Unix in C: about a third bigger<small>rewritten 1973 · “quite acceptable”: Ritchie and Thompson’s paper, 1974</small></div>
         <div class="faces">
           <figure class="ss-portrait" data-commons="File:Dennis Ritchie 2011.jpg" data-cue="Ritchie" data-anim="pop"><figcaption>Dennis Ritchie</figcaption></figure>
           <figure class="ss-portrait" data-commons="File:Ken Thompson, 2019.jpg" data-cue="Thompson" data-anim="pop"><figcaption>Ken Thompson</figcaption></figure>
@@ -250,12 +253,13 @@
 <section data-scene="07-the-trade">
   <div class="stage">
     <div class="tag center" data-cue="+0.1" data-anim="fade">one job, 1957</div>
+    <div class="fact" data-cue="course," data-anim="up">a programmer, after <em>one day</em> of Fortran training</div>
     <div class="bars">
       <div class="bar-row" data-cue="four" data-anim="fade"><div>In Fortran</div><div class="bar fortran" data-cue="four" data-anim="grow">4 hours</div></div>
       <div class="bar-row" data-cue="hand," data-anim="fade"><div>By hand</div><div class="bar hand" data-cue="hand," data-anim="grow">about 3 days (his estimate)</div></div>
     </div>
     <div class="fact" data-cue="wrong," data-anim="up">The bug? Fixed <em>in his Fortran</em>. No memory dumps.</div>
-    <div class="half card" data-cue="1958," data-anim="up"><div class="num">more than ½</div><div class="fact" style="text-align: left; max-width: 900px">of the machine instructions on IBM 704s came from the compiler, by fall 1958</div></div>
+    <div class="half card" data-cue="1958," data-anim="up"><div class="num">more than ½</div><div class="fact" style="text-align: left; max-width: 900px">of the machine instructions at about 60 IBM 704 sites came from the compiler, by fall 1958</div></div>
   </div>
   <div class="meme-wrap" id="m07" data-cue="days." data-anim="pop">
     <div class="scrim"></div>
@@ -266,6 +270,7 @@
 <section data-scene="08-now">
   <div class="stage">
     <div class="chart-title" data-cue="+0.1" data-anim="fade"><div class="big">The longest task AI finishes half the time</div><div class="tag">METR</div></div>
+    <div class="chart-note" data-cue="times" data-anim="fade">task length = how long a <b>human expert</b> takes it</div>
     <div class="chart" data-cue="METR" data-anim="fade">
       <svg viewBox="0 0 1600 600" preserveAspectRatio="none">
         <!-- y: log scale, y = 640 - 600*log2(h/0.5)/7.5: 1 h at 560, 4 h at 400, 16 h at 240, 64 h at 80 -->
@@ -274,16 +279,16 @@
         <line class="grid" x1="120" x2="1560" y1="240" y2="240"/><text class="lbl" x="100" y="248" text-anchor="end">16 h</text>
         <line class="grid" x1="120" x2="1560" y1="80" y2="80"/><text class="lbl" x="100" y="88" text-anchor="end">64 h</text>
         <!-- x: linear in time by release day, 2025-02-24 at 220, 2.83 px a day; the early-2026 point at 2026-02-15 -->
-        <text class="lbl" x="220" y="625" text-anchor="middle">Feb 2025</text><text class="lbl" x="466" y="625" text-anchor="middle">May 2025</text><text class="lbl" x="684" y="625" text-anchor="middle">Aug 2025</text><text class="lbl" x="992" y="625" text-anchor="middle">Nov 2025</text><text class="lbl" x="1227" y="625" text-anchor="middle">early 2026</text>
-        <g data-cue="hour." data-anim="pop"><circle class="dot" cx="220" cy="560" r="14"/><text class="pt" x="200" y="530" text-anchor="start">Claude 3.7 Sonnet · 1 h</text></g>
+        <text class="lbl" x="220" y="660" text-anchor="middle">Feb 2025</text><text class="lbl" x="466" y="660" text-anchor="middle">May 2025</text><text class="lbl" x="684" y="660" text-anchor="middle">Aug 2025</text><text class="lbl" x="992" y="660" text-anchor="middle">Nov 2025</text><text class="lbl" x="1227" y="660" text-anchor="middle">early 2026</text>
+        <g data-cue="hour." data-anim="pop"><circle class="dot" cx="220" cy="560" r="14"/><text class="pt" x="200" y="610" text-anchor="start">Claude 3.7 Sonnet · 1 h</text></g>
         <path class="trend" data-cue="twelve" data-anim="draw" d="M 220 560 L 466 500 L 684 413 L 992 367 L 1227 273"/>
-        <g data-cue="twelve" data-anim="pop"><circle class="dot" cx="466" cy="500" r="12"/><text class="pt" x="466" y="470" text-anchor="middle">Claude Opus 4 · 1.7 h</text><circle class="dot" cx="684" cy="413" r="12"/><text class="pt" x="684" y="383" text-anchor="middle">GPT-5 · 3.6 h</text><circle class="dot" cx="992" cy="367" r="14"/><text class="pt" x="992" y="337" text-anchor="middle">Claude Opus 4.5 · 5.3 h</text></g>
-        <g data-cue="twelve" data-anim="pop" data-sfx="up" data-sfx-offset="-0.15"><line class="range" x1="1227" x2="1227" y1="374" y2="85"/><circle class="dot" cx="1227" cy="273" r="16"/><text class="pt hi" x="1260" y="283" text-anchor="start">best public model · ~12 h</text><text class="lbl" x="1260" y="318" text-anchor="start">likely range 5 to 61 h</text></g>
+        <g data-cue="twelve" data-anim="pop"><circle class="dot" cx="466" cy="500" r="12"/><text class="pt" x="466" y="545" text-anchor="middle">Claude Opus 4 · 1.7 h</text><circle class="dot" cx="684" cy="413" r="12"/><text class="pt" x="684" y="383" text-anchor="middle">GPT-5 · 3.6 h</text><circle class="dot" cx="992" cy="367" r="14"/><text class="pt" x="1012" y="402" text-anchor="start">Claude Opus 4.5 · 5.3 h</text></g>
+        <g data-cue="twelve" data-anim="pop" data-sfx="up" data-sfx-offset="-0.15"><line class="range" x1="1227" x2="1227" y1="374" y2="85"/><circle class="dot" cx="1227" cy="273" r="16"/><text class="pt hi" x="1260" y="283" text-anchor="start">public frontier · ~12 h</text><text class="lbl" x="1260" y="320" text-anchor="start">Feb–Mar 2026 · range 5 to 61 h</text><text class="lbl" x="1260" y="356" text-anchor="start">highly uncertain: the test is near its limit</text></g>
       </svg>
     </div>
-    <div class="chart-note" data-cue="doubling" data-anim="up"><b>doubling about every 3 months since 2024</b> · Time Horizon 1.1, Jan 2026<br>~12 h: public frontier measured early 2026, Frontier Risk Report, May 2026</div>
+    <div class="chart-note" data-cue="doubling" data-anim="up"><b>doubling about every 3 months since 2024</b> · METR Time Horizon 1.1, Jan 2026 · Frontier Risk Report, May 2026</div>
   </div>
-  <div class="meme-wrap" data-cue="doubling" data-anim="pop">
+  <div class="meme-wrap" id="m08" data-cue="doubling" data-anim="pop">
     <div class="scrim"></div>
     <figure class="ss-meme" data-clip="https://i.imgflip.com/62yufy.mp4" data-crop="top 29%" data-name="Willem Dafoe looking up" data-credit="https://knowyourmeme.com/memes/willem-dafoe-looking-up" data-cue="doubling" data-anim="pop"><span class="top">Me looking at</span><span class="bottom">the time horizon chart</span></figure>
   </div>
@@ -292,27 +297,37 @@
 <section data-scene="09-converts">
   <div class="stage">
     <div class="tag center" data-cue="+0.1" data-anim="fade">the people who doubted it</div>
-    <div class="converts">
+    <div class="converts" style="max-width: 1500px; margin: 0 auto">
       <div class="convert card" data-cue="Karpathy" data-anim="up">
         <figure class="ss-portrait" id="p-karpathy" data-commons="File:Andrej Karpathy, OpenAI.png" data-cue="Karpathy" data-anim="pop"><figcaption>Andrej Karpathy</figcaption></figure>
         <div class="when">Oct 2025</div><div class="was" data-cue="work." data-anim="fade">agents: “they just don't work”</div>
         <div class="when" data-cue="flipped." data-anim="fade">Jan 2026</div><div class="now" data-cue="Eighty" data-anim="up">80% manual + autocomplete → 80% agent coding</div>
+        <div class="who">Dwarkesh Podcast, Oct 2025 · on X, Jan 2026</div>
       </div>
       <div class="convert card" data-cue="DHH," data-anim="up">
         <figure class="ss-portrait" id="p-dhh" data-commons="File:David Heinemeier Hansson Driver of Abu Dhabi Proton Racing's Porsche 911 RSR (27225732035) (cropped).jpg" data-cue="DHH," data-anim="pop"><figcaption>DHH<small>created Ruby on Rails</small></figcaption></figure>
         <div class="was" data-cue="year" data-anim="fade">“A year ago, I did not like the mode of AI we were offered.”</div>
         <div class="now" data-cue="dividing" data-anim="up">“Opus 4.5, to me, was the dividing line”</div>
-      </div>
-      <div class="convert card" data-cue="Antirez," data-anim="up">
-        <figure class="ss-portrait" id="p-antirez" data-commons="File:Salvatore Sanfilippo.png" data-cue="Antirez," data-anim="pop"><figcaption>Antirez<small>created Redis</small></figcaption></figure>
-        <div class="was" data-cue="thought" data-anim="fade">“I thought that we had more time”</div>
-        <div class="now" data-cue="writes" data-anim="up">“writing the code yourself is no longer sensible, if not to have fun”</div>
+        <div class="was" data-cue="Quattro" data-anim="fade">“I have not written any of the code that’s shipped in Quattro by hand”</div>
+        <div class="who">Lex Fridman Podcast #501</div>
       </div>
     </div>
   </div>
 </section>
 
-<section data-scene="10-objection">
+<section data-scene="10-antirez">
+  <div class="stage">
+    <div class="entry card" data-cue="+0.1" data-anim="up">
+      <div class="yr">2026</div>
+      <figure class="ss-portrait" id="p-antirez" data-commons="File:Salvatore Sanfilippo.png" data-cue="Antirez," data-anim="pop"><figcaption>Antirez<small>created Redis</small></figcaption></figure>
+      <div><div class="quote" data-cue="thought" data-anim="fade">“I thought that we had more time”</div>
+        <div class="quote" data-cue="wrote" data-anim="fade" style="margin-top: 22px">“for most projects, writing the code yourself is <em>no longer sensible</em>, if not to have fun”</div>
+        <div class="who">antirez, “Don't fall into the anti-AI hype”, January 2026</div></div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="11-objection">
   <div class="stage">
     <div class="vs">
       <div class="card" data-cue="+0.1" data-anim="left"><div class="tag">a compiler</div><div class="big">same input, same output</div>
@@ -320,18 +335,19 @@
       <div class="card" data-cue="agent" data-anim="right"><div class="tag">an agent</div><div class="big" data-cue="co-worker" data-anim="highlight">more like a co-worker</div>
         <div class="runs"><div class="run">run 1 <b>program A</b></div><div class="run">run 2 <b>program B</b></div></div><div class="who">Yoav Goldberg, May 2026</div></div>
     </div>
-    <div class="pct card" data-cue="Veracode's" data-anim="up"><div class="num">56%</div><div class="what">of model code passed Veracode's security tests, with no security guidance<div class="who">Veracode, 2026 GenAI Code Security Report</div></div></div>
+    <div class="pct card" data-cue="Veracode's" data-anim="up"><div class="num">56%</div><div class="what">of model code passed Veracode's security tests, on average, with no security guidance<div class="who">Veracode, 2026 GenAI Code Security Report</div></div></div>
     <div class="card" data-cue="Run" data-anim="up"><div class="runs" style="margin-top: 0"><div class="run">program A · same tests <b class="ok">pass ✓</b></div><div class="run">program B · same tests <b class="ok">pass ✓</b></div></div></div>
   </div>
-  <div class="meme-wrap" data-cue="pass." data-anim="pop">
+  <div class="meme-wrap" id="m11" data-cue="pass#2" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-meme="fine" data-cue="pass." data-anim="pop"><span>Merging agent code</span><span>with no tests</span></figure>
+    <figure class="ss-meme" data-meme="fine" data-cue="pass#2" data-anim="pop"><span>Merging agent code</span><span>with no tests</span></figure>
   </div>
 </section>
 
-<section data-scene="11-behavior">
+<section data-scene="12-behavior">
   <div class="stage">
-    <div class="never" data-cue="+0.1" data-anim="fade">What must it <em>never</em> do?</div>
+    <div class="never" data-cue="+0.1" data-anim="fade">Understand the <em style="color: var(--good)">behavior</em></div>
+    <div class="never" data-cue="never" data-anim="fade">What must it <em>never</em> do?</div>
     <div class="testcard" data-cue="invoice," data-anim="up">
       <div class="name">test: a customer never sees another customer's invoice</div>
       <div class="line" data-cue="fails" data-anim="fade"><span>agent, first try</span><span class="fail">✗ fails</span></div>
@@ -339,16 +355,14 @@
       <div class="line" data-cue="breaks" data-anim="fade"><span>a later change breaks it</span><span class="fail">✗ fails again</span></div>
     </div>
     <div class="karp-q card" data-cue="Karpathy's" data-anim="up"><div class="quote">“Don't tell it what to do, give it <em style="color: var(--good)">success criteria</em> and watch it go.”</div><div class="who center">Andrej Karpathy, Jan 2026</div></div>
+    <div class="down" data-cue="thought" data-anim="up"><span>a test only checks what you thought to ask</span></div>
     <div class="down" data-cue="surprises" data-anim="up"><span>surprised?</span><span class="arrow">↓</span><span>drop a rung, read the code</span></div>
-  </div>
-  <div class="meme-wrap" id="m11" data-cue="check." data-anim="pop">
-    <div class="scrim"></div>
-    <figure class="ss-meme" data-meme="rollsafe" data-cue="check." data-anim="pop"><span>Can't misread the code</span><span>if the test says what it does</span></figure>
   </div>
 </section>
 
-<section data-scene="12-close">
+<section data-scene="13-close">
   <div class="stage">
+    <div class="heckle big" data-cue="+0.1" data-anim="fade">“You don't understand the code.”</div>
     <div class="ask big" data-cue="Do#2" data-anim="up">Do you understand <em>what it does?</em></div>
     <div class="ask big" data-cue="how" data-anim="up">And how do you <em>know?</em></div>
     <div class="made" data-cue="know?" data-anim="fade">made with ShipShow · github.com/latent-variable/shipshow · voice: mine, cloned</div>
@@ -356,7 +370,8 @@
 </section>
 
 <script>
-  // Two memes step aside after 3.8 s so the cards under them are seen.
+  // Three memes step aside after a few seconds so the cards under them are seen.
   tl.to("#m07", { opacity: 0, duration: 0.3 }, cueAt("#m07") + 3.8);
-  tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 3.8);
+  tl.to("#m08", { opacity: 0, duration: 0.3 }, cueAt("#m08") + 3.6);
+  tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 3.6);
 </script>
