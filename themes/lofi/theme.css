@@ -55,6 +55,7 @@
   --meme-radius: 8px;
   --meme-shadow: 0 30px 70px rgba(5, 2, 12, 0.65), 0 0 90px rgba(255, 184, 119, 0.10);
   --portrait-radius: 8px;
+  --portrait-frame-width: 8px;  /* a portrait's mat: thinner than a meme's, portraits run small */
   --portrait-shadow: 0 30px 70px rgba(5, 2, 12, 0.65);
 
   /* captions: over the grain and the vignette, never under them */
