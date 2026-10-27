@@ -22,3 +22,20 @@ from his last channel video (videos/never-about-the-code/critics.md) carries ove
 - **Shows the people** named for what they did, with a photo and a legible Commons credit where one is free (Cook, Impagliazzo,
   Williams); Paturi is a name card.
 - **Memes land a point already made** and are readable in the time they are up.
+
+## The owner's notes on the first cut (2026-10-27), each now a finding when missed
+
+He watched the first half of the published first cut and asked for these. Judge the second cut against them.
+
+- **Each act has its own feel.** The intro, the puzzle, the history, the house of cards, the paper landing, the heist, the
+  galactic catch, the fallout and the verdict each get their own music, colours and background (`video.json` `moods`). An act that
+  looks or sounds like the one before it, or a change of mood that lands mid-thought instead of where the act turns, is a finding.
+- **An act opens with a hook, never "so how does it work".** Each act's first line gives a reason to keep watching (a question, a
+  turn, a picture), not a signpost.
+- **3-SAT is made to matter.** The viewer sees what "no answer" looks like (every setting breaks a rule), why a "no" is often the
+  answer someone needs (a dependency conflict, a chip with no bug), and why proving "no" is hard. Growth is shown as a chart,
+  not only said.
+- **Fun, again.** He found the first cut not as fun as it could be. A stretch with no joke, picture gag or turn for more than about
+  thirty seconds is a finding for engagement.
+- **Letters sound like letters.** "Two to the n" is said with the letter n. The first cut said "E N" on nearly every line. Any
+  variable or acronym said wrongly (check the voice step's LISTEN lines and the packet's *Second listen*) is a finding.

@@ -47,7 +47,7 @@
   .uses .card .tag { display: block; margin-bottom: 14px; }
   .uses .card .then { color: var(--accent); margin-top: 12px; }
   /* 03: the zoom-out chart */
-  .zoom { width: 1500px; margin: 0 auto; position: relative; }
+  .zoom { width: 1300px; margin: -20px auto 0; position: relative; }
   .zoom svg text { font-family: var(--font-mono); font-size: 28px; fill: var(--muted); }
   .zoom .ax { stroke: var(--ink); stroke-width: 3; }
   .zoom .curve { fill: none; stroke: var(--accent); stroke-width: 7; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
@@ -57,18 +57,18 @@
   .zoom .uni { stroke: var(--accent-2); stroke-width: 4; stroke-dasharray: 14 10; }
   .zoombadge { position: absolute; right: 30px; top: 6px; }
   /* 07, 08, 13b: the house of cards */
-  .hoc { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .hoc { display: flex; flex-direction: column; align-items: center; gap: 18px; }
   .hoc .tier { display: flex; gap: 16px; justify-content: center; }
-  .hoc .pc { padding: 16px 22px; min-width: 200px; text-align: center; background: #ecebe2; color: #1f2a25; border-radius: 6px; font-size: 30px; font-weight: 800; box-shadow: 0 10px 24px rgba(3, 8, 6, 0.45); border: 3px solid #d7d5c8; }
+  .hoc .pc { padding: 22px 28px; min-width: 250px; text-align: center; background: #ecebe2; color: #1f2a25; border-radius: 6px; font-size: 38px; font-weight: 800; box-shadow: 0 10px 24px rgba(3, 8, 6, 0.45); border: 3px solid #d7d5c8; }
   .hoc .tier .pc:nth-child(odd) { transform: rotate(-2.5deg); }
   .hoc .tier .pc:nth-child(even) { transform: rotate(2deg); }
-  .hoc .pc.base { min-width: 330px; padding: 24px 30px; font-family: var(--font-display); font-size: 52px; background: var(--accent); border-color: var(--accent); color: #1b211e; }
+  .hoc .pc.base { min-width: 400px; padding: 30px 36px; font-family: var(--font-display); font-size: 66px; background: var(--accent); border-color: var(--accent); color: #1b211e; }
   .hoc .pc.base.seth { background: var(--accent-2); border-color: var(--accent-2); }
   .hoc .pc.more { background: transparent; color: var(--muted); border-style: dashed; border-color: var(--muted); box-shadow: none; }
   .hoclabel { font-family: var(--font-mono); font-size: 28px; color: var(--muted); text-align: center; }
   .net { width: 1100px; height: 10px; border-radius: 5px; background: var(--good); margin: 0 auto; }
   .netlab { font-family: var(--font-mono); font-size: 28px; color: var(--good); text-align: center; }
-  .side { display: grid; grid-template-columns: 860px 1fr; gap: 50px; align-items: center; }
+  .side { display: grid; grid-template-columns: 960px 1fr; gap: 50px; align-items: center; }
   /* 09 to 11: the heist */
   .move { position: absolute; left: var(--pad); top: 34px; font-family: var(--font-mono); font-size: 34px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 4px solid var(--accent); border-radius: 10px; padding: 6px 20px; transform: rotate(-3deg); }
   .plan { display: flex; gap: 26px; justify-content: center; }
@@ -362,7 +362,7 @@
           <div class="rule card">A off <span class="or">or</span> B off</div>
         </div>
       </div>
-      <div class="row"><div class="stamp" data-cue="Nothing" data-anim="slam" data-sfx="thump" data-sfx-offset="0.1">no answer</div></div>
+      <div class="row"><div class="stamp" data-cue="works." data-anim="slam" data-sfx="thump" data-sfx-offset="0.05">no answer</div></div>
     </div>
   </div>
   <div class="phase" id="p02bb">
@@ -381,7 +381,7 @@
   <div class="stage">
     <div class="doubling" data-cue="doubles" data-anim="pop">one more switch = <em>twice the settings</em></div>
     <div class="zoom" data-cue="billion" data-anim="up">
-      <svg viewBox="0 0 1300 640" width="1500" height="738">
+      <svg viewBox="0 0 1300 640" width="1300" height="640">
         <defs><clipPath id="clip03"><rect x="110" y="0" width="1190" height="562"/></clipPath></defs>
         <line class="ax" x1="120" y1="560" x2="1290" y2="560"/><line class="ax" x1="120" y1="20" x2="120" y2="560"/>
         <text x="120" y="600" text-anchor="middle">0</text><text x="234" y="600" text-anchor="middle">10</text><text x="348" y="600" text-anchor="middle">20</text><text x="462" y="600" text-anchor="middle">30</text><text x="576" y="600" text-anchor="middle">40</text><text x="690" y="600" text-anchor="middle">50</text><text x="804" y="600" text-anchor="middle">60</text><text x="918" y="600" text-anchor="middle">70</text><text x="1032" y="600" text-anchor="middle">80</text><text x="1146" y="600" text-anchor="middle">90</text><text x="1260" y="600" text-anchor="middle">100</text><text x="1290" y="636" text-anchor="end">switches →</text>
@@ -815,15 +815,16 @@
 
   // 02b: each rule crosses out the setting it rules out (rule 1 the last cell, rule 4 the first), then the uses arrive.
   tl.set("#grid02b .x", { opacity: 0, scale: 1.6 }, 0);
-  [3, 2, 1, 0].forEach((cell, i) => tl.to(`#grid02b .cell:nth-child(${cell + 1}) .x`, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2)" }, cueAt("#rules02b") + 0.35 + i * 0.45));
+  ["#grid02b .cell:nth-child(4) .x", "#grid02b .cell:nth-child(3) .x", "#grid02b .cell:nth-child(2) .x", "#grid02b .cell:nth-child(1) .x"].forEach((x, i) =>
+    tl.to(x, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2)" }, cueAt("#rules02b") + 0.35 + i * 0.45));
   tl.to("#p02ba", { opacity: 0, duration: 0.35 }, cueAt("#p02bb .uses .card") - 0.4);
 
   // 03: the chart zooms out three times; each new scale replaces the last as its number is said.
   tl.set(["#z03month", "#z03years", "#z03universe", "#zb03"], { opacity: 0 }, 0);
-  [["hour", "month", "Fifty"], ["month", "years", "Sixty"], ["years", "universe", "Ninety"]].forEach(([from, to, word], i) => {
-    const at = +document.querySelector(`[data-scene='03-doubling'] [data-zoom='${word}']`).dataset.at;
-    tl.to(`#z03${from}`, { opacity: 0, y: 80, duration: 0.35 }, at - 0.35);
-    tl.fromTo(`#z03${to}`, { opacity: 0, y: -60 }, { opacity: 1, y: 0, duration: 0.45 }, at - 0.1);
+  [["#z03hour", "#z03month", "[data-zoom='Fifty']"], ["#z03month", "#z03years", "[data-zoom='Sixty']"], ["#z03years", "#z03universe", "[data-zoom='Ninety']"]].forEach(([from, to, word]) => {
+    const at = cueAt(word);
+    tl.to(from, { opacity: 0, y: 80, duration: 0.35 }, at - 0.35);
+    tl.fromTo(to, { opacity: 0, y: -60 }, { opacity: 1, y: 0, duration: 0.45 }, at - 0.1);
     tl.fromTo("#zb03", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.25 }, at - 0.35);
     tl.to("#zb03", { opacity: 0, duration: 0.3 }, at + 0.9);
   });
