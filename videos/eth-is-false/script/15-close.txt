@@ -1,4 +1,4 @@
 [thoughtful] Here's what I'm watching. Whether the people checking it confirm it. Whether someone can explain the core idea in one page. And which of those hundreds of papers survive on weaker assumptions.
 [dry] Until then, keep your SAT solver, and be suspicious of anyone who says P equals NP.
-[sincere] For a quarter century, unless ETH is false is where arguments stopped.
+[sincere] For a quarter century, unless ETH is false is where most arguments stopped.
 [smug, with a grin] Now it's where one starts.

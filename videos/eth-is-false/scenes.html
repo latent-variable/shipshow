@@ -432,15 +432,15 @@
     <div class="claim">
       <div class="col" style="align-items: flex-start">
         <div class="chip" data-cue="size," data-anim="pop">any fixed rule size</div>
-        <div class="xp math" data-cue="something" data-anim="up">2<sup class="old"><i>n</i></sup> <span data-cue="roughly" data-anim="pop">→ 2<sup class="new"><i>n</i> / √log <i>n</i></sup></span></div>
+        <div class="xp math" data-cue="something" data-anim="up">2<sup class="old"><i>n</i></sup> <span data-cue="roughly" data-anim="pop">→ ≈ 2<sup class="new"><i>n</i> / √log <i>n</i></sup></span></div>
         <div class="stamp" data-cue="gone." data-anim="slam" data-sfx="thump" data-sfx-offset="0.05">no floor, if it holds</div>
       </div>
       <svg class="floorplot" viewBox="0 0 820 440" width="820" height="440">
         <line class="ax" x1="60" y1="380" x2="800" y2="380"/><line class="ax" x1="60" y1="20" x2="60" y2="380"/>
         <text x="790" y="420" text-anchor="end">n →</text><text x="74" y="44">exponent</text>
         <g data-cue="base" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="80" text-anchor="end" style="fill: var(--accent-3)">c to the n = 2 to the (constant × n)</text></g>
-        <path class="cur" d="M60 380 C 180 200, 400 170, 800 160" data-cue="slower" data-anim="draw"/><text class="lbl" x="790" y="210" text-anchor="end" style="fill: var(--accent)" data-cue="slower" data-anim="fade">n / √log n</text>
-        <circle cx="520" cy="170" r="12" style="fill: var(--bad)" data-cue="eventually" data-anim="pop"/>
+        <path class="cur" d="M60 380 C 220 230, 480 175, 800 140" data-cue="slower" data-anim="draw"/><text class="lbl" x="790" y="190" text-anchor="end" style="fill: var(--accent)" data-cue="slower" data-anim="fade">n / √log n</text>
+        <circle cx="641" cy="160" r="12" style="fill: var(--bad)" data-cue="eventually" data-anim="pop"/>
         <text x="420" y="420" text-anchor="middle">schematic</text>
       </svg>
     </div>
@@ -597,7 +597,7 @@
         <div class="block base" data-cue="polynomial" data-anim="up">P ≠ NP<small>still standing, still open</small></div>
       </div>
       <div class="col">
-        <div class="q big" data-cue="+0.1" data-anim="pop">P = NP?</div>
+        <div class="q big" style="font-size: 84px" data-cue="+0.1" data-anim="pop">does this give<br>P = NP?</div>
         <div class="stamp green" style="font-size: 64px; align-self: center" data-cue="No." data-anim="slam">no</div>
         <div class="card" style="font-size: 36px; font-weight: 700" data-cue="translating" data-anim="up">crack SAT, crack NP: by translating into SAT
           <div data-cue="bigger#2" data-anim="up" style="margin-top: 8px">which can make problems much bigger</div>
@@ -679,7 +679,7 @@
     <div class="stage">
       <div class="tag" style="width: 1400px; margin: 0 auto" data-cue="+0.1" data-anim="fade">what I'm watching</div>
       <div class="watch">
-        <div class="item" data-cue="confirm" data-anim="left"><div class="box"></div>the checkers confirm it, or find the gap</div>
+        <div class="item" data-cue="confirm" data-anim="left"><div class="box"></div>the checkers confirm it, or find a gap</div>
         <div class="item" data-cue="page." data-anim="left"><div class="box"></div>the core idea, explained in one page</div>
         <div class="item" data-cue="survive" data-anim="left"><div class="box"></div>which papers survive on weaker assumptions</div>
       </div>

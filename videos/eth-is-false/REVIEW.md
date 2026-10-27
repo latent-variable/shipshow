@@ -156,3 +156,14 @@ Fixed after the cap:
 - Engagement's minors: three small knobs instead of a picture of knobs in 11b, and dry asides rather than a third meme in 09 to 11.
 - Visuals' minors: 11b's chips sit high until the formula arrives; 12's columns shift when the second arrives; 09's long arc sits close to
   the count line.
+
+## Past the cap: the floor re-checked (accuracy, Opus): pass, 0 blocking, 0 major, 8 minor
+
+Taken: "ETH says there's a line nobody will ever cross" (it never said nobody gets near one); "where most arguments stopped" in the close;
+the heading "does this give P = NP?" (a bare "P = NP? NO" read as settling P versus NP); "→ ≈ 2^(n/√log n)" beside the exact theorem; the
+schematic curve now climbs nearly linearly and crosses under the line (it had flattened like a log); "or find a gap"; the cards' affiliations
+and the 2001 journal dates recorded in sources.md. Every take of the changed lines heard back; the only flags are Whisper's spelling of names
+and "stopped" heard as "stop".
+
+**For the owner's listen:** each direction (the deadpans in 01, 03, 09, 12 and 14b; "That's not a typo"), the name "Impagliazzo"
+(respelled "Impalyatso" for Drama 3), the 2.16 s beat after "Simple, right?", and the pace of 09, 12 and 14b.
