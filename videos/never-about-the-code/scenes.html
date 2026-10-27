@@ -22,6 +22,8 @@
   .stamp.hl { border-color: var(--accent-3); color: var(--accent-3); }
   .meme-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
   .scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 92%, transparent); }
+  /* a solid panel fades out at its foot, so a theme's horizon or skyline is never cut by a hard line */
+  .scrim.solid { background: linear-gradient(to bottom, var(--bg) 0%, var(--bg) 76%, transparent 100%); }
   .ss-meme { --meme-height: 760px; }
   /* a portrait or a screenshot set in the layout, not centred over the scene (the kit default) */
   .stage .ss-portrait, .row .ss-portrait { --portrait-height: 330px; position: relative; inset: auto; margin: 0; max-width: none; flex: none; font-size: 32px; }
@@ -56,12 +58,22 @@
   .axis .line { flex: 1; width: 4px; margin: 14px auto; background: linear-gradient(var(--accent-3), var(--accent)); border-radius: 2px; }
 
   /* 03: the flashback to January 2023, a tape rewinding */
-  .vhs .vhs-lines { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 6px); mix-blend-mode: screen; }
+  .vhs .vhs-lines { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 6px); mix-blend-mode: screen; }
   .vhs-tag { font-family: var(--font-mono); font-size: 64px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink); text-shadow: 3px 0 0 rgba(255, 60, 80, 0.75), -3px 0 0 rgba(60, 200, 255, 0.75); }
   .vhs-tag .rw { color: var(--accent-3); margin-right: 10px; }
   .vhs-tag .when { color: var(--accent-3); margin-left: 18px; }
   .vhs-chip { font-family: var(--font-display); font-size: 50px; font-weight: 700; padding: 16px 34px; border: 3px solid var(--line); border-radius: 999px; }
   .vhs-chip b { color: var(--accent-3); font-weight: 800; }
+
+  .roast-box { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 36px 60px 40px; border-radius: 20px; background: var(--bg); border: 2px solid var(--line); box-shadow: var(--shadow); }
+  /* 11b: the diff stat, GitHub's colours */
+  .diffstat { position: absolute; right: 190px; top: 640px; z-index: 5; padding: 14px 30px; border-radius: 14px; background: var(--card); border: 2px solid var(--line); box-shadow: var(--shadow); font-family: var(--font-mono); font-weight: 700; font-size: 64px; transform: rotate(3deg); }
+  .diffstat .add { color: #3fb950; } .diffstat .del { color: #f85149; }
+  .diffstat small { display: block; font-size: 26px; color: var(--muted); font-weight: 400; }
+  /* 12: the review rounds */
+  .rounds { display: flex; gap: 12px; margin-top: 12px; }
+  .rounds b { font-family: var(--font-mono); font-size: 28px; font-weight: 700; padding: 4px 14px; border: 2px solid var(--line); border-radius: 999px; color: var(--muted); }
+  .rounds b.done { color: var(--good); border-color: var(--good); }
 
   /* 04 to 06: the four stages */
   .stage:has(> .stages) { top: 170px; }
@@ -224,7 +236,7 @@
 <section data-scene="03-ladder">
   <div class="stage">
     <div class="ladder-wrap" data-cue="+0.1" data-anim="fade">
-      <div class="axis" data-cue="+0.2" data-anim="fade"><div>write less</div><div class="line"></div><div>trust more</div></div>
+      <div class="axis" data-cue="+0.2" data-anim="fade"><div>&uarr; write less<br>trust more</div><div class="line"></div><div>write it all</div></div>
       <div class="ladder">
         <div class="rung card" data-cue="Machine" data-anim="up">Machine code <small>numbers</small></div>
         <div class="rung card" data-cue="assembly," data-anim="up">Assembly <small>mov, add, jmp</small></div>
@@ -240,7 +252,7 @@
     <figure class="ss-meme" data-clip="https://i.imgflip.com/5pzpm5.mp4" data-name="Pedro Pascal crying" data-credit="https://imgflip.com/gif-templates" data-cue="roasted" data-anim="pop"><span class="top">Every new layer</span><span class="bottom">reading the comments</span></figure>
   </div>
   <div class="overlay vhs" id="fb03" data-cue="rewind" data-anim="glitch" data-sfx="scratch" data-sfx-offset="0.5">
-    <div class="scrim" style="background: var(--bg)"></div>
+    <div class="scrim" style="background: radial-gradient(120% 90% at 50% 40%, #12303a 0%, #0b1a22 60%, #05090c 100%)"></div>
     <div class="vhs-lines"></div>
     <div class="zone full" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px">
       <div class="vhs-tag"><span class="rw">&#9664;&#9664;</span> REWIND <span class="when" data-cue="January" data-anim="type">JAN 2023</span></div>
@@ -250,14 +262,17 @@
   </div>
   <div id="now26" data-cue="Now#2" data-anim="fade" style="position: absolute; width: 1px; height: 1px"></div>
   <div class="overlay" id="k23" data-cue="Karpathy" data-anim="pop">
-    <div class="scrim" style="background: var(--bg)"></div>
+    <div class="scrim solid"></div>
     <div class="zone full" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 44px">
       <div class="col" style="width: 1200px; flex: none"><figure class="ss-shot" data-shot="https://platform.twitter.com/embed/Tweet.html?id=1617979122625712128&amp;theme=dark" data-source="x.com/karpathy/status/1617979122625712128" data-select="article" data-width="620" data-pad="0" data-find="is English" data-mark-cue="hottest" style="--shot-max-height: 620px"></figure></div>
-      <div class="stamp hl" data-cue="Way" data-anim="slam" data-sfx="ding" data-sfx-offset="0.7">way ahead of his time</div>
+      <div class="stamp hl" data-cue="time." data-anim="slam" data-sfx="ding">way ahead of his time</div>
     </div>
   </div>
   <div class="overlay" style="display: flex; align-items: center; justify-content: center; padding-top: 120px; pointer-events: none">
-    <div class="stamp" data-cue="started" data-anim="slam" data-sfx="thump" data-sfx-offset="0.2" style="font-size: 72px; background: color-mix(in srgb, var(--bg) 88%, transparent); padding: 14px 40px">the roasting has started</div>
+    <div class="roast-box" data-cue="started" data-anim="pop">
+      <div class="stamp" data-cue="started" data-anim="slam" data-sfx="thump" data-sfx-offset="0.2" style="font-size: 72px">the roasting has started</div>
+      <div class="quote" data-cue="understand" data-anim="up" style="color: var(--accent)">“You don't understand the code.”</div>
+    </div>
   </div>
 </section>
 
@@ -428,6 +443,7 @@
 
 <section data-scene="11b-ocaml">
   <div class="zone full" style="top: 60px; bottom: auto" data-cue="+0.1" data-anim="fade"><div class="tag center">OCaml · PR #14369 · 13K lines, closed unmerged · a maintainer, Nov 2025</div></div>
+  <div class="diffstat" id="dstat" data-cue="thirteen" data-anim="slam" data-sfx="thump" data-sfx-offset="0.3"><span class="add">+<span data-cue="thirteen" data-anim="count">13,323</span></span> <span class="del">&minus;0</span> <small>lines to review</small></div>
   <div class="zone full" id="ocA" data-cue="+0.1" data-anim="up" style="top: 130px"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="hard to review, and very lightly tested" data-width="1100" data-pad="8" data-mark-cue="lightly" style="--shot-max-height: 760px"></figure></div></div>
   <div class="zone full" id="ocB" data-cue="passes" data-anim="up" style="top: 130px; display: flex; align-items: center"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="only 20% of the work, the other 80% are to get the feature discussed, reviewed and integrated" data-lines="0" data-width="1100" data-pad="8" data-mark-cue="only" style="--shot-max-height: 640px"></figure></div></div>
 </section>
@@ -439,7 +455,7 @@
       <div class="steps-list">
         <div class="step card" data-cue="tell" data-anim="left"><span class="n">1</span><span>I say what the feature has to do</span></div>
         <div class="step card" data-cue="builds" data-anim="left"><span class="n">2</span><span>the agent builds it, and tests it</span></div>
-        <div class="step card" data-cue="review" data-anim="left"><span class="n">3</span><span>another model reviews the PR<small>round after round, until nothing serious is left</small></span></div>
+        <div class="step card" data-cue="review" data-anim="left"><span class="n">3</span><span>another model reviews the PR<small>round after round, until nothing serious is left</small><span class="rounds" data-cue="round" data-anim="stagger"><b>round 1</b><b>round 2</b><b class="done">round 3 &check;</b></span></span></div>
         <div class="step card" data-cue="standing" data-anim="left"><span class="n">4</span><span>standing tests and checks<small>they know the project</small></span></div>
       </div>
       <div class="side">
@@ -453,7 +469,7 @@
     </div>
   </div>
   <div class="overlay" id="review" data-cue="tool" data-anim="fade">
-    <div class="scrim" style="background: var(--bg)"></div>
+    <div class="scrim solid"></div>
     <div class="zone full" style="display: flex; flex-direction: column; justify-content: center">
       <div class="col" style="width: 1500px; flex: none; margin: 0 auto"><figure class="ss-shot" data-shot="https://github.com/latent-variable/shipshow/pull/77" data-select="#pullrequestreview-5662968608 h3:has(+ table), #pullrequestreview-5662968608 table" data-find="blocks clones without a transcript" data-width="700" data-pad="10" data-mark-cue="bug:" style="--shot-max-height: 720px"><figcaption>the last review round on ShipShow's PR #77: the bug, resolved; no open findings</figcaption></figure></div>
     </div>
@@ -465,13 +481,13 @@
     <div class="big-step card" data-cue="+0.1" data-anim="up"><span class="n">5</span><span>I run it myself<small>does it do what I meant?</small></span></div>
   </div>
   <div class="overlay" id="split" data-cue="Building" data-anim="fade">
-    <div class="scrim" style="background: var(--bg)"></div>
+    <div class="scrim solid"></div>
     <div class="zone full" style="display: flex; flex-direction: column; justify-content: center; gap: 50px">
       <div class="split">
         <div class="lbl">building</div><div class="bar build" data-cue="Building" data-anim="grow">the small part</div>
         <div class="lbl" data-cue="Most" data-anim="fade" style="margin-top: 20px">reviewing · testing · verifying</div><div class="bar verify" data-cue="reviewing," data-anim="grow">most of the work</div>
       </div>
-      <div class="who center" data-cue="merged" data-anim="fade" style="font-size: 34px">ShipShow alone: 58 merged pull requests</div>
+      <div class="who center" data-cue="merged" data-anim="fade" style="font-size: 34px">ShipShow alone: 65 merged pull requests</div>
       <div class="center"><span class="stamp hl" data-cue="diligence" data-anim="slam" data-sfx="thump" data-sfx-offset="0.45" style="font-size: 60px">due diligence, 2026</span></div>
     </div>
   </div>
@@ -518,10 +534,10 @@
   tl.to("#pair", { opacity: 0, duration: 0.3 }, cueAt("#me") - 0.3);
   tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 1.9);
   tl.to("#review", { opacity: 0, duration: 0.3 }, cueAt("#checks") + 0.2);
-  tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#m12") + 2.6);
+  tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#m12") + 3.2);
   tl.to("#call4", { opacity: 0, duration: 0.3 }, cueAt("#p-hopper") - 0.3);
   tl.to("#call5", { opacity: 0, duration: 0.3 }, cueAt("#bk") - 0.3);
   tl.to("#call5b", { opacity: 0, duration: 0.3 }, cueAt("#dj") - 0.3);
   tl.to("#call6", { opacity: 0, duration: 0.3 }, cueAt("#c1983") - 0.3);
-  tl.to("#ocA", { opacity: 0, duration: 0.3 }, cueAt("#ocB") - 0.3);
+  tl.to(["#ocA", "#dstat"], { opacity: 0, duration: 0.3 }, cueAt("#ocB") - 0.3);
 </script>
