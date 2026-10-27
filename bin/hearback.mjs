@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { REPO } from "./lib.mjs";
+import { REPO, pythonExists } from "./lib.mjs";
 
 const constant = (file, name) => +readFileSync(join(REPO, "bin", file), "utf8").match(new RegExp(`^${name} = ([\\d.]+)`, "m"))[1];
 
@@ -16,7 +16,7 @@ export const HEARBACK_MIN = constant("hearback.py", "MIN");
 
 /** Whether `py` can hear takes back: faster-whisper installed (npm run setup:hearback). */
 export function hearbackAvailable(py) {
-  return !!py && existsSync(py) && spawnSync(py, ["-c", "import faster_whisper"], { stdio: "ignore" }).status === 0;
+  return pythonExists(py) && spawnSync(py, ["-c", "import faster_whisper"], { stdio: "ignore" }).status === 0;
 }
 
 /** The .check file beside a take (written by hearback.py, or by omnivoice.py): {key, text, score, heard, faults}, or null. */
@@ -41,8 +41,9 @@ export function voiceCheckSection(vc) {
   const out = ["## Voice checks", ""];
   if (!vc) return [...out, "None recorded (voiced before the checks existed): npm run voice again.", ""];
   out.push(vc.hearBack
-    ? `Each of ${vc.checked} sentences was heard back by faster-whisper and compared with its text; under ${pct(vc.min)} is flagged. Listen to those: a dropped or mangled word is the commonest fault in a voiced take. Hearing a take back cannot catch a word said wrongly that Whisper mends from context.`
+    ? `Each of ${vc.checked} ${vc.runs ? "runs of sentences" : "sentences"} was heard back by faster-whisper and compared with its text; under ${pct(vc.min)} is flagged. Listen to those: a dropped or mangled word is the commonest fault in a voiced take. Hearing a take back cannot catch a word said wrongly that Whisper mends from context.`
     : "Not heard back (faster-whisper is not installed: npm run setup:hearback), so a dropped or mangled word would not have been caught by the pipeline.", "");
+  if (vc.runs) out.push(`The takes are runs of whole sentences (DESIGN D47), so the sentence column names the sentences in the run, and the sentence and word times come from Whisper: ${vc.runs.matched} of ${vc.runs.words} words were matched to what was heard, and the rest were placed between their neighbours.`, "");
   if (vc.flagged.length) out.push(...table(["scene", "sentence", "heard back", "script", "heard"], vc.flagged.map((f) => [f.scene, f.sentence, pct(f.score), f.text, f.heard])));
   if (vc.faults.length) out.push(...table(["scene", "sentence", "script", "fault kept after retakes"], vc.faults.map((f) => [f.scene, f.sentence, f.text, f.faults.join("; ")])));
   if (!vc.flagged.length && !vc.faults.length) out.push("Nothing flagged.", "");

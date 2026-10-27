@@ -9,6 +9,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { basename, join } from "node:path";
 import { BASE_SPM, BASE_WPM, HF, REPO, config, die, reviewPlan, round, run, syllables, videoDir } from "./lib.mjs";
 import { memesIn } from "./meme.mjs";
+import { portraitsIn } from "./portrait.mjs";
 import { voiceCheckSection } from "./hearback.mjs";
 import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
 
@@ -107,8 +108,13 @@ out.push(md(cues.map((c) => {
 }), ["at (s)", "scene", "cue", "on screen", "being said", "stays up", "needs", "flag"]), "");
 const memes = memesIn(html);
 if (memes.length) {
-  out.push("## Memes", "", "Each meme is a memegen template whose picture is a third-party image, fetched at build. Credit it in `sources.md` (template and source), and judge that its text is short and readable (`critic-visuals`).", "");
-  out.push(md(memes.map((x) => [`\`${x.id}\``, x.name, x.source, x.lines.map((l) => l || "(blank)").join(" / ")]), ["template", "name", "source", "lines"]), "");
+  out.push("## Memes", "", "Each meme is a third-party picture, fetched at build: a memegen template, or a clip (GIF, MP4 or WebM) the figure names. Credit it in `sources.md` (template and source), and judge that its text is short and readable (`critic-visuals`). An animated one is a video the build made, starting at its cue and looping to the end of its scene.", "");
+  out.push(md(memes.map((x) => [`\`${x.id}\``, x.clip ? "animated" : "still", x.name, x.clip && x.clip !== x.source ? `${x.source} (clip: ${x.clip})` : x.source, x.lines.map((l) => l || "(blank)").join(" / ")]), ["template", "kind", "name", "source", "lines"]), "");
+}
+const portraits = portraitsIn(html);
+if (portraits.length) {
+  out.push("## Portraits", "", "Each portrait is a Wikimedia Commons photo, checked at build to be public domain, CC0, CC BY or CC BY-SA. Copy each row into `sources.md` (file page, author, licence, licence link); the credit line is on screen under the photo.", "");
+  out.push(md(portraits.map((x) => [`[${x.file.replace(/^File:/, "")}](${x.page.replace(/\(/g, "%28").replace(/\)/g, "%29")})`, x.author, x.licence, x.licenceUrl || "(none given)", x.credit]), ["file page", "author", "licence", "licence link", "on-screen credit"]), "");
 }
 out.push("## Stillness", "", "The longest stretch of each scene in which nothing new appears: the scene's start, each cue and its end are the moments something changes.", "");
 out.push(md(timing.scenes.map((sc) => {

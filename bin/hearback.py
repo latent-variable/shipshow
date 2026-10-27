@@ -6,13 +6,17 @@
 spec.json, written by bin/voice.mjs:
   {"min": 0.9, "items": [{"text": "what the engine was told to say", "wav": "...", "key": "..."}]}
 
-This is a VERIFICATION, never timing: ShipShow still places a sentence by where its take was put
-(bin/voice.mjs), and a word inside it by its share of the letters. faster-whisper small.en listens to
-a take, and the transcript is compared with the text by letters, spaces and punctuation gone
+This is verification first: faster-whisper small.en listens to a take, and the transcript is compared
+with the text by letters, spaces and punctuation gone
 ("FindBusiness" is two words to Whisper) and numbers spelled out ("29.3" is "twenty nine point three"
 in a script). The score is the share of the letters that match, 0 to 1. Ported from DAIS
 product-videos (studio/narrate.py), where it keeps the best of three takes and flags a scene under
 90% to listen to.
+
+It is also timing, for a take that is a run of sentences (DESIGN D47): `hear_words` returns the words
+with their times, from the same transcription that scores the take, and bin/wordtime.py lays the
+script's sentences and words over them. Whisper times only runs; a take of one sentence is still placed
+by where bin/voice.mjs put it, and a word in it by its share of the letters.
 
 Optional: it needs `npm run setup:hearback` (faster-whisper, requirements-hearback.txt; about 480 MB
 for the model on the first run). Without it nothing here runs and nothing is required. The `.check`
@@ -68,13 +72,25 @@ def _pair(m):
     return lead + "point " + " ".join(ONES[int(d)] for d in frac)
 
 
-def spoken_numbers(text):
-    """Numbers as a narrator says them, so a take heard back as "29.3" compares with a script that says
-    "twenty nine point three". Close is enough: this ranks takes, and a time or year read the other
-    way only costs a few letters."""
+def year_words(n):
+    """A year as a narrator reads it: 1952 is "nineteen fifty two", 1905 "nineteen oh five", 1900 "nineteen hundred"."""
+    hi, lo = divmod(n, 100)
+    if lo == 0:
+        return int_words(hi) + " hundred"
+    return int_words(hi) + " " + ("oh " + ONES[lo] if lo < 10 else int_words(lo))
+
+
+def spoken_numbers(text, years=False):
+    """Numbers as a narrator says them, so a take heard as "29.3" compares with a script that says
+    "twenty nine point three". Close is enough: this ranks takes, and a time read the other way only costs
+    a few letters. A four digit number is a quantity by default ("one thousand nine hundred fifty two");
+    with `years` one from 1100 to 1999 or 2010 to 2099 is read as a year, which is how a script that
+    says "nineteen fifty two" is spelled out: agreement() tries both."""
     text = re.sub(r"(?<=\d),(?=\d{3}\b)", "", text)                  # 2,916
     text = re.sub(r"(\d+)\s*([.:])\s*(\d+)", _pair, text)           # 29.3, Whisper's "29 .3", 4:57
     text = re.sub(r"(\d+)(?:st|nd|rd|th)\b", lambda m: ordinal(int_words(int(m.group(1)))), text)
+    if years:
+        text = re.sub(r"(?<!\d)(?:1[1-9]\d\d|20[1-9]\d)(?!\d)", lambda m: year_words(int(m.group())), text)
     return re.sub(r"\d+", lambda m: int_words(int(m.group())), text)
 
 
@@ -82,8 +98,11 @@ def agreement(text, heard):
     """How closely what a take says matches the text, 0 to 1, by letters with spaces and punctuation
     gone: Whisper writes "FindBusiness" as "Find Business" and "Next.js" as "next JS", which a
     word-by-word match counts as misses."""
-    norm = lambda t: re.sub(r"[^a-z0-9]", "", spoken_numbers(t).lower())
-    return difflib.SequenceMatcher(None, norm(without_marks(text)), norm(heard), autojunk=False).ratio()
+    best = 0.0
+    for years in (False, True):      # "1952" is "one thousand nine hundred fifty two" or "nineteen fifty two"
+        norm = lambda t: re.sub(r"[^a-z0-9]", "", spoken_numbers(t, years).lower())
+        best = max(best, difflib.SequenceMatcher(None, norm(without_marks(text)), norm(heard), autojunk=False).ratio())
+    return best
 
 
 def available():
@@ -129,18 +148,27 @@ def hear(samples):
     return " ".join(seg.text.strip() for seg in whisper().transcribe(samples, language="en")[0]).strip()
 
 
+def hear_words(samples):
+    """(what Whisper hears, [{"w", "start", "end"}] each word with its time) in 16 kHz samples."""
+    segments = list(whisper().transcribe(samples, language="en", word_timestamps=True)[0])
+    words = [{"w": w.word.strip(), "start": float(w.start), "end": float(w.end)} for seg in segments for w in (seg.words or []) if w.word.strip()]
+    return " ".join(seg.text.strip() for seg in segments).strip(), words
+
+
 def score(text, samples):
     """(0..1, what was heard) for a take's samples against its text."""
     heard = hear(samples)
     return agreement(text, heard), heard
 
 
-def write_check(wav, key, text, got, heard, faults=()):
+def write_check(wav, key, text, got, heard, faults=(), timing=None):
     """The `.check` file beside a take: what it was judged by, so bin/voice.mjs and the review packet
-    can say which sentences to listen to. `score` is None when nothing could hear it back."""
-    Path(wav).with_suffix(".check").write_text(json.dumps({
-        "key": key, "text": text, "score": None if got is None else round(got, 3), "heard": heard,
-        "faults": list(faults)}) + "\n")
+    can say which sentences to listen to. `score` is None when nothing could hear it back. `timing`, for a
+    run of sentences, is bin/wordtime.py's {"sentences", "matched", "words"}."""
+    check = {"key": key, "text": text, "score": None if got is None else round(got, 3), "heard": heard, "faults": list(faults)}
+    if timing is not None:
+        check["timing"] = timing
+    Path(wav).with_suffix(".check").write_text(json.dumps(check) + "\n")
 
 
 def check(items):

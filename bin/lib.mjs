@@ -2,12 +2,20 @@
 import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative, resolve } from "node:path";
+import { basename, delimiter, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const HF = join(REPO, "node_modules", ".bin", "hyperframes");
 export const VENV_PY = join(REPO, ".venv", "bin", "python");
+
+/** Whether a Python can be run: a path that exists, or a bare command (`python3`, which a person may set
+ *  in HYPERFRAMES_PYTHON) found on PATH. */
+export function pythonExists(py) {
+  if (!py) return false;
+  if (py.includes("/") || py.includes("\\")) return existsSync(py);
+  return (process.env.PATH || "").split(delimiter).some((d) => d && existsSync(join(d, py)));
+}
 
 export function die(msg) {
   console.error(msg);
@@ -188,6 +196,48 @@ export function spoken(sentence, say) {
     out = out.replace(new RegExp(`(?<![\\w])${esc}(?![\\w])`, "g"), said);
   }
   return out;
+}
+
+/** A sentence's written words, each with what the voice is told to say for it: [{w, say}]. A `say` key of
+ *  several words ("the CTO") is one spoken unit, so its first written word carries it and the rest say
+ *  nothing of their own; bin/wordtime.py puts a time on each written word from what is heard. */
+export function spokenWords(sentence, say = {}) {
+  const words = sentence.split(" ");
+  const out = words.map((w) => ({ w, say: spoken(w, say) }));
+  const starts = [];                                   // where each word begins in the sentence
+  words.reduce((at, w) => (starts.push(at), at + w.length + 1), 0);
+  for (const [written, said] of Object.entries(say)) {
+    if (!written.includes(" ")) continue;
+    const esc = written.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    for (const m of sentence.matchAll(new RegExp(`(?<![\\w])${esc}(?![\\w])`, "g"))) {
+      const first = starts.indexOf(m.index);
+      if (first < 0) continue;
+      const n = written.split(" ").length;
+      out[first].say = said;
+      for (let k = 1; k < n; k++) out[first + k].say = "";
+    }
+  }
+  return out;
+}
+
+/** The sentences of a scene (already `say`-mapped, as the voice will read them) grouped into runs of whole
+ *  sentences of up to `limit` words: [[0, 1, 2], [3]] by sentence number. A sentence longer than the limit
+ *  stands alone. One take per run, so a run keeps its own prosody across the sentences in it (DESIGN D47);
+ *  45 words is what DAIS product-videos found a scene could be voiced in without dropping words. */
+export function groupRuns(says, limit = 45) {
+  const runs = [];
+  let words = 0;
+  says.forEach((text, i) => {
+    const n = text.split(/\s+/).filter(Boolean).length;
+    if (runs.length && words + n <= limit) {
+      runs[runs.length - 1].push(i);
+      words += n;
+    } else {
+      runs.push([i]);
+      words = n;
+    }
+  });
+  return runs;
 }
 
 export const norm = (w) => w.toLowerCase().replace(/[^a-z0-9]/g, "");

@@ -4,20 +4,25 @@
 
 jobs.json, written by bin/voice.mjs:
   {"speed": 1.25, "voice": {"name": "caro_davy"} | {"name": "lino", "wav": "...", "text": "..."},
-   "cache": "<dir for the trimmed reference>", "hearback": true, "min": 0.9,
-   "jobs": [{"text": "...", "wav": "...", "seed": 1, "key": "..."}]}
+   "cache": "<dir for the trimmed reference>", "hearback": true, "min": 0.9, "pace": "stretch" | "window",
+   "jobs": [{"text": "...", "wav": "...", "seed": 1, "key": "...", "parts": [[{"w": "...", "say": "..."}]]}]}
 
 OmniVoice clones every voice from a short recording, so a voice here is a recording: a clone is
 a clip in local/voices/, a built-in one a clip from kyutai/tts-voices (bin/omnivoice-voices.json).
 OmniVoice wants a 3 to 10 s reference: silence at the clip's edges is trimmed first, then a clip
-still too long is cut at its last pause before 10 s. Each take is one sentence, so nothing is
-chunked.
+still too long is cut at its last pause before 10 s. A take is one sentence, or, when the job has
+`parts` (bin/voice.mjs does that when hear-back is installed, DESIGN D47), a run of whole sentences
+that is voiced in one go so the sentences keep one prosody. Then the take is heard back with word
+times (bin/hearback.py `hear_words`) and bin/wordtime.py puts each sentence and written word on them;
+the result goes in the `.check` file as `timing`.
 
-Speed is applied after generation, never by squeezing it. OmniVoice fills the duration it is
-given, and a window cut to 1.3x its natural length dropped or garbled words in 7 of 24 sentences
-(measured 2026-10-17 with Whisper); generating at the natural length and then time-stretching
-the take (ffmpeg atempo, pitch kept) dropped none. The padding's silence at a take's edges is
-trimmed. A take that comes out silent, which a short line can, is voiced again with another seed.
+Speed is `pace`. "stretch", for a take of one sentence, generates at the natural length and time-stretches
+the take (ffmpeg atempo, pitch kept): squeezing a sentence's window to 1.3x dropped or garbled words in
+7 of 24 sentences (measured 2026-10-17 with Whisper) and stretching dropped none. "window", for a run
+(bin/voice.mjs), asks the model for a shorter duration, as DAIS product-videos does: at 1.2 it heard
+back as well as stretching (DESIGN D47).
+The padding's silence at a take's edges is trimmed. A take that comes out silent, which a short line
+can, is voiced again with another seed.
 
 The models sample, so every take is checked before it is kept (bin/voicecheck.py, ported from DAIS
 product-videos, where the owner heard these in published videos): the burst of noise OmniVoice opens
@@ -39,6 +44,7 @@ import soundfile as sf
 
 import hearback
 import voicecheck
+import wordtime
 
 SPEC = json.loads((Path(__file__).parent / "omnivoice-voices.json").read_text())
 # 16 steps is twice as fast and dropped and repeated words on a long line (measured in a
@@ -53,7 +59,9 @@ TRIES = 3         # silent takes: voiced again with another seed
 # the first sample on every seed (a clone cut from a clip with no lead-in did: 1 clean take in 24), so
 # more tries cost time and change nothing; such a take is trimmed and reported to listen to.
 CLEAN_TRIES = 3
+RUN_CLEAN_TRIES = 5   # a run is a longer take, and a clean start is worth more tries (DAIS tries a piece 5 times)
 HEAR_TRIES = 3    # takes compared with the text, when faster-whisper is installed
+NOISY_DB = -52.0  # a reference whose background is louder than this is cleaned of hiss (see quiet())
 
 
 def probe_seconds(clip):
@@ -89,7 +97,7 @@ def reference(voice, cache):
         text = entry.get("text")
     seconds = probe_seconds(clip)
     if seconds <= REF_SECONDS:
-        return clip, text
+        return quiet(clip, voice["name"], cache, 0.0, seconds), text
     # Trim silence at the edges first: it holds no words, so a transcript stays true.
     pauses = silences(clip)
     start = next((e for s, e in pauses if s <= 0.05), 0.0)
@@ -103,11 +111,37 @@ def reference(voice, cache):
         end = max(inner, default=start + REF_SECONDS) + 0.15
         if not inner:
             print(f"warning: {clip} has no pause to cut at before 10 s, so its reference ends mid-word", file=sys.stderr)
+    return quiet(clip, voice["name"], cache, start, end), text
+
+
+def noise_floor(clip, start=0.0, end=None):
+    """The background of the part of a clip used as the reference, dBFS: the 10th percentile of its 50 ms windows'
+    levels, digital silence (under -90) left out so padding cannot hide a hiss."""
+    a, sr = sf.read(str(clip), dtype="float32")
+    a = a.mean(axis=1) if a.ndim > 1 else a
+    a = a[int(sr * start): None if end is None else int(sr * end)]
+    w = int(sr * 0.05)
+    levels = 20 * np.log10(np.sqrt((a[: len(a) // w * w].reshape(-1, w) ** 2).mean(axis=1)) + 1e-12)
+    levels = levels[levels > -90]
+    return float(np.percentile(levels, 10)) if len(levels) else -120.0
+
+
+def quiet(clip, name, cache, start, end):
+    """The reference as the model gets it: cut to [start, end], and cleaned of hiss when its background is
+    louder than NOISY_DB. A clone copies the room of its clip: the owner's clip (a -39 dBFS floor) gave takes
+    with no silence after the decoder's opening burst, so all 5 runs of a test video were flagged "starts at
+    once" and cut into their first syllable, heard as choppy. Two mild afftdn passes (floor about -57, speech
+    level unchanged) gave 0 of 5, every run heard back at 97% or more; one stronger pass (nf=-20, nr=30) gave
+    2 of 5 (2026-10-26). The built-in clips sit at -56 to -87 and are left alone."""
     Path(cache).mkdir(parents=True, exist_ok=True)
-    out = Path(cache) / f"{voice['name']}-reference.wav"
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(clip), "-ss", f"{start:.2f}", "-to", f"{end:.2f}",
+    out = Path(cache) / f"{name}-reference.wav"
+    floor = noise_floor(clip, start, end)
+    clean = ["-af", "highpass=f=70,afftdn=nf=-25:nr=18,afftdn=nf=-30:nr=18"] if floor > NOISY_DB else []
+    if clean:
+        print(f"reference {Path(clip).name}: background {floor:.0f} dBFS, cleaned of hiss before cloning", flush=True)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(clip), "-ss", f"{start:.2f}", "-to", f"{end:.2f}", *clean,
                     "-ar", str(SR), "-ac", "1", str(out)], check=True)
-    return out, text
+    return out
 
 
 def seconds_for(estimator, text):
@@ -156,18 +190,20 @@ def transcript(model, tokens, clip, name, cache):
     return text
 
 
-def one_take(model, tokens, ref_text, estimator, job, round_):
-    """(audio, faults): the sentence voiced until it starts clean and does not shout, up to CLEAN_TRIES
-    seeds. `audio` is the clean take, at the model's natural length, unstretched. What is still wrong
-    after that is returned as words."""
+def one_take(model, tokens, ref_text, estimator, job, round_, speed=1.0, pace="stretch", tries=CLEAN_TRIES):
+    """(audio, faults): the text voiced until it starts clean and does not shout, up to `tries`
+    seeds. `audio` is the clean take: at the model's natural length, unstretched, for pace "stretch";
+    already at `speed`, from a shorter window, for pace "window". What is still wrong after that is
+    returned as words."""
     import mlx.core as mx
     audio, faults = None, []
-    for k in range(CLEAN_TRIES):
+    window = seconds_for(estimator, job["text"]) / (speed if pace == "window" else 1.0)
+    for k in range(tries):
         faults = []
         for attempt in range(TRIES):
-            mx.random.seed(job["seed"] + (round_ * CLEAN_TRIES * TRIES + k * TRIES + attempt) * 7919)
+            mx.random.seed(job["seed"] + (round_ * tries * TRIES + k * TRIES + attempt) * 7919)
             out = list(model.generate(text=job["text"], language="english", ref_tokens=tokens, ref_text=ref_text,
-                                      num_steps=STEPS, duration_s=seconds_for(estimator, job["text"])))
+                                      num_steps=STEPS, duration_s=window))
             raw = np.concatenate([np.array(r.audio, dtype=np.float32) for r in out])
             peak = 20 * np.log10(max(float(np.abs(raw).max()), 1e-9))
             if peak > SILENT_DB:
@@ -185,9 +221,10 @@ def one_take(model, tokens, ref_text, estimator, job, round_):
     return audio, faults
 
 
-def finish(audio, speed):
-    """The kept take as played: silence at its edges trimmed, stretched to speed, one speech level."""
-    return voicecheck.level(stretch(trim(audio), speed), SR)
+def finish(audio, speed, pace="stretch"):
+    """The kept take as played: silence at its edges trimmed, stretched to speed (unless the window was
+    already shortened to it), one speech level."""
+    return voicecheck.level(trim(audio) if pace == "window" else stretch(trim(audio), speed), SR)
 
 
 def main(spec_path):
@@ -209,21 +246,32 @@ def main(spec_path):
         ref_text = transcript(model, tokens, clip, spec["voice"]["name"], spec["cache"])
         print(f"reference heard as: {ref_text}", flush=True)
     estimator = RuleDurationEstimator()
+    pace = spec.get("pace", "stretch")
     for i, job in enumerate(spec["jobs"], 1):
         best = None
+        run = bool(job.get("parts"))
         for round_ in range(HEAR_TRIES if hear_on else 1):
-            audio, faults = one_take(model, tokens, ref_text, estimator, job, round_)
-            final = finish(audio, spec["speed"])
-            got, heard = hearback.score(job["text"], hearback.samples_from(final, SR)) if hear_on else (None, "")
+            audio, faults = one_take(model, tokens, ref_text, estimator, job, round_, spec["speed"], pace, RUN_CLEAN_TRIES if run else CLEAN_TRIES)
+            final = finish(audio, spec["speed"], pace)
+            words = []
+            if not hear_on:
+                got, heard = None, ""
+            elif run:
+                heard, words = hearback.hear_words(hearback.samples_from(final, SR))
+                got = hearback.agreement(job["text"], heard)
+            else:
+                got, heard = hearback.score(job["text"], hearback.samples_from(final, SR))
             rank = (not faults, got is None or got >= floor, got or 0.0)
             if best is None or rank > best[0]:
-                best = (rank, final, faults, got, heard)
+                best = (rank, final, faults, got, heard, words)
             if got is None or got >= floor:
                 break    # a fault one_take could not clear is not cleared by another hearing
-        _, final, faults, got, heard = best
+        _, final, faults, got, heard, words = best
         sf.write(job["wav"], final, SR, subtype="PCM_16")
-        hearback.write_check(job["wav"], job.get("key", ""), job["text"], got, heard, faults)
-        print(f"voiced {i}/{len(spec['jobs'])}" + (f" ({got:.0%} heard back)" if got is not None else ""), flush=True)
+        timing = wordtime.align(job["parts"], words, len(final) / SR) if run and hear_on else None
+        hearback.write_check(job["wav"], job.get("key", ""), job["text"], got, heard, faults, timing)
+        print(f"voiced {i}/{len(spec['jobs'])}" + (f" ({got:.0%} heard back)" if got is not None else "")
+              + (f", {timing['matched']}/{timing['words']} words timed from what was heard" if timing else ""), flush=True)
 
 
 if __name__ == "__main__":

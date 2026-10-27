@@ -102,3 +102,27 @@ body { background: var(--bg); overflow: hidden; }
 }
 .ss-meme-box[data-font="thin"] .ss-meme-line { font-weight: 600; }
 .ss-meme-box[data-font="impact"] .ss-meme-line { font-family: Anton, sans-serif; font-weight: 400; }
+
+/* Portraits (bin/portrait.mjs): a credited Wikimedia Commons photo in a themed frame, the name and a
+   line under it. Sized by --portrait-height (the photo's height; theme, figure, or any width on the
+   figure); the credit line sits on the photo's foot. Opt-in treatments: ss-portrait-gray, ss-portrait-duo. */
+.ss-portrait {
+  position: absolute; inset: 0; margin: auto; height: fit-content;
+  width: calc(var(--portrait-height, 640px) * var(--ar, 0.75)); max-width: calc(100% - 2 * var(--pad));
+  display: flex; flex-direction: column; gap: 0.5em; font-size: 40px;
+}
+.ss-portrait-photo {
+  position: relative; overflow: hidden; background: var(--card); aspect-ratio: var(--ar, 0.75);
+  border-radius: var(--portrait-radius, var(--radius)); border: var(--border) solid var(--line); box-shadow: var(--shadow);
+}
+.ss-portrait-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ss-portrait-credit {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 1.6em 0.7em 0.5em;
+  font-family: var(--font); font-size: 0.5em; line-height: 1.25; letter-spacing: 0.01em; color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0));
+}
+.ss-portrait figcaption { font-family: var(--font-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); line-height: 1.1; color: var(--ink); }
+.ss-portrait figcaption small { display: block; margin-top: 0.15em; font-family: var(--font); font-weight: 500; letter-spacing: normal; font-size: 0.62em; line-height: 1.25; color: var(--muted); }
+.ss-portrait-gray .ss-portrait-img { filter: grayscale(1) contrast(1.05); }
+.ss-portrait-duo .ss-portrait-photo { background: var(--accent); }
+.ss-portrait-duo .ss-portrait-img { filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
