@@ -1,0 +1,4 @@
+Here's how I actually verify. Before the agent writes a line, I write down what must never happen, like a customer seeing someone else's invoice. That list is the real work, because tests only catch what's on it.
+Then I write the tests, and watch them fail. Then the agent makes them pass.
+Then I break the code on purpose. Sabotage is a testing strategy.
+Because if my tests can't catch a bug I planted, they won't catch the one the agent planted.

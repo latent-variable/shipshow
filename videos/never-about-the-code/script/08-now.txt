@@ -1,1 +1,0 @@
-Now it's our turn. METR, an AI research lab, times how long real tasks take a human expert. Then it finds the longest one an AI agent can finish half the time. In early 2025, about an hour. In early 2026, roughly twelve hours, with error bars you could park a truck in. And it has been doubling about every three months.

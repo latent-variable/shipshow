@@ -1,0 +1,2 @@
+In IBM's own case study, so IBM grading its own homework, one guy learned Fortran in a day, then finished a job in four hours that he figured would take three days.
+When it broke, he fixed it in Fortran. He understood what his program did, not what the machine did. Sound familiar?

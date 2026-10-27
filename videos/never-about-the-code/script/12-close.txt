@@ -1,1 +1,0 @@
-So next time someone says you don't understand the code, just agree. Then show them the test that fails when it's wrong, and passes when it's right. Nobody read the machine code either. It was never about the code. It was always about what it does, and whether you can prove it.
