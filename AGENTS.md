@@ -186,7 +186,7 @@ nobody heard the takes.
 up to 45 words (a longer sentence stands alone), one take per run, `assets/voice/<scene>-r<n>.wav`, because a take
 per sentence restarts the prosody each time and sounded choppy (the owner, 2026-10-26). Each run is retried up to
 five times for a clean start, kept as the best of three by hear-back score, and cached by its own text, so editing
-a sentence re-voices its run. The same Whisper pass that scores the take gives word times (`word_timestamps`);
+a sentence re-voices its run. Where Whisper heard two sentences of a run closer than the video's `gap`, a breath of silence goes in at the quietest 10 ms near the boundary, only if that point is under -40 dBFS (`BREATH_QUIET_DB`), so a word is never cut and a boundary with no quiet point is left as it is (`breathe` in `bin/lib.mjs`, D51), so a run keeps its prosody without running sentences together. The same Whisper pass that scores the take gives word times (`word_timestamps`);
 `bin/wordtime.py` lays the script's sentences and written words on them (through `say`, with a word Whisper missed
 placed between its neighbours), and they go in `timing.json` as each sentence's `words: [{"w", "at"}]`. `build`
 uses them for cues and captions when present, and the letter share otherwise. Kokoro, and OmniVoice without

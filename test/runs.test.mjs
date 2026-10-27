@@ -9,7 +9,7 @@ import { tmpdir } from "node:os";
 import { delimiter, join } from "node:path";
 import { test } from "node:test";
 import { createHash } from "node:crypto";
-import { BASE_PACE, REPO, VENV_PY, groupRuns, pythonExists, readWav, sentences, spokenWords, writeWav } from "../bin/lib.mjs";
+import { BASE_PACE, REPO, VENV_PY, breathe, groupRuns, pythonExists, readWav, sentences, spokenWords, writeWav } from "../bin/lib.mjs";
 import { hearbackAvailable, levelStamp, voiceCheckSection } from "../bin/hearback.mjs";
 
 const BIN = join(REPO, "bin");
@@ -101,11 +101,14 @@ test("a run's sentences and words are placed where the take says they are, at th
   assert.equal(r.status, 0, r.stderr + r.stdout);
   const timing = JSON.parse(readFileSync(join(dir, "timing.json"), "utf8"));
   const [intro] = timing.scenes;
-  // lead 0.5 / speed 1.25 = 0.4 s, then the run: sentence k is at 2k + 0.1 into its 4 s take
-  assert.deepEqual(intro.sentences.slice(0, 4).map((s) => [s.start, s.duration]), [[0.5, 1.8], [2.5, 1.8], [4.5, 1.8], [6.5, 1.8]]);
-  assert.deepEqual(intro.sentences[1].words.slice(0, 3), [{ w: "Sentence", at: 2.5 }, { w: "2", at: 2.6 }, { w: "has", at: 2.7 }]);
-  // the next run starts after the 4 s take and the gap (0.35 / 1.25 = 0.28 s)
-  assert.equal(intro.sentences[4].start, round2(0.4 + 4 + 0.28 + 0.1));
+  // lead 0.5 / speed 1.25 = 0.4 s, then the run: sentence k is heard at 2k + 0.1 into its take. The fake leaves 0.2 s between
+  // sentences, under the gap (0.35 / 1.25 = 0.28 s), so each boundary inside the take gets a 0.08 s breath and the sentences
+  // after it move. The fake's fourth sentence lies past its 4 s take: no audio there to splice, so no breath before it.
+  assert.deepEqual(intro.sentences.slice(0, 4).map((s) => [s.start, s.duration]), [[0.5, 1.8], [2.58, 1.8], [4.66, 1.8], [6.66, 1.8]]);
+  assert.deepEqual(intro.sentences[1].words.slice(0, 3), [{ w: "Sentence", at: 2.58 }, { w: "2", at: 2.68 }, { w: "has", at: 2.78 }]);
+  // the next run starts after the 4 s take, its two breaths (0.16 s) and the gap
+  assert.equal(intro.sentences[4].start, round2(0.4 + 4 + 0.16 + 0.28 + 0.1));
+  assert.match(r.stdout, /3 breath\(s\) put between sentences/, "two in the first run, one in the second");
   assert.equal(intro.sentences.length, 6);
   const vc = timing.voiceCheck;
   assert.deepEqual(vc.runs, { takes: 4, words: 113, matched: 109 }, "the packet is told how many words Whisper matched: 60 + 50 + 3 words, one missed per take in the fake");
@@ -273,4 +276,27 @@ test("a run above the measured speed is time-stretched, not squeezed", () => {
     assert.equal(r.status, 0, r.stderr + r.stdout);
     assert.equal(jobsLog(dir).at(-1).pace, "stretch", `speed ${speed} was never measured with a shorter window`);
   }
+});
+
+test("breathe: silence goes in at the quietest point between two sentences that ran together, and nowhere else", () => {
+  const rate = 1000, tone = (n) => Array.from({ length: n }, (_, i) => Math.round(Math.sin(i) * 10000));
+  // 1 s of voice, 50 ms of near-silence, 1 s of voice, 500 ms of silence, 1 s of voice
+  const samples = Int16Array.from([...tone(1000), ...Array(50).fill(3), ...tone(1000), ...Array(500).fill(0), ...tone(1000)]);
+  const { samples: out, shifts } = breathe(samples, rate, 1, [[0.99, 1.06], [2.04, 2.56]], 0.35);
+  assert.deepEqual(shifts.map((x) => Math.round(x * 1000)), [280, 280], "the first boundary needed 0.28 s more (0.35 - 0.07); the second already had 0.52 s");
+  assert.equal(out.length, samples.length + 280);
+  // the inserted silence sits inside the quiet stretch, with the first sentence untouched before it
+  assert.deepEqual([...out.slice(0, 990)], [...samples.slice(0, 990)], "the first sentence is not touched");
+  const loud = [...out.slice(1000, 1330)].filter((x) => Math.abs(x) > 50).length;
+  assert.equal(loud, 0, "the breath is silence, put where it was already quiet");
+  assert.deepEqual([...out.slice(out.length - 1000)], [...samples.slice(samples.length - 1000)], "the last sentence is moved, not changed");
+  // two sentences with no quiet point between them (the voice runs straight on) are left alone, never cut mid-word
+  const run_on = Int16Array.from([...tone(1000), ...tone(1000)]);
+  const kept = breathe(run_on, rate, 1, [[0.99, 1.01]], 0.35);
+  assert.equal(kept.samples, run_on);
+  assert.deepEqual(kept.shifts, [0]);
+  // a take whose sentences already have their gap comes back as it was
+  const calm = breathe(samples, rate, 1, [[2.04, 2.56]], 0.35);
+  assert.equal(calm.samples, samples);
+  assert.deepEqual(calm.shifts, [0]);
 });
