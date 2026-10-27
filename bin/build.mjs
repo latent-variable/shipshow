@@ -9,6 +9,7 @@
 // theme's. A <figure class="ss-meme" data-meme="<memegen id>"> (or data-clip="<url or file>" for any
 // GIF, MP4 or WebM) with a <span> per line is a meme (bin/meme.mjs); a moving one becomes a video; a
 // <figure class="ss-portrait" data-commons="File:..."> is a credited Wikimedia Commons photo (bin/portrait.mjs).
+// <figure class="ss-shot" data-shot="<url>"> is a screenshot of a real page, taken in headless Chrome (bin/shot.mjs).
 // The look is the theme (video.json "theme", themes/ or local/themes/) under the
 // video's own styles, and video.json "flair" overrides the theme's motion. Captions are the
 // script's own words, one line at a time. Writes index.html, meta.json, assets/vendor/gsap.min.js
@@ -17,6 +18,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { basename, join } from "node:path";
 import { MEME_FONTS_CSS, memeScene } from "./meme.mjs";
 import { portraitScene } from "./portrait.mjs";
+import { shotScene } from "./shot.mjs";
 import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir } from "./lib.mjs";
 import { sfxTrack } from "./sfx.mjs";
 
@@ -140,8 +142,8 @@ const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<
   const scene = byId[id];
   if (!scene) die(`scenes.html names scene ${id}, which has no script/${id}.txt (or run voice.mjs again)`);
   seen.add(id);
-  // bin/portrait.mjs: a Commons photo and its credit; bin/meme.mjs: a meme figure's picture and text boxes; an animated one is a video that starts at its cue and runs to the scene's end
-  const withMemes = await memeScene(await portraitScene(m[2], dir, id), dir, id, { start: scene.start, end: round(scene.start + scene.duration - 0.01), at: (cue) => cueTime(scene, cue, `scene ${id}`) });
+  // bin/shot.mjs: a screenshot of a real page; bin/portrait.mjs: a Commons photo and its credit; bin/meme.mjs: a meme figure's picture and text boxes; an animated one is a video that starts at its cue and runs to the scene's end
+  const withMemes = await memeScene(await portraitScene(await shotScene(m[2], dir, id), dir, id), dir, id, { start: scene.start, end: round(scene.start + scene.duration - 0.01), at: (cue) => cueTime(scene, cue, `scene ${id}`) });
   usesMemes ||= withMemes !== m[2] && /data-(meme|clip)=/.test(m[2]);   // the meme fonts, for a still, an animated template or a clip
   const body = withMemes.replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
   // 10 ms short of the next scene: scenes share a track, and touching ends read as an overlap.

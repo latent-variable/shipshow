@@ -4,7 +4,7 @@
   "importance": "high",
   "importance_reason": "public: Lino's YouTube channel, in his own voice, making historical and research claims a viewer may repeat",
   "audience": "A developer or tech lead on YouTube who uses AI coding agents, or argues against them, and has heard 'you don't understand the code'. Knows roughly what a compiler is; may not know the history. After watching, they can answer that criticism with what each earlier layer's skeptics said, why the layer won anyway, where AI coding stands in 2026, and a better question: do you understand what it does, and how do you know?",
-  "theme": "lofi",
+  "theme": "signal",
   "engine": "drama",
   "voice": "lino-long",
   "speed": 1.2,
@@ -21,20 +21,19 @@
     "2026": "twenty twenty six",
     "IBM": "I B M",
     "METR": "meter",
-    "Dijkstra": "Dike-stra",
+    "Dijkstra": "Dykstra",
     "COBOL": "Cobol",
     "4.5": "four point five",
-    "Veracode's": "Vera-code's",
-    "Datamation": "Data-mation",
     "DHH": "D H H",
-    "Antirez": "Antee-rez",
     "704": "seven oh four",
-    "Quattro": "Kwah-tro",
     "goto": "go to",
     "1950s": "nineteen fifties",
     "Andrej": "Andrey",
-    "Redis": "Red-iss",
-    "IBM's": "I B M's"
+    "IBM's": "I B M's",
+    "2023": "twenty twenty three",
+    "OCaml's": "Oh Camel's",
+    "Ghostty": "Ghosty",
+    "ShipShow": "Ship Show"
   },
   "music": {
     "file": "local/music/never-about-the-code-lofi.wav",
@@ -43,12 +42,10 @@
   },
   "pauses": {
     "04-impossible": 0.5,
-    "08-the-trade": 0.6,
-    "09-now": 0.5
+    "08-the-trade": 0.7,
+    "09-now": 0.5,
+    "13-close": 0.7
   },
   "hold": 4,
-  "gap": 0.35,
-  "flair": {
-    "ambient": "dust vignette grain"
-  }
+  "gap": 0.35
 }

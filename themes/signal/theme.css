@@ -1,0 +1,86 @@
+/* Signal: a commentary video on a dark desk. Near-black graphite, crisp white, a highlighter yellow for the one
+   thing to look at, hot red for a complaint, green for what held up, sky blue for a source. Bricolage Grotesque
+   for headlines (big, tight, a little odd), Inter for text, JetBrains Mono for code (all SIL Open Font License,
+   in fonts/). Screenshots and photos sit flat on the desk with a hairline edge and a long shadow; a faint grid
+   drifts behind, under a vignette and light grain. Made for opinion pieces and explainers that argue a point. */
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 600; src: url("fonts/bricolage-grotesque-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 800; src: url("fonts/bricolage-grotesque-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 800; src: url("fonts/inter-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; src: url("fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url("fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2"); }
+
+:root {
+  /* colour */
+  --bg: #0b0c10;
+  --sky: radial-gradient(120% 90% at 50% 0%, #17191f 0%, #0d0e12 55%, #08090c 100%);
+  --ink: #f6f5f1;             /* warm white */
+  --muted: #a3a8b4;
+  --accent: #ff5d4d;          /* the complaint: hot red */
+  --accent-2: #6cb8ff;        /* a source: sky blue */
+  --accent-3: #ffd43b;        /* the highlighter */
+  --card: #16181e;
+  --line: #2b2e38;
+  --code-bg: #101116;
+  --code-ink: #d6d9e0;
+  --good: #5be38a;            /* what held up */
+  --bad: #ff5d4d;
+
+  /* type */
+  --font: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Bricolage Grotesque", "Inter", -apple-system, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --display-weight: 800;
+  --display-tracking: -0.025em;
+
+  /* layout and shape */
+  --pad: 130px;
+  --heading-top: 96px;
+  --heading-size: 92px;
+  --heading-align: left;
+  --meme-height: 760px;
+  --radius: 14px;
+  --border: 1.5px;
+  --shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  --code-shadow: 0 0 0 1px #23262f, 0 24px 60px rgba(0, 0, 0, 0.5);
+
+  /* photos, memes and screenshots: flat on the desk, a hairline edge */
+  --frame: #34384a;
+  --frame-width: 2px;
+  --meme-border: 2px solid #34384a;
+  --meme-radius: 14px;
+  --meme-shadow: 0 34px 90px rgba(0, 0, 0, 0.7);
+  --portrait-radius: 14px;
+  --portrait-frame-width: 2px;
+  --portrait-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+  --shot-mark: #ffd43b;
+  --shot-bar: #1b1d24;
+  --shot-shadow: 0 40px 100px rgba(0, 0, 0, 0.75);
+
+  /* captions: karaoke, the spoken word lit in the highlighter */
+  --cap-bg: rgba(8, 9, 12, 0.86);
+  --cap-ink: #ffffff;
+  --cap-size: 44px;
+  --cap-radius: 12px;
+  --cap-style: karaoke;
+  --cap-words: 10;
+  --cap-font: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --cap-weight: 700;
+  --cap-hot: #ffd43b;
+  --cap-border: 1px solid #2b2e38;
+
+  /* motion: quick and confident */
+  --transition: slide;
+  --entrance: up;
+  --camera: push;
+  --ambient: grid vignette grain;
+  --ambient-strength: 0.10;
+  --grain-strength: 0.16;
+  --grain-fps: 12;
+  --grain-blend: overlay;
+  --vignette-strength: 0.55;
+  --vignette-color: #000000;
+  --progress: on;
+  --progress-fill: #ffd43b;
+}

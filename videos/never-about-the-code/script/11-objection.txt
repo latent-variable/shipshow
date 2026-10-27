@@ -1,4 +1,4 @@
 [playing devil's advocate] Okay, but agents aren't deterministic. Run one twice, get two different programs.
 [dry] And raw model code is not exactly Fort Knox.
-[serious] In Veracode's 2026 tests, it passed security checks only fifty six percent of the time, on average.
-[conceding, then firm] Both true. Which is exactly why you don't trust the output. You trust the tests.
+[serious] In Veracode's 2026 report, it passed security checks only fifty six percent of the time, on average.
+[conceding, then firm] Both true. So you don't trust the output. You verify it.

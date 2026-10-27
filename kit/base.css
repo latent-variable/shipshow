@@ -105,7 +105,8 @@ body { background: var(--bg); overflow: hidden; }
 
 /* Portraits (bin/portrait.mjs): a credited Wikimedia Commons photo in a themed frame, the name and a
    line under it. Sized by --portrait-height (the photo's height; theme, figure, or any width on the
-   figure); the credit line sits on the photo's foot. Opt-in treatments: ss-portrait-gray, ss-portrait-duo. */
+   figure). The credit goes in the video's description (review/credits.txt, D57); --portrait-credit: block
+   draws it on the photo's foot as well. Opt-in treatments: ss-portrait-gray, ss-portrait-duo. */
 .ss-portrait {
   position: absolute; inset: 0; margin: auto; height: fit-content;
   width: calc(var(--portrait-height, 640px) * var(--ar, 0.75)); max-width: calc(100% - 2 * var(--pad));
@@ -118,7 +119,7 @@ body { background: var(--bg); overflow: hidden; }
 }
 .ss-portrait-img { display: block; width: 100%; height: 100%; object-fit: cover; filter: var(--photo-filter, none); }
 .ss-portrait-credit {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: 1.6em 0.7em 0.5em;
+  display: var(--portrait-credit, none); position: absolute; left: 0; right: 0; bottom: 0; padding: 1.6em 0.7em 0.5em;
   font-family: var(--font); font-size: 0.5em; line-height: 1.25; letter-spacing: 0.01em; color: #fff;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0));
 }
@@ -127,3 +128,36 @@ body { background: var(--bg); overflow: hidden; }
 .ss-portrait-gray .ss-portrait-img { filter: grayscale(1) contrast(1.05); }
 .ss-portrait-duo .ss-portrait-photo { background: var(--accent); }
 .ss-portrait-duo .ss-portrait-img { filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+
+/* Screenshots (bin/shot.mjs): a real page, captured at build, under a bar naming where it came from, with a
+   marker over the words data-find named. Sized by --shot-width (theme or figure; the height follows the page),
+   held inside the scene; centred in the scene window like a meme. --shot-mark is the marker's colour. */
+.ss-shot {
+  position: absolute; inset: 0; margin: auto; height: fit-content; display: flex; flex-direction: column; gap: 0.6em;
+  width: min(var(--shot-width, 1500px), calc(100% - 2 * var(--pad)), calc((var(--shot-max-height, 860px) - 64px) * var(--ar, 1.6)));
+  font-size: 34px;
+}
+.ss-shot-bar {
+  display: flex; align-items: center; gap: 0.6em; padding: 0.45em 0.9em; border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--shot-bar, var(--card)); color: var(--muted); font-family: var(--font-mono); font-size: 0.8em;
+  border: var(--border) solid var(--frame, var(--line)); border-bottom: 0; margin-bottom: -0.6em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ss-shot-bar::before { content: "\25CF\00A0\25CF\00A0\25CF"; letter-spacing: 0.1em; color: var(--line); font-size: 0.7em; }
+.ss-shot-photo {
+  position: relative; aspect-ratio: var(--ar, 1.6); overflow: hidden; border-radius: 0 0 var(--radius) var(--radius);
+  border: var(--border) solid var(--frame, var(--line)); box-shadow: var(--shot-shadow, var(--shadow)); background: var(--card);
+}
+.ss-shot-img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.ss-shot-marks { position: absolute; inset: 0; pointer-events: none; }
+.ss-shot-mark {
+  position: absolute; border-radius: 4px;
+  background: color-mix(in srgb, var(--shot-mark, var(--accent)) 30%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--shot-mark, var(--accent)) 85%, transparent);
+}
+.ss-shot.in-flow, .col > .ss-shot { position: relative; inset: auto; margin: 0 auto; width: min(100%, calc((var(--shot-max-height, 860px) - 64px) * var(--ar, 1.6))); }
+.ss-shot figcaption { font-family: var(--font); color: var(--ink); font-size: 0.9em; text-align: center; }
+/* On a light page the marks multiply under the ink. The blend sits on the container: its grow animation makes it a stacking
+   context, inside which a child's blend would only mix with the empty layer. */
+.ss-shot-light .ss-shot-marks { mix-blend-mode: multiply; }
+.ss-shot-light .ss-shot-mark { background: color-mix(in srgb, var(--shot-mark, var(--accent)) 70%, transparent); box-shadow: none; }
+

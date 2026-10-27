@@ -159,7 +159,7 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
 every turn (measured: 22 skills, 7,891 characters, about 1,973 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 212). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+and SKILL.md under 500 lines (longest 217). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -797,7 +797,56 @@ direction per line, at its start, a new line where the tone turns, never a pause
 runs; once the model is loaded a line, heard back and retaken, took about 11 s, so never-about-the-code's 52 lines voiced in about
 8 minutes. The licence (Fish Audio Community License) is free under $500K a year in revenue and forbids a hosted service and
 cloning without consent; the weights are downloaded by whoever runs it, never shipped here. What a direction sounds like is judged
-by ear: hear-back proves the words, not the tone.
+by ear: hear-back proves the words, not the tone. **Names (2026-10-27).** A `say` respelling with a hyphen is read as two words:
+the owner heard "Dike-stra" as "Di... kistra", and Whisper heard it as "Dekeestra" and "Dikestra". Voiced twice each, "Dykstra"
+came back as the name both times and "Dijkstra" as written once in two; Veracode, Quattro and Redis were right as written. So with
+Drama a name is written as it is spelled, and respelled only as one word, checked by voicing it. **Stalls of hiss
+(2026-10-27).** A take that is mostly the clone's hiss has its quiet level pinned at SILENT (-45 dBFS) while the hiss sits near
+-40, so a 3 s stall of hiss inside "Both true. So ... you don't trust the output" read as voice, passed every check, and only a
+sync critic heard the dead air. Silence inside a take is now also anything 18 dB under the take's loud level (its 90th percentile,
+`GAP_BELOW_VOICE`): over that video's 62 takes it caught the stall alone (2.5 s; the next longest gap was 1.5 s). The same flaw kept a take's edges: one opened on 2 s of hiss (-33 to -37 dBFS, inside 18 dB of the voice), so a
+take's edges are now where its level holds 15 dB under the voice for 50 ms, walked back up to 0.25 s while within 6 dB of that
+line so a soft first syllable stays (D53); on all 62 takes the start found was within 0.1 s of Whisper's first word. `DRAMA_RULES`
+went to 3, so every Drama take is made again under both once.
+
+### D56. A quote is shown where it was said: screenshots taken at build (2026-10-27)
+**Decision.** `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of a real page. `bin/shot.mjs`
+opens it in headless Chrome (HyperFrames' own, `hyperframes browser path`, through `puppeteer-core`, now a direct dev
+dependency; `SHIPSHOW_CHROME` overrides), in dark mode by default at 2 device pixels per CSS pixel, finds the words (whitespace,
+case and curly quotes ignored), and captures the element `data-select` names (or the box around several, the words looked for inside
+the nearest element holding them, elements with no size skipped: GitHub hides empty dialog headings inside a review, and one at the
+page's top made a 9,450 px capture) or else the block holding the words (a paragraph, a list item; a block taller than a screen,
+like a whole post in one `<pre>`, is cut to the paragraph between blank lines). `data-lines` keeps only the lines holding the words
+and N more, cut on line boundaries, because a critic found a whole METR paragraph unreadable at 14 px for a ten-word point. It
+records one box per line the words run over, so the kit draws a marker on exactly those words; `data-mark-cue` sweeps it in on
+a later word. The figure shows a bar naming the page (`data-source` names the address to cite when the page captured is an
+embed: an X post is captured through `platform.twitter.com/embed/Tweet.html?id=<id>&theme=dark`, which needs no sign-in). The
+capture is kept in `~/.cache/shipshow/shots/<key>/` (`SHIPSHOW_SHOTS_CACHE`), keyed by every input that changes the picture and
+`VERSION`; a page that cannot be loaded, an element or words not on it, stops the build naming the scene and the page; nothing is
+cached for a failed capture. `review` lists each under *Screenshots* with the date it was captured. **Why.** The owner, on the
+fifth cut of never-about-the-code: "if we could get screenshots of 'you don't understand this code' in people's PRs that we can
+reference, as opposed to just making a note of it". A card that paraphrases a comment asks the viewer to trust the video; the
+page itself is the evidence, and a mock comment (the fifth cut's "senior-reviewer commented on PR #4021") reads as invented.
+**Costs.** A capture takes 3 to 8 s and needs the network once; a page can change or vanish, so the cached picture is what the
+video shows, and its capture date is in the packet. The pictures are third-party, never committed, shown as commentary.
+
+### D57. A photo's credit goes in the description, not on the photo (2026-10-27; changes D48's look)
+**Decision.** The portrait's credit line stays in the built page and the packet, but is hidden unless a theme or figure sets
+`--portrait-credit: block`. `review` writes *Credits*, a line per portrait and per screenshot ready to paste into the video's
+description, and `review/credits.txt`. The licence gate is unchanged. **Why.** The owner: "why are we saying where the pictures of
+the people come from ... nobody does that when they make videos like this". CC BY and CC BY-SA ask for credit in a manner
+reasonable to the medium, and a video's credits go in its description; a credit drawn on a face covered a third of a 300 px photo.
+**Costs.** The credit now depends on the publisher pasting it: the packet says so, and `critic-accuracy` checks that it is there.
+
+### D58. The signal theme (2026-10-27)
+**Decision.** `themes/signal`: near-black graphite under a soft top light, warm white text, a highlighter yellow (`--accent-3`,
+the progress bar, the karaoke word, a screenshot's marker) for the one thing to look at, hot red for a complaint, green for what
+held up, sky blue for a source. Bricolage Grotesque 800 for headlines, Inter for text and captions, JetBrains Mono for code (SIL
+OFL, in `fonts/` with their licences). Pictures sit flat with a hairline edge and a long shadow; a faint grid, a vignette and light
+grain are the only ambient motion. **Why.** The owner on the fifth cut, in `lofi`: the motion "does kind of feel cool, but ... the
+colours and the fonts, we can do much better". `lofi` is a mood (dusk, a serif, dust); an argument with screenshots as evidence
+wants contrast, a type that reads at a glance, and one colour that means "look here". **Costs.** None for other themes: it only
+sets tokens the kit already reads.
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
@@ -819,7 +868,8 @@ What an agent or person observes. Each line is checkable against the cited file.
   records them in `timing.json` `voiceCheck`, which `review` prints as *Voice checks*.
 - `build` also places sound effects (D43): a `data-sfx` or `sfx()` call becomes a sound in `assets/sfx.wav`, peaking (or starting) at the cue; it stops on a run of one sound, on a sound over a sentence's first word, and on an unknown sound; `"sfx": false` turns it off. `review` lists each sound with its time, scene, level against the voice and audible span under *Sound effects*.
 - `render` writes `out/<name>.mp4`; `make` chains voice, build, lint and render.
-- `build` expands each `ss-portrait` figure (D48): a refused licence, a missing file or an unreachable Commons with nothing cached stops it naming the scene and the file; `review` lists each portrait under *Portraits*.
+- `build` expands each `ss-portrait` figure (D48): a refused licence, a missing file or an unreachable Commons with nothing cached stops it naming the scene and the file; `review` lists each portrait under *Portraits*, and every portrait and screenshot under *Credits* and in `review/credits.txt`; the credit is not drawn on the photo (D57).
+- `build` expands each `ss-shot` figure (D56) from the cache, or by capturing the page in headless Chrome: a page that cannot be loaded, a `data-select` with no match or `data-find` words not on the page stops it naming the scene and the page, and leaves nothing in the cache; `review` lists each under *Screenshots* with its capture date.
 - `review` writes `review/packet.md` (words a minute while speaking, every pause, every cue's
   time and reading time, with code counted in tokens, the longest still stretch of each scene) and
   `review/frames/`. The packet measures; the critics judge.

@@ -26,7 +26,14 @@ every piece of on-screen text in the cue table and the frames. Follow the links 
 - **major:** a claim true in the source but stated more broadly than the source supports
   ("all", "always", "faster") or with a caveat the source carries dropped.
 - **major:** on-screen text and narration disagree on a fact.
-- **minor:** a claim that is true but carries no source line, so the next edit cannot check it.
+- **major:** a person described by a label their record does not bear out: "a doubter", "a skeptic", "a convert" read
+  from one quote when their record runs the other way (the fifth cut of never-about-the-code called Karpathy a doubter
+  for one podcast remark; he named vibe coding and wrote "the hottest new programming language is English" in 2023).
+  Check the label against what the sources say the person did over time, not one line.
+- **major:** a quote picked from a longer complaint and presented as the whole of it ("their complaint was X" when the
+  page lists four): say "among" or show the rest. A screenshot (`ss-shot`) must show what the narration says it shows.
+- **minor:** a claim that is true but carries no source line, so the next edit cannot check it; a portrait or
+  screenshot missing from the packet's *Credits*, which go in the video's description.
 
 For every spoken sentence, spot-check the `[read]` and `[ran]` cites behind it against the pinned
 file: a false line in `sources.md` that is spoken but not shown is yours, and no other critic sees

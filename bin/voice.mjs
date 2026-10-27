@@ -46,7 +46,7 @@ const noHear = process.argv.includes("--no-hearback");
 const hear = !noHear && hearbackAvailable(py);
 const RUNS = (omni && hear) || drama;   // OmniVoice voices runs of sentences when it can hear them back (D47); Drama 3 always does (D55)
 // The rules bin/drama.py makes, retakes and finishes a take by. Bump it when they change, so takes are voiced again.
-const DRAMA_RULES = 1;
+const DRAMA_RULES = 3;   // bin/drama.py's rules: 2 reads a stall against the voice too (GAP_BELOW_VOICE), 3 trims edges by the same level (2026-10-27)
 // A run takes its speed from a shorter window, as DAIS product-videos does, not from atempo: measured 2026-10-26
 // at speed 1.2 on 5 runs three times each, both heard back at 0.998 and none under 0.988 (DESIGN D47).
 // Measured only up to 1.2; above it (the 1.25 default, up to 1.3) a run is generated at its natural length and

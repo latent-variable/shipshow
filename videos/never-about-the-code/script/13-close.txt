@@ -1,5 +1,2 @@
-[sly] So next time someone says you don't understand the code, just agree.
-[confident] Then show them the test that fails when it's wrong, and passes when it's right.
+[sly] So next time someone says you don't understand the code, just agree, and show them how you verified it.
 [dry] Nobody read the machine code either.
-[firm, sincere] It was never about the code. It was always about what it does, and whether you can prove it.
-[challenging, with a grin] So, can you?

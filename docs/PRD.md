@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-10-26 (after runs of sentences were added).
+Last reviewed: 2026-10-27 (after runs of sentences were added).
 
 ## Problem
 
@@ -89,7 +89,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F17 | Package as a Claude Code plugin: `.claude-plugin/plugin.json` and `marketplace.json`, all skills, a `critic` agent with Read, Grep, Glob, Bash and Skill that cannot Write or Edit (Bash still can: DESIGN D45); validates (one expected warning: no `version`, deliberate) | done. Standalone in any repo: `code-context`, `change-context`, `evidence-standard`. The rest produce an artifact only the pipeline consumes (a brief, a plan, a script, a hand-back) or judge one, and need this repo cloned (open question 3). Packaging limits in DESIGN D13 |
 | F18 | A sample application that makes the problem recognisable: `sample_application/`, a toy ad-spend pacer built by three agents in one day, each change correct for its task, with a bug only their interaction shows, a replayable git history and the hand-off notes a manager would have received | done |
 | F19 | Take multimodal inputs (images, audio, video, documents) as evidence for a video | **open**: nothing we can read says the company has multimodal data |
-| F23 | A video's look is a theme (`themes/shipshow`, `paper`, `launch`, `buildday`, `lofi`, a client's in `local/themes/`) with motion and effects, made from a brand by the `theme` skill (main, #8) | done |
+| F23 | A video's look is a theme (`themes/shipshow`, `paper`, `launch`, `buildday`, `lofi`, `signal`, a client's in `local/themes/`) with motion and effects, made from a brand by the `theme` skill (main, #8) | done |
 | F24 | How much critic review a video gets is a plan with presets and dials, set by the builder from the video's importance; a floor no dial lowers; `npm run critics` prints it (main, #9 and #10; this branch adds `critic-grounding` to the floor for a video that shows code) | done |
 | F25 | The pace is the person's choice: `speed` is a multiplier on a base of about 160 words a minute, 1.25 by default; `critic-pacing` judges against about 210 syllables a minute times it (`BASE_SPM`) (main, #7) | done |
 | F26 | A second voice engine, optional and Apple Silicon only: OmniVoice (MLX) for higher-quality and cloned voices, installed into the same `.venv` by `npm run setup:omnivoice`; Kokoro stays the default and runs anywhere (main, #11) | done |
@@ -112,6 +112,9 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F43 | A render plays at the loudness its platform plays at: `render` masters the audio to -14 LUFS by default (`video.json` `loudness`), one gain and a capped look-ahead limiter, never compression, the picture untouched (DESIGN D52) | done |
 | F44 | A writer decides which sentences are voiced together: with OmniVoice runs, each line of a script file is one take (DESIGN D54) | done |
 | F45 | A writer directs the delivery: with the Drama 3 engine (`"engine": "drama"`, `npm run setup:drama`), a bracketed direction at the start of a script line (`[deadpan]`, `[sarcastic]`) is performed and never shown, cued or read by another engine; every take is heard back and retaken up to five times, and one still under 97% is kept and listed to listen to, as OmniVoice's are (DESIGN D55) | done; how each direction sounds is judged by ear, which an agent cannot |
+| F46 | A quote is shown where it was said: `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of the real page (a PR comment, a contributing guide, a post), taken in headless Chrome at build, cached, with a marker on the words and a bar naming the page (DESIGN D56) | done; a page can change after it is captured, so the packet gives each capture's date |
+| F47 | A photo's credit goes in the video's description, not on the photo: `review` writes *Credits* and `review/credits.txt` for every portrait and screenshot (DESIGN D57) | done |
+| F48 | A theme for an argument: `signal`, near-black with a highlighter yellow, Bricolage Grotesque and Inter, karaoke captions, screenshots and photos flat on the desk (DESIGN D58) | done; judged by a fresh visual critic on never-about-the-code |
 | F20 | Per-person preferences and private videos stay local (`tailor`, `local/`) | done in this repo; elsewhere a skill checks `local/` is ignored and uses `.git/info/exclude` |
 | F21 | Run code to verify a claim without harm: a sandbox script, a faithful scratch copy, no network, writes confined (`evidence-standard`) | done on macOS; Linux untested |
 | F22 | Scaffold and diagnose: `npm run new` from `template/`, `npm run setup` (picks a Python in 3.10 to 3.13, the range the pinned Kokoro supports, and upgrades the new venv's pip before installing), `npm run doctor` for what the machine lacks, a draft render mode | done |
@@ -125,7 +128,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | N3 | **Independence.** The builder never judges its own video; critics are fresh agents | `critic-loop` | done |
 | N4 | **Public-safe.** A private code base's details never reach this public repo | `local/` is gitignored; `evidence-standard`, *Where the result goes* | done |
 | N5 | **Safe to run.** Reading a code base does not change it, spend money or send data out | `evidence-standard`, `scripts/sandbox-run.sh` (DESIGN D9) | done on macOS, tested; refuses elsewhere; reads are not confined and it is not a defence against hostile code |
-| N6 | **Cheap to carry.** Each skill's name and description count toward context on every turn once installed, so descriptions stay short and bodies stay under 500 lines | Measured 2026-10-17: 22 skills, 7,891 characters (about 1,973 tokens) of names and descriptions; longest SKILL.md 212 lines (a test checks these figures against the tree) | done |
+| N6 | **Cheap to carry.** Each skill's name and description count toward context on every turn once installed, so descriptions stay short and bodies stay under 500 lines | Measured 2026-10-17: 22 skills, 7,891 characters (about 1,973 tokens) of names and descriptions; longest SKILL.md 217 lines (a test checks these figures against the tree) | done |
 | N7 | **Reproducible.** A voice take is cached by text, voice and speed; generated files are gitignored | `assets/voice/*.key` | done |
 | N8 | **Observable.** Token and context use is readable per agent | `npm run usage` | done |
 | N9 | **Tested without Kokoro.** `npm test` runs with no voice model; it is the only thing CI runs | `test/` (55 tests in `pipeline.test.mjs`, plus the voice-check and run tests in `voicecheck.test.mjs` and `runs.test.mjs`; the sandbox and capture tests run on macOS only, the CI docs check only on a pull request) | done; 7 tests need `npm install` (the cue-and-caption timing test, the caption function-word test, the bare-cue warning test, the flair test, both OmniVoice tests and the `hold` test) |

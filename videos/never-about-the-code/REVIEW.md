@@ -273,3 +273,91 @@ The pictures did not change, so the critics whose ground the voice touched ran f
 
 **For the owner's listen:** whether each direction lands (the double take in 06, the deadpan punchlines, the sarcasm in 05), and
 the 1.9 s beat in 06.
+
+# Sixth cut: receipts, his own process, a new look (2026-10-27)
+
+Lino on the fifth cut: the delivery lands ("a lot of intonations ... and emphasis are actually landing really well"); the content
+needs work. What he named, and what changed:
+
+- **"Dijkstra" came out "Di... kistra".** The `say` respelling "Dike-stra" was read as two words. Voiced twice each in his clone and
+  heard back: "Dykstra" came back as the name both times, so `say` now maps to that, and the other hyphenated respellings
+  (Veracode, Quattro, Redis, antirez, Datamation) are gone: Drama reads them as written. ShipShow D55 and `narration-writing`.
+- **Photo credits on screen.** Gone from the photos; ShipShow now writes them for the description (`review/credits.txt`, D57).
+- **"Calling Andrej Karpathy a doubter feels wrong."** "Even the doubters switched" is cut. Karpathy appears as the man who wrote
+  "the hottest new programming language is English" in 2023 (shown when the script says "plain English") and named vibe coding.
+- **"I never write that down ... what I do have is automatic tests, verifiers and loops."** Scene 12 is his process in his words:
+  he says what the feature must do, the agent builds and tests it, another model reviews the PR round after round, standing tests
+  and checks know the project, he validates it himself; most of the work is reviewing, testing and verifying; "that's due
+  diligence in 2026". The planted-bug and never-list method is gone, and `critics.md` no longer asks for it.
+- **"Screenshots of 'you don't understand this code' in people's PRs."** ShipShow can now capture real pages (D56). No public PR
+  comment says those words literally (a research agent searched GitHub and the web); the closest real ones are shown: Ghostty's
+  contributing guide ("you must understand your code", in bold) and the OCaml maintainer closing a 13,000-line AI PR ("hard to
+  review, and very lightly tested"; "only 20% of the work"). Every quote someone wrote is now the page it is on.
+- **METR, "the same people behind that study".** Scene 9 now says METR is the lab whose 2025 study found AI made developers slower,
+  and that its rerun lost developers who would not work without AI, before the time-horizon chart.
+- **"COBOL cripples the mind, but then Fortran ..."** Dijkstra's line about Fortran itself ("the infantile disorder") leads, and
+  COBOL is introduced as its sibling on the same layer.
+- **"The receipts".** "The haters had receipts" is cut: back then a great hand coder could beat the machine; today almost nobody
+  can, and the few who can spent decades getting there. His line goes in after the builders: "I'm not going to out-code the AI. My
+  job is using it to build things that scale."
+- **"The colours and the fonts, we can do much better."** A new theme, `signal` (D58): near-black, a highlighter yellow, Bricolage
+  Grotesque and Inter, karaoke captions.
+
+## Round 1 (fresh agents, Sonnet: all seven)
+
+| Critic | Verdict | What it found, and what changed |
+|---|---|---|
+| accuracy | fail (3 major, 7 minor) | The hook said 1950s programmers "said basically the same thing" about compilers, which no source has: now "pushed back on compilers the same way". The METR rerun began in August 2025: "then they tried to run it again, and more and more developers wouldn't work without AI". IBM's programmer took a one-day course and also used the manual: "took a one-day Fortran course"; the meme says "One Fortran user". Also "many programmers" (Backus), "2026 report" (Veracode), "by the end of 2025" (Karpathy), antirez's "for most projects" on his card, the real first four instructions on the asm card, C's unsourced 1973 dropped, the memes table in `sources.md` matched to the screen. |
+| visuals | fail (2 blocking, 5 major) | The chart's title was cut by the frame's top and its uncertainty notes overlapped: chart shorter, title smaller, notes spaced. The EWD 498 captures showed half lines: captured with no padding. The METR paragraphs were too small and too long: `data-lines` (new) keeps only the lines with the words. Small mono labels raised to 28 px; the hook title now starts centred and moves up; the stage cards and portraits are bigger; the IBM block shares one width. |
+| clarity | revise (7 major) | Scene 2's "has anyone ever said..." read as contradicting the hook: now "does anyone today say", and a new line sets up the thesis early ("You know what it does. That's the part that always mattered."). "It always goes" is now "almost every time". DHH and antirez are named. The OCaml case now leads into scene 12 ("how I actually do that eighty percent"). A concrete catch is in scene 12 (below). "The roasting has already started"; the IBM sentence is split. |
+| engagement | fail (3 major) | Scene 12 had no example: it now shows a real catch from the PR that built this video's voice ("turning off hear-back blocked any cloned voice without a transcript. Fixed before it merged"), marked in the review ledger. Scene 5 is split and Backus gets a one-line intro. The METR beats stay: the owner asked for them. |
+| pacing | fail (7 major) | Scenes 5, 11, 12 and 13 are each split in two (05b, 11b, 12b, 13b), so no scene holds two ideas or runs past 40 s, and the thesis gets a scene and a pause of its own. "And nobody's waiting decades" is cut. The rate findings (02, 07, 10, 13 at 19 to 21% over target) are accepted, as on cuts 4 and 5: the owner asked for this pace. |
+| sync | revise (4 major) | Backus is now named as his photo lands. The IBM meme arrives on "course." and leaves before "four hours". "Nobody read the machine code either" now shows the struck-out instructions. The two late thumps: the stamp moves to "nobody" and the title to "code.", so each lands with its sound. Also the compiler card on "deterministic.", the reviewing row on "Most", the next receipt on its sentence's first word, stage one lit on "one,". |
+| consistency | pass (5 minor) | The stage tabs are pinned to one place; "Time horizon" named once on the chart; "fresh critics" dropped from the checks card; the hero line spelled one way. Stamp colours kept: red marks a turn, yellow the point. |
+
+## Round 2 (fresh agents: accuracy, pacing, sync, consistency on Sonnet; clarity, visuals, engagement on Opus)
+
+| Critic | Verdict | What it found, and what changed |
+|---|---|---|
+| accuracy | revise (1 major, 5 minor) | "Moving faster than any before it" compared layers no source measures: now "this layer is moving fast", tagged opinion and carried by the doubling. The card shows `return m * x + b;` (the line compiled) and "load · multiply · add"; "pushed back on compilers too"; "a maintainer closed ... he wrote, among other things"; the METR doubling figures written into `sources.md`. "Every one of them got roasted" kept as the narrator's opinion. |
+| visuals | fail (1 blocking, 3 major, 8 minor) | Screenshot captions were dimmed by the vignette: now in full ink. Cards ran into the stage tabs: every staged scene now starts below them. Each stage now gets its name large on screen when it is said, and "four stages" shows all four. The PR receipt is now the ledger alone, full width, about 38 px type, when the story is told. Marks on light pages multiply under the ink (ShipShow records whether a page is light). The EWD captures have side padding and whole lines; arrow, scene 12 heading, IBM facts and the compiler/agent cards aligned. |
+| clarity | revise (2 major, 4 minor) | The catch is said in the viewer's words ("switch off one check, and some cloned voices stopped working"). The METR slowdown is resolved aloud: "so many developers wouldn't work without AI that METR called its own new numbers unreliable." Dijkstra is introduced ("Turing Award winner"), Ghostty ("the terminal app"); "Back then" and the IBM opening reworded. |
+| engagement | fail (4 major, 2 minor) | The payoff in scene 2 landed 17 s early on "knows": now on "You know what it does". "Both true" now slams across the objection cards. The PR receipt arrives with "On the tool that voiced this video". The last minute gets a meme ("Wait, it's all reviewing?" / "Always has been") and a real number under "a lot of code merged" (ShipShow alone: 58). |
+| pacing | revise (2 major) | Scene 12's catch is now nine words shorter and the checks card arrives on "Fixed", 1.7 s earlier. 02, 11b, 12b and 13 run 15 to 21% over target: accepted, the owner's pace. The 1.9 s beat in 06 stays for his ear. |
+| sync | revise (1 major, 4 minor) | The scene 2 payoff (as above); "not out-coding the AI" on "going"; the Dafoe meme on "bars"; the IBM meme moved to "Sound familiar?", after the bars. |
+| consistency | pass (3 minor) | Kept: "machine code" in the close is the thesis line, loosely true; units and caption patterns noted. |
+
+## Round 3 (fresh agents: accuracy, pacing, sync, consistency on Sonnet; clarity, visuals, engagement on Opus)
+
+Five pass: accuracy (every quote and number re-checked at its source), clarity, sync, consistency and engagement ("I would
+not have stopped"), with minor notes only.
+
+| Critic | Verdict | What it found, and what changed |
+|---|---|---|
+| visuals | fail (2 blocking, 3 major) | The "both true" stamp covered part of the Veracode line: now the opening of the closing line ("both true. don't trust the output. verify it."). Marks on light pages still washed the words out: the grow animation makes the marks' container its own layer, so the blend now sits on the container (ShipShow kit). The IBM scene opens on a headline, the ladder's axis is up from the start, scene 12's heading is pinned instead of drifting, Karpathy's post sits lower, and scene 10's tabs show the whole row from the start. |
+| pacing | revise (1 major) | 05b ran slow: the Dijkstra line is shorter and he is introduced as the "goto considered harmful" guy (engagement's suggestion; S21), COBOL's line too. The beat after "Sound familiar?" is now 1.4 s so its meme can be read. 12-verify's rate (19% over) accepted with 02, 11b, 12b and 13. |
+| clarity, consistency | pass | ShipShow is now named aloud in scene 12, since the screen names it. |
+| sync | pass | The Fort Knox meme leaves sooner; Backus's quote shows on "themselves", before its meme. |
+| accuracy | pass | "Nobody read the machine code either" kept as the thesis line, an opinion whose scope the struck-out compiler output on screen shows. |
+
+## Round 4, the plan's cap (fresh agents: accuracy, pacing, sync on Sonnet; visuals on Opus)
+
+| Critic | Verdict | What it found, and what changed |
+|---|---|---|
+| accuracy | pass (1 minor) | "Switch off one check, and some cloned voices stopped working" kept: a fair plain reading of the ledger row. |
+| visuals | revise (1 major, 7 minor) | Scene 10 opened on its tabs alone: the quote is now up from the start. Screenshot captions and bars are larger (kit); the thesis breaks after "what it does,"; "same here." is large. Kept: the IBM, ladder and scene 12 openings each hold a heading or the axis for 3 to 5 s, and a stray list bullet at the EWD captures' edge. |
+| sync | revise (2 major, 4 minor) | **A 3 s stall of hiss inside "Both true. So ... you don't trust the output"**: Drama's retake check read the hiss as voice. Fixed in ShipShow (silence is now also 18 dB under the voice; D55, a test, `DRAMA_RULES` 2), so every take was voiced again under it. Also: Hopper's "nobody would touch it" lands on "nobody", the 20/80 mark on "only", the astronaut meme after "verifying", the Fort Knox meme up 1.9 s. Kept: the record scratch 0.4 s before its meme (the build forbids it over "Wait."), and the checks card on "Fixed" (round 2's pacing call). |
+| pacing | fail (3 major) | The beat after "Sound familiar?" stacked to 2.7 s: now 0.9 s on top of the scene gap. **Accepted for the owner's ear**: 05b and 06 run 19 to 21% slow because of the directed delivery (the wry Dijkstra line, the double take with its 1.9 s beat); re-taking for speed would trade the delivery he praised for a number. The fast scenes (02, 07, 11b, 12, 12b, 13 at 15 to 21% over) are his pace. |
+
+**Open at the cap, for the owner's listen:** the Dijkstra line and the double take in 06 (slow on purpose?), the 1.9 s beat
+before "Yesterday's insult", and every line's delivery: all 62 takes are new since the stall fix.
+
+## After the cap: the voice fixes, voiced again and verified
+
+Both stall fixes (a stall of hiss inside a take, then a take that opened on 2 s of hiss: D55) changed `DRAMA_RULES`, so all 62
+lines were voiced again twice. A fresh sync verifier passed the new timing; a fresh pacing verifier found the hiss lead-in, which
+the second fix removed. The beat after "Sound familiar?" is now under 2 s. Rendered: `out/never-about-the-code.mp4`, 5:21,
+mastered to -15.1 LUFS (held under -14 so no peak loses more than 3 dB). Credits for the description: `review/credits.txt`.
+
+**For the owner's listen:** every take is new; "today's flex" heard back as "flicks" (Whisper or the voice?); the wry Dijkstra
+line and the double take in 06; the 1.5 s beat before "Yesterday's insult".
