@@ -12,6 +12,7 @@
 //   SHIPSHOW_COMMONS_CACHE  where fetched pictures and metadata are kept (default ~/.cache/shipshow/commons)
 // Pictures are third-party and CC-licensed: fetched, never committed (assets/ is ignored).
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { homedir } from "node:os";
 import { extname, join, resolve } from "node:path";
 import { die } from "./lib.mjs";
@@ -22,6 +23,8 @@ const api = () => process.env.SHIPSHOW_COMMONS_API || "https://commons.wikimedia
 export const cacheDir = () => process.env.SHIPSHOW_COMMONS_CACHE || join(homedir(), ".cache", "shipshow", "commons");
 const isUrl = (s) => /^https?:\/\//.test(s);
 const slug = (title) => title.replace(/^File:/i, "").replace(/[^A-Za-z0-9._-]+/g, "_").replace(/^[._]+/, "").slice(0, 120);
+// The cache and asset name: the slug for reading, plus a hash of the whole title, so two titles that slug alike never share one.
+const key = (title) => `${slug(title).replace(/\.\w+$/, "")}-${createHash("sha256").update(title).digest("hex").slice(0, 8)}`;
 
 async function getBytes(location) {
   if (!isUrl(location)) {
@@ -60,12 +63,15 @@ export function checkLicence(meta) {
   if (!short && !code) return refuse("Commons gives no licence for it");
   if (/^(true|yes|1)$/i.test(String(meta.NonFree || ""))) return refuse("Commons marks it non-free");
   if (/fair.?use|non.?free/i.test(short) || /^(fair|non-?free)/.test(code)) return refuse(`its licence is "${short || code}"`);
-  const pd = /^(public domain|pd\b|no restrictions)/i.test(short) || /^pd(-|$)/.test(code);
-  const cc0 = /^cc0\b/i.test(short) || code === "cc0";
+  // Each field Commons gives must pass on its own: a "Public domain" name beside a cc-by-nc code is refused.
+  const shortPd = /^(public domain|pd\b|no restrictions)/i.test(short), codePd = /^pd(-|$)/.test(code);
+  const shortCc0 = /^cc0\b/i.test(short), codeCc0 = code === "cc0";
   // "CC BY 4.0", "CC BY-SA 3.0", "CC BY 3.0 NL": the word after BY is a version, never NC or ND.
-  const cc = /^cc[- ]by(-sa)?[- ]\d(\.\d)?(\s+[a-z]{2,3})?$/i.test(short) || /^cc-by(-sa)?-\d(\.\d)?(-[a-z]{2,3})?$/.test(code);
-  if (!(pd || cc0 || cc)) return refuse(`its licence is "${short || code}", which is not public domain, CC0, CC BY or CC BY-SA`);
-  return { ok: true, pd, label: pd ? "public domain" : cc0 ? "CC0" : short };
+  const shortCc = /^cc[- ]by(-sa)?[- ]\d(\.\d)?(\s+[a-z]{2,3})?$/i.test(short), codeCc = /^cc-by(-sa)?-\d(\.\d)?(-[a-z]{2,3})?$/.test(code);
+  const bad = (short && !(shortPd || shortCc0 || shortCc)) ? short : (code && !(codePd || codeCc0 || codeCc)) ? code : "";
+  if (bad) return refuse(`its licence is "${bad}", which is not public domain, CC0, CC BY or CC BY-SA`);
+  const pd = short ? shortPd : codePd, cc0 = short ? shortCc0 : codeCc0;
+  return { ok: true, pd, label: pd ? "public domain" : cc0 ? "CC0" : short || code.toUpperCase() };
 }
 
 /** What a file's metadata says, reduced to what the gate and the credit use. */
@@ -101,11 +107,12 @@ export function creditFor(meta, licence = checkLicence(meta)) {
 /** {meta, image, ext, licence, author, credit}: from the cache, fetched first if it is not there. Throws on a refused or missing file. */
 export async function loadPortrait(title) {
   if (!/^File:[^\0<>[\]{}|#]+\.\w{2,5}$/i.test(title)) throw new Error(`"${title}" is not a Commons file name (it looks like File:Name.jpg)`);
-  const dir = join(cacheDir(), `${slug(title)}-w${WIDTH}`);
+  const dir = join(cacheDir(), `${key(title)}-w${WIDTH}`);
   const metaPath = join(dir, "meta.json");
   let meta;
   if (existsSync(metaPath)) meta = JSON.parse(readFileSync(metaPath, "utf8"));
-  else {
+  if (meta && meta.title !== title) meta = undefined;   // a cache written for another title is never trusted
+  if (!meta) {
     meta = await query(title);
     const g = checkLicence(meta);
     if (!g.ok) throw new Error(`${title} cannot be used: ${g.reason} (${meta.page}). Only public domain, CC0, CC BY and CC BY-SA are allowed`);
@@ -122,7 +129,7 @@ export async function loadPortrait(title) {
   const ext = ["jpg", "jpeg", "png", "gif", "webp"].find((e) => existsSync(join(dir, `image.${e}`)));
   if (!ext) throw new Error(`${title} is in the cache with no picture; delete ${dir} and build again`);
   const { author, line } = creditFor(meta, licence);
-  return { meta, image: join(dir, `image.${ext}`), ext, licence, author, credit: line, name: `${slug(title).replace(/\.\w+$/, "")}.${ext}` };
+  return { meta, image: join(dir, `image.${ext}`), ext, licence, author, credit: line, name: `${key(title)}.${ext}` };
 }
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

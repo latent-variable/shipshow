@@ -3,7 +3,7 @@
 // the thumbnails sit beside them; one test serves them over HTTP to check the request itself.
 import assert from "node:assert/strict";
 import { execFile, spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -86,10 +86,10 @@ test("build accepts public domain and CC BY-SA, copies the picture, and draws th
   assert.match(html, /<span class="ss-portrait-credit">Photo: James S\. Davis · public domain<\/span>/);
   assert.match(html, /<span class="ss-portrait-credit">Photo: Hamilton Richards &amp; Co · CC BY-SA 3\.0<\/span>/);
   assert.match(html, /<figcaption>Grace Hopper<small>1906-1992<\/small><\/figcaption>/);
-  assert.match(html, /<img class="ss-portrait-img" src="assets\/portraits\/Free_PD\.png" alt="Grace Hopper" \/>/);
+  assert.match(html, /<img class="ss-portrait-img" src="assets\/portraits\/Free_PD-[0-9a-f]{8}\.png" alt="Grace Hopper" \/>/);
   assert.match(html, /style="--ar:2;"/);
   assert.match(html, /data-cue="Hopper" data-at="[\d.]+"/);
-  assert.ok(existsSync(join(dir, "assets", "portraits", "Free_PD.png")));
+  assert.ok(readdirSync(join(dir, "assets", "portraits")).some((f) => /^Free_PD-[0-9a-f]{8}\.png$/.test(f)));
   assert.deepEqual(portraitsIn(html).map((p) => [p.author, p.licence, p.licenceUrl, p.page]), [
     ["James S. Davis", "public domain", "", "https://commons.wikimedia.org/wiki/File:Free_PD.png"],
     ["Hamilton Richards & Co", "CC BY-SA 3.0", "http://creativecommons.org/licenses/by-sa/3.0/", "https://commons.wikimedia.org/wiki/File:Free_BYSA.png"],
@@ -108,7 +108,8 @@ test("a fetched portrait is kept in the cache and used when Commons is gone", ()
   assert.equal(build(demo(fig("Free PD.png")), e).status, 0);
   const again = build(demo(fig("Free PD.png")), { ...e, SHIPSHOW_COMMONS_API: join(tmpdir(), "no-such-commons") });
   assert.equal(again.status, 0, again.stderr);
-  assert.match(readFileSync(join(e.SHIPSHOW_COMMONS_CACHE, "Free_PD.png-w900", "meta.json"), "utf8"), /James S\. Davis/);
+  const cached = readdirSync(e.SHIPSHOW_COMMONS_CACHE).find((d) => d.startsWith("Free_PD-") && d.endsWith("-w900"));
+  assert.match(readFileSync(join(e.SHIPSHOW_COMMONS_CACHE, cached, "meta.json"), "utf8"), /James S\. Davis/);
   // An unreachable source with nothing cached stops the build with the reason.
   const cold = build(demo(fig("Free PD.png")), env(join(tmpdir(), "no-such-commons")));
   assert.equal(cold.status, 1);
@@ -137,7 +138,7 @@ test("the API is asked for the file's url, extmetadata and size at a thumbnail w
     assert.equal(seen[0].q.iiurlwidth, "900");
     assert.equal(seen[0].q.titles, "File:Free PD.png");
     assert.match(seen[0].ua, /^ShipShow\//);
-    assert.ok(existsSync(join(dir, "assets", "portraits", "Free_PD.png")));
+    assert.ok(readdirSync(join(dir, "assets", "portraits")).some((f) => /^Free_PD-[0-9a-f]{8}\.png$/.test(f)));
   } finally {
     server.close();
   }
@@ -147,4 +148,20 @@ test("a name that is not a Commons file title never reaches the API or the cache
   const r = build(demo(`<figure class="ss-portrait" data-commons="../../etc/passwd"></figure>`), env(source()));
   assert.equal(r.status, 1);
   assert.match(r.stderr, /"..\/..\/etc\/passwd" is not a Commons file name/);
+});
+
+test("two titles that read alike never share a cached picture", () => {
+  const api = source(), e = env(api);
+  assert.equal(build(demo(fig("Free PD.png")), e).status, 0);
+  // "Free,PD.png" slugs like "Free PD.png"; with Commons gone it must not be served the other file's photo and credit.
+  const other = build(demo(fig("Free,PD.png")), { ...e, SHIPSHOW_COMMONS_API: join(tmpdir(), "no-such-commons") });
+  assert.equal(other.status, 1, "a different title was served from another file's cache");
+  assert.match(other.stderr, /data-commons="File:Free,PD\.png"/);
+});
+
+test("the gate refuses a licence name and code that disagree", () => {
+  assert.equal(checkLicence({ LicenseShortName: "Public domain", License: "cc-by-nc-4.0" }).ok, false);
+  assert.equal(checkLicence({ LicenseShortName: "CC BY-NC 4.0", License: "pd" }).ok, false);
+  assert.equal(checkLicence({ LicenseShortName: "CC BY 4.0", License: "cc-by-nd-4.0" }).ok, false);
+  assert.equal(checkLicence({ LicenseShortName: "", License: "cc-by-sa-4.0" }).label, "CC-BY-SA-4.0");
 });
