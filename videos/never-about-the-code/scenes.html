@@ -343,7 +343,7 @@
         <g data-cue="2025," data-anim="pop"><circle class="dot" cx="220" cy="560" r="14"/><text class="pt" x="200" y="610" text-anchor="start">Claude 3.7 Sonnet · 1 h</text></g>
         <path class="trend" data-cue="2026," data-anim="draw" d="M 220 560 L 466 500 L 684 413 L 992 367 L 1227 273"/>
         <g data-cue="hour." data-anim="pop"><circle class="dot" cx="466" cy="500" r="12"/><circle class="dot" cx="684" cy="413" r="12"/><circle class="dot" cx="992" cy="367" r="14"/><text class="pt" x="1012" y="402" text-anchor="start">Claude Opus 4.5 · 5.3 h</text></g>
-        <g data-cue="twelve" data-anim="pop" data-sfx="up" data-sfx-offset="-0.15"><rect class="band" x="1197" y="85" width="60" height="289" rx="10"/><circle class="dot" cx="1227" cy="273" r="16"/><text class="pt hi" x="1200" y="246" text-anchor="end">public frontier · ~12 h</text><text class="lbl" x="1200" y="206" text-anchor="end">Feb–Mar 2026 · range 5 to 61 h</text><text class="lbl" x="1200" y="170" text-anchor="end">highly uncertain: the test is near its limit</text></g>
+        <g data-cue="twelve" data-anim="pop" data-sfx="up" data-sfx-offset="-0.15"><rect class="band" x="1197" y="85" width="60" height="289" rx="10"/><circle class="dot" cx="1227" cy="273" r="16"/><text class="pt hi" x="1180" y="246" text-anchor="end">public frontier · ~12 h</text><text class="lbl" x="1200" y="206" text-anchor="end">Feb–Mar 2026 · range 5 to 61 h</text><text class="lbl" x="1200" y="170" text-anchor="end">highly uncertain: the test is near its limit</text></g>
       </svg>
     </div>
     <div class="chart-note" data-cue="doubling" data-anim="up"><b>doubling about every 3 months since 2024</b> · METR Time Horizon 1.1, Jan 2026 · Frontier Risk Report, May 2026</div>
@@ -357,6 +357,7 @@
 <section data-scene="09-skeptics">
   <div class="stage">
     <div class="tag center" data-cue="+0.1" data-anim="fade">late 2026: the argument is basically over</div>
+    <div class="punch big" data-cue="folded." data-anim="slam" style="color: var(--good)">the skeptics folded.</div>
     <div class="skeptics">
       <div class="skeptic card" data-cue="Karpathy," data-anim="up">
         <figure class="ss-portrait" id="p-karpathy" data-commons="File:Andrej Karpathy, OpenAI.png" data-cue="Karpathy," data-anim="pop"><figcaption>Andrej Karpathy<small>coined “vibe coding”</small></figcaption></figure>
@@ -397,11 +398,11 @@
   <div class="stage">
     <div class="tag center" data-cue="+0.1" data-anim="fade">how I actually verify</div>
     <div class="step card" data-cue="done" data-anim="left" style="width: 1400px; margin: 0 auto"><span class="n">1</span><span>write down done, and what must <em style="font-style: normal; color: var(--accent)">never</em> happen</span><span class="r" data-cue="invoice." data-anim="fade">no customer sees another's invoice</span></div>
-    <div class="terminal" data-cue="tests" data-anim="up">
+    <div class="terminal" data-cue="tests#2" data-anim="up">
       <div class="cmd">$ npm test   <small>(illustration)</small></div>
       <div class="ln" data-cue="fail." data-anim="fade"><span class="fail">✗ never shows another customer's invoice</span><small>before the agent</small></div>
       <div class="ln" data-cue="pass." data-anim="fade"><span class="pass">✓ never shows another customer's invoice</span><small>agent's fix</small></div>
-      <div class="ln" data-cue="catch" data-anim="fade"><span class="fail">✗ never shows another customer's invoice</span><small>planted · caught</small></div>
+      <div class="ln" data-cue="catch#2" data-anim="fade"><span class="fail">✗ never shows another customer's invoice</span><small>planted · caught</small></div>
     </div>
     <div class="who center" data-cue="list" data-anim="fade" style="font-size: 34px; color: var(--accent)">the never list is the real work: tests only catch what's on it</div>
     <div class="proof big" data-cue="proof." data-anim="slam">reading <em>isn't proof.</em></div>
@@ -432,6 +433,6 @@
   tl.to("#m05", { opacity: 0, duration: 0.3 }, cueAt("#m05") + 3.2);
   tl.to("#m10", { opacity: 0, duration: 0.3 }, cueAt("#m10") + 3.2);
   tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 2.6);
-  tl.to("#moth", { opacity: 0, duration: 0.3 }, cueAt("#moth") + 1.4);
+  tl.to("#moth", { opacity: 0, duration: 0.3 }, cueAt("#moth") + 1.9);
   tl.to("#exA", { opacity: 0, duration: 0.3 }, cueAt("#exB") - 0.3);
 </script>
