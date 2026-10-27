@@ -44,7 +44,7 @@
   "pauses": {
     "04-impossible": 0.5,
     "08-the-trade": 0.6,
-    "09-now": 1.2
+    "09-now": 0.5
   },
   "hold": 4,
   "gap": 0.35,

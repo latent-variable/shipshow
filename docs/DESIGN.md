@@ -794,8 +794,8 @@ one seed of two, `[dry, matter-of-fact]` and `[playful, mock-serious]` kept ever
 A direction in the middle of a line lost the words after it on 5 of 6; `[laughs]` mid-line or at the end lost a sentence on 3 of 5;
 with no direction, a short last sentence was dropped on 1 seed of 3. So the rules in `narration-writing` (*Direction*): one tone
 direction per line, at its start, a new line where the tone turns, never a pause. **Costs.** About 40 GB of free memory while it
-runs; a take takes about real time, and with hear-back and retakes a line averaged about 40 s, so a five-minute video voices in about
-half an hour. The licence (Fish Audio Community License) is free under $500K a year in revenue and forbids a hosted service and
+runs; once the model is loaded a line, heard back and retaken, took about 11 s, so never-about-the-code's 52 lines voiced in about
+8 minutes. The licence (Fish Audio Community License) is free under $500K a year in revenue and forbids a hosted service and
 cloning without consent; the weights are downloaded by whoever runs it, never shipped here. What a direction sounds like is judged
 by ear: hear-back proves the words, not the tone.
 ## Behaviour
