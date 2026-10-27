@@ -145,7 +145,7 @@ Information is not enough; the viewer has to want to keep watching. Each video s
 made for its subject, not stamped from a template.
 
 - **Theme** for the client or audience (`skills/theme`); the shipped ones are `shipshow`, `paper`,
-  `launch` and `buildday` (karaoke captions).
+  `launch`, `buildday` (karaoke captions) and `lofi` (a late-night study room, for an opinion piece).
 - **Flair** in `video.json` for this video's own motion: `"flair": {"transition": "wipe",
   "camera": "push", "ambient": "grid"}`. A section's `data-transition` changes one scene;
   varying them keeps the cuts alive.
