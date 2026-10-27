@@ -90,6 +90,8 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
 - **Every line gets one**, even a plain one (`[matter-of-fact]`, `[clear, explaining]`), so the read changes where
   you meant it to and nowhere else. The setup is plain or warm, the turn is dry, the payoff deadpan or smug; sincerity
   is saved for the point the video exists to make.
+- **Names as they are spelled.** Drama 3 knows most names; a `say` respelling with a hyphen is read as two words
+  ("Dike-stra" came out "Di... kistra", D55). Respell only a name it gets wrong, as one word ("Dykstra"), and voice it to check.
 - **A line is still one thought.** Splitting at every sentence for a direction breaks the prosody the owner asked
   for; split where the tone turns, not more.
 

@@ -1,4 +1,6 @@
 [playing devil's advocate] Okay, but agents aren't deterministic. Run one twice, get two different programs.
 [dry] And raw model code is not exactly Fort Knox.
 [serious] In Veracode's 2026 tests, it passed security checks only fifty six percent of the time, on average.
-[conceding, then firm] Both true. Which is exactly why you don't trust the output. You trust the tests.
+[conceding, then firm] Both true. So you don't trust the output. You verify it.
+[matter-of-fact] When OCaml's maintainers closed a thirteen thousand line AI pull request, one of them put it plainly: hard to review, and very lightly tested.
+[knowing] Code that passes tests, he wrote, is only twenty percent of the work. The other eighty is getting it discussed, reviewed and integrated.

@@ -1,4 +1,4 @@
 [pointed] So where's AI? You don't understand the code is stage three, it rots your brain. But the work already moved on to stage four.
-[energetic] Even the doubters switched. Karpathy went from agents just don't work to agents writing eighty percent of his code.
-[deadpan] In two months.
+[energetic] Karpathy, who named vibe coding, now has agents writing eighty percent of his code.
 [amused] The Rails guy hasn't hand written any of the code he shipped in Quattro. And the Redis guy says hand coding is mostly for fun now, like baking your own bread.
+[sincere] Same here. I'm not going to out-code the AI. My job is using it to build things that scale.

@@ -1,4 +1,4 @@
 [mock-dramatic] Stage two, it's beneath you.
 [sarcastic] Programmers saw themselves as a priesthood, and a machine writing their programs, the whole idea behind Fortran, was a foolish and arrogant dream.
 [mock-dramatic] Stage three, it rots your brain.
-[wry] By 1975, Dijkstra wrote that COBOL cripples the mind, and that teaching it should be a criminal offense.
+[wry] By 1975, Dijkstra was calling Fortran an infantile disorder. And COBOL, its sibling on that same layer? It cripples the mind.

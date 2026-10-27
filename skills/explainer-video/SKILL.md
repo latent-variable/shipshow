@@ -101,9 +101,9 @@ sections in `scenes.html`): the build stops on a script file with no section.
   `--speed`. Write for it: at 1.25, a 30 second scene holds about 100 words.
 - Numbers and versions as they are said: "version two point four". Names the voice gets
   wrong go in `video.json` `"say"`; captions keep the written form.
-- A video where tone carries the point (humour, sarcasm, an opinion piece for a channel) is voiced with
-  `"engine": "drama"` and directed: one bracketed direction at the start of each line (`narration-writing`,
-  *Direction*). A decision or feature video reads well undirected on OmniVoice or Kokoro.
+- Where Drama 3 is set up (`npm run doctor -- --drama`) it is the voice for anything published, and directed: one
+  bracketed direction at the start of each line, so a joke or an aside is heard as one (`narration-writing`,
+  *Direction*). A quick decision video reads well undirected on OmniVoice or Kokoro.
 - A release explainer: what this release is, then breaking changes with before and after,
   then what is new, then the upgrade steps, then where to read more.
 
@@ -148,7 +148,8 @@ Information is not enough; the viewer has to want to keep watching. Each video s
 made for its subject, not stamped from a template.
 
 - **Theme** for the client or audience (`skills/theme`); the shipped ones are `shipshow`, `paper`,
-  `launch`, `buildday` (karaoke captions) and `lofi` (a late-night study room, for an opinion piece).
+  `launch`, `buildday` (karaoke captions), `lofi` (a late-night study room) and `signal` (near-black, a highlighter
+  yellow, big type: for a video that argues a point with evidence).
 - **Flair** in `video.json` for this video's own motion: `"flair": {"transition": "wipe",
   "camera": "push", "ambient": "grid"}`. A section's `data-transition` changes one scene;
   varying them keeps the cuts alive.
@@ -157,6 +158,10 @@ made for its subject, not stamped from a template.
   sentence turns on, `stagger` for a list, `pulse` for the one thing to remember. A screen
   where nothing moves for more than about eight seconds while the voice goes on is losing
   the viewer.
+- **Show the receipt.** When the video quotes a person, a rule or a comment, show the page it is on
+  (`ss-shot`, `AGENTS.md` *Screenshots*), with the words marked, rather than a card that paraphrases it; a mock
+  comment reads as invented. Describe people by their record, not by one quote. Photos carry no credit on screen;
+  paste `review/credits.txt` into the video's description.
 - **A meme, rarely and at the right beat** (`AGENTS.md`, *Memes*; `npm run memes -- <words>` finds one). It lands a point
   already made, as the punchline after the explanation, never instead of it: if the video is not clear without the meme,
   fix the explanation. One at a beat, a video rarely wants more than one or two. The text is short (a few words a line; the

@@ -1,5 +1,6 @@
-[sincere, getting practical] Here's how I actually verify. Before the agent writes a line, I write down what must never happen, like a customer seeing someone else's invoice.
-[emphatic] That list is the real work, because tests only catch what's on it.
-[confident] Then I write the tests, and watch them fail. Then the agent makes them pass.
-[mischievous] Then I break the code on purpose. Sabotage is a testing strategy.
-[serious] Because if my tests can't catch a bug I planted, they won't catch the one the agent planted.
+[sincere, getting practical] So here's how I actually ship with agents.
+[matter-of-fact] I tell the agent what the feature has to do. It builds it, and tests it as hard as it can.
+[confident] Then the pull request goes through review by another model, round after round, until nothing serious is left. And my standing tests and checks already know the project, so they catch what should never happen.
+[serious] Then I validate it myself. I run the feature, and make sure it does what I meant.
+[emphatic] Building is the small part now. Most of the work is reviewing, testing, and verifying.
+[warm, proud] I've gotten a lot of code merged this way. That's due diligence in 2026.

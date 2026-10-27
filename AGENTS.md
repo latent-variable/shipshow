@@ -24,9 +24,9 @@ The skills in `skills/` are the team's baseline. Each person tailors on top of t
 | `docs/PRD.md`, `docs/DESIGN.md` | The requirements, and the design decisions and behaviour. Kept current (*Docs that stay current*) |
 | `skills/` | Every skill. `npm install` links them into `.claude/skills/` for Claude Code; other agents read them here |
 | `videos/<name>/` | One video: `script/`, `scenes.html`, `video.json`, `sources.md`, `critics.md`, `REVIEW.md` |
-| `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; `memes` (search the memegen catalog, with `meme.mjs` behind it and `build`); `portrait.mjs` (Commons photos, credit and licence gate, called by `build` and `review`); and `usage` (token and context tracking) |
+| `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; `memes` (search the memegen catalog, with `meme.mjs` behind it and `build`); `portrait.mjs` (Commons photos, credit and licence gate, called by `build` and `review`); `shot.mjs` (screenshots of real pages, taken in headless Chrome, called by `build` and `review`); and `usage` (token and context tracking) |
 | `kit/` | The page, base styles (including `ss-portrait`) and timeline every video shares; `kit/fonts/` holds the meme fonts (Titillium Web, Anton: SIL OFL, licences beside them) |
-| `themes/` | Shared themes (`shipshow`, `paper`, `launch`, `buildday`, `lofi`); a client's goes in `local/themes/` |
+| `themes/` | Shared themes (`shipshow`, `paper`, `launch`, `buildday`, `lofi`, `signal`); a client's goes in `local/themes/` |
 | `template/` | What `npm run new` copies |
 | `examples/` | Fictional code bases for example videos: `ledgerly`, the invoicing API behind `videos/invoice-leak` |
 | `.claude/settings.json`, `.claude/hooks/` | The project's Claude Code hooks and read denials (tracked; `.claude/skills/` is the generated skill links and is not) |
@@ -172,7 +172,8 @@ OmniVoice's pin), and the model (`mlx-community/fish-audio-drama-3-4bit`, pinned
 downloads on first use unless `SHIPSHOW_DRAMA_MODEL` or `local/config.json` `"dramaModel"` names a folder holding it. A
 stage direction in brackets at the start of a script line, `[deadpan] Like animals.`, is performed; captions, cues and
 the other engines never see it (`directedSentences` in `bin/lib.mjs`). How to direct, and what breaks it: `narration-writing`,
-*Direction*. Voices are the same recordings as OmniVoice's, but a clone may be 3 to 30 seconds. Each line is one take,
+*Direction*. Write a name as it is spelled: a `say` respelling with a hyphen is read as two words ("Dike-stra" came out
+"Di... kistra"), so respell only a name it gets wrong, as one word ("Dykstra"; D55). Voices are the same recordings as OmniVoice's, but a clone may be 3 to 30 seconds. Each line is one take,
 made by `bin/drama.py` in one process: retaken when it is silent, stalls for 2 s or ends in 3 s of silence, time-stretched
 to `speed` (0.8 to 1.5; it has no speed control and reads slower than the base pace), levelled, heard back with word
 times, and the best of five kept. Its licence is the Fish Audio Community License: free for research and non-commercial
@@ -272,14 +273,28 @@ packet lists each animated meme with its source URL; credit it in `sources.md` (
 (the name is the Commons file page's title; the figcaption is yours and optional). The build (`bin/portrait.mjs`) asks the Commons API
 for the file's thumbnail (900 px wide), author and licence once, keeps both in `~/.cache/shipshow/commons/` (`SHIPSHOW_COMMONS_CACHE`;
 `SHIPSHOW_COMMONS_API` moves the endpoint, or is a folder of replies, which is how the tests run), copies the picture to the video's
-`assets/portraits/`, and draws a credit on the photo's foot: `Photo: James S. Davis · public domain`, `Photo: Hamilton Richards · CC BY-SA 3.0`.
+`assets/portraits/`, and writes a credit line (`Photo: James S. Davis · public domain`, `Photo: Hamilton Richards · CC BY-SA 3.0`) into the figure, hidden by default.
 **The licence gate** accepts public domain, CC0, CC BY and CC BY-SA of any version; anything else (non-free, fair use, NC, ND, GFDL, a licence
 Commons does not state), and a CC file with no author, stops the build naming the scene and the file. The gate runs on every build, cached or not.
-`review` lists each portrait's file page, author, licence and licence link under *Portraits*: copy them into `sources.md`. Size: `--portrait-height`
+`review` lists each portrait's file page, author, licence and licence link under *Portraits*: copy them into `sources.md`. The
+credit is not drawn on the photo (`--portrait-credit: block` draws it); it goes in the video's description, which `review` writes
+under *Credits* and in `review/credits.txt` with the screenshots' pages (D57). Size: `--portrait-height`
 (640 px; theme or figure style). `ss-portrait-gray` and `ss-portrait-duo` (the theme's accent) treat an old or mismatched photo. A figure is
 centred in the scene window; to place two side by side, wrap them in a flex row and give each `position: relative; inset: auto; margin: 0`.
 A portrait is a person's photo: the pictures are third-party, fetched, never committed, and Commons' metadata is only as good as its uploader
 (some Karpathy and Sanfilippo files are YouTube stills): read the file page before publishing.
+
+**Screenshots** (DESIGN D56). To show a quote, a rule or a comment where it was said: `<figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972"
+data-find="hard to review, and very lightly tested" data-mark-cue="lightly" data-cue="OCaml's" data-anim="up"></figure>`. The build
+(`bin/shot.mjs`) opens the page in HyperFrames' headless Chrome (`SHIPSHOW_CHROME` overrides), dark mode unless `data-scheme="light"`,
+`data-width` CSS px wide (1100 by default: narrower makes the text bigger on screen), captures `data-select`'s element or else the
+block holding `data-find`'s words (`data-pad` px around it, default 20), and marks those words, one box per line; `data-mark-cue`
+sweeps the marker in on its own word. `data-hide` hides selectors first (a cookie banner). An X post: `data-shot="https://platform.twitter.com/embed/Tweet.html?id=<id>&amp;theme=dark"
+data-select="article" data-width="620" data-pad="0" data-source="x.com/<user>/status/<id>"` (no sign-in; `data-source` is what the
+bar shows and the credits cite). Captures are cached in `~/.cache/shipshow/shots/` (`SHIPSHOW_SHOTS_CACHE`; trash a folder to take it
+again). A page that will not load, or words or an element not on it, stops the build naming the scene. Size: `--shot-width` (1500 px)
+and `--shot-max-height` (860 px); inside a layout, give the figure `position: relative; inset: auto; margin: 0`. `review` lists each
+with its capture date. The pages are third-party: captured, never committed, shown as commentary.
 
 **Music.** `video.json` `"music": {"file", "volume", "duck"}` puts a bed under the narration:
 the build decodes it with ffmpeg, loops it to length, lowers it while the voice speaks (from the
@@ -331,7 +346,7 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ```
 bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
-themes/     shipshow, paper, launch, buildday and lofi; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono: SIL OFL)
+themes/     shipshow, paper, launch, buildday, lofi and signal; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono, Bricolage Grotesque, Inter: SIL OFL)
 skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
 template/   what npm run new copies
 videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) and never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino-long.wav exists, with Drama 3 set up)

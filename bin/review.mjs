@@ -9,7 +9,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { basename, join } from "node:path";
 import { BASE_SPM, BASE_WPM, HF, REPO, config, die, reviewPlan, round, run, syllables, videoDir } from "./lib.mjs";
 import { memesIn } from "./meme.mjs";
-import { portraitsIn } from "./portrait.mjs";
+import { creditLines, portraitsIn } from "./portrait.mjs";
+import { shotsIn } from "./shot.mjs";
 import { voiceCheckSection } from "./hearback.mjs";
 import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
 
@@ -113,8 +114,18 @@ if (memes.length) {
 }
 const portraits = portraitsIn(html);
 if (portraits.length) {
-  out.push("## Portraits", "", "Each portrait is a Wikimedia Commons photo, checked at build to be public domain, CC0, CC BY or CC BY-SA. Copy each row into `sources.md` (file page, author, licence, licence link); the credit line is on screen under the photo.", "");
-  out.push(md(portraits.map((x) => [`[${x.file.replace(/^File:/, "")}](${x.page.replace(/\(/g, "%28").replace(/\)/g, "%29")})`, x.author, x.licence, x.licenceUrl || "(none given)", x.credit]), ["file page", "author", "licence", "licence link", "on-screen credit"]), "");
+  out.push("## Portraits", "", "Each portrait is a Wikimedia Commons photo, checked at build to be public domain, CC0, CC BY or CC BY-SA. Copy each row into `sources.md` (file page, author, licence, licence link). The credit is not drawn on the photo unless the theme or figure sets `--portrait-credit: block`; it goes in the video's description instead (*Credits*, below, and `review/credits.txt`).", "");
+  out.push(md(portraits.map((x) => [`[${x.file.replace(/^File:/, "")}](${x.page.replace(/\(/g, "%28").replace(/\)/g, "%29")})`, x.author, x.licence, x.licenceUrl || "(none given)", x.credit]), ["file page", "author", "licence", "licence link", "credit"]), "");
+}
+const shots = shotsIn(html);
+if (shots.length) {
+  out.push("## Screenshots", "", "Each is a real page, captured in headless Chrome at build and kept in the cache (`bin/shot.mjs`): check that it shows what the narration says it shows, that the marked words are the ones meant, and that it is current enough. Credit each in `sources.md`.", "");
+  out.push(md(shots.map((x) => [x.source ? `${x.source} (captured from ${x.url})` : x.url, x.taken, x.find ? `"${x.find}"${x.marked ? "" : " (not marked)"}` : "(none)"]), ["page", "captured", "marked words"]), "");
+}
+const credits = creditLines(portraits, shots);
+if (credits.length) {
+  out.push("## Credits", "", "For the video's description, ready to paste (also in `review/credits.txt`):", "", "```", ...credits, "```", "");
+  writeFileSync(join(dir, "review", "credits.txt"), credits.join("\n") + "\n");
 }
 out.push("## Stillness", "", "The longest stretch of each scene in which nothing new appears: the scene's start, each cue and its end are the moments something changes.", "");
 out.push(md(timing.scenes.map((sc) => {
