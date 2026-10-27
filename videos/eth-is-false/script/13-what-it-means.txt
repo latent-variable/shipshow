@@ -1,4 +1,4 @@
 [clear, explaining] So, does this mean P equals NP?
 [firm] No. Even with that squeezed exponent, it's slower than any polynomial. P versus NP is untouched.
-[matter-of-fact] And the paper says this doesn't automatically speed up every NP problem, because the usual reductions can blow up the size.
+[matter-of-fact] And remember, cracking SAT cracks all of NP by translating other problems into SAT. The translation can make them much bigger, and the paper says a speedup this small doesn't automatically survive that.
 [thoughtful] But ETH was the bigger bet, sitting on top of P not equal to NP. Most people believed it. If this proof holds, it just fell.

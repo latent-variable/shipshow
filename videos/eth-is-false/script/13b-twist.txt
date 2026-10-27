@@ -1,4 +1,4 @@
 [matter-of-fact] And those hundreds of papers? They just lost one of their reasons. Some are still backed by weaker assumptions that may hold.
 [dry] And no, your diff tool didn't get faster.
 [playful] One more twist. Ryan Williams proved that if ETH is false, some problems can't be solved by circuits of linear size.
-[smug] So the paper's faster algorithm also proves something is hard.
+[smug] So if it holds, the paper's faster algorithm also proves something is hard.

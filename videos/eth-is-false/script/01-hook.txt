@@ -3,3 +3,4 @@
 [matter-of-fact] No human authors. An AI model wrote it, and OpenAI says a proof checker already verified it.
 [amused] And the group set up to check it is led by two of the three people who proposed the hypothesis.
 [sincere] For twenty five years, this hypothesis was a floor under how fast some problems could ever get. Hundreds of papers stood on it. If this holds up, the floor is gone.
+[playful] Does that mean P equals NP? Does your SAT solver get faster? Stick around. The answers are weirder than the headline.

@@ -90,3 +90,33 @@ What changed:
   list is "the problem", and "polynomial" is kept for the dial's curve; Terms updated.
 - **Visuals and sync.** 07's stamp moved off the caption into the Strong ETH column; memes at 780 px; source lines at 30 px; name cards
   padded; Cook's caption breaks before "NP-complete"; the Lean scene sits lower; cues on "hard", "even", "never", "weaker".
+
+## Round 3: 0 blocking, 23 major; seven critics (grounding's round 2 pass stands: the excerpt did not change). Opus for clarity, visuals and engagement
+
+| Critic | Model | Verdict | Blocking / major / minor |
+|---|---|---|---|
+| accuracy | Sonnet | fail | 0 / 1 / 3 |
+| clarity | Opus | fail | 0 / 3 / 6 |
+| pacing | Sonnet | fail | 0 / 7 / 3 |
+| sync | Sonnet | fail | 0 / 1 / 6 |
+| visuals | Opus | fail | 0 / 6 / 7 |
+| consistency | Sonnet | pass | 0 / 0 / 5 |
+| engagement | Opus | fail | 0 / 4 / 4 |
+
+What changed:
+- **Accuracy.** The three billion digits are now "plug in the overview's own parameter choice, and the construction only works once the
+  number of switches has about three billion digits" (the full proof's cutoff is smaller or not computed, so the fallback line is gone,
+  replaced by "That's not a typo"); "if it holds" on the hardness twist; "2026 preprint" on the Jiang and Cai bar.
+- **Clarity.** The bridge from ETH to the new bound is said: any base above one, c to the n, is two to some constant times n, and this
+  exponent grows slower than any constant times n. The chart's curve was drawn rising then falling (it said the exponent shrinks as n
+  grows); it now rises and bends under the line, with the crossing marked. Reductions are said in scene 04's terms (cracking SAT cracks NP
+  by translating into SAT; the translation makes problems bigger). The three knobs line up with the trade. Scene 14's long sentence is three.
+  The paper's names are on screen ("clause polynomial", "Taylor coefficients").
+- **Engagement.** A This Is Fine meme lands "hundreds of papers, one hypothesis" in 07; the hook asks the viewer's two questions (P = NP? a
+  faster SAT solver?) and the video answers them in 12 and 13; the stakes line in 04 lands on its own word; three stamps became chips.
+- **Pacing and sync.** The 2.35 s silence in 13b went with the retaken line; 11b's knob chips arrive one by one, with arrows on "fewer",
+  "Smaller" and "bigger"; 12 opens on "before you rewrite your SAT solver…" with the root on "slowly"; 13b's card lands on "circuits" and the
+  stamp mid-line; the close's quote lands on "unless"; 08's tail gets 0.5 s for its stamp; 11b's pause is 0.9 s.
+- **Visuals.** The floor band in 06 stays faint (`fill` with alpha, so the fade does not make it opaque); the dial's numbers sit off the rim;
+  08's labels arrive with their marks; the exponent of 2 is written out at full size; the Lean file label is 28 px; 14b aligns on the photo
+  tops; the close's heading sits over its list; 02's chips sit on their own centred row; the hook's crack no longer crosses the label.

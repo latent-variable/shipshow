@@ -1,5 +1,6 @@
 [serious] So, should you believe it?
-[clear, explaining] OpenAI says it formalized the proof in Lean, a language where a computer checks every step. The statement that proof has to match says one fixed machine computes the exact count, faster than c to the n for every base above one, without much memory.
+[clear, explaining] OpenAI says it formalized the proof in Lean, a language where a computer checks every step.
+[clear] The statement it has to match: one machine counts every setting exactly. It beats c to the n for every base above one. And it barely uses memory.
 [dry] It's a bit weaker than the paper's best bound. Still enough to sink ETH.
 [matter-of-fact] But OpenAI pulled three of its other AI math papers on October seventh, after a sign error was found.
 [dry] So it's a strong signal. It's not peer review yet.
