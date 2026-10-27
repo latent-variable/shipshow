@@ -810,11 +810,12 @@ line so a soft first syllable stays (D53); on all 62 takes the start found was w
 went to 3, so every Drama take is made again under both once. **A joke is one take (2026-10-27, reverses this entry's
 "a new line where the tone turns").** Split from its setup, "Like animals." and "No. ... Also no." were each voiced with no
 memory of what came before and landed, the owner said, "almost like they were written separately". So a setup, its turn and its
-punchline share a line, and the opening direction carries the arc ("[teasing questions, each answered deadpan]"); a new line
+punchline share a line, and the opening direction carries the arc ("[teasing, then deadpan]"; "each answered deadpan" paused 2.2 to 2.7 s before "No." on three seeds running); a new line
 starts where the subject changes. A punchline is also the sentence Drama 3 drops: the first merged take lost "No." and still
 scored 98.8%, because two letters barely move a letter score. So hear-back now also lists a sentence that is missing
 altogether, each of its words short in what Whisper heard (`hearback.vanished`), and Drama retakes such a take like one under
-97% (`DRAMA_RULES` 4); over the video's 44 takes it found that "No." alone.
+97% (`DRAMA_RULES` 4); over the video's 44 takes it found that "No." alone. A take that stalls on every seed no longer stops the video: the shortest stall is kept with its fault, ranked
+below any clean round, and listed to listen to.
 
 ### D56. A quote is shown where it was said: screenshots taken at build (2026-10-27)
 **Decision.** `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of a real page. `bin/shot.mjs`

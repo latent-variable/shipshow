@@ -167,9 +167,13 @@ def stretch(audio, sr, speed):
 
 
 def one_take(model, job, round_, ref):
-    """(audio at the model's pace with its edges trimmed, sample rate): the line voiced until it is not silent and does
-    not end in a long silence, up to TRIES seeds."""
+    """(audio at the model's pace with its edges trimmed, sample rate, fault or None): the line voiced until it is not
+    silent, does not stall and does not end in a long silence, up to TRIES seeds. When every seed stalls or trails off, the
+    take with the shortest silence comes back with its fault, to be ranked against the other rounds and listed, rather than
+    stopping the whole video (a directed punchline paused 2.2 to 2.7 s on three seeds running, 2026-10-27). Only a line that
+    is silent on every seed stops it."""
     import mlx.core as mx
+    worst_kept = None
     for attempt in range(TRIES):
         mx.random.seed(job["seed"] + (round_ * TRIES + attempt) * 7919)
         out = list(model.generate(text=job["text"], **ref))
@@ -180,15 +184,17 @@ def one_take(model, job, round_, ref):
             print("take came out silent; voicing it again", file=sys.stderr, flush=True)
             continue
         tail = (len(audio) - (span[1] + 1) * int(sr * 0.01)) / sr
-        if tail > TAIL_DROP:
-            print(f"take ended in {tail:.1f} s of silence (words dropped); voicing it again", file=sys.stderr, flush=True)
-            continue
         gap = longest_gap(audio, sr, span)
-        if gap > GAP_DROP:
-            print(f"take stalled for {gap:.1f} s mid-line; voicing it again", file=sys.stderr, flush=True)
-            continue
-        return trim(audio, sr, span), sr
-    raise SystemExit(f"Drama 3 gave silence or dropped words {TRIES} times for: {job['text']}")
+        fault = (f"ended in {tail:.1f} s of silence" if tail > TAIL_DROP else
+                 f"stalled for {gap:.1f} s mid-line" if gap > GAP_DROP else None)
+        if fault is None:
+            return trim(audio, sr, span), sr, None
+        print(f"take {fault}; voicing it again", file=sys.stderr, flush=True)
+        if worst_kept is None or max(tail, gap) < worst_kept[0]:
+            worst_kept = (max(tail, gap), trim(audio, sr, span), sr, fault)
+    if worst_kept is None:
+        raise SystemExit(f"Drama 3 gave silence {TRIES} times for: {job['text']}")
+    return worst_kept[1], worst_kept[2], worst_kept[3]
 
 
 def main(spec_path):
@@ -216,23 +222,23 @@ def main(spec_path):
         best = None
         run = bool(job.get("parts"))
         for round_ in range(HEAR_TRIES if hear_on else 1):
-            audio, sr = one_take(model, job, round_, ref)
+            audio, sr, fault = one_take(model, job, round_, ref)
             final = voicecheck.level(stretch(audio, sr, spec["speed"]), sr)
             words, got, heard, gone = [], None, "", []
             if hear_on:
                 heard, words = hearback.hear_words(hearback.samples_from(final, sr))
                 got = hearback.agreement(job["plain"], heard)
                 gone = hearback.vanished(job["plain"], heard)   # a dropped punchline barely moves the letter score
-            ok = (got is None or got >= floor) and not gone
-            rank = (ok, -len(gone), got or 0.0)
+            ok = (got is None or got >= floor) and not gone and fault is None
+            rank = (ok, -len(gone), fault is None, got or 0.0)
             if best is None or rank > best[0]:
-                best = (rank, final, sr, got, heard, words, gone)
+                best = (rank, final, sr, got, heard, words, gone, fault)
             if ok:
                 break
-        _, final, sr, got, heard, words, gone = best
+        _, final, sr, got, heard, words, gone, fault = best
         sf.write(job["wav"], final, sr, subtype="PCM_16")
         timing = wordtime.align(job["parts"], words, len(final) / sr) if run and hear_on else None
-        hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [f'not heard: "{s}"' for s in gone], timing)
+        hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [f'not heard: "{s}"' for s in gone] + ([fault] if fault else []), timing)
         if job.get("keyFile"):
             Path(job["keyFile"]).write_text(job["key"])   # kept: a run stopped after this keeps this take
         print(f"voiced {i}/{len(spec['jobs'])}" + (f" ({got:.0%} heard back)" if got is not None else "")

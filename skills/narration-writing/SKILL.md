@@ -87,7 +87,7 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
 - **A joke is one line: setup, turn and punchline in one take.** Each line is voiced on its own, with no memory of the
   line before, so a punchline on a line of its own is performed cold and lands like a separate thought (the owner on
   "Like animals." and "No. ... Also no.", 2026-10-27). Keep them together and let one direction describe the arc:
-  `[teasing questions, each answered deadpan] So, have you ever read them? No. And does anyone today say ...? Also no.`,
+  `[teasing, then deadpan] So, have you ever read them? No. And does anyone today say ...? Also no.`,
   `[conceding, then sly, landing a deadpan punchline] Fair enough. Except ... by hand. Like animals.`
 - **One direction per line, at its start.** A direction in the middle of a line lost the words after it on 5 of 6
   seeds, so the turn goes inside the opening direction ("then ...", "landing a ..."), never in brackets mid-line.
