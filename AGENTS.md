@@ -103,6 +103,7 @@ npm run doctor                                                    # what is miss
 npm run setup:omnivoice                                           # optional, Apple Silicon: OmniVoice for better and cloned voices (and hear-back)
 npm run setup:hearback                                            # optional, any engine: faster-whisper hears each take back (about 480 MB model)
 npm run setup:drama                                               # optional, Apple Silicon: Drama 3, the directed voice, in its own .venv-drama
+npm run setup:listen                                              # optional, Apple Silicon: Parakeet's second listen over the finished narration, in .venv-listen
 ```
 
 The first `doctor` downloads Kokoro into `~/.cache/hyperframes/tts` (about 340 MB). The first
@@ -190,7 +191,13 @@ silence after it, a take that starts with no lead-in or shouts (a 400 ms stretch
 is voiced again with another seed, up to three times, then kept and reported. *Hear-back*, optional
 (`npm run setup:hearback`; `--no-hearback` turns it off): faster-whisper small.en transcribes each take and
 `bin/hearback.py` scores it against the text the engine was told to say, by letters with spaces, punctuation and
-marks gone and numbers spelled out. OmniVoice keeps the best of three; under 0.97 is flagged. Each take's
+marks gone and numbers spelled out. It also looks for letters spelled out that the script never spells (`spelled_out`:
+Whisper writes letters it hears spelled as capitals, "two to the EN"), against the script as written and as told; Drama 3
+retakes such a take, and one kept with it is listed (D60). *Second listen*, optional (`npm run setup:listen`, Apple Silicon;
+`--no-listen` skips it): after the track is laid, `bin/listen.py` has NVIDIA's Parakeet hear each scene of
+`assets/narration.wav` and compares it with the script as WRITTEN (letter score under 90%, a sentence not heard, letters
+spelled out), writes `assets/listen.json`, prints LISTEN lines, and the packet shows it under *Second listen* (stale once the
+narration changes). It flags and never re-voices. OmniVoice keeps the best of three; under 0.97 is flagged. Each take's
 `assets/voice/<scene>-<n>.check` holds the result, `timing.json` `voiceCheck` collects it, and `npm run review`
 prints it in the packet's *Voice checks*. Without faster-whisper everything else still runs and the packet says
 nobody heard the takes.

@@ -250,6 +250,8 @@ def main(spec_path):
         _, final, faults, got, heard, words = best
         sf.write(job["wav"], final, SR, subtype="PCM_16")
         timing = wordtime.align(job["parts"], words, len(final) / SR) if run and hear_on else None
+        if hear_on:   # flagged, not retaken: OmniVoice is not told respellings that it reads as letters (D60)
+            faults = list(faults) + [f'spelled out: heard the letters "{g}"' for g in hearback.spelled_out(job.get("written", job["text"]), job["text"], heard)]
         hearback.write_check(job["wav"], job.get("key", ""), job["text"], got, heard, faults, timing)
         print(f"voiced {i}/{len(spec['jobs'])}" + (f" ({got:.0%} heard back)" if got is not None else "")
               + (f", {timing['matched']}/{timing['words']} words timed from what was heard" if timing else ""), flush=True)

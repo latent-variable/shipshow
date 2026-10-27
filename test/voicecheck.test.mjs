@@ -11,7 +11,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 import { BASE_PACE, REPO, VENV_PY, readWav, writeWav } from "../bin/lib.mjs";
-import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, voiceCheckSection } from "../bin/hearback.mjs";
+import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, listenSection, voiceCheckSection } from "../bin/hearback.mjs";
 
 const BIN = join(REPO, "bin");
 const python = (py, code, args = []) => spawnSync(py, ["-c", `import sys; sys.path.insert(0, ${JSON.stringify(BIN)})\n${code}`, ...args], { encoding: "utf8" });
@@ -154,7 +154,7 @@ if (first === "-c") process.exit(second.includes("faster_whisper") ? 0 : 1);
 const spec = JSON.parse(readFileSync(second, "utf8"));
 appendFileSync(second + ".log", JSON.stringify({ script: first.split("/").pop(), spec }) + "\\n");
 const scores = ${JSON.stringify(scores)};
-const check = (j, faults = []) => writeFileSync(j.wav.replace(/\\.wav$/, ".check"), JSON.stringify({ key: j.key, text: j.text, score: scores.find(([w]) => j.text.includes(w))?.[1] ?? 1, heard: "heard: " + j.text, faults }));
+const check = (j, faults = []) => writeFileSync(j.wav.replace(/\\.wav$/, ".check"), JSON.stringify({ key: j.key, text: j.text, score: scores.find(([w]) => j.text.includes(w))?.[1] ?? 1, heard: "heard: " + j.text, faults, spelledChecked: true }));
 if (first.endsWith("omnivoice.py")) {
   for (const j of spec.jobs) { writeWav(j.wav, { rate: 24000, channels: 1, samples: new Int16Array(24000) }); if (spec.hearback) check(j, j.text.includes("second") ? ["a shout at 0.4s, 9.1 dB over its own speech"] : []); }
 } else if (first.endsWith("hearback.py")) {
@@ -323,4 +323,105 @@ print(fault, round(len(a) / sr, 1))
   const [stalled, clean] = r.stdout.trim().split("\n");
   assert.match(stalled, /^stalled for 2\.\d s mid-line 4\.\d$/, `the 2.4 s stall is the one kept, with its fault: ${stalled}`);
   assert.match(clean, /^None 2\.\d$/, `a clean seed is taken as soon as it comes: ${clean}`);
+});
+
+test("hear-back finds letters spelled out that the script never spells: the respelling \"en\" said \"E N\"", { skip: !plain && "no python3" }, () => {
+  const r = python(plain, `
+import hearback as h, json
+cases = [
+  ("With n switches, there are two to the n settings.", "With en switches, there are two to the en settings.", "With EN switches, there are two to the EN settings."),
+  ("the square root of n, for example", "the square root of en, for example", "the square root of E N, for example"),
+  ("It grows like n over log n.", "It grows like en over log en.", "It grows like E.N. over log E-N."),
+  ("c to the n is just two to the n", "c to the n is just two to the n", "C to the N is just two to the N"),
+  ("In 2001 they made ETH, and OpenAI said NP.", "In 2001 they made E T H, and Open A I said N P.", "In 2001 they made ETH, and OpenAI said NP. AI. E.T.H."),
+  ("I said a thing. A cat.", "I said a thing. A cat.", "I said a thing. A cat. I A."),
+]
+print(json.dumps([h.spelled_out(*c) for c in cases]))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [plainN, spaced, dotted, letterN, acronyms, words] = JSON.parse(r.stdout);
+  assert.deepEqual(plainN, ["EN"], "Whisper's \"EN\" for the variable n, once however often it comes");
+  assert.deepEqual(spaced, ["EN"], "Parakeet's \"E N\" joins into one group");
+  assert.deepEqual(dotted, ["EN"], "\"E.N.\" and \"E-N\" are the same letters");
+  assert.deepEqual(letterN, [], "a single letter said as itself is not spelled out");
+  assert.deepEqual(acronyms, [], "acronyms the script writes, or tells the voice to spell, are fine");
+  assert.deepEqual(words, [], "a capital A or I alone is a word");
+});
+
+test("drama: a take that spells out letters is voiced again, and kept with the fault only when every round does", { skip: !numeric && "no python with numpy and soundfile" }, () => {
+  const dir = mkdtempSync(join(tmpdir(), "spelled-"));
+  mkdirSync(join(dir, "model"));
+  writeFileSync(join(dir, "model", "config.json"), "{}");
+  const r = spawnSync(numeric, ["-c", `import sys; sys.path.insert(0, ${JSON.stringify(BIN)})
+import json, types, numpy as np, soundfile as sf
+sys.modules["mlx"] = types.ModuleType("mlx"); core = types.ModuleType("mlx.core"); core.random = types.SimpleNamespace(seed=lambda s: None)
+sys.modules["mlx.core"] = core; sys.modules["mlx"].core = core
+heard = {"lines": []}
+class Model:
+    def generate(self, text, **_):
+        t = np.arange(24000) / 24000
+        return [types.SimpleNamespace(audio=(0.14 * np.sin(2 * np.pi * 180 * t)).astype(np.float32), sample_rate=24000)]
+utils = types.ModuleType("mlx_audio.tts.utils"); utils.load_model = lambda p: Model()
+for m in ("mlx_audio", "mlx_audio.tts"): sys.modules[m] = types.ModuleType(m)
+sys.modules["mlx_audio.tts.utils"] = utils
+import drama, hearback
+hearback.available = lambda: True
+hearback.samples_from = lambda a, sr: a
+def hear_words(_):
+    said = heard["lines"].pop(0)
+    return said, [{"w": w, "start": i * 0.2, "end": i * 0.2 + 0.15} for i, w in enumerate(said.split())]
+hearback.hear_words = hear_words
+d = sys.argv[1]
+sf.write(d + "/ref.wav", np.zeros(48000, dtype=np.float32), 24000)
+def run(lines, name):
+    heard["lines"] = list(lines)
+    job = {"text": "two to the en", "plain": "two to the en", "written": "two to the n", "wav": f"{d}/{name}.wav", "key": "k", "seed": 1,
+           "parts": [[{"w": "two", "say": "two"}, {"w": "to", "say": "to"}, {"w": "the", "say": "the"}, {"w": "n", "say": "en"}]]}
+    json.dump({"speed": 1.0, "voice": {"name": "x", "wav": d + "/ref.wav", "text": "hello"}, "model": {"path": d + "/model"}, "hearback": True, "min": 0.5, "jobs": [job]}, open(d + "/spec.json", "w"))
+    drama.main(d + "/spec.json")
+    c = json.load(open(f"{d}/{name}.check"))
+    print(json.dumps([len(lines) - len(heard["lines"]), c["heard"], c["faults"]]))
+run(["two to the EN", "two to the E N", "two to the N", "two to the EN", "two to the EN"], "fixed")
+run(["two to the EN"] * 5, "kept")
+`, dir], { encoding: "utf8", env: { ...process.env, SHIPSHOW_DRAMA_FORCE: "1" } });
+  assert.equal(r.status, 0, r.stderr);
+  const [fixed, kept] = r.stdout.trim().split("\n").filter((l) => l.startsWith("[")).map((l) => JSON.parse(l));
+  assert.deepEqual(fixed, [3, "two to the N", []], "voiced again until the letter is said as a letter, then kept clean");
+  assert.equal(kept[0], 5, "every round tried");
+  assert.deepEqual(kept[2], ['spelled out: heard the letters "EN"'], "kept with the fault, so the voice step lists it to listen to");
+});
+
+test("the second listen: the packet says what Parakeet flagged, and says so when it heard an older narration", { skip: !plain && "no python3" }, () => {
+  const listen = { model: "mlx-community/parakeet-tdt-0.6b-v3@ed2b7e8c", narration: "abc", min: 0.9, scenes: [
+    { scene: "02-puzzle", score: 0.95, heard: "two to the E N settings", missing: [], spelled: ["EN"], flag: true },
+    { scene: "03-doubling", score: 0.99, heard: "fine", missing: [], spelled: [], flag: false }] };
+  const now = listenSection(listen, true).join("\n");
+  assert.match(now, /\| 02-puzzle \| 95% \|  \| EN \| two to the E N settings \|/);
+  assert.doesNotMatch(now, /03-doubling/, "only flagged scenes are listed");
+  assert.match(listenSection(listen, false).join("\n"), /Stale/);
+  assert.match(listenSection(null, false).join("\n"), /npm run setup:listen/);
+  const r = python(plain, `
+import listen
+print(listen.said("two to the n, and ETH; n-th", {"n": "en", "ETH": "E T H"}))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  assert.equal(r.stdout.trim(), "two to the en, and E T H; en-th", "the same whole-word swap as bin/lib.mjs spoken()");
+});
+
+test("hear-back: a take checked before spelled_out existed is read again from what was heard, its timing kept", { skip: !plain && "no python3" }, () => {
+  const dir = mkdtempSync(join(tmpdir(), "oldcheck-"));
+  const wav = join(dir, "s-r01.wav");
+  writeFileSync(wav, "");
+  writeFileSync(join(dir, "s-r01.check"), JSON.stringify({ key: "k", text: "two to the en", score: 0.99, heard: "two to the EN", faults: [], timing: { matched: 4, words: 4 } }));
+  const r = python(plain, `
+import hearback, json
+hearback.score = lambda *a: (_ for _ in ()).throw(SystemExit("heard again"))
+hearback.check([{"text": "two to the en", "written": "two to the n", "wav": ${JSON.stringify(wav)}, "key": "k"}])
+print(open(${JSON.stringify(join(dir, "s-r01.check"))}).read())
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const c = JSON.parse(r.stdout);
+  assert.deepEqual(c.faults, ['spelled out: heard the letters "EN"']);
+  assert.equal(c.spelledChecked, true);
+  assert.deepEqual(c.timing, { matched: 4, words: 4 }, "the run's word times are kept");
 });

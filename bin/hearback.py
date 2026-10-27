@@ -125,6 +125,63 @@ def vanished(text, heard):
     return found
 
 
+LETTER_WORDS = {"A", "I"}   # a capital A or I alone is usually a word, not a letter being spelled
+
+
+def letter_groups(text):
+    """Runs of capital letters in a line, as Whisper writes letters it hears spelled out: "EN", "E.N.", "E-N" or
+    "E N" are each "EN". A word of several capitals is one group, and single capitals side by side, with no
+    punctuation between them, join into one ("A" and "I" alone only join a neighbour that is a letter too)."""
+    groups, run = [], ""
+    for tok in re.findall(r"\S+", text):
+        core = re.sub(r"^[^A-Za-z0-9]+|[^A-Za-z0-9.'-]+$", "", tok)
+        letters_only = re.sub(r"[.'-]", "", core)
+        broken = bool(re.search(r"[,;:!?]$", tok)) or (tok.endswith(".") and not re.fullmatch(r"([A-Z]\.)+", tok))
+        if re.fullmatch(r"[A-Z]", letters_only) and (letters_only not in LETTER_WORDS or run):
+            run += letters_only
+        elif re.fullmatch(r"[A-Z]{2,}", letters_only):
+            if len(run) >= 2:
+                groups.append(run)
+            run = letters_only
+            groups.append(run)
+            run = ""
+            continue
+        else:
+            if len(run) >= 2:
+                groups.append(run)
+            run = ""
+            continue
+        if broken:
+            if len(run) >= 2:
+                groups.append(run)
+            run = ""
+    if len(run) >= 2:
+        groups.append(run)
+    return groups
+
+
+def spelled_out(written, said, heard):
+    """The letters a take spelled out that the script never asks for: each group of capitals Whisper wrote
+    (letter_groups) that is not an acronym of the written line or of what the voice was told to say. Drama 3 read
+    the respelling "en" (for the variable n) as the letters E, N on nearly every line of eth-is-false, and Whisper
+    wrote "two to the EN"; the letter score passed it, because "EN" and "en" are the same letters (2026-10-27).
+    `heard` is Whisper's text, case kept. Returns the groups, in order, once each."""
+    allowed = set()
+    for line in (without_marks(written), without_marks(said)):
+        for g in letter_groups(line):
+            allowed.add(g)
+        for tok in re.findall(r"[A-Za-z][A-Za-z0-9'-]*", line):   # OpenAI is "OPENAI" and "AI"
+            caps = re.findall(r"[A-Z]{2,}", tok)
+            allowed.update(caps)
+            if len(re.findall(r"[A-Z]", tok)) >= 2:
+                allowed.add(re.sub(r"[^A-Za-z]", "", tok).upper())
+    found = []
+    for g in letter_groups(heard):
+        if g not in allowed and g not in found:
+            found.append(g)
+    return found
+
+
 def available():
     try:
         import faster_whisper  # noqa: F401
@@ -185,7 +242,7 @@ def write_check(wav, key, text, got, heard, faults=(), timing=None):
     """The `.check` file beside a take: what it was judged by, so bin/voice.mjs and the review packet
     can say which sentences to listen to. `score` is None when nothing could hear it back. `timing`, for a
     run of sentences, is bin/wordtime.py's {"sentences", "matched", "words"}."""
-    check = {"key": key, "text": text, "score": None if got is None else round(got, 3), "heard": heard, "faults": list(faults)}
+    check = {"key": key, "text": text, "score": None if got is None else round(got, 3), "heard": heard, "faults": list(faults), "spelledChecked": True}
     if timing is not None:
         check["timing"] = timing
     Path(wav).with_suffix(".check").write_text(json.dumps(check) + "\n")
@@ -198,10 +255,16 @@ def check(items):
         mark = Path(item["wav"]).with_suffix(".check")
         have = json.loads(mark.read_text()) if mark.exists() else {}
         if have.get("key") == item["key"] and have.get("score") is not None:
+            if not have.get("spelledChecked"):   # heard before spelled_out existed: read what was heard again, no new hearing
+                have["faults"] = [f for f in have.get("faults", []) if not f.startswith("spelled out")] + \
+                    [f'spelled out: heard the letters "{g}"' for g in spelled_out(item.get("written", item["text"]), item["text"], have.get("heard", ""))]
+                have["spelledChecked"] = True
+                mark.write_text(json.dumps(have) + "\n")
             continue
         got, heard = score(item["text"], samples_of(item["wav"]))
-        write_check(item["wav"], item["key"], item["text"], got, heard,
-                    have.get("faults", []) if have.get("key") == item["key"] else [])
+        faults = [f for f in (have.get("faults", []) if have.get("key") == item["key"] else []) if not f.startswith("spelled out")]
+        faults += [f'spelled out: heard the letters "{g}"' for g in spelled_out(item.get("written", item["text"]), item["text"], heard)]
+        write_check(item["wav"], item["key"], item["text"], got, heard, faults)
         done.append((item["wav"], got))
         print(f"heard {Path(item['wav']).stem}: {got:.0%}", flush=True)
     return done
