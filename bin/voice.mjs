@@ -1,15 +1,21 @@
-// Voice a video's script, one sentence at a time, and time every sentence. Kokoro by default;
-// "engine": "omnivoice" in video.json (or --engine omnivoice) is the higher-quality one.
+// Voice a video's script and time every sentence. Kokoro by default; "engine": "omnivoice" in video.json
+// (or --engine omnivoice) is the higher-quality one. A take is one sentence, except for OmniVoice with
+// hear-back installed: then it is a run of whole sentences (see below).
 //   node bin/voice.mjs videos/<name> [--speed 1.25] [--engine omnivoice] [--voice caro_davy]
 // Writes, in the video folder (all generated, none committed):
 //   assets/voice/<scene>-<n>.wav   one take per sentence; a take whose text, voice and speed
 //                                  are unchanged is kept, so editing one sentence re-voices one
+//   assets/voice/<scene>-r<n>.wav  or, for a run of sentences, one take per run (OmniVoice with hear-back)
 //   assets/narration.wav           every take on one track, with the pauses from video.json
 //   assets/voice/<scene>-<n>.check what the take was judged by: hear-back score, faults (see below)
 //   timing.json                    when each scene and each sentence starts and how long it is, and
 //                                  "voiceCheck": the sentences to listen to (bin/review.mjs prints them)
-// Voicing each sentence on its own is what makes timing exact without speech recognition:
-// a sentence starts where we placed its take.
+// Voicing each sentence on its own makes its start exact without speech recognition: a sentence starts
+// where we placed its take, and a word inside it is placed by its share of the letters. But every
+// sentence on its own restarts its prosody, which the owner heard as choppy (2026-10-26), so when the
+// worker can also hear its takes back (faster-whisper) OmniVoice voices a scene in runs of whole
+// sentences up to 45 words and Whisper's word times place the sentences and words inside the run
+// (bin/wordtime.py, DESIGN D47). Kokoro, and OmniVoice without hear-back, stay one take per sentence.
 // Every take is also checked, never required: OmniVoice takes are cut of their opening burst, made
 // again when they shout, and levelled (bin/omnivoice.py, bin/voicecheck.py); Kokoro takes are levelled
 // where they lie, without voicing them again; and when faster-whisper is installed (npm run
@@ -19,7 +25,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { REPO, HF, VENV_PY, config, die, readWav, round, run, scenes, sentences, spoken, ttsEnv, videoDir, writeWav } from "./lib.mjs";
+import { REPO, HF, VENV_PY, config, die, groupRuns, pythonExists, readWav, round, run, scenes, sentences, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
@@ -34,28 +40,48 @@ const omni = cfg.engine === "omnivoice";
 const py = process.env.HYPERFRAMES_PYTHON || VENV_PY;
 const noHear = process.argv.includes("--no-hearback");
 const hear = !noHear && hearbackAvailable(py);
+const RUNS = omni && hear;   // OmniVoice voices runs of sentences when it can hear them back (DESIGN D47)
+// A run takes its speed from a shorter window, as DAIS product-videos does, not from atempo: measured 2026-10-26
+// at speed 1.2 on 5 runs three times each, both heard back at 0.998 and none under 0.988 (DESIGN D47).
+// Measured only up to 1.2; above it (the 1.25 default, up to 1.3) a run is generated at its natural length and
+// time-stretched, as one sentence always was: a window squeezed to 1.3x dropped words in 7 of 24 sentences
+// (2026-10-17). Raise WINDOW_MAX only with a hear-back measurement at the new speed.
+const WINDOW_MAX = 1.2;
+// How bin/omnivoice.py prepares a reference (quiet(): a hissy clip is cleaned first). Bump it when that changes,
+// so takes cloned from the old preparation are voiced again.
+const REF_PREP = 1;
+const PACE = cfg.speed <= WINDOW_MAX + 1e-9 ? "window" : "stretch";
 
-// Every sentence, with the take it needs and whether that take is current.
+// Every take (a sentence, or a run of sentences) and whether it is current.
 const jobs = [];
-const plan = scenes(dir).map((s) => ({
-  id: s.id,
-  sentences: sentences(s.text).map((text, i) => {
-    const say = spoken(text, cfg.say);
-    const wav = join(vdir, `${s.id}-${String(i + 1).padStart(2, "0")}.wav`);
-    // A Kokoro take's key is unchanged from before omnivoice existed, so its takes stay valid.
-    const key = JSON.stringify(omni
-      // check: the rules a take is cut, retaken and levelled by (voicecheck.py VERSION); ref: whether
-      // the voice's reference has a transcript, given or heard back, which clones it better
-      ? { engine: "omnivoice", say, voice: cfg.omni.identity, speed: cfg.speed, take: "natural+trim+stretch", check: CHECK_VERSION, ref: cfg.omni.text ? "given" : hear ? "heard" : "none" }
-      : { say, voice: cfg.voice, speed: cfg.kokoroSpeed });
-    const keyFile = wav.replace(/\.wav$/, ".key");
-    const fresh = existsSync(wav) && existsSync(keyFile) && readFileSync(keyFile, "utf8") === key;
-    if (!fresh) jobs.push({ say, wav, key, keyFile });
-    return { text, say, wav, key };
-  }),
-}));
+const plan = scenes(dir).map((s) => {
+  const texts = sentences(s.text);
+  const says = texts.map((t) => spoken(t, cfg.say));
+  const groups = RUNS ? groupRuns(says) : texts.map((_, i) => [i]);
+  return {
+    id: s.id,
+    units: groups.map((idx, n) => {
+      const text = idx.map((i) => texts[i]).join(" "), say = idx.map((i) => says[i]).join(" ");
+      const wav = join(vdir, RUNS ? `${s.id}-r${String(n + 1).padStart(2, "0")}.wav` : `${s.id}-${String(idx[0] + 1).padStart(2, "0")}.wav`);
+      // A Kokoro take's key is unchanged from before omnivoice existed, so its takes stay valid.
+      const key = JSON.stringify(omni
+        // check: the rules a take is cut, retaken and levelled by (voicecheck.py VERSION); ref: whether
+        // the voice's reference has a transcript, given or heard back, which clones it better; a run's
+        // key also carries its written text, since its word times depend on it
+        ? { engine: "omnivoice", ...(RUNS ? { text } : {}), say, voice: cfg.omni.identity, speed: cfg.speed, take: RUNS ? `run+${PACE}` : "natural+trim+stretch", check: CHECK_VERSION, refPrep: REF_PREP, ref: cfg.omni.text ? "given" : hear ? "heard" : "none" }
+        : { say, voice: cfg.voice, speed: cfg.kokoroSpeed });
+      const keyFile = wav.replace(/\.wav$/, ".key");
+      // A Kokoro take levelled by older rules (voicecheck.py VERSION) was squashed by them: voice it again.
+      const lvl = wav.replace(/\.wav$/, ".lvl");
+      const older = !omni && existsSync(lvl) && /^v\d+:/.test(readFileSync(lvl, "utf8")) && !readFileSync(lvl, "utf8").startsWith(`v${CHECK_VERSION}:`);
+      const fresh = existsSync(wav) && existsSync(keyFile) && readFileSync(keyFile, "utf8") === key && !older;
+      if (!fresh) jobs.push({ say, wav, key, keyFile, parts: RUNS ? idx.map((i) => spokenWords(texts[i], cfg.say)) : undefined });
+      return { idx, texts: idx.map((i) => texts[i]), text, say, wav, key };
+    }),
+  };
+});
 
-if (!plan.some((s) => s.sentences.length)) die("the script has no sentences to voice");
+if (!plan.some((s) => s.units.length)) die("the script has no sentences to voice");
 
 async function voiceOne({ say, wav, key, keyFile }) {
   writeFileSync(wav.replace(/\.wav$/, ".lvl"), "");   // this take is not levelled yet (a wav voiced again under the same key)
@@ -66,7 +92,7 @@ async function voiceOne({ say, wav, key, keyFile }) {
 // OmniVoice loads a model of about 1.5 GB, so one process voices every stale sentence.
 // A seed from each take's key makes a sentence voice the same way every run.
 async function voiceAllOmni() {
-  if (!existsSync(py)) die("omnivoice needs this repo's .venv: npm run setup:omnivoice");
+  if (!pythonExists(py)) die("omnivoice needs this repo's .venv: npm run setup:omnivoice");
   const spec = join(dir, "assets", "omnivoice-jobs.json");
   writeFileSync(spec, JSON.stringify({
     speed: cfg.speed,
@@ -74,7 +100,8 @@ async function voiceAllOmni() {
     cache: join(dir, "assets", "omnivoice"),
     hearback: hear,
     min: HEARBACK_MIN,
-    jobs: jobs.map((j) => ({ text: j.say, wav: j.wav, key: j.key, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
+    pace: RUNS ? PACE : "stretch",
+    jobs: jobs.map((j) => ({ text: j.say, wav: j.wav, key: j.key, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
   }));
   try {
     await run(py, [join(REPO, "bin", "omnivoice.py"), spec]);
@@ -110,13 +137,13 @@ else console.log("every sentence already voiced");
 // Check the takes. Kokoro's are set to one speech level in place (the key does not change, so nothing
 // is voiced again; a .lvl stamp says which are done); OmniVoice's were levelled as they were made.
 // Neither check is required: a missing numpy or faster-whisper skips it and says so.
-const takes = plan.flatMap((s) => s.sentences);
+const takes = plan.flatMap((s) => s.units);
 const pyRun = (script, items, extra = {}) => {
   const spec = join(dir, "assets", `${script}-spec.json`);
   writeFileSync(spec, JSON.stringify({ items, min: HEARBACK_MIN, ...extra }));
   return spawnSync(py, [join(REPO, "bin", `${script}.py`), ...(script === "voicecheck" ? ["level"] : []), spec], { encoding: "utf8" });
 };
-if (!omni && existsSync(py)) {
+if (!omni && pythonExists(py)) {
   const todo = takes.filter((t) => !existsSync(t.wav.replace(/\.wav$/, ".lvl")) || readFileSync(t.wav.replace(/\.wav$/, ".lvl"), "utf8") !== levelStamp(t.key));
   if (todo.length) {
     const r = pyRun("voicecheck", todo.map((t) => ({ wav: t.wav, key: t.key })));
@@ -133,6 +160,28 @@ if (hear) {
   }
 }
 
+// Where each sentence of a take is, as {text, start, duration, words?}: Whisper's word times when the take
+// is a run that was heard back (the .check file's `timing`), else a take of one sentence is where we put
+// it with its words by their share of the letters (build.mjs), and a run without word times shares the
+// take out by letters.
+function sentenceTimes(unit, at, dur) {
+  const timed = readCheck(unit.wav, unit.key)?.timing?.sentences;
+  if (timed?.length === unit.texts.length) {
+    return unit.texts.map((text, k) => {
+      const x = timed[k], start = at + x.start;
+      return { text, start: round(start), duration: round(Math.max(at + x.end - start, 0.05)), words: x.words.map((w) => ({ w: w.w, at: round(at + w.at) })) };
+    });
+  }
+  const letters = unit.texts.map((x) => x.replace(/\s/g, "").length || 1);
+  const total = letters.reduce((a, b) => a + b, 0);
+  let before = 0;
+  return unit.texts.map((text, k) => {
+    const out = { text, start: round(at + (before / total) * dur), duration: round((letters[k] / total) * dur) };
+    before += letters[k];
+    return out;
+  });
+}
+
 // Lay the takes out on one track and record where each landed.
 let rate = 0, channels = 0, t = 0;
 const timing = { engine: cfg.engine, voice: cfg.voice, speed: cfg.speed, scenes: [] };
@@ -140,14 +189,14 @@ const placed = [];
 for (const s of plan) {
   const scene = { id: s.id, start: round(t), sentences: [] };
   t += cfg.lead / cfg.speed;
-  s.sentences.forEach((sen, i) => {
-    const wav = readWav(sen.wav);
+  s.units.forEach((unit, i) => {
+    const wav = readWav(unit.wav);
     if (!rate) ({ rate, channels } = wav);
-    if (wav.rate !== rate || wav.channels !== channels) die(`${sen.wav} is ${wav.rate} Hz, the others ${rate} Hz`);
+    if (wav.rate !== rate || wav.channels !== channels) die(`${unit.wav} is ${wav.rate} Hz, the others ${rate} Hz`);
     const dur = wav.samples.length / channels / rate;
     placed.push({ at: t, samples: wav.samples });
-    scene.sentences.push({ text: sen.text, start: round(t), duration: round(dur) });
-    t += dur + (i < s.sentences.length - 1 ? cfg.gap / cfg.speed : 0);
+    scene.sentences.push(...sentenceTimes(unit, t, dur));
+    t += dur + (i < s.units.length - 1 ? cfg.gap / cfg.speed : 0);
   });
   t += cfg.tail / cfg.speed;
   t += cfg.pauses[s.id] || 0;                         // a beat after this scene: a meme or a stamp is read in it
@@ -157,20 +206,23 @@ for (const s of plan) {
 }
 timing.total = round(t);
 
-// What the checks found, for the review packet (bin/review.mjs): sentences that heard back under the
-// threshold, and takes kept with a fault after the retries.
+// What the checks found, for the review packet (bin/review.mjs): takes that heard back under the
+// threshold, and takes kept with a fault after the retries. A run is named by its sentences, "2-4".
 const voiceCheck = { hearBack: false, min: HEARBACK_MIN, checked: 0, flagged: [], faults: [] };
-for (const s of plan) s.sentences.forEach((sen, i) => {
-  const c = readCheck(sen.wav, sen.key);
+let timed = 0, words = 0, runs = 0;
+for (const s of plan) s.units.forEach((unit) => {
+  const c = readCheck(unit.wav, unit.key);
   if (!c) return;
-  const at = { scene: s.id, sentence: i + 1, text: sen.text };
+  const at = { scene: s.id, sentence: unit.idx.length > 1 ? `${unit.idx[0] + 1}-${unit.idx.at(-1) + 1}` : unit.idx[0] + 1, text: unit.text };
   if (c.score != null) {
     voiceCheck.checked++;
     if (c.score < HEARBACK_MIN) voiceCheck.flagged.push({ ...at, score: c.score, heard: c.heard });
   }
   if (c.faults?.length) voiceCheck.faults.push({ ...at, faults: c.faults });
+  if (c.timing) { runs++; timed += c.timing.matched; words += c.timing.words; }
 });
 voiceCheck.hearBack = voiceCheck.checked > 0;
+if (runs) voiceCheck.runs = { takes: runs, words, matched: timed };   // word times from Whisper: how many words it heard
 timing.voiceCheck = voiceCheck;
 
 const track = new Int16Array(Math.ceil(t * rate) * channels);
@@ -178,8 +230,9 @@ for (const p of placed) track.set(p.samples, Math.round(p.at * rate) * channels)
 writeWav(join(dir, "assets", "narration.wav"), { rate, channels, samples: track });
 writeFileSync(join(dir, "timing.json"), JSON.stringify(timing, null, 1) + "\n");
 
-if (voiceCheck.hearBack) console.log(`heard back: ${voiceCheck.checked} sentence(s), ${voiceCheck.flagged.length} under ${Math.round(HEARBACK_MIN * 100)}%`);
+if (voiceCheck.hearBack) console.log(`heard back: ${voiceCheck.checked} ${voiceCheck.runs ? "run(s)" : "sentence(s)"}, ${voiceCheck.flagged.length} under ${Math.round(HEARBACK_MIN * 100)}%`);
 else console.log(noHear ? "not heard back: hear-back is off (--no-hearback)" : "not heard back (npm run setup:hearback lets the pipeline hear its takes and catch a dropped word)");
+if (voiceCheck.runs) console.log(`voiced in ${voiceCheck.runs.takes} run(s) of sentences; ${voiceCheck.runs.matched} of ${voiceCheck.runs.words} words timed from what was heard, the rest placed between their neighbours`);
 for (const f of voiceCheck.flagged) console.log(`  LISTEN ${f.scene} sentence ${f.sentence}: ${Math.round(f.score * 100)}% heard back. Script: "${f.text}" Heard: "${f.heard}"`);
 for (const f of voiceCheck.faults) console.log(`  LISTEN ${f.scene} sentence ${f.sentence}: ${f.faults.join("; ")}`);
 const n = timing.scenes.reduce((a, s) => a + s.sentences.length, 0);

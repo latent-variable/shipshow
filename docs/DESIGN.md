@@ -45,10 +45,10 @@ Three layers: **understand** (the context skills and `evidence-standard`), **mak
 
 ## Decision log
 
-### D1. No speech recognition for timing (2026-10-17; narrowed by D44)
+### D1. No speech recognition for timing (2026-10-17; narrowed by D44, reversed for runs of sentences by D47)
 **Decision.** Word timing comes from voicing each sentence on its own, and placing a word by
 its share of the sentence's letters. No ASR step in timing. (D44 adds an optional ASR that
-verifies takes and never times them.) **Why.** `hyperframes transcribe` built
+verifies takes and never times them; D47 later lets Whisper time runs of sentences.) **Why.** `hyperframes transcribe` built
 whisper.cpp and then timed out downloading its model after six minutes; a second model is a
 larger download. **Consequence.** A cue can be a few hundred milliseconds off; fix it by
 splitting the sentence or using `data-cue="+seconds"`. A spoken alias made through `say`
@@ -378,7 +378,7 @@ syllables-a-minute pace target next to this branch's measured reading queue and 
 past the 12-word limit) and the `how-we-built-it` video. Nothing on this branch touches captions; the merge was clean.
 **Costs.** None known; the test count is now 47.
 
-### D31. OmniVoice speed is a stretch after generation, never a shorter window (2026-10-17; corrects D27's consequence)
+### D31. OmniVoice speed is a stretch after generation, never a shorter window (2026-10-17; corrects D27's consequence; a run of sentences is the exception, D47)
 **Decision.** `bin/omnivoice.py` asks OmniVoice for each sentence at its natural length (mlx-audio's own sizing, padded
 15%), trims the padding's silence from the take's edges, then applies `speed` with ffmpeg `atempo`, which keeps the pitch.
 A take that comes out silent is voiced again with another seed (three tries). A reference clip over 10 s is trimmed at its
@@ -415,7 +415,7 @@ listen. The boom, scratch and trombone are the likeliest to want a person's ear 
 **Decision.** Ported from DAIS product-videos, where the owner heard these faults in published videos before anything
 measured them. `bin/voicecheck.py`: OmniVoice takes have the opening burst cut at the silence after it, are voiced again
 (three seeds) when the voice starts with no lead-in or a 400 ms stretch runs over 8 dB above the take's own median, and
-every take of either engine is set to a median speech of -20 dBFS with peaks capped at -6 dBFS (a tanh knee, not a hard clip).
+every take of either engine is set to a median speech of -20 dBFS with peaks capped at -6 dBFS (a tanh knee, not a hard clip; D47 replaced the knee).
 Kokoro takes are levelled in place after voicing; the take's key is unchanged and a `.lvl` stamp (rules' version and a hash of
 the key) says it is done, so nothing is voiced again. `bin/hearback.py`: with faster-whisper installed (`npm run
 setup:hearback`, `requirements-hearback.txt`; small.en pinned by revision) each take is transcribed and scored against the
@@ -549,7 +549,7 @@ loaded when it starts.
 ### D42. Memes come from the memegen catalog, and ShipShow draws the text (2026-10-26)
 **Decision.** A `<figure class="ss-meme" data-meme="<id>">` with a span per line is a meme. `bin/meme.mjs` fetches the
 template's `config.yml` (the text boxes: `anchor_x`, `anchor_y`, `scale_x`, `scale_y`, `angle`, `align`, `color`, `font`) and
-its clean `default.<ext>` from github.com/jacebrowning/memegen (extension tried in turn: jpg, png, gif, jpeg), once, into
+its clean `default.<ext>` from github.com/jacebrowning/memegen (extension tried in turn: gif, jpg, png, jpeg; D49), once, into
 `~/.cache/shipshow/memes/<id>/`; `bin/build.mjs` copies the picture to `assets/memes/`, and positions each span by its box in
 percent of the picture with the box's angle; spans fill boxes in order. `kit/kit.js` fits each line to its box (the largest
 font size at which the wrapped text fits both ways), synchronously and again when the fonts are ready, then the cue engine
@@ -596,25 +596,129 @@ one punchline a beat was to slow the whole video. product-videos has the same th
 is dead air for the ear: at 1.6 to 2.2 s on top of the scene gap, round 2's pacing critic heard four three-second silences, so
 the video settled on 0.8 to 1.3 s.
 
+### D47. OmniVoice voices runs of sentences, Whisper times them, and levelling no longer squashes (2026-10-26)
+**Decision.** Three changes from one listening. The owner heard a video in his cloned voice and called it "really choppy",
+with short words that "sound really bad, like I'm really close to my mic". (1) **Levelling** (`bin/voicecheck.py` VERSION 2):
+a take is multiplied by one gain that moves its median speech toward -23 dBFS and is held back so its loudest sample stays at or
+below -3 dBFS. Nothing is clipped or soft-clipped. The old rule set the median to -20 dBFS and squashed everything over 0.4 into a
+tanh knee at 0.5; natural speech peaks 19 to 25 dB over the median, so short takes lived in the knee (samples over 0.4, on 14
+sentences: "It's a fair worry." 16.9%, "Sound familiar?" 11.0%, mean 4.1%, up to 13% of a take's samples piled against the 0.5
+ceiling). A Kokoro take stamped by the old rules is voiced again (a `.lvl` stamp from an older VERSION), since levelling it again
+cannot undo a squash. (2) **Runs.** With OmniVoice and faster-whisper installed (and without `--no-hearback`) a scene is grouped,
+after `say`, into runs of whole sentences up to 45 words (`groupRuns` in `bin/lib.mjs`; a longer sentence stands alone), and
+each run is one take, `<scene>-r<n>.wav`, cached by its written and spoken text, voice, speed, check version and method, so
+editing a sentence re-voices its run. It keeps the per-take checks (opening burst cut, shout and silence retakes, best of three by
+hear-back score) and tries a clean start five times, as DAIS product-videos does, not three. Gaps are the existing `gap` between
+runs and none inside them. Why: voicing every sentence alone restarts its prosody; product-videos voices runs of up to 45 words
+(a 268-word scene in one call lost a quarter of its words, every scene over about 150 words fell to 90 to 94%) and the owner
+approved its narration. (3) **Whisper times the run.** The same transcription that scores the take is run with
+`word_timestamps=True` (`hearback.hear_words`), and `bin/wordtime.py` lays the script over it: script and transcript are compared
+as letters (the hear-back normalisation, numbers spelled out, a year read as a year or a quantity, whichever matches), difflib
+matches them, and a written word is placed where its first matched letter was heard once half its letters matched. `say` is
+respected because the worker is given each written word with what it is said as (`spokenWords`); a `say` key of several words
+belongs to its first. A word nobody heard is placed between its matched neighbours by letters. A sentence starts at its first word
+and ends at its last, the last of a take no earlier than 0.1 s before the take ends (Whisper cuts the final word short).
+`timing.json` keeps its shape and each timed sentence gains `words: [{"w", "at"}]`, absolute seconds; `build` uses them for cues
+(`wordTimes`) and caption lines, and uses the letter share for a sentence without. **Speed** for a run is a shorter window
+(`pace: "window"`), not atempo (D31): at speed 1.2 on the five runs of the test video, three takes each way, both scored a mean
+0.998 heard back and none fell under 0.988, so the squeeze that dropped words at 1.3x on single sentences did not at 1.2 on runs, and
+it is what the owner has heard approved. D31 stands for a take of one sentence. The window is used only up to speed 1.2 (`WINDOW_MAX` in `bin/voice.mjs`), the speed it was measured at; above it
+(the 1.25 default, up to 1.3) a run is generated at its natural length and stretched, as D31 says. **Unchanged:** Kokoro, and OmniVoice without
+faster-whisper or with `--no-hearback`, keep one take per sentence, atempo and the letter share.
+**Why this reverses D1.** D1 refused ASR because `hyperframes transcribe` timed out downloading a model. faster-whisper is already
+installed for hear-back, so timing costs no second download; a take per sentence sounded choppy; product-videos times its cues this
+way. **Measured (2026-10-26, this Mac, the cloned voice).** Whisper's sentence start against the first speech onset in the audio
+(energy, after a 120 ms pause), 8 sentences that follow a pause: median +0.01 s, mean 0.04 s, worst 0.21 s. The other six sentences
+run on from the one before with no pause to detect. Letter-share cue estimates for the same words were off from the heard time by
+up to 0.8 s ("Hopper" -0.81, "1952" +0.71). Every one of 132 words matched in all six runs. Hear-back per run 0.988 to 1.0.
+Levelling: samples over 0.4 on the same 14 sentences 16.9% at worst before, 1.0% after, and the runs 0.5% at worst, none piled against a
+ceiling; run takes sit within 1.4 dB of each other (-23.2 to -24.6 dBFS), while single short sentences under the new rule can end up
+10 dB under their neighbours ("Sound familiar?" -33 dBFS) because their peak is the limit. **Costs and not verified.** A run is
+re-voiced whole for one edited word; hear-back is now timing, so a machine without it falls back to the sentence path and a
+different sound. **A hissy reference is cleaned.** The clone copies the room of its clip: the owner's (background -39 dBFS) gave takes with no
+silence after the opening burst, so every run was "starts at once" and the fallback cut 30 ms into its first syllable, heard as
+choppy. `bin/omnivoice.py` `quiet()` measures a reference's background (10th percentile of its 50 ms levels) and, above -52 dBFS,
+runs it through a 70 Hz high-pass and two mild `afftdn` passes (background about -57, speech level unchanged) before cloning: 0 of 5
+runs flagged, against 5 of 5 raw and 2 of 5 with one stronger pass (nf -20, nr 30); every run heard back at 97% or more. The built-in
+clips (-56 to -87) are left alone. `REF_PREP` in the take's key voices takes again when the preparation changes. (Fixes #60.)
+Whisper's word times are good to a tenth of a second and its last words in a take run short. Nobody here can listen: whether runs
+sound less choppy, and whether window beats atempo to the ear, is the owner's to judge.
+
+### D48. Portraits come from Wikimedia Commons, behind a licence gate (2026-10-26)
+**Decision.** `<figure class="ss-portrait" data-commons="File:Name.jpg">` is a credited photo. `bin/portrait.mjs` asks the Commons API
+(`prop=imageinfo`, `iiprop=url|extmetadata|size`, `iiurlwidth=900`, a `User-Agent` naming ShipShow, as Wikimedia asks) for the file,
+keeps its thumbnail and a reduced copy of its metadata in `~/.cache/shipshow/commons/<name>-w900/`, and `build` copies the picture to
+`assets/portraits/` and writes the `<img>`, the builder's `<figcaption>` and a credit line. The gate reads `LicenseShortName`, `License`
+and `NonFree`: it accepts public domain (`pd*`), CC0, and CC BY or CC BY-SA with a version (an optional jurisdiction suffix), and refuses
+the rest, including a licence Commons leaves empty. A CC file whose `Artist` is empty is refused (the licence needs a name); a public-domain
+one is credited to its `Credit` text, else "Wikimedia Commons". The gate runs on every build, over the cached metadata too, so tightening it
+reaches files already fetched. `Artist` is stripped of tags and entities before it reaches the page. `review` lists each portrait's file page,
+author, licence and licence link. `SHIPSHOW_COMMONS_API` (a URL, or a folder of replies for tests) and `SHIPSHOW_COMMONS_CACHE` move the source and cache.
+**Why.** A builder would otherwise download, credit and style each photo by hand and get a licence wrong; a CC BY-SA photo without its
+author is a licence breach, and a non-free file is worse. The gate is the point: it fails at build, before a render, with the file named.
+**Look.** `ss-portrait` in `kit/base.css`: the photo in the theme's card, border, radius and shadow, the credit on a dark gradient at its
+foot (white text in every theme, so contrast does not depend on the photo), the name in `--font-display` and the line under it in `--muted`.
+Opt-in `ss-portrait-gray` and `ss-portrait-duo` (grayscale multiplied over `--accent`). Checked on `shipshow` and `paper` (2026-10-26).
+**Costs.** Commons' metadata is as good as its uploaders: a file can be mislabelled (the research note flags two YouTube stills), the gate
+trusts what Commons says, and "no attribution required" public domain files are still credited. A non-image or a very odd thumbnail type
+(TIFF, SVG) is not handled. The first build of a file needs the network; the 900 px thumbnail of a small original is the original, upscaled
+by the frame, so a 238 px photo looks soft at the default size (Backus): set `--portrait-height` smaller.
+
+### D49. A moving meme is a video the build writes, and its scene is not timed (2026-10-26)
+**Decision.** Two sources, one pipeline. `data-meme="rollsafe"` plays a template whose clean `default.gif` is animated (17 of
+memegen's 211 have one); `<figure class="ss-meme" data-clip="<url or file>" data-crop="top 98px">` plays any GIF, MP4 or WebM
+(an Imgflip clean MP4, `https://i.imgflip.com/<id>.mp4`, is the usual one). `bin/meme.mjs` fetches a URL once into
+`<cache>/clips/<hash>` (a file is read from the video's folder; the first bytes must say GIF, MP4 or WebM, so an error page is never
+cached), reads the crop (`top|right|bottom|left` with `%` or `px`, several allowed, kept to even pixels), and `ffmpeg` writes
+`assets/memes/clips/<key>.mp4`: cropped, 30 fps, no sound, H.264 at CRF 14 with a keyframe a second, **looped to the time the
+figure is on screen** (its cue to the scene's end). The key hashes the source bytes and every parameter, so a changed clip,
+crop or cue is a new file and an unchanged one is not encoded again. The figure holds a `<video class="clip" data-start data-duration muted>`
+with the figure's own `data-at` as its start, so it plays at real speed from the figure's arrival. Text is optional: `<span class="top">`
+and `<span class="bottom">` (or first and second in order) are drawn in the meme style in bands at 3% and 77% of the picture, fitted and
+cued like a template's. The packet lists each animated meme with its source URL; `data-name` and `data-credit` set the name and the
+page to credit. An unreachable clip with nothing cached, a file that is not a clip, a malformed or all-consuming crop, too many spans
+and a figure with both `data-meme` and `data-clip` stop the build naming the scene.
+**Why.** HyperFrames renders frame by frame, seeking a `<video>` through ffmpeg frame extraction (so the same frame number gives the
+same picture); an `<img src="x.gif">` is turned into a video by HyperFrames itself, but one that starts at time 0 and loops over the whole
+composition, not at the figure's cue. Baking the loop into the file, not a `loop` attribute, keeps the playback a function of the time
+alone and independent of how the renderer treats `loop`. The memegen picture is tried as gif first because some of them keep a
+still beside it (`fine` has a `default.png`, `rollsafe` a `default.jpg`) and the old order took the still.
+**The scene is not timed.** `hyperframes lint` refuses a `<video>` inside an element that also has `data-start` (its frame extractor
+and its visibility disagree about the offset). A scene that holds a video therefore has no `data-start`, `data-duration` or `clip` class,
+and keeps its times in `data-scene-start` and `data-scene-duration`, which `kit/kit.js` reads (`sceneSpan`); it already showed and hid
+every scene on the GSAP timeline, so nothing else changes. Other scenes keep `data-start`.
+**Measured (gif-test, 15.7 s, three clips, 2026-10-26).** Two renders of the build with no `slam` gave 470 identical frames (the render
+uses parallel workers that seek out of order); against the source clip, the picture matched the clip's time within one frame at three
+points in each of three clips, and a 1.6 s clip's frame at 2.0 s matched the source at 0.4 s (the loop). Render time was 15 s with three
+stills and 17 to 21 s with three clips (standard quality). A `slam` text entrance is not frame-identical across two renders (about
+270 pixels, in the text only; the kit's `tl.to` with a yoyo, not touched here).
+**Costs.** A first build of a clip needs the network, and ffmpeg and ffprobe (already required). A GIF's transparency is flattened, not
+kept. A clip is looped, never held on its last frame, and its own sound is dropped. The look is bound to the source's size: Imgflip
+clips are 266 to 960 px, soft at 800 px. The white caption band some clips carry (Dafoe's was 29%, found by measuring a frame, not guessed)
+is cut with `data-crop`. Clips are third-party and unlicensed: fetched, never committed, a published video relies on fair use and
+commentary norms, and that is the publisher's call (D42).
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
 
 **The pipeline** (`bin/`, `kit/`)
-- `voice` voices one sentence at a time and writes `timing.json`. A take is cached by its text,
+- `voice` voices one sentence at a time (or, with OmniVoice and hear-back, runs of sentences up to 45 words, D47) and writes `timing.json`. A take is cached by its text,
   voice and speed, so inserting a sentence re-voices every later sentence in that scene (numbering restarts per
   scene; the cost per take has not been measured).
+- A sentence timed from a run carries `words: [{"w", "at"}]` in `timing.json`; `build` places cues and caption lines on those times (`bin/build.mjs`, `heardAts`), and on the letter share for a sentence without.
 - `build` writes `index.html` from `scenes.html` and the timing. It stops on a cue word its
   scene never says and warns when a bare cue word occurs more than once in its scene. A cue
   matches the start of a spoken word across the whole scene, so use `word#n` or a distinctive
   word.
-- `build` expands each `ss-meme` figure (D42): an unknown template, an unreachable source with nothing cached, or more spans than
+- `build` expands each `ss-meme` figure (D42, and D49 for a `data-clip` or an animated template, which becomes a video): an unknown template, an unreachable source with nothing cached, or more spans than
   the template has boxes stops it naming the scene; `review` lists each meme's template and source; `memes <words>` searches the catalog.
 - `voice` also levels every take and, with faster-whisper installed, hears each back (`bin/voice.mjs`,
   `bin/hearback.py`, `bin/voicecheck.py`; D44): it prints `LISTEN` for a sentence under 0.97 or kept with a fault, and
   records them in `timing.json` `voiceCheck`, which `review` prints as *Voice checks*.
 - `build` also places sound effects (D43): a `data-sfx` or `sfx()` call becomes a sound in `assets/sfx.wav`, peaking (or starting) at the cue; it stops on a run of one sound, on a sound over a sentence's first word, and on an unknown sound; `"sfx": false` turns it off. `review` lists each sound with its time, scene, level against the voice and audible span under *Sound effects*.
 - `render` writes `out/<name>.mp4`; `make` chains voice, build, lint and render.
+- `build` expands each `ss-portrait` figure (D48): a refused licence, a missing file or an unreachable Commons with nothing cached stops it naming the scene and the file; `review` lists each portrait under *Portraits*.
 - `review` writes `review/packet.md` (words a minute while speaking, every pause, every cue's
   time and reading time, with code counted in tokens, the longest still stretch of each scene) and
   `review/frames/`. The packet measures; the critics judge.

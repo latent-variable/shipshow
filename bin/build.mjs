@@ -6,14 +6,17 @@
 //   data-cue="word#2"   ... the second one
 //   data-cue="+1.5"     ... 1.5 s into the scene
 // and data-anim says how (kit/kit.js); a section's data-transition and data-camera override the
-// theme's. A <figure class="ss-meme" data-meme="<memegen id>"> with a <span> per line is a meme
-// (bin/meme.mjs). The look is the theme (video.json "theme", themes/ or local/themes/) under the
+// theme's. A <figure class="ss-meme" data-meme="<memegen id>"> (or data-clip="<url or file>" for any
+// GIF, MP4 or WebM) with a <span> per line is a meme (bin/meme.mjs); a moving one becomes a video; a
+// <figure class="ss-portrait" data-commons="File:..."> is a credited Wikimedia Commons photo (bin/portrait.mjs).
+// The look is the theme (video.json "theme", themes/ or local/themes/) under the
 // video's own styles, and video.json "flair" overrides the theme's motion. Captions are the
 // script's own words, one line at a time. Writes index.html, meta.json, assets/vendor/gsap.min.js
 // and assets/theme/ (the theme's fonts and images).
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { MEME_FONTS_CSS, memeScene } from "./meme.mjs";
+import { portraitScene } from "./portrait.mjs";
 import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir } from "./lib.mjs";
 import { sfxTrack } from "./sfx.mjs";
 
@@ -35,17 +38,21 @@ const byId = Object.fromEntries(timing.scenes.map((s) => [s.id, s]));
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-/** Every word of a scene with the time the voice reaches it: its share of its sentence's letters. */
+/** The time of each word of a sentence when it was timed from what was heard (bin/voice.mjs, Whisper), else null. */
+const heardAts = (s) => (s.words?.length === s.text.split(" ").length ? s.words.map((x) => x.at) : null);
+
+/** Every word of a scene with the time the voice reaches it: when Whisper heard it, else its share of its sentence's letters. */
 function wordTimes(scene) {
   const out = [];
   for (const s of scene.sentences) {
     const words = s.text.split(" ");
+    const heard = heardAts(s);
     const total = s.text.replace(/\s/g, "").length || 1;
     let before = 0;
-    for (const w of words) {
-      out.push({ word: w, at: s.start + (before / total) * s.duration });
+    words.forEach((w, k) => {
+      out.push({ word: w, at: heard ? heard[k] : s.start + (before / total) * s.duration });
       before += w.length;
-    }
+    });
   }
   return out;
 }
@@ -89,13 +96,22 @@ function captions() {
   for (const scene of timing.scenes) {
     for (const s of scene.sentences) {
       const total = s.text.replace(/\s/g, "").length || 1;
-      let before = 0;
+      const heard = heardAts(s);
+      let before = 0, seen = 0;
       for (const line of lines(s.text)) {
         const len = line.replace(/\s/g, "").length;
-        const at = (n) => round(s.start + (n / total) * s.duration);
-        let into = before;
-        const words = line.split(" ").map((w) => ((into += w.length), { w, at: at(into - w.length) }));
-        caps.push({ t: s.start + (before / total) * s.duration, e: s.start + ((before + len) / total) * s.duration + 0.3, text: line, words });
+        const names = line.split(" ");
+        if (heard) {
+          // timed from what was heard: the line starts on its first word and lasts to the next line's first word
+          const next = heard[seen + names.length] ?? s.start + s.duration;
+          caps.push({ t: heard[seen], e: next + 0.3, text: line, words: names.map((w, k) => ({ w, at: round(heard[seen + k]) })) });
+          seen += names.length;
+        } else {
+          const at = (n) => round(s.start + (n / total) * s.duration);
+          let into = before;
+          const words = names.map((w) => ((into += w.length), { w, at: at(into - w.length) }));
+          caps.push({ t: s.start + (before / total) * s.duration, e: s.start + ((before + len) / total) * s.duration + 0.3, text: line, words });
+        }
         before += len;
       }
     }
@@ -124,14 +140,20 @@ const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<
   const scene = byId[id];
   if (!scene) die(`scenes.html names scene ${id}, which has no script/${id}.txt (or run voice.mjs again)`);
   seen.add(id);
-  const withMemes = await memeScene(m[2], dir, id);   // bin/meme.mjs: a meme figure's picture and text boxes
-  usesMemes ||= withMemes !== m[2];
+  // bin/portrait.mjs: a Commons photo and its credit; bin/meme.mjs: a meme figure's picture and text boxes; an animated one is a video that starts at its cue and runs to the scene's end
+  const withMemes = await memeScene(await portraitScene(m[2], dir, id), dir, id, { start: scene.start, end: round(scene.start + scene.duration - 0.01), at: (cue) => cueTime(scene, cue, `scene ${id}`) });
+  usesMemes ||= withMemes !== m[2] && /data-(meme|clip)=/.test(m[2]);   // the meme fonts, for a still, an animated template or a clip
   const body = withMemes.replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
   // 10 ms short of the next scene: scenes share a track, and touching ends read as an overlap.
   const attrs = m[1].replace(/\s*class="([^"]*)"/, "");
-  const cls = ["clip", "scene", (m[1].match(/class="([^"]*)"/) || [])[1]].filter(Boolean).join(" ");
+  // A scene with a meme video is not itself timed: HyperFrames cannot place a video inside a timed
+  // element (its frame extractor and its visibility disagree), so the scene keeps its times in
+  // data-scene-* for kit.js, which already shows and hides every scene on the GSAP timeline.
+  const hasVideo = /<video[\s>]/.test(body);
+  const cls = [hasVideo ? "" : "clip", "scene", (m[1].match(/class="([^"]*)"/) || [])[1]].filter(Boolean).join(" ");
   bodies.push({ id, body });
-  return `      <section${attrs} id="scene-${id}" class="${cls}" data-start="${scene.start}" data-duration="${round(scene.duration - 0.01)}" data-track-index="1">\n        <div class="inner"><div class="cam">${body}</div></div>\n      </section>`;
+  const times = hasVideo ? `data-scene-start="${scene.start}" data-scene-duration="${round(scene.duration - 0.01)}"` : `data-start="${scene.start}" data-duration="${round(scene.duration - 0.01)}" data-track-index="1"`;
+  return `      <section${attrs} id="scene-${id}" class="${cls}" ${times}>\n        <div class="inner"><div class="cam">${body}</div></div>\n      </section>`;
 }));
 const missing = timing.scenes.filter((s) => !seen.has(s.id)).map((s) => s.id);
 if (missing.length) die(`scenes.html has no <section data-scene> for: ${missing.join(", ")}`);
