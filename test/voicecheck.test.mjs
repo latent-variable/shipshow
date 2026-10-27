@@ -39,10 +39,12 @@ print(a(words, words.replace(" small", "")))
 print(a(words, words.replace("small", "banana")))
 print(a(words, "something else entirely"))
 print(h.MIN)
+print(a("Go back to nineteen fifty two.", "Go back to 1952."))
+print(a("Meet in 1905, not 2026.", "Meet in nineteen oh five, not twenty twenty six."))
 `);
   assert.equal(r.status, 0, r.stderr);
-  const [name, num, clock, mark, dropped, wrong, other, min] = r.stdout.trim().split("\n").map(Number);
-  for (const x of [name, num, clock, mark]) assert.equal(x, 1);
+  const [name, num, clock, mark, dropped, wrong, other, min, year, years] = r.stdout.trim().split("\n").map(Number);
+  for (const x of [name, num, clock, mark, year, years]) assert.equal(x, 1);   // a year is read as a year or as a quantity, whichever the take matches
   assert.ok(dropped < min, `one dropped word in twelve is under the threshold (${dropped})`);
   assert.ok(wrong < min, `one wrong word in twelve is under the threshold (${wrong})`);
   assert.ok(other < 0.5);
@@ -66,12 +68,36 @@ print(ok2)
 calm = tone(0.1, 4.0)
 loud = calm.copy(); loud[int(sr * 2.0):int(sr * 2.4)] *= 4
 print(v.shout(calm, sr) is None, v.shout(loud, sr) is not None)
-# levelling: a quiet and a loud take end at one speech level, peaks under the cap
+# levelling: a quiet and a loud take end at one speech level, nothing over the ceiling
 a, b = v.level(tone(0.02, 1.0), sr), v.level(tone(0.9, 1.0), sr)
-print(round(abs(v.speech_level(a, sr) - v.speech_level(b, sr)), 1), max(abs(a).max(), abs(b).max()) <= v.PEAK_CAP + 1e-6)
+print(round(abs(v.speech_level(a, sr) - v.speech_level(b, sr)), 1), max(abs(a).max(), abs(b).max()) <= v.PEAK_MAX + 1e-6)
 `);
   assert.equal(r.status, 0, r.stderr);
   assert.deepEqual(r.stdout.trim().split("\n"), ["True True True", "False", "True True", "0.0 True"]);
+});
+
+test("voicecheck level: one gain, never a knee: a take reaches the target, a take with a spike stays quieter and is not clipped", { skip: !numeric && "no python with numpy and soundfile" }, () => {
+  const r = python(numeric, `
+import numpy as np, voicecheck as v
+sr = 24000
+body = (0.03 * np.random.RandomState(2).randn(sr * 2)).astype(np.float32)     # speech-level noise, peaks well under the ceiling
+spiky = body.copy(); spiky[1000:1010] = 0.6                                   # one plosive, 26 dB over the body
+for take in (body, spiky):
+    out = v.level(take, sr)
+    k = np.abs(take) > 1e-4
+    ratio = out[k] / take[k]
+    print(round(v.speech_level(out, sr), 1), round(float(np.abs(out).max()), 3), bool(np.allclose(ratio, ratio[0], rtol=1e-4)))
+print(v.TARGET_DB, round(v.PEAK_MAX, 3))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [a, b, tgt] = r.stdout.trim().split("\n");
+  const [target, ceiling] = tgt.split(" ").map(Number);
+  const [lvA, peakA, linA] = a.split(" "), [lvB, peakB, linB] = b.split(" ");
+  assert.equal(+lvA, target, "a take that fits reaches the target level");
+  assert.ok(+peakA < ceiling && linA === "True");
+  assert.ok(+lvB < target - 0.5, "a take with a spike stays quieter than the target");
+  assert.ok(Math.abs(+peakB - ceiling) < 0.002, `the spike sits at the ceiling (${peakB} vs ${ceiling})`);
+  assert.equal(linB, "True", "every sample is the take's own times one gain: nothing is clipped or squashed");
 });
 
 test("voicecheck level: Kokoro takes are levelled in place, once, and their cache key is untouched", { skip: !numeric && "no python with numpy and soundfile" }, () => {
@@ -153,6 +179,7 @@ test("voice hears every take back when it can, flags those under the threshold, 
   const worker = log()[0].spec;
   assert.equal(worker.hearback, true, "the worker is told it may hear takes back");
   assert.equal(worker.min, HEARBACK_MIN);
+  assert.equal(worker.jobs.length, 2, "with hear-back, the template's two scenes of two sentences are two runs (DESIGN D47)");
   assert.ok(worker.jobs.every((j) => j.key.includes(`"check":${CHECK_VERSION}`) && j.key.includes('"ref":"heard"')), "a take's key carries the rules and the reference transcript");
   const vc = JSON.parse(readFileSync(join(dir, "timing.json"), "utf8")).voiceCheck;
   assert.equal(vc.hearBack, true);
@@ -160,11 +187,11 @@ test("voice hears every take back when it can, flags those under the threshold, 
   assert.deepEqual(vc.flagged.map((f) => [f.scene, f.score]), [["02-idea", 0.5]]);
   assert.match(vc.flagged[0].text, /box/);
   assert.equal(vc.faults.length, 1, "a fault the worker kept is carried too");
-  assert.match(r.stdout, /LISTEN 02-idea sentence \d: 50% heard back/);
+  assert.match(r.stdout, /LISTEN 02-idea sentence 1-2: 50% heard back/);
 
   const packet = voiceCheckSection(JSON.parse(readFileSync(join(dir, "timing.json"), "utf8")).voiceCheck).join("\n");
   assert.match(packet, /## Voice checks/);
-  assert.match(packet, /\| 02-idea \| \d \| 50% \| .*box.* \| heard: .*box/);
+  assert.match(packet, /\| 02-idea \| 1-2 \| 50% \| .*box.* \| heard: .*box/);
   assert.match(packet, /fault kept after retakes/);
 
   r = run("--engine", "omnivoice");

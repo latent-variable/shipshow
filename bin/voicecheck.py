@@ -16,8 +16,9 @@ What this does about each:
                 fades the ends. A take whose voice runs straight out of the burst is made again with
                 another seed, and only after several tries trimmed and reported.
   shout(take)   the same: a shout is made again.
-  level(take)   every kept take's median speech is set to TARGET_DB and its peaks capped, so one
-                sentence is never louder than the next, whatever the engine. For Kokoro this is the
+  level(take)   every kept take's median speech is moved toward TARGET_DB by one gain, which is held
+                back when it would put the take's loudest sample over PEAK_DB: a take that cannot reach
+                the target stays a little quieter, and nothing is ever clipped. For Kokoro this is the
                 only step, and it runs on takes already voiced, in place and without voicing them
                 again: a Kokoro take's cache key is unchanged (the `.lvl` stamp beside it records
                 that it was levelled, by this VERSION).
@@ -32,12 +33,13 @@ from pathlib import Path
 
 import numpy as np
 
-VERSION = 1            # in an OmniVoice take's key and a Kokoro take's .lvl stamp: change a rule below, bump it
+VERSION = 2            # in an OmniVoice take's key and a Kokoro take's .lvl stamp: change a rule below, bump it
 SPEECH_FLOOR = -40.0   # dBFS: a window louder than this is speech, not room
 SILENT = -45.0         # dBFS: a 10 ms window quieter than this is silence
 SHOUT_DB = 8.0         # a 400 ms stretch this far over the take's own median is a shout
-TARGET_DB = -20.0      # every kept take's median speech, in dBFS (50 ms windows)
-PEAK_CAP = 0.5         # -6 dBFS: the sample peak a kept take may reach after levelling
+TARGET_DB = -23.0      # the median speech a kept take is moved toward, in dBFS (50 ms windows)
+PEAK_DB = -3.0         # the loudest sample a kept take may reach after levelling
+PEAK_MAX = 10 ** (PEAK_DB / 20)
 FADE_IN, FADE_OUT = 0.008, 0.03
 BURST = 0.06           # the decoder's opening burst is over by then: the silence must begin by it
 GAP = 0.04             # the silence that has to follow the burst for the voice to start clean
@@ -106,15 +108,16 @@ def shout(a, sr):
 
 
 def level(a, sr):
-    """The take with its median speech at TARGET_DB and its peaks under PEAK_CAP."""
-    a = np.asarray(a, dtype=np.float32) * np.float32(10 ** ((TARGET_DB - speech_level(a, sr)) / 20))
+    """The take times one gain: the one that puts its median speech at TARGET_DB, or less when that
+    would put its loudest sample over PEAK_MAX. Nothing is clipped or squashed, so the shape of every
+    vowel is the model's. (Before VERSION 2 a tanh knee above 0.4 flattened the peaks of short takes:
+    11 to 17% of the samples of "Sound familiar?" and "It's a fair worry.", audible as a close mic.)"""
+    a = np.asarray(a, dtype=np.float32)
     peak = float(np.max(np.abs(a))) if len(a) else 0.0
-    if peak > PEAK_CAP:
-        # a soft knee above the cap rather than a hard clip: tanh keeps the shape of a loud vowel
-        k = PEAK_CAP * 0.8
-        over = np.abs(a) > k
-        a[over] = np.sign(a[over]) * (k + (PEAK_CAP - k) * np.tanh((np.abs(a[over]) - k) / (PEAK_CAP - k)))
-    return a
+    gain = 10 ** ((TARGET_DB - speech_level(a, sr)) / 20)
+    if peak > 0:
+        gain = min(gain, PEAK_MAX / peak)
+    return a * np.float32(gain)
 
 
 def stamp(key):

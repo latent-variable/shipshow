@@ -45,10 +45,10 @@ Three layers: **understand** (the context skills and `evidence-standard`), **mak
 
 ## Decision log
 
-### D1. No speech recognition for timing (2026-10-17; narrowed by D44)
+### D1. No speech recognition for timing (2026-10-17; narrowed by D44, reversed for runs of sentences by D47)
 **Decision.** Word timing comes from voicing each sentence on its own, and placing a word by
 its share of the sentence's letters. No ASR step in timing. (D44 adds an optional ASR that
-verifies takes and never times them.) **Why.** `hyperframes transcribe` built
+verifies takes and never times them; D47 later lets Whisper time runs of sentences.) **Why.** `hyperframes transcribe` built
 whisper.cpp and then timed out downloading its model after six minutes; a second model is a
 larger download. **Consequence.** A cue can be a few hundred milliseconds off; fix it by
 splitting the sentence or using `data-cue="+seconds"`. A spoken alias made through `say`
@@ -378,7 +378,7 @@ syllables-a-minute pace target next to this branch's measured reading queue and 
 past the 12-word limit) and the `how-we-built-it` video. Nothing on this branch touches captions; the merge was clean.
 **Costs.** None known; the test count is now 47.
 
-### D31. OmniVoice speed is a stretch after generation, never a shorter window (2026-10-17; corrects D27's consequence)
+### D31. OmniVoice speed is a stretch after generation, never a shorter window (2026-10-17; corrects D27's consequence; a run of sentences is the exception, D47)
 **Decision.** `bin/omnivoice.py` asks OmniVoice for each sentence at its natural length (mlx-audio's own sizing, padded
 15%), trims the padding's silence from the take's edges, then applies `speed` with ffmpeg `atempo`, which keeps the pitch.
 A take that comes out silent is voiced again with another seed (three tries). A reference clip over 10 s is trimmed at its
@@ -415,7 +415,7 @@ listen. The boom, scratch and trombone are the likeliest to want a person's ear 
 **Decision.** Ported from DAIS product-videos, where the owner heard these faults in published videos before anything
 measured them. `bin/voicecheck.py`: OmniVoice takes have the opening burst cut at the silence after it, are voiced again
 (three seeds) when the voice starts with no lead-in or a 400 ms stretch runs over 8 dB above the take's own median, and
-every take of either engine is set to a median speech of -20 dBFS with peaks capped at -6 dBFS (a tanh knee, not a hard clip).
+every take of either engine is set to a median speech of -20 dBFS with peaks capped at -6 dBFS (a tanh knee, not a hard clip; D47 replaced the knee).
 Kokoro takes are levelled in place after voicing; the take's key is unchanged and a `.lvl` stamp (rules' version and a hash of
 the key) says it is done, so nothing is voiced again. `bin/hearback.py`: with faster-whisper installed (`npm run
 setup:hearback`, `requirements-hearback.txt`; small.en pinned by revision) each take is transcribed and scored against the
@@ -596,14 +596,57 @@ one punchline a beat was to slow the whole video. product-videos has the same th
 is dead air for the ear: at 1.6 to 2.2 s on top of the scene gap, round 2's pacing critic heard four three-second silences, so
 the video settled on 0.8 to 1.3 s.
 
+### D47. OmniVoice voices runs of sentences, Whisper times them, and levelling no longer squashes (2026-10-26)
+**Decision.** Three changes from one listening. The owner heard a video in his cloned voice and called it "really choppy",
+with short words that "sound really bad, like I'm really close to my mic". (1) **Levelling** (`bin/voicecheck.py` VERSION 2):
+a take is multiplied by one gain that moves its median speech toward -23 dBFS and is held back so its loudest sample stays at or
+below -3 dBFS. Nothing is clipped or soft-clipped. The old rule set the median to -20 dBFS and squashed everything over 0.4 into a
+tanh knee at 0.5; natural speech peaks 19 to 25 dB over the median, so short takes lived in the knee (samples over 0.4, on 14
+sentences: "It's a fair worry." 16.9%, "Sound familiar?" 11.0%, mean 4.1%, up to 13% of a take's samples piled against the 0.5
+ceiling). A Kokoro take stamped by the old rules is voiced again (a `.lvl` stamp from an older VERSION), since levelling it again
+cannot undo a squash. (2) **Runs.** With OmniVoice and faster-whisper installed (and without `--no-hearback`) a scene is grouped,
+after `say`, into runs of whole sentences up to 45 words (`groupRuns` in `bin/lib.mjs`; a longer sentence stands alone), and
+each run is one take, `<scene>-r<n>.wav`, cached by its written and spoken text, voice, speed, check version and method, so
+editing a sentence re-voices its run. It keeps the per-take checks (opening burst cut, shout and silence retakes, best of three by
+hear-back score) and tries a clean start five times, as DAIS product-videos does, not three. Gaps are the existing `gap` between
+runs and none inside them. Why: voicing every sentence alone restarts its prosody; product-videos voices runs of up to 45 words
+(a 268-word scene in one call lost a quarter of its words, every scene over about 150 words fell to 90 to 94%) and the owner
+approved its narration. (3) **Whisper times the run.** The same transcription that scores the take is run with
+`word_timestamps=True` (`hearback.hear_words`), and `bin/wordtime.py` lays the script over it: script and transcript are compared
+as letters (the hear-back normalisation, numbers spelled out, a year read as a year or a quantity, whichever matches), difflib
+matches them, and a written word is placed where its first matched letter was heard once half its letters matched. `say` is
+respected because the worker is given each written word with what it is said as (`spokenWords`); a `say` key of several words
+belongs to its first. A word nobody heard is placed between its matched neighbours by letters. A sentence starts at its first word
+and ends at its last, the last of a take no earlier than 0.1 s before the take ends (Whisper cuts the final word short).
+`timing.json` keeps its shape and each timed sentence gains `words: [{"w", "at"}]`, absolute seconds; `build` uses them for cues
+(`wordTimes`) and caption lines, and uses the letter share for a sentence without. **Speed** for a run is a shorter window
+(`pace: "window"`), not atempo (D31): at speed 1.2 on the five runs of the test video, three takes each way, both scored a mean
+0.998 heard back and none fell under 0.988, so the squeeze that dropped words at 1.3x on single sentences did not at 1.2 on runs, and
+it is what the owner has heard approved. D31 stands for a take of one sentence. **Unchanged:** Kokoro, and OmniVoice without
+faster-whisper or with `--no-hearback`, keep one take per sentence, atempo and the letter share.
+**Why this reverses D1.** D1 refused ASR because `hyperframes transcribe` timed out downloading a model. faster-whisper is already
+installed for hear-back, so timing costs no second download; a take per sentence sounded choppy; product-videos times its cues this
+way. **Measured (2026-10-26, this Mac, the cloned voice).** Whisper's sentence start against the first speech onset in the audio
+(energy, after a 120 ms pause), 8 sentences that follow a pause: median +0.01 s, mean 0.04 s, worst 0.21 s. The other six sentences
+run on from the one before with no pause to detect. Letter-share cue estimates for the same words were off from the heard time by
+up to 0.8 s ("Hopper" -0.81, "1952" +0.71). Every one of 132 words matched in all six runs. Hear-back per run 0.988 to 1.0.
+Levelling: samples over 0.4 on the same 14 sentences 16.9% at worst before, 1.0% after, and the runs 0.5% at worst, none piled against a
+ceiling; run takes sit within 1.4 dB of each other (-23.2 to -24.6 dBFS), while single short sentences under the new rule can end up
+10 dB under their neighbours ("Sound familiar?" -33 dBFS) because their peak is the limit. **Costs and not verified.** A run is
+re-voiced whole for one edited word; hear-back is now timing, so a machine without it falls back to the sentence path and a
+different sound. A clone that starts speaking at the first sample is still "starts at once" on all five runs (five tries do not help).
+Whisper's word times are good to a tenth of a second and its last words in a take run short. Nobody here can listen: whether runs
+sound less choppy, and whether window beats atempo to the ear, is the owner's to judge.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
 
 **The pipeline** (`bin/`, `kit/`)
-- `voice` voices one sentence at a time and writes `timing.json`. A take is cached by its text,
+- `voice` voices one sentence at a time (or, with OmniVoice and hear-back, runs of sentences up to 45 words, D47) and writes `timing.json`. A take is cached by its text,
   voice and speed, so inserting a sentence re-voices every later sentence in that scene (numbering restarts per
   scene; the cost per take has not been measured).
+- A sentence timed from a run carries `words: [{"w", "at"}]` in `timing.json`; `build` places cues and caption lines on those times (`bin/build.mjs`, `heardAts`), and on the letter share for a sentence without.
 - `build` writes `index.html` from `scenes.html` and the timing. It stops on a cue word its
   scene never says and warns when a bare cue word occurs more than once in its scene. A cue
   matches the start of a spoken word across the whole scene, so use `word#n` or a distinctive

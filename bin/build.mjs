@@ -35,17 +35,21 @@ const byId = Object.fromEntries(timing.scenes.map((s) => [s.id, s]));
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-/** Every word of a scene with the time the voice reaches it: its share of its sentence's letters. */
+/** The time of each word of a sentence when it was timed from what was heard (bin/voice.mjs, Whisper), else null. */
+const heardAts = (s) => (s.words?.length === s.text.split(" ").length ? s.words.map((x) => x.at) : null);
+
+/** Every word of a scene with the time the voice reaches it: when Whisper heard it, else its share of its sentence's letters. */
 function wordTimes(scene) {
   const out = [];
   for (const s of scene.sentences) {
     const words = s.text.split(" ");
+    const heard = heardAts(s);
     const total = s.text.replace(/\s/g, "").length || 1;
     let before = 0;
-    for (const w of words) {
-      out.push({ word: w, at: s.start + (before / total) * s.duration });
+    words.forEach((w, k) => {
+      out.push({ word: w, at: heard ? heard[k] : s.start + (before / total) * s.duration });
       before += w.length;
-    }
+    });
   }
   return out;
 }
@@ -89,13 +93,22 @@ function captions() {
   for (const scene of timing.scenes) {
     for (const s of scene.sentences) {
       const total = s.text.replace(/\s/g, "").length || 1;
-      let before = 0;
+      const heard = heardAts(s);
+      let before = 0, seen = 0;
       for (const line of lines(s.text)) {
         const len = line.replace(/\s/g, "").length;
-        const at = (n) => round(s.start + (n / total) * s.duration);
-        let into = before;
-        const words = line.split(" ").map((w) => ((into += w.length), { w, at: at(into - w.length) }));
-        caps.push({ t: s.start + (before / total) * s.duration, e: s.start + ((before + len) / total) * s.duration + 0.3, text: line, words });
+        const names = line.split(" ");
+        if (heard) {
+          // timed from what was heard: the line starts on its first word and lasts to the next line's first word
+          const next = heard[seen + names.length] ?? s.start + s.duration;
+          caps.push({ t: heard[seen], e: next + 0.3, text: line, words: names.map((w, k) => ({ w, at: round(heard[seen + k]) })) });
+          seen += names.length;
+        } else {
+          const at = (n) => round(s.start + (n / total) * s.duration);
+          let into = before;
+          const words = names.map((w) => ((into += w.length), { w, at: at(into - w.length) }));
+          caps.push({ t: s.start + (before / total) * s.duration, e: s.start + ((before + len) / total) * s.duration + 0.3, text: line, words });
+        }
         before += len;
       }
     }
