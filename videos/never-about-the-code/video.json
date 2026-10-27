@@ -37,10 +37,11 @@
   },
   "pauses": {
     "02-compiler": 0.5,
-    "04-priesthood": 0.6,
-    "05-real-programmers": 0.6,
-    "08-now": 0.4,
-    "11-objection": 0.4
+    "04-priesthood": 0.4,
+    "05-real-programmers": 0.4,
+    "08-now": 2.0,
+    "11-objection": 0.4,
+    "09-converts": 0.6
   },
   "hold": 5,
   "gap": 0.45
