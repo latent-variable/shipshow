@@ -1,2 +1,4 @@
-You don't understand the code. In 2026, that's the top comment on every AI pull request.
-And it's a fair point. Except programmers said basically the same thing about compilers, back in the 1950s, while writing machine code by hand. Like animals.
+[flat, reading a comment aloud] You don't understand the code.
+[dry] In 2026, that's the top comment on every AI pull request.
+[conceding, then sly] And it's a fair point. Except programmers said basically the same thing about compilers, back in the 1950s, while writing machine code by hand.
+[deadpan] Like animals.

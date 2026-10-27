@@ -5,9 +5,9 @@
   "importance_reason": "public: Lino's YouTube channel, in his own voice, making historical and research claims a viewer may repeat",
   "audience": "A developer or tech lead on YouTube who uses AI coding agents, or argues against them, and has heard 'you don't understand the code'. Knows roughly what a compiler is; may not know the history. After watching, they can answer that criticism with what each earlier layer's skeptics said, why the layer won anyway, where AI coding stands in 2026, and a better question: do you understand what it does, and how do you know?",
   "theme": "lofi",
-  "engine": "omnivoice",
-  "voice": "lino",
-  "speed": 1.15,
+  "engine": "drama",
+  "voice": "lino-long",
+  "speed": 1.2,
   "say": {
     "1952": "nineteen fifty two",
     "1954": "nineteen fifty four",
@@ -44,7 +44,7 @@
   "pauses": {
     "04-impossible": 0.5,
     "08-the-trade": 0.6,
-    "09-now": 1.2
+    "09-now": 0.5
   },
   "hold": 4,
   "gap": 0.35,

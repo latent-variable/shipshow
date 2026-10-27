@@ -102,6 +102,7 @@ npm run setup                                                     # .venv with K
 npm run doctor                                                    # what is missing, with the fix; voices one word
 npm run setup:omnivoice                                           # optional, Apple Silicon: OmniVoice for better and cloned voices (and hear-back)
 npm run setup:hearback                                            # optional, any engine: faster-whisper hears each take back (about 480 MB model)
+npm run setup:drama                                               # optional, Apple Silicon: Drama 3, the directed voice, in its own .venv-drama
 ```
 
 The first `doctor` downloads Kokoro into `~/.cache/hyperframes/tts` (about 340 MB). The first
@@ -114,7 +115,7 @@ checks it and voices one word; `-- --hearback` checks the hear-back and hears on
 | Command | What it does |
 |---|---|
 | `npm run new -- <folder>` | A new video from `template/` (`videos/x` for this repo, `local/videos/x` for any other code base) |
-| `npm run voice -- <folder>` | One take per sentence (Kokoro, or OmniVoice: `--engine omnivoice --voice <name>` to try it; OmniVoice with hear-back installed voices runs of sentences instead), levelled and, with hear-back installed, heard back (`--no-hearback` skips it), then `assets/narration.wav` and `timing.json` |
+| `npm run voice -- <folder>` | One take per sentence (Kokoro, or OmniVoice: `--engine omnivoice --voice <name>` to try it; OmniVoice with hear-back installed, and Drama 3 (`--engine drama`), voice a line of the script per take instead), levelled and, with hear-back installed, heard back (`--no-hearback` skips it), then `assets/narration.wav` and `timing.json` |
 | `npm run build -- <folder>` | The HyperFrames composition, `index.html`, from `scenes.html` and the timing |
 | `npm run check -- <folder>` | HyperFrames' own check: lint, layout, motion, caption contrast |
 | `npm run preview -- <folder>` | The HyperFrames studio, to scrub through it |
@@ -154,7 +155,7 @@ number in the text counts up), `highlight` (a marker sweeps under text already s
 `glitch` (arrives split into colour channels, jitters, settles), `slam` (lands big and hard). A `<script>` in `scenes.html` runs after the shared
 timeline and may add GSAP tweens to `tl`; each cued element's time is its `data-at`.
 
-**Voice.** Two engines, set by `engine` in `video.json` or `local/config.json` (`--engine` on `make` or
+**Voice.** Three engines, set by `engine` in `video.json` or `local/config.json` (`--engine` on `make` or
 `voice` tries one). **`kokoro`** is the default and runs anywhere: `af_heart`; `npx hyperframes tts --list`
 shows the rest; non-English voices need `espeak-ng` system-wide. **`omnivoice`** is higher quality and
 clones voices, on Apple Silicon only (MLX; `npm run setup:omnivoice`, then `"engine": "omnivoice"`). Its
@@ -165,7 +166,18 @@ VCTK speaker p361, CC BY 4.0, which a public video credits: "Voice: VCTK corpus,
 `<name>.txt` beside it (a clip that ends mid-word, or has no transcript, clones worse: Eve's silent takes, 2026-10-17;
 with hear-back installed a clone or built-in voice with no `.txt` is given one by hearing its reference back, so
 write the `.txt` only to correct it). `say` maps a written word to what the engine is told to say
-(`"HyperFrames": "Hyper Frames"`); captions keep the written form.
+(`"HyperFrames": "Hyper Frames"`); captions keep the written form. **`drama`** (Fish Audio Drama 3, DESIGN D55) is the
+directed one, on Apple Silicon only: `npm run setup:drama` makes `.venv-drama` (it needs an mlx-audio newer than
+OmniVoice's pin), and the model (`mlx-community/fish-audio-drama-3-4bit`, pinned in `bin/lib.mjs` `DRAMA`, about 20 GB)
+downloads on first use unless `SHIPSHOW_DRAMA_MODEL` or `local/config.json` `"dramaModel"` names a folder holding it. A
+stage direction in brackets at the start of a script line, `[deadpan] Like animals.`, is performed; captions, cues and
+the other engines never see it (`directedSentences` in `bin/lib.mjs`). How to direct, and what breaks it: `narration-writing`,
+*Direction*. Voices are the same recordings as OmniVoice's, but a clone may be 3 to 30 seconds. Each line is one take,
+made by `bin/drama.py` in one process: retaken when it is silent, stalls for 2 s or ends in 3 s of silence, time-stretched
+to `speed` (0.8 to 1.5; it has no speed control and reads slower than the base pace), levelled, heard back with word
+times, and the best of five kept. Its licence is the Fish Audio Community License: free for research and non-commercial
+use and for commercial use under $500K a year in revenue, never as a hosted service, and never a voice cloned without
+consent.
 
 **Checks on every take** (ported from DAIS product-videos, where the owner heard these faults in published
 videos; `bin/voicecheck.py`, `bin/hearback.py`, `bin/hearback.mjs`). *Levelling*, both engines: a take's median
@@ -317,12 +329,12 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ## Layout
 
 ```
-bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take
+bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
 themes/     shipshow, paper, launch, buildday and lofi; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono: SIL OFL)
 skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
 template/   what npm run new copies
-videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) and never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino.wav exists)
+videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) and never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino-long.wav exists, with Drama 3 set up)
 examples/   ledgerly, a fictional invoicing API with one authorization bug, a threat model and an access log
 skills/critic-grounding/scripts/  excerpt.mjs and check-excerpt.mjs, the excerpt check (run through the skill)
 skills/evidence-standard/scripts/  sandbox-run.sh, capture.mjs, verify-vendored.sh (run through the skill)
@@ -338,7 +350,8 @@ local/      gitignored, per person (tailor skill)
 - **`requirements.txt` pins phonemizer.** kokoro-onnx 0.6.1 needs `EspeakWrapper.set_data_path`, which phonemizer 3.3 lacks. Bump the two together and run `npm run doctor`.
 - **espeak-ng fails when its data path is 160 characters or longer** (measured 2026-10-17: 159 works, 160 fails). It reports a missing `.../site-packages//phontab`, not a path error. A venv deep in a temp or worktree path hits this; `doctor` checks the length.
 - **OmniVoice is Apple Silicon only, and opt-in.** `requirements-omnivoice.txt` is separate so Kokoro installs anywhere; `doctor` lists the engine as `opt` until you ask with `--omnivoice`. `bin/omnivoice.py` voices every stale sentence in one process (the model loads once) from a job file `bin/voice.mjs` writes; a user-set `HYPERFRAMES_PYTHON` is its Python too, which is how the tests stand a fake worker in for it. The model and the built-in clips are pinned by revision in `bin/omnivoice-voices.json`.
-- **A clone is somebody's voice.** OmniVoice's own disclaimer prohibits unauthorized cloning and impersonation: clone yourself or someone who agreed. `local/` never leaves the machine, so a clone never reaches this public repo; keep it that way.
+- **A clone is somebody's voice.** OmniVoice's own disclaimer prohibits unauthorized cloning and impersonation, and Drama 3's licence forbids cloning without consent: clone yourself or someone who agreed. `local/` never leaves the machine, so a clone never reaches this public repo; keep it that way.
+- **Drama 3 needs about 40 GB free** (it loads 22 GB and peaked at 35 GB; `bin/drama.py` refuses below 40 unless `SHIPSHOW_DRAMA_FORCE=1`), and it drops words: a short last sentence on about 1 seed in 3 with no direction, and the rest of a line after a mid-line direction or a `[pause]`, `[long pause]` or `[slowly]` on nearly every seed (measured 2026-10-27, D55). Hear-back and the retakes are what make it usable, so `.venv-drama` always carries faster-whisper; never direct a pause, and listen to the lines the voice step lists.
 - **OmniVoice drops words when its window is too short, so a take of one sentence gets its speed after generation.** It fills the duration it is given: squeezed to 1.3x, 7 of 24 sentences lost or garbled words ("not a" vanished from "not a wall of logs"); generated at its natural length and then time-stretched (ffmpeg `atempo`), none did (measured 2026-10-17 with Whisper, why-shipshow). `bin/omnivoice.py` also trims the padding's silence from each take (13.8 s of a 67 s video was dead air) and re-voices a take that comes out silent. At 16 steps instead of 32 it dropped words on long lines, so `STEPS` stays 32. With faster-whisper installed the pipeline hears each take back and flags a sentence under 0.97 (see *Checks on every take*); a word said wrongly that Whisper mends from context still passes, so listen to the flagged ones and to anything that matters before you ship. A run of sentences (D47) is the exception: its window is shortened to the speed (`pace: "window"`), because at 1.2 it heard back as well as atempo (0.998 mean, none under 0.988, 5 runs three times each, 2026-10-26).
 - **A take's identity includes the voice's bytes.** A clip replaced under the same name (or its `.txt` edited) is a different voice, so its takes are voiced again; a Kokoro take's key is unchanged from before OmniVoice, so existing takes stay valid.
 - **Whisper times runs of sentences, and only runs.** This reverses "speech recognition checks takes and never times them" (2026-10-26, DESIGN D47). Why: `hyperframes transcribe` (whisper.cpp) timed out downloading its model, but faster-whisper is already installed for hear-back, so timing costs no second download; a take per sentence sounded choppy to the owner; and DAIS product-videos, whose narration he approved, times cues from the same word timestamps. A run's take is heard back with `word_timestamps=True`, never a whole video's track (a window edge dropped a dozen words in product-videos). A Whisper word time reaches `timing.json` only through `bin/wordtime.py`, only for a run, and only as `words`; a sentence take, Kokoro, and the `--no-hearback` path are placed as before. Never make faster-whisper required. A cue a few hundred milliseconds off in a run is Whisper's resolution: use `data-cue="+seconds"`.

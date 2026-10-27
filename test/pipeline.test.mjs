@@ -440,7 +440,78 @@ test("omnivoice says what to do about a voice it does not have and a speed outsi
   assert.notEqual(r.status, 0);
   assert.match(r.stderr, /speed 1\.5 is outside 1 to 1\.3/);
   r = voiceRun(dir, local, py, "--engine", "mystery");
-  assert.match(r.stderr, /engine is "mystery"; it takes kokoro or omnivoice/);
+  assert.match(r.stderr, /engine is "mystery"; it takes kokoro, omnivoice or drama/);
+});
+
+// The drama engine (Fish Audio Drama 3, DESIGN D55). The same fake worker stands in for bin/drama.py, from its own venv.
+const dramaRun = (dir, local, py, ...args) => spawnSync(process.execPath, [join(REPO, "bin", "voice.mjs"), dir, "--engine", "drama", ...args], {
+  encoding: "utf8", env: { ...process.env, SHIPSHOW_LOCAL: local, SHIPSHOW_DRAMA_PYTHON: py, HYPERFRAMES_PYTHON: "/nonexistent" },
+});
+
+test("drama is told the stage directions, a line at a time, and the captions and other engines never see them", () => {
+  const dir = newVideo(), local = fakeLocal(), py = fakeWorker();
+  writeFileSync(join(dir, "script", "01-intro.txt"), "[dry, matter-of-fact] Programmers said the same about compilers. Like animals.\n[playful] It was fine. [laughs]\n");
+  writeFileSync(join(dir, "script", "02-idea.txt"), "One more. [sigh. then, quietly] Really.\n");
+  const jobsOf = () => readFileSync(join(dir, "assets", "drama-jobs.json.log"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
+
+  let r = dramaRun(dir, local, py, "--voice", "mine");
+  assert.equal(r.status, 0, r.stderr);
+  const [first] = jobsOf();
+  assert.deepEqual(first.jobs.map((j) => j.text), [
+    "[dry, matter-of-fact] Programmers said the same about compilers. Like animals.",
+    "[playful] It was fine. [laughs]",
+    "One more. [sigh. then, quietly] Really.",
+  ], "one take per line, each with its directions where they stand; a full stop inside a direction ends no sentence");
+  assert.deepEqual(first.jobs.map((j) => j.plain), ["Programmers said the same about compilers. Like animals.", "It was fine.", "One more. Really."]);
+  assert.equal(first.voice.text, "The words in the clip.");
+  assert.equal(first.model.repo, "mlx-community/fish-audio-drama-3-4bit");
+  const timing = JSON.parse(readFileSync(join(dir, "timing.json"), "utf8"));
+  assert.equal(timing.engine, "drama");
+  const shown = timing.scenes.flatMap((s) => s.sentences.map((x) => x.text));
+  assert.deepEqual(shown, ["Programmers said the same about compilers.", "Like animals.", "It was fine.", "One more.", "Really."]);
+  assert.ok(shown.every((t) => !t.includes("[")), "no direction reaches a caption");
+
+  // A direction is part of the line as told: changing one voices that line again, and only it.
+  writeFileSync(join(dir, "script", "01-intro.txt"), "[dry, matter-of-fact] Programmers said the same about compilers. Like animals.\n[deadpan] It was fine. [laughs]\n");
+  r = dramaRun(dir, local, py, "--voice", "mine");
+  assert.equal(r.status, 0, r.stderr);
+  assert.deepEqual(jobsOf()[1].jobs.map((j) => j.text), ["[deadpan] It was fine. [laughs]"]);
+
+  // OmniVoice, given the same script, is told the words only.
+  r = voiceRun(dir, local, py, "--engine", "omnivoice");
+  assert.equal(r.status, 0, r.stderr);
+  const omni = JSON.parse(readFileSync(join(dir, "assets", "omnivoice-jobs.json.log"), "utf8").trim().split("\n")[0]);
+  assert.ok(omni.jobs.every((j) => !j.text.includes("[")), omni.jobs.map((j) => j.text).join(" | "));
+});
+
+test("drama takes a speed it was tested at and says how to set it up", () => {
+  const dir = newVideo(), local = fakeLocal(), py = fakeWorker();
+  let r = dramaRun(dir, local, py, "--speed", "1.7");
+  assert.notEqual(r.status, 0);
+  assert.match(r.stderr, /speed 1\.7 is outside 0\.8 to 1\.5, the range drama was tested at/);
+  r = dramaRun(dir, local, "/nonexistent/python");
+  assert.notEqual(r.status, 0);
+  assert.match(r.stderr, /npm run setup:drama/);
+  r = spawnSync(process.execPath, [join(REPO, "bin", "voice.mjs"), dir, "--engine", "drama"], {
+    encoding: "utf8", env: { ...process.env, SHIPSHOW_LOCAL: local, SHIPSHOW_DRAMA_PYTHON: py, SHIPSHOW_DRAMA_MODEL: "/models/drama3" },
+  });
+  assert.equal(r.status, 0, r.stderr);
+  assert.deepEqual(JSON.parse(readFileSync(join(dir, "assets", "drama-jobs.json.log"), "utf8").trim().split("\n").at(-1)).model, { path: "/models/drama3" });
+});
+
+test("stage directions are cut from what is shown and kept with the sentence they stand in", async () => {
+  const { directedSentences, withoutDirections, lineRuns } = await import("../bin/lib.mjs");
+  assert.equal(withoutDirections("Hello [sarcastic] world , ok."), "Hello world, ok.");
+  assert.deepEqual(directedSentences("[deadpan] Like animals. It was fine. [laughs]\nWait. [long pause. then dry] Fortran?"), [
+    { text: "Like animals.", directed: "[deadpan] Like animals." },
+    { text: "It was fine.", directed: "It was fine. [laughs]" },
+    { text: "Wait.", directed: "Wait." },
+    { text: "Fortran?", directed: "[long pause. then dry] Fortran?" },
+  ]);
+  // Lines that do not each end a sentence are one paragraph, as before.
+  assert.deepEqual(directedSentences("One line that\nruns on. Then.").map((s) => s.text), ["One line that runs on.", "Then."]);
+  const text = "[dry] A b. C d.\nE f. [sighs]";
+  assert.deepEqual(lineRuns(text, directedSentences(text).map((s) => s.text)), { runs: [[0, 1], [2]], byLine: true });
 });
 
 test("new scaffolds a folder that holds only the working agent's brief, and keeps the brief", () => {

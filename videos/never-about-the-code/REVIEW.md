@@ -253,3 +253,23 @@ the twelve-hour point arrives (it fades first, since the two would collide; chec
 are that a machine writing an efficient program was "a foolish and arrogant dream"; the line and the card now say that a machine writing
 the program, the idea behind Fortran, was the dream, and `sources.md` quotes the passage. Scene 06's "Fortran? The foolish and arrogant
 dream?" still pays it off.
+
+# Fifth cut: Drama 3, directed (2026-10-27)
+
+Lino, on hearing Drama 3 against OmniVoice: use it, and use what it is for, so that "where we're using humor, sarcasm, whatever, it
+comes across ... in the direction", speed it up slightly, and make it "available for others going forward". ShipShow got a third
+engine (DESIGN D55): every script line now opens with a stage direction (`[deadpan]`, `[sarcastic]`, `[mock-dramatic]`, `[smug]`),
+lines split where the tone turns so each punchline stands alone ("Like animals.", "No.", "Also no.", "In two months."), no
+timing directions (they stalled the voice in testing). The words are the fourth cut's, unchanged. Voice: `lino-long`, the first
+15 s of the owner's Yap recording as recorded, with its transcript; speed 1.2 over the engine's slower natural read. 52 takes,
+all heard back; two under 97%, both Whisper's spelling of "Karpathy" and "56%". 4:25.
+
+The pictures did not change, so the critics whose ground the voice touched ran fresh: sync and pacing (Sonnet).
+
+| Critic | Verdict | What it found, and what changed |
+|---|---|---|
+| sync | pass (3 minor) | The "caught" terminal row landed on the first "catch" of its sentence: now on "won't catch" (`catch#3`). The closing thump 0.5 s after its slam, and Karpathy's photo 0.15 s early from Whisper's "Carpathi", kept. |
+| pacing | fail (4 major) | 07, 10, 02 and 12 run 19 to 23% over target: accepted, as on the fourth cut (the owner asked for this pace). The pause after 09 was 2.5 s of dead air, padding left from the OmniVoice cut: now 0.5 s. 06 runs slow (a 1.9 s gap between the double take and "Yesterday's insult, today's flex") and some cards are short to read: kept for the owner's listen, since the gap is inside the directed delivery and an agent cannot hear whether it lands. |
+
+**For the owner's listen:** whether each direction lands (the double take in 06, the deadpan punchlines, the sarcasm in 05), and
+the 1.9 s beat in 06.

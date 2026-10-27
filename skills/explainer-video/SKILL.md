@@ -2,7 +2,7 @@
 name: explainer-video
 description: >
   Make or update a narrated explainer video in this repo: facts from a source of record,
-  a script, scenes, a Kokoro or OmniVoice voice, a HyperFrames render, then the critic loop until the
+  a script, scenes, a Kokoro, OmniVoice or Drama 3 voice, a HyperFrames render, then the critic loop until the
   video's critics pass. Three kinds: a decision video an agent makes mid-work so a person
   can make a call, a feature explainer (how something in a code base works), and a release
   explainer. Load when asked for an explainer, a release video, a "video of how X works",
@@ -101,6 +101,9 @@ sections in `scenes.html`): the build stops on a script file with no section.
   `--speed`. Write for it: at 1.25, a 30 second scene holds about 100 words.
 - Numbers and versions as they are said: "version two point four". Names the voice gets
   wrong go in `video.json` `"say"`; captions keep the written form.
+- A video where tone carries the point (humour, sarcasm, an opinion piece for a channel) is voiced with
+  `"engine": "drama"` and directed: one bracketed direction at the start of each line (`narration-writing`,
+  *Direction*). A decision or feature video reads well undirected on OmniVoice or Kokoro.
 - A release explainer: what this release is, then breaking changes with before and after,
   then what is new, then the upgrade steps, then where to read more.
 

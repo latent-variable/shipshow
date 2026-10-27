@@ -158,8 +158,8 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 **Facts from the docs that shaped it.** Only `name` is required, in kebab-case, and may not start
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
-every turn (measured: 22 skills, 7,882 characters, about 1,971 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 209). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+every turn (measured: 22 skills, 7,891 characters, about 1,973 tokens), so descriptions stay short
+and SKILL.md under 500 lines (longest 212). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -774,6 +774,30 @@ take (`lineRuns` in `bin/lib.mjs`); a line over 70 words (`LINE_MAX`) is split b
 they don't sound like they're meant to be one after the other": a word count cut thoughts in half and joined unrelated ones. The
 writer knows where a thought ends; a line break says so. **Costs.** A long line is a long take, where OmniVoice drops words more often
 (D47's measurements); hear-back's best of three and the 97% flag still catch it, and lines over 70 words are split.
+
+### D55. Drama 3 is the directed engine: the script carries stage directions (2026-10-27)
+**Decision.** A third engine, `"engine": "drama"`: Fish Audio Drama 3 (the 4-bit MLX conversion, pinned in `bin/lib.mjs`
+`DRAMA`), run by `bin/drama.py` from its own venv, `.venv-drama` (`npm run setup:drama`), because it needs an mlx-audio commit
+newer than the 0.5.9 OmniVoice is pinned to; the venv carries faster-whisper, so its takes are always heard back. A script line
+may carry stage directions in brackets: `directedSentences` (`bin/lib.mjs`) keeps them in what Drama 3 is told and takes them
+out of everything else (captions, cues, `timing.json`, word counts, and the text Kokoro and OmniVoice are told). Each line is one
+take (D54), cached by the line as told, so changing a direction voices that line again. A take is retaken when it is silent,
+stalls 2 s inside or ends in 3 s of silence, is time-stretched to `speed` (0.8 to 1.5; the model has no speed control and reads
+at about 130 words a minute from the owner's clip), levelled, heard back, and the best of five kept. **Why.** The owner, on
+hearing Drama 3 against OmniVoice: use it, because it lets the script "drive the narrative ... the quality, the tone", so that
+"where we're using humor, sarcasm, whatever, it comes across", and make that "available for others going forward". OmniVoice
+reads every line the same way; a direction is the only place a writer can say how a joke lands. **Measured (2026-10-27, the owner's
+15 s clip, one line on two or three seeds per direction).** At a line's start: `[excited]` widened the pitch range from about
+2 semitones to 3.1 to 3.6 and quickened the read, `[deadpan]` narrowed it to 1.3 to 1.6, `[whispers]` dropped the level 6 dB on
+one seed of two, `[dry, matter-of-fact]` and `[playful, mock-serious]` kept every word on 6 of 6. Timing directions broke the take:
+`[pause]` and `[long pause]` 4 of 4, `[slowly]` 2 of 2 (seconds of silence, the rest of the line never said), `[shouting]` 1 of 2.
+A direction in the middle of a line lost the words after it on 5 of 6; `[laughs]` mid-line or at the end lost a sentence on 3 of 5;
+with no direction, a short last sentence was dropped on 1 seed of 3. So the rules in `narration-writing` (*Direction*): one tone
+direction per line, at its start, a new line where the tone turns, never a pause. **Costs.** About 40 GB of free memory while it
+runs; once the model is loaded a line, heard back and retaken, took about 11 s, so never-about-the-code's 52 lines voiced in about
+8 minutes. The licence (Fish Audio Community License) is free under $500K a year in revenue and forbids a hosted service and
+cloning without consent; the weights are downloaded by whoever runs it, never shipped here. What a direction sounds like is judged
+by ear: hear-back proves the words, not the tone.
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
@@ -782,6 +806,7 @@ What an agent or person observes. Each line is checkable against the cited file.
 - `voice` voices one sentence at a time (or, with OmniVoice and hear-back, runs of sentences up to 45 words, D47) and writes `timing.json`. A take is cached by its text,
   voice and speed, so inserting a sentence re-voices every later sentence in that scene (numbering restarts per
   scene; the cost per take has not been measured).
+- A bracketed stage direction in a script line reaches only the Drama 3 engine; captions, cues, `timing.json` and the other engines get the line without it, and a line's direction moves with the line, never to the next one (`directedSentences`, D55).
 - A sentence timed from a run carries `words: [{"w", "at"}]` in `timing.json`; `build` places cues and caption lines on those times (`bin/build.mjs`, `heardAts`), and on the letter share for a sentence without.
 - `build` writes `index.html` from `scenes.html` and the timing. It stops on a cue word its
   scene never says and warns when a bare cue word occurs more than once in its scene. A cue

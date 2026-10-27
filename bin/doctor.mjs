@@ -6,12 +6,14 @@
 //                                     one word back (downloads its model, about 480 MB, on the first run)
 //   node bin/doctor.mjs --omnivoice   also checks the optional OmniVoice engine, and voices one
 //                                     word with it (downloads its model, about 1.5 GB, on the first run)
+//   node bin/doctor.mjs --drama       also checks the optional Drama 3 engine (.venv-drama), and voices one
+//                                     word with it (downloads its model, about 20 GB, unless it is already on disk)
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { writeFileSync } from "node:fs";
-import { HF, REPO, VENV_PY, ttsEnv } from "./lib.mjs";
+import { DRAMA, DRAMA_PY, HF, REPO, VENV_PY, localConfig, ttsEnv } from "./lib.mjs";
 import { MAX, MIN, pythonVersion, supportedPython } from "./python.mjs";
 import { hearbackAvailable } from "./hearback.mjs";
 
@@ -71,6 +73,30 @@ if (venv) {
     writeFileSync(spec, JSON.stringify({ speed: 1.25, voice: { name: "caro_davy" }, cache: dir, jobs: [{ text: "Ready.", wav, seed: 1 }] }));
     const r = spawnSync(py, [join(REPO, "bin", "omnivoice.py"), spec], { encoding: "utf8" });
     optional("OmniVoice speaks", r.status === 0 && existsSync(wav), (r.stderr || r.stdout || "").trim().slice(-400));
+  }
+}
+// Drama 3 is optional too, in its own venv (DESIGN D55).
+const wantDrama = process.argv.includes("--drama");
+{
+  const arm = process.platform === "darwin" && process.arch === "arm64";
+  const dpy = process.env.SHIPSHOW_DRAMA_PYTHON || DRAMA_PY;
+  const ready = arm && existsSync(dpy) && spawnSync(dpy, ["-c", "import mlx_audio.tts.models.fish_drama3, faster_whisper, soundfile"], { stdio: "ignore" }).status === 0;
+  optional("Drama 3 engine, for a directed and cloned voice (Apple Silicon)", ready,
+    arm ? "npm run setup:drama" : "Drama 3 runs on MLX, which needs a Mac with Apple Silicon", wantDrama);
+  if (ready && wantDrama) {
+    const model = process.env.SHIPSHOW_DRAMA_MODEL || localConfig().dramaModel;
+    if (model) optional(`Drama 3 model at ${model}`, existsSync(join(model, "config.json")), `download it: hf download ${DRAMA.repo} --local-dir ${model}`, true);
+    else console.log(`note  Drama 3 downloads its model (about 20 GB, ${DRAMA.repo}) on first use; local/config.json "dramaModel" names a folder that already holds it`);
+    const vm = spawnSync("vm_stat", { encoding: "utf8" }).stdout || "";
+    const page = +(vm.match(/page size of (\d+)/)?.[1] || 0);
+    const pages = [...vm.matchAll(/Pages (free|inactive|speculative):\s+(\d+)/g)].reduce((n, m) => n + +m[2], 0);
+    const gb = Math.round((page * pages) / 1e9);
+    optional(`Memory for Drama 3: about 40 GB free (have ${gb})`, gb >= 40, "close what holds memory (mlx-stop unloads mlx-serve), or set SHIPSHOW_DRAMA_FORCE=1", true);
+    const dir = mkdtempSync(join(tmpdir(), "dr-"));
+    const spec = join(dir, "jobs.json"), wav = join(dir, "doctor.wav");
+    writeFileSync(spec, JSON.stringify({ speed: 1, voice: { name: "caro_davy" }, model: model ? { path: model } : DRAMA, hearback: true, jobs: [{ text: "[cheerful] Ready.", plain: "Ready.", wav, seed: 1 }] }));
+    const r = spawnSync(dpy, [join(REPO, "bin", "drama.py"), spec], { encoding: "utf8" });
+    optional("Drama 3 speaks", r.status === 0 && existsSync(wav), (r.stderr || r.stdout || "").trim().slice(-400), true);
   }
 }
 if (!bad) {

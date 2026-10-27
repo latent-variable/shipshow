@@ -71,6 +71,33 @@ can be hard to hear. Write for the ear, then check it against the clock.
 - Do not announce structure ("in this section we will see"). Open on the point, and say why it
   matters to the viewer.
 
+## Direction (the Drama 3 engine)
+
+With `"engine": "drama"` the voice is directed: a stage direction in brackets at the start of a line,
+`[deadpan] Like animals.`, is performed, and nothing else ever shows or says it (captions, cues, the
+other engines and the packet's word counts all read the line without it; DESIGN D55). It is how a joke, an
+aside or a turn of tone is heard as one instead of read flat. Write the script for the ear first, then direct it:
+
+- **Direct the tone, never the timing.** A direction says how the line feels: `[dry]`, `[deadpan]`,
+  `[sarcastic]`, `[amused]`, `[mock-dramatic]`, `[teasing]`, `[smug]`, `[sincere]`, `[serious]`,
+  `[energetic]`, `[storyteller, with a smirk]`, `[playing devil's advocate]`. Plain words, one to four of them.
+  `[pause]`, `[long pause]` and `[slowly]` stalled the voice into seconds of silence and lost the rest of the line on
+  every seed measured; `[shouting]` and a `[laughs]` did on one seed in two. A pause is a line break, a sentence
+  end or `video.json` `gap` and `pauses`.
+- **One direction per line, at its start.** A direction in the middle of a line lost the words after it on 5 of 6
+  seeds. Where the tone turns, start a new line: the short gap between lines is the beat before a punchline.
+  Put the punchline on a line of its own (`[deadpan] Also no.`).
+- **Every line gets one**, even a plain one (`[matter-of-fact]`, `[clear, explaining]`), so the read changes where
+  you meant it to and nowhere else. The setup is plain or warm, the turn is dry, the payoff deadpan or smug; sincerity
+  is saved for the point the video exists to make.
+- **A line is still one thought.** Splitting at every sentence for a direction breaks the prosody the owner asked
+  for; split where the tone turns, not more.
+
+Measured 2026-10-27 on a clone of the owner, one line three seeds each (D55): `[excited]` widened the pitch range
+from about 2 semitones to 3.5 and quickened the read, `[deadpan]` narrowed it to about 1.5, `[whispers]` dropped
+the level about 6 dB on one seed. Drama 3 drops a short last sentence now and then even with no direction, so every
+take is heard back and retaken up to five times (`bin/drama.py`); one still under 97% is kept and listed, often for Whisper's spelling of a name, so listen to the ones the voice step lists.
+
 ## Pronunciation
 
 Kokoro mispronounces names and acronyms. Put the spoken form in `video.json` `"say"` and

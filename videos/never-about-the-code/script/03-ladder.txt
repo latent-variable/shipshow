@@ -1,2 +1,3 @@
-Every few decades, we add a new layer. Machine code, assembly, Fortran, C, Python. Each one lets you write less, and trust more.
-And every one of them got roasted by the people on the layer below. The new layer is plain English, and the roast is already live.
+[storyteller] Every few decades, we add a new layer. Machine code, assembly, Fortran, C, Python. Each one lets you write less, and trust more.
+[amused] And every one of them got roasted by the people on the layer below.
+[playful] The new layer is plain English, and the roast is already live.
