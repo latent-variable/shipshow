@@ -134,3 +134,16 @@ Accepted or declined at the cap, with the reason:
   as they stand; the last three are recorded in `sources.md`.
 
 The floor holds: accuracy passed with no blocking or major finding.
+
+# Third cut (2026-10-27)
+
+Lino listened to the second cut. The voice sounded hollow, "like I'm talking through a paper towel roll": the reference had been
+denoised (#67). Fixed in #73: the clip goes to the model as recorded, and the clean-start check reads silence against the take's
+own hiss. On the script: "too focused on quoting people"; he would never tell someone to read the code as the answer, his method is
+to define the failure modes, test them, make them pass and prove the tests catch failures; "more punchy, more aggressive, more like
+a Fireship video ... funny is better than anything else". `critics.md` carries that as the first two lines of the bar.
+
+Rewritten in that style (759 words, 12 scenes, speed 1.15): people get a fun one-line intro (Hopper's team's moth, Dijkstra calling go
+to harmful, Karpathy coining vibe coding, DHH racing at Le Mans), quotes cut to a few short ones, scene 11 is his verification method,
+the close is "just agree, then show them the test". A fresh Opus critic read the script cold first ("not yet, but close": 09 a stack
+of quotes, 07 a lecture, a defensive close); its lines went in, except two that overreached the sources.

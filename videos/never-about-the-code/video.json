@@ -7,7 +7,7 @@
   "theme": "lofi",
   "engine": "omnivoice",
   "voice": "lino",
-  "speed": 1.0,
+  "speed": 1.15,
   "say": {
     "1952": "nineteen fifty two",
     "1954": "nineteen fifty four",
@@ -28,7 +28,13 @@
     "Datamation": "Data-mation",
     "DHH": "D H H",
     "Antirez": "Antee-rez",
-    "704": "seven oh four"
+    "704": "seven oh four",
+    "Quattro": "Kwah-tro",
+    "goto": "go to",
+    "1950s": "nineteen fifties",
+    "Andrej": "Andrey",
+    "Redis": "Red-iss",
+    "IBM's": "I B M's"
   },
   "music": {
     "file": "local/music/never-about-the-code-lofi.wav",
@@ -36,13 +42,14 @@
     "duck": 0.35
   },
   "pauses": {
-    "02-compiler": 0.5,
-    "04-priesthood": 0.4,
-    "05-real-programmers": 0.4,
-    "08-now": 2.0,
-    "11-objection": 0.4,
-    "09-converts": 0.6
+    "06-the-cost": 2.4,
+    "01-hook": 0.8,
+    "07-the-trade": 1.8,
+    "08-now": 1.4,
+    "03-ladder": 1.0,
+    "04-priesthood": 1.0,
+    "02-compiler": 1.4
   },
-  "hold": 5,
-  "gap": 0.45
+  "hold": 4,
+  "gap": 0.35
 }

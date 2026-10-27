@@ -3,6 +3,11 @@
 Every critic applies these on top of its skill. The first cut was rejected by Lino on 2026-10-26; the first five lines are what
 he said was wrong with it, so they are the bar this version is judged by first.
 
+- **Fireship energy (the owner, 2026-10-27, on the second cut).** Punchy, fast, straight to the point, and funny first: "funny
+  is better than anything else". People are introduced with a fun line, not a citation; quotes are few and short. A slow, serious or
+  lecture-like stretch is a finding. Fast narration is wanted, not a fault, as long as each sentence can be followed.
+- **The ending is his verification method, never "read the code".** Define done and the failure modes, write tests that fail
+  first, make them pass, then break the code on purpose to prove the tests catch it.
 - **Sounds like a person talking.** Lino heard the first cut as choppy, with short words sounding distorted and too close to the
   mic, and the wording and pacing as "atrocious". Any sentence that is hard to follow on one listen, sounds like written copy,
   announces itself, or piles up numbers is a finding. The voice-check packet lines (hear-back scores, faults) count.
