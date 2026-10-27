@@ -326,3 +326,16 @@ needs work. What he named, and what changed:
 | pacing | revise (2 major) | Scene 12's catch is now nine words shorter and the checks card arrives on "Fixed", 1.7 s earlier. 02, 11b, 12b and 13 run 15 to 21% over target: accepted, the owner's pace. The 1.9 s beat in 06 stays for his ear. |
 | sync | revise (1 major, 4 minor) | The scene 2 payoff (as above); "not out-coding the AI" on "going"; the Dafoe meme on "bars"; the IBM meme moved to "Sound familiar?", after the bars. |
 | consistency | pass (3 minor) | Kept: "machine code" in the close is the thesis line, loosely true; units and caption patterns noted. |
+
+## Round 3 (fresh agents: accuracy, pacing, sync, consistency on Sonnet; clarity, visuals, engagement on Opus)
+
+Five pass: accuracy (every quote and number re-checked at its source), clarity, sync, consistency and engagement ("I would
+not have stopped"), with minor notes only.
+
+| Critic | Verdict | What it found, and what changed |
+|---|---|---|
+| visuals | fail (2 blocking, 3 major) | The "both true" stamp covered part of the Veracode line: now the opening of the closing line ("both true. don't trust the output. verify it."). Marks on light pages still washed the words out: the grow animation makes the marks' container its own layer, so the blend now sits on the container (ShipShow kit). The IBM scene opens on a headline, the ladder's axis is up from the start, scene 12's heading is pinned instead of drifting, Karpathy's post sits lower, and scene 10's tabs show the whole row from the start. |
+| pacing | revise (1 major) | 05b ran slow: the Dijkstra line is shorter and he is introduced as the "goto considered harmful" guy (engagement's suggestion; S21), COBOL's line too. The beat after "Sound familiar?" is now 1.4 s so its meme can be read. 12-verify's rate (19% over) accepted with 02, 11b, 12b and 13. |
+| clarity, consistency | pass | ShipShow is now named aloud in scene 12, since the screen names it. |
+| sync | pass | The Fort Knox meme leaves sooner; Backus's quote shows on "themselves", before its meme. |
+| accuracy | pass | "Nobody read the machine code either" kept as the thesis line, an opinion whose scope the struck-out compiler output on screen shows. |

@@ -32,7 +32,8 @@
     "IBM's": "I B M's",
     "2023": "twenty twenty three",
     "OCaml's": "Oh Camel's",
-    "Ghostty": "Ghosty"
+    "Ghostty": "Ghosty",
+    "ShipShow": "Ship Show"
   },
   "music": {
     "file": "local/music/never-about-the-code-lofi.wav",
@@ -41,7 +42,7 @@
   },
   "pauses": {
     "04-impossible": 0.5,
-    "08-the-trade": 0.6,
+    "08-the-trade": 1.4,
     "09-now": 0.5,
     "13-close": 0.7
   },

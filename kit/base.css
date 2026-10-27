@@ -156,5 +156,8 @@ body { background: var(--bg); overflow: hidden; }
 }
 .ss-shot.in-flow, .col > .ss-shot { position: relative; inset: auto; margin: 0 auto; width: min(100%, calc((var(--shot-max-height, 860px) - 64px) * var(--ar, 1.6))); }
 .ss-shot figcaption { font-family: var(--font); color: var(--ink); font-size: 0.9em; text-align: center; }
-.ss-shot-light .ss-shot-mark { mix-blend-mode: multiply; background: color-mix(in srgb, var(--shot-mark, var(--accent)) 70%, transparent); }
+/* On a light page the marks multiply under the ink. The blend sits on the container: its grow animation makes it a stacking
+   context, inside which a child's blend would only mix with the empty layer. */
+.ss-shot-light .ss-shot-marks { mix-blend-mode: multiply; }
+.ss-shot-light .ss-shot-mark { background: color-mix(in srgb, var(--shot-mark, var(--accent)) 70%, transparent); box-shadow: none; }
 

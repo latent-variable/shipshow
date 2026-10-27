@@ -1,2 +1,3 @@
 [mock-dramatic] Stage three, it rots your brain.
-[wry] By 1975, Turing Award winner Dijkstra was calling Fortran an infantile disorder. And COBOL, its sibling on that same layer? It cripples the mind.
+[wry] By 1975, Dijkstra, the "goto considered harmful" guy, called Fortran an infantile disorder.
+[dry] Its sibling COBOL, on the same layer? It cripples the mind.

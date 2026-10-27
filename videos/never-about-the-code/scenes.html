@@ -65,6 +65,7 @@
   .stages span > b { position: absolute; inset: -2px; border-radius: 999px; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-weight: inherit; }
   .stages span > b.on { background: var(--accent); color: var(--bg); }
   .stages span > b.done { background: var(--bg); color: var(--accent); }
+  .stages span > b.win { background: var(--good); color: var(--bg); border-color: var(--good); }
   .solo { display: flex; gap: 48px; align-items: center; width: 1560px; margin: 0 auto; }
   .stage .solo .ss-portrait { --portrait-height: 480px; font-size: 36px; }
   .solo .quote { font-size: 64px; }
@@ -130,7 +131,7 @@
   .pct .what { font-size: 42px; font-weight: 700; max-width: 1000px; line-height: 1.2; }
 
   /* 12-verify */
-  .flow { display: grid; grid-template-columns: 740px 1fr; gap: 50px; align-items: center; }
+  .flow { display: grid; grid-template-columns: 740px 1fr; gap: 50px; align-items: center; margin-top: 90px; }
   .steps-list { display: flex; flex-direction: column; gap: 16px; }
   .step { display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: 18px; padding: 18px 28px; font-size: 38px; font-weight: 700; line-height: 1.2; }
   .step .n { font-family: var(--font-display); font-weight: 800; font-size: 54px; color: var(--accent-3); }
@@ -215,7 +216,7 @@
 <section data-scene="03-ladder">
   <div class="stage">
     <div class="ladder-wrap" data-cue="+0.1" data-anim="fade">
-      <div class="axis" data-cue="layer." data-anim="fade"><div>write less</div><div class="line"></div><div>trust more</div></div>
+      <div class="axis" data-cue="+0.2" data-anim="fade"><div>write less</div><div class="line"></div><div>trust more</div></div>
       <div class="ladder">
         <div class="rung card" data-cue="Machine" data-anim="up">Machine code <small>numbers</small></div>
         <div class="rung card" data-cue="assembly," data-anim="up">Assembly <small>mov, add, jmp</small></div>
@@ -256,7 +257,7 @@
     <div class="stages" data-cue="+0.1" data-anim="fade"><span class="done">1 · impossible</span><span class="on">2 · beneath you</span><span class="">3 · rots your brain</span><span class="">4 · the bar</span></div>
     <div class="solo card" id="bk" data-cue="Backus," data-anim="up">
       <figure class="ss-portrait" data-commons="File:John Backus 2.jpg" data-cue="Backus," data-anim="pop"><figcaption>John Backus<small>built Fortran, told the story</small></figcaption></figure>
-      <div><div class="quote" data-cue="priesthood." data-anim="fade">many programmers: “a priesthood”</div><div class="quote" data-cue="foolish" data-anim="fade" style="margin-top: 18px">a machine writing the program: “a <em>foolish and arrogant dream</em>”</div></div>
+      <div><div class="quote" data-cue="themselves" data-anim="fade">many programmers: “a priesthood”</div><div class="quote" data-cue="foolish" data-anim="fade" style="margin-top: 18px">a machine writing the program: “a <em>foolish and arrogant dream</em>”</div></div>
     </div>
   </div>
   <div class="meme-wrap" id="m05" data-cue="priesthood." data-anim="pop">
@@ -308,8 +309,8 @@
 
 <section data-scene="08-the-trade">
   <div class="stage">
-    <div class="tag center" data-cue="+0.1" data-anim="fade">IBM's own case study, 1957 · IBM grading its own homework</div>
-    <div class="punch big" data-cue="course." data-anim="pop" style="font-size: 76px">a one-day Fortran course</div>
+    <div class="punch big" data-cue="+0.1" data-anim="up" style="font-size: 64px">IBM's own case study, 1957 <span style="color: var(--muted); font-size: 40px">· IBM grading its own homework</span></div>
+    <div class="punch big" data-cue="One" data-anim="pop" style="font-size: 72px; color: var(--accent-3)">a one-day Fortran course</div>
     <div class="bars">
       <div class="bar-row" data-cue="hours" data-anim="fade"><div>In Fortran</div><div class="bar fortran" data-cue="hours" data-anim="grow">4 hours</div></div>
       <div class="bar-row" data-cue="days." data-anim="fade"><div>By hand</div><div class="bar hand" data-cue="days." data-anim="grow">about 3 days (his estimate)</div></div>
@@ -360,12 +361,12 @@
 
 <section data-scene="10-skeptics">
   <div class="stage" style="justify-content: flex-start; padding-top: 10px">
-    <div class="stages" data-cue="+0.1" data-anim="fade"><span class="done">1 · impossible</span><span class="done">2 · beneath you</span><span class="on" data-cue="three," data-anim="pop">3 · rots your brain</span><span class="win" data-cue="four" data-anim="slam">4 · the bar</span></div>
+    <div class="stages" data-cue="+0.1" data-anim="fade"><span class="done">1 · impossible</span><span class="done">2 · beneath you</span><span class="">3 · rots your brain<b class="on" data-cue="three," data-anim="pop">3 · rots your brain</b></span><span class="">4 · the bar<b class="win" data-cue="four" data-anim="slam">4 · the bar</b></span></div>
   </div>
   <div class="zone" id="s3" data-cue="You" data-anim="slam" style="top: 200px; display: flex; align-items: center; justify-content: center">
     <div class="punch big" style="font-size: 84px; line-height: 1.2">“You don't understand the code.”<br><span style="color: var(--accent)" data-cue="three," data-anim="fade">is stage three.</span><br><span style="color: var(--good)" data-cue="four" data-anim="fade">the work is at stage four.</span></div>
   </div>
-  <div class="zone" id="k26" data-cue="Karpathy" data-anim="up" style="top: 200px; bottom: 90px">
+  <div class="zone" id="k26" data-cue="Karpathy" data-anim="up" style="top: 230px; bottom: 90px">
     <figure class="ss-shot" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2015883857489522876&amp;theme=dark" data-source="x.com/karpathy/status/2015883857489522876" data-select="article" data-width="620" data-pad="0" data-find="80% agent coding" data-mark-cue="eighty" style="--shot-max-height: 680px"><figcaption>Andrej Karpathy, who named vibe coding · January 2026</figcaption></figure>
   </div>
   <div class="zone" id="pair" style="top: 220px; display: flex; align-items: center">
@@ -396,8 +397,7 @@
         <div class="runs"><div class="run">run 1 <b>program A</b></div><div class="run">run 2 <b>program B</b></div></div></div>
     </div>
     <div class="pct card" data-cue="Veracode's" data-anim="up"><div class="num">56%</div><div class="what">of model code passed Veracode's security tests, on average, with no security guidance<div class="who">Veracode, 2026 GenAI Code Security Report</div></div></div>
-    <div class="center" style="position: absolute; left: 0; right: 0; top: 330px; pointer-events: none"><span class="stamp ink" data-cue="Both" data-anim="slam" style="font-size: 64px; background: var(--bg)">both true</span></div>
-    <div class="punch big" data-cue="trust" data-anim="slam">don't trust the output. <em data-cue="verify" data-anim="fade">verify it.</em></div>
+    <div class="punch big"><span data-cue="Both" data-anim="slam" style="color: var(--muted)">both true.</span> <span data-cue="trust" data-anim="slam">don't trust the output.</span> <em data-cue="verify" data-anim="fade">verify it.</em></div>
   </div>
   <div class="meme-wrap" id="m11" data-cue="Fort" data-anim="pop">
     <div class="scrim"></div>
@@ -413,7 +413,7 @@
 
 <section data-scene="12-verify">
   <div class="stage">
-    <div class="tag center" data-cue="+0.1" data-anim="fade" style="margin-top: 30px">how I actually ship with agents</div>
+    <div class="punch big" data-cue="+0.1" data-anim="up" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px">how I actually ship with agents</div>
     <div class="flow" id="flow">
       <div class="steps-list">
         <div class="step card" data-cue="tell" data-anim="left"><span class="n">1</span><span>I say what the feature has to do</span></div>
@@ -493,7 +493,7 @@
   tl.to("#s3", { opacity: 0, duration: 0.3 }, cueAt("#k26") - 0.3);
   tl.to("#k26", { opacity: 0, duration: 0.3 }, cueAt("#p-dhh") - 0.3);
   tl.to("#pair", { opacity: 0, duration: 0.3 }, cueAt("#me") - 0.3);
-  tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 2.4);
+  tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 1.4);
   tl.to("#review", { opacity: 0, duration: 0.3 }, cueAt("#checks") + 0.2);
   tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#m12") + 2.8);
   tl.to("#call4", { opacity: 0, duration: 0.3 }, cueAt("#p-hopper") - 0.3);
