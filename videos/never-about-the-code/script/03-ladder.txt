@@ -1,1 +1,1 @@
-That's one rung on a ladder. Machine code, assembly, Fortran, C, Python. Every rung up, you write less, and you trust the layer below more. And every rung met the same doubt. Now there's a new rung on top. Plain English.
+Every few decades, we add a new layer on top. Machine code, assembly, Fortran, C, Python. Each one lets you write less and trust more. And each one got roasted by the people on the layer below. The new layer is plain English. Check the comments. The roast is already live.

@@ -1,0 +1,1 @@
+Okay, but compilers are deterministic, and agents aren't. Run one twice, get two different programs. And code straight out of a model is not exactly Fort Knox. In Veracode's 2026 report, with no security guidance, it passed only fifty six percent of the time, on average. Both true. Which is exactly why you don't trust the output. You trust the tests.

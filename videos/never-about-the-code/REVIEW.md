@@ -134,3 +134,62 @@ Accepted or declined at the cap, with the reason:
   as they stand; the last three are recorded in `sources.md`.
 
 The floor holds: accuracy passed with no blocking or major finding.
+
+# Third cut (2026-10-27)
+
+Lino listened to the second cut. The voice sounded hollow, "like I'm talking through a paper towel roll": the reference had been
+denoised (#67). Fixed in #73: the clip goes to the model as recorded, and the clean-start check reads silence against the take's
+own hiss. On the script: "too focused on quoting people"; he would never tell someone to read the code as the answer, his method is
+to define the failure modes, test them, make them pass and prove the tests catch failures; "more punchy, more aggressive, more like
+a Fireship video ... funny is better than anything else". `critics.md` carries that as the first two lines of the bar.
+
+Rewritten in that style (759 words, 12 scenes, speed 1.15): people get a fun one-line intro (Hopper's team's moth, Dijkstra calling go
+to harmful, Karpathy coining vibe coding, DHH racing at Le Mans), quotes cut to a few short ones, scene 11 is his verification method,
+the close is "just agree, then show them the test". A fresh Opus critic read the script cold first ("not yet, but close": 09 a stack
+of quotes, 07 a lecture, a defensive close); its lines went in, except two that overreached the sources.
+
+## Cut 3, round 1: 0 blocking, 17 major; accuracy, pacing, sync and consistency pass
+
+| Critic | Model | Verdict | Blocking / major / minor |
+|---|---|---|---|
+| accuracy | Sonnet | pass | 0 / 2 / 6 |
+| clarity | Opus | fail | 0 / 2 / 9 |
+| pacing | Sonnet | pass | 0 / 4 / 6 |
+| sync | Sonnet | pass | 0 / 1 / 5 |
+| visuals | Opus | fail | 0 / 2 / 5 |
+| consistency | Sonnet | pass | 0 / 0 / 5 |
+| engagement | Opus | fail | 0 / 6 / 9 |
+
+What changed: the close says what it was always about ("what it does, and whether you can prove it"); METR introduced as "an AI
+research lab" and its measure split in two; the Unix growth is the rewrite's; the 1957 story is "IBM's own case study, so, grain
+of salt", and the 1958 statistic left the narration; "on average" spoken for the 56%. The hook is a mock pull-request comment with
+its upvotes counting; Hopper and Backus take the frame one after the other, with the 1947 logbook photo (public domain, NSWC
+Dahlgren) on "moth"; the chart draws as the years are said; the skeptics arrive together; the payoff is a test run going red, green,
+then red on the planted bug ("reading isn't proof"); the blurry IShowSpeed clip replaced by Pedro Pascal. Memes that land at a scene's
+end get a beat after it; the Suspicious Guy meme moved to "strategy." so the caught bug is seen.
+
+## Cut 3, round 2: 2 blocking, 12 major; accuracy, pacing, sync and consistency pass
+
+| Critic | Model | Verdict | Blocking / major / minor |
+|---|---|---|---|
+| accuracy | Sonnet | pass | 0 / 0 / 3 |
+| clarity | Opus | fail | 0 / 1 / 10 |
+| pacing | Sonnet | pass | 0 / 6 / 6 |
+| sync | Sonnet | pass | 0 / 2 / 6 |
+| visuals | Opus | fail | 2 / 2 / 6 |
+| consistency | Sonnet | pass | 0 / 0 / 4 |
+| engagement | Opus | fail | 0 / 1 / 9 |
+
+What changed: the hook's comment card no longer clips its reaction row (blocking, and engagement's one major); the moth photo
+steps aside before Hopper's quote (blocking); every card arrives with its person; the terminal note fits; the chart shows the 5 to
+61 h band (the "error bars you could park a truck in"); scene 11 says the method's limit, "that list is the real work, because tests
+only catch what's on it" (clarity's major); a fresh take of the bread line. Every run heard back at 97% or more, none flagged.
+Accepted with reasons: speaking rate over ShipShow's default (the owner asked for Fireship pace); the assembly listing's reading time
+(four lines and "and 7 more"); the scratch 0.42 s early (the build forbids it on the word); one accuracy minor is wrong (S7 does
+compare Mel's code with the optimizing assembler's: "Mel's always ran faster").
+
+Verification (a fresh Opus critic, after round 2): six of seven fixes held; the seventh broke the order of scene 11 (the new limit
+sentence says "tests" and "catch" first, so the planted-bug line arrived 15 s early: blocking). Fixed with `tests#2` and `catch#2`:
+the terminal now shows fail at 256.9 s, pass at 260.5 s, caught at 269.0 s. Its major, an empty scene 09 opening, is answered by
+"the skeptics folded." stamping on "folded"; the moth photo stays up 1.9 s. Accepted at that point: scene 09's first 3 s carry only
+its header and the caption; Dijkstra's card shows "1975" for a few seconds before his quote.
