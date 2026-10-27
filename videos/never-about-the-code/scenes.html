@@ -245,9 +245,10 @@
     <div class="zone full" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px">
       <div class="vhs-tag"><span class="rw">&#9664;&#9664;</span> REWIND <span class="when" data-cue="January" data-anim="type">JAN 2023</span></div>
       <div class="vhs-chip" data-cue="ChatGPT" data-anim="pop">ChatGPT <b>launched Nov 30, 2022</b> · two months old</div>
-      <div class="col" style="width: 1240px; flex: none"><figure class="ss-shot" data-cue="suggest" data-anim="up" data-shot="https://github.blog/2022-06-21-github-copilot-is-generally-available-to-all-developers/" data-find="GitHub Copilot suggests the next line of code" data-lines="1" data-width="1000" data-mark-cue="next" style="--shot-max-height: 380px"></figure></div>
+      <div class="col" style="width: 1240px; flex: none"><figure class="ss-shot" data-cue="fancy" data-anim="up" data-shot="https://github.blog/2022-06-21-github-copilot-is-generally-available-to-all-developers/" data-find="GitHub Copilot suggests the next line of code" data-width="1000" data-mark-cue="autocomplete" style="--shot-max-height: 380px"></figure></div>
     </div>
   </div>
+  <div id="now26" data-cue="Now#2" data-anim="fade" style="position: absolute; width: 1px; height: 1px"></div>
   <div class="overlay" id="k23" data-cue="Karpathy" data-anim="pop">
     <div class="scrim" style="background: var(--bg)"></div>
     <div class="zone full" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 44px">
@@ -256,7 +257,7 @@
     </div>
   </div>
   <div class="overlay" style="display: flex; align-items: center; justify-content: center; padding-top: 120px; pointer-events: none">
-    <div class="stamp" data-cue="started." data-anim="slam" data-sfx="thump" data-sfx-offset="0.2" style="font-size: 72px; background: color-mix(in srgb, var(--bg) 88%, transparent); padding: 14px 40px">the roasting has started</div>
+    <div class="stamp" data-cue="started" data-anim="slam" data-sfx="thump" data-sfx-offset="0.2" style="font-size: 72px; background: color-mix(in srgb, var(--bg) 88%, transparent); padding: 14px 40px">the roasting has started</div>
   </div>
 </section>
 
@@ -427,7 +428,7 @@
 
 <section data-scene="11b-ocaml">
   <div class="zone full" style="top: 60px; bottom: auto" data-cue="+0.1" data-anim="fade"><div class="tag center">OCaml · PR #14369 · 13K lines, closed unmerged · a maintainer, Nov 2025</div></div>
-  <div class="zone full" id="ocA" data-cue="OCaml's" data-anim="up" style="top: 130px"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="hard to review, and very lightly tested" data-width="1100" data-pad="8" data-mark-cue="lightly" style="--shot-max-height: 760px"></figure></div></div>
+  <div class="zone full" id="ocA" data-cue="+0.1" data-anim="up" style="top: 130px"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="hard to review, and very lightly tested" data-width="1100" data-pad="8" data-mark-cue="lightly" style="--shot-max-height: 760px"></figure></div></div>
   <div class="zone full" id="ocB" data-cue="passes" data-anim="up" style="top: 130px; display: flex; align-items: center"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="only 20% of the work, the other 80% are to get the feature discussed, reviewed and integrated" data-lines="0" data-width="1100" data-pad="8" data-mark-cue="only" style="--shot-max-height: 640px"></figure></div></div>
 </section>
 
@@ -492,7 +493,7 @@
 <section data-scene="13b-thesis">
   <div class="stage">
     <div class="close-title big" data-cue="code." data-anim="slam" data-sfx="thump">It was never about the code.</div>
-    <div class="punch big" data-cue="does," data-anim="up" style="font-size: 60px">it was always about <em>what it does</em>,<br>and <em data-cue="prove" data-anim="fade">whether you can prove it.</em></div>
+    <div class="punch big" data-cue="does," data-anim="up" style="font-size: 60px">it was always about <em>what it does</em>,<br><span data-cue="prove" data-anim="fade">and <em>whether you can prove it.</em></span></div>
     <div class="ask big" data-cue="can#2" data-anim="slam" style="font-size: 92px; color: var(--accent-3)">so, can you?</div>
   </div>
 </section>
@@ -504,7 +505,7 @@
   tl.to("#m02", { opacity: 0, duration: 0.3 }, cueAt("#m02") + 3.0);
   tl.to("#m03", { opacity: 0, duration: 0.3 }, cueAt("#m03") + 2.6);
   tl.to("#fb03", { opacity: 0, duration: 0.3 }, cueAt("#k23") - 0.3);
-  tl.to("#k23", { opacity: 0, duration: 0.35 }, cueAt("#r-eng") - 0.35);
+  tl.to("#k23", { opacity: 0, duration: 0.35 }, cueAt("#now26"));
   tl.to("#m05", { opacity: 0, duration: 0.3 }, cueAt("#m05") + 2.3);
   tl.to("#m06", { opacity: 0, duration: 0.3 }, cueAt("#m06") + 3.6);
   tl.to("#m08", { opacity: 0, duration: 0.3 }, cueAt("#m08") + 2.2);

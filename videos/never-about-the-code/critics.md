@@ -53,3 +53,6 @@ he said was wrong with it, so they are the bar this version is judged by first.
 - **A joke is one take** (the owner on the sixth cut, 2026-10-27). A punchline on its own script line ("Like animals.",
   "No.", "Also no.") is voiced cold and lands "like they were written separately". The setup and its punchline share a line,
   and the opening direction carries the arc. A punchline split from its setup in `script/` is a finding.
+- **Every section is its own mood** (the owner, 2026-10-27): the opening, the history, now, the objection, the workshop and the
+  close each look and sound different (`video.json` `moods`, the packet's *Moods* table), and each look and track fits what that
+  section says. The priority is that it is fun to watch, on top of true.

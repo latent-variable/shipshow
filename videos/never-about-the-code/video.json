@@ -41,7 +41,7 @@
     "duck": 0.35
   },
   "pauses": {
-    "03-ladder": 0.9,
+    "03-ladder": 0.6,
     "04-impossible": 0.5,
     "08-the-trade": 0.7,
     "09-now": 0.5,
@@ -85,12 +85,12 @@
     "objection": {
       "theme": "signal",
       "look": {
-        "--sky": "radial-gradient(120% 90% at 50% 0%, #2b0f12 0%, #140708 55%, #080404 100%)",
-        "--bg": "#120607",
-        "--card": "#1d0f11",
-        "--line": "#3d1e22",
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #4a1216 0%, #230a0c 55%, #0d0505 100%)",
+        "--bg": "#170708",
+        "--card": "#2a1214",
+        "--line": "#5a2228",
         "--accent": "#ff4040",
-        "--vignette-color": "#200000"
+        "--vignette-color": "#3a0000"
       },
       "music": {
         "file": "local/music/nac-objection-s7.wav",
@@ -108,5 +108,9 @@
       },
       "ambient": "stars horizon"
     }
+  },
+  "sfx": {
+    "kit": "default",
+    "under": 12
   }
 }

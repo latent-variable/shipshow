@@ -374,3 +374,28 @@ line and the double take in 06; the 1.5 s beat before "Yesterday's insult".
   fixed it in Fortran. Today, that's just called programming. In 1957, it was a bet. Sound familiar?"
 
 Voiced again under the new rules: every sentence heard, no faults. Rendered 5:26, -15.1 LUFS.
+
+## Seventh cut (2026-10-27): an essay in sections, each with its own mood; Karpathy looked back on
+
+**The owner's notes.** Each section needs "dedicated looks and feels" and "relevant music ... to help convey the specific
+message", with fun as the priority; Karpathy's 2023 post should be framed as a look back: ChatGPT had just come out, most of us
+used AI as autocomplete, and he was betting English would be the language; and this kind of video, an idea made to share in your
+own voice, should be documented as its own kind.
+
+**What changed.** `"kind": "essay"` (D62). Six moods (D61): the opening in `signal` over the lofi bed; the history (04 to 08) in
+the new `archive` theme over 1950s big-band swing; now (09, 10) in `launch` with cyan over synthwave; the objection (11, 11b) in
+alarm red over a suspense pulse; the workshop (12, 12b) in `buildday` over boom-bap; the close back in `signal` and the lofi.
+Music: ACE-Step 1.5 (MIT), two seeds per section, each checked with Whisper (no singing) and for level. Scene 03 rewinds to
+January 2023 (S33, S34) and ends on the opening's charge. Every line voiced again under DRAMA_RULES 5 (letters spelled out).
+
+**Round 1** (fresh Sonnet critics, the full packet with its new *Moods* table):
+
+| critic | verdict | what changed |
+|---|---|---|
+| accuracy | revise (1 major, 4 minor) | "suggest the next line of code" sat over a screenshot that goes on to whole methods: now "most of us use AI as fancy autocomplete", the owner's words, which the whole page supports. Minors are earlier cuts' wording, kept |
+| clarity | revise (5 major, 3 minor) | The rewind's point was unsaid: the line now ends "the roasting has already started: you don't understand the code", tying 2023 to the charge. **Declined for the owner**: the four stages resting mostly on Fortran, "just agree" conceding the charge, and what "verify" proves are the argument he approved in cuts five and six |
+| pacing | revise | The new beat after 03 made a 2.2 s silence: 0.9 s to 0.6 s. The fast scenes and dense cards are the earlier cuts', at the owner's speed 1.2 |
+| sync | pass (7 minor) | The 2023 post now leaves on "Now it's 2026" |
+| visuals | revise (4 major) | Archive grey ink darkened (`--muted` #54432d); the Copilot capture shows its whole paragraph, not a cut sentence; the thesis no longer strands "and" on its own line. Small labels elsewhere are earlier cuts', accepted then |
+| consistency | pass (3 minor) | none needed |
+| engagement | revise (3 major) | The OCaml receipt is up from the scene's start; the objection's red pushed harder; sounds 12 dB under the voice, not 14, so the jokes' stings are felt. Its best fit: the archive section and its swing |
