@@ -737,6 +737,20 @@ sentence gaps now at least 0.34 s (Whisper's word ends are rounded), none under 
 not room tone, under a music bed it is not heard as a drop; a boundary Whisper placed wrongly gets its breath at the quietest
 point near the wrong place, which is still between words.
 
+
+### D52. A render is mastered to the loudness it is played at (2026-10-27)
+**Decision.** After HyperFrames writes the MP4, `render` brings its audio to `video.json` `"loudness"` (LUFS; `local/config.json`
+next; -14 by default, what YouTube plays at; `false` for none): ffmpeg's loudnorm measures it, one `volume` gain moves it to the
+target, and an `alimiter` (5 ms attack, 50 ms release, ceiling 0.5 dB under -1 dBTP) catches the few peaks the gain pushes over.
+The gain is held back so the limiter takes at most 3 dB off any peak (`MAX_LIMIT`); a video whose peaks would need more lands under
+its target and the render says so. The video stream is copied, never re-encoded; the file is stamped (`comment`) so a second run
+does nothing. **Why.** The never-about-the-code second cut came out at -19 LUFS once the narration stopped being squashed (D47):
+YouTube turns loud videos down to about -14 and never turns quiet ones up, so it would have played 5 dB under its neighbours.
+loudnorm's own second pass was not used: when the peaks do not fit at the target it silently switches to dynamic mode, which
+compresses, the sound the owner rejected. **Measured (that render).** -19.0 to -14.7 LUFS, true peak -1.3 dBFS, a 4.6 dB gain; the
+limiter acted on 0.055% of samples (3.4% of 50 ms windows), against 4% on average and 13% at worst of every take under the old
+tanh levelling. **Costs.** A second AAC encode of the audio (192 kb/s); a video with music much louder than its voice is still
+mastered by its whole mix.
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
