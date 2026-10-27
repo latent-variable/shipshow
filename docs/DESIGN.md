@@ -867,6 +867,24 @@ owner's canon gives every video a look of its own; lofi is the opinion channel's
 is token-only, built on the layers D50 added, so no kit code changed. **Costs.** One more theme folder (about 270 KB of fonts,
 duplicated from lofi so each theme stays self-contained).
 
+### D61. Named moods give each act its own look and music (2026-10-27)
+**Decision.** `video.json` `"moods"` names sets of look and music; a section's `data-mood` picks one, and it carries forward to
+the following sections until another names a mood (`bin/moods.mjs`). A mood starts from the video's theme and flair, adds its
+own `theme`'s tokens (its files copied under `assets/theme/<name>/`, its `@font-face` rules added), then its `look`. An `ambient`
+builds that mood's own seeded layers with the shared builders; without one the base ambient stays. In the page, `kit/kit.js`
+crossfades one backdrop per mood (over black, added with `plus-lighter`, so a crossfade is a true mix and never dips) and the
+ambient containers over 1.2 s centred on the boundary, tweens colour and plain-number tokens on `#root` on the shared timeline,
+and switches fonts, caption tokens and anything else it cannot tween at the midpoint. `musicBed` with moods mixes one track per
+music change: each starts at the head of its 1.5 s crossfade, so its own opening fades in; a mood without music, or whose file
+is missing, keeps the previous track playing. **Why.** The owner watched a ten-minute explainer and found every act felt the
+same: one theme, one flair and one bed for its whole length. A mood is a named flair set, the same idea `flair` already is for
+a whole video, so an act can span scenes, and a later act can come back to an earlier look. Timeline tweens and seeded ambient
+keep any frame renderable alone (D50). **Costs.** More ambient DOM and theme files per distinct mood, one decoded track per music
+change. A token with no base value switches at the midpoint. A video cannot return to its base look except through a mood that
+restates it. **Tested** by `test/moods.test.mjs` (carry-forward, unknown names, namespaced fonts and files, midpoint switches,
+tweens, synthetic tones before, during and after a music boundary), and a three-scene Kokoro demo built, checked and rendered:
+frames at each boundary show navy turning into the paper theme's cream and serif type, then a lofi night with stars.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

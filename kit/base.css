@@ -161,3 +161,9 @@ body { background: var(--bg); overflow: hidden; }
 .ss-shot-light .ss-shot-marks { mix-blend-mode: multiply; }
 .ss-shot-light .ss-shot-mark { background: color-mix(in srgb, var(--shot-mark, var(--accent)) 70%, transparent); box-shadow: none; }
 
+
+/* Mood layers share the canvas and leave scene and caption tracks above them. */
+.mood-backdrop { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: plus-lighter; }
+#ambient .mood-ambient { position: absolute; inset: 0; }
+#overlay .mood-overlay { position: absolute; inset: 0; }
+#overlay .mood-overlay > div { position: absolute; inset: 0; }

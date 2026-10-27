@@ -75,14 +75,16 @@ export function themeDir(name) {
 
 /** A theme's CSS, with its relative url()s pointed at assets/theme/, where its files are
  *  copied (fonts, a logo), so a render needs no network. */
-export function themeCss(name, videoFolder) {
+export function themeCss(name, videoFolder, namespace = "") {
   const src = themeDir(name);
+  const dest = join(videoFolder, "assets", "theme", namespace);
+  const prefix = `assets/theme/${namespace ? namespace + "/" : ""}`;
   const files = readdirSync(src).filter((f) => f !== "theme.css");
   if (files.length) {
-    mkdirSync(join(videoFolder, "assets", "theme"), { recursive: true });
-    for (const f of files) cpSync(join(src, f), join(videoFolder, "assets", "theme", f), { recursive: true });
+    mkdirSync(dest, { recursive: true });
+    for (const f of files) cpSync(join(src, f), join(dest, f), { recursive: true });
   }
-  return readFileSync(join(src, "theme.css"), "utf8").replace(/url\(\s*(["']?)(?!data:|https?:|\/|assets\/)([^"')]+)\1\s*\)/g, (_, q, path) => `url(${q}assets/theme/${path.replace(/^\.\//, "")}${q})`);
+  return readFileSync(join(src, "theme.css"), "utf8").replace(/url\(\s*(["']?)(?!data:|https?:|\/|assets\/)([^"')]+)\1\s*\)/g, (_, q, path) => `url(${q}${prefix}${path.replace(/^\.\//, "")}${q})`);
 }
 
 /** video.json "flair": a video's own motion, over its theme's. */
@@ -465,7 +467,8 @@ export function reviewPlan(cfg, argv = process.argv) {
  *  false when the file is not there (music is often local: a teammate may not have it).
  *  "file" is relative to the video's folder, then the repo; "volume" is the bed's level in
  *  the gaps (0 to 1, default 0.22) and "duck" what it is multiplied by under speech (0.35). */
-export function musicBed(dir, music, timing) {
+export function musicBed(dir, music, timing, moods = []) {
+  if (moods.length > 1) return moodMusicBed(dir, music, timing, moods);
   if (!music) return false;
   const spec = typeof music === "string" ? { file: music } : music;
   const file = [join(dir, spec.file), join(REPO, spec.file), spec.file].find((p) => p && existsSync(p));
@@ -498,6 +501,64 @@ export function musicBed(dir, music, timing) {
     const s = (f % srcFrames) * 2;                                 // loop a shorter track
     out[f * 2] = Math.round(src[s] * gain);
     out[f * 2 + 1] = Math.round(src[s + 1] * gain);
+  }
+  writeWav(join(dir, "assets", "music.wav"), { rate, channels: 2, samples: out });
+  return true;
+}
+
+/** Mix only explicit music changes; absent or missing tracks keep the previous playhead. */
+function moodMusicBed(dir, music, timing, moods) {
+  const rate = 48000, tracks = [];
+  mkdirSync(join(dir, "assets"), { recursive: true });
+  for (const mood of moods) {
+    const musicSpec = mood.name === null ? music : mood.music;
+    if (!musicSpec) continue;
+    const spec = typeof musicSpec === "string" ? { file: musicSpec } : musicSpec;
+    const file = [join(dir, spec.file), join(REPO, spec.file), spec.file].find((p) => existsSync(p));
+    if (!file) {
+      console.warn(`music: ${spec.file} is not on this machine; mood ${mood.name ?? "base"} continues the previous bed`);
+      continue;
+    }
+    const tmp = join(dir, "assets", "music-source.wav");
+    const r = spawnSync("ffmpeg", ["-v", "error", "-y", "-i", file, "-ac", "2", "-ar", String(rate), "-c:a", "pcm_s16le", tmp]);
+    if (r.error?.code === "ENOENT") die("music: ffmpeg is not installed; npm run doctor says how to get it");
+    if (r.status !== 0) die(`music: ffmpeg could not read ${file}\n${r.stderr}`);
+    const samples = readWav(tmp).samples;
+    if (!samples.length) die(`music: ${file} has no samples`);
+    tracks.push({ start: mood.start, samples, volume: spec.volume ?? 0.22, duck: spec.duck ?? 0.35 });
+  }
+  if (!tracks.length) return false;
+  const frames = Math.ceil(timing.total * rate), out = new Int16Array(frames * 2);
+  const spans = timing.scenes.flatMap((s) => s.sentences.map((x) => [x.start - 0.15, x.start + x.duration + 0.25]));
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+  let si = 0, active = -1;
+  for (let f = 0; f < frames; f++) {
+    const t = f / rate;
+    while (si < spans.length && spans[si][1] + 0.3 < t) si++;
+    let speech = 0;
+    for (let k = si; k < spans.length && spans[k][0] - 0.3 <= t; k++) {
+      const [a, b] = spans[k];
+      speech = Math.max(speech, t < a ? 1 - (a - t) / 0.3 : t > b ? 1 - (t - b) / 0.3 : 1);
+    }
+    const mixed = [0, 0];
+    while (active + 1 < tracks.length && tracks[active + 1].start - 0.75 <= t) active++;
+    let remaining = 1;
+    for (let i = active; i >= 0 && remaining > 0; i--) {
+      const track = tracks[i];
+      const enter = track.start === 0 ? 1 : clamp((t - track.start + 0.75) / 1.5);
+      let gain = enter * remaining;
+      remaining *= 1 - enter;
+      if (!gain) continue;
+      gain *= track.volume * (1 - speech * (1 - track.duck));
+      gain *= Math.min(1, t / 0.8, (timing.total - t) / 2.5);
+      const n = track.samples.length / 2;
+      // A track starts at the head of its crossfade, so what fades in is its own opening, never its looped-round end.
+      const at = ((f - Math.round(Math.max(0, track.start - 0.75) * rate)) % n + n) % n * 2;
+      mixed[0] += track.samples[at] * gain;
+      mixed[1] += track.samples[at + 1] * gain;
+    }
+    out[f * 2] = Math.max(-32768, Math.min(32767, Math.round(mixed[0])));
+    out[f * 2 + 1] = Math.max(-32768, Math.min(32767, Math.round(mixed[1])));
   }
   writeWav(join(dir, "assets", "music.wav"), { rate, channels: 2, samples: out });
   return true;
