@@ -1,0 +1,3 @@
+[storyteller] So in 2001, Russell Impagliazzo, Ramamohan Paturi and Francis Zane made a sharper bet.
+[firm] 3-SAT is not in that middle. It needs truly exponential time: some number bigger than one, raised to the n.
+[dry] They called it the Exponential Time Hypothesis. ETH.

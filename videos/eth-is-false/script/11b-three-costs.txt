@@ -1,0 +1,4 @@
+[matter-of-fact] The hard part is three knobs at once: how many slopes at each point, how many notes to try, and how big each group gets.
+[dry] More points mean fewer slopes at each one. Smaller groups mean less to count. But both make the notes bigger and slower to try. Turn one knob, and another one bites.
+[clear] Balance all three, and the exponent drops to roughly n over the square root of log n.
+[deadpan] Simple, right?

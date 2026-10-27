@@ -1,0 +1,3 @@
+[clear, explaining] But here's what people miss. P not equal to NP only says SAT can't be solved in polynomial time.
+[curious] Between polynomial and exponential, there's a huge middle ground.
+[matter-of-fact] Two to the square root of n, for example. Slower than any polynomial, but faster than any exponential, even one point zero zero one to the n.

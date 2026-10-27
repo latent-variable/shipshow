@@ -1,0 +1,4 @@
+[clear, explaining] So, does this mean P equals NP?
+[firm] No. Its guarantee is still bigger than any polynomial, so it gives no polynomial algorithm. P versus NP is untouched.
+[matter-of-fact] And remember, cracking SAT cracks all of NP by translating other problems into SAT. The translation can make them much bigger, and the paper says a speedup this small doesn't automatically survive that.
+[thoughtful] But ETH was the bigger bet, sitting on top of P not equal to NP. Most people believed it. If this proof holds, it just fell.

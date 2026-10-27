@@ -855,6 +855,18 @@ grain are the only ambient motion. **Why.** The owner on the fifth cut, in `lofi
 colours and the fonts, we can do much better". `lofi` is a mood (dusk, a serif, dust); an argument with screenshots as evidence
 wants contrast, a type that reads at a glance, and one colour that means "look here". **Costs.** None for other themes: it only
 sets tokens the kit already reads.
+
+by ear: hear-back proves the words, not the tone.
+### D59. The chalk theme: a blackboard for math and theory explainers (2026-10-27)
+**Decision.** `themes/chalk` is a blackboard at night: a slate-green board with a soft lamp in the middle (`--sky`), chalk white
+ink, chalk yellow for the thing to look at, chalk blue and pink as second and third voices, chalk dust drifting (`dust`), faint
+pools of light (`blobs`), grain and a vignette over the pictures, and `wipe` between scenes like an eraser. It reuses the lofi
+theme's fonts (Fraunces, Nunito, IBM Plex Mono, SIL OFL), copied beside it. **Why.** The first video about a math result
+(`videos/eth-is-false`, OpenAI's ETH preprint) needed a look made for its story, a hypothesis written on a board and erased, and the
+owner's canon gives every video a look of its own; lofi is the opinion channel's study room and the others are product looks. It
+is token-only, built on the layers D50 added, so no kit code changed. **Costs.** One more theme folder (about 270 KB of fonts,
+duplicated from lofi so each theme stays self-contained).
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

@@ -1,0 +1,5 @@
+[storyteller] So the paper adds a dial, T. It slides from the problem you want to problems you can count.
+[clear] At T equals zero, it's exactly the original problem.
+[clear, explaining] At chosen points, one, two, three and so on, each rule stops reading other groups' switches directly. It reads a short summary of them instead, a note.
+[matter-of-fact] The notes are short, so there are few enough to try them all. With the notes fixed, every group is counted alone.
+[dry] The catch? That only works at the chosen points, never at zero. The one place you need the answer.

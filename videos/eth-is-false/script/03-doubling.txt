@@ -1,0 +1,5 @@
+[building] Every switch you add doubles the work.
+[matter-of-fact] Ten switches, about a thousand settings. Fifty switches, about a quadrillion.
+[mock-dramatic] Three hundred switches, and the number of settings has ninety one digits.
+[deadpan] No computer is getting through that list. Not yours, not anyone's.
+[clear] So the whole game is being smarter than trying everything.
