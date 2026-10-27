@@ -173,12 +173,14 @@ def main(spec_path):
     hear_on = spec.get("hearback", True) and hearback.available()
     floor = spec.get("min", hearback.MIN)
     clip, ref_text = reference(spec["voice"])
-    if not ref_text and hear_on:
+    # The reference's words are needed whether or not takes are heard back (--no-hearback turns off checking takes,
+    # not transcribing the clip), so Whisper hears them whenever it is installed.
+    if not ref_text and hearback.available():
         ref_text = hearback.hear(hearback.samples_of(clip))
         print(f"reference heard as: {ref_text}", flush=True)
     if not ref_text:
-        raise SystemExit(f"Drama 3 needs the words spoken in {clip}: write them in a .txt beside it, or npm run setup:drama "
-                         f"so they are heard back")
+        raise SystemExit(f"Drama 3 needs the words spoken in {clip}: write them in a .txt beside it "
+                         f"(faster-whisper, which would hear them, is not installed: npm run setup:drama)")
     model = load_model(model_path(spec["model"]))
     ref = {"ref_audio": str(clip), "ref_text": ref_text}
     for i, job in enumerate(spec["jobs"], 1):
