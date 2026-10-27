@@ -4,7 +4,7 @@
 body { background: var(--bg); overflow: hidden; }
 #root {
   width: 1920px; height: 1080px; position: relative; overflow: hidden;
-  background: var(--bg); color: var(--ink); font-family: var(--font);
+  background: var(--sky, var(--bg)); color: var(--ink); font-family: var(--font);
 }
 
 /* Scenes: .inner is the scene's window (above the captions), .cam is what the camera moves. */
@@ -30,6 +30,25 @@ body { background: var(--bg); overflow: hidden; }
   border-top: 2px solid rgba(142, 200, 255, 0.55);
   box-shadow: 0 -10px 60px rgba(255, 122, 61, 0.35), 0 -40px 220px rgba(255, 122, 61, 0.22), inset 0 30px 80px rgba(142, 200, 255, 0.12); }
 #ambient .star { position: absolute; border-radius: 50%; background: var(--ink); }
+#ambient .pool { position: absolute; width: 1100px; height: 1100px; margin: -550px 0 0 -550px; opacity: var(--blob-strength, var(--ambient-strength)); }
+#ambient .skyline { position: absolute; left: 0; bottom: 0; }
+#ambient .skyline svg { display: block; }
+#ambient .skyline.far .bldg { fill: var(--skyline-far, var(--card)); }
+#ambient .skyline.near .bldg { fill: var(--skyline-near, var(--code-bg)); }
+#ambient .skyline .win { fill: var(--window-color, var(--accent)); }
+#ambient .mote { position: absolute; top: 100%; border-radius: 50%;
+  background: radial-gradient(closest-side, var(--dust-color, var(--ink)), transparent); }
+/* Over the scenes, under the captions (kit.js makes #overlay only when a theme asks for one). */
+#overlay { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+#overlay > * { z-index: 1; }   /* no z-index on #overlay itself: a stacking context there would blend the grain with nothing */
+#overlay .grain { position: absolute; inset: 0 -256px -256px 0;   /* kit.js jumps it up and left by up to one tile */
+   opacity: var(--grain-strength, 0.08); mix-blend-mode: var(--grain-blend, overlay); }
+#overlay .scanlines { position: absolute; inset: 0; opacity: var(--scanline-strength, 0.08);
+  background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0 1px, transparent 1px var(--scanline-gap, 4px)); }
+#overlay .roll { position: absolute; left: 0; right: 0; top: 0; height: 240px; opacity: var(--scanline-strength, 0.08);
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.5) 50%, transparent); }
+#overlay .vignette { position: absolute; inset: 0; opacity: var(--vignette-strength, 0.5);
+  box-shadow: inset 0 0 340px 40px var(--vignette-color, #000); }   /* a shadow, not a gradient: HyperFrames' layout check reads a background as a cover over the text */
 
 /* Captions. */
 .caps { position: absolute; left: 0; right: 0; bottom: 56px; height: 120px; z-index: 2; }
@@ -39,6 +58,7 @@ body { background: var(--bg); overflow: hidden; }
   background: var(--cap-bg); color: var(--cap-ink); font-family: var(--cap-font, var(--font));
   font-size: var(--cap-size); line-height: 1.25; font-weight: var(--cap-weight, 500); text-align: center;
   letter-spacing: var(--cap-tracking, normal); text-transform: var(--cap-case, none);
+  border: var(--cap-border, none); box-shadow: var(--cap-shadow, none);
 }
 .cap .w { display: inline-block; font-weight: inherit; }
 
@@ -54,7 +74,7 @@ body { background: var(--bg); overflow: hidden; }
 .ss-card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
 .ss-chip { padding: 20px 34px; background: var(--card); border: var(--border) solid var(--line); border-radius: calc(var(--radius) * 0.8); font-size: 40px; font-weight: 600; }
 .ss-chip.hot { border-color: var(--accent); color: var(--accent); }
-.ss-code { font-family: var(--font-mono); font-variant-ligatures: none; white-space: pre; background: var(--code-bg); color: var(--code-ink); border: var(--border) solid var(--line); border-radius: var(--radius); }
+.ss-code { font-family: var(--font-mono); font-variant-ligatures: none; white-space: pre; background: var(--code-bg); color: var(--code-ink); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--code-shadow, none); }
 .ss-code[data-source]:not([data-source=""])[data-ranges]:not([data-ranges=""])::before { content: attr(data-source) " · " attr(data-ranges); display: block; font-family: var(--font-mono); font-size: 0.62em; color: var(--muted); }
 .ss-code .k { color: var(--accent-2); }
 .ss-code .s { color: var(--accent); }
@@ -70,9 +90,9 @@ body { background: var(--bg); overflow: hidden; }
 .ss-meme {
   position: absolute; inset: 0; margin: auto; overflow: hidden;
   height: var(--meme-height, 760px); aspect-ratio: var(--ar, 1.7778); width: calc(var(--meme-height, 760px) * var(--ar, 1.7778));
-  border-radius: var(--meme-radius, var(--radius)); border: var(--border) solid var(--line); box-shadow: var(--shadow);
+  border-radius: var(--meme-radius, var(--radius)); border: var(--meme-border, var(--border) solid var(--line)); box-shadow: var(--meme-shadow, var(--shadow));
 }
-.ss-meme-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ss-meme-img { display: block; width: 100%; height: 100%; object-fit: cover; filter: var(--photo-filter, none); }
 .ss-meme-box { position: absolute; display: flex; align-items: center; justify-content: center; transform: rotate(var(--rot, 0deg)); }
 .ss-meme-box[data-overflow] { overflow: hidden; }
 .ss-meme-line {

@@ -30,6 +30,35 @@
         return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
       };
 
+      // A hash of a step and a lane, for motion that jumps (grain): the same frame always gets the same
+      // value, whatever was rendered before it.
+      const stepHash = (step, lane) => {
+        let h = Math.imul((step + 1) ^ SEED, 2654435761) ^ Math.imul(lane + 0x9e37, 40503);
+        h = Math.imul(h ^ (h >>> 15), 2246822507);
+        h = Math.imul(h ^ (h >>> 13), 3266489909);
+        return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+      };
+      const TAU = Math.PI * 2, toPx = (v) => `${v.toFixed(1)}px`;
+      // Motion as a function of time rather than a tween between two values (a sway, a wrap, a jump):
+      // one linear tween of each property from 0 to TOTAL on the timeline, mapped through its function
+      // by a modifier, so seeking to any time draws that time's frame and no callback is involved.
+      const driveBy = (el, fns) => {
+        const from = {}, to = { duration: TOTAL, ease: "none", modifiers: {}, immediateRender: false };
+        Object.entries(fns).forEach(([k, f]) => { from[k] = 0; to[k] = TOTAL; to.modifiers[k] = (v) => f(parseFloat(v)); });
+        // A timeline sought to 0 on a fresh page does not render, so time 0 is drawn here.
+        gsap.set(el, Object.fromEntries(Object.entries(fns).map(([k, f]) => [k, f(0)])));
+        tl.fromTo(el, from, to, 0);
+      };
+      // Layers that lie over the scenes (grain, scanlines, vignette) go in #overlay, made only when a
+      // theme asks for one: after the scenes, before the captions.
+      let overlayEl = null;
+      const makeOverlay = () => {
+        if (overlayEl) return;
+        overlayEl = document.createElement("div");
+        overlayEl.id = "overlay";
+        document.getElementById("root").insertBefore(overlayEl, document.querySelector(".caps"));
+      };
+
       // Ambient background: a slow drift under every scene; several may layer ("stars glow").
       const ambientEl = document.getElementById("ambient");
       token("--ambient", "none").split(/\s+/).forEach((ambient) => {
@@ -71,8 +100,104 @@
         planet.setAttribute("data-layout-allow-overflow", "");
         ambientEl.appendChild(planet);
         tl.fromTo(planet, { y: 60 }, { y: -40, duration: TOTAL, ease: "sine.inOut" }, 0);
+      } else if (ambient === "blobs") {
+        // Soft pools of light that drift and breathe: radial gradients, never a blur filter, so they cost
+        // nothing to draw. Colours from --blob-1..3 (the accents when unset).
+        [["--blob-1", "--accent"], ["--blob-2", "--accent-2"], ["--blob-3", "--accent-3"]].forEach(([name, fallback], i) => {
+          const blob = document.createElement("div");
+          blob.className = "pool";
+          blob.setAttribute("data-layout-allow-overflow", "");
+          blob.style.background = `radial-gradient(closest-side, var(${name}, var(${fallback})), transparent)`;
+          blob.style.left = `${Math.round(i * 30 + rand() * 20)}%`;
+          blob.style.top = `${Math.round(10 + rand() * 50)}%`;
+          ambientEl.appendChild(blob);
+          const ax = 220 + rand() * 260, ay = 120 + rand() * 160, px = 50 + rand() * 50, py = 40 + rand() * 40, fx = rand() * TAU, fy = rand() * TAU;
+          const breathe = (t) => 1 + 0.14 * Math.sin(TAU * t / (py * 0.7) + fx);
+          driveBy(blob, { x: (t) => toPx(ax * Math.sin(TAU * t / px + fx)), y: (t) => toPx(ay * Math.sin(TAU * t / py + fy)), scaleX: breathe, scaleY: breathe });
+        });
+      } else if (ambient === "dust") {
+        // Motes in lamplight, rising and swaying, the nearer ones bigger, brighter and faster; each
+        // wraps round to the bottom when it leaves the top. Colour --dust-color (--ink when unset).
+        const H = 1080 * 1.24;   // #ambient's height (inset -12%)
+        [[30, 3, 8], [14, 6, 14], [6, 16, 22]].forEach(([count, size, speed]) => {
+          for (let i = 0; i < count; i++) {
+            const mote = document.createElement("div");
+            mote.className = "mote";
+            mote.setAttribute("data-layout-allow-overflow", "");
+            const s = size * (0.7 + rand() * 0.6), v = speed * (0.7 + rand() * 0.6), y0 = rand() * H;
+            const sway = 8 + rand() * 30, period = 7 + rand() * 9, phase = rand() * TAU, glow = 0.35 + rand() * 0.55;
+            Object.assign(mote.style, { left: `${(rand() * 100).toFixed(2)}%`, width: `${s.toFixed(1)}px`, height: `${s.toFixed(1)}px` });
+            ambientEl.appendChild(mote);
+            driveBy(mote, {
+              y: (t) => toPx(-((y0 + v * t) % H)),
+              x: (t) => toPx(sway * Math.sin(TAU * t / period + phase)),
+              opacity: (t) => (glow * (0.65 + 0.35 * Math.sin(TAU * t / (period * 0.6) + phase * 2))).toFixed(3),
+            });
+          }
+        });
+      } else if (ambient === "skyline") {
+        // A city at night along the bottom of the frame, as if seen from the desk: two rows of seeded
+        // buildings (--skyline-far, --skyline-near) with lit windows (--window-color), drifting apart
+        // slowly (parallax), and a few windows going on and off. Drawn once as SVG, then only moved.
+        const below = Math.round(1080 * 0.12);   // #ambient reaches this far under the frame
+        [["far", 0.35, 100, 240, 70, 170, 0.4], ["near", 0.8, 40, 165, 90, 230, 0.8]].forEach(([row, speed, hMin, hMax, wMin, wMax, lit]) => {
+          const width = Math.ceil(1920 * 1.24 + speed * TOTAL + 40), height = hMax + 40 + below;
+          let x = -rand() * 60, rects = "", windows = "";
+          const flickers = [];
+          while (x < width) {
+            const w = Math.round(wMin + rand() * (wMax - wMin)), h = Math.round(hMin + rand() * (hMax - hMin)), top = height - below - h;
+            rects += `<rect x="${x.toFixed(0)}" y="${top}" width="${w}" height="${h + below}"/>`;
+            if (rand() < 0.35) { const cw = Math.round(w * (0.3 + rand() * 0.3)); rects += `<rect x="${(x + (w - cw) / 2).toFixed(0)}" y="${top - 18}" width="${cw}" height="20"/>`; }
+            if (rand() < 0.2) rects += `<rect x="${(x + w * (0.2 + rand() * 0.6)).toFixed(0)}" y="${top - 46}" width="3" height="30"/>`;
+            // Windows on a grid, a few lit; some of the lit ones keep their own hours.
+            for (let wy = top + 16; wy < height - below - 14; wy += 30) {
+              for (let wx = x + 12; wx < x + w - 18; wx += 24) {
+                if (rand() > 0.16) continue;
+                const win = `x="${wx.toFixed(0)}" y="${wy}" width="9" height="13"`;
+                if (rand() < 0.12) flickers.push(win); else windows += `<rect ${win}/>`;
+              }
+            }
+            x += w + Math.round(rand() * 14);
+          }
+          const layer = document.createElement("div");
+          layer.className = `skyline ${row}`;
+          layer.setAttribute("data-layout-allow-overflow", "");
+          layer.innerHTML = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><g class="bldg">${rects}</g><g class="win" opacity="${lit}">${windows}${flickers.map((f, i) => `<rect class="fl" data-i="${i}" ${f}/>`).join("")}</g></svg>`;
+          ambientEl.appendChild(layer);
+          driveBy(layer, { x: (t) => toPx(-speed * t) });
+          // A flickering window changes its state every few seconds, by a hash of the step: on or off.
+          layer.querySelectorAll(".fl").forEach((el, i) => {
+            const every = 3 + (i % 5) * 1.7, lane = 10 + i + (row === "far" ? 500 : 0);
+            driveBy(el, { opacity: (t) => (stepHash(Math.floor(t / every), lane) < 0.55 ? 1 : 0) });
+          });
+        });
+      } else if (ambient === "grain" || ambient === "scanlines" || ambient === "vignette") {
+        // Over the scenes and under the captions, so it lies on the pictures like film but never on
+        // the words the viewer reads.
+        makeOverlay();
+        // Decorative and meant to lie over text: HyperFrames' layout check is told so.
+        const veil = (el) => { el.setAttribute("data-layout-allow-occlusion", ""); el.setAttribute("data-layout-ignore", ""); overlayEl.appendChild(el); return el; };
+        const layer = veil(document.createElement("div"));
+        layer.className = ambient;
+        if (ambient === "grain") {
+          // A seeded noise tile, jumped to a new place --grain-fps times a second: fresh grain each
+          // step, drawn once. The jump is a hash of the step, so any frame can be rendered first.
+          const tile = 256, fps = parseFloat(token("--grain-fps", "12"));
+          const noise = `<svg xmlns='http://www.w3.org/2000/svg' width='${tile}' height='${tile}'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='${SEED % 9973}' stitchTiles='stitch'/><feColorMatrix values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>`;
+          layer.style.backgroundImage = `url("data:image/svg+xml,${noise.replace(/</g, "%3C").replace(/>/g, "%3E")}")`;
+          layer.style.backgroundSize = `${tile}px ${tile}px`;
+          layer.setAttribute("data-layout-allow-overflow", "");
+          driveBy(layer, { x: (t) => toPx(-Math.floor(stepHash(Math.floor(t * fps), 1) * tile)), y: (t) => toPx(-Math.floor(stepHash(Math.floor(t * fps), 2) * tile)) });
+        } else if (ambient === "scanlines") {
+          // Fine lines, and a soft bright band rolling down the screen, like an old set's refresh.
+          const band = veil(document.createElement("div"));
+          band.className = "roll";
+          band.setAttribute("data-layout-allow-overflow", "");
+          const period = 9 + rand() * 4, phase = rand();
+          driveBy(band, { y: (t) => toPx((((t / period + phase) % 1) * 1.5 - 0.25) * 1080) });
+        }
       } else if (ambient !== "none") {
-        throw new Error(`unknown --ambient ${ambient}: none, glow, grid, dots, stars or horizon`);
+        throw new Error(`unknown --ambient ${ambient}: none, glow, grid, dots, stars, horizon, blobs, dust, skyline, grain, scanlines or vignette`);
       }
       });
 
