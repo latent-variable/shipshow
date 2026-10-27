@@ -1,1 +1,0 @@
-Naur adds a warning, though. A program nobody holds the theory of is dead, even while it runs. So somebody still has to hold the theory.

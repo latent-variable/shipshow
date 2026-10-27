@@ -1,0 +1,1 @@
+That's one rung on a ladder. Machine code, then assembly, then Fortran, then C, then Python. Every rung up, you write less, and you trust the layer below more. And every rung up, someone says you don't really know what the machine is doing. Now there's a new rung on top. Plain English.

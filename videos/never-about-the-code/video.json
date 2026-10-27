@@ -3,8 +3,8 @@
   "kind": "feature",
   "importance": "high",
   "importance_reason": "public: Lino's YouTube channel, in his own voice, making historical and research claims a viewer may repeat",
-  "audience": "A developer or tech lead on YouTube who uses AI coding agents, or argues against them, and has heard 'you don't understand the code'. Knows what a compiler is; may not know the 1950s history. After watching, they can answer that criticism with the history, its fair limits, and a better question: do you understand what it does, and how do you know?",
-  "theme": "paper",
+  "audience": "A developer or tech lead on YouTube who uses AI coding agents, or argues against them, and has heard 'you don't understand the code'. Knows roughly what a compiler is; may not know the history. After watching, they can answer that criticism with what each earlier layer's skeptics said, why the layer won anyway, where AI coding stands in 2026, and a better question: do you understand what it does, and how do you know?",
+  "theme": "lofi",
   "engine": "omnivoice",
   "voice": "lino",
   "speed": 1.2,
@@ -13,31 +13,35 @@
     "1954": "nineteen fifty four",
     "1957": "nineteen fifty seven",
     "1958": "nineteen fifty eight",
-    "1978": "nineteen seventy eight",
-    "1985": "nineteen eighty five",
+    "1973": "nineteen seventy three",
+    "1975": "nineteen seventy five",
+    "1983": "nineteen eighty three",
+    "2005": "two thousand five",
+    "2024": "twenty twenty four",
     "2025": "twenty twenty five",
-    "704": "seven oh four",
+    "2026": "twenty twenty six",
     "IBM": "I B M",
-    "FORTRAN": "Fortran",
     "METR": "meter",
-    "METR's": "meter's",
-    "Naur": "Now-er",
     "Dijkstra": "Dike-stra",
-    "ShipShow": "Ship Show"
+    "COBOL": "Cobol",
+    "4.5": "four point five",
+    "Veracode's": "Vera-code's",
+    "Datamation": "Data-mation",
+    "DHH": "D H H",
+    "Antirez": "Antee-rez"
   },
   "music": {
-    "file": "local/music/never-about-the-code-bed.wav",
-    "volume": 0.18,
-    "duck": 0.3
+    "file": "local/music/never-about-the-code-lofi.wav",
+    "volume": 0.2,
+    "duck": 0.35
   },
   "pauses": {
-    "01-hook": 0.5,
-    "03-it-won": 0.8,
-    "04-theory": 0.8,
-    "06-where-it-breaks": 0.8,
-    "08-oversight": 0.8,
-    "10-leaks": 0.83,
-    "05-dead": 0.6
+    "01-hook": 0.6,
+    "03-ladder": 0.6,
+    "06-mel": 0.5,
+    "07-the-cost": 0.5,
+    "09-now": 0.6,
+    "12-behavior": 0.4
   },
-  "hold": 11
+  "hold": 6
 }

@@ -1,0 +1,1 @@
+And the complaints never stopped. They just moved up a rung. In 1975, Dijkstra wrote that COBOL cripples the mind. In 1983, a satirical letter in Datamation said real programmers use Fortran, and quiche eaters use Pascal. Wait. Fortran? The thing the priesthood scoffed at? A generation later, it's what real programmers use.

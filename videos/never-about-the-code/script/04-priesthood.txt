@@ -1,0 +1,1 @@
+It started with Grace Hopper. In 1952 she had a running compiler, and in her words, nobody would touch it. They told her computers could only do arithmetic. Around 1954, John Backus started Fortran at IBM. He said programmers saw themselves as a priesthood. A machine writing an efficient program? To them, a foolish and arrogant dream. Only the priests could do that.

@@ -1,1 +1,1 @@
-Whenever someone ships code an AI wrote, someone says it. You don't understand the code. It's a fair worry. I think it's the same suspicion that met the first compilers, more than seventy years ago. And it asks the wrong question. To find a better one, go back to 1952.
+You don't understand the code. If you build with coding agents, you've heard that one. Programmers said the same thing about compilers, seventy years ago.
