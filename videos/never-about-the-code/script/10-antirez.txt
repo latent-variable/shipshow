@@ -1,0 +1,1 @@
+Antirez, who created Redis, thought we had more time before programming changed completely. In January, he wrote that for most projects, writing the code yourself no longer makes sense, unless you're doing it for fun.

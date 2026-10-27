@@ -1,163 +1,136 @@
-# Review: never-about-the-code
+# Review: never-about-the-code (second cut)
 
-Plan: `thorough` (importance high: Lino's YouTube channel, in his voice). Critics: accuracy, clarity, pacing, sync, visuals,
-consistency, engagement; Sonnet, Opus for the last round's clarity, visuals and engagement; at most 4 rounds; until no blocking or
-objective major finding is left. Every critic is a fresh agent that never saw the build.
+The first cut (six rounds, all critics passing; git history of this file) was rejected by Lino on 2026-10-26: choppy audio with
+short words that sounded "really close to my mic", wording and pacing he called atrocious, 2025 statistics, too little of what
+people actually complained about, no faces, a plain look, a jazz piano bed instead of lo-fi, and dated memes. This cut is a
+rewrite: new script and research, the voice pipeline fixed (runs of sentences, no squashing, the clone's hiss cleaned: #67), Commons
+portraits (#65), animated memes (#66), the lofi theme (#69) and a lo-fi music bed.
 
-## Round 1: 52 findings (1 blocking, 29 major, 22 minor); all seven critics
+Plan: `thorough` (importance high). Critics: accuracy, clarity, pacing, sync, visuals, consistency, engagement; Sonnet, Opus for the
+last round's clarity, visuals and engagement; at most 4 rounds; until no blocking or objective major finding is left. Every critic is
+a fresh agent that never saw the build. Before round 1, a fresh Opus critic read the script alone ("not yet": announcer lines, a
+three-times tagline, a dense complaints scene, an unanswered objection); its fixes went in first.
 
-| Critic | Verdict | Blocking / major / minor |
-|---|---|---|
-| accuracy | fail | 0 / 4 / 3 |
-| clarity | fail | 0 / 6 / 2 |
-| pacing | fail | 0 / 6 / 1 |
-| sync | fail | 0 / 1 / 8 |
-| visuals | fail | 1 / 4 / 3 |
-| consistency | fail | 0 / 2 / 3 |
-| engagement | fail | 0 / 6 / 2 |
-
-Sound effects were not in this build (the pipeline PR was still open); round 2 judges them.
-
-**Fixed.** The script was rewritten into eleven scenes. The hook states the position as the narrator's view (clarity-1,
-accuracy-2); scene 02 says the bridge to today aloud and gains a meme (clarity-2, engagement-1); "those machines" in 1958 is now
-"about sixty installations" with its population on screen (accuracy-1); "settled it" became "spread fast" (accuracy-6); Naur's own
-warning, a program nobody holds the theory of is dead, has its own scene (accuracy-3, clarity-3); determinism is explained as
-"check a compiler once, an agent every time" (clarity-4); scene 07 opens on what the studies show and says what to do with the
-out-of-date one (clarity-5); opinion lines are in the first person (accuracy-4); the recap matches the studies (accuracy-5); the
-Karpathy line is split and says "favorite name" (clarity-8, accuracy-7); the limit of the thesis is said (clarity-6); "agent" is
-used throughout, FORTRAN is one spelling, the close's stamp matches the hook (consistency-1 to -3). The ending is the question, and
-the ShipShow credit is a silent end card held four seconds (engagement-6, pacing-5). Every scene is a centred column at larger
-sizes, every source line 28 px or more, the overlap removed, meme backdrops solid and the content behind them faded (visuals-1 to
--8). Each meme gets time to read: a new `pauses` setting adds a beat after its scene (pacing-1 to -4, -6; engagement-4, -8). Two
-memes were added (engagement-3); cues land on their own words (sync-1 to -9).
-
-**Declined.** engagement-5 asked for more varied entrances; the layouts now vary by scene and the entrances follow what each thing
-is. Round 2 judges whether that is enough.
-
-## Round 2: 33 findings (0 blocking, 15 major, 18 minor); all seven critics
+## Round 1: 0 blocking, 39 major; six critics (visuals waited for the theme)
 
 | Critic | Verdict | Blocking / major / minor |
 |---|---|---|
-| accuracy | fail | 0 / 1 / 3 |
-| clarity | fail | 0 / 5 / 3 |
-| pacing | fail | 0 / 4 / 0 |
-| sync | fail | 0 / 3 / 2 |
-| visuals | fail | 0 / 1 / 3 |
-| consistency | pass | 0 / 0 / 4 |
-| engagement | fail | 0 / 2 / 4 |
+| accuracy | fail | 0 / 8 / 6 |
+| clarity | fail | 0 / 5 / 5 |
+| pacing | fail | 0 / 15 / 4 |
+| sync | fail | 0 / 6 / 5 |
+| consistency | fail | 0 / 2 / 6 |
+| engagement | fail | 0 / 3 / 4 |
 
-**Fixed.** The three questions are said and labelled as the narrator's, after Naur (accuracy-1); Hopper "had what she called a
-compiler", the meme's doubters are unnamed, Spolsky keeps "to some degree", the assembly line says what S1 supports, and the close
-is in the first person (accuracy-2 to -4). "Theory" is glossed in plain words where it is introduced (clarity-1); scene 09 says how
-someone holds the theory of code they did not type (clarity-2); the Karpathy aside is one sentence with a Pooh meme on the naming
-(clarity-3, engagement-1, -3); the cost and the limit are named (clarity-4); "check" became "test the output", with why once is
-enough for a compiler (clarity-5); METR's caveat says which way it cuts (clarity-6); scene 10 names the abstraction and the leak
-(clarity-7); FORTRAN is introduced as a compiler (clarity-8). Pauses were cut to 0.8 to 1.3 s and the end card held seven seconds
-(pacing-1 to -4). The boom lands with "been" and the sting with "today" (sync-1, -2); a headline opens scene 06 (sync-3); the
-astronaut's first line arrives on its own words (sync-4). Rows of cards appear together and fill in, so no frame builds from the
-left (visuals-1, -2); scene 09 shows an example failing test and scene 10 an example surprise (engagement-2); the hook promises the
-better question (engagement-6). Blue is kept for sources only; the closing stamps match the hook's; source labels sit above every
-quote; the compiler's output has one name in the meme (consistency-1 to -4). Found while fixing: the meme fitter split
-"ENGINEERING" across two lines, because `overflow-wrap: break-word` let a long word "fit"; the kit now keeps words whole.
+What changed:
+- **Pace.** Seven scenes ran 300 to 348 syllables a minute against a 252 target, with near-zero gaps inside runs. Speed 1.2 to
+  1.05, the script cut from 796 to 741 words, the dense scenes trimmed, pauses after the scenes that end on a meme.
+- **Accuracy.** The hook's compiler claim is now "something a lot like it" (opinion); the ladder's paraphrase lost its quotation
+  marks; Spolsky cut (his point was about weeding out students); Backus's two fragments quoted separately; the twelve hours dated
+  early 2026 with its 5 to 61 h range; the doubling credited to Time Horizon 1.1 and said as "has been doubling"; Veracode's 56%
+  scoped to model code with no security guidance; the determinism objection framed as the common objection, not Goldberg's.
+- **Clarity and engagement.** The Hopper aside that made "he'd flipped" read as Hopper is gone; Karpathy's "just don't work" carries
+  its context; Antirez's "more time" says before what; the Backus schedule joke cut (a slip, not a cost); Mel moved into the cost
+  scene; the objection answered on screen (two programs, the same tests pass); the payoff is a worked test (a customer never sees
+  another customer's invoice) that fails, passes, and fails again.
+- **Sync.** Every scene opens on a +0.1 s anchor; the memes that covered the optimized result, the cost stamps and the 1958 card
+  moved or step aside after 3.8 s; chart dots arrive as they are named; sound offsets over 0.3 s removed.
+- **Consistency.** Every dated quote is a card with the portrait inside; red is the complaint again (the cost stamps are ink, "lost
+  anyway" red); one caption form per person.
+- **Voice.** Two runs re-taken for shouts; 23 runs heard back, 22 at 97% or more, the other at 97% with digits written as numbers.
 
-**Accepted.** sync-5 (some meme panels land together on one cue): the panels set up a line the narration has just said.
-
-## Round 3: 27 findings (2 blocking, 7 major, 18 minor); all seven critics
-
-| Critic | Verdict | Blocking / major / minor |
-|---|---|---|
-| accuracy | pass | 0 / 0 / 3 |
-| clarity | fail | 0 / 3 / 2 |
-| pacing | fail | 0 / 3 / 0 |
-| sync | fail | 0 / 1 / 5 |
-| visuals | fail | 2 / 2 / 1 |
-| consistency | pass | 0 / 0 / 3 |
-| engagement | pass | 0 / 0 / 4 |
-
-The accuracy floor holds from this round on.
-
-**Fixed.** The round-2 headline pushed scene 06 past the frame, clipping the headline and the Dijkstra card (visuals-1, -2,
-blocking): the scene now runs comparison, then the Gru meme, then Dijkstra's warning as its own full-frame beat, which also
-puts "test once, test every time" straight after determinism and ties Dijkstra to prompts (clarity-2). A bug found while
-fixing it: the Dijkstra card first rendered blank, because the backdrop is positioned and the card was not; the kit's
-`highlight` then drew a bar through the quote, so the key words are red instead. The hook signposts where the better question
-comes from (clarity-1); scene 10 speaks its example (clarity-3, sync-5). The stat rows in 03 and 07 are a list that arrives a
-row at a time, complete, so no empty card is ever on screen (visuals-4, sync-4, engagement-2). Pauses are 0.8 s except 1.1 s
-after scene 10's meme, and the end holds nine seconds (pacing-1 to -3). The Pooh meme's label lands on "agentic" (sync-1); the
-credits come after the last stamp (sync-6). Swishes and whooshes are 4 to 5 dB louder (engagement-4). "Around 1954",
-"installations" throughout, "a security flaw" in the recap, "I'd say" on the test-once line, "Whenever" in the hook, and one
-year-first form for every source label (accuracy-1 to -3, consistency-1 to -3).
-
-**Declined.** visuals-3 measured source lines, tags and credits at about 20 px from one-third-scale contact sheets; the styles
-set them at 30 px (`.who`, `.tag`, credits), 32 px (tags) and 36 px (the limit line), and the full-size frames show them at that
-size. sync-3 (Drake's "Check the program does its job" before the narration says it): it sets up scene 08's "checking what the
-code does", and the meme restates the scene's question. clarity-4, -5: the Karpathy line now names the swap the Pooh meme shows,
-and the two adoption figures are separate sentences.
-
-## Round 4: 23 findings (0 blocking, 5 major, 18 minor); all seven critics, Opus for clarity, visuals and engagement
+## Round 2: 0 blocking, 27 major; all seven critics, on the lofi theme
 
 | Critic | Verdict | Blocking / major / minor |
 |---|---|---|
-| accuracy | pass | 0 / 0 / 3 |
-| clarity (Opus) | pass | 0 / 0 / 3 |
-| pacing | fail | 0 / 2 / 1 |
-| sync | pass | 0 / 0 / 3 |
-| visuals (Opus) | fail | 0 / 3 / 3 |
-| consistency | pass | 0 / 0 / 6 |
-| engagement (Opus) | pass | 0 / 0 / 2 |
+| accuracy | fail | 0 / 1 / 5 |
+| clarity | fail | 0 / 3 / 4 |
+| pacing | fail | 0 / 9 / 5 |
+| sync | fail | 0 / 6 / 6 |
+| visuals | fail | 0 / 4 / 4 |
+| consistency | fail | 0 / 1 / 5 |
+| engagement | fail | 0 / 3 / 4 |
 
-The plan's cap. The two critics left failing raised objective, mechanical majors, so they were fixed and a fresh pacing and visuals
-critic judge the result (round 5, below), with accuracy for the three lines that changed.
+What changed:
+- **Rhythm.** Speed 1.05 to 1.0. Pacing found sentences inside runs 0 to 0.25 s apart next to 3 s pauses between scenes: ShipShow
+  now puts a breath of at least the video's gap between sentences of a run at a quiet point (#70, D51); scene pauses capped at 1 s.
+  All sentence gaps now 0.34 s or more. Three runs re-taken (two clipped starts, one shout): 24 runs, no faults.
+- **Accuracy.** The ~12 h point is labelled as METR's: public frontier, Feb–Mar 2026, range 5 to 61 h, highly uncertain, the test
+  near its limit, and said "with wide error bars"; Ed Post's capitals match his page; the 1958 share is "at about sixty sites";
+  Veracode's 56% is an average over models.
+- **Clarity.** DHH's card says what changed (his words on Quattro); Antirez has his own scene; the objection names the security
+  tests and answers with "treat it like a co-worker's work"; the payoff names its limit (a test only checks what you thought to ask).
+- **Sync and engagement.** The C rung lands on "C"; the Dafoe and This Is Fine memes step aside after 3.6 s; the 12-behavior
+  question lands on "never"; the close opens on the heckle; the chart shows what task length means while METR is explained; the
+  one-job scene opens on the programmer's one day of training; Roll Safe (2017) cut.
+- **Visuals and consistency.** Chart labels moved off the line and haloed; source lines, axes and the credit line at 28 px or more;
+  portrait credits larger and Ritchie and Thompson bigger; every quote card carries its source; the Unix card says rewritten 1973,
+  paper 1974; portraits take the theme's print frame (#69).
 
-**Fixed.** Each stat row now arrives with its number (visuals-1); the number column is wide enough for "over 50%" (visuals-2);
-cards arrive with their first content, never as a label alone (visuals-3); scene 02 no longer overflows its frame, which pinned it
-to the top edge (visuals-4: measured in a headless browser, 827 px of content in an 810 px stage; now 696), every scene's stage
-was measured the same way and all fit; quotes wrap balanced (visuals-5); the Fowler label is short (visuals-6). The gap after scene
-10 is 2.0 s and the end card holds eleven seconds (pacing-1, -3); pacing-2 was the meme counted twice (its wrapper and the figure),
-and it now has no flag. Also taken: "many of them" saw themselves as a priesthood (accuracy-1), "because you skipped the machine
-code" (clarity-2), "And an agent will build the nonsense, too." (clarity-3), the hook's stamp names the first compilers on the word
-(engagement-1), the credits wait 1.5 s after the last stamp (engagement-2), "paraphrased" for Naur and year-first source labels
-(consistency-1 to -3).
-
-**Accepted, minor.** The close keeps two questions for the three (consistency-4: "what it must never do" is inside "what it
-does"); "test" and "check" both stay (consistency-5); only two scenes carry a heading (consistency-6); sync-1 to -3 (a headline
-and two meme panels a second or two ahead of their words); accuracy-2, -3 and clarity-1 (said as the narrator's view).
-
-## Round 5: past the cap, a fresh check of the round-4 fixes; pacing, accuracy, visuals (Opus)
-
-| Critic | Verdict | Blocking / major / minor |
-|---|---|---|
-| accuracy | pass | 0 / 0 / 1 |
-| pacing | pass | 0 / 0 / 2 |
-| visuals (Opus) | fail | 0 / 2 / 6 |
-
-Visuals sampled the rendered MP4, not only the packet's stills, and found what the stills cannot show: several scenes opened on
-an empty page for 3 to 8 seconds before their first cue (scene 04 for 8 s, the close for 4.4 s).
-
-**Fixed.** Every scene now puts something on screen within two seconds of its start, the transition included: a heading for 04,
-07 and 10, the first line of 05 and 09 on their first sentence, the close's question at once (visuals-1, -2, -3). The backdrop
-behind memes covers the caption band too, so the dot grid no longer stops in a hard line (visuals-4); the DISBELIEVED stamp lands
-after its quote (visuals-6); the Veracode source fits on one line and the studies' number column is narrower (visuals-7); meme
-lines keep a 2% margin from the picture's edge (visuals-8), done by making the line 96% of its box (a first attempt compared the
-text with 96% of a full-width line, which can never pass, and the layout check caught every meme falling to the minimum size).
-
-**Accepted.** visuals-5: the Fowler card waits on the left for the agent card while the voice explains determinism.
-pacing-1 is #62 (the packet counts a meme twice); pacing-2 is a 0.01 s rounding flag.
-
-## Round 6: visuals (Opus), a fresh check of the round-5 fixes on the finished render
+## Round 3: 1 blocking, 21 major; all seven critics (clarity and engagement pass)
 
 | Critic | Verdict | Blocking / major / minor |
 |---|---|---|
-| visuals (Opus) | pass | 0 / 0 / 3 |
+| accuracy | fail | 0 / 1 / 4 |
+| clarity | pass | 0 / 0 / 6 |
+| pacing | fail | 0 / 12 / 4 |
+| sync | fail | 0 / 1 / 4 |
+| visuals | fail | 1 / 3 / 4 |
+| consistency | fail | 0 / 1 / 5 |
+| engagement | pass | 0 / 3 / 5 |
 
-**Fixed.** visuals-1: scenes 06 and 10 used the `wipe` transition, whose clip held the backdrop above the caption band, so the dot
-grid showed below the memes there; both use `slide` now, and stills from the render show no dots above or below the picture.
-visuals-2: "and they felt 20% faster" arrives with its row, so the card has no gap. **Accepted.** visuals-3: scene 09's heading
-waits alone for its first question while the voice says it.
+What changed:
+- **Visuals (blocking).** The chart's caveat ran off the right edge: the labels now sit left of the point; the Opus 4 and GPT-5
+  labels are gone (their dots stay). Portrait credits sit on a solid strip; source lines, tags and steps at 30 px or more.
+- **Accuracy.** Goldberg is credited only with the co-worker point ("argues"), not with the determinism objection he calls poor;
+  Karpathy "flipped by December", as his post says.
+- **Memes.** Engagement found four of the memes old. Three replaced with 2025 and 2026 formats from Imgflip's clean clips: Jack
+  Black opening the book (A Minecraft Movie) for reading the assembly, Odysseus tied to the mast (The Odyssey) for the priesthood
+  hearing about automatic programming, IShowSpeed's hands over his face for the 56%. The objection's answer cards are never covered.
+- **Sync and engagement.** The Karpathy quote lands on "they"; the Backus card and Goldberg's credit land on their names; the
+  objection gains beats (the "no security guidance" highlight, "treat it like a co-worker's work: check the behavior").
+- **Pacing.** The gap between sentences is 0.45 s, and every sentence inside a run gets it (11 breaths); scene pauses cut to 0.6 s at
+  most. **Declined:** the remaining speaking-rate findings (01, 02, 03, 12 at +23 to +34% over ShipShow's 210 syllables a minute).
+  The voice is at speed 1.0, the slowest OmniVoice is run at, and cutting words does not change a rate; Lino's own call for his
+  published videos is that 1.0 already drags and 1.1 to 1.25 is what viewers expect (DAIS product-videos, 2026-10-15).
+- **Consistency.** Antirez's concession is green like the other converts'; his name capitalised as narrated.
 
-## State
+## Round 4 (the cap): 0 blocking, 13 major; accuracy, clarity and consistency pass
 
-Every critic passes: accuracy (the floor, from round 3), clarity, pacing, sync, visuals, consistency and engagement. Clarity,
-visuals and engagement were judged by Opus in the last rounds; the rest by Sonnet. The finished mix was transcribed by Whisper
-against the script (0.977 word match; the gap is digits written as numbers). Nobody has listened to it: the voice, the music bed
-and the sounds are measured, not heard.
+| Critic | Model | Verdict | Blocking / major / minor |
+|---|---|---|---|
+| accuracy | Sonnet | pass | 0 / 0 / 5 |
+| clarity | Opus | pass | 0 / 0 / 7 |
+| pacing | Sonnet | fail | 0 / 5 / 4 |
+| sync | Sonnet | fail | 0 / 2 / 3 |
+| visuals | Opus | fail | 0 / 2 / 6 |
+| consistency | Sonnet | pass | 0 / 0 / 5 |
+| engagement | Opus | fail | 0 / 4 / 5 |
+
+Fixed after the cap, then checked by two fresh verifiers (Opus on scenes 01, 02, 04, 07, 08, 09 and 11; Sonnet on 07 to 09
+after the first found a blocking chart collision and three majors that the fixes themselves had caused):
+- **Sync and engagement.** The Dafoe meme lands after the doubling line is read, so the note and its METR source are seen; the
+  1958 card builds on "sixty", "half", "instructions", "compiler"; 07 opens on "machine time ⇄ programmer time" and the bug card
+  lands on "his Fortran"; the chart's first dot lands on "longest"; the code line types at the scene's start.
+- **Engagement.** Shut Up and Take My Money (2011) replaced by Nanami vibing (Jujutsu Kaisen); five of seven memes are now 2022 or
+  newer clips. The money meme's fade and the 1958 card no longer cover each other.
+- **Visuals.** The chart's box holds its axis labels (they had collided with the doubling note); role tags at 26 px.
+- **Clarity.** "The doubt starts with Grace Hopper" (it was "It starts", heard as Plain English); 07 says what was traded; the
+  1950s card says "something like it", as the narration does; the 56% meme restates the narration.
+- **Pacing.** The Backus and DHH cards cut to what can be read in their time; scene gaps after 04 and 05 under 2 s.
+- **Loudness.** The render came out at -19 LUFS; ShipShow now masters it to -14 (#71, D52).
+
+Accepted or declined at the cap, with the reason:
+- **Speaking rate (pacing, major).** 01, 02, 03, 11 and 12 run 18 to 34% over ShipShow's 210 syllables a minute. Declined: speed
+  is 1.0, the slowest OmniVoice runs at; every sentence gap is at least 0.45 s; Lino's own call for his published videos is that
+  1.0 drags and 1.1 to 1.25 is what viewers expect (DAIS product-videos, 2026-10-15). His ear decides; a slower pass is one
+  `gap` change away.
+- **Portrait credits at about 19 px (visuals, major).** Accepted: each sits on a solid strip and is crisp at 1080p; at 28 px a
+  credit would cover the face on a 200 to 300 px photo. Every credit (author, licence, link) goes in the YouTube description too.
+- **Reading time of the assembly listing and the chart (pacing, major).** Accepted: the listing is four lines and "and 7 more",
+  the point is its length, not its lines; the chart's 2574 s "needs" is the packet counting the chart's text as code.
+- **Minor findings** across critics (date formats, ladder annotations, the 0.2 s "Wait." take, the end-credit line's reading
+  time, METR's "human expert" being partly estimated, Post's letter being satire, "In January" inferred for Antirez) are accepted
+  as they stand; the last three are recorded in `sources.md`.
+
+The floor holds: accuracy passed with no blocking or major finding.
