@@ -7,13 +7,15 @@
 //   data-cue="+1.5"     ... 1.5 s into the scene
 // and data-anim says how (kit/kit.js); a section's data-transition and data-camera override the
 // theme's. A <figure class="ss-meme" data-meme="<memegen id>"> with a <span> per line is a meme
-// (bin/meme.mjs). The look is the theme (video.json "theme", themes/ or local/themes/) under the
+// (bin/meme.mjs); a <figure class="ss-portrait" data-commons="File:..."> is a credited Wikimedia
+// Commons photo (bin/portrait.mjs). The look is the theme (video.json "theme", themes/ or local/themes/) under the
 // video's own styles, and video.json "flair" overrides the theme's motion. Captions are the
 // script's own words, one line at a time. Writes index.html, meta.json, assets/vendor/gsap.min.js
 // and assets/theme/ (the theme's fonts and images).
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { MEME_FONTS_CSS, memeScene } from "./meme.mjs";
+import { portraitScene } from "./portrait.mjs";
 import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir } from "./lib.mjs";
 import { sfxTrack } from "./sfx.mjs";
 
@@ -137,8 +139,8 @@ const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<
   const scene = byId[id];
   if (!scene) die(`scenes.html names scene ${id}, which has no script/${id}.txt (or run voice.mjs again)`);
   seen.add(id);
-  const withMemes = await memeScene(m[2], dir, id);   // bin/meme.mjs: a meme figure's picture and text boxes
-  usesMemes ||= withMemes !== m[2];
+  const withMemes = await memeScene(await portraitScene(m[2], dir, id), dir, id);   // bin/portrait.mjs: a Commons photo and its credit; bin/meme.mjs: a meme's picture and text boxes
+  usesMemes ||= withMemes !== m[2] && /data-meme=/.test(m[2]);
   const body = withMemes.replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
   // 10 ms short of the next scene: scenes share a track, and touching ends read as an overlap.
   const attrs = m[1].replace(/\s*class="([^"]*)"/, "");
