@@ -107,8 +107,8 @@ out.push(md(cues.map((c) => {
 }), ["at (s)", "scene", "cue", "on screen", "being said", "stays up", "needs", "flag"]), "");
 const memes = memesIn(html);
 if (memes.length) {
-  out.push("## Memes", "", "Each meme is a memegen template whose picture is a third-party image, fetched at build. Credit it in `sources.md` (template and source), and judge that its text is short and readable (`critic-visuals`).", "");
-  out.push(md(memes.map((x) => [`\`${x.id}\``, x.name, x.source, x.lines.map((l) => l || "(blank)").join(" / ")]), ["template", "name", "source", "lines"]), "");
+  out.push("## Memes", "", "Each meme is a third-party picture, fetched at build: a memegen template, or a clip (GIF, MP4 or WebM) the figure names. Credit it in `sources.md` (template and source), and judge that its text is short and readable (`critic-visuals`). An animated one is a video the build made, starting at its cue and looping to the end of its scene.", "");
+  out.push(md(memes.map((x) => [`\`${x.id}\``, x.clip ? "animated" : "still", x.name, x.clip && x.clip !== x.source ? `${x.source} (clip: ${x.clip})` : x.source, x.lines.map((l) => l || "(blank)").join(" / ")]), ["template", "kind", "name", "source", "lines"]), "");
 }
 out.push("## Stillness", "", "The longest stretch of each scene in which nothing new appears: the scene's start, each cue and its end are the moments something changes.", "");
 out.push(md(timing.scenes.map((sc) => {

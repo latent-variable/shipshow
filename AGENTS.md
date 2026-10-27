@@ -222,6 +222,17 @@ width and height), centred in the scene window, rounded and framed by the theme.
 third-party: fetched, never committed (`assets/` is ignored), and a published video relies on fair use and
 commentary norms, which is the publisher's call (DESIGN D42). The review packet lists each meme's template and
 `source`; credit both in `sources.md`.
+**Moving memes** (DESIGN D49). `data-meme="rollsafe"` plays a template whose clean `default.gif` is animated (17 of them; the
+cache now tries gif first), and `<figure class="ss-meme" data-clip="https://i.imgflip.com/62yufy.mp4" data-crop="top 98px"
+data-name="Willem Dafoe looking up" data-credit="<page to credit>" data-cue="agents" data-anim="pop"><span class="top">..</span>
+<span class="bottom">..</span></figure>` plays any GIF, MP4 or WebM: a URL (fetched once into `<cache>/clips/`) or a file in the
+video's folder. Imgflip serves each GIF template as a clean `https://i.imgflip.com/<id>.mp4`. `data-crop` takes sides with `%` or
+`px` (`top 14%`, `top 40px bottom 5%`); measure a frame for the band to cut, because a guess leaves white under the text. Text is optional: `top`
+and `bottom` spans (or first and second), drawn like a still's. `ffmpeg` writes `assets/memes/clips/<key>.mp4` (30 fps H.264, a keyframe
+a second, looped to cover the figure's cue to its scene's end) and the figure holds a `<video>` that starts at its cue; a scene that
+holds one keeps its times in `data-scene-start` and `data-scene-duration`, because HyperFrames refuses a video inside a timed
+element. A bad crop, a clip that is not a GIF, MP4 or WebM, or one with nothing cached and no network stops the build naming the scene. The
+packet lists each animated meme with its source URL; credit it in `sources.md` (third-party, as above).
 
 **Music.** `video.json` `"music": {"file", "volume", "duck"}` puts a bed under the narration:
 the build decodes it with ffmpeg, loops it to length, lowers it while the voice speaks (from the
