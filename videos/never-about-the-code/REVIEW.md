@@ -351,3 +351,13 @@ not have stopped"), with minor notes only.
 
 **Open at the cap, for the owner's listen:** the Dijkstra line and the double take in 06 (slow on purpose?), the 1.9 s beat
 before "Yesterday's insult", and every line's delivery: all 62 takes are new since the stall fix.
+
+## After the cap: the voice fixes, voiced again and verified
+
+Both stall fixes (a stall of hiss inside a take, then a take that opened on 2 s of hiss: D55) changed `DRAMA_RULES`, so all 62
+lines were voiced again twice. A fresh sync verifier passed the new timing; a fresh pacing verifier found the hiss lead-in, which
+the second fix removed. The beat after "Sound familiar?" is now under 2 s. Rendered: `out/never-about-the-code.mp4`, 5:21,
+mastered to -15.1 LUFS (held under -14 so no peak loses more than 3 dB). Credits for the description: `review/credits.txt`.
+
+**For the owner's listen:** every take is new; "today's flex" heard back as "flicks" (Whisper or the voice?); the wry Dijkstra
+line and the double take in 06; the 1.5 s beat before "Yesterday's insult".

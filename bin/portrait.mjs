@@ -177,9 +177,9 @@ export function portraitsIn(html) {
 /** The video's credits, one line each, for its description: each portrait (CC BY and CC BY-SA ask for credit in a
  *  manner reasonable to the medium, and a video's credits go in its description, D57) and each screenshot's page. */
 export function creditLines(portraits, shots = []) {
-  return [
+  return [...new Set([
     ...portraits.map((x) => `Photo of ${x.file.replace(/^File:/, "").replace(/\.\w+$/, "")}: ${x.author} · ${x.licence}, ${x.page}`),
     ...shots.map((x) => `Screenshot: ${x.source ? `https://${x.source.replace(/^https?:\/\//, "")}` : x.url} (captured ${x.taken})`),
-  ];
+  ])];   // one line per page: two captures of one page are one credit
 }
 
