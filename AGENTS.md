@@ -289,7 +289,10 @@ data-find="hard to review, and very lightly tested" data-mark-cue="lightly" data
 (`bin/shot.mjs`) opens the page in HyperFrames' headless Chrome (`SHIPSHOW_CHROME` overrides), dark mode unless `data-scheme="light"`,
 `data-width` CSS px wide (1100 by default: narrower makes the text bigger on screen), captures `data-select`'s element or else the
 block holding `data-find`'s words (`data-pad` px around it, default 20), and marks those words, one box per line; `data-mark-cue`
-sweeps the marker in on its own word. `data-hide` hides selectors first (a cookie banner). An X post: `data-shot="https://platform.twitter.com/embed/Tweet.html?id=<id>&amp;theme=dark"
+sweeps the marker in on its own word. `data-select` may name several elements (`"#review h3, #review table"`: one capture around
+them all, and the words are looked for inside the nearest element holding them; hidden elements are skipped). `data-lines="1"` keeps only
+the lines holding the words and one more above and below, cut on line boundaries: for a long paragraph whose one sentence is the point.
+`data-hide` hides selectors first (a cookie banner). An X post: `data-shot="https://platform.twitter.com/embed/Tweet.html?id=<id>&amp;theme=dark"
 data-select="article" data-width="620" data-pad="0" data-source="x.com/<user>/status/<id>"` (no sign-in; `data-source` is what the
 bar shows and the credits cite). Captures are cached in `~/.cache/shipshow/shots/` (`SHIPSHOW_SHOTS_CACHE`; trash a folder to take it
 again). A page that will not load, or words or an element not on it, stops the build naming the scene. Size: `--shot-width` (1500 px)

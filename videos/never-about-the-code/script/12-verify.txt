@@ -1,6 +1,5 @@
-[sincere, getting practical] So here's how I actually ship with agents.
+[sincere, getting practical] So here's how I actually do that eighty percent.
 [matter-of-fact] I tell the agent what the feature has to do. It builds it, and tests it as hard as it can.
-[confident] Then the pull request goes through review by another model, round after round, until nothing serious is left. And my standing tests and checks already know the project, so they catch what should never happen.
-[serious] Then I validate it myself. I run the feature, and make sure it does what I meant.
-[emphatic] Building is the small part now. Most of the work is reviewing, testing, and verifying.
-[warm, proud] I've gotten a lot of code merged this way. That's due diligence in 2026.
+[confident] Then the pull request goes through review by another model, round after round, until nothing serious is left.
+[storyteller] On the tool that voiced this video, the reviewer caught that turning off hear-back blocked any cloned voice without a transcript. Fixed before it merged.
+[confident] And my standing tests and checks already know the project, so they catch what should never happen.

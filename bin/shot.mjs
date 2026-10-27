@@ -10,6 +10,8 @@
 //   data-select   the element to capture (CSS), or several ("h3, table": the box around them all, plus the block holding
 //                 data-find's words, looked for inside the nearest element holding them all); without it, that block
 //   data-find     words on the page to mark (whitespace, case and curly quotes ignored); the build stops if they are absent
+//   data-lines    keep only the lines holding data-find's words, and this many more above and below (0 to 10): for a
+//                 long paragraph whose one sentence is the point
 //   data-hide     CSS selectors to hide first, comma-separated (a cookie banner, a sticky header)
 //   data-width    the browser's width in CSS px (default 1100); data-scheme "dark" (default) or "light"; data-pad, px
 //                 of page kept around the element (default 20)
@@ -29,7 +31,7 @@ import { pathToFileURL } from "node:url";
 import { die, REPO } from "./lib.mjs";
 import { imageSize } from "./meme.mjs";
 
-export const VERSION = 5;   // how a capture is taken: bump when that changes, so cached shots are taken again
+export const VERSION = 6;   // how a capture is taken: bump when that changes, so cached shots are taken again
 export const cacheDir = () => process.env.SHIPSHOW_SHOTS_CACHE || join(homedir(), ".cache", "shipshow", "shots");
 const SCALE = 2;            // device pixels per CSS px: sharp when the figure is drawn larger than the page was
 const TIMEOUT = 30000;
@@ -51,7 +53,14 @@ export function shotSpec(attrs, videoDir) {
   const scheme = attrOf(attrs, "data-scheme") || "dark";
   if (!["dark", "light"].includes(scheme)) throw new Error(`data-scheme="${scheme}" is not dark or light`);
   const hide = (attrOf(attrs, "data-hide") || "").split(",").map((s) => s.trim()).filter(Boolean);
-  return { url, select: attrOf(attrs, "data-select") || "", find: attrOf(attrs, "data-find") || "", hide, width, pad, scheme };
+  const spec = { url, select: attrOf(attrs, "data-select") || "", find: attrOf(attrs, "data-find") || "", hide, width, pad, scheme };
+  if (attrOf(attrs, "data-lines") !== undefined) {
+    const lines = Number(attrOf(attrs, "data-lines"));
+    if (!(Number.isInteger(lines) && lines >= 0 && lines <= 10)) throw new Error(`data-lines="${attrOf(attrs, "data-lines")}" is not a whole number from 0 to 10`);
+    if (!spec.find) throw new Error("data-lines needs data-find: it keeps the lines holding those words");
+    spec.lines = lines;
+  }
+  return spec;
 }
 
 /** The cache folder's name for a spec: every input that changes the picture. */
@@ -74,7 +83,7 @@ function chromePath() {
 }
 
 /** Runs in the page: hides what was asked, finds the element and the words, and returns the clip and the mark in page px. */
-function locate({ select, find, hide, pad }) {
+function locate({ select, find, hide, pad, lines }) {
   for (const h of hide) for (const el of document.querySelectorAll(h)) el.style.setProperty("display", "none", "important");
   // data-select may name several elements ("h3, table"): the capture is the box around all of them.
   // Elements with no size (a hidden dialog's heading) are skipped: they sit at the page's top and would stretch the box.
@@ -122,6 +131,17 @@ function locate({ select, find, hide, pad }) {
     para.setStart(range.startContainer, from < 0 ? 0 : from + 2); para.setEnd(range.startContainer, to < 0 ? t.length : to);
     const p = para.getBoundingClientRect();
     box = { left: box.left, width: box.width, top: p.top, height: p.height };
+    padY = 0;
+  }
+  // data-lines: only the lines holding the words, and that many more above and below, cut on line boundaries.
+  if (lines !== undefined && range) {
+    const rects = [...range.getClientRects()].filter((r) => r.width >= 1 && r.height >= 1);
+    const el = range.startContainer.parentElement;
+    const glyph = rects[0].height, lh = parseFloat(getComputedStyle(el).lineHeight) || glyph * 1.4;
+    const half = Math.max(0, (lh - glyph) / 2);
+    const top = Math.max(box.top, Math.min(...rects.map((r) => r.top)) - half - lines * lh);
+    const bottom = Math.min(box.top + box.height, Math.max(...rects.map((r) => r.bottom)) + half + lines * lh);
+    box = { left: box.left, width: box.width, top, height: bottom - top };
     padY = 0;
   }
   const clip = { x: Math.max(0, box.left + sx - pad), y: Math.max(0, box.top + sy - padY), width: box.width + 2 * pad, height: box.height + 2 * padY };

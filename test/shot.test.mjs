@@ -131,6 +131,11 @@ test("a local page is captured, the block holding the words cut out and the word
     assert.equal(shot.size.w, 800, "the paragraph, at 2 device pixels per CSS pixel");
     assert.ok(shot.size.h > 40 && shot.size.h < 400, `the paragraph only, not the page: ${shot.size.h} px high`);
     assert.ok(shot.meta.mark.length >= 1 && shot.meta.mark.every((m) => m.x >= 0 && m.y >= 0 && m.x + m.w <= 1.001 && m.y + m.h <= 1.001), JSON.stringify(shot.meta.mark));
+    // data-lines keeps the lines holding the words: one line here, against the whole paragraph.
+    const line = await loadShot(shotSpec(`data-shot="page.html" data-find="If you can't explain" data-lines="0" data-width="400" data-pad="0"`, dir));
+    assert.ok(line.size.h < shot.size.h * 0.6, `one line (${line.size.h} px) against the paragraph (${shot.size.h} px)`);
+    assert.throws(() => shotSpec(`data-shot="page.html" data-lines="2"`, dir), /data-lines needs data-find/);
+    assert.throws(() => shotSpec(`data-shot="page.html" data-find="x" data-lines="-1"`, dir), /not a whole number from 0 to 10/);
     // Curly quotes on the page match straight ones in data-find.
     const q = await loadShot(shotSpec(`data-shot="page.html" data-find="If you can't explain" data-width="400" data-pad="0"`, dir));
     assert.equal(q.meta.mark.length, 1);
@@ -144,6 +149,6 @@ test("a local page is captured, the block holding the words cut out and the word
     const last = await loadShot(shotSpec(`data-shot="two.html" data-select="#last h2, #last table" data-find="Other text" data-width="400" data-pad="0"`, dir));
     const round = await loadShot(shotSpec(`data-shot="two.html" data-select="#last" data-width="400" data-pad="0"`, dir));
     assert.equal(last.size.h, round.size.h, "the last section only, not from the first round's words down");
-    assert.ok(readdirSync(process.env.SHIPSHOW_SHOTS_CACHE).length === 6, "a failed capture leaves nothing in the cache");
+    assert.ok(readdirSync(process.env.SHIPSHOW_SHOTS_CACHE).length === 7, "a failed capture leaves nothing in the cache");
   } finally { delete process.env.SHIPSHOW_SHOTS_CACHE; }
 });

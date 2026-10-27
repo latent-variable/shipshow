@@ -13,8 +13,8 @@ he said was wrong with it, so they are the bar this version is judged by first.
 - **Fireship energy (the owner, 2026-10-27, on the second cut).** Punchy, fast, straight to the point, and funny first: "funny
   is better than anything else". People are introduced with a fun line, not a citation; quotes are few and short. A slow, serious or
   lecture-like stretch is a finding. Fast narration is wanted, not a fault, as long as each sentence can be followed.
-- **The ending is his verification method, never "read the code".** Define done and the failure modes, write tests that fail
-  first, make them pass, then break the code on purpose to prove the tests catch it.
+- **The ending is his verification method, never "read the code"**: his own, as the owner's notes below describe it (2026-10-27;
+  until then this bar named a method he does not use).
 - **Sounds like a person talking.** Lino heard the first cut as choppy, with short words sounding distorted and too close to the
   mic, and the wording and pacing as "atrocious". Any sentence that is hard to follow on one listen, sounds like written copy,
   announces itself, or piles up numbers is a finding. The voice-check packet lines (hear-back scores, faults) count.
@@ -22,9 +22,9 @@ he said was wrong with it, so they are the bar this version is judged by first.
   things is an accuracy finding.
 - **Shows the complaints.** The viewer sees what people actually said at each rung (who, when, their words) and what a compiler
   does, not a summary of resistance in general.
-- **Shows the people.** Each person who is quoted or named for what they did has their photo on screen as they are named, with
-  its Commons credit legible.
-- **Stands on its own.** Every frame has a finished, distinctive look (the lofi theme), never a plain page; memes are current and
+- **Shows the people.** Each person who is quoted or named for what they did has their photo, or the page they wrote, on screen
+  as they are named. Credits go in the description (2026-10-27).
+- **Stands on its own.** Every frame has a finished, distinctive look (the signal theme since the sixth cut), never a plain page; memes are current and
   animated where they can be.
 - **The thesis is Lino's, and argued as his.** Opinion lines (`sources.md` marks them) are his first person or a question. The
   counterarguments (determinism, security) are stated fairly in their strongest 2026 form, briefly, and answered.
@@ -34,3 +34,19 @@ he said was wrong with it, so they are the bar this version is judged by first.
   is up. Jokes target the argument, never a person.
 - **For YouTube.** A developer who pressed play knows within ten seconds what the video will argue, and the ending gives them
   the question to ask.
+
+## The owner's notes on the fifth cut (2026-10-27)
+
+- **People are described by their record.** Karpathy was never a doubter: he named vibe coding and wrote "the hottest new
+  programming language is English" in 2023. A label for a person ("doubter", "skeptic") that one quote supports and their
+  record does not is a finding.
+- **Receipts, not paraphrase.** Where the video quotes what someone wrote (a PR comment, a rule, a post), the screen shows the
+  real page, the words marked. A mock comment or a card standing in for a page that could be captured is a finding.
+- **No photo credits on screen.** Credits go in the description; a credit drawn on a photo is a finding.
+- **The method is the owner's own.** He says what the feature must do; the agent builds and tests it; another model reviews
+  the PR round after round; standing tests and checks catch what should never happen; he validates it himself. Advice he does
+  not follow ("write down what must never happen first", "plant a bug") is a finding.
+- **One layer at a time.** Contrasting two languages of the same layer (Fortran, COBOL) without saying they are the same layer
+  loses the viewer.
+- **Look.** The fifth cut's colours and fonts were the weak part; judge the `signal` theme on whether each frame reads at a
+  glance and looks made, not templated.

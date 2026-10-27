@@ -806,8 +806,11 @@ Drama a name is written as it is spelled, and respelled only as one word, checke
 **Decision.** `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of a real page. `bin/shot.mjs`
 opens it in headless Chrome (HyperFrames' own, `hyperframes browser path`, through `puppeteer-core`, now a direct dev
 dependency; `SHIPSHOW_CHROME` overrides), in dark mode by default at 2 device pixels per CSS pixel, finds the words (whitespace,
-case and curly quotes ignored), and captures the element `data-select` names or else the block holding the words (a paragraph,
-a list item; a block taller than a screen, like a whole post in one `<pre>`, is cut to the paragraph between blank lines). It
+case and curly quotes ignored), and captures the element `data-select` names (or the box around several, the words looked for inside
+the nearest element holding them, elements with no size skipped: GitHub hides empty dialog headings inside a review, and one at the
+page's top made a 9,450 px capture) or else the block holding the words (a paragraph, a list item; a block taller than a screen,
+like a whole post in one `<pre>`, is cut to the paragraph between blank lines). `data-lines` keeps only the lines holding the words
+and N more, cut on line boundaries, because a critic found a whole METR paragraph unreadable at 14 px for a ten-word point. It
 records one box per line the words run over, so the kit draws a marker on exactly those words; `data-mark-cue` sweeps it in on
 a later word. The figure shows a bar naming the page (`data-source` names the address to cite when the page captured is an
 embed: an X post is captured through `platform.twitter.com/embed/Tweet.html?id=<id>&theme=dark`, which needs no sign-in). The

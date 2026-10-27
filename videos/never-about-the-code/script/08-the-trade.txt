@@ -1,3 +1,4 @@
-[storyteller, with a smirk] In IBM's own case study, so IBM grading its own homework, one guy learned Fortran in a day, then finished a job in four hours that he figured would take three days.
+[storyteller, with a smirk] In IBM's own case study, so IBM grading its own homework, one guy took a one-day Fortran course.
+[matter-of-fact] Then he wrote a job in four hours that he figured would take three days by hand.
 [matter-of-fact] When it broke, he fixed it in Fortran. He understood what his program did, not what the machine did.
 [knowing] Sound familiar?
