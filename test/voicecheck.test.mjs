@@ -240,12 +240,19 @@ t = np.arange(int(sr * 4.0)) / sr
 voice = (0.2 * np.sin(2 * np.pi * 180 * t) * (np.sin(2 * np.pi * 1.5 * t) > 0)).astype(np.float32)
 hiss = (rng.standard_normal(len(t)) * 0.012).astype(np.float32)
 sf.write(sys.argv[1] + "/hissy.wav", voice + hiss, sr); sf.write(sys.argv[1] + "/quiet.wav", voice + hiss * 0.02, sr)
+# the same hissy clip padded with digital silence, which must not hide its hiss
+sf.write(sys.argv[1] + "/padded.wav", np.concatenate([np.zeros(sr * 3, np.float32), voice + hiss]), sr)
+p = o.quiet(sys.argv[1] + "/padded.wav", "padded", sys.argv[1] + "/cache", 0.0, 7.0)
+print("padded", round(o.noise_floor(sys.argv[1] + "/padded.wav", 3.0, 7.0)), round(o.noise_floor(p, 3.0, 7.0)))
 a = o.quiet(sys.argv[1] + "/hissy.wav", "hissy", sys.argv[1] + "/cache", 0.0, 4.0)
 b = o.quiet(sys.argv[1] + "/quiet.wav", "quiet", sys.argv[1] + "/cache", 0.0, 4.0)
 print(round(o.noise_floor(sys.argv[1] + "/hissy.wav")), round(o.noise_floor(a)), round(o.noise_floor(sys.argv[1] + "/quiet.wav")), round(o.noise_floor(b)))
 `, [dir]);
   assert.equal(r.status, 0, r.stderr);
-  const [hissyIn, hissyOut, quietIn, quietOut] = r.stdout.trim().split("\n").pop().split(" ").map(Number);
+  const lines = r.stdout.trim().split("\n");
+  const [hissyIn, hissyOut, quietIn, quietOut] = lines.pop().split(" ").map(Number);
+  const [, padIn, padOut] = lines.find((l) => l.startsWith("padded")).split(" ").map(Number);
+  assert.ok(padOut < padIn - 6, `digital silence does not hide a hiss: ${padIn} -> ${padOut}`);
   assert.ok(hissyIn > -52, `the hissy clip is over the line: ${hissyIn}`);
   assert.ok(hissyOut < hissyIn - 6, `the hissy clip is cleaned: ${hissyIn} -> ${hissyOut}`);
   assert.ok(quietIn < -52 && Math.abs(quietOut - quietIn) <= 1, `a quiet clip is left alone: ${quietIn} -> ${quietOut}`);

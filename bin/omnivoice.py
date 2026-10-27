@@ -114,13 +114,16 @@ def reference(voice, cache):
     return quiet(clip, voice["name"], cache, start, end), text
 
 
-def noise_floor(clip):
-    """The clip's background, dBFS: the 10th percentile of its 50 ms windows' levels."""
+def noise_floor(clip, start=0.0, end=None):
+    """The background of the part of a clip used as the reference, dBFS: the 10th percentile of its 50 ms windows'
+    levels, digital silence (under -90) left out so padding cannot hide a hiss."""
     a, sr = sf.read(str(clip), dtype="float32")
     a = a.mean(axis=1) if a.ndim > 1 else a
+    a = a[int(sr * start): None if end is None else int(sr * end)]
     w = int(sr * 0.05)
-    frames = a[: len(a) // w * w].reshape(-1, w)
-    return float(np.percentile(20 * np.log10(np.sqrt((frames ** 2).mean(axis=1)) + 1e-9), 10))
+    levels = 20 * np.log10(np.sqrt((a[: len(a) // w * w].reshape(-1, w) ** 2).mean(axis=1)) + 1e-12)
+    levels = levels[levels > -90]
+    return float(np.percentile(levels, 10)) if len(levels) else -120.0
 
 
 def quiet(clip, name, cache, start, end):
@@ -132,7 +135,7 @@ def quiet(clip, name, cache, start, end):
     2 of 5 (2026-10-26). The built-in clips sit at -56 to -87 and are left alone."""
     Path(cache).mkdir(parents=True, exist_ok=True)
     out = Path(cache) / f"{name}-reference.wav"
-    floor = noise_floor(clip)
+    floor = noise_floor(clip, start, end)
     clean = ["-af", "highpass=f=70,afftdn=nf=-25:nr=18,afftdn=nf=-30:nr=18"] if floor > NOISY_DB else []
     if clean:
         print(f"reference {Path(clip).name}: background {floor:.0f} dBFS, cleaned of hiss before cloning", flush=True)
