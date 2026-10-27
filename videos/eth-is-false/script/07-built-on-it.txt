@@ -4,3 +4,4 @@
 [clear] Take edit distance, how many edits turn one string into another. The Strong ETH was the best-known reason it can't be done much faster than quadratic.
 [deadpan] Unless the Strong ETH is false.
 [serious] For a quarter century, unless ETH is false is where most arguments stopped.
+[dry] Card on card. And at the very bottom, one hypothesis nobody ever proved.
