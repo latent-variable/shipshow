@@ -1,1 +1,0 @@
-Now it's our turn, and this time it's moving faster. METR times tasks by how long a human expert takes. Then it finds the longest task an AI can finish half the time. In early 2025, that was about an hour. By May 2026, about twelve hours. And it's doubling about every three months.

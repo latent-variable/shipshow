@@ -18,7 +18,6 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 | S5 | Edsger W. Dijkstra, EWD 498, "How do we tell truths that might hurt?", 1975-06-18. cs.virginia.edu/~evans/cs655/readings/ewd498.html | page |
 | S6 | Ed Post, "Real Programmers Don't Use Pascal", letter to Datamation, vol. 29 no. 7, July 1983. pbm.com/~lindahl/real.programmers.html | page |
 | S7 | Ed Nather, "The Story of Mel", Usenet, 1983-05-21. catb.org/jargon/html/story-of-mel.html | page |
-| S8 | Joel Spolsky, "The Perils of JavaSchools", 2005-12-29. joelonsoftware.com/2005/12/29/the-perils-of-javaschools-2/ | page |
 | S9 | D. M. Ritchie, K. Thompson, "The UNIX Time-Sharing System", CACM 17(7), 1974. dsf.berkeley.edu/cs262/unix.pdf (web.archive.org copy) | PDF text |
 | S10 | METR, "Time Horizon 1.1", 2026-01-29. metr.org/blog/2026-1-29-time-horizon-1-1/ | page |
 | S11 | METR, "Frontier Risk Report", 2026-05-19. metr.org/blog/2026-05-19-frontier-risk-report/ | page (first 100,000 characters) |
@@ -36,43 +35,39 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 | Scene | Claim | Source |
 |---|---|---|
 | 01 | People say "you don't understand the code" about building with coding agents | The criticism the video answers; S16 and S17 are its 2026 forms |
-| 01 | Programmers said the same thing about compilers, seventy years ago | S1, S2 (1954 skepticism about automatic programming); 1954 to 2026 is 72 years |
+| 01 | "In the 1950s, programmers heard something a lot like it about compilers" | **opinion**, the video's framing; what they actually said is in 04 (S1, S2, S3): a machine could not write efficient programs, computers could only do arithmetic |
 | 02 | A processor runs simple steps (load, multiply, add, store) and a compiler writes them from a readable line | S18: the -O0 listing is loads (`ldr`), stores (`str`), `mul` and `add` |
-| 02 | `m * x + b` becomes eleven instructions; optimised, two | S18: 11 lines at -O0; `madd w0, w1, w0, w2` and `ret` at -O2 |
-| 02 | "When did you last read them? And nobody tells you that you don't understand your code." | **opinion**, a question to the viewer |
-| 03 | The ladder: machine code, assembly, Fortran, C, Python; each rung means writing less and trusting the layer below more, and each met "you don't know what the machine is doing" | **opinion**, the video's framing; scenes 04 to 06 give the sourced complaints rung by rung |
-| 04 | In 1952 Hopper had a running compiler; "nobody would touch it"; "They told me computers could only do arithmetic" | S3: "In 1952 she had an operational compiler... 'I had a running compiler and nobody would touch it. They told me computers could only do arithmetic.'" Reported speech in the newsletter |
+| 02 | `m * x + b` becomes eleven instructions; optimised, two | S18: 11 lines at -O0 (four shown, "and 7 more"); `madd w0, w1, w0, w2` and `ret` at -O2 |
+| 02 | "When did you last read them? Nobody tells you that you don't understand your code." | **opinion**, a question to the viewer |
+| 03 | The ladder: machine code, assembly, Fortran, C, Python; each rung means writing less and trusting the layer below more; every rung met the same doubt | **opinion**, the video's framing; 04 to 06 give the sourced doubts. The screen says "the same doubt" with no quotation marks |
+| 04 | In 1952 Hopper had a running compiler; "nobody would touch it"; "They told me computers could only do arithmetic" | S3: "In 1952 she had an operational compiler... 'I had a running compiler and nobody would touch it. They told me computers could only do arithmetic.'" Reported speech in the newsletter, credited as such on screen |
 | 04 | Around 1954 Backus started Fortran at IBM | S1 (the 1954 preliminary report; the team formed in 1954) |
-| 04 | Programmers saw themselves as a priesthood; a machine writing an efficient program was "a foolish and arrogant dream"; "Only the priests could do that" | S2, section 4 "The Priesthood": "members of a priesthood guarding skills and mysteries far too complex for ordinary mortals"; "it was obviously a foolish and arrogant dream to imagine that any mechanical process could possibly perform the mysterious feats of invention required to write an efficient program. Only the priests could do that." |
+| 04 | Programmers saw themselves as "a priesthood"; a machine writing an efficient program was "a foolish and arrogant dream" | S2, section 4 "The Priesthood": "members of a priesthood guarding skills and mysteries far too complex for ordinary mortals"; "it was obviously a foolish and arrogant dream to imagine that any mechanical process could possibly perform the mysterious feats of invention required to write an efficient program." The card quotes the two phrases separately |
 | 05 | In 1975 Dijkstra wrote that COBOL cripples the mind | S5: "The use of COBOL cripples the mind; its teaching should, therefore, be regarded as a criminal offence." |
 | 05 | In 1983 a satirical letter in Datamation said real programmers use Fortran, quiche eaters use Pascal | S6: "Real Programmers use FORTRAN. Quiche Eaters use PASCAL." |
 | 05 | "A generation later, it's what real programmers use" | 1957 (S1) to 1983 (S6): 26 years |
-| 06 | The Story of Mel, 1983: Mel wrote raw machine code and wouldn't use an optimizing assembler: "You never know where it's going to put things" | S7: "Real Programmers wrote in machine code. Not FORTRAN. Not RATFOR. Not, even, assembly language."; "'You never know where it's going to put things', he explained" |
-| 06 | In 2005 Spolsky worried that students taught only Java would never really get pointers | S8: "there's nothing hard enough about Java to really weed out the programmers without the part of the brain that does pointers or recursion" |
-| 07 | Mel's code really did run faster | S7: "Mel's always ran faster" (compared with the optimizing assembler's output) |
-| 07 | When Unix moved from assembly to C in 1973 it got about a third bigger; Ritchie and Thompson called that quite acceptable | S9: "during the summer of 1973, it was rewritten in C. The size of the new system is about one third greater than the old... we considered this increase in size quite acceptable." |
-| 07 | Backus promised Fortran in about six months; it took over two years | S1: "to be completed within about six months [!]... until it actually was completed over two years later, in April 1957" |
-| 07 | "Software estimates haven't changed." | **opinion**, a joke |
-| 08 | In a 1957 case a programmer took a one-day course, wrote the job in four hours; by hand he estimated three days; he found the bug in a Fortran statement without memory dumps | S4: "attended a one-day course on FORTRAN... He then programmed the job in 4 hours, using 47 FORTRAN statements... He studied the output (no tracing or memory dumps were used) and was able to localize his error in a FORTRAN statement he had written... He estimated that it might have taken 3 days to code this job by hand" |
-| 08 | "He never opened the machine code" | S4: he localized the error from the output to a FORTRAN statement, "no tracing or memory dumps were used" |
-| 08 | By fall 1958, more than half the machine instructions on those IBM machines came from the compiler | S1, quoting Backus's November 1958 report: "more than half the machine instructions for these machines are being produced by FORTRAN" (about 60 installations, 66 IBM 704s) |
-| 09 | METR times tasks by how long a human expert takes and finds the longest an AI finishes half the time (the 50% time horizon) | S10 |
-| 09 | Early 2025, about an hour | S10: Claude Sonnet 3.7 (released February 2025), 60 minutes under TH1.1 |
-| 09 | By May 2026, about twelve hours | S11, Table 1: public frontier 50% time horizon "~12h [5h-61h]". The chart also shows S11's "between 16 and 20 hours" for the most capable model shared with METR, labelled as such |
-| 09 | The chart: Claude 3.7 Sonnet 60 min, Claude Opus 4 101 min (1.7 h), GPT-5 214 min (3.6 h), Claude Opus 4.5 320 min (5.3 h), placed at release month on a linear time axis and a log hours axis | S10 (TH1.1 column), S19 |
-| 09 | Doubling about every three months | S10: "doubling time since 2024... falls to 89 days under TH1.1" |
-| 10 | In October 2025 Karpathy said agents just don't work | S12: "The reason you don't do it today is because they just don't work." |
-| 10 | "Grace Hopper heard a version of that in 1952" | S3 ("computers could only do arithmetic"); **opinion** that it is the same kind of dismissal |
-| 10 | Three months later he had flipped: eighty percent by hand became eighty percent agents | S13: "I rapidly went from about 80% manual+autocomplete coding and 20% agents in November to 80% agent coding and 20% edits+touchups in December" |
-| 10 | DHH, who created Ruby on Rails, said a year before he didn't like the AI on offer; Opus 4.5 was the dividing line | S14: "A year ago, I did not like the mode of AI we were offered."; "Opus 4.5, to me, was the dividing line" |
-| 10 | Antirez, who created Redis, thought we had more time; for most projects writing the code yourself no longer makes sense unless for fun | S15: "thought that we had more time before programming would be completely reshaped... I no longer believe this is the case."; "for most projects, writing the code yourself is no longer sensible, if not to have fun." The card quotes it exactly |
-| 11 | A compiler gives the same output every time and an agent doesn't; Goldberg says an agent is more like a co-worker than a compiler | S16: "The compiler is stateless (each invocation is fully independent) and the agent is stateful."; "It is like a co-worker, or an employee." |
-| 11 | In Veracode's 2026 tests, AI code passed security checks only 56% of the time | S17: "the average security pass rate sits at 56 percent". A vendor's test: named on screen |
-| 11 | We review a co-worker's pull request, but what we check is what it does and whether something proves it | **opinion** |
-| 12 | You need to understand the behaviour: what it does, what it must never do, how you know | **opinion**, the thesis |
-| 12 | Karpathy: "Don't tell it what to do, give it success criteria and watch it go." | S13, verbatim |
-| 12 | Drop down a rung and read the code when it surprises you, the way you'd open the assembly | **opinion** |
-| 13 | "Do you understand what it does? And how do you know?" | **opinion**, the closing question |
+| 06 | The Story of Mel, 1983: Mel wrote raw machine code and refused an optimizing assembler; his code ran faster | S7: "Real Programmers wrote in machine code. Not FORTRAN. Not RATFOR. Not, even, assembly language."; "'You never know where it's going to put things', he explained"; "Mel's always ran faster" (against the optimizing assembler's output). A legend, called one |
+| 06 | When Unix moved from assembly to C in 1973 it got about a third bigger; Ritchie and Thompson called that quite acceptable | S9: "during the summer of 1973, it was rewritten in C. The size of the new system is about one third greater than the old... we considered this increase in size quite acceptable." |
+| 06 | "The skeptics were right about the cost, and they lost anyway." | **opinion**, the summary of 06 and 07 |
+| 07 | In a 1957 case a programmer took a one-day course, wrote the job in four hours; by hand he estimated three days; he fixed the bug in his Fortran with no memory dumps | S4: "attended a one-day course on FORTRAN... He then programmed the job in 4 hours, using 47 FORTRAN statements... He studied the output (no tracing or memory dumps were used) and was able to localize his error in a FORTRAN statement he had written... He estimated that it might have taken 3 days to code this job by hand" |
+| 07 | By fall 1958, more than half the machine instructions on IBM's 704 computers came from the compiler | S1, quoting Backus's November 1958 report: "more than half the machine instructions for these machines are being produced by FORTRAN" (about 60 installations, 66 IBM 704s) |
+| 08 | METR gives AI agents real tasks, times how long each takes a human expert, and finds the longest an AI finishes half the time (the 50% time horizon) | S10 |
+| 08 | Early 2025, about an hour | S10: Claude 3.7 Sonnet (released February 2025), 60 minutes under TH1.1 |
+| 08 | The chart: Claude 3.7 Sonnet 60 min, Claude Opus 4 101 min (1.7 h), GPT-5 214 min (3.6 h), Claude Opus 4.5 320 min (5.3 h), at release day on a linear time axis and a log hours axis | S10 (TH1.1 column), S19 |
+| 08 | In early 2026, roughly twelve hours (range 5 to 61 h on screen) | S11, Table 1: public frontier 50% time horizon "~12h [5h-61h]", the best public model as measured in early 2026, published May 2026; plotted at mid-February 2026 |
+| 08 | Doubling about every three months since 2024 | S10: "doubling time since 2024... falls to 89 days under TH1.1". Said as "has been doubling", a fitted trend |
+| 09 | In October 2025 Karpathy said you couldn't hand agents real work yet, because they just don't work | S12: on why you would not have agents do an intern's or employee's job today: "The reason you don't do it today is because they just don't work." |
+| 09 | Three months later he had flipped: 80% manual coding became 80% agent coding | S13: "I rapidly went from about 80% manual+autocomplete coding and 20% agents in November to 80% agent coding and 20% edits+touchups in December". The card says "manual + autocomplete" |
+| 09 | DHH, who created Ruby on Rails, said a year before he didn't like the AI on offer; Opus 4.5 was the dividing line | S14: "A year ago, I did not like the mode of AI we were offered."; "Opus 4.5, to me, was the dividing line" |
+| 09 | Antirez, who created Redis, thought we had more time before programming changed completely; for most projects writing the code yourself no longer makes sense unless for fun | S15: "thought that we had more time before programming would be completely reshaped... I no longer believe this is the case."; "for most projects, writing the code yourself is no longer sensible, if not to have fun." The card quotes it exactly |
+| 10 | The usual objection: a compiler gives the same output every time and an agent doesn't | **opinion**, stated as the common objection, not as Goldberg's view (S16 notes compilers are not perfectly deterministic either) |
+| 10 | Goldberg: an agent is more like a co-worker than a compiler | S16: "The compiler is stateless (each invocation is fully independent) and the agent is stateful."; "It is like a co-worker, or an employee." |
+| 10 | In Veracode's 2026 tests, with no security guidance, model code passed only 56% of the time | S17: "the average security pass rate sits at 56 percent"; models "fail nearly 44 percent of the time when given no security-specific guidance". Raw models, not agents with tooling; said and shown as such |
+| 10 | Run the agent twice, get two different programs, and the same tests still have to pass | **opinion**, the answer to the objection |
+| 11 | Understand the behaviour: what it must never do; a test for it that fails until it is right and fails again if broken | **opinion**, the thesis, with an illustrative test (not a real project's) |
+| 11 | Karpathy: "Don't tell it what to do, give it success criteria and watch it go." | S13, verbatim |
+| 11 | Drop down a rung and read the code when it surprises you, the way you'd open the assembly | **opinion** |
+| 12 | "Do you understand what it does? And how do you know?" | **opinion**, the closing question |
 
 ## Portraits
 
@@ -84,21 +79,32 @@ the photo and listed in the review packet.
 | 04 | Grace Hopper | File:Commodore Grace M. Hopper, USN (covered) head and shoulders crop.jpg | public domain, James S. Davis (US Navy) |
 | 04 | John Backus | File:John Backus 2.jpg | CC BY-SA 4.0, PIerre.Lescanne |
 | 05 | Edsger Dijkstra | File:Edsger Wybe Dijkstra.jpg | CC BY-SA 3.0, Hamilton Richards |
-| 06 | Joel Spolsky | File:Joel Spolsky 2014-06-18 (cropped).jpg | CC BY-SA 4.0, Katie Chan |
-| 07 | Dennis Ritchie | File:Dennis Ritchie 2011.jpg | CC BY 2.0, Denise Panyik-Dale |
-| 07 | Ken Thompson | File:Ken Thompson, 2019.jpg | CC BY-SA 4.0, A.C.Diller |
-| 10 | Andrej Karpathy | File:Andrej Karpathy, OpenAI.png | CC BY 3.0, Gladwin Analytics |
-| 10 | David Heinemeier Hansson | File:David Heinemeier Hansson Driver of Abu Dhabi Proton Racing's Porsche 911 RSR (27225732035) (cropped).jpg | CC BY 2.0, David Merrett |
-| 10 | Salvatore Sanfilippo (antirez) | File:Salvatore Sanfilippo.png | CC BY 3.0, dotconferences |
+| 06 | Dennis Ritchie | File:Dennis Ritchie 2011.jpg | CC BY 2.0, Denise Panyik-Dale |
+| 06 | Ken Thompson | File:Ken Thompson, 2019.jpg | CC BY-SA 4.0, A.C.Diller |
+| 09 | Andrej Karpathy | File:Andrej Karpathy, OpenAI.png | CC BY 3.0, Gladwin Analytics |
+| 09 | David Heinemeier Hansson | File:David Heinemeier Hansson Driver of Abu Dhabi Proton Racing's Porsche 911 RSR (27225732035) (cropped).jpg | CC BY 2.0, David Merrett |
+| 09 | Salvatore Sanfilippo (antirez) | File:Salvatore Sanfilippo.png | CC BY 3.0, dotconferences |
 
 ## Memes
 
 Third-party pictures and clips, fetched at build and never committed; the video relies on fair use and commentary norms,
 which is the publisher's call. Animated clips come from Imgflip's GIF templates (clean MP4, no caption) and the memegen
 catalog's animated templates. The text on each restates a line the narration says; none carries a claim of its own.
-Filled in as the scenes are built.
+
+| Scene | Meme | Source | Text | Restates |
+|---|---|---|---|---|
+| 02 | Homer Simpson backs into bushes (clip) | i.imgflip.com/2txtm1.mp4; knowyourmeme.com/memes/homer-simpson-backs-into-bushes | "Me when someone asks" / "if I read the assembly" | "When did you last read them?" |
+| 04 | Chef Skinner reading a letter (clip) | i.imgflip.com/52b9vy.mp4; knowyourmeme.com/memes/chef-skinner-reading-a-letter | "The priesthood" / "reading the Fortran plan" | the priesthood's view of Fortran (S2) |
+| 05 | "No no no wait wait wait" (clip) | i.imgflip.com/6inpzl.mp4 (Imgflip GIF templates) | "1957: Fortran? No way" / "1983: real programmers use Fortran" | "Wait. Fortran?"; 1957 stands for the skepticism of S1 and S2 |
+| 07 | `money`, Shut Up and Take My Money (memegen, animated) | knowyourmeme.com/memes/shut-up-and-take-my-money | "4 hours instead of 3 days?" / "shut up and take my compiler" | the 1957 case (S4) |
+| 08 | Willem Dafoe looking up (clip, top 29% cropped) | i.imgflip.com/62yufy.mp4; knowyourmeme.com/memes/willem-dafoe-looking-up | "Me looking at" / "the time horizon chart" | the chart |
+| 10 | `fine`, This Is Fine (memegen, animated) | knowyourmeme.com/memes/this-is-fine | "Merging agent code" / "with no tests" | "the same tests still have to pass" |
+| 11 | `rollsafe`, Roll Safe (memegen, animated) | knowyourmeme.com/memes/roll-safe | "Can't misread the code" / "if the test says what it does" | "That's understanding you can check" |
 
 ## Left out, and why
+
+- Joel Spolsky on Java schools and pointers (2005): his point was about weeding out students, not understanding; cut after round 1.
+- Backus's six months that became two years: a schedule slip, not a cost of the layer; cut after round 1.
 
 - METR's July 2025 slowdown study and Veracode's 2025 report: superseded. METR's own 2026 update says the 2025 result is out
   of date and its new data an unreliable signal because developers refused to work without AI; Veracode's 2026 edition is

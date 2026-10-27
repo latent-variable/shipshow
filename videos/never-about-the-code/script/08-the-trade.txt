@@ -1,1 +1,0 @@
-Because the trade was worth it. In one 1957 case, a programmer took a one day Fortran course, then wrote a job in four hours. By hand, he figured three days. When the output was wrong, he fixed it in his Fortran. He never opened the machine code. By the fall of 1958, more than half the machine instructions on those IBM machines came from the compiler.

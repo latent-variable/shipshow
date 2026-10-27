@@ -1,1 +1,0 @@
-That same year, someone posted the Story of Mel, a legend about a programmer who wrote raw machine code. Mel wouldn't touch an optimizing assembler. You never know where it's going to put things, he said. In 2005, Joel Spolsky worried that students taught only Java would never really get pointers. And now? You don't understand the code.

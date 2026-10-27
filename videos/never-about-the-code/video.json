@@ -7,7 +7,7 @@
   "theme": "lofi",
   "engine": "omnivoice",
   "voice": "lino",
-  "speed": 1.2,
+  "speed": 1.05,
   "say": {
     "1952": "nineteen fifty two",
     "1954": "nineteen fifty four",
@@ -16,7 +16,6 @@
     "1973": "nineteen seventy three",
     "1975": "nineteen seventy five",
     "1983": "nineteen eighty three",
-    "2005": "two thousand five",
     "2024": "twenty twenty four",
     "2025": "twenty twenty five",
     "2026": "twenty twenty six",
@@ -28,7 +27,8 @@
     "Veracode's": "Vera-code's",
     "Datamation": "Data-mation",
     "DHH": "D H H",
-    "Antirez": "Antee-rez"
+    "Antirez": "Antee-rez",
+    "704": "seven oh four"
   },
   "music": {
     "file": "local/music/never-about-the-code-lofi.wav",
@@ -36,12 +36,16 @@
     "duck": 0.35
   },
   "pauses": {
-    "01-hook": 0.6,
-    "03-ladder": 0.6,
-    "06-mel": 0.5,
-    "07-the-cost": 0.5,
-    "09-now": 0.6,
-    "12-behavior": 0.4
+    "01-hook": 0.5,
+    "02-compiler": 1.8,
+    "03-ladder": 0.8,
+    "04-priesthood": 2.0,
+    "05-real-programmers": 1.6,
+    "06-the-cost": 0.8,
+    "07-the-trade": 0.6,
+    "08-now": 1.8,
+    "10-objection": 2.2,
+    "11-behavior": 2.2
   },
-  "hold": 6
+  "hold": 5
 }

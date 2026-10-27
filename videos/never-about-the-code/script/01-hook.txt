@@ -1,1 +1,1 @@
-You don't understand the code. If you build with coding agents, you've heard that one. Programmers said the same thing about compilers, seventy years ago.
+You don't understand the code. If you build with coding agents, you've heard that one. In the 1950s, programmers heard something a lot like it about compilers. By the end, I'll give you a better question to ask back.

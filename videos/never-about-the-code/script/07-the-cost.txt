@@ -1,1 +1,0 @@
-The skeptics weren't wrong about the cost. Mel's code really did run faster. When Unix moved from assembly to C in 1973, it got about a third bigger. Ritchie and Thompson called that quite acceptable. And Backus promised Fortran in about six months. It took over two years. Software estimates haven't changed. They were right about the cost, and they lost anyway.
