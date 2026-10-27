@@ -596,6 +596,33 @@ one punchline a beat was to slow the whole video. product-videos has the same th
 is dead air for the ear: at 1.6 to 2.2 s on top of the scene gap, round 2's pacing critic heard four three-second silences, so
 the video settled on 0.8 to 1.3 s.
 
+### D50. The lofi theme, and ambient layers that sway, wrap and jump (2026-10-26)
+**Decision.** `themes/lofi` is a late-night study room: a dusk sky (`--sky`, a gradient on the canvas), lamp amber, mint and
+rose, Fraunces for headlines and quotes, Nunito for text and captions, IBM Plex Mono for code (all SIL OFL, in the theme
+folder). Six ambients join the kit, any theme may name them: `blobs` (pools of light as radial gradients, never a blur filter),
+`dust`, `skyline` (two rows of seeded buildings drawn once as SVG, drifting apart, a few windows switching on and off),
+and `grain`, `scanlines` and `vignette`, which go in an `#overlay` made only when a theme names one, after the scenes and
+before the captions: they lie on pictures and text like film but never on the captions. Photos and memes get a cream print
+frame and a warming filter (`--meme-border`, `--photo-filter`), and the `--frame` and `--portrait-*` tokens are set for the
+framed portrait being built alongside. Every new token is read with a fallback that is the old value, so `paper` renders
+pixel-identical to main (all ten review frames of how-it-works, 2026-10-26).
+**How the motion stays repeatable.** A sway, a wrap or a jump is not a tween between two values, so each is a pure function
+of the time: one linear tween of the property from 0 to TOTAL, mapped by a GSAP modifier (`driveBy` in `kit/kit.js`). No
+callback is involved (a seek with suppressed events still draws it), the grain's jump is a hash of its step and the seed, and
+the value at time 0 is set when the layer is made, because a timeline sought to 0 on a fresh page does not render. A test runs
+`kit/kit.js` in a Node sandbox with a recording GSAP, Math.random and Date.now throwing, and samples every driven property
+backwards across the video: the same seed gives the same page and motion, another seed another layout.
+**Traps found building it.** `scale` cannot take a modifier (CSSPlugin splits it into scaleX and scaleY); unmodified, the
+pools grew to 21 times their size and washed the frame mauve. A z-index on `#overlay` made it a stacking context, so the
+grain's `mix-blend-mode` blended with nothing and greyed the frame; the children carry the z-index instead. HyperFrames'
+layout check reads a gradient background over text as a cover, so the vignette is an inset box-shadow, and the allow-flags
+only count on the text, not on the cover.
+**Costs.** Measured by seeking and screenshotting 120 frames in headless Chrome: lofi with every layer 67 ms a frame, with
+none 39, the default `shipshow` theme 135 to 169 (its `glow` is a 140 px blur), so lofi is cheaper than the default; grain is
+most of the added 28 ms. A full draft render of how-it-works took 30 to 33 s with `shipshow` and 38 s with `lofi`, run to
+run swings on this machine were up to 8 s; the shipped fonts account for much of it (`launch`, which also ships fonts, took
+39 s). The skyline sits behind the bottom 200 px of every scene, so a scene that puts content there sits on buildings.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

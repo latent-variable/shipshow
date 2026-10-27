@@ -46,8 +46,15 @@
   --transition: rise;         /* none | fade | rise | slide | zoom | wipe | flash */
   --entrance: up;             /* the data-anim an element gets when it names none */
   --camera: push;             /* none | push: a slow push-in over each scene */
-  --ambient: glow;            /* none | glow | grid | dots | stars | horizon, or several: "stars glow" */
+  --ambient: glow;            /* none | glow | grid | dots | stars | horizon | blobs | dust | skyline, and over the
+                                 pictures grain | scanlines | vignette; or several: "stars glow" */
   --ambient-strength: 0.18;
   --progress: on;             /* on | off: a thin bar across the top */
   --progress-fill: var(--accent);
+
+  /* Read when set, and unset here (themes/lofi sets them all): --sky (the canvas, --bg when unset);
+     --cap-border, --cap-shadow; --code-shadow; --meme-border, --meme-shadow, --photo-filter; --frame,
+     --frame-width, --portrait-radius, --portrait-shadow; and for the ambient layers --blob-1..3,
+     --blob-strength, --dust-color, --skyline-far, --skyline-near, --window-color, --grain-strength,
+     --grain-fps, --grain-blend, --scanline-strength, --scanline-gap, --vignette-strength, --vignette-color. */
 }

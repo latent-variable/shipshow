@@ -199,6 +199,62 @@ test("flair: a known token becomes a #root override; an unknown value stops the 
   assert.throws(() => execFileSync(process.execPath, [join(REPO, "bin", "build.mjs"), dir], { env, stdio: "pipe" }), /transition is "spin"/);
 });
 
+test("ambient layers are seeded: the same video draws the same frame at any time, in any order, with no clock or Math.random", async () => {
+  // kit/kit.js runs in a sandbox with a bare page and a GSAP that records what it is asked to do;
+  // each layer's motion is sampled through its modifiers, as a render worker seeking anywhere would.
+  const { runInNewContext } = await import("node:vm");
+  const kit = readFileSync(join(REPO, "kit", "kit.js"), "utf8");
+  const run = (ambient, seed) => {
+    const made = [];
+    const el = (tag) => {
+      const e = { tag, id: "", className: "", style: {}, attrs: {}, children: [], html: "", flick: null,
+        setAttribute(k, v) { this.attrs[k] = v; }, hasAttribute(k) { return k in this.attrs; },
+        appendChild(c) { this.children.push(c); return c; }, insertBefore(c) { this.children.push(c); return c; },
+        set innerHTML(v) { this.html = v; }, get innerHTML() { return this.html; },
+        querySelectorAll(sel) {   // only the skyline asks: its flickering windows
+          if (sel !== ".fl") return [];
+          this.flick ||= (this.html.match(/class="fl"/g) || []).map(() => el("rect"));
+          return this.flick;
+        } };
+      made.push(e);
+      return e;
+    };
+    const root = el("div"), ambientEl = el("div"), progress = el("div"), caps = el("div");
+    const tokens = { "--ambient": ambient, "--progress": "off", "--grain-fps": "12" };
+    const record = [];
+    const id = (t) => (typeof t === "object" && t && made.includes(t) ? `#${made.indexOf(t)}` : String(t));
+    const tl = {};
+    for (const verb of ["to", "fromTo", "set"]) tl[verb] = (t, ...args) => { record.push({ verb, target: id(t), args }); return tl; };
+    const gsap = { timeline: () => tl, set: (t, vars) => record.push({ verb: "gsap.set", target: id(t), args: [vars] }) };
+    const document = {
+      getElementById: (k) => ({ root, ambient: ambientEl, progress }[k]),
+      querySelector: (s) => (s === ".caps" ? caps : null), querySelectorAll: () => [], createElement: el,
+    };
+    const ctx = { TOTAL: 120, SEED: seed, gsap, document, window: {}, getComputedStyle: () => ({ getPropertyValue: (k) => tokens[k] || "" }), console };
+    runInNewContext(`Math.random = () => { throw new Error("Math.random"); }; Date.now = () => { throw new Error("Date.now"); };\n${kit}`, ctx);
+    // What the page looks like (each element's styles, attributes and markup) and where every driven
+    // property is at a spread of times, sampled backwards so no sample can lean on the one before.
+    const times = [0, 0.04, 1, 1.01, 1.5, 7.3, 33.33, 59.9, 119.96].reverse();
+    const motion = record.filter((r) => r.args[1] && r.args[1].modifiers).map((r) => ({ target: r.target,
+      at: Object.fromEntries(Object.entries(r.args[1].modifiers).map(([k, f]) => [k, times.map((t) => f(String(t)))])) }));
+    const page = made.map((e) => ({ tag: e.tag, id: e.id, className: e.className, style: e.style, attrs: e.attrs, html: e.html }));
+    return { page, motion, overlay: made.some((e) => e.id === "overlay") };
+  };
+  const all = "blobs skyline dust vignette scanlines grain";
+  const a = run(all, 12345), b = run(all, 12345), c = run(all, 999);
+  assert.ok(a.motion.length >= 60, "every pool, mote, skyline row, window and the grain is driven");
+  assert.deepEqual(a, b, "the same seed draws the same page and the same motion");
+  assert.notDeepEqual(a.page, c.page, "another video's seed lays its layers out its own way");
+  // Grain holds still within one step (1/12 s) and jumps between steps.
+  const grain = a.motion.find((m) => a.page[+m.target.slice(1)].className === "grain").at.x;   // times reversed: [.., 1.5, 1.01, 1, 0.04, 0]
+  assert.equal(grain[6], grain[5], "1 s and 1.01 s are the same grain step");
+  assert.notEqual(grain[4], grain[5], "1.5 s is a new grain step");
+  // Over-the-picture layers exist only when a theme names one, so other themes' pages are unchanged.
+  assert.equal(run("stars glow", 1).overlay, false);
+  assert.equal(a.overlay, true);
+  assert.throws(() => run("rain", 1), /unknown --ambient rain: .*skyline, grain, scanlines or vignette/);
+});
+
 test("critic plan: presets, precedence, a decision video's defaults, and caps validated", async () => {
   const { reviewPlan, PRESETS } = await import("../bin/lib.mjs");
   const local = mkdtempSync(join(tmpdir(), "kx-test-"));

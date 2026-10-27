@@ -26,7 +26,7 @@ The skills in `skills/` are the team's baseline. Each person tailors on top of t
 | `videos/<name>/` | One video: `script/`, `scenes.html`, `video.json`, `sources.md`, `critics.md`, `REVIEW.md` |
 | `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; `memes` (search the memegen catalog, with `meme.mjs` behind it and `build`); and `usage` (token and context tracking) |
 | `kit/` | The page, base styles and timeline every video shares; `kit/fonts/` holds the meme fonts (Titillium Web, Anton: SIL OFL, licences beside them) |
-| `themes/` | Shared themes (`shipshow`, `paper`, `launch`, `buildday`); a client's goes in `local/themes/` |
+| `themes/` | Shared themes (`shipshow`, `paper`, `launch`, `buildday`, `lofi`); a client's goes in `local/themes/` |
 | `template/` | What `npm run new` copies |
 | `examples/` | Fictional code bases for example videos: `ledgerly`, the invoicing API behind `videos/invoice-leak` |
 | `.claude/settings.json`, `.claude/hooks/` | The project's Claude Code hooks and read denials (tracked; `.claude/skills/` is the generated skill links and is not) |
@@ -187,14 +187,25 @@ lists them all. Fonts and images sit beside it and are copied to `assets/theme/`
 `url()`s rewritten (`bin/lib.mjs`, `themeCss`). Most specific wins: `--theme`, then
 `video.json`, then `local/config.json`, then `shipshow`. `kit/base.css` draws the canvas,
 captions and the `ss-` pieces from the tokens; a scene's own styles should use the tokens
-too, or a theme cannot restyle it.
+too, or a theme cannot restyle it. Tokens a theme may add, each unset (so other themes are unchanged) unless it opts in:
+`--sky` (the canvas's background, e.g. a gradient; `--bg` when unset), `--cap-border` and `--cap-shadow`, `--code-shadow`,
+`--meme-border`, `--meme-shadow` and `--photo-filter` (a CSS filter on meme pictures, to make pictures from anywhere look
+like one set), and `--frame`, `--frame-width`, `--portrait-radius` and `--portrait-shadow` for framed photos. `lofi` sets
+them all: a late-night study room (dusk sky, a city skyline, lamp amber, Fraunces, Nunito and IBM Plex Mono).
 
 **Motion.** Theme tokens `--transition` (`none`, `fade`, `rise`, `slide`, `zoom`, `wipe`,
 `flash`), `--camera` (`none`, `push`: a slow push-in per scene), `--ambient` (`none`, `glow`,
-`grid`, `dots`, `stars`, `horizon` (a lit planet rim low in the frame), or several: `stars glow`), `--ambient-strength`, `--progress` (`on`, `off`) and `--entrance`. `video.json`
+`grid`, `dots`, `stars`, `horizon` (a lit planet rim low in the frame), `blobs` (soft pools of light that drift and breathe;
+`--blob-1..3`, `--blob-strength`), `dust` (motes rising in lamplight; `--dust-color`), `skyline` (a night city along the bottom,
+two rows drifting apart, a few windows going on and off; `--skyline-far`, `--skyline-near`, `--window-color`), and three that
+lie over the pictures but under the captions, in `#overlay`: `grain` (`--grain-strength`, `--grain-fps`, `--grain-blend`),
+`scanlines` (`--scanline-strength`, `--scanline-gap`) and `vignette` (`--vignette-strength`, `--vignette-color`); or several:
+`stars glow`), `--ambient-strength`, `--progress` (`on`, `off`) and `--entrance`. `video.json`
 `"flair"` overrides them for one video; a section's `data-transition` or `data-camera` for
 one scene. Ambient motion is seeded from the video's name (`"seed"` to change it), so a
-render is repeatable and each video moves its own way.
+render is repeatable and each video moves its own way. Motion that sways, wraps or jumps is a pure function of the time,
+driven through GSAP modifiers on one linear tween (`kit/kit.js`, `driveBy`), so a worker that seeks anywhere draws that
+time's frame; a test runs the kit in a sandbox and checks it (DESIGN D50).
 
 **Review.** How much critic review a video gets is a plan with dials (`critics`, `rounds`,
 `until`, `model`, `final`, `frames`, `rerun`) and presets (`quick`, `standard`, `thorough`),
@@ -273,7 +284,7 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ```
 bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
-themes/     shipshow, paper, launch and buildday; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono: SIL OFL)
+themes/     shipshow, paper, launch, buildday and lofi; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono: SIL OFL)
 skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
 template/   what npm run new copies
 videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) and never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino.wav exists)
