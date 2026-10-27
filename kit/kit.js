@@ -9,8 +9,9 @@
       // runs here. cueAt is an element's data-at, sceneStart and sceneEnd a scene's edges.
       const cueAt = (sel) => +document.querySelector(sel).dataset.at;
       const sceneEl = (id) => document.querySelector('[data-scene="' + id + '"]');
-      const sceneStart = (id) => +sceneEl(id).dataset.start;
-      const sceneEnd = (id) => sceneStart(id) + +sceneEl(id).dataset.duration;
+      const sceneSpan = (el) => [+(el.dataset.start ?? el.dataset.sceneStart), +(el.dataset.duration ?? el.dataset.sceneDuration)];   // a scene with a video keeps them in data-scene-*
+      const sceneStart = (id) => sceneSpan(sceneEl(id))[0];
+      const sceneEnd = (id) => sceneStart(id) + sceneSpan(sceneEl(id))[1];
       const sfx = () => {};
 
       // The motion settings are theme tokens (themes/<name>/theme.css), which a video's
@@ -94,10 +95,10 @@
       const SETTLED = { opacity: 1, x: 0, y: 0, scale: 1, clipPath: "inset(0% 0% 0% 0%)", filter: "brightness(1)" };
       // The last scene is the one that ends last on the timeline, whatever its place in the page.
       const scenes = [...document.querySelectorAll("section.scene")];
-      const finalEnd = Math.max(...scenes.map((el) => +el.dataset.start + +el.dataset.duration));
+      const finalEnd = Math.max(...scenes.map((el) => sceneSpan(el)[0] + sceneSpan(el)[1]));
       scenes.forEach((el) => {
         const inner = el.querySelector(":scope > .inner"), cam = inner.querySelector(":scope > .cam");
-        const start = +el.dataset.start, dur = +el.dataset.duration, end = start + dur, last = end >= finalEnd - 0.001;
+        const [start, dur] = sceneSpan(el), end = start + dur, last = end >= finalEnd - 0.001;
         const kind = el.dataset.transition || token("--transition", "fade");
         if (!(kind in TRANSITIONS)) throw new Error(`unknown transition ${kind}: ${Object.keys(TRANSITIONS).join(", ")}`);
         gsap.set(inner, { opacity: 0 });
