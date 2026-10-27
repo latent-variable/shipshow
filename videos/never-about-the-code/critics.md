@@ -50,3 +50,6 @@ he said was wrong with it, so they are the bar this version is judged by first.
   loses the viewer.
 - **Look.** The fifth cut's colours and fonts were the weak part; judge the `signal` theme on whether each frame reads at a
   glance and looks made, not templated.
+- **A joke is one take** (the owner on the sixth cut, 2026-10-27). A punchline on its own script line ("Like animals.",
+  "No.", "Also no.") is voiced cold and lands "like they were written separately". The setup and its punchline share a line,
+  and the opening direction carries the arc. A punchline split from its setup in `script/` is a finding.

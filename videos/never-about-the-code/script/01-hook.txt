@@ -1,4 +1,3 @@
 [flat, reading a comment aloud] You don't understand the code.
 [dry] That's the charge against AI pull requests now. Ghostty, the terminal app, made it a rule: you must understand your code.
-[conceding, then sly] Fair enough. Except programmers pushed back on compilers too, back in the 1950s, while writing machine code by hand.
-[deadpan] Like animals.
+[conceding, then sly, landing a deadpan punchline] Fair enough. Except programmers pushed back on compilers too, back in the 1950s, while writing machine code by hand. Like animals.

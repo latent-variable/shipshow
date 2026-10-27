@@ -1,7 +1,4 @@
 [casual, explaining to a friend] Your processor is very fast and very dumb. It only knows tiny steps, and a compiler writes those steps for you.
 [a little impressed] On my Mac, that one line becomes eleven instructions. Turn on optimization, and it's two.
-[teasing] So, have you ever read them?
-[deadpan] No.
-[mock-serious] And does anyone today say you don't understand your code because of it?
-[deadpan] Also no.
+[teasing, then deadpan] So, have you ever read them? No. And does anyone today say you don't understand your code because of it? Also no.
 [knowing] You know what it does. That's the part that always mattered.

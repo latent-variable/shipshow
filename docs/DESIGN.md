@@ -793,7 +793,7 @@ one seed of two, `[dry, matter-of-fact]` and `[playful, mock-serious]` kept ever
 `[pause]` and `[long pause]` 4 of 4, `[slowly]` 2 of 2 (seconds of silence, the rest of the line never said), `[shouting]` 1 of 2.
 A direction in the middle of a line lost the words after it on 5 of 6; `[laughs]` mid-line or at the end lost a sentence on 3 of 5;
 with no direction, a short last sentence was dropped on 1 seed of 3. So the rules in `narration-writing` (*Direction*): one tone
-direction per line, at its start, a new line where the tone turns, never a pause. **Costs.** About 40 GB of free memory while it
+direction per line, at its start, a new line where the subject changes (a joke stays in one take: below), never a pause. **Costs.** About 40 GB of free memory while it
 runs; once the model is loaded a line, heard back and retaken, took about 11 s, so never-about-the-code's 52 lines voiced in about
 8 minutes. The licence (Fish Audio Community License) is free under $500K a year in revenue and forbids a hosted service and
 cloning without consent; the weights are downloaded by whoever runs it, never shipped here. What a direction sounds like is judged
@@ -807,7 +807,15 @@ sync critic heard the dead air. Silence inside a take is now also anything 18 dB
 `GAP_BELOW_VOICE`): over that video's 62 takes it caught the stall alone (2.5 s; the next longest gap was 1.5 s). The same flaw kept a take's edges: one opened on 2 s of hiss (-33 to -37 dBFS, inside 18 dB of the voice), so a
 take's edges are now where its level holds 15 dB under the voice for 50 ms, walked back up to 0.25 s while within 6 dB of that
 line so a soft first syllable stays (D53); on all 62 takes the start found was within 0.1 s of Whisper's first word. `DRAMA_RULES`
-went to 3, so every Drama take is made again under both once.
+went to 3, so every Drama take is made again under both once. **A joke is one take (2026-10-27, reverses this entry's
+"a new line where the tone turns").** Split from its setup, "Like animals." and "No. ... Also no." were each voiced with no
+memory of what came before and landed, the owner said, "almost like they were written separately". So a setup, its turn and its
+punchline share a line, and the opening direction carries the arc ("[teasing, then deadpan]"; "each answered deadpan" paused 2.2 to 2.7 s before "No." on three seeds running); a new line
+starts where the subject changes. A punchline is also the sentence Drama 3 drops: the first merged take lost "No." and still
+scored 98.8%, because two letters barely move a letter score. So hear-back now also lists a sentence that is missing
+altogether, each of its words short in what Whisper heard (`hearback.vanished`), and Drama retakes such a take like one under
+97% (`DRAMA_RULES` 4); over the video's 44 takes it found that "No." alone. A take that stalls on every seed no longer stops the video: the shortest stall is kept with its fault, ranked
+below any clean round, and listed to listen to.
 
 ### D56. A quote is shown where it was said: screenshots taken at build (2026-10-27)
 **Decision.** `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of a real page. `bin/shot.mjs`

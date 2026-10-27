@@ -84,16 +84,21 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   `[pause]`, `[long pause]` and `[slowly]` stalled the voice into seconds of silence and lost the rest of the line on
   every seed measured; `[shouting]` and a `[laughs]` did on one seed in two. A pause is a line break, a sentence
   end or `video.json` `gap` and `pauses`.
+- **A joke is one line: setup, turn and punchline in one take.** Each line is voiced on its own, with no memory of the
+  line before, so a punchline on a line of its own is performed cold and lands like a separate thought (the owner on
+  "Like animals." and "No. ... Also no.", 2026-10-27). Keep them together and let one direction describe the arc:
+  `[teasing, then deadpan] So, have you ever read them? No. And does anyone today say ...? Also no.`,
+  `[conceding, then sly, landing a deadpan punchline] Fair enough. Except ... by hand. Like animals.`
 - **One direction per line, at its start.** A direction in the middle of a line lost the words after it on 5 of 6
-  seeds. Where the tone turns, start a new line: the short gap between lines is the beat before a punchline.
-  Put the punchline on a line of its own (`[deadpan] Also no.`).
+  seeds, so the turn goes inside the opening direction ("then ...", "landing a ..."), never in brackets mid-line.
+  Start a new line where the subject changes, not where the tone does.
 - **Every line gets one**, even a plain one (`[matter-of-fact]`, `[clear, explaining]`), so the read changes where
   you meant it to and nowhere else. The setup is plain or warm, the turn is dry, the payoff deadpan or smug; sincerity
   is saved for the point the video exists to make.
 - **Names as they are spelled.** Drama 3 knows most names; a `say` respelling with a hyphen is read as two words
   ("Dike-stra" came out "Di... kistra", D55). Respell only a name it gets wrong, as one word ("Dykstra"), and voice it to check.
-- **A line is still one thought.** Splitting at every sentence for a direction breaks the prosody the owner asked
-  for; split where the tone turns, not more.
+- **A line is still one thought.** Splitting at every sentence, or at every turn of tone, breaks the prosody the owner
+  asked for; a line runs as long as the thought, up to about 45 words.
 
 Measured 2026-10-27 on a clone of the owner, one line three seeds each (D55): `[excited]` widened the pitch range
 from about 2 semitones to 3.5 and quickened the read, `[deadpan]` narrowed it to about 1.5, `[whispers]` dropped

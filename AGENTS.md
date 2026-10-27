@@ -174,7 +174,7 @@ stage direction in brackets at the start of a script line, `[deadpan] Like anima
 the other engines never see it (`directedSentences` in `bin/lib.mjs`). How to direct, and what breaks it: `narration-writing`,
 *Direction*. Write a name as it is spelled: a `say` respelling with a hyphen is read as two words ("Dike-stra" came out
 "Di... kistra"), so respell only a name it gets wrong, as one word ("Dykstra"; D55). Voices are the same recordings as OmniVoice's, but a clone may be 3 to 30 seconds. Each line is one take,
-made by `bin/drama.py` in one process: retaken when it is silent, stalls for 2 s (silence read against its own hiss and 18 dB under its voice) or ends in 3 s of silence, time-stretched
+made by `bin/drama.py` in one process: retaken when it is silent, stalls for 2 s (silence read against its own hiss and 18 dB under its voice), ends in 3 s of silence or is heard back missing a whole sentence (a dropped punchline), time-stretched
 to `speed` (0.8 to 1.5; it has no speed control and reads slower than the base pace), levelled, heard back with word
 times, and the best of five kept. Its licence is the Fish Audio Community License: free for research and non-commercial
 use and for commercial use under $500K a year in revenue, never as a hosted service, and never a voice cloned without

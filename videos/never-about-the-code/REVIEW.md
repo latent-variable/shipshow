@@ -361,3 +361,16 @@ mastered to -15.1 LUFS (held under -14 so no peak loses more than 3 dB). Credits
 
 **For the owner's listen:** every take is new; "today's flex" heard back as "flicks" (Whisper or the voice?); the wry Dijkstra
 line and the double take in 06; the 1.5 s beat before "Yesterday's insult".
+
+## The owner's listen (2026-10-27): jokes are one take, and the IBM payoff
+
+- **"Like animals." and "No. ... Also no." landed "like they were written separately."** Each was its own script line, so its own
+  Drama take, voiced with no memory of the setup. Every setup and its punchline now share a line (twelve merges), with one
+  direction for the arc ("[conceding, then sly, landing a deadpan punchline]", "[teasing, then deadpan]"). ShipShow's rule said
+  the opposite and now says this (`narration-writing`, D55). The first merged take dropped "No." and still scored 98.8%, so
+  hear-back now also finds a whole missing sentence and Drama retakes it; "each answered deadpan" paused 2.2 to 2.7 s before
+  "No." on three seeds running, so a take that stalls on every seed is now kept with its fault instead of stopping the video.
+- **The IBM payoff was obvious to a modern programmer** ("he understood his program, not the machine"). Now: "When it broke, he
+  fixed it in Fortran. Today, that's just called programming. In 1957, it was a bet. Sound familiar?"
+
+Voiced again under the new rules: every sentence heard, no faults. Rendered 5:26, -15.1 LUFS.

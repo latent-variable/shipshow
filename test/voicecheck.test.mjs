@@ -276,3 +276,51 @@ print(round(drama.voiced(lead, sr)[0] * 0.01, 1))
   assert.ok(stalled > 2.0, `the 3 s stall of hiss reads as a gap over GAP_DROP: ${stalled} s`);
   assert.ok(paused < 1.0, `half-second pauses are not a stall: ${paused} s`);
 });
+
+test("hear-back finds a sentence that is missing altogether, which the letter score misses", { skip: !plain && "no python3" }, () => {
+  const r = python(plain, `
+import hearback, json
+line = "So, have you ever read them? No. And does anyone today say you don't understand your code because of it? Also no."
+print(json.dumps([
+  hearback.vanished(line, "So have you ever read them? And does anyone today say you don't understand your code because of it? Also no."),
+  hearback.vanished(line, "So have you ever read them? No. And does anyone today say you don't understand your code because of it? Also no."),
+  hearback.vanished("Fair enough. Except by hand. Like animals.", "Fair enough, except by hand."),
+  hearback.vanished("By the end of 2025, Karpathy had agents writing eighty percent of his code.", "By the end of 2025, Carpathi had agents writing 80% of his code."),
+  round(hearback.agreement(line, "So have you ever read them? And does anyone today say you don't understand your code because of it? Also no."), 3),
+]))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [dropped, whole, punchline, misheard, score] = JSON.parse(r.stdout);
+  assert.deepEqual(dropped, ["No."], "the dropped two-letter answer is found");
+  assert.deepEqual(whole, [], "nothing missing in a whole take");
+  assert.deepEqual(punchline, ["Like animals."]);
+  assert.deepEqual(misheard, [], "a misspelt name and digits for words are not a missing sentence");
+  assert.ok(score > 0.97, `the letter score alone passes the dropped take: ${score}`);
+});
+
+test("drama: when every seed stalls, the take with the shortest stall is kept with its fault instead of stopping the video", { skip: !numeric && "no python with numpy and soundfile" }, () => {
+  const r = python(numeric, `
+import sys, types, numpy as np
+sys.modules["mlx"] = types.ModuleType("mlx"); core = types.ModuleType("mlx.core"); core.random = types.SimpleNamespace(seed=lambda s: None)
+sys.modules["mlx.core"] = core; sys.modules["mlx"].core = core
+import drama
+sr = 24000; rng = np.random.default_rng(2)
+def voice(s): t = np.arange(int(sr * s)) / sr; return (0.14 * np.sin(2 * np.pi * 180 * t) * (0.6 + 0.4 * np.sin(2 * np.pi * 3 * t))).astype(np.float32)
+hiss = lambda s: (rng.standard_normal(int(sr * s)) * 0.01).astype(np.float32)
+class Model:
+    def __init__(self, stalls): self.stalls = list(stalls)
+    def generate(self, text, **_):
+        s = self.stalls.pop(0)
+        a = np.concatenate([voice(1.2), hiss(s), voice(1.0)]) if s else np.concatenate([voice(1.2), hiss(0.4), voice(1.0)])
+        return [types.SimpleNamespace(audio=a, sample_rate=sr)]
+job = {"seed": 1, "text": "x"}
+a, _, fault = drama.one_take(Model([3.0, 2.4, 2.8]), job, 0, {})
+print(fault, round(len(a) / sr, 1))
+a, _, fault = drama.one_take(Model([3.0, 0, 2.8]), job, 0, {})
+print(fault, round(len(a) / sr, 1))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [stalled, clean] = r.stdout.trim().split("\n");
+  assert.match(stalled, /^stalled for 2\.\d s mid-line 4\.\d$/, `the 2.4 s stall is the one kept, with its fault: ${stalled}`);
+  assert.match(clean, /^None 2\.\d$/, `a clean seed is taken as soon as it comes: ${clean}`);
+});

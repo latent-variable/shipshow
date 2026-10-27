@@ -1,3 +1,2 @@
 [fair-minded] Back then, a great hand coder really could beat the machine.
-[matter-of-fact] Today, almost nobody can. The few who can spent decades getting there.
-[warm, with a grin] Machine time is cheap, and you are not.
+[matter-of-fact, then warm, with a grin] Today, almost nobody can. The few who can spent decades getting there. Machine time is cheap, and you are not.
