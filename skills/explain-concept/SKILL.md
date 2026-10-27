@@ -74,6 +74,11 @@ omission from an oversight.
   `critic-pacing` holds the limit.
 - A newcomer's order often runs: the problem, the idea, one worked example, how it goes
   wrong or what it costs, then what to do.
+- **A longer video is acts, and each act has its own feel.** Past about three minutes, group the scenes into acts (the
+  setup, the history, the turn, the consequences) and give each a mood (`video.json` `moods`: its colours, background and
+  music). Open each act on a hook, a question or a turn, never a signpost like "so how does it work". Show what failure
+  looks like and why it matters to someone, not only the case that works. `critic-engagement` judges these (the owner,
+  2026-10-27).
 
 ## 3. Idea to picture
 
