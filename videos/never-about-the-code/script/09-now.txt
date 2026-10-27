@@ -1,6 +1,4 @@
 [energetic] Now it's our turn, and this layer is moving fast.
 [storyteller, with a smirk] METR is the lab whose 2025 study found AI made experienced developers slower. Then they tried to run it again, and so many developers wouldn't work without AI that METR called its own new numbers unreliable.
 [clear, explaining] METR also measures the longest task an agent can finish half the time, in human expert hours.
-[matter-of-fact] In early 2025, about an hour.
-[amused] In early 2026, about twelve hours, with error bars you could park a truck in.
-[serious] And it has been doubling about every three months.
+[matter-of-fact, amused by the error bars, then serious] In early 2025, about an hour. In early 2026, about twelve hours, with error bars you could park a truck in. And it has been doubling about every three months.

@@ -218,19 +218,21 @@ def main(spec_path):
         for round_ in range(HEAR_TRIES if hear_on else 1):
             audio, sr = one_take(model, job, round_, ref)
             final = voicecheck.level(stretch(audio, sr, spec["speed"]), sr)
-            words, got, heard = [], None, ""
+            words, got, heard, gone = [], None, "", []
             if hear_on:
                 heard, words = hearback.hear_words(hearback.samples_from(final, sr))
                 got = hearback.agreement(job["plain"], heard)
-            rank = (got is None or got >= floor, got or 0.0)
+                gone = hearback.vanished(job["plain"], heard)   # a dropped punchline barely moves the letter score
+            ok = (got is None or got >= floor) and not gone
+            rank = (ok, -len(gone), got or 0.0)
             if best is None or rank > best[0]:
-                best = (rank, final, sr, got, heard, words)
-            if got is None or got >= floor:
+                best = (rank, final, sr, got, heard, words, gone)
+            if ok:
                 break
-        _, final, sr, got, heard, words = best
+        _, final, sr, got, heard, words, gone = best
         sf.write(job["wav"], final, sr, subtype="PCM_16")
         timing = wordtime.align(job["parts"], words, len(final) / sr) if run and hear_on else None
-        hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [], timing)
+        hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [f'not heard: "{s}"' for s in gone], timing)
         if job.get("keyFile"):
             Path(job["keyFile"]).write_text(job["key"])   # kept: a run stopped after this keeps this take
         print(f"voiced {i}/{len(spec['jobs'])}" + (f" ({got:.0%} heard back)" if got is not None else "")

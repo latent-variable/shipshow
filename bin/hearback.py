@@ -105,6 +105,26 @@ def agreement(text, heard):
     return best
 
 
+def vanished(text, heard):
+    """The sentences of `text` that are missing from `heard` altogether, each of whose words is short in what was heard.
+    The letter score cannot see these: "No." gone from a 25-word line still scored 98.8% (never-about-the-code, the
+    "No. ... Also no." take, 2026-10-27), and a short punchline is the sentence Drama 3 drops most."""
+    import collections
+    words = lambda t, years: [w.replace("'", "") for w in re.findall(r"[a-z0-9']+", spoken_numbers(without_marks(t), years).lower())]
+    found = None
+    for years in (False, True):
+        short = collections.Counter(words(text, years)) - collections.Counter(words(heard, years))
+        gone = []
+        for sentence in re.split(r"(?<=[.!?])\s+", text.strip()):
+            ws = words(sentence, years)
+            if ws and all(short[w] > 0 for w in ws):
+                gone.append(sentence)
+                for w in ws:
+                    short[w] -= 1
+        found = gone if found is None or len(gone) < len(found) else found   # the reading of the numbers that misses least
+    return found
+
+
 def available():
     try:
         import faster_whisper  # noqa: F401

@@ -1,4 +1,3 @@
 [storyteller, with a smirk] IBM's own case study, so yes, IBM grading its own homework. One guy took a one-day Fortran course.
 [matter-of-fact] Then he wrote a job in four hours that he figured would take three days by hand.
-[matter-of-fact] When it broke, he fixed it in Fortran. He understood what his program did, not what the machine did.
-[knowing] Sound familiar?
+[matter-of-fact, then knowing] When it broke, he fixed it in Fortran. Today, that's just called programming. In 1957, it was a bet. Sound familiar?

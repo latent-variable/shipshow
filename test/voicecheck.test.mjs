@@ -276,3 +276,24 @@ print(round(drama.voiced(lead, sr)[0] * 0.01, 1))
   assert.ok(stalled > 2.0, `the 3 s stall of hiss reads as a gap over GAP_DROP: ${stalled} s`);
   assert.ok(paused < 1.0, `half-second pauses are not a stall: ${paused} s`);
 });
+
+test("hear-back finds a sentence that is missing altogether, which the letter score misses", { skip: !plain && "no python3" }, () => {
+  const r = python(plain, `
+import hearback, json
+line = "So, have you ever read them? No. And does anyone today say you don't understand your code because of it? Also no."
+print(json.dumps([
+  hearback.vanished(line, "So have you ever read them? And does anyone today say you don't understand your code because of it? Also no."),
+  hearback.vanished(line, "So have you ever read them? No. And does anyone today say you don't understand your code because of it? Also no."),
+  hearback.vanished("Fair enough. Except by hand. Like animals.", "Fair enough, except by hand."),
+  hearback.vanished("By the end of 2025, Karpathy had agents writing eighty percent of his code.", "By the end of 2025, Carpathi had agents writing 80% of his code."),
+  round(hearback.agreement(line, "So have you ever read them? And does anyone today say you don't understand your code because of it? Also no."), 3),
+]))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [dropped, whole, punchline, misheard, score] = JSON.parse(r.stdout);
+  assert.deepEqual(dropped, ["No."], "the dropped two-letter answer is found");
+  assert.deepEqual(whole, [], "nothing missing in a whole take");
+  assert.deepEqual(punchline, ["Like animals."]);
+  assert.deepEqual(misheard, [], "a misspelt name and digits for words are not a missing sentence");
+  assert.ok(score > 0.97, `the letter score alone passes the dropped take: ${score}`);
+});

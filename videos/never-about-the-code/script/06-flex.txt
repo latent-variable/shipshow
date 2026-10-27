@@ -1,3 +1,2 @@
 [storyteller] Then stage four. It quietly becomes the bar. By 1983, the joke was that real programmers use Fortran.
-[doing a double take] Wait. Fortran? The infantile disorder?
-[smug] Yesterday's insult, today's flex.
+[doing a double take, then smug] Wait. Fortran? The infantile disorder? Yesterday's insult, today's flex.

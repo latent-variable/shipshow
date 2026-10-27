@@ -1,3 +1,1 @@
-[mock-dramatic] Stage two, it's beneath you.
-[storyteller] John Backus, who built Fortran, said many programmers saw themselves as a priesthood.
-[sarcastic] To them, a machine writing their programs was a foolish and arrogant dream.
+[mock-dramatic, then a storyteller turning sarcastic] Stage two, it's beneath you. John Backus, who built Fortran, said many programmers saw themselves as a priesthood. To them, a machine writing their programs was a foolish and arrogant dream.

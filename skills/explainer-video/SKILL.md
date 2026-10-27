@@ -102,8 +102,8 @@ sections in `scenes.html`): the build stops on a script file with no section.
 - Numbers and versions as they are said: "version two point four". Names the voice gets
   wrong go in `video.json` `"say"`; captions keep the written form.
 - Where Drama 3 is set up (`npm run doctor -- --drama`) it is the voice for anything published, and directed: one
-  bracketed direction at the start of each line, so a joke or an aside is heard as one (`narration-writing`,
-  *Direction*). A quick decision video reads well undirected on OmniVoice or Kokoro.
+  bracketed direction at the start of each line describing its arc, with a joke's setup and punchline in the same
+  line so they are one take (`narration-writing`, *Direction*). A quick decision video reads well undirected on OmniVoice or Kokoro.
 - A release explainer: what this release is, then breaking changes with before and after,
   then what is new, then the upgrade steps, then where to read more.
 
