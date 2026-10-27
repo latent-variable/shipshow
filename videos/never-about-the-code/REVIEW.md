@@ -248,3 +248,8 @@ the twelve-hour point arrives (it fades first, since the two would collide; chec
 - Photo credit bands are the kit's size (about 20 px); legible at 1080p.
 - "Quattro" is said without being explained; the card and the point carry it.
 - The duplicated "so, can you?" (on screen and in the caption) is the last line, and kept on purpose.
+
+**From the PR reviewer (#76):** "machine-written code, like Fortran" called Fortran itself machine code. Backus's words (S2, section 4)
+are that a machine writing an efficient program was "a foolish and arrogant dream"; the line and the card now say that a machine writing
+the program, the idea behind Fortran, was the dream, and `sources.md` quotes the passage. Scene 06's "Fortran? The foolish and arrogant
+dream?" still pays it off.
