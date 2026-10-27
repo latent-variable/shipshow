@@ -329,12 +329,12 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ## Layout
 
 ```
-bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take
+bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
 themes/     shipshow, paper, launch, buildday and lofi; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono: SIL OFL)
 skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
 template/   what npm run new copies
-videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) and never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino.wav exists)
+videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) and never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino-long.wav exists, with Drama 3 set up)
 examples/   ledgerly, a fictional invoicing API with one authorization bug, a threat model and an access log
 skills/critic-grounding/scripts/  excerpt.mjs and check-excerpt.mjs, the excerpt check (run through the skill)
 skills/evidence-standard/scripts/  sandbox-run.sh, capture.mjs, verify-vendored.sh (run through the skill)
