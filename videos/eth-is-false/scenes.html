@@ -43,11 +43,11 @@
   .norules { display: flex; flex-direction: column; gap: 16px; }
   .norules .rule { font-size: 36px; padding: 14px 28px; }
   .uses { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
-  .uses .card { font-size: 38px; font-weight: 700; line-height: 1.3; }
+  .uses .card { font-size: 46px; font-weight: 700; line-height: 1.3; padding: 34px 40px; }
   .uses .card .tag { display: block; margin-bottom: 14px; }
   .uses .card .then { color: var(--accent); margin-top: 12px; }
   /* 03: the zoom-out chart */
-  .zoom { width: 1300px; margin: -20px auto 0; position: relative; }
+  .zoom { width: 1110px; margin: 0 auto; position: relative; }
   .zoom svg text { font-family: var(--font-mono); font-size: 28px; fill: var(--muted); }
   .zoom .ax { stroke: var(--ink); stroke-width: 3; }
   .zoom .curve { fill: none; stroke: var(--accent); stroke-width: 7; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
@@ -67,7 +67,8 @@
   .hoc .pc.more { background: transparent; color: var(--muted); border-style: dashed; border-color: var(--muted); box-shadow: none; }
   .hoclabel { font-family: var(--font-mono); font-size: 28px; color: var(--muted); text-align: center; }
   .net { width: 1100px; height: 10px; border-radius: 5px; background: var(--good); margin: 0 auto; }
-  .netlab { font-family: var(--font-mono); font-size: 28px; color: var(--good); text-align: center; }
+  .netlab { font-size: 40px; font-weight: 700; color: var(--good); text-align: center; }
+  .netlab small { display: block; margin-top: 8px; font-family: var(--font-mono); font-size: 26px; font-weight: 400; color: var(--muted); }
   .side { display: grid; grid-template-columns: 960px 1fr; gap: 50px; align-items: center; }
   /* 09 to 11: the heist */
   .move { position: absolute; left: var(--pad); top: 34px; font-family: var(--font-mono); font-size: 34px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 4px solid var(--accent); border-radius: 10px; padding: 6px 20px; transform: rotate(-3deg); }
@@ -381,11 +382,11 @@
   <div class="stage">
     <div class="doubling" data-cue="doubles" data-anim="pop">one more switch = <em>twice the settings</em></div>
     <div class="zoom" data-cue="billion" data-anim="up">
-      <svg viewBox="0 0 1300 640" width="1300" height="640">
+      <svg viewBox="0 0 1300 640" width="1110" height="546">
         <defs><clipPath id="clip03"><rect x="110" y="0" width="1190" height="562"/></clipPath></defs>
         <line class="ax" x1="120" y1="560" x2="1290" y2="560"/><line class="ax" x1="120" y1="20" x2="120" y2="560"/>
         <text x="120" y="600" text-anchor="middle">0</text><text x="234" y="600" text-anchor="middle">10</text><text x="348" y="600" text-anchor="middle">20</text><text x="462" y="600" text-anchor="middle">30</text><text x="576" y="600" text-anchor="middle">40</text><text x="690" y="600" text-anchor="middle">50</text><text x="804" y="600" text-anchor="middle">60</text><text x="918" y="600" text-anchor="middle">70</text><text x="1032" y="600" text-anchor="middle">80</text><text x="1146" y="600" text-anchor="middle">90</text><text x="1260" y="600" text-anchor="middle">100</text><text x="1290" y="636" text-anchor="end">switches →</text>
-        <text x="130" y="88" style="font-size: 26px">time to try every setting, at a billion a second</text>
+        <text x="130" y="88" style="font-size: 26px">time to try every setting, at a billion a second</text><text x="130" y="122" style="font-size: 24px">2ⁿ ÷ 10⁹ · our arithmetic</text>
         <g clip-path="url(#clip03)">
           <g class="zs" id="z03hour"><path class="curve" d="M120.0 560.0 L125.7 560.0 L131.4 560.0 L137.1 560.0 L142.8 560.0 L148.5 560.0 L154.2 560.0 L159.9 560.0 L165.6 560.0 L171.3 560.0 L177.0 560.0 L182.7 560.0 L188.4 560.0 L194.1 560.0 L199.8 560.0 L205.5 560.0 L211.2 560.0 L216.9 560.0 L222.6 560.0 L228.3 560.0 L234.0 560.0 L239.7 560.0 L245.4 560.0 L251.1 560.0 L256.8 560.0 L262.5 560.0 L268.2 560.0 L273.9 560.0 L279.6 560.0 L285.3 560.0 L291.0 560.0 L296.7 560.0 L302.4 560.0 L308.1 560.0 L313.8 560.0 L319.5 560.0 L325.2 560.0 L330.9 560.0 L336.6 560.0 L342.3 560.0 L348.0 560.0 L353.7 560.0 L359.4 560.0 L365.1 560.0 L370.8 560.0 L376.5 560.0 L382.2 560.0 L387.9 560.0 L393.6 560.0 L399.3 560.0 L405.0 560.0 L410.7 560.0 L416.4 560.0 L422.1 560.0 L427.8 560.0 L433.5 560.0 L439.2 560.0 L444.9 559.9 L450.6 559.9 L456.3 559.9 L462.0 559.9 L467.7 559.8 L473.4 559.7 L479.1 559.6 L484.8 559.4 L490.5 559.2 L496.2 558.8 L501.9 558.3 L507.6 557.6 L513.3 556.6 L519.0 555.2 L524.7 553.3 L530.4 550.5 L536.1 546.5 L541.8 540.9 L547.5 533.0 L553.2 521.8 L558.9 506.0 L564.6 483.6 L570.3 452.0 L576.0 407.3 L581.7 344.0 L587.4 254.6 L593.1 128.1 L598.8 -50.8 L604.5 -200.0"/><text class="ylab" x="130" y="50">top: 1 hour</text><circle class="dot" cx="576" cy="407" r="12"/><text class="pt" x="596" y="398">40: 18 minutes</text></g>
           <g class="zs" id="z03month"><path class="curve" d="M120.0 560.0 L125.7 560.0 L131.4 560.0 L137.1 560.0 L142.8 560.0 L148.5 560.0 L154.2 560.0 L159.9 560.0 L165.6 560.0 L171.3 560.0 L177.0 560.0 L182.7 560.0 L188.4 560.0 L194.1 560.0 L199.8 560.0 L205.5 560.0 L211.2 560.0 L216.9 560.0 L222.6 560.0 L228.3 560.0 L234.0 560.0 L239.7 560.0 L245.4 560.0 L251.1 560.0 L256.8 560.0 L262.5 560.0 L268.2 560.0 L273.9 560.0 L279.6 560.0 L285.3 560.0 L291.0 560.0 L296.7 560.0 L302.4 560.0 L308.1 560.0 L313.8 560.0 L319.5 560.0 L325.2 560.0 L330.9 560.0 L336.6 560.0 L342.3 560.0 L348.0 560.0 L353.7 560.0 L359.4 560.0 L365.1 560.0 L370.8 560.0 L376.5 560.0 L382.2 560.0 L387.9 560.0 L393.6 560.0 L399.3 560.0 L405.0 560.0 L410.7 560.0 L416.4 560.0 L422.1 560.0 L427.8 560.0 L433.5 560.0 L439.2 560.0 L444.9 560.0 L450.6 560.0 L456.3 560.0 L462.0 560.0 L467.7 560.0 L473.4 560.0 L479.1 560.0 L484.8 560.0 L490.5 560.0 L496.2 560.0 L501.9 560.0 L507.6 560.0 L513.3 560.0 L519.0 560.0 L524.7 560.0 L530.4 560.0 L536.1 560.0 L541.8 560.0 L547.5 560.0 L553.2 559.9 L558.9 559.9 L564.6 559.9 L570.3 559.9 L576.0 559.8 L581.7 559.7 L587.4 559.6 L593.1 559.4 L598.8 559.2 L604.5 558.8 L610.2 558.3 L615.9 557.6 L621.6 556.6 L627.3 555.2 L633.0 553.2 L638.7 550.4 L644.4 546.4 L650.1 540.8 L655.8 532.9 L661.5 521.6 L667.2 505.7 L672.9 483.2 L678.6 451.4 L684.3 406.4 L690.0 342.8 L695.7 252.9 L701.4 125.6 L707.1 -54.3 L712.8 -200.0"/><text class="ylab" x="130" y="50">top: 1 month</text><circle class="dot" cx="690" cy="343" r="12"/><text class="pt" x="710" y="334">50: two weeks</text></g>
@@ -396,7 +397,6 @@
       <div class="chip blue zoombadge" id="zb03">zoom out</div>
     </div>
     <div class="row"><div class="stamp" data-cue="small" data-anim="slam">and 90 is small</div><div class="chip hot" data-cue="clever" data-anim="pop">solvers: skip cleverly</div><div class="chip" data-cue="hardest" data-anim="pop">hardest cases: still exponential</div></div>
-    <div class="src" style="text-align: center" data-cue="billion" data-anim="fade">2<sup>n</sup> settings ÷ 10<sup>9</sup> a second · our arithmetic</div>
   </div>
 </section>
 
@@ -728,7 +728,7 @@
           <div class="tier t0"><div class="pc base">ETH</div><div class="pc base seth">Strong ETH</div></div>
         </div>
         <div class="net" data-cue="weaker" data-anim="grow"></div>
-        <div class="netlab" data-cue="weaker" data-anim="fade">weaker assumptions that may still hold · e.g. the Orthogonal Vectors Conjecture (the paper, 1.1.3)</div>
+        <div class="netlab" data-cue="weaker" data-anim="fade">weaker assumptions that may still hold<small>e.g. the Orthogonal Vectors Conjecture · the paper, 1.1.3</small></div>
       </div>
       <div class="row"><div class="chip" data-cue="diff" data-anim="pop">your diff tool: <span style="color: var(--good)">same speed as yesterday</span></div></div>
     </div>
@@ -849,7 +849,8 @@
   tl.to("#hoc13 .t0 .pc", { x: (i) => [-700, 700][i], rotation: -25, opacity: 0, duration: 0.6, ease: "power2.in" }, cueAt("[data-zoom='reasons']") - 0.8);
   tl.to("#hoc13 .t1 .pc", { y: 420, rotation: (i) => [-40, 25, -15][i], opacity: 0, duration: 0.9, ease: "power2.in", stagger: 0.12 }, cueAt("[data-zoom='reasons']") - 0.2);
   tl.to("#hoc13 .t3 .pc", { y: 500, opacity: 0, duration: 0.9, ease: "power2.in" }, cueAt("[data-zoom='reasons']"));
-  tl.to("#hoc13 .t2 .pc", { y: 270, rotation: (i) => [-6, 5][i], duration: 0.8, ease: "bounce.out", stagger: 0.1 }, cueAt("#p13a .net"));
+  tl.to("#hoc13 .t2 .pc", { y: 232, rotation: (i) => [-6, 5][i], duration: 0.8, ease: "bounce.out", stagger: 0.1 }, cueAt("#p13a .net"));
+  tl.to("#p13a .col", { y: -150, duration: 0.9, ease: "power2.inOut" }, cueAt("#p13a .net") + 1.0);
   tl.to("#p09a", { opacity: 0, duration: 0.35 }, cueAt("#p09b .groups") - 0.4);
   tl.to("[data-scene='07-built-on-it'] .stage", { opacity: 0.06, duration: 0.3 }, cueAt("#m07") - 0.2);
   tl.to("#p11b", { opacity: 0, duration: 0.3 }, cueAt("#m11") - 0.3);
