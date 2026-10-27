@@ -9,7 +9,7 @@ import { tmpdir } from "node:os";
 import { delimiter, join } from "node:path";
 import { test } from "node:test";
 import { createHash } from "node:crypto";
-import { BASE_PACE, REPO, VENV_PY, breathe, groupRuns, pythonExists, readWav, sentences, spokenWords, writeWav } from "../bin/lib.mjs";
+import { BASE_PACE, LINE_MAX, REPO, VENV_PY, breathe, groupRuns, lineRuns, pythonExists, readWav, sentences, spokenWords, writeWav } from "../bin/lib.mjs";
 import { hearbackAvailable, levelStamp, voiceCheckSection } from "../bin/hearback.mjs";
 
 const BIN = join(REPO, "bin");
@@ -299,4 +299,24 @@ test("breathe: silence goes in at the quietest point between two sentences that 
   const calm = breathe(samples, rate, 1, [[2.04, 2.56]], 0.35);
   assert.equal(calm.samples, samples);
   assert.deepEqual(calm.shifts, [0]);
+});
+
+test("runs by line: a script written one thought per line is voiced a line at a time", () => {
+  const one = (t) => sentences(t);
+  // three lines, the middle one two sentences: three takes, the two sentences together
+  let text = "First thought here.\nSecond thought. It goes with the second.\nThird thought.";
+  assert.deepEqual(lineRuns(text, one(text)), { runs: [[0], [1, 2], [3]], byLine: true });
+  // one paragraph: the word-count rule, as before
+  text = "A. B. C.";
+  assert.equal(lineRuns(text, one(text)).byLine, false);
+  // a line that does not end its sentence would merge with the next: fall back rather than misplace a sentence
+  text = "This line runs on\ninto this one. And ends.";
+  assert.equal(lineRuns(text, one(text)).byLine, false);
+  // a line over LINE_MAX words is split into runs of up to 45
+  const long = Array.from({ length: 6 }, (_, i) => `Sentence ${i} ` + "word ".repeat(13).trim() + ".").join(" ");
+  text = "Short line.\n" + long;
+  const r = lineRuns(text, one(text));
+  assert.ok(long.split(/\s+/).length > LINE_MAX);
+  assert.deepEqual(r.runs[0], [0]);
+  assert.ok(r.runs.length > 2 && r.runs.slice(1).flat().join() === [1, 2, 3, 4, 5, 6].join(), "the long line is split, in order, and nothing is lost");
 });

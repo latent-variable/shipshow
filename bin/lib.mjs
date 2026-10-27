@@ -224,6 +224,28 @@ export function spokenWords(sentence, say = {}) {
  *  sentences of up to `limit` words: [[0, 1, 2], [3]] by sentence number. A sentence longer than the limit
  *  stands alone. One take per run, so a run keeps its own prosody across the sentences in it (DESIGN D47);
  *  45 words is what DAIS product-videos found a scene could be voiced in without dropping words. */
+/** A scene's runs when its script file is written one thought per line: each line's sentences are one take, so sentences
+ *  meant to land together are voiced together (Lino, 2026-10-27: takes cut by word count "don't sound like they're meant to
+ *  be one after the other"). A line over LINE_MAX words is split by groupRuns, since OmniVoice drops words in long takes. A file
+ *  that is one paragraph, or whose lines do not each end a sentence, falls back to groupRuns. Returns {runs, byLine}. */
+export const LINE_MAX = 70;
+export function lineRuns(text, says) {
+  const lines = text.split(/\n/).map((l) => l.trim()).filter(Boolean);
+  if (lines.length < 2) return { runs: groupRuns(says), byLine: false };
+  const counts = lines.map((l) => sentences(l).length);
+  if (counts.reduce((x, y) => x + y, 0) !== says.length) return { runs: groupRuns(says), byLine: false };
+  const runs = [];
+  let at = 0;
+  for (const n of counts) {
+    const idx = Array.from({ length: n }, (_, k) => at + k);
+    const words = idx.reduce((w, i) => w + says[i].split(/\s+/).filter(Boolean).length, 0);
+    if (words <= LINE_MAX) runs.push(idx);
+    else for (const sub of groupRuns(idx.map((i) => says[i]))) runs.push(sub.map((k) => idx[k]));
+    at += n;
+  }
+  return { runs, byLine: true };
+}
+
 export function groupRuns(says, limit = 45) {
   const runs = [];
   let words = 0;
