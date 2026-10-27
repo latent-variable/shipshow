@@ -113,6 +113,8 @@ const OMNI_SPEEDS = [1.0, 1.3];  // the range it was tested at; mlx-audio's own 
 // about 130 words a minute), and has no speed control, so a take is time-stretched to `speed` after it is made.
 export const DRAMA = { repo: "mlx-community/fish-audio-drama-3-4bit", revision: "cc639e27aba7edb73429d3e3806f471dcd79d316" };
 export const DRAMA_PY = join(REPO, ".venv-drama", "bin", "python");
+// The optional second listen (bin/listen.py): Parakeet on MLX hears the finished narration (npm run setup:listen).
+export const LISTEN_PY = join(REPO, ".venv-listen", "bin", "python");
 const DRAMA_SPEEDS = [0.8, 1.5];
 
 /** A voice for the omnivoice engine: a clone (local/voices/<name>.wav, and <name>.txt beside it

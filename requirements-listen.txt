@@ -1,0 +1,8 @@
+# The second listen (bin/listen.py): NVIDIA's Parakeet hears the finished narration, scene by scene, and it is compared
+# with the script as written. Optional, Apple Silicon only (MLX). Its own venv, .venv-listen (`npm run setup:listen`),
+# so it never moves the pins of the voice engines' venvs. The model, pinned in bin/listen.py, is about 2.5 GB.
+parakeet-mlx==0.5.3
+# Transitive floors (huggingface_hub pulls them in): older releases have known CVEs.
+httpx2>=2.12.0
+httpcore2>=2.10.0
+certifi>=2026.10.19
