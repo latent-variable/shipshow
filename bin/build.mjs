@@ -20,6 +20,7 @@ import { MEME_FONTS_CSS, memeScene } from "./meme.mjs";
 import { portraitScene } from "./portrait.mjs";
 import { shotScene } from "./shot.mjs";
 import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir } from "./lib.mjs";
+import { resolveMoods } from "./moods.mjs";
 import { sfxTrack } from "./sfx.mjs";
 
 const CUE_LEAD = 0.15;      // a piece lands just before its word, so the eye gets there with the ear
@@ -132,6 +133,7 @@ function captions() {
 
 // scenes.html: its styles, its script, and its sections.
 const src = readFileSync(join(dir, "scenes.html"), "utf8");
+const { moods, fonts: moodFonts } = resolveMoods(cfg, timing, src, theme, dir);
 const styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n");
 const script = [...src.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join("\n");
 const seen = new Set(), bodies = [];
@@ -160,7 +162,7 @@ const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<
 const missing = timing.scenes.filter((s) => !seen.has(s.id)).map((s) => s.id);
 if (missing.length) die(`scenes.html has no <section data-scene> for: ${missing.join(", ")}`);
 
-const music = musicBed(dir, cfg.music, timing);
+const music = musicBed(dir, cfg.music, timing, moods);
 let sfx = null;
 try { sfx = sfxTrack({ dir, cfg, timing, sections: bodies, script }); } catch (e) { die(`sound effects: ${e.message}`); }
 const html = readFileSync(join(REPO, "kit", "shell.html"), "utf8")
@@ -168,13 +170,14 @@ const html = readFileSync(join(REPO, "kit", "shell.html"), "utf8")
   .replace("{{sfx}}", sfx ? `<audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="${timing.total}" data-track-index="32" data-volume="1"></audio>` : "")
   .replaceAll("{{title}}", esc(cfg.title))
   .replaceAll("{{total}}", String(timing.total))
-  .replace("{{theme}}", () => theme)
+  .replace("{{theme}}", () => theme + (moodFonts ? "\n" + moodFonts : ""))
   .replace("{{base}}", () => readFileSync(join(REPO, "kit", "base.css"), "utf8"))
   .replace("{{flair}}", () => flairCss(cfg.flair))
   .replaceAll("{{seed}}", String(cfg.seed ?? seedFor(basename(dir))))
   .replace("{{styles}}", () => (usesMemes ? MEME_FONTS_CSS + "\n" : "") + styles)
   .replace("{{scenes}}", () => sections.join("\n"))
   .replace("{{captions}}", () => captions())
+  .replace("{{moods}}", () => moods.length ? `const MOODS = ${JSON.stringify(moods).replace(/</g, "\\u003c")};\n` : "")
   .replace("{{kit}}", () => readFileSync(join(REPO, "kit", "kit.js"), "utf8").trimEnd())
   .replace("{{script}}", () => script);
 writeFileSync(join(dir, "index.html"), html);

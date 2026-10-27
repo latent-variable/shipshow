@@ -32,8 +32,8 @@
 
       // A hash of a step and a lane, for motion that jumps (grain): the same frame always gets the same
       // value, whatever was rendered before it.
-      const stepHash = (step, lane) => {
-        let h = Math.imul((step + 1) ^ SEED, 2654435761) ^ Math.imul(lane + 0x9e37, 40503);
+      const timeHash = (step, lane, seed = SEED) => {
+        let h = Math.imul((step + 1) ^ seed, 2654435761) ^ Math.imul(lane + 0x9e37, 40503);
         h = Math.imul(h ^ (h >>> 15), 2246822507);
         h = Math.imul(h ^ (h >>> 13), 3266489909);
         return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
@@ -49,19 +49,25 @@
         gsap.set(el, Object.fromEntries(Object.entries(fns).map(([k, f]) => [k, f(0)])));
         tl.fromTo(el, from, to, 0);
       };
+      const buildAmbient = (ambientEl, ambientName, ambientSeed = SEED, overlayHost = null, ambientTokens = {}) => {
+      seedState = ambientSeed >>> 0;
+      const SEED = ambientSeed;
+      const stepHash = (step, lane) => timeHash(step, lane, ambientSeed);
+      const ambientStyle = getComputedStyle(ambientEl);
+      const token = (name, fallback) => (ambientTokens[name] || ambientStyle.getPropertyValue(name)).trim().replace(/^["']|["']$/g, "") || fallback;
       // Layers that lie over the scenes (grain, scanlines, vignette) go in #overlay, made only when a
       // theme asks for one: after the scenes, before the captions.
       let overlayEl = null;
       const makeOverlay = () => {
         if (overlayEl) return;
         overlayEl = document.createElement("div");
-        overlayEl.id = "overlay";
+        overlayEl.id = overlayHost ? "" : "overlay";
+        if (overlayHost) { overlayHost.appendChild(overlayEl); return; }
         document.getElementById("root").insertBefore(overlayEl, document.querySelector(".caps"));
       };
 
       // Ambient background: a slow drift under every scene; several may layer ("stars glow").
-      const ambientEl = document.getElementById("ambient");
-      token("--ambient", "none").split(/\s+/).forEach((ambient) => {
+      ambientName.split(/\s+/).forEach((ambient) => {
       if (ambient === "stars") {
         // Three layers of seeded stars, the nearer ones bigger and faster: parallax.
         [[90, 1.4, 60], [45, 2.2, 140], [18, 3.2, 260]].forEach(([count, size, drift]) => {
@@ -200,6 +206,72 @@
         throw new Error(`unknown --ambient ${ambient}: none, glow, grid, dots, stars, horizon, blobs, dust, skyline, grain, scanlines or vignette`);
       }
       });
+
+      };
+      if (typeof MOODS === "undefined") {
+        buildAmbient(document.getElementById("ambient"), token("--ambient", "none"));
+      } else {
+        const root = document.getElementById("root");
+        const baseAmbient = token("--ambient", "none");
+        root.style.background = "#000";
+        root.style.isolation = "isolate";
+        const baseTokens = Object.fromEntries(Object.keys(MOODS[0].tokens).map((key) => [key, STYLE.getPropertyValue(key).trim()]));
+        const overlay = document.createElement("div");
+        overlay.id = "overlay";
+        root.insertBefore(overlay, document.querySelector(".caps"));
+        const backgrounds = [], ambients = new Map();
+        const moodHash = (name) => {
+          let h = SEED;
+          for (const c of name) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+          return h >>> 0;
+        };
+        MOODS.forEach((mood, i) => {
+          const tokens = { ...baseTokens, ...mood.tokens };
+          const sky = document.createElement("div");
+          sky.className = "mood-backdrop";
+          sky.setAttribute("aria-hidden", "true");
+          Object.entries(tokens).forEach(([key, value]) => sky.style.setProperty(key, value || "initial"));
+          sky.style.background = "var(--sky, var(--bg))";
+          root.insertBefore(sky, document.getElementById("ambient"));
+          gsap.set(sky, { opacity: i === 0 ? 1 : 0 });
+          backgrounds.push(sky);
+          if (i) {
+            const at = Math.max(0, mood.start - 0.6), duration = mood.start + 0.6 - at;
+            tl.to(backgrounds[i - 1], { opacity: 0, duration, ease: "none" }, at);
+            tl.to(sky, { opacity: 1, duration, ease: "none" }, at);
+            const previous = MOODS[i - 1].tokens;
+            Object.entries(tokens).forEach(([key, value]) => {
+              const from = previous[key] || baseTokens[key] || "";
+              const plain = (x) => /^[-+]?(?:\d*\.)?\d+$/.test(x);
+              const colour = (x) => x && !/var\(|currentColor/i.test(x) && CSS.supports("color", x);
+              const tween = !/^--(?:font|display-|cap-)/.test(key) && key !== "--sky" && ((plain(from) && plain(value)) || (colour(from) && colour(value)));
+              if (tween) tl.fromTo(root, { [key]: from }, { [key]: value, duration, ease: "none", immediateRender: false }, at);
+              else tl.set(root, { [key]: value }, mood.start);
+            });
+          } else gsap.set(root, tokens);
+          // No ambient override means the same base container, with its playhead intact.
+          const ambientKey = mood.ambient === undefined ? "base" : `mood:${mood.name}`;
+          if (!ambients.has(ambientKey)) {
+            const container = document.createElement("div"), over = document.createElement("div");
+            container.className = "mood-ambient";
+            over.className = "mood-overlay";
+            // A mood's own layers keep its colours through a crossfade; the base layers follow the tokens tweened on #root.
+            if (ambientKey !== "base") Object.entries(tokens).forEach(([key, value]) => { if (value) { container.style.setProperty(key, value); over.style.setProperty(key, value); } });
+            document.getElementById("ambient").appendChild(container);
+            overlay.appendChild(over);
+            const seed = ambientKey === "base" ? SEED : moodHash(mood.name);
+            buildAmbient(container, mood.ambient ?? baseAmbient, seed, over, tokens);
+            gsap.set([container, over], { opacity: i === 0 ? 1 : 0 });
+            ambients.set(ambientKey, [container, over]);
+          }
+          mood.ambientKey = ambientKey;
+          if (i && ambientKey !== MOODS[i - 1].ambientKey) {
+            const at = Math.max(0, mood.start - 0.6), duration = mood.start + 0.6 - at;
+            tl.to(ambients.get(MOODS[i - 1].ambientKey), { opacity: 0, duration, ease: "none" }, at);
+            tl.to(ambients.get(ambientKey), { opacity: 1, duration, ease: "none" }, at);
+          }
+        });
+      }
 
       // Progress bar across the top.
       const progress = document.getElementById("progress");

@@ -139,7 +139,7 @@ A change to `bin/`, `kit/` or `template/` is validated by running `make` and `re
 |---|---|
 | `script/01-intro.txt`, `02-...` | One file per scene, read aloud in file-name order. A sentence ends at `.`, `!` or `?` and a space. With OmniVoice runs, write one thought per line: each line is one take, so sentences meant to land together are voiced together (`lineRuns`, D54; a line over 70 words is split) |
 | `scenes.html` | One `<section data-scene="01-intro">` per script file, a `<style>` for the look, optionally a `<script>` |
-| `video.json` | `title`, `kind` (`decision`, `feature`, `release`), `importance` and `importance_reason` (set by the builder), `sfx` (sound effects: `false`, a kit name, or `{kit, under, tonic}`), `shows_code` (puts `critic-grounding` on the floor; read from `scenes.html` when absent: a `<pre>`, `<code>` or `.ss-code` sets it, and `false` cannot lower it), `voice`, `speed`, `theme`, `flair`, `review`, `say`, `audience`; optional `lead`, `gap`, `tail` (seconds of pause), `pauses` (`{"<scene>": seconds}`: a beat after one scene, so a meme or a stamp at its end can be read), `hold` (still seconds after the last word; the last scene never fades), `seed`, `loudness` (LUFS the render is mastered to; -14 by default, `false` for none) |
+| `video.json` | `title`, `kind` (`decision`, `feature`, `release`), `importance` and `importance_reason` (set by the builder), `sfx` (sound effects: `false`, a kit name, or `{kit, under, tonic}`), `shows_code` (puts `critic-grounding` on the floor; read from `scenes.html` when absent: a `<pre>`, `<code>` or `.ss-code` sets it, and `false` cannot lower it), `voice`, `speed`, `theme`, `flair`, `moods` (named looks, ambient and music selected by `data-mood`), `review`, `say`, `audience`; optional `lead`, `gap`, `tail` (seconds of pause), `pauses` (`{"<scene>": seconds}`: a beat after one scene, so a meme or a stamp at its end can be read), `hold` (still seconds after the last word; the last scene never fades), `seed`, `loudness` (LUFS the render is mastered to; -14 by default, `false` for none) |
 | `sources.md` | Every claim the video makes, with its source |
 | `critics.md` | This video's own bar, applied by every critic |
 | `brief.md` | A decision video's handoff from the agent that asked for it |
@@ -223,6 +223,15 @@ too, or a theme cannot restyle it. Tokens a theme may add, each unset (so other 
 `--meme-border`, `--meme-shadow` and `--photo-filter` (a CSS filter on meme pictures, to make pictures from anywhere look
 like one set), and `--frame`, `--frame-width`, `--portrait-frame-width`, `--portrait-radius`, `--portrait-shadow` and `--photo-filter` for framed photos (portraits and memes read them, falling back to the card border, shadow and no filter). `lofi` sets
 them all: a late-night study room (dusk sky, a city skyline, lamp amber, Fraunces, Nunito and IBM Plex Mono).
+
+**Moods.** `video.json` `"moods": {"history": {"theme": "paper", "look": {"--accent": "#b3261e"}, "ambient": "stars glow", "music": {"file": "history.wav", "volume": 0.22, "duck": 0.35}}}` names a section's feel. A
+`<section data-scene="02-history" data-mood="history">` selects it and following sections keep it until another names a mood;
+an unknown name stops the build with its scene. Before the first, the video's own theme, flair and music apply. Each mood starts
+from the base tokens, takes its optional theme's tokens, then its `look`. Mood theme files live under `assets/theme/<name>/`.
+Skies and explicit ambient layers crossfade over 1.2 seconds centred on the boundary; colours and plain numbers tween on the
+shared timeline, while fonts, caption tokens and other values switch at the midpoint. No `ambient` keeps the base ambient.
+Music accepts a file string or the usual object, starts at the head of its 1.5 second crossfade (so its opening fades in), and
+loops if short. Absent or missing music keeps the previous bed's playhead. No moods keeps the single-bed path.
 
 **Motion.** Theme tokens `--transition` (`none`, `fade`, `rise`, `slide`, `zoom`, `wipe`,
 `flash`), `--camera` (`none`, `push`: a slow push-in per scene), `--ambient` (`none`, `glow`,
