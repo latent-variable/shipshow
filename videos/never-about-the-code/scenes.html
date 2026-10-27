@@ -118,6 +118,7 @@
 
   /* 11-behavior */
   .never { font-size: 54px; font-weight: 650; text-align: center; }
+  [data-scene="12-behavior"] .stage { gap: 24px; }
   .never em { font-style: normal; color: var(--accent); }
   .testcard { font-family: var(--font-mono); font-size: 34px; padding: 26px 34px; background: var(--code-bg); color: var(--code-ink); border-radius: var(--radius); }
   .testcard .name { color: var(--ink); margin-bottom: 14px; }
@@ -125,7 +126,7 @@
   .testcard .fail { color: var(--accent); font-weight: 700; }
   .testcard .pass { color: var(--good); font-weight: 700; }
   .karp-q .quote { font-size: 48px; text-align: center; }
-  .down { display: flex; justify-content: center; align-items: center; gap: 30px; font-size: 48px; font-weight: 650; }
+  .down { display: flex; justify-content: center; align-items: center; gap: 24px; font-size: 42px; font-weight: 650; }
   .down .arrow { font-size: 80px; color: var(--accent-2); }
 
   /* 12-close */
@@ -346,7 +347,7 @@
 
 <section data-scene="12-behavior">
   <div class="stage">
-    <div class="never" data-cue="+0.1" data-anim="fade">Understand the <em style="color: var(--good)">behavior</em></div>
+    <div class="tag center" data-cue="+0.1" data-anim="fade">understand the behavior</div>
     <div class="never" data-cue="never" data-anim="fade">What must it <em>never</em> do?</div>
     <div class="testcard" data-cue="invoice," data-anim="up">
       <div class="name">test: a customer never sees another customer's invoice</div>
@@ -355,8 +356,7 @@
       <div class="line" data-cue="breaks" data-anim="fade"><span>a later change breaks it</span><span class="fail">✗ fails again</span></div>
     </div>
     <div class="karp-q card" data-cue="Karpathy's" data-anim="up"><div class="quote">“Don't tell it what to do, give it <em style="color: var(--good)">success criteria</em> and watch it go.”</div><div class="who center">Andrej Karpathy, Jan 2026</div></div>
-    <div class="down" data-cue="thought" data-anim="up"><span>a test only checks what you thought to ask</span></div>
-    <div class="down" data-cue="surprises" data-anim="up"><span>surprised?</span><span class="arrow">↓</span><span>drop a rung, read the code</span></div>
+    <div class="down"><span data-cue="thought" data-anim="fade">a test only checks what you thought to ask.</span><span data-cue="surprises" data-anim="fade">surprised?</span><span class="arrow" data-cue="surprises" data-anim="fade">↓</span><span data-cue="read" data-anim="fade">read the code</span></div>
   </div>
 </section>
 

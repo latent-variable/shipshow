@@ -38,3 +38,31 @@ What changed:
 - **Consistency.** Every dated quote is a card with the portrait inside; red is the complaint again (the cost stamps are ink, "lost
   anyway" red); one caption form per person.
 - **Voice.** Two runs re-taken for shouts; 23 runs heard back, 22 at 97% or more, the other at 97% with digits written as numbers.
+
+## Round 2: 0 blocking, 27 major; all seven critics, on the lofi theme
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | fail | 0 / 1 / 5 |
+| clarity | fail | 0 / 3 / 4 |
+| pacing | fail | 0 / 9 / 5 |
+| sync | fail | 0 / 6 / 6 |
+| visuals | fail | 0 / 4 / 4 |
+| consistency | fail | 0 / 1 / 5 |
+| engagement | fail | 0 / 3 / 4 |
+
+What changed:
+- **Rhythm.** Speed 1.05 to 1.0. Pacing found sentences inside runs 0 to 0.25 s apart next to 3 s pauses between scenes: ShipShow
+  now puts a breath of at least the video's gap between sentences of a run at a quiet point (#70, D51); scene pauses capped at 1 s.
+  All sentence gaps now 0.34 s or more. Three runs re-taken (two clipped starts, one shout): 24 runs, no faults.
+- **Accuracy.** The ~12 h point is labelled as METR's: public frontier, Feb–Mar 2026, range 5 to 61 h, highly uncertain, the test
+  near its limit, and said "with wide error bars"; Ed Post's capitals match his page; the 1958 share is "at about sixty sites";
+  Veracode's 56% is an average over models.
+- **Clarity.** DHH's card says what changed (his words on Quattro); Antirez has his own scene; the objection names the security
+  tests and answers with "treat it like a co-worker's work"; the payoff names its limit (a test only checks what you thought to ask).
+- **Sync and engagement.** The C rung lands on "C"; the Dafoe and This Is Fine memes step aside after 3.6 s; the 12-behavior
+  question lands on "never"; the close opens on the heckle; the chart shows what task length means while METR is explained; the
+  one-job scene opens on the programmer's one day of training; Roll Safe (2017) cut.
+- **Visuals and consistency.** Chart labels moved off the line and haloed; source lines, axes and the credit line at 28 px or more;
+  portrait credits larger and Ritchie and Thompson bigger; every quote card carries its source; the Unix card says rewritten 1973,
+  paper 1974; portraits take the theme's print frame (#69).

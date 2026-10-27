@@ -44,30 +44,29 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 | 04 | Around 1954 Backus started Fortran at IBM | S1 (the 1954 preliminary report; the team formed in 1954) |
 | 04 | Programmers saw themselves as "a priesthood"; a machine writing an efficient program was "a foolish and arrogant dream" | S2, section 4 "The Priesthood": "members of a priesthood guarding skills and mysteries far too complex for ordinary mortals"; "it was obviously a foolish and arrogant dream to imagine that any mechanical process could possibly perform the mysterious feats of invention required to write an efficient program." The card quotes the two phrases separately |
 | 05 | In 1975 Dijkstra wrote that COBOL cripples the mind | S5: "The use of COBOL cripples the mind; its teaching should, therefore, be regarded as a criminal offence." |
-| 05 | In 1983 a satirical letter in Datamation said real programmers use Fortran, quiche eaters use Pascal | S6: "Real Programmers use FORTRAN. Quiche Eaters use PASCAL." |
+| 05 | In 1983 a satirical letter in Datamation, a computer magazine, said real programmers use Fortran, quiche eaters use Pascal | S6: "Real Programmers use Fortran. Quiche Eaters use Pascal." (the page's own capitals, checked 2026-10-27) |
 | 05 | "A generation later, it's what real programmers use" | 1957 (S1) to 1983 (S6): 26 years |
 | 06 | The Story of Mel, 1983: Mel wrote raw machine code and refused an optimizing assembler; his code ran faster | S7: "Real Programmers wrote in machine code. Not FORTRAN. Not RATFOR. Not, even, assembly language."; "'You never know where it's going to put things', he explained"; "Mel's always ran faster" (against the optimizing assembler's output). A legend, called one |
 | 06 | When Unix moved from assembly to C in 1973 it got about a third bigger; Ritchie and Thompson called that quite acceptable | S9: "during the summer of 1973, it was rewritten in C. The size of the new system is about one third greater than the old... we considered this increase in size quite acceptable." |
 | 06 | "The skeptics were right about the cost, and they lost anyway." | **opinion**, the summary of 06 and 07 |
 | 07 | In a 1957 case a programmer took a one-day course, wrote the job in four hours; by hand he estimated three days; he fixed the bug in his Fortran with no memory dumps | S4: "attended a one-day course on FORTRAN... He then programmed the job in 4 hours, using 47 FORTRAN statements... He studied the output (no tracing or memory dumps were used) and was able to localize his error in a FORTRAN statement he had written... He estimated that it might have taken 3 days to code this job by hand" |
-| 07 | By fall 1958, more than half the machine instructions on IBM's 704 computers came from the compiler | S1, quoting Backus's November 1958 report: "more than half the machine instructions for these machines are being produced by FORTRAN" (about 60 installations, 66 IBM 704s) |
+| 07 | By fall 1958, at about sixty sites running IBM's 704, more than half the machine instructions came from the compiler | S1, quoting Backus's November 1958 report: "more than half the machine instructions for these machines are being produced by FORTRAN" (about 60 installations, 66 IBM 704s) |
 | 08 | METR gives AI agents real tasks, times how long each takes a human expert, and finds the longest an AI finishes half the time (the 50% time horizon) | S10 |
 | 08 | Early 2025, about an hour | S10: Claude 3.7 Sonnet (released February 2025), 60 minutes under TH1.1 |
 | 08 | The chart: Claude 3.7 Sonnet 60 min, Claude Opus 4 101 min (1.7 h), GPT-5 214 min (3.6 h), Claude Opus 4.5 320 min (5.3 h), at release day on a linear time axis and a log hours axis | S10 (TH1.1 column), S19 |
-| 08 | In early 2026, roughly twelve hours (range 5 to 61 h on screen) | S11, Table 1: public frontier 50% time horizon "~12h [5h-61h]", the best public model as measured in early 2026, published May 2026; plotted at mid-February 2026 |
+| 08 | In early 2026, roughly twelve hours, with wide error bars (on screen: public frontier, Feb–Mar 2026, range 5 to 61 h, highly uncertain, the test near its limit) | S11, Table 1: public frontier 50% time horizon "~12h [5h-61h]", Feb–Mar 2026, published May 2026; S11 says the suite "can't reliably measure time horizons above 16 hours" and calls the estimates highly uncertain. Plotted at mid-February 2026 |
 | 08 | Doubling about every three months since 2024 | S10: "doubling time since 2024... falls to 89 days under TH1.1". Said as "has been doubling", a fitted trend |
 | 09 | In October 2025 Karpathy said you couldn't hand agents real work yet, because they just don't work | S12: on why you would not have agents do an intern's or employee's job today: "The reason you don't do it today is because they just don't work." |
 | 09 | Three months later he had flipped: 80% manual coding became 80% agent coding | S13: "I rapidly went from about 80% manual+autocomplete coding and 20% agents in November to 80% agent coding and 20% edits+touchups in December". The card says "manual + autocomplete" |
-| 09 | DHH, who created Ruby on Rails, said a year before he didn't like the AI on offer; Opus 4.5 was the dividing line | S14: "A year ago, I did not like the mode of AI we were offered."; "Opus 4.5, to me, was the dividing line" |
-| 09 | Antirez, who created Redis, thought we had more time before programming changed completely; for most projects writing the code yourself no longer makes sense unless for fun | S15: "thought that we had more time before programming would be completely reshaped... I no longer believe this is the case."; "for most projects, writing the code yourself is no longer sensible, if not to have fun." The card quotes it exactly |
-| 10 | The usual objection: a compiler gives the same output every time and an agent doesn't | **opinion**, stated as the common objection, not as Goldberg's view (S16 notes compilers are not perfectly deterministic either) |
-| 10 | Goldberg: an agent is more like a co-worker than a compiler | S16: "The compiler is stateless (each invocation is fully independent) and the agent is stateful."; "It is like a co-worker, or an employee." |
-| 10 | In Veracode's 2026 tests, with no security guidance, model code passed only 56% of the time | S17: "the average security pass rate sits at 56 percent"; models "fail nearly 44 percent of the time when given no security-specific guidance". Raw models, not agents with tooling; said and shown as such |
-| 10 | Run the agent twice, get two different programs, and the same tests still have to pass | **opinion**, the answer to the objection |
-| 11 | Understand the behaviour: what it must never do; a test for it that fails until it is right and fails again if broken | **opinion**, the thesis, with an illustrative test (not a real project's) |
-| 11 | Karpathy: "Don't tell it what to do, give it success criteria and watch it go." | S13, verbatim |
-| 11 | Drop down a rung and read the code when it surprises you, the way you'd open the assembly | **opinion** |
-| 12 | "Do you understand what it does? And how do you know?" | **opinion**, the closing question |
+| 09 | DHH, who created Ruby on Rails, said a year before he didn't like the AI on offer; Opus 4.5 was the dividing line; he hasn't written any of the code shipped in Quattro by hand | S14: "A year ago, I did not like the mode of AI we were offered."; "Opus 4.5, to me, was the dividing line"; "I have not written any of the code that's shipped in Quattro by hand." (he says he reviewed its shape and the critical lines) |
+| 10 | Antirez, who created Redis, thought we had more time before programming changed completely; for most projects writing the code yourself no longer makes sense unless for fun | S15: "thought that we had more time before programming would be completely reshaped... I no longer believe this is the case."; "for most projects, writing the code yourself is no longer sensible, if not to have fun." The card quotes it exactly |
+| 11 | The usual objection: a compiler gives the same output every time and an agent doesn't | **opinion**, stated as the common objection, not as Goldberg's view (S16 notes compilers are not perfectly deterministic either) |
+| 11 | Goldberg: an agent is more like a co-worker than a compiler | S16: "The compiler is stateless (each invocation is fully independent) and the agent is stateful."; "It is like a co-worker, or an employee." |
+| 11 | In Veracode's 2026 security tests, code straight from the models, with no security guidance, passed only 56% of the time (on screen: on average) | S17: "the average security pass rate sits at 56 percent"; models "fail nearly 44 percent of the time when given no security-specific guidance". Raw models, not agents with tooling; said and shown as such |
+| 11 | Run the agent twice, get two different programs, and the same tests still have to pass | **opinion**, the answer to the objection |
+| 12 | Understand the behaviour: what it must never do; a test for it that fails until it is right and fails again if broken; a test only checks what you thought to ask, so drop down and read the code when surprised | **opinion**, the thesis, with an illustrative test (not a real project's) |
+| 12 | Karpathy: "Don't tell it what to do, give it success criteria and watch it go." | S13, verbatim |
+| 13 | "Do you understand what it does? And how do you know?" | **opinion**, the closing question |
 
 ## Portraits
 
@@ -83,7 +82,7 @@ the photo and listed in the review packet.
 | 06 | Ken Thompson | File:Ken Thompson, 2019.jpg | CC BY-SA 4.0, A.C.Diller |
 | 09 | Andrej Karpathy | File:Andrej Karpathy, OpenAI.png | CC BY 3.0, Gladwin Analytics |
 | 09 | David Heinemeier Hansson | File:David Heinemeier Hansson Driver of Abu Dhabi Proton Racing's Porsche 911 RSR (27225732035) (cropped).jpg | CC BY 2.0, David Merrett |
-| 09 | Salvatore Sanfilippo (antirez) | File:Salvatore Sanfilippo.png | CC BY 3.0, dotconferences |
+| 10 | Salvatore Sanfilippo (antirez) | File:Salvatore Sanfilippo.png | CC BY 3.0, dotconferences |
 
 ## Memes
 
@@ -98,8 +97,7 @@ catalog's animated templates. The text on each restates a line the narration say
 | 05 | "No no no wait wait wait" (clip) | i.imgflip.com/6inpzl.mp4 (Imgflip GIF templates) | "1957: Fortran? No way" / "1983: real programmers use Fortran" | "Wait. Fortran?"; 1957 stands for the skepticism of S1 and S2 |
 | 07 | `money`, Shut Up and Take My Money (memegen, animated) | knowyourmeme.com/memes/shut-up-and-take-my-money | "4 hours instead of 3 days?" / "shut up and take my compiler" | the 1957 case (S4) |
 | 08 | Willem Dafoe looking up (clip, top 29% cropped) | i.imgflip.com/62yufy.mp4; knowyourmeme.com/memes/willem-dafoe-looking-up | "Me looking at" / "the time horizon chart" | the chart |
-| 10 | `fine`, This Is Fine (memegen, animated) | knowyourmeme.com/memes/this-is-fine | "Merging agent code" / "with no tests" | "the same tests still have to pass" |
-| 11 | `rollsafe`, Roll Safe (memegen, animated) | knowyourmeme.com/memes/roll-safe | "Can't misread the code" / "if the test says what it does" | "That's understanding you can check" |
+| 11 | `fine`, This Is Fine (memegen, animated) | knowyourmeme.com/memes/this-is-fine | "Merging agent code" / "with no tests" | "the same tests still have to pass" |
 
 ## Left out, and why
 
