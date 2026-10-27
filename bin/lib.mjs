@@ -1,7 +1,7 @@
 // Shared plumbing for the bin/ scripts: paths, the video's config, sentence splitting, WAV I/O.
 import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { basename, delimiter, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -59,7 +59,7 @@ export function flag(name, argv = process.argv) {
 const localDir = () => process.env.SHIPSHOW_LOCAL || join(REPO, "local");
 
 /** This person's settings, local/config.json (tailor skill): {speed, voice, theme, sfx}. */
-function localConfig() {
+export function localConfig() {
   const p = join(localDir(), "config.json");
   return existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : {};
 }
@@ -482,4 +482,50 @@ export function breathe(samples, rate, channels, bounds, minGap) {
     dst += n + (p < cuts.length ? cuts[p].add : 0);
   }
   return { samples: out, shifts };
+}
+
+/** The loudness a render is mastered to, in LUFS, or null for none: video.json "loudness", then local/config.json, then
+ *  -14 (what YouTube plays at: it turns louder videos down and never turns quieter ones up). false turns mastering off. */
+export function loudnessTarget(dir) {
+  const own = JSON.parse(readFileSync(join(dir, "video.json"), "utf8")).loudness;
+  const value = own !== undefined ? own : localConfig().loudness !== undefined ? localConfig().loudness : DEFAULT_LOUDNESS;
+  if (value === false || value === null) return null;
+  if (!(typeof value === "number" && value >= -30 && value <= -9)) die(`loudness is ${JSON.stringify(value)}; it takes -30 to -9 LUFS, or false`);
+  return value;
+}
+export const DEFAULT_LOUDNESS = -14;
+export const TRUE_PEAK = -1;   // dBTP: room for the encoder's overshoot
+
+/** ffmpeg loudnorm's first pass over a file's audio: {input_i, input_tp, input_lra, input_thresh, target_offset}. */
+export function measureLoudness(file, target) {
+  const r = spawnSync("ffmpeg", ["-hide_banner", "-nostats", "-i", file, "-vn", "-af", `loudnorm=I=${target}:TP=${TRUE_PEAK}:LRA=11:print_format=json`, "-f", "null", "-"], { encoding: "utf8" });
+  const json = (r.stderr || "").match(/\{[^{}]*"input_i"[^{}]*\}/);
+  if (r.status !== 0 || !json) die(`could not measure the loudness of ${file}\n${(r.stderr || "").trim().split("\n").slice(-3).join("\n")}`);
+  return JSON.parse(json[0]);
+}
+
+/** The render's audio brought to `target` LUFS by one gain, its few peaks over TRUE_PEAK caught by a look-ahead limiter
+ *  (alimiter, 5 ms attack), never by compression: loudnorm's own second pass switches to dynamic mode when the peaks do not fit,
+ *  which is the squash the owner heard in narration (D44, D47). The gain is held back so the limiter takes at most MAX_LIMIT dB
+ *  off a peak; a video whose peaks would need more lands under the target, and says so. The video stream is copied untouched.
+ *  Returns {before, after, gain, limited}, or null for a file this already mastered to this target (its stamp), so running it
+ *  twice does not stack. */
+export const MAX_LIMIT = 3;
+export function masterLoudness(file, target) {
+  // A mastered file carries a stamp (its container comment), so a second run never stacks more gain and limiting on it.
+  const stamp = `shipshow-mastered ${target} LUFS`;
+  const tags = spawnSync("ffprobe", ["-v", "error", "-show_entries", "format_tags=comment", "-of", "csv=p=0", file], { encoding: "utf8" }).stdout.trim();
+  if (tags === stamp) return null;
+  const m = measureLoudness(file, target);
+  const before = Number(m.input_i), peak = Number(m.input_tp);
+  const gain = Math.min(target - before, TRUE_PEAK + MAX_LIMIT - peak);
+  const limited = Math.max(0, peak + gain - TRUE_PEAK);
+  // the limiter's ceiling sits 0.5 dB under the true-peak line: it works on samples, and a reconstructed peak can sit a little higher
+  const ceiling = (10 ** ((TRUE_PEAK - 0.5) / 20)).toFixed(4);
+  const tmp = file.replace(/\.mp4$/, ".mastering.mp4");
+  const af = `volume=${gain.toFixed(2)}dB,alimiter=limit=${ceiling}:attack=5:release=50:level=false`;
+  const r = spawnSync("ffmpeg", ["-hide_banner", "-y", "-v", "error", "-i", file, "-map", "0", "-c:v", "copy", "-af", af, "-ar", "48000", "-c:a", "aac", "-b:a", "192k", "-metadata", `comment=${stamp}`, "-movflags", "+faststart", tmp], { encoding: "utf8" });
+  if (r.status !== 0) die(`could not master the loudness of ${file}\n${r.stderr}`);
+  renameSync(tmp, file);
+  return { before, after: Number(measureLoudness(file, target).input_i), gain, limited };
 }
