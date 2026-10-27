@@ -64,7 +64,8 @@
         "file": "local/music/nac-archive-s7.wav",
         "volume": 0.18,
         "duck": 0.35
-      }
+      },
+      "ambient": "vignette grain"
     },
     "now": {
       "theme": "launch",
@@ -78,7 +79,8 @@
         "file": "local/music/nac-now-s21.wav",
         "volume": 0.18,
         "duck": 0.35
-      }
+      },
+      "ambient": "stars glow grain"
     },
     "objection": {
       "theme": "signal",
@@ -94,7 +96,8 @@
         "file": "local/music/nac-objection-s7.wav",
         "volume": 0.22,
         "duck": 0.35
-      }
+      },
+      "ambient": "vignette grain"
     },
     "workshop": {
       "theme": "buildday",
@@ -102,7 +105,8 @@
         "file": "local/music/nac-workshop-s21.wav",
         "volume": 0.16,
         "duck": 0.35
-      }
+      },
+      "ambient": "stars horizon"
     }
   }
 }
