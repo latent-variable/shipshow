@@ -1,9 +1,9 @@
 # Sources: eth-is-false
 
-An explainer for Lino's YouTube channel, narrated by Lino Valdovinos in his own cloned voice: what the Exponential Time
+An explainer for Lino's YouTube channel, narrated by an invented narrator voice (no real person cloned; see *Voice* below): what the Exponential Time
 Hypothesis (ETH) is, how it relates to P versus NP, what OpenAI's preprint "The Exponential Time Hypothesis is False" claims,
 the core idea of its algorithm, what it does and does not mean, and how far to trust it on 2026-10-27, the day after release.
-Every fact below was read at its source on 2026-10-27. Lines marked **opinion** are the narrator's view, said in his voice.
+Every fact below was read at its source on 2026-10-27. Lines marked **opinion** are the channel's view (Lino's), said by the narrator.
 Lines marked **ours** are arithmetic done for this video on a source's numbers, shown with the working.
 
 ## Primary sources
@@ -129,6 +129,14 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 11b | Galaxy Brain meme (memegen `gb`, knowyourmeme.com/memes/galaxy-brain) | third-party template, fetched at build, never committed |
 | 07 | This Is Fine meme (memegen `fine`, gunshowcomic.com/648, K.C. Green): "hundreds of papers, one hypothesis / this is fine" | third-party template, fetched at build, never committed |
 | 12 | Drakeposting meme (memegen `drake`, knowyourmeme.com/memes/drakeposting) | third-party template, fetched at build, never committed |
+
+## Voice
+
+The narrator is an invented voice, not a person: Fish Audio Drama 3 (`mlx-community/fish-audio-drama-3-4bit`) given only the
+description "energetic young male tech YouTuber, upbeat and clear" and seed 89, no reference clip, picked by the owner from twelve
+auditions on 2026-10-27. That take (13.3 s, `local/voices/eth-narrator.wav`, never committed) is the reference every line clones.
+Drama 3's output is used under the Fish Audio Community License (commercial use allowed under $500K a year in revenue). The owner's own
+cloned voice stays for his opinion videos, since he is not the one explaining this paper.
 
 ## Left out, and why
 

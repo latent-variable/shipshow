@@ -1,7 +1,7 @@
 # This video's own bar
 
 Every critic applies these on top of its skill. The owner asked for a "really thorough", "very interesting, very fun, very
-engaging" video, a breakdown for a general viewer that then goes into the details, in his own voice for his channel. His bar
+engaging" video, a breakdown for a general viewer that then goes into the details, for his channel, read by a narrator voice (his own voice is kept for his opinion videos, 2026-10-27). His bar
 from his last channel video (videos/never-about-the-code/critics.md) carries over where it fits.
 
 - **Right, first.** This is a complexity-theory result experts are still checking, and viewers will repeat what it says. A claim

@@ -1,6 +1,6 @@
 # Review: eth-is-false
 
-Plan: `thorough` (importance high: public, in Lino's voice, on a result experts are still checking). Critics: accuracy, clarity,
+Plan: `thorough` (importance high: public, on Lino's channel, on a result experts are still checking). Critics: accuracy, clarity,
 pacing, sync, visuals, consistency, engagement, and grounding (scene 14 shows a Lean excerpt); Sonnet, Opus for the last round's
 clarity, visuals and engagement; at most 4 rounds; until no blocking or objective major finding is left. Every critic is a fresh
 agent that never saw the build.
