@@ -549,7 +549,7 @@ loaded when it starts.
 ### D42. Memes come from the memegen catalog, and ShipShow draws the text (2026-10-26)
 **Decision.** A `<figure class="ss-meme" data-meme="<id>">` with a span per line is a meme. `bin/meme.mjs` fetches the
 template's `config.yml` (the text boxes: `anchor_x`, `anchor_y`, `scale_x`, `scale_y`, `angle`, `align`, `color`, `font`) and
-its clean `default.<ext>` from github.com/jacebrowning/memegen (extension tried in turn: jpg, png, gif, jpeg), once, into
+its clean `default.<ext>` from github.com/jacebrowning/memegen (extension tried in turn: gif, jpg, png, jpeg; D49), once, into
 `~/.cache/shipshow/memes/<id>/`; `bin/build.mjs` copies the picture to `assets/memes/`, and positions each span by its box in
 percent of the picture with the box's angle; spans fill boxes in order. `kit/kit.js` fits each line to its box (the largest
 font size at which the wrapped text fits both ways), synchronously and again when the fonts are ready, then the cue engine
@@ -616,6 +616,40 @@ trusts what Commons says, and "no attribution required" public domain files are 
 (TIFF, SVG) is not handled. The first build of a file needs the network; the 900 px thumbnail of a small original is the original, upscaled
 by the frame, so a 238 px photo looks soft at the default size (Backus): set `--portrait-height` smaller.
 
+### D49. A moving meme is a video the build writes, and its scene is not timed (2026-10-26)
+**Decision.** Two sources, one pipeline. `data-meme="rollsafe"` plays a template whose clean `default.gif` is animated (17 of
+memegen's 211 have one); `<figure class="ss-meme" data-clip="<url or file>" data-crop="top 98px">` plays any GIF, MP4 or WebM
+(an Imgflip clean MP4, `https://i.imgflip.com/<id>.mp4`, is the usual one). `bin/meme.mjs` fetches a URL once into
+`<cache>/clips/<hash>` (a file is read from the video's folder; the first bytes must say GIF, MP4 or WebM, so an error page is never
+cached), reads the crop (`top|right|bottom|left` with `%` or `px`, several allowed, kept to even pixels), and `ffmpeg` writes
+`assets/memes/clips/<key>.mp4`: cropped, 30 fps, no sound, H.264 at CRF 14 with a keyframe a second, **looped to the time the
+figure is on screen** (its cue to the scene's end). The key hashes the source bytes and every parameter, so a changed clip,
+crop or cue is a new file and an unchanged one is not encoded again. The figure holds a `<video class="clip" data-start data-duration muted>`
+with the figure's own `data-at` as its start, so it plays at real speed from the figure's arrival. Text is optional: `<span class="top">`
+and `<span class="bottom">` (or first and second in order) are drawn in the meme style in bands at 3% and 77% of the picture, fitted and
+cued like a template's. The packet lists each animated meme with its source URL; `data-name` and `data-credit` set the name and the
+page to credit. An unreachable clip with nothing cached, a file that is not a clip, a malformed or all-consuming crop, too many spans
+and a figure with both `data-meme` and `data-clip` stop the build naming the scene.
+**Why.** HyperFrames renders frame by frame, seeking a `<video>` through ffmpeg frame extraction (so the same frame number gives the
+same picture); an `<img src="x.gif">` is turned into a video by HyperFrames itself, but one that starts at time 0 and loops over the whole
+composition, not at the figure's cue. Baking the loop into the file, not a `loop` attribute, keeps the playback a function of the time
+alone and independent of how the renderer treats `loop`. The memegen picture is tried as gif first because some of them keep a
+still beside it (`fine` has a `default.png`, `rollsafe` a `default.jpg`) and the old order took the still.
+**The scene is not timed.** `hyperframes lint` refuses a `<video>` inside an element that also has `data-start` (its frame extractor
+and its visibility disagree about the offset). A scene that holds a video therefore has no `data-start`, `data-duration` or `clip` class,
+and keeps its times in `data-scene-start` and `data-scene-duration`, which `kit/kit.js` reads (`sceneSpan`); it already showed and hid
+every scene on the GSAP timeline, so nothing else changes. Other scenes keep `data-start`.
+**Measured (gif-test, 15.7 s, three clips, 2026-10-26).** Two renders of the build with no `slam` gave 470 identical frames (the render
+uses parallel workers that seek out of order); against the source clip, the picture matched the clip's time within one frame at three
+points in each of three clips, and a 1.6 s clip's frame at 2.0 s matched the source at 0.4 s (the loop). Render time was 15 s with three
+stills and 17 to 21 s with three clips (standard quality). A `slam` text entrance is not frame-identical across two renders (about
+270 pixels, in the text only; the kit's `tl.to` with a yoyo, not touched here).
+**Costs.** A first build of a clip needs the network, and ffmpeg and ffprobe (already required). A GIF's transparency is flattened, not
+kept. A clip is looped, never held on its last frame, and its own sound is dropped. The look is bound to the source's size: Imgflip
+clips are 266 to 960 px, soft at 800 px. The white caption band some clips carry (Dafoe's was 29%, found by measuring a frame, not guessed)
+is cut with `data-crop`. Clips are third-party and unlicensed: fetched, never committed, a published video relies on fair use and
+commentary norms, and that is the publisher's call (D42).
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
@@ -628,7 +662,7 @@ What an agent or person observes. Each line is checkable against the cited file.
   scene never says and warns when a bare cue word occurs more than once in its scene. A cue
   matches the start of a spoken word across the whole scene, so use `word#n` or a distinctive
   word.
-- `build` expands each `ss-meme` figure (D42): an unknown template, an unreachable source with nothing cached, or more spans than
+- `build` expands each `ss-meme` figure (D42, and D49 for a `data-clip` or an animated template, which becomes a video): an unknown template, an unreachable source with nothing cached, or more spans than
   the template has boxes stops it naming the scene; `review` lists each meme's template and source; `memes <words>` searches the catalog.
 - `voice` also levels every take and, with faster-whisper installed, hears each back (`bin/voice.mjs`,
   `bin/hearback.py`, `bin/voicecheck.py`; D44): it prints `LISTEN` for a sentence under 0.97 or kept with a fault, and
