@@ -25,6 +25,10 @@ SHIPSHOW_DRAMA_FORCE=1 starts anyway. Each take is checked before it is kept:
   - it is set to one speech level (bin/voicecheck.py level);
   - it is heard back with word times (bin/hearback.py, which ignores the [directions]) and the best of HEAR_TRIES is
     kept; bin/wordtime.py puts each sentence and written word on what was heard, in the `.check` file as `timing`.
+  A take still under `min` after HEAR_TRIES is kept, never refused: its score is in the `.check` file, and the voice step
+  and the review packet list it to listen to, as for OmniVoice (D44). Whisper misspelling a name is the usual cause (both
+  such takes of never-about-the-code's 52 were "Karpathy" and "56%" with every word said), so refusing would block on
+  false alarms.
 A take is never rejected for being loud: a direction can ask for that.
 """
 import json
