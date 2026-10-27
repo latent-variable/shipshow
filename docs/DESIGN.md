@@ -635,7 +635,7 @@ Levelling: samples over 0.4 on the same 14 sentences 16.9% at worst before, 1.0%
 ceiling; run takes sit within 1.4 dB of each other (-23.2 to -24.6 dBFS), while single short sentences under the new rule can end up
 10 dB under their neighbours ("Sound familiar?" -33 dBFS) because their peak is the limit. **Costs and not verified.** A run is
 re-voiced whole for one edited word; hear-back is now timing, so a machine without it falls back to the sentence path and a
-different sound. **A hissy reference is cleaned.** The clone copies the room of its clip: the owner's (background -39 dBFS) gave takes with no
+different sound. **A hissy reference is cleaned (reversed by D53: it made the voice hollow).** The clone copies the room of its clip: the owner's (background -39 dBFS) gave takes with no
 silence after the opening burst, so every run was "starts at once" and the fallback cut 30 ms into its first syllable, heard as
 choppy. `bin/omnivoice.py` `quiet()` measures a reference's background (10th percentile of its 50 ms levels) and, above -52 dBFS,
 runs it through a 70 Hz high-pass and two mild `afftdn` passes (background about -57, speech level unchanged) before cloning: 0 of 5
@@ -751,6 +751,21 @@ compresses, the sound the owner rejected. **Measured (that render).** -19.0 to -
 limiter acted on 0.055% of samples (3.4% of 50 ms windows), against 4% on average and 13% at worst of every take under the old
 tanh levelling. **Costs.** A second AAC encode of the audio (192 kb/s); a video with music much louder than its voice is still
 mastered by its whole mix.
+
+### D53. A clone's reference is used as recorded; a take's silence is read against its own background (2026-10-27; reverses D47's cleaning)
+**Decision.** `quiet()` in `bin/omnivoice.py` cuts and resamples a reference and does nothing else. `voicecheck.clean` finds the
+silence after the decoder's opening burst with `quiet_level`: SILENT (-45 dBFS), or 6 dB over the take's own background (its 10th
+percentile 10 ms window) when that is louder, never closer than 8 dB to the take's median window. `voicecheck.py` VERSION 3 and
+`REF_PREP` 2 voice every OmniVoice take again once. **Why.** D47 denoised a reference whose background was over -52 dBFS (two afftdn
+passes) because the owner's clip, hiss at about -39, gave takes that all read as "starts at once" and were trimmed into their first
+syllable. The owner listened to the result: his voice "doesn't sound clear at all ... like I'm talking through a paper towel roll",
+and the original recording "sounds way cleaner" than the cleaned one. The measurement had chased the wrong cause: the takes did have
+a pause after the burst, but it carried the clip's hiss and never fell under the fixed -45 dBFS, so the check could not see it, and
+`trim()` then cut 30 ms of good audio. **Measured (2026-10-27, scenes 01 to 04 of never-about-the-code, the uncleaned clip, fresh
+takes).** Fixed threshold: 6 of 6 runs flagged and trimmed. Background-relative, capped 12 dB under the median: 3 of 6. Capped 8 dB
+under: 0 of 6, every run heard back at 97% or more. 0.35 s of extra start room (product-videos' LEAD) made no difference to the flags
+and slowed the read, so it was not kept. **Lesson.** A change to how the voice sounds is judged by ear before it ships; D47's
+numbers improved while the voice got worse, and nobody listened until the video was done.
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
