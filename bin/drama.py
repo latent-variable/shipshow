@@ -6,7 +6,7 @@ jobs.json, written by bin/voice.mjs:
   {"speed": 1.15, "voice": {"name": "caro_davy"} | {"name": "lino", "wav": "...", "text": "..."},
    "model": {"repo": "...", "revision": "..."} | {"path": "<a folder holding the model>"},
    "cache": "<dir>", "hearback": true, "min": 0.97,
-   "jobs": [{"text": "<the line with its [directions]>", "plain": "<the line without them>", "wav": "...",
+   "jobs": [{"text": "<the line with its [directions]>", "plain": "<the line without them>", "written": "<as the script writes it>", "wav": "...",
              "key": "...", "seed": 1, "parts": [[{"w": "...", "say": "..."}]]}]}
 
 Drama 3 is the directed engine (DESIGN D55): a script line carries stage directions in brackets where they land,
@@ -24,7 +24,8 @@ SHIPSHOW_DRAMA_FORCE=1 starts anyway. Each take is checked before it is kept:
     ShipShow's base pace;
   - it is set to one speech level (bin/voicecheck.py level);
   - it is heard back with word times (bin/hearback.py, which ignores the [directions]) and the best of HEAR_TRIES is
-    kept; bin/wordtime.py puts each sentence and written word on what was heard, in the `.check` file as `timing`.
+    kept: one missing a whole sentence, or spelling out letters the script never spells (hearback.spelled_out: the
+    respelling "en" read as "E N"), is made again; bin/wordtime.py puts each sentence and written word on what was heard, in the `.check` file as `timing`.
   A take still under `min` after HEAR_TRIES is kept, never refused: its score is in the `.check` file, and the voice step
   and the review packet list it to listen to, as for OmniVoice (D44). Whisper misspelling a name is the usual cause (both
   such takes of never-about-the-code's 52 were "Karpathy" and "56%" with every word said), so refusing would block on
@@ -224,21 +225,22 @@ def main(spec_path):
         for round_ in range(HEAR_TRIES if hear_on else 1):
             audio, sr, fault = one_take(model, job, round_, ref)
             final = voicecheck.level(stretch(audio, sr, spec["speed"]), sr)
-            words, got, heard, gone = [], None, "", []
+            words, got, heard, gone, spelled = [], None, "", [], []
             if hear_on:
                 heard, words = hearback.hear_words(hearback.samples_from(final, sr))
                 got = hearback.agreement(job["plain"], heard)
                 gone = hearback.vanished(job["plain"], heard)   # a dropped punchline barely moves the letter score
-            ok = (got is None or got >= floor) and not gone and fault is None
-            rank = (ok, -len(gone), fault is None, got or 0.0)
+                spelled = hearback.spelled_out(job.get("written", job["plain"]), job["plain"], heard)   # "n" said "E N"
+            ok = (got is None or got >= floor) and not gone and not spelled and fault is None
+            rank = (ok, -len(gone), -len(spelled), fault is None, got or 0.0)
             if best is None or rank > best[0]:
-                best = (rank, final, sr, got, heard, words, gone, fault)
+                best = (rank, final, sr, got, heard, words, gone, spelled, fault)
             if ok:
                 break
-        _, final, sr, got, heard, words, gone, fault = best
+        _, final, sr, got, heard, words, gone, spelled, fault = best
         sf.write(job["wav"], final, sr, subtype="PCM_16")
         timing = wordtime.align(job["parts"], words, len(final) / sr) if run and hear_on else None
-        hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [f'not heard: "{s}"' for s in gone] + ([fault] if fault else []), timing)
+        hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [f'not heard: "{s}"' for s in gone] + [f'spelled out: heard the letters "{g}"' for g in spelled] + ([fault] if fault else []), timing)
         if job.get("keyFile"):
             Path(job["keyFile"]).write_text(job["key"])   # kept: a run stopped after this keeps this take
         print(f"voiced {i}/{len(spec['jobs'])}" + (f" ({got:.0%} heard back)" if got is not None else "")

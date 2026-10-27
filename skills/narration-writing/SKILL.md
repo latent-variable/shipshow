@@ -97,6 +97,9 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   is saved for the point the video exists to make.
 - **Names as they are spelled.** Drama 3 knows most names; a `say` respelling with a hyphen is read as two words
   ("Dike-stra" came out "Di... kistra", D55). Respell only a name it gets wrong, as one word ("Dykstra"), and voice it to check.
+- **Never respell a letter.** A variable is written as itself, "two to the n", and Drama 3 says the letter. The respelling
+  `"n": "en"` was read as the letters E, N on nearly every line of eth-is-false, and the owner heard it (2026-10-27, D60);
+  hear-back now retakes a take that spells out letters the script never spells.
 - **A line is still one thought.** Splitting at every sentence, or at every turn of tone, breaks the prosody the owner
   asked for; a line runs as long as the thought, up to about 45 words.
 
@@ -114,6 +117,8 @@ keep the written form in captions:
 "say": { "HyperFrames": "Hyper Frames", "MP4": "M P 4", "npm": "N P M" }
 ```
 
-Agents cannot hear the voice and there is no speech recognition here (`AGENTS.md`). Give every
-acronym, product name and odd identifier a spoken form up front; when a person reports a word
-said wrongly, add it to `"say"`.
+Agents cannot hear the voice. Hear-back (faster-whisper on each take) and the second listen (Parakeet on the
+finished track, `npm run setup:listen`) catch a dropped sentence and letters spelled out that should not be, but
+not a word said wrongly that a model mends from context. Give every acronym, product name and odd identifier a
+spoken form up front, and read the LISTEN lines the voice step prints; when a person reports a word said wrongly,
+fix it in `"say"`, and a respelling that makes it worse (as "en" for n did) comes out again.

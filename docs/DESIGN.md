@@ -867,6 +867,25 @@ owner's canon gives every video a look of its own; lofi is the opinion channel's
 is token-only, built on the layers D50 added, so no kit code changed. **Costs.** One more theme folder (about 270 KB of fonts,
 duplicated from lofi so each theme stays self-contained).
 
+### D60. Letters spelled out are a fault, and a second model listens to the finished track (2026-10-27)
+**Decision.** `bin/hearback.py` `spelled_out` finds groups of capital letters in what Whisper heard ("EN", "E N", "E.N.")
+that are not an acronym of the script line as written or as told to the voice; Drama 3 retakes such a take like one missing
+a sentence (`DRAMA_RULES` 5), keeps the best of five, and lists any still faulty; Kokoro's check flags it. `bin/listen.py`
+then has NVIDIA's Parakeet (parakeet-tdt-0.6b-v3, pinned, on MLX through parakeet-mlx, in `.venv-listen`) hear each scene of
+the finished `narration.wav` and compares it with the script as written: letter score, missing sentences, spelled letters.
+It flags and never re-voices; the packet shows it, and marks it stale when the narration's hash changes. **Why.** The owner
+heard eth-is-false say "two to the E N" on almost every line: `say` mapped n to "en" and Drama 3 read the respelling as letters.
+Hear-back passed every take, because it scored against the respelling and lowercased Whisper's "EN" into "en". Both models had
+heard it (Whisper "EN", Parakeet "E N" and "Ean", measured on the published cut), so the fault was what we compared against,
+not the ear: comparing with the written word, and reading Whisper's capitals as a signal, catches it. The owner asked for a
+Parakeet pass; it is a transducer, not a decoder with a language model, so it mends less from context and fails differently,
+which is what a second listen is for (it heard "Ed TEH" where an ETH sounded wrong). **Costs.** One more optional venv (about
+200 MB) and model (about 2.5 GB); about a minute for a ten-minute track. A capital A or I alone is read as a word, so "A I"
+spelled out where the script does not spell it is missed. **Tested** by unit tests on Whisper's and Parakeet's real
+transcripts of the published cut, a Drama 3 run with a fake model and fake hearing (retaken until clean; kept with the fault
+when every round spells), a control with the retake rule removed (the test fails), and an end-to-end voice and listen on a
+throwaway Kokoro video.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

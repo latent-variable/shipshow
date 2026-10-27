@@ -10,6 +10,7 @@
 //   assets/voice/<scene>-r<n>.wav  or, for a run of sentences, one take per run (OmniVoice with hear-back)
 //   assets/narration.wav           every take on one track, with the pauses from video.json
 //   assets/voice/<scene>-<n>.check what the take was judged by: hear-back score, faults (see below)
+//   assets/listen.json             the second listen: Parakeet on the finished track, scene by scene (bin/listen.py)
 //   timing.json                    when each scene and each sentence starts and how long it is, and
 //                                  "voiceCheck": the sentences to listen to (bin/review.mjs prints them)
 // Voicing each sentence on its own makes its start exact without speech recognition: a sentence starts
@@ -27,7 +28,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { DRAMA, DRAMA_PY, REPO, HF, VENV_PY, breathe, config, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
+import { DRAMA, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, breathe, config, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
@@ -46,7 +47,7 @@ const noHear = process.argv.includes("--no-hearback");
 const hear = !noHear && hearbackAvailable(py);
 const RUNS = (omni && hear) || drama;   // OmniVoice voices runs of sentences when it can hear them back (D47); Drama 3 always does (D55)
 // The rules bin/drama.py makes, retakes and finishes a take by. Bump it when they change, so takes are voiced again.
-const DRAMA_RULES = 4;   // bin/drama.py's rules: 2 reads a stall against the voice (GAP_BELOW_VOICE), 3 trims edges by it, 4 retakes a take missing a whole sentence (2026-10-27)
+const DRAMA_RULES = 5;   // bin/drama.py's rules: 2 reads a stall against the voice (GAP_BELOW_VOICE), 3 trims edges by it, 4 retakes a take missing a whole sentence, 5 one that spells out letters (2026-10-27)
 // A run takes its speed from a shorter window, as DAIS product-videos does, not from atempo: measured 2026-10-26
 // at speed 1.2 on 5 runs three times each, both heard back at 0.998 and none under 0.988 (DESIGN D47).
 // Measured only up to 1.2; above it (the 1.25 default, up to 1.3) a run is generated at its natural length and
@@ -88,7 +89,7 @@ const plan = scenes(dir).map((s) => {
       const lvl = wav.replace(/\.wav$/, ".lvl");
       const older = !omni && existsSync(lvl) && /^v\d+:/.test(readFileSync(lvl, "utf8")) && !readFileSync(lvl, "utf8").startsWith(`v${CHECK_VERSION}:`);
       const fresh = existsSync(wav) && existsSync(keyFile) && readFileSync(keyFile, "utf8") === key && !older;
-      if (!fresh) jobs.push({ say, told, wav, key, keyFile, parts: RUNS ? idx.map((i) => spokenWords(texts[i], cfg.say)) : undefined });
+      if (!fresh) jobs.push({ text, say, told, wav, key, keyFile, parts: RUNS ? idx.map((i) => spokenWords(texts[i], cfg.say)) : undefined });
       return { idx, texts: idx.map((i) => texts[i]), text, say, wav, key };
     }),
   };
@@ -114,7 +115,7 @@ async function voiceAllOmni() {
     hearback: hear,
     min: HEARBACK_MIN,
     pace: RUNS ? PACE : "stretch",
-    jobs: jobs.map((j) => ({ text: j.say, wav: j.wav, key: j.key, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
+    jobs: jobs.map((j) => ({ text: j.say, written: j.text, wav: j.wav, key: j.key, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
   }));
   try {
     await run(py, [join(REPO, "bin", "omnivoice.py"), spec]);
@@ -136,7 +137,7 @@ async function voiceAllDrama() {
     hearback: hear,
     min: HEARBACK_MIN,
     // keyFile: the worker writes each take's key as soon as the take is kept, so a long run stopped halfway keeps what it made
-    jobs: jobs.map((j) => ({ text: j.told, plain: j.say, wav: j.wav, key: j.key, keyFile: j.keyFile, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
+    jobs: jobs.map((j) => ({ text: j.told, plain: j.say, written: j.text, wav: j.wav, key: j.key, keyFile: j.keyFile, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
   }));
   try {
     await run(py, [join(REPO, "bin", "drama.py"), spec]);
@@ -188,10 +189,11 @@ if (!omni && !drama && pythonExists(py)) {
   }
 }
 if (hear) {
-  const todo = takes.filter((t) => readCheck(t.wav, t.key)?.score == null);
+  // a take heard before letters spelled out were looked for is read again from what was heard (no new hearing)
+  const todo = takes.filter((t) => { const c = readCheck(t.wav, t.key); return c?.score == null || !c.spelledChecked; });
   if (todo.length) {
-    console.log(`hearing ${todo.length} take(s) back with faster-whisper`);
-    const r = pyRun("hearback", todo.map((t) => ({ text: t.say, wav: t.wav, key: t.key })));
+    console.log(`checking ${todo.length} take(s) with faster-whisper`);
+    const r = pyRun("hearback", todo.map((t) => ({ text: t.say, written: t.text, wav: t.wav, key: t.key })));
     if (r.status !== 0) console.warn(`hear-back failed (${(r.stderr || r.stdout).trim().split("\n").pop()}); takes are not checked`);
   }
 }
@@ -282,3 +284,13 @@ for (const f of voiceCheck.flagged) console.log(`  LISTEN ${f.scene} sentence ${
 for (const f of voiceCheck.faults) console.log(`  LISTEN ${f.scene} sentence ${f.sentence}: ${f.faults.join("; ")}`);
 const n = timing.scenes.reduce((a, s) => a + s.sentences.length, 0);
 console.log(`${timing.scenes.length} scenes, ${n} sentences, ${timing.total} s -> assets/narration.wav, timing.json`);
+
+// A second listen over the finished track, by another model (Parakeet), against the script as written (bin/listen.py).
+// Optional (npm run setup:listen); --no-listen skips it. It flags, never re-voices.
+if (!process.argv.includes("--no-listen")) {
+  const listenPy = process.env.SHIPSHOW_LISTEN_PYTHON || LISTEN_PY;
+  if (pythonExists(listenPy)) {
+    const r = spawnSync(listenPy, [join(REPO, "bin", "listen.py"), dir], { stdio: "inherit" });
+    if (r.status !== 0) console.warn("second listen failed; the narration is written, but nobody listened to it again");
+  } else console.log("no second listen (npm run setup:listen lets Parakeet hear the finished narration against the script, Apple Silicon)");
+}

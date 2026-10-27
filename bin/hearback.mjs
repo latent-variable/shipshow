@@ -49,3 +49,17 @@ export function voiceCheckSection(vc) {
   if (!vc.flagged.length && !vc.faults.length) out.push("Nothing flagged.", "");
   return out;
 }
+
+/** The review packet's "Second listen" section: Parakeet's hearing of the finished narration (bin/listen.py, assets/listen.json),
+ *  or why there is none. `current` is false when the narration changed after it was heard. */
+export function listenSection(listen, current) {
+  const out = ["## Second listen", ""];
+  if (!listen) return [...out, "None: a second model has not heard the finished narration (npm run setup:listen, then npm run voice; Apple Silicon).", ""];
+  if (!current) return [...out, "Stale: the narration changed after the last second listen. Run npm run voice again (it listens at the end).", ""];
+  out.push(`Parakeet (${listen.model}) heard each scene of the finished track, compared with the script as written: under ${Math.round(listen.min * 100)}% of its letters, a sentence not heard, or letters spelled out that the script never spells are flagged. A different model from hear-back's, so it fails differently; listen to each flagged scene.`, "");
+  const flagged = listen.scenes.filter((r) => r.flag);
+  if (!flagged.length) return [...out, `Nothing flagged in ${listen.scenes.length} scenes.`, ""];
+  out.push("| scene | heard | not heard | spelled out | what Parakeet heard |", "|---|---|---|---|---|");
+  for (const r of flagged) out.push(`| ${r.scene} | ${Math.round(r.score * 100)}% | ${r.missing.join(" / ") || ""} | ${r.spelled.join(", ")} | ${r.heard.replace(/\|/g, "/").replace(/\n/g, " ")} |`);
+  return [...out, ""];
+}
