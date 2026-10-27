@@ -40,6 +40,8 @@ export const cacheDir = () => process.env.SHIPSHOW_MEMES_CACHE || join(homedir()
 const isUrl = (s) => /^https?:\/\//.test(s);
 
 /** Bytes from a URL or a local path; null when it is not there. A network failure is an Error. */
+export const MAX_BYTES = 25e6;   // largest meme picture or clip fetched (Imgflip clips are 40-860 KB)
+
 async function get(location) {
   if (!isUrl(location)) return existsSync(location) ? readFileSync(location) : null;
   let res;
@@ -50,7 +52,16 @@ async function get(location) {
   }
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`${location} answered ${res.status}`);
-  return Buffer.from(await res.arrayBuffer());
+  // A meme is a few hundred KB; stop reading past MAX_BYTES rather than buffer whatever a URL sends.
+  if (+res.headers.get("content-length") > MAX_BYTES) throw new Error(`${location} is ${res.headers.get("content-length")} bytes, over the ${MAX_BYTES / 1e6} MB a meme may be`);
+  const parts = [];
+  let size = 0;
+  for await (const chunk of res.body) {
+    size += chunk.length;
+    if (size > MAX_BYTES) throw new Error(`${location} sent more than the ${MAX_BYTES / 1e6} MB a meme may be`);
+    parts.push(chunk);
+  }
+  return Buffer.concat(parts);
 }
 
 /** A memegen config.yml, the parts ShipShow uses: name, source, and the text boxes in order.

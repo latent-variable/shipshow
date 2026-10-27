@@ -296,9 +296,11 @@ test("a clip is fetched from a URL once into the cache, and an unreachable or wr
   }
 });
 
-test("a URL that answers 404 or is not a clip, and a file that is not there, stop the build naming the scene", async () => {
+test("a URL that answers 404, is not a clip or is too big, and a file that is not there, stop the build naming the scene", async () => {
   const server = createServer((req, res) => {
     if (req.url === "/page") res.end("<html>not a clip</html>");
+    else if (req.url === "/huge.mp4") { res.setHeader("content-length", String(30e6)); res.end(); }
+    else if (req.url === "/endless.mp4") { const chunk = Buffer.alloc(1e6); let n = 0; const go = () => { while (n++ < 40) if (!res.write(chunk)) return res.once("drain", go); res.end(); }; res.on("error", () => {}); go(); }
     else { res.statusCode = 404; res.end(); }
   });
   await new Promise((ok) => server.listen(0, "127.0.0.1", ok));
@@ -310,6 +312,10 @@ test("a URL that answers 404 or is not a clip, and a file that is not there, sto
     assert.match(miss.stderr, /scene 01-intro: data-clip=".*nope.mp4": no clip at .* \(404\)/);
     const html = await abuild(demo(`<figure class="ss-meme" data-clip="${base}/page"><span>x</span></figure>`));
     assert.match(html.stderr, /scene 01-intro: data-clip=".*\/page": .* is not a GIF, MP4 or WebM clip/);
+    const huge = await abuild(demo(`<figure class="ss-meme" data-clip="${base}/huge.mp4"><span>x</span></figure>`));
+    assert.match(huge.stderr, /huge\.mp4 is 30000000 bytes, over the 25 MB a meme may be/);
+    const endless = await abuild(demo(`<figure class="ss-meme" data-clip="${base}/endless.mp4"><span>x</span></figure>`));
+    assert.match(endless.stderr, /endless\.mp4 sent more than the 25 MB a meme may be/);
     const file = build(demo(`<figure class="ss-meme" data-clip="clips/none.mp4"><span>x</span></figure>`), env());
     assert.equal(file.status, 1);
     assert.match(file.stderr, /scene 01-intro: data-clip="clips\/none.mp4": no clip file /);
