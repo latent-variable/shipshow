@@ -223,7 +223,7 @@ lists them all. Fonts and images sit beside it and are copied to `assets/theme/`
 `video.json`, then `local/config.json`, then `shipshow`. `kit/base.css` draws the canvas,
 captions and the `ss-` pieces from the tokens; a scene's own styles should use the tokens
 too, or a theme cannot restyle it. Tokens a theme may add, each unset (so other themes are unchanged) unless it opts in:
-`--sky` (the canvas's background, e.g. a gradient; `--bg` when unset), `--cap-border` and `--cap-shadow`, `--code-shadow`,
+`--sky` (the canvas's background, e.g. a gradient; `--bg` when unset), `--cap-border`, `--cap-shadow` and `--cap-wait` (karaoke's waiting words, 0.38), `--code-shadow`,
 `--meme-border`, `--meme-shadow` and `--photo-filter` (a CSS filter on meme pictures, to make pictures from anywhere look
 like one set), and `--frame`, `--frame-width`, `--portrait-frame-width`, `--portrait-radius`, `--portrait-shadow` and `--photo-filter` for framed photos (portraits and memes read them, falling back to the card border, shadow and no filter). `lofi` sets
 them all: a late-night study room (dusk sky, a city skyline, lamp amber, Fraunces, Nunito and IBM Plex Mono).
