@@ -93,7 +93,7 @@ test("build accepts public domain and CC BY-SA, copies the picture, and draws th
   assert.deepEqual(portraitsIn(html).map((p) => [p.author, p.licence, p.licenceUrl, p.page]), [
     ["James S. Davis", "public domain", "", "https://commons.wikimedia.org/wiki/File:Free_PD.png"],
     ["Hamilton Richards & Co", "CC BY-SA 3.0", "http://creativecommons.org/licenses/by-sa/3.0/", "https://commons.wikimedia.org/wiki/File:Free_BYSA.png"],
-  ]);
+  ]);  assert.deepEqual(portraitsIn(html).map((p) => p.name), ["Grace Hopper", "Edsger Dijkstra"], "the caption's name, without its small print, for the credit line");
 });
 
 test("the credit strips tags and entities from the artist, and a public-domain file with no artist credits Commons", () => {

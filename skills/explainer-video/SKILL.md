@@ -226,8 +226,13 @@ critic*).
 ## 6. Land it
 
 `npm run render -- <folder>` for the final MP4. For a video in `videos/`, commit
-`sources.md`, `script/`, `scenes.html`, `video.json`, `critics.md` and `REVIEW.md`; never
+`sources.md`, `script/`, `scenes.html`, `video.json`, `critics.md`, `REVIEW.md` and `thumbnail.html`; never
 audio, frames or renders. A video in `local/videos/` is never committed.
+
+**Publish** (a video going on YouTube): `video.json` `"youtube"` (title, description in the author's voice, chapters by scene,
+sources, credits, tags, Studio's answers) and a 1280 by 720 `thumbnail.html`, then `npm run package -- <folder> [--to <dir>]`.
+A thumbnail is one face or picture and three to five big words that complement the title; nothing on it may misdate a photo or
+put words in a real person's mouth. A fresh critic judges the package before the owner uploads it.
 
 ## Updating one
 

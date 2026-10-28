@@ -613,3 +613,17 @@ essay in someone's own voice the way they talk to camera; his voice profile has 
 - "We're underselling ShipShow ... it's the whole suite of skills, plugins that help the AI models build the entire video
   end-to-end." The bug story now opens "Here's a bug from ShipShow. That's my toolkit of skills and plugins that lets AI build
   this whole video, end to end." (heard back at 100%). `narration-writing`: describe the owner's own work at its full size.
+
+## Packaged for YouTube (2026-10-27)
+
+The owner: good enough to ship; he wants the upload folder the product videos get. `npm run package` (new, D66) wrote it to
+`~/Movies/Explainers/shipshow/youtube/to-upload/never-about-the-code/`: the render, `thumbnail.html` set at 1280 by 720, and the
+title, description with 11 chapters, sources, credits, tags and Studio's answers from `video.json` `"youtube"`.
+
+One fresh critic (Opus) on the package: fix first, three blocking. The red quote beside Hopper's face read as said to her (no
+source has it); "Hopper's compiler 1952" dated a 1980s photo (she is a Commodore in it); "the same way" overstated the sources.
+Fixed: she is labelled by name only, the quote line became "Now it's AI's turn" (which also puts AI in the thumbnail), "pushed
+back on compilers too". Major: the title repeated the thumbnail and never said AI, so it is "It Was Never About the Code: Why AI
+Coding Gets Roasted"; a false alternative title struck. Minor, taken: the cadence line folded, Hopper's source credited to its
+author, the vibe-coding post and the Copilot page added to the sources, every meme named, and photo credits now read "John Backus:
+photo by ..." (ShipShow `creditLines` uses the caption's name, for every video).

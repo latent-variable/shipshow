@@ -75,7 +75,7 @@ export function sourceLabel(url) {
   return (u.host.replace(/^www\./, "") + u.pathname.replace(/\/$/, "")).slice(0, 90);
 }
 
-function chromePath() {
+export function chromePath() {
   if (process.env.SHIPSHOW_CHROME) return process.env.SHIPSHOW_CHROME;
   try {
     return execFileSync(join(REPO, "node_modules", ".bin", "hyperframes"), ["browser", "path"], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim().split("\n").pop();
