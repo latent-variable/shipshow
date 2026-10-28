@@ -171,7 +171,7 @@ export function portraitsIn(html) {
   return [...html.matchAll(/<figure[^>]*data-commons="([^"]*)"[^>]*data-portrait-file="([^"]*)" data-portrait-author="([^"]*)" data-portrait-licence="([^"]*)" data-portrait-licence-url="([^"]*)"[^>]*>([\s\S]*?)<\/figure>/g)].map((m) => ({
     file: un(m[1]), page: un(m[2]), author: un(m[3]), licence: un(m[4]), licenceUrl: un(m[5]),
     credit: un((m[6].match(/class="ss-portrait-credit">([\s\S]*?)<\/span>/) || [, ""])[1]),
-    name: un(((m[6].match(/<figcaption[^>]*>([\s\S]*?)(?:<small|<\/figcaption>)/) || [, ""])[1]).replace(/<[^>]+>/g, "").trim()),
+    name: stripHtml((m[6].match(/<figcaption[^>]*>([\s\S]*?)(?:<small|<\/figcaption>)/) || [, ""])[1]).trim(),
   }));
 }
 
