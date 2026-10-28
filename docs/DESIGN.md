@@ -158,8 +158,8 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 **Facts from the docs that shaped it.** Only `name` is required, in kebab-case, and may not start
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
-every turn (measured: 22 skills, 7,957 characters, about 1,989 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 241). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+every turn (measured: 23 skills, 8,350 characters, about 2,088 tokens), so descriptions stay short
+and SKILL.md under 500 lines (longest 238). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -997,6 +997,8 @@ the timing. It copies; it never moves or deletes. **Why.** The owner, ready to p
 same thing that we do for the product videos: a dedicated thumbnail and a dedicated title, descriptions, all the other stuff",
 and that every lesson feed back into ShipShow so the next video starts from it. **Costs.** The description is written by the
 builder in the owner's voice and judged by a fresh critic, not generated; a thumbnail is a page the builder designs per video.
+The bar for each (and the owner's call on "altered or synthetic content": his own clone saying his own words, disclosed in the
+video, he marks No) is the `publish` skill, so the next video starts from what the first one learned.
 
 ### D67. An invented voice keeps its style in every direction (2026-10-27)
 **Decision.** A clone in `local/voices/` may have `<name>.style`, the description it was invented from; Drama 3 is told it at
