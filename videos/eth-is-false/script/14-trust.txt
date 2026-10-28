@@ -1,6 +1,6 @@
 [serious, measured] So, should you believe it? OpenAI says it formalized the proof in Lean, a language where a computer checks every step.
 
-[clear, explaining carefully] The statement it has to match: for each rule size, a machine counts the satisfying settings exactly, and beats c to the n for every base above one. A bit weaker than the paper's best bound, but enough to sink ETH.
+[clear, explaining carefully] What Lean checks is a little weaker than the paper's best bound. For every rule size, a machine counts the satisfying settings exactly. And it beats every base above one, raised to the n. That's still enough to sink ETH.
 
 [matter-of-fact, careful] But OpenAI pulled three of its other AI math papers on October seventh, after a sign error was found. So far, that's OpenAI's word. The team lined up to check it hasn't reported yet.
 

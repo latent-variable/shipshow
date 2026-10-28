@@ -36,7 +36,7 @@
   .namecard small { font-size: 28px; color: var(--muted); margin-top: 12px; line-height: 1.25; }
   .phase { position: absolute; inset: 0; }
   /* A new act opens on its own card while its music and look arrive alone (video.json leads). */
-  .chapter { position: absolute; inset: 0; z-index: 5; background: var(--sky, var(--bg)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center; }
+  .chapter { position: absolute; inset: 0; z-index: 5; background: var(--sky, var(--bg)); -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%); mask-image: linear-gradient(to bottom, #000 72%, transparent 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center; }
   .chapter .kicker { font-family: var(--font-mono); font-size: 40px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); }
   .chapter .title { font-family: var(--font-display); font-size: 150px; line-height: 1; color: var(--accent); }
   .chapter .rule { width: 520px; height: 6px; border-radius: 3px; background: var(--accent-3); transform-origin: center; }
@@ -572,10 +572,10 @@
       <svg class="floorplot" viewBox="0 0 820 440" width="820" height="440">
         <line class="ax" x1="60" y1="380" x2="800" y2="380"/><line class="ax" x1="60" y1="20" x2="60" y2="380"/>
         <text x="790" y="420" text-anchor="end">n →</text><text x="74" y="44">exponent</text><text x="74" y="126" style="fill: var(--accent-3)" data-cue="record," data-anim="fade">1.307ⁿ = 2^(0.39 n)</text>
-        <g data-cue="fraction" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="70" text-anchor="end" style="fill: var(--accent-3)">ETH's floor: a fixed fraction × n</text></g>
-        <g data-cue="smaller" data-anim="fade"><path class="lin" d="M60 380 L800 200"/><text class="lbl" x="790" y="180" text-anchor="end" style="fill: var(--accent-3); font-size: 26px">a smaller fraction</text></g>
+        <g data-cue="slice" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="70" text-anchor="end" style="fill: var(--accent-3)">ETH's floor: a fixed slice of n</text></g>
+        <g data-cue="Pick" data-anim="fade"><path class="lin" d="M60 380 L800 200"/><text class="lbl" x="790" y="180" text-anchor="end" style="fill: var(--accent-3); font-size: 26px">any smaller slice</text></g>
         <path class="cur" d="M60 380 C 150 250, 400 232, 800 218" data-cue="shrinking." data-anim="draw"/><text class="lbl" x="790" y="262" text-anchor="end" style="fill: var(--accent)" data-cue="shrinking." data-anim="fade">n / √log n</text>
-        <circle cx="433" cy="239" r="12" style="fill: var(--bad)" data-cue="quarter." data-anim="pop"/><circle cx="714" cy="221" r="12" style="fill: var(--bad)" data-cue="too." data-anim="pop"/>
+        <circle cx="433" cy="239" r="12" style="fill: var(--bad)" data-cue="quarter" data-anim="pop"/><circle cx="714" cy="221" r="12" style="fill: var(--bad)" data-cue="falls" data-anim="pop"/>
         <text x="420" y="420" text-anchor="middle">schematic</text>
       </svg>
     </div>
@@ -784,7 +784,7 @@
     <div class="stage">
       <div class="wil">
         <figure class="ss-portrait" data-commons="File:Ryan Williams at Dagstuhl 10441.jpg" data-cue="Williams" data-anim="up"><figcaption>Ryan Williams<small>MIT</small></figcaption></figure>
-        <div class="card" data-cue="circuits" data-anim="up">if ETH is false: some problems have no linear-size circuits<div class="src">Williams, SICOMP 2013 · applied in the paper, Corollary C.1</div></div>
+        <div class="card" data-cue="circuit" data-anim="up">if ETH is false: some problems have no small circuit<div class="src">Williams, SICOMP 2013 · applied in the paper, Corollary C.1</div></div>
       </div>
       <div class="row"><div class="stamp yellow" data-cue="faster#2" data-anim="slam">fast algorithm ⇒ hardness, if it holds</div></div>
     </div>
@@ -809,7 +809,7 @@
         S * ((Encoding.formulaBitLength F : ℝ) + 1) ^ e := by</span></pre>
       <div class="trustrow">
         <div class="chip blue" data-cue="counts" data-anim="pop">the exact count, for each rule size</div>
-        <div class="chip blue" data-cue="beats" data-anim="pop">beats c<sup>n</sup> for every c &gt; 1</div>
+        <div class="chip blue" data-cue="beats" data-anim="pop">beats every base above one, to the n</div>
         <div class="chip" data-cue="weaker" data-anim="pop">a bit weaker than the paper's best</div>
       </div>
     </div>

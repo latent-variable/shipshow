@@ -41,7 +41,10 @@ looks fast by words and is not by ear. A faster video is what they asked for, no
   changes with no wordless title card and its new look and music given no time alone (the build warns under 1.2 s), or
   the narration announces its structure instead of letting pauses and pictures carry it. A video that sounds like speed
   reading has failed, however accurate (the owner on never-about-the-code and on eth-is-false, 2026-10-27).
-- **major:** a scene over 40 seconds. It almost always holds two ideas.
+- **major:** a scene over 40 seconds of speech (its act card's lead and its pauses not counted) that holds two ideas.
+  The clock is the proxy, the second idea is the finding: a scene that breathes runs longer, and one whose picture
+  turns at each step (phases, a chart that builds) and never sits still past about 10 s passes (eth-is-false's third cut,
+  2026-10-27: eight scenes ran 42 to 51 s once they breathed).
 - **minor:** sentence gaps that feel rushed (under 0.25 s) or a scene change with no breath
   (under 0.8 s between scenes).
 - **major:** sound effects crowding the voice: more than about 4 a minute, or sounds that cluster so the ear is pulled off the words (the build already refuses a run of one sound and a sound over a sentence's first word, so judge the rest in the *Sound effects* table). A sound whose level is within about 10 dB of the voice is heard rather than felt.
