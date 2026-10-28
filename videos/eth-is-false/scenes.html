@@ -80,11 +80,16 @@
   .heist em { font-style: normal; color: var(--accent); }
 
   /* 01-hook */
-  .preprint { width: 1400px; margin: 0 auto; padding: 46px 380px 56px 70px; background: #efeee6; color: #1b211e; border-radius: 6px; box-shadow: 0 30px 70px rgba(3, 8, 6, 0.6); transform: rotate(-1.2deg); position: relative; }
+  .preprint { width: 1400px; margin: 0 auto; padding: 46px 470px 56px 70px; background: #efeee6; color: #1b211e; border-radius: 6px; box-shadow: 0 30px 70px rgba(3, 8, 6, 0.6); transform: rotate(-1.2deg); position: relative; }
+  .prize { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 150px; pointer-events: none; }
+  .prize .stamp { font-size: 52px; background: rgba(24, 18, 12, 0.94); text-align: center; }
+  .prize .stamp small { display: block; font-size: 26px; letter-spacing: 0.04em; margin-top: 6px; opacity: 0.85; }
+  .checkers .ss-portrait { --portrait-height: 400px; }
+  .checkers .namecard { height: 400px !important; width: 360px !important; }
   .race .shave { font-family: var(--font-mono); font-size: 44px; font-weight: 700; fill: var(--accent-3); }
   .preprint .who { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.12em; color: #4b5a52; }
   .preprint .title { font-family: var(--font-display); font-weight: 600; font-size: 84px; line-height: 1.05; margin-top: 18px; }
-  .preprint .stamp { position: absolute; right: 40px; top: 50%; margin-top: -78px; font-size: 112px; color: #b3261e; border-color: #b3261e; background: rgba(239, 238, 230, 0.95); }
+  .preprint .stamp { position: absolute; right: 40px; top: 50%; margin-top: -78px; font-size: 100px; color: #b3261e; border-color: #b3261e; background: rgba(239, 238, 230, 0.95); }
   .facts { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 44px; }
   .facts .chip { font-size: 38px; }
   .floor-wrap { width: 1300px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; }
@@ -371,7 +376,7 @@
           <div class="rule card">A off <span class="or">or</span> B off</div>
         </div>
       </div>
-      <div class="row"><div class="stamp" data-cue="works." data-anim="slam" data-sfx="thump" data-sfx-offset="0.05">no answer</div></div>
+      <div class="row"><div class="stamp" data-cue="works." data-anim="slam" data-sfx="thump" data-sfx-offset="0.35">no answer</div></div>
     </div>
   </div>
   <div class="phase" id="p02bb">
@@ -425,7 +430,7 @@
         <div><div class="lab">said P ≠ NP</div><div class="src">Gasarch poll, SIGACT News,<br>2019 · 124 answers</div><div class="stamp yellow" style="font-size: 36px; margin-top: 14px" data-cue="proved" data-anim="slam">unproved</div></div>
       </div>
     </div>
-    <div class="row"><div class="stamp green" style="font-size: 48px" data-cue="dollars" data-anim="slam" data-sfx="ding" data-sfx-offset="0.3">$1,000,000 prize · still unclaimed</div><div class="src" style="align-self: center; margin: 0">Clay Mathematics Institute,<br>Millennium Prize Problems</div></div>
+    <div class="prize"><div class="stamp green" data-cue="dollars" data-anim="slam" data-sfx="ding" data-sfx-offset="0.3">$1,000,000 prize · still unclaimed<small>Clay Mathematics Institute · Millennium Prize Problems</small></div></div>
   </div>
 </section>
 
