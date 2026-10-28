@@ -17,6 +17,7 @@
 import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { MEME_FONTS_CSS, memeScene } from "./meme.mjs";
+import { footageScene } from "./footage.mjs";
 import { portraitScene } from "./portrait.mjs";
 import { shotScene } from "./shot.mjs";
 import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir } from "./lib.mjs";
@@ -146,10 +147,11 @@ const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<
   seen.add(id);
   // bin/shot.mjs: a screenshot of a real page; bin/portrait.mjs: a Commons photo and its credit; bin/meme.mjs: a meme figure's picture and text boxes; an animated one is a video that starts at its cue and runs to the scene's end
   const withMemes = await memeScene(await portraitScene(await shotScene(m[2], dir, id), dir, id), dir, id, { start: scene.start, end: round(scene.start + scene.duration - 0.01), at: (cue) => cueTime(scene, cue, `scene ${id}`) });
-  const body = withMemes.replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
+  const withFootage = footageScene(withMemes, dir, id, { start: scene.start, end: round(scene.start + scene.duration - 0.01), at: (cue) => cueTime(scene, cue, `scene ${id}`) });
+  const body = withFootage.replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
   // 10 ms short of the next scene: scenes share a track, and touching ends read as an overlap.
   const attrs = m[1].replace(/\s*class="([^"]*)"/, "");
-  // A scene with a meme video is not itself timed: HyperFrames cannot place a video inside a timed
+  // A scene with a video is not itself timed: HyperFrames cannot place a video inside a timed
   // element (its frame extractor and its visibility disagree), so the scene keeps its times in
   // data-scene-* for kit.js, which already shows and hides every scene on the GSAP timeline.
   const hasVideo = /<video[\s>]/.test(body);

@@ -103,6 +103,15 @@ body { background: var(--bg); overflow: hidden; }
 .ss-meme-box[data-font="thin"] .ss-meme-line { font-weight: 600; }
 .ss-meme-box[data-font="impact"] .ss-meme-line { font-family: Anton, sans-serif; font-weight: 400; }
 
+/* Footage: the app's recording in a framed window, with no meme treatment. */
+.ss-footage {
+  position: absolute; inset: 0; margin: auto; overflow: hidden;
+  width: var(--footage-width, 1344px); height: calc(var(--footage-width, 1344px) / var(--ar, 1.7778)); aspect-ratio: var(--ar, 1.7778);
+  border-radius: var(--footage-radius, var(--radius)); border: var(--footage-border, var(--border) solid var(--line));
+  box-shadow: var(--footage-shadow, var(--shadow));
+}
+.ss-footage-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
 /* Portraits (bin/portrait.mjs): a credited Wikimedia Commons photo in a themed frame, the name and a
    line under it. Sized by --portrait-height (the photo's height; theme, figure, or any width on the
    figure). The credit goes in the video's description (review/credits.txt, D57); --portrait-credit: block

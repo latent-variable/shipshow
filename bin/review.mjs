@@ -11,6 +11,7 @@ import { createHash } from "node:crypto";
 import { BASE_SPM, BASE_WPM, HF, REPO, config, die, localDir, reviewPlan, round, run, syllables, videoDir } from "./lib.mjs";
 import { memesIn, memesUsed } from "./meme.mjs";
 import { creditLines, portraitsIn } from "./portrait.mjs";
+import { footageIn } from "./footage.mjs";
 import { shotsIn } from "./shot.mjs";
 import { overlaps } from "./overlap.mjs";
 import { listenSection, voiceCheckSection } from "./hearback.mjs";
@@ -138,6 +139,11 @@ if (memes.length) {
   const used = memesUsed(), me = basename(dir);
   const others = (x) => [...(used.get(x.clip ?? x.id) || [])].filter((v) => v !== me).join(", ") || "";
   out.push(md(memes.map((x) => [`\`${x.id}\``, x.clip ? "animated" : "still", x.name, x.clip && x.clip !== x.source ? `${x.source} (clip: ${x.clip})` : x.source, x.lines.map((l) => l || "(blank)").join(" / "), others(x)]), ["template", "kind", "name", "source", "lines", "also in"]), "");
+}
+const footage = footageIn(html);
+if (footage.length) {
+  out.push("## Footage", "", "The video's own recordings play once at 1x. A hold keeps the final frame on screen until the scene ends.", "");
+  out.push(md(footage.map((x) => [x.scene, x.file, `${round(x.length)} s`, `${x.from} s`, `${x.start} s`, x.hold > 0 ? `yes, ${x.hold} s` : "no"]), ["scene", "file", "length", "from in file", "start in scene", "holds last frame"]), "");
 }
 const portraits = portraitsIn(html);
 if (portraits.length) {

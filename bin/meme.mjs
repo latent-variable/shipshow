@@ -264,6 +264,11 @@ export async function clipFile(src, videoDir) {
     }
     return file;
   }
+  return localClipFile(src, videoDir);
+}
+
+/** The local branch shared with footage; never fetches. */
+export function localClipFile(src, videoDir) {
   const file = isAbsolute(src) ? src : resolve(videoDir, src);
   if (!existsSync(file) || !statSync(file).isFile()) throw new Error(`no clip file ${file}`);
   if (!clipKind(readFileSync(file).subarray(0, 16))) throw new Error(`${file} is not a GIF, MP4 or WebM clip`);
@@ -272,22 +277,25 @@ export async function clipFile(src, videoDir) {
 
 /** Turn a GIF, MP4 or WebM into assets/memes/clips/<key>.mp4: cropped, 30 fps, no sound, looped to
  *  `window` seconds. The key names the source bytes and every parameter, so a changed clip, crop or window
- *  is a new file and an unchanged one is not encoded again. Returns {file, w, h}. */
-export function encodeClip(input, crop, window, videoDir) {
+ *  is a new file and an unchanged one is not encoded again. Footage uses `hold` and `from` instead:
+ *  play once from the offset and pad the final frame, in assets/footage/. Returns {file, w, h}. */
+export function encodeClip(input, crop, window, videoDir, { hold = false, from = 0 } = {}) {
   const bytes = readFileSync(input);
   const src = ffprobeSize(input);
   const rect = cropRect(crop, src.w, src.h);
   const k = Math.min(1, MAX_PX.w / rect.w, MAX_PX.h / rect.h);
   const out = k < 1 ? { w: Math.max(2, 2 * Math.round((rect.w * k) / 2)), h: Math.max(2, 2 * Math.round((rect.h * k) / 2)) } : { w: rect.w, h: rect.h };
   const length = Math.ceil(window * FPS) / FPS;   // whole frames
-  const key = createHash("sha256").update(`clip2|${FPS}|${rect.x},${rect.y},${rect.w},${rect.h}|${out.w}x${out.h}|${length}|`).update(bytes).digest("hex").slice(0, 16);
-  const rel = join("assets", "memes", "clips", `${key}.mp4`), file = join(videoDir, rel);
+  const key = createHash("sha256").update(`${hold ? `footage1|${from}` : "clip2"}|${FPS}|${rect.x},${rect.y},${rect.w},${rect.h}|${out.w}x${out.h}|${length}|`).update(bytes).digest("hex").slice(0, 16);
+  const folder = hold ? join("assets", "footage") : join("assets", "memes", "clips");
+  const rel = join(folder, `${key}.mp4`), file = join(videoDir, rel);
   if (existsSync(file) && statSync(file).size > 0) return { file: rel, ...out };
-  mkdirSync(join(videoDir, "assets", "memes", "clips"), { recursive: true });
-  const vf = [`fps=${FPS}`, `crop=${rect.w}:${rect.h}:${rect.x}:${rect.y}`, ...(k < 1 ? [`scale=${out.w}:${out.h}:flags=lanczos`] : []), "format=yuv420p"].join(",");
+  mkdirSync(join(videoDir, folder), { recursive: true });
+  const vf = [`fps=${FPS}`, `crop=${rect.w}:${rect.h}:${rect.x}:${rect.y}`, ...(k < 1 ? [`scale=${out.w}:${out.h}:flags=lanczos`] : []), "format=yuv420p", ...(hold ? [`tpad=stop_mode=clone:stop_duration=${length}`] : [])].join(",");
   const tmp = `${file}.part.mp4`;
-  const args = ["-v", "error", "-y", "-stream_loop", "-1", ...(clipKind(bytes.subarray(0, 16)) === "gif" ? ["-ignore_loop", "1"] : []), "-i", input,
-    "-t", String(length), "-an", "-vf", vf, "-c:v", "libx264", "-preset", "medium", "-crf", "14", "-r", String(FPS), "-g", String(FPS), "-keyint_min", String(FPS),   // a keyframe a second: HyperFrames seeks a clip with sparse ones badly
+  // Seek footage after decoding and padding: even an offset inside the final frame must hold it.
+  const args = ["-v", "error", "-y", ...(hold ? [] : ["-stream_loop", "-1"]), ...(clipKind(bytes.subarray(0, 16)) === "gif" ? ["-ignore_loop", "1"] : []), "-i", input,
+    ...(hold ? ["-ss", String(from)] : []), "-t", String(length), "-an", "-vf", vf, "-c:v", "libx264", "-preset", "medium", "-crf", "14", "-r", String(FPS), "-g", String(FPS), "-keyint_min", String(FPS),   // a keyframe a second: HyperFrames seeks a clip with sparse ones badly
      "-movflags", "+faststart", tmp];
   const r = spawnSync("ffmpeg", args, { encoding: "utf8" });
   if (r.error?.code === "ENOENT") throw new Error(FFMPEG_MISSING);
@@ -300,8 +308,8 @@ let videos = 0;
 /** The video element for a figure: it starts when the figure does (`start`, seconds on the video's timeline) and
  *  runs `window` seconds. The figure carries the entrance animation, never the video: the renderer owns a
  *  timed element's opacity. */
-function videoHtml(rel, start, window) {
-  return `<video class="clip ss-meme-img" id="meme-video-${++videos}" src="${rel.split("\\").join("/")}" data-start="${round(start)}" data-duration="${round(window)}" data-track-index="${40 + videos}" data-has-audio="false" muted playsinline preload="auto"></video>`;
+export function videoHtml(rel, start, window, kind = "meme") {
+  return `<video class="clip ss-${kind}-img" id="${kind}-video-${++videos}" src="${esc(rel.split("\\").join("/"))}" data-start="${round(start)}" data-duration="${round(window)}" data-track-index="${40 + videos}" data-has-audio="false" muted playsinline preload="auto"></video>`;
 }
 
 /** Where the two text bands of a clip meme sit, in a memegen config's own terms. */

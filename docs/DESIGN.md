@@ -1103,6 +1103,16 @@ Whether the default itself should rise is the owner's call: it is part of how ka
 **Tested** by `test/captions.test.mjs`: it builds the template on the signal theme, seeks Chrome to a moment a word is waiting, and
 reads 0.38 unset and 0.62 set; with the old fixed value it fails.
 
+### D77. Footage is the video's own recording, played once and held, never a meme (2026-10-28)
+
+**Decision.** `ss-footage` figures name a local MP4, WebM or GIF with `data-footage` (relative to the video's folder or absolute; URLs refused). They play at 1x from their cue, or the scene's start when uncued. `data-from` selects an offset into the recording; an offset outside the recording fails with the scene and file named. A recording shorter than its remaining scene window holds its last frame with ffmpeg `tpad=stop_mode=clone`, without a warning or a restart.
+
+**Why.** A product video built on ShipShow needs its app's footage. A moving meme loops to cover its scene, carries meme framing and text bands, and is listed as third-party material to credit. Those behaviours misrepresent our own recording and can restart an answer halfway through a scene.
+
+**How.** `bin/footage.mjs` shares `bin/meme.mjs`'s local file validation, size probe, H.264 encoder (30 fps, a keyframe each second) and timed video element with a shared track counter. The footage branch never uses `-stream_loop`, strips audio and pads the final frame, writing `assets/footage/<key>.mp4`, keyed by source bytes, offset, window and encoding parameters. The scene retains `data-scene-start` and `data-scene-duration` as it does for any video. The figure has no meme text bands or generated meme attributes. `--footage-width` defaults to 1344px; the file sets its aspect ratio, and `--footage-radius`, `--footage-border` and `--footage-shadow` fall back to the card tokens. These opt-in styles leave existing figures and themes unchanged. The packet's *Footage* table gives scene, file, source length, offset, scene-relative start and whether and how long the final frame holds, outside memes and credits.
+
+**Tested.** `test/footage.test.mjs` generates a tiny moving testsrc MP4 without Kokoro or network access, builds it into a scene, probes the encoded window and compares held frames. It captures actual encoder arguments to check that footage never loops, verifies offsets, cache identity, GIF and WebM input, scene-start playback, URL rejection with the scene named, and exclusion from meme discovery. The hold test is also run with padding removed and must fail before the implementation is restored.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
