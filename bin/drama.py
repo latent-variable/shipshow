@@ -25,7 +25,8 @@ SHIPSHOW_DRAMA_FORCE=1 starts anyway. Each take is checked before it is kept:
   - it is set to one speech level (bin/voicecheck.py level);
   - it is heard back with word times (bin/hearback.py, which ignores the [directions]) and the best of HEAR_TRIES is
     kept: one missing a whole sentence, or spelling out letters the script never spells (hearback.spelled_out: the
-    respelling "en" read as "E N"), is made again; bin/wordtime.py puts each sentence and written word on what was heard, in the `.check` file as `timing`.
+    respelling "en" read as "E N"), or that drawls (over 2.5 s between two words of one sentence,
+    hearback.drawled), is made again; bin/wordtime.py puts each sentence and written word on what was heard, in the `.check` file as `timing`.
   A take still under `min` after HEAR_TRIES is kept, never refused: its score is in the `.check` file, and the voice step
   and the review packet list it to listen to, as for OmniVoice (D44). Whisper misspelling a name is the usual cause (both
   such takes of never-about-the-code's 52 were "Karpathy" and "56%" with every word said), so refusing would block on
@@ -231,6 +232,9 @@ def main(spec_path):
                 got = hearback.agreement(job["plain"], heard)
                 gone = hearback.vanished(job["plain"], heard)   # a dropped punchline barely moves the letter score
                 spelled = hearback.spelled_out(job.get("written", job["plain"]), job["plain"], heard)   # "n" said "E N"
+            slow = hearback.drawled(wordtime.align(job["parts"], words, len(final) / sr)["sentences"]) if run and words else None
+            if slow and fault is None:
+                fault = f"drawled: {slow}"   # a sentence dragged apart, which no silence check sees through hiss
             ok = (got is None or got >= floor) and not gone and not spelled and fault is None
             rank = (ok, -len(gone), -len(spelled), fault is None, got or 0.0)
             if best is None or rank > best[0]:

@@ -28,7 +28,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { DRAMA, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, beatsAfter, breathe, config, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
+import { DRAMA, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, beatsAfter, breathe, drawled, config, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
@@ -266,7 +266,9 @@ for (const s of plan) s.units.forEach((unit) => {
     voiceCheck.checked++;
     if (c.score < HEARBACK_MIN) voiceCheck.flagged.push({ ...at, score: c.score, heard: c.heard });
   }
-  if (c.faults?.length) voiceCheck.faults.push({ ...at, faults: c.faults });
+  const drawl = drawled(c.timing?.sentences);   // a sentence dragged apart, flagged on a take made before the rule too
+  const faults = [...(c.faults || []), ...(drawl && !(c.faults || []).some((f) => f.startsWith("drawled")) ? [`drawled: ${drawl}`] : [])];
+  if (faults.length) voiceCheck.faults.push({ ...at, faults });
   if (c.timing) { runs++; timed += c.timing.matched; words += c.timing.words; }
 });
 voiceCheck.hearBack = voiceCheck.checked > 0;

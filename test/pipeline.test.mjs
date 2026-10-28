@@ -1349,6 +1349,14 @@ test("leads add a beat before one scene: it starts where it did, its first word 
   assert.match(bad.r.stderr, /leads\[".*"\] is -1; it takes 0 to 10 seconds/);
 });
 
+test("drawled: the voice step flags a sentence dragged apart, with the same rule as bin/hearback.py", async () => {
+  const { drawled } = await import("../bin/lib.mjs");
+  assert.equal(drawled([{ words: [{ w: "Like", at: 32.97 }, { w: "animals.", at: 35.95 }] }]), '3.0 s between "Like" and "animals."');
+  assert.equal(drawled([{ words: [{ w: "Like", at: 23.1 }, { w: "animals.", at: 23.24 }] }]), null, "said well");
+  assert.equal(drawled([{ words: [{ w: "Wait.", at: 1 }] }, { words: [{ w: "Fortran?", at: 4.5 }] }]), null, "a pause between sentences is a beat");
+  assert.equal(drawled(undefined), null, "a take with no word times is not judged");
+});
+
 test("beatsAfter: a blank line between two lines marks the sentence before it; edges, doubled blanks and prose do not", async () => {
   const { beatsAfter } = await import("../bin/lib.mjs");
   assert.deepEqual([...beatsAfter("One. Two.\n\nThree.\nFour.")], [1], "the blank line follows sentence 2 (index 1)");

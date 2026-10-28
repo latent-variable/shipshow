@@ -198,6 +198,26 @@ def spelled_out(written, said, heard):
     return found
 
 
+# A take that drags inside a sentence: Drama 3 once read "Like animals." with 3 s between the two words, and every other
+# check passed it, since hiss filled the gap and no stall was long enough (never-about-the-code, 2026-10-27). Across 1,204
+# word pairs in that video and eth-is-false, the longest gap between two words of one sentence was 1.9 s (a year said
+# out loud). A pause between sentences is a beat and is never judged. bin/lib.mjs `drawled` is the same rule.
+MAX_WORD_GAP = 2.5
+
+
+def drawled(sentences):
+    """The longest gap between two words of one sentence, as "<gap> s between "<a>" and "<b>"", when it is over
+    MAX_WORD_GAP; else None. `sentences` is wordtime.align's: [{"words": [{"w", "at"}]}]."""
+    worst = None
+    for s in sentences or []:
+        words = s.get("words") or []
+        for a, b in zip(words, words[1:]):
+            gap = b["at"] - a["at"]
+            if gap > MAX_WORD_GAP and (worst is None or gap > worst[0]):
+                worst = (gap, a["w"], b["w"])
+    return None if worst is None else f'{worst[0]:.1f} s between "{worst[1]}" and "{worst[2]}"'
+
+
 def available():
     try:
         import faster_whisper  # noqa: F401

@@ -285,6 +285,22 @@ export function spokenWords(sentence, say = {}) {
  *  be one after the other"). A line over LINE_MAX words is split by groupRuns, since OmniVoice drops words in long takes. A file
  *  that is one paragraph, or whose lines do not each end a sentence, falls back to groupRuns. Returns {runs, byLine}. */
 export const LINE_MAX = 70;
+/** The longest gap between two words of one sentence of a take, as text, when it is over 2.5 s; else null. Drama 3 read
+ *  "Like animals." with 3 s between the words and passed every other check; the longest such gap in two videos' 1,204 word
+ *  pairs was 1.9 s (a year said out loud). A pause between sentences is a beat and is never judged. bin/hearback.py
+ *  `drawled` is the same rule, which bin/drama.py retakes on; this one flags takes already made. */
+export function drawled(sentences) {
+  let worst = null;
+  for (const s of sentences || []) {
+    const w = s.words || [];
+    for (let i = 1; i < w.length; i++) {
+      const gap = w[i].at - w[i - 1].at;
+      if (gap > 2.5 && (!worst || gap > worst[0])) worst = [gap, w[i - 1].w, w[i].w];
+    }
+  }
+  return worst && `${worst[0].toFixed(1)} s between "${worst[1]}" and "${worst[2]}"`;
+}
+
 /** The sentences a blank line follows in a scene's script: after each, the voice step leaves a beat (video.json `beat`
  *  seconds on top of the gap) so a punchline lands before the next point. Indices into directedSentences(text); empty
  *  when the lines do not split into whole sentences. */
