@@ -39,3 +39,22 @@ He watched the first half of the published first cut and asked for these. Judge 
   thirty seconds is a finding for engagement.
 - **Letters sound like letters.** "Two to the n" is said with the letter n. The first cut said "E N" on nearly every line. Any
   variable or acronym said wrongly (check the voice step's LISTEN lines and the packet's *Second listen*) is a finding.
+
+## The owner's notes on the fourth cut (2026-10-28)
+
+- **Not cringe.** "A very rude title", "a heist in three moves", "cracking", "card on card", "somebody pulled", "before you
+  rewrite your SAT solver" all read as forced. Fun comes from a self-aware narrator: an AI (Claude) explaining another AI's
+  (OpenAI's) proof to humans, which may joke about that and about the competition when it is natural; never an empty
+  people-pleaser.
+- **The hook under-sold the stakes.** Ask what a viewer feels (does this break encryption? does P equal NP?), and answer it
+  straight. Name OpenAI and the date ("a few days ago"), not "somebody".
+- **Like for like.** P, NP, checking and solving were named but never compared in the same terms; show the cost of checking
+  against the cost of solving, the middle ground on a chart, and bring that chart back when the new result lands.
+- **The house of cards** has to be said as an analogy first (ETH is the bottom card), or "card on card" means nothing.
+- **The exponent comparison was muddled**: 1.307ⁿ as 2^(0.39 n), how it stacks against earlier records, what it says as n
+  grows: break it down, and animate it.
+- **Why splitting into groups helps**, with numbers; "translating into SAT" with an intuitive example. Use animations to show
+  why, everywhere.
+- **Memes are compression, not afterthoughts.** The galaxy brain should be held and walked through as a recap. Vary templates
+  across videos; the same few over and over annoy.
+- **Music**: the puzzle act's bed felt like a circus.
