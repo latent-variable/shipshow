@@ -167,3 +167,41 @@ and "stopped" heard as "stop".
 
 **For the owner's listen:** each direction (the deadpans in 01, 03, 09, 12 and 14b; "That's not a typo"), the name "Impagliazzo"
 (respelled "Impalyatso" for Drama 3), the 2.16 s beat after "Simple, right?", and the pace of 09, 12 and 14b.
+
+# The second cut (2026-10-27)
+
+The owner watched half of the first cut and asked for more: a mood per act, act openers that hook, 3-SAT's "no answer" shown and why
+it matters, a growth chart, more fun, and the letter n never spelled "E N". Then he moved the video off his cloned voice: he is not the
+one explaining the paper, so an invented Drama 3 narrator (picked by him from twelve auditions) reads it. Plan as before: `thorough`,
+at most 4 rounds; grounding's round 2 pass stands while the Lean excerpt is unchanged.
+
+## Round 5: 1 blocking, 18 major; seven critics, Sonnet
+
+| Critic | Verdict | Blocking | Major | Minor |
+|---|---|---|---|---|
+| accuracy | pass | 0 | 0 | 3 |
+| clarity | fail | 0 | 3 | 4 |
+| pacing | fail | 0 | 4 | 2 |
+| sync | fail | 0 | 3 | 2 |
+| visuals | fail | 1 | 4 | 2 |
+| consistency | fail | 0 | 1 | 2 |
+| engagement | fail | 0 | 2 | 2 |
+
+**Fixed:**
+- **Visuals (blocking).** Scene 08's theorem chart showed through the house of cards: the chart's phase now waits for its own cue.
+- **Pace.** The new narrator ran 20 to 40% over the target at speed 1.2, the speed of the audition the owner picked: now 1.1, and lines
+  that restated the one before are cut ("No progress yet", "Stick around", "polynomial memory", the 11b knob list). Pauses after 07 and
+  11b are under 2 s.
+- **Clarity.** The step from "a smaller exponent" to "ETH is false" is said plainly and drawn: "ETH says the exponent can never drop below
+  some fixed fraction of n. This one ends up below every fraction you pick." A note is "a few weighted sums" of a group's switches. 11b
+  is two pulls, both making the notes bigger. "Easy points" in both 10 and 11.
+- **Engagement.** 04 opens on a million dollar puzzle and closes on "the million dollars is still sitting there" (Clay, source M);
+  06 shows what twenty five years of records shaved (−0.026); the NP card lands on its definition and the n-squared line on its words.
+- **Sync and consistency.** "Move 1" lands on "Move one" (it landed on "moves" 15 s early); the growth chart pins 30 and 40 on their
+  words; the 12 card on "million"; the relatives one at a time; the catch card on "The catch?".
+- **Visuals.** The growth chart's labels sit left of every curve, at chart sizes of 28 px and up; the title's FALSE stamp is larger and
+  red; scene 14 shows the three pulled papers struck through and ends on two stamps, "strong signal" and "not peer reviewed yet".
+- **Accuracy.** "In a preprint this year" for 1.307; "in the worked example the paper itself walks through"; DNF as Fedora's package
+  manager is now sourced (D).
+- **Pipeline.** Both listeners flagged "ETH." as unheard because they wrote it "E.T.H.": the missing-sentence check now joins spelled
+  letters (DESIGN D60).
