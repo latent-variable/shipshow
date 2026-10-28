@@ -81,11 +81,13 @@
 
   /* 01-hook */
   .preprint { width: 1400px; margin: 0 auto; padding: 46px 470px 56px 70px; background: #efeee6; color: #1b211e; border-radius: 6px; box-shadow: 0 30px 70px rgba(3, 8, 6, 0.6); transform: rotate(-1.2deg); position: relative; }
-  .prize { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 150px; pointer-events: none; }
+  .prize { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
   .prize .stamp { font-size: 52px; background: rgba(24, 18, 12, 0.94); text-align: center; }
   .prize .stamp small { display: block; font-size: 26px; letter-spacing: 0.04em; margin-top: 6px; opacity: 0.85; }
   .checkers .ss-portrait { --portrait-height: 400px; }
   .checkers .namecard { height: 400px !important; width: 360px !important; }
+  .stamp.flaw { position: absolute; right: 90px; bottom: 140px; font-size: 44px; }
+  .stamp.getaway { position: absolute; right: 110px; top: 150px; font-size: 48px; }
   .race .shave { font-family: var(--font-mono); font-size: 44px; font-weight: 700; fill: var(--accent-3); }
   .preprint .who { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.12em; color: #4b5a52; }
   .preprint .title { font-family: var(--font-display); font-weight: 600; font-size: 84px; line-height: 1.05; margin-top: 18px; }
@@ -306,7 +308,7 @@
         <div class="chip" data-cue="authors" data-anim="pop">no human authors</div>
         <div class="chip" data-cue="AI" data-anim="pop">an unreleased AI model</div>
         <div class="chip blue" data-cue="verified" data-anim="pop">verified in Lean, says OpenAI</div>
-        <div class="chip hot" data-cue="group" data-anim="pop">to be checked by a group led by two of its proposers</div>
+        <div class="chip hot" data-cue="team" data-anim="pop">to be checked by a team led by two of its proposers</div>
       </div>
     </div>
   </div>
@@ -401,7 +403,7 @@
         <text x="120" y="600" text-anchor="middle">0</text><text x="234" y="600" text-anchor="middle">10</text><text x="348" y="600" text-anchor="middle">20</text><text x="462" y="600" text-anchor="middle">30</text><text x="576" y="600" text-anchor="middle">40</text><text x="690" y="600" text-anchor="middle">50</text><text x="804" y="600" text-anchor="middle">60</text><text x="918" y="600" text-anchor="middle">70</text><text x="1032" y="600" text-anchor="middle">80</text><text x="1146" y="600" text-anchor="middle">90</text><text x="1260" y="600" text-anchor="middle">100</text><text x="1290" y="636" text-anchor="end">switches →</text>
         <text class="sub" x="140" y="96">time to try every setting,</text><text class="sub" x="140" y="134">at a billion a second</text><text class="sub" x="140" y="172" style="font-size: 28px">2ⁿ ÷ 10⁹ · our arithmetic</text>
         <g clip-path="url(#clip03)">
-          <g class="zs" id="z03hour"><path class="curve" d="M120.0 560.0 L125.7 560.0 L131.4 560.0 L137.1 560.0 L142.8 560.0 L148.5 560.0 L154.2 560.0 L159.9 560.0 L165.6 560.0 L171.3 560.0 L177.0 560.0 L182.7 560.0 L188.4 560.0 L194.1 560.0 L199.8 560.0 L205.5 560.0 L211.2 560.0 L216.9 560.0 L222.6 560.0 L228.3 560.0 L234.0 560.0 L239.7 560.0 L245.4 560.0 L251.1 560.0 L256.8 560.0 L262.5 560.0 L268.2 560.0 L273.9 560.0 L279.6 560.0 L285.3 560.0 L291.0 560.0 L296.7 560.0 L302.4 560.0 L308.1 560.0 L313.8 560.0 L319.5 560.0 L325.2 560.0 L330.9 560.0 L336.6 560.0 L342.3 560.0 L348.0 560.0 L353.7 560.0 L359.4 560.0 L365.1 560.0 L370.8 560.0 L376.5 560.0 L382.2 560.0 L387.9 560.0 L393.6 560.0 L399.3 560.0 L405.0 560.0 L410.7 560.0 L416.4 560.0 L422.1 560.0 L427.8 560.0 L433.5 560.0 L439.2 560.0 L444.9 559.9 L450.6 559.9 L456.3 559.9 L462.0 559.9 L467.7 559.8 L473.4 559.7 L479.1 559.6 L484.8 559.4 L490.5 559.2 L496.2 558.8 L501.9 558.3 L507.6 557.6 L513.3 556.6 L519.0 555.2 L524.7 553.3 L530.4 550.5 L536.1 546.5 L541.8 540.9 L547.5 533.0 L553.2 521.8 L558.9 506.0 L564.6 483.6 L570.3 452.0 L576.0 407.3 L581.7 344.0 L587.4 254.6 L593.1 128.1 L598.8 -50.8 L604.5 -200.0"/><text class="ylab" x="140" y="52">top: 1 hour</text><g data-cue="Thirty" data-anim="pop"><circle class="dot" cx="462" cy="558" r="12"/><text class="pt" x="462" y="520" text-anchor="middle">30: 1 second</text></g><g data-cue="Forty" data-anim="pop"><circle class="dot" cx="576" cy="407" r="12"/><text class="pt" x="596" y="398">40: 18 minutes</text></g></g>
+          <g class="zs" id="z03hour"><path class="curve" d="M120.0 560.0 L125.7 560.0 L131.4 560.0 L137.1 560.0 L142.8 560.0 L148.5 560.0 L154.2 560.0 L159.9 560.0 L165.6 560.0 L171.3 560.0 L177.0 560.0 L182.7 560.0 L188.4 560.0 L194.1 560.0 L199.8 560.0 L205.5 560.0 L211.2 560.0 L216.9 560.0 L222.6 560.0 L228.3 560.0 L234.0 560.0 L239.7 560.0 L245.4 560.0 L251.1 560.0 L256.8 560.0 L262.5 560.0 L268.2 560.0 L273.9 560.0 L279.6 560.0 L285.3 560.0 L291.0 560.0 L296.7 560.0 L302.4 560.0 L308.1 560.0 L313.8 560.0 L319.5 560.0 L325.2 560.0 L330.9 560.0 L336.6 560.0 L342.3 560.0 L348.0 560.0 L353.7 560.0 L359.4 560.0 L365.1 560.0 L370.8 560.0 L376.5 560.0 L382.2 560.0 L387.9 560.0 L393.6 560.0 L399.3 560.0 L405.0 560.0 L410.7 560.0 L416.4 560.0 L422.1 560.0 L427.8 560.0 L433.5 560.0 L439.2 560.0 L444.9 559.9 L450.6 559.9 L456.3 559.9 L462.0 559.9 L467.7 559.8 L473.4 559.7 L479.1 559.6 L484.8 559.4 L490.5 559.2 L496.2 558.8 L501.9 558.3 L507.6 557.6 L513.3 556.6 L519.0 555.2 L524.7 553.3 L530.4 550.5 L536.1 546.5 L541.8 540.9 L547.5 533.0 L553.2 521.8 L558.9 506.0 L564.6 483.6 L570.3 452.0 L576.0 407.3 L581.7 344.0 L587.4 254.6 L593.1 128.1 L598.8 -50.8 L604.5 -200.0"/><text class="ylab" x="140" y="52">top: 1 hour</text><g data-cue="Thirty" data-anim="pop"><circle class="dot" cx="462" cy="558" r="12"/><text class="pt" x="440" y="520" text-anchor="end">30: 1 second</text></g><g data-cue="Forty" data-anim="pop"><circle class="dot" cx="576" cy="407" r="12"/><text class="pt" x="596" y="398">40: 18 minutes</text></g></g>
           <g class="zs" id="z03month"><path class="curve" d="M120.0 560.0 L125.7 560.0 L131.4 560.0 L137.1 560.0 L142.8 560.0 L148.5 560.0 L154.2 560.0 L159.9 560.0 L165.6 560.0 L171.3 560.0 L177.0 560.0 L182.7 560.0 L188.4 560.0 L194.1 560.0 L199.8 560.0 L205.5 560.0 L211.2 560.0 L216.9 560.0 L222.6 560.0 L228.3 560.0 L234.0 560.0 L239.7 560.0 L245.4 560.0 L251.1 560.0 L256.8 560.0 L262.5 560.0 L268.2 560.0 L273.9 560.0 L279.6 560.0 L285.3 560.0 L291.0 560.0 L296.7 560.0 L302.4 560.0 L308.1 560.0 L313.8 560.0 L319.5 560.0 L325.2 560.0 L330.9 560.0 L336.6 560.0 L342.3 560.0 L348.0 560.0 L353.7 560.0 L359.4 560.0 L365.1 560.0 L370.8 560.0 L376.5 560.0 L382.2 560.0 L387.9 560.0 L393.6 560.0 L399.3 560.0 L405.0 560.0 L410.7 560.0 L416.4 560.0 L422.1 560.0 L427.8 560.0 L433.5 560.0 L439.2 560.0 L444.9 560.0 L450.6 560.0 L456.3 560.0 L462.0 560.0 L467.7 560.0 L473.4 560.0 L479.1 560.0 L484.8 560.0 L490.5 560.0 L496.2 560.0 L501.9 560.0 L507.6 560.0 L513.3 560.0 L519.0 560.0 L524.7 560.0 L530.4 560.0 L536.1 560.0 L541.8 560.0 L547.5 560.0 L553.2 559.9 L558.9 559.9 L564.6 559.9 L570.3 559.9 L576.0 559.8 L581.7 559.7 L587.4 559.6 L593.1 559.4 L598.8 559.2 L604.5 558.8 L610.2 558.3 L615.9 557.6 L621.6 556.6 L627.3 555.2 L633.0 553.2 L638.7 550.4 L644.4 546.4 L650.1 540.8 L655.8 532.9 L661.5 521.6 L667.2 505.7 L672.9 483.2 L678.6 451.4 L684.3 406.4 L690.0 342.8 L695.7 252.9 L701.4 125.6 L707.1 -54.3 L712.8 -200.0"/><text class="ylab" x="140" y="52">top: 1 month</text><circle class="dot" cx="690" cy="343" r="12"/><text class="pt" x="710" y="334">50: two weeks</text></g>
           <g class="zs" id="z03years"><path class="curve" d="M120.0 560.0 L125.7 560.0 L131.4 560.0 L137.1 560.0 L142.8 560.0 L148.5 560.0 L154.2 560.0 L159.9 560.0 L165.6 560.0 L171.3 560.0 L177.0 560.0 L182.7 560.0 L188.4 560.0 L194.1 560.0 L199.8 560.0 L205.5 560.0 L211.2 560.0 L216.9 560.0 L222.6 560.0 L228.3 560.0 L234.0 560.0 L239.7 560.0 L245.4 560.0 L251.1 560.0 L256.8 560.0 L262.5 560.0 L268.2 560.0 L273.9 560.0 L279.6 560.0 L285.3 560.0 L291.0 560.0 L296.7 560.0 L302.4 560.0 L308.1 560.0 L313.8 560.0 L319.5 560.0 L325.2 560.0 L330.9 560.0 L336.6 560.0 L342.3 560.0 L348.0 560.0 L353.7 560.0 L359.4 560.0 L365.1 560.0 L370.8 560.0 L376.5 560.0 L382.2 560.0 L387.9 560.0 L393.6 560.0 L399.3 560.0 L405.0 560.0 L410.7 560.0 L416.4 560.0 L422.1 560.0 L427.8 560.0 L433.5 560.0 L439.2 560.0 L444.9 560.0 L450.6 560.0 L456.3 560.0 L462.0 560.0 L467.7 560.0 L473.4 560.0 L479.1 560.0 L484.8 560.0 L490.5 560.0 L496.2 560.0 L501.9 560.0 L507.6 560.0 L513.3 560.0 L519.0 560.0 L524.7 560.0 L530.4 560.0 L536.1 560.0 L541.8 560.0 L547.5 560.0 L553.2 560.0 L558.9 560.0 L564.6 560.0 L570.3 560.0 L576.0 560.0 L581.7 560.0 L587.4 560.0 L593.1 560.0 L598.8 560.0 L604.5 560.0 L610.2 560.0 L615.9 560.0 L621.6 560.0 L627.3 560.0 L633.0 560.0 L638.7 560.0 L644.4 560.0 L650.1 560.0 L655.8 560.0 L661.5 559.9 L667.2 559.9 L672.9 559.9 L678.6 559.8 L684.3 559.7 L690.0 559.6 L695.7 559.5 L701.4 559.3 L707.1 559.0 L712.8 558.6 L718.5 558.0 L724.2 557.1 L729.9 556.0 L735.6 554.3 L741.3 551.9 L747.0 548.6 L752.7 543.9 L758.4 537.2 L764.1 527.7 L769.8 514.3 L775.5 495.4 L781.2 468.7 L786.9 430.8 L792.6 377.3 L798.3 301.7 L804.0 194.7 L809.7 43.3 L815.4 -170.7 L821.1 -200.0"/><text class="ylab" x="140" y="52">top: 50 years</text><circle class="dot" cx="804" cy="195" r="12"/><text class="pt" x="824" y="186">60: 36 years</text></g>
           <g class="zs" id="z03universe"><path class="curve" d="M120.0 560.0 L125.7 560.0 L131.4 560.0 L137.1 560.0 L142.8 560.0 L148.5 560.0 L154.2 560.0 L159.9 560.0 L165.6 560.0 L171.3 560.0 L177.0 560.0 L182.7 560.0 L188.4 560.0 L194.1 560.0 L199.8 560.0 L205.5 560.0 L211.2 560.0 L216.9 560.0 L222.6 560.0 L228.3 560.0 L234.0 560.0 L239.7 560.0 L245.4 560.0 L251.1 560.0 L256.8 560.0 L262.5 560.0 L268.2 560.0 L273.9 560.0 L279.6 560.0 L285.3 560.0 L291.0 560.0 L296.7 560.0 L302.4 560.0 L308.1 560.0 L313.8 560.0 L319.5 560.0 L325.2 560.0 L330.9 560.0 L336.6 560.0 L342.3 560.0 L348.0 560.0 L353.7 560.0 L359.4 560.0 L365.1 560.0 L370.8 560.0 L376.5 560.0 L382.2 560.0 L387.9 560.0 L393.6 560.0 L399.3 560.0 L405.0 560.0 L410.7 560.0 L416.4 560.0 L422.1 560.0 L427.8 560.0 L433.5 560.0 L439.2 560.0 L444.9 560.0 L450.6 560.0 L456.3 560.0 L462.0 560.0 L467.7 560.0 L473.4 560.0 L479.1 560.0 L484.8 560.0 L490.5 560.0 L496.2 560.0 L501.9 560.0 L507.6 560.0 L513.3 560.0 L519.0 560.0 L524.7 560.0 L530.4 560.0 L536.1 560.0 L541.8 560.0 L547.5 560.0 L553.2 560.0 L558.9 560.0 L564.6 560.0 L570.3 560.0 L576.0 560.0 L581.7 560.0 L587.4 560.0 L593.1 560.0 L598.8 560.0 L604.5 560.0 L610.2 560.0 L615.9 560.0 L621.6 560.0 L627.3 560.0 L633.0 560.0 L638.7 560.0 L644.4 560.0 L650.1 560.0 L655.8 560.0 L661.5 560.0 L667.2 560.0 L672.9 560.0 L678.6 560.0 L684.3 560.0 L690.0 560.0 L695.7 560.0 L701.4 560.0 L707.1 560.0 L712.8 560.0 L718.5 560.0 L724.2 560.0 L729.9 560.0 L735.6 560.0 L741.3 560.0 L747.0 560.0 L752.7 560.0 L758.4 560.0 L764.1 560.0 L769.8 560.0 L775.5 560.0 L781.2 560.0 L786.9 560.0 L792.6 560.0 L798.3 560.0 L804.0 560.0 L809.7 560.0 L815.4 560.0 L821.1 560.0 L826.8 560.0 L832.5 560.0 L838.2 560.0 L843.9 560.0 L849.6 560.0 L855.3 560.0 L861.0 560.0 L866.7 560.0 L872.4 560.0 L878.1 560.0 L883.8 560.0 L889.5 560.0 L895.2 560.0 L900.9 560.0 L906.6 560.0 L912.3 560.0 L918.0 560.0 L923.7 560.0 L929.4 560.0 L935.1 560.0 L940.8 560.0 L946.5 560.0 L952.2 560.0 L957.9 560.0 L963.6 560.0 L969.3 560.0 L975.0 560.0 L980.7 560.0 L986.4 560.0 L992.1 560.0 L997.8 560.0 L1003.5 559.9 L1009.2 559.9 L1014.9 559.9 L1020.6 559.8 L1026.3 559.7 L1032.0 559.6 L1037.7 559.5 L1043.4 559.2 L1049.1 558.9 L1054.8 558.5 L1060.5 557.8 L1066.2 556.9 L1071.9 555.7 L1077.6 553.9 L1083.3 551.3 L1089.0 547.7 L1094.7 542.7 L1100.4 535.5 L1106.1 525.3 L1111.8 511.0 L1117.5 490.7 L1123.2 461.9 L1128.9 421.3 L1134.6 363.9 L1140.3 282.6 L1146.0 167.7 L1151.7 5.2 L1157.4 -200.0"/><line class="uni" x1="120" y1="422" x2="1290" y2="422"/><text x="140" y="404" style="fill: var(--accent-2)">age of the universe</text><text class="ylab" x="140" y="52">top: 50 billion years</text><circle class="dot" cx="1146" cy="168" r="12"/><text class="pt" x="1126" y="150" text-anchor="end">90: past the age of the universe</text></g>
@@ -415,9 +417,17 @@
 
 <!-- 04: P versus NP, Cook, the poll -->
 <section data-scene="04-p-vs-np" data-mood="archive">
+  <div class="phase" id="p04a">
+    <div class="stage" style="align-items: center">
+      <div class="big" style="font-size: 120px" data-cue="million" data-anim="pop">P vs NP</div>
+      <div class="stamp green" style="font-size: 56px" data-cue="dollar" data-anim="slam">$1,000,000 prize</div>
+      <div class="src center" data-cue="dollar" data-anim="fade">Clay Mathematics Institute · Millennium Prize Problems</div>
+    </div>
+  </div>
+  <div class="phase" id="p04b">
   <div class="stage">
     <div class="pnp">
-      <div class="card" data-cue="P#3" data-anim="up"><div class="big">P</div><div class="what">solve it fast</div><div class="how" data-cue="squared" data-anim="up">the work grows like <span class="math"><i>n</i><sup>2</sup></span> or <span class="math"><i>n</i><sup>3</sup></span></div></div>
+      <div class="card" id="card04p" data-cue="P#3" data-anim="up"><div class="big">P</div><div class="what">solve it fast</div><div class="how" data-cue="squared" data-anim="up">the work grows like <span class="math"><i>n</i><sup>2</sup></span> or <span class="math"><i>n</i><sup>3</sup></span></div></div>
       <div class="card" data-cue="NP" data-anim="up"><div class="big">NP</div><div class="what">check an answer fast</div><div class="how">like reading down the list of rules</div></div>
     </div>
     <div class="row">
@@ -430,7 +440,8 @@
         <div><div class="lab">said P ≠ NP</div><div class="src">Gasarch poll, SIGACT News,<br>2019 · 124 answers</div><div class="stamp yellow" style="font-size: 36px; margin-top: 14px" data-cue="proved" data-anim="slam">unproved</div></div>
       </div>
     </div>
-    <div class="prize"><div class="stamp green" data-cue="dollars" data-anim="slam" data-sfx="ding" data-sfx-offset="0.3">$1,000,000 prize · still unclaimed<small>Clay Mathematics Institute · Millennium Prize Problems</small></div></div>
+    <div class="prize"><div class="stamp green" data-cue="dollars" data-anim="slam" data-sfx="ding" data-sfx-offset="0.3">$1,000,000 · still unclaimed</div></div>
+  </div>
   </div>
 </section>
 
@@ -544,7 +555,7 @@
       <svg class="floorplot" viewBox="0 0 820 440" width="820" height="440">
         <line class="ax" x1="60" y1="380" x2="800" y2="380"/><line class="ax" x1="60" y1="20" x2="60" y2="380"/>
         <text x="790" y="420" text-anchor="end">n →</text><text x="74" y="44">exponent</text>
-        <g data-cue="fraction" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="70" text-anchor="end" style="fill: var(--accent-3)">ETH's floor: a fixed fraction × n</text></g>
+        <g data-cue="fraction" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="70" text-anchor="end" style="fill: var(--accent-3)">ETH's floor, as an exponent: a fixed fraction × n</text></g>
         <path class="cur" d="M60 380 C 220 230, 480 175, 800 140" data-cue="ends" data-anim="draw"/><text class="lbl" x="790" y="200" text-anchor="end" style="fill: var(--accent)" data-cue="ends" data-anim="fade">n / √log n</text>
         <circle cx="641" cy="160" r="12" style="fill: var(--bad)" data-cue="every" data-anim="pop"/>
         <text x="420" y="420" text-anchor="middle">schematic</text>
@@ -585,7 +596,7 @@
         <div class="math" style="color: var(--accent)">1 − (1 − <i>A</i>) · <i>B</i> · (1 − <i>C</i>)</div>
       </div>
       <div class="row"><div class="chip alive" data-cue="happy" data-anim="pop">happy: 1</div><div class="chip" style="border-color: var(--bad); color: var(--bad)" data-cue="isn't." data-anim="pop">unhappy: 0</div></div>
-      <div class="sumline math" data-cue="Add" data-anim="up">count = Σ<sub>every setting</sub> rule<sub>1</sub> × rule<sub>2</sub> × … × rule<sub><i>m</i></sub><small>the paper's own example, section 2.2 · in the paper: a clause polynomial</small></div>
+      <div class="sumline math" data-cue="Add" data-anim="up">count = Σ<sub>every setting</sub> rule<sub>1</sub> × rule<sub>2</sub> × … × rule<sub><i>m</i></sub><small>the paper, section 2.2</small></div>
       <div class="row"><div class="chip" style="border-color: var(--bad); color: var(--bad)" data-cue="still" data-anim="pop">still 2<sup>n</sup> terms</div></div>
     </div>
   </div>
@@ -634,6 +645,7 @@
         <div class="bus" data-cue="note" data-anim="grow">a note: a few weighted sums of each group's switches</div>
         <div class="panel" data-cue="few" data-anim="up">try every note<small>for each one, count every group <span id="alone10" data-cue="alone." data-anim="highlight">alone</span></small></div>
         <span id="catch10" data-cue="catch?" data-anim="fade"></span>
+        <div class="stamp flaw" data-cue="answer." data-anim="slam" data-sfx="scratch">the plan has one flaw</div>
         <div class="nozero" data-cue="catch?" data-anim="pop">✗ at T = 0 this shortcut doesn't apply</div>
       </div>
     </div>
@@ -643,12 +655,13 @@
 <!-- 11: read the answer off zero -->
 <section data-scene="11-read-off-zero">
   <div class="move" data-cue="Move" data-anim="slam">move 3 · the getaway</div>
+  <div class="stamp green getaway" data-cue="count#2" data-anim="slam">clean getaway</div>
   <div class="stage">
     <div class="readoff">
       <svg class="plot" viewBox="0 0 1100 640" width="1100" height="640">
         <line class="ax" x1="100" y1="560" x2="1080" y2="560"/><line class="ax" x1="100" y1="20" x2="100" y2="560"/>
         <text x="100" y="605" text-anchor="middle">0</text><text x="260" y="605" text-anchor="middle">1</text><text x="420" y="605" text-anchor="middle">2</text><text x="580" y="605" text-anchor="middle">3</text><text x="740" y="605" text-anchor="middle">4</text><text x="900" y="605" text-anchor="middle">5</text>
-        <text x="1070" y="540" text-anchor="end">dial T</text><text x="118" y="50">total H(T)</text>
+        <text x="1070" y="540" text-anchor="end">dial T</text><text x="118" y="50">count H(T)</text>
         <path class="curve" d="M260 320 C 330 140, 420 160, 500 250 S 650 440, 740 350 S 860 170, 960 220" data-cue="curve." data-anim="draw"/>
         <g data-cue="easy" data-anim="stagger"><circle class="pt" cx="260" cy="320" r="16"/><circle class="pt" cx="420" cy="186" r="16"/><circle class="pt" cx="580" cy="340" r="16"/><circle class="pt" cx="740" cy="350" r="16"/><circle class="pt" cx="900" cy="196" r="16"/></g>
         <g data-cue="slope," data-anim="stagger"><line class="tan" x1="210" y1="400" x2="310" y2="240"/><line class="tan" x1="360" y1="186" x2="480" y2="186"/><line class="tan" x1="530" y1="285" x2="630" y2="395"/><line class="tan" x1="690" y1="380" x2="790" y2="320"/><line class="tan" x1="850" y1="190" x2="950" y2="202"/></g>
@@ -691,7 +704,7 @@
           <div class="chip" data-cue="messy" data-anim="pop">a log log factor + hidden constants</div>
         </div>
         <div class="col">
-          <div class="card" data-cue="example" data-anim="up"><div class="digitsbig" data-cue="billion" data-anim="pop">≈ 3.3 billion</div><div class="huge" style="font-size: 44px; margin-top: 8px">digits in the number of switches<br>before its conditions hold<small>with the paper's worked example numbers (eq. 2.19),<br>our arithmetic: n &gt; 2 to the 10.9 billion</small></div></div>
+          <div class="card" data-cue="example" data-anim="up"><div class="digitsbig" data-cue="billion" data-anim="pop">≈ 3.3 billion</div><div class="huge" style="font-size: 44px; margin-top: 8px">digits in the number of switches<br>before its conditions hold<small>the paper's worked example · our arithmetic</small></div></div>
           <div class="stamp yellow" style="align-self: center" data-cue="typo." data-anim="slam">not a typo</div>
         </div>
       </div>
@@ -749,7 +762,7 @@
     <div class="stage">
       <div class="wil">
         <figure class="ss-portrait" data-commons="File:Ryan Williams at Dagstuhl 10441.jpg" data-cue="Williams" data-anim="up"><figcaption>Ryan Williams<small>MIT</small></figcaption></figure>
-        <div class="card" data-cue="circuits" data-anim="up">if ETH is false: some problems in E<sup>NP</sup> have no linear-size circuits<div class="src">Williams, SICOMP 2013 · applied in the paper, Corollary C.1</div></div>
+        <div class="card" data-cue="circuits" data-anim="up">if ETH is false: some problems have no linear-size circuits<div class="src">Williams, SICOMP 2013 · applied in the paper, Corollary C.1</div></div>
       </div>
       <div class="row"><div class="stamp yellow" data-cue="faster#2" data-anim="slam">fast algorithm ⇒ hardness, if it holds</div></div>
     </div>
@@ -781,8 +794,8 @@
   <div class="phase" id="p14b">
     <div class="stage">
       <div class="pulled3" data-cue="pulled" data-anim="stagger"><div class="pp">AI math paper</div><div class="pp">AI math paper</div><div class="pp">AI math paper</div></div>
-      <div class="card withdrawn" style="align-self: center" data-cue="seventh," data-anim="up">October 7: three of OpenAI's AI papers withdrawn<div class="src">a sign error · algebraic geometry, not this paper</div></div>
-      <div class="chip" style="align-self: center" data-cue="far," data-anim="pop">so far, OpenAI's word: the group checking it hasn't reported</div>
+      <div class="src center" data-cue="seventh," data-anim="fade">October 7 · a sign error · algebraic geometry, not this paper</div>
+      <div class="chip" style="align-self: center" data-cue="far," data-anim="pop">so far, OpenAI's word: the checking team hasn't reported</div>
       <div class="row" style="gap: 60px"><div class="stamp green" data-cue="signal." data-anim="slam">strong signal</div><div class="stamp yellow" data-cue="peer" data-anim="slam">not peer reviewed yet</div></div>
     </div>
   </div>
@@ -794,7 +807,7 @@
     <div class="checkers">
       <figure class="ss-portrait" data-commons="File:Russell Impagliazzo at the DIMACS Workshop on Cryptography.jpg" data-cue="Impagliazzo" data-anim="pop"><figcaption>Russell Impagliazzo<small>proposed ETH</small></figcaption></figure>
       <div class="namecard" data-cue="Paturi," data-anim="pop"><b>Ramamohan Paturi</b><small>proposed ETH</small></div>
-      <figure class="ss-portrait" data-commons="File:Ryan Williams at Dagstuhl 10441.jpg" data-cue="Williams," data-anim="pop"><figcaption>Ryan Williams<small>2016: refuted MA-SETH, a close<br>relative of the Strong ETH</small></figcaption></figure>
+      <figure class="ss-portrait" data-commons="File:Ryan Williams at Dagstuhl 10441.jpg" data-cue="Williams," data-anim="pop"><figcaption>Ryan Williams<small>refuted MA-SETH, 2016</small></figcaption></figure>
     </div>
     <div class="obit"><div class="stamp" data-cue="obituary." data-anim="slam">proofreading its obituary</div></div>
   </div>
@@ -806,7 +819,7 @@
     <div class="stage">
       <div class="tag" style="width: 1400px; margin: 0 auto" data-cue="+0.1" data-anim="fade">what I'm watching</div>
       <div class="watch">
-        <div class="item" data-cue="confirm" data-anim="left"><div class="box"></div>the group checking it confirms it, or finds a gap</div>
+        <div class="item" data-cue="confirm" data-anim="left"><div class="box"></div>the checking team confirms it, or finds a gap</div>
         <div class="item" data-cue="page." data-anim="left"><div class="box"></div>the core idea, explained in one page</div>
         <div class="item" data-cue="survive" data-anim="left"><div class="box"></div>which papers survive on weaker assumptions</div>
       </div>
@@ -852,6 +865,10 @@
   // 08: somebody pulls the bottom card, the tower lurches, then the theorem.
   tl.to("#hoc08 .t0 .pc:first-child", { x: -700, rotation: -25, opacity: 0, duration: 0.7, ease: "power2.in" }, cueAt("[data-zoom='pulled']"));
   tl.to(["#hoc08 .t1", "#hoc08 .t2", "#hoc08 .t3"], { rotation: 4, x: 30, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, cueAt("[data-zoom='pulled']") + 0.5);
+  tl.to("#p04a", { opacity: 0, duration: 0.35 }, cueAt("#card04p") - 0.4);
+  tl.set("#p04b", { opacity: 0 }, 0);
+  tl.to("#p04b", { opacity: 1, duration: 0.35 }, cueAt("#card04p") - 0.4);
+  tl.to(["#p04b .pnp", "#p04b .row"], { opacity: 0.1, duration: 0.3 }, cueAt("#p04b .prize .stamp") - 0.2);
   tl.to("#p08a", { opacity: 0, duration: 0.35 }, cueAt("#p08b .thm") - 0.4);
   tl.set("#p08b", { opacity: 0 }, 0);
   tl.to("#p08b", { opacity: 1, duration: 0.35 }, cueAt("#p08b .thm") - 0.4);
@@ -871,6 +888,7 @@
   tl.to("#p12a", { opacity: 0, duration: 0.3 }, cueAt("#m12") - 0.3);
   tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#m12") + 4.2);
   tl.to("#p13a", { opacity: 0, duration: 0.35 }, cueAt("#p13b .ss-portrait") - 0.4);
+  tl.to("#p14a pre", { opacity: 0.3, duration: 0.4 }, cueAt("#p14a .trustrow .chip:nth-child(2)") + 1.2);
   tl.to("#p14a", { opacity: 0, duration: 0.35 }, cueAt("#p14b .pulled3") - 0.4);
   tl.to("#p15a", { opacity: 0, duration: 0.35 }, cueAt("#p15b .last") - 0.4);
 

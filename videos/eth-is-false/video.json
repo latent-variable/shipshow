@@ -28,9 +28,9 @@
     "ambient": "blobs dust vignette grain"
   },
   "pauses": {
-    "11b-three-costs": 0.4,
+    "11b-three-costs": 0.6,
     "08-the-claim": 0.5,
-    "07-built-on-it": 0.8,
+    "07-built-on-it": 0.5,
     "02b-no-answer": 0.3
   },
   "moods": {

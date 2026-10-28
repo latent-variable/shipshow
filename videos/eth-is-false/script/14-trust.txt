@@ -3,5 +3,5 @@
 [clear] The statement it has to match: for each rule size, a machine counts the satisfying settings exactly, and beats c to the n for every base above one.
 [dry] A bit weaker than the paper's best bound, but enough to sink ETH.
 [matter-of-fact] But OpenAI pulled three of its other AI math papers on October seventh, after a sign error was found.
-[serious] So far, that's OpenAI's word. The people lined up to check it haven't reported yet.
+[serious] So far, that's OpenAI's word. The team lined up to check it hasn't reported yet.
 [dry] So it's a strong signal. It's not peer review yet.

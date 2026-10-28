@@ -1,4 +1,4 @@
 [firm] Then, this October, somebody pulled on the bottom card.
 [clear, explaining] It gives an algorithm for SAT with rules of any fixed size, three switches, four, ten.
 [clear] And the speed. Still two to the something, but the something isn't n anymore. It grows roughly like n over the square root of log n.
-[clear] ETH says the exponent can never drop below some fixed fraction of n. This one ends up below every fraction you pick, once n is big enough. If it's right, the floor is gone.
+[clear] A base above one is just two to some fraction of n. So ETH says the exponent can never drop below some fixed fraction of n. This one ends up below every fraction you pick, once n is big enough. If it's right, the floor is gone.
