@@ -62,32 +62,43 @@ test("mood theme fonts and assets are namespaced, leaving the base theme path al
   }
 });
 
-test("music crossfades around the boundary and missing or absent music keeps the playhead", () => {
+test("music hands off at a mood change: the old bed fades from the last word, the new one swells in from its opening", () => {
   const dir = scratch(), rate = 48000;
   for (const [file, frequency] of [["a.wav", 220], ["b.wav", 880]]) {
     const samples = Int16Array.from({ length: rate * 4 }, (_, i) => Math.round(10000 * Math.sin(2 * Math.PI * frequency * Math.floor(i / 2) / rate)));
     writeWav(join(dir, file), { rate, channels: 2, samples });
   }
   const moods = [{ name: null, start: 0 }, { name: "b", start: 4, music: { file: "b.wav", volume: 0.5, duck: 1 } }, { name: "keep", start: 8 }, { name: "missing", start: 12, music: "missing.wav" }];
-  assert.equal(musicBed(dir, { file: "a.wav", volume: 0.5, duck: 1 }, timing, moods), true);
-  const { samples } = readWav(join(dir, "assets/music.wav"));
-  const amplitude = (time, hz) => {
-    const start = Math.round(time * rate), count = rate / 20;
-    let re = 0, im = 0;
-    for (let i = start; i < start + count; i++) {
-      re += samples[i * 2] * Math.cos(2 * Math.PI * hz * i / rate);
-      im += samples[i * 2] * Math.sin(2 * Math.PI * hz * i / rate);
-    }
-    return Math.hypot(re, im) * 2 / count;
+  const level = (timingIn, base) => {
+    assert.equal(musicBed(dir, { file: "a.wav", volume: 0.5, duck: 1, ...base }, timingIn, moods), true);
+    const { samples } = readWav(join(dir, "assets/music.wav"));
+    return (time, hz) => {
+      const count = rate / 20, start = Math.round(time * rate) - count / 2;   // 50 ms centred on the time: whole cycles of both tones
+      let re = 0, im = 0;
+      for (let i = start; i < start + count; i++) {
+        re += samples[i * 2] * Math.cos(2 * Math.PI * hz * i / rate);
+        im += samples[i * 2] * Math.sin(2 * Math.PI * hz * i / rate);
+      }
+      return Math.hypot(re, im) * 2 / count;
+    };
   };
-  assert.ok(amplitude(3, 220) > 4900);
-  assert.ok(amplitude(3, 880) < 10);
-  assert.ok(Math.abs(amplitude(3.975, 220) - 2500) < 20);
-  assert.ok(Math.abs(amplitude(3.975, 880) - 2500) < 20);
-  assert.ok(amplitude(5, 220) < 10);
-  for (const t of [5, 8, 12]) assert.ok(amplitude(t, 880) > 4900);
-  const before = samples.slice();
-  musicBed(dir, { file: "a.wav", volume: 0.5, duck: 1 }, timing, moods.slice(0, 2));
+  // No speech: the old bed fades over the last MUSIC_OUT_MIN (1 s) and MUSIC_OUT_PAST (0.5 s) after the boundary.
+  let amplitude = level(timing);
+  const near = (got, want, why) => assert.ok(Math.abs(got - want) < 120, `${why}: ${Math.round(got)}, wanted about ${want}`);
+  near(amplitude(2.5, 220), 5000, "the old bed is whole before its handoff");
+  assert.ok(amplitude(2.5, 880) < 10);
+  near(amplitude(3.75, 220), 5000 * Math.cos(Math.PI / 4), "halfway out at 0.75 s of 1.5");
+  assert.ok(amplitude(3.75, 880) < 10, "the new bed waits for its boundary");
+  assert.ok(amplitude(4.6, 220) < 10, "the old bed is gone just after the boundary");
+  near(amplitude(5, 880), 5000 * Math.sin(Math.PI / 4), "the new bed is halfway in at 1 s of 2");
+  for (const t of [6.5, 8, 12]) near(amplitude(t, 880), 5000, `the new bed is whole at ${t} s, through a mood with no music and one whose file is missing`);
+  // A last word at 2 s: the bed fades from there at its ducked level, never swelling back up in the pause.
+  const spoken = { ...timing, scenes: timing.scenes.map((s, i) => (i === 0 ? { ...s, sentences: [{ start: 1, duration: 1 }] } : s)) };
+  amplitude = level(spoken, { duck: 0.5 });
+  near(amplitude(3.25, 220), 2500 * Math.cos(Math.PI / 4), "ducked and halfway out at 1.25 s of 2.5");
+  // A mood with no music, and one whose file is missing, leave the bed exactly as it was.
+  const before = readWav(join(dir, "assets/music.wav")).samples.slice();
+  musicBed(dir, { file: "a.wav", volume: 0.5, duck: 0.5 }, spoken, moods.slice(0, 2));
   assert.deepEqual(readWav(join(dir, "assets/music.wav")).samples, before);
 });
 

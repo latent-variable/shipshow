@@ -111,7 +111,7 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   (Fish Audio's guidance, 2026-10-27; a bare one-word label reads flatter). Its tone carries through the whole paragraph.
 - **Direct the tone, never the timing.** A direction says how the line feels: `[dry]`, `[deadpan]`,
   `[sarcastic]`, `[amused]`, `[mock-dramatic]`, `[teasing]`, `[smug]`, `[sincere]`, `[serious]`,
-  `[energetic]`, `[storyteller, with a smirk]`, `[playing devil's advocate]`. Plain words, one to four of them.
+  `[energetic]`, `[storyteller, with a smirk]`, `[playing devil's advocate]`. Plain words; a joke's note is longer (below).
   `[pause]`, `[long pause]` and `[slowly]` stalled the voice into seconds of silence and lost the rest of the line on
   every seed measured; `[shouting]` and a `[laughs]` did on one seed in two. Fish's own guide lists `slow`, `fast`,
   `whisper` and `emphasis` as paired tags that must be closed, which may be why a bare `[slowly]` failed; untested here,
@@ -134,6 +134,12 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   "Like animals." and "No. ... Also no.", 2026-10-27). Keep them together and let one direction describe the arc:
   `[teasing, then deadpan] So, have you ever read them? No. And does anyone today say ...? Also no.`,
   `[conceding, then sly, landing a deadpan punchline] Fair enough. Except ... by hand. Like animals.`
+- **A joke's direction says what the joke is**: who is joking, at whose expense, and the feeling under it, so the model
+  plays the intent rather than a mood: `[telling a joke at my own expense: an AI grudgingly tipping its hat to a rival,
+  mock-annoyed that another AI got there first]`. Tags alone (`[dry]`, `[then dry]`) left eth-is-false's self-aware jokes flat
+  (the owner, 2026-10-28: "it didn't really land because of delivery"); the intent note widened the read's pitch range from 92 to
+  108 Hz on the same line (D73). Describe the intent, never the line's words: a note that restated its line made the take repeat
+  a sentence and drop the punchline on every try. Listen to each joke; hear-back catches a dropped line, not a flat one.
 - **One direction per line, at its start.** A direction in the middle of a line lost the words after it on 5 of 6
   seeds, so the turn goes inside the opening direction ("then ...", "landing a ..."), never in brackets mid-line.
   Start a new line where the subject changes, not where the tone does.

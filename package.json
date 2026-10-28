@@ -23,6 +23,7 @@
     "render": "node bin/render.mjs",
     "make": "node bin/make.mjs",
     "review": "node bin/review.mjs",
+    "overlaps": "node bin/overlap.mjs",
     "memes": "node bin/memes.mjs",
     "usage": "node bin/usage.mjs",
     "critics": "node bin/critics.mjs",

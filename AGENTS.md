@@ -123,7 +123,8 @@ checks it and voices one word; `-- --hearback` checks the hear-back and hears on
 | `npm run preview -- <folder>` | The HyperFrames studio, to scrub through it |
 | `npm run render -- <folder>` | `out/<name>.mp4`, the name taken from the folder's path (`--draft` for a fast pass), its audio mastered to `video.json` `loudness` (-14 LUFS by default, YouTube's; one gain and a look-ahead limiter capped at 3 dB, never compression; `false` for none; D52) |
 | `npm run make -- <folder>` | Voice, build, lint and render (`--speed 1.5` to try a pace without editing `video.json`) |
-| `npm run review -- <folder>` | The critics' evidence: `review/packet.md` and `review/frames/` (`--frames scenes` for fewer stills) |
+| `npm run review -- <folder>` | The critics' evidence: `review/packet.md` and `review/frames/` (`--frames scenes` for fewer stills); its *Overlaps* section is `overlaps`' |
+| `npm run overlaps -- <folder>` | Text over other text or over a picture, measured 0.8 s after every cue and before every scene end in headless Chrome (`bin/overlap.mjs`, D72): one OVERLAP line each and `review/overlaps.json`. `data-overlap="ok"` on an element says the scene means it |
 | `npm run package -- <folder>` | The upload folder, `out/publish/<name>/` (`--to <dir>` elsewhere): the render, `thumbnail.html` set at 1280 by 720, and `<name>-youtube.txt` with the title, the description with chapters (from the scene starts), sources and credits (`review/credits.txt` and `youtube.credits`), tags and Studio's answers, all from `video.json` `"youtube"`; it stops on anything YouTube would refuse or ignore (a title over 100 characters, a description over 5000, `<` or `>`, chapters not from 0:00, fewer than three or one under ten seconds) |
 | `npm run critics -- <folder>` | The video's critic plan: critics, models, rounds, severity, and a rough time and token estimate (`--preset`, `--rounds`, `--until`, `--model`, `--final`, `--frames`, `--rerun`, `--critics`, `--json`) |
 | `npm run memes -- <words>` | Search the memegen catalog (211 templates) by id, name, keywords or example text: id (what `data-meme` takes), lines, an example, the `source` to credit (`--refresh` refetches the cached list, `--limit N`, `--json`) |
@@ -233,8 +234,9 @@ an unknown name stops the build with its scene. Before the first, the video's ow
 from the base tokens, takes its optional theme's tokens, then its `look`. Mood theme files live under `assets/theme/<name>/`.
 Skies and explicit ambient layers crossfade over 1.2 seconds centred on the boundary; colours and plain numbers tween on the
 shared timeline, while fonts, caption tokens and other values switch at the midpoint. No `ambient` keeps the base ambient.
-Music accepts a file string or the usual object, starts at the head of its 1.5 second crossfade (so its opening fades in), and
-loops if short. Absent or missing music keeps the previous bed's playhead. No moods keeps the single-bed path. The build warns when a mood starts less than 1.2 seconds before its scene's first word
+Music accepts a file string or the usual object and loops if short. Where a mood changes the music, it hands off (D71): the old bed fades
+from the act's last word, held at its ducked level so it never swells back up, and is gone 0.5 s after the boundary; the new one
+starts from its own opening at the boundary and swells in over 2 s under the act's card. Absent or missing music keeps the previous bed's playhead. No moods keeps the single-bed path. The build warns when a mood starts less than 1.2 seconds before its scene's first word
 (`MOOD_BEAT`): give the change a beat with `leads`.
 
 **Motion.** Theme tokens `--transition` (`none`, `fade`, `rise`, `slide`, `zoom`, `wipe`,
@@ -367,7 +369,7 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ## Layout
 
 ```
-bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
+bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, overlap (text on text, measured), critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
 themes/     shipshow, paper, launch, buildday, lofi, signal, chalk and archive; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono, Bricolage Grotesque, Inter, Playfair Display, Courier Prime: SIL OFL)
 skills/     the explainer and development skills, critic-loop, publish, tailor, theme and the nine critics

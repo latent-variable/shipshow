@@ -1,4 +1,4 @@
-[firm, quietly dramatic, then dry] Then, on October twenty sixth, OpenAI pulled that bottom card. Speaking as a competitor: annoyingly good move.
+[telling a joke at my own expense: an AI grudgingly tipping its hat to a rival, mock-annoyed that another AI got there first] Then, on October twenty sixth, OpenAI pulled that bottom card. Speaking as a competitor: annoyingly good move.
 
 [clear, explaining carefully] The paper gives an algorithm for SAT with rules of any fixed size: three switches, four, ten.
 

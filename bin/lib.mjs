@@ -567,6 +567,11 @@ export function musicBed(dir, music, timing, moods = []) {
   return true;
 }
 
+/** A music handoff at a mood change (D71), in seconds: the old bed starts fading at the act's last word, but no earlier
+ *  than MUSIC_OUT_MAX and no later than MUSIC_OUT_MIN before the boundary, and is gone MUSIC_OUT_PAST after it; the new
+ *  bed swells in over MUSIC_IN from the boundary. */
+export const MUSIC_OUT_MAX = 4, MUSIC_OUT_MIN = 1, MUSIC_OUT_PAST = 0.5, MUSIC_IN = 2;
+
 /** Mix only explicit music changes; absent or missing tracks keep the previous playhead. */
 function moodMusicBed(dir, music, timing, moods) {
   const rate = 48000, tracks = [];
@@ -591,8 +596,19 @@ function moodMusicBed(dir, music, timing, moods) {
   if (!tracks.length) return false;
   const frames = Math.ceil(timing.total * rate), out = new Int16Array(frames * 2);
   const spans = timing.scenes.flatMap((s) => s.sentences.map((x) => [x.start - 0.15, x.start + x.duration + 0.25]));
+  const ends = timing.scenes.flatMap((s) => s.sentences.map((x) => x.start + x.duration));
   const clamp = (x) => Math.max(0, Math.min(1, x));
-  let si = 0, active = -1;
+  // The handoff (D71): the old bed fades out from the act's last word, held at its ducked level so it never swells back
+  // up in the pause, and is gone just after the boundary; the new bed starts from its own opening at the boundary and
+  // swells in under the act's card. Equal-power curves, so the two never pile up or leave a hole.
+  tracks.forEach((track, i) => {
+    const next = tracks[i + 1];
+    if (!next) return;
+    const last = ends.filter((e) => e <= next.start).pop() ?? next.start - MUSIC_OUT_MIN;
+    track.outFrom = Math.max(track.start, Math.min(next.start - MUSIC_OUT_MIN, Math.max(next.start - MUSIC_OUT_MAX, last)));
+    track.outTo = next.start + MUSIC_OUT_PAST;
+  });
+  let si = 0;
   for (let f = 0; f < frames; f++) {
     const t = f / rate;
     while (si < spans.length && spans[si][1] + 0.3 < t) si++;
@@ -602,19 +618,17 @@ function moodMusicBed(dir, music, timing, moods) {
       speech = Math.max(speech, t < a ? 1 - (a - t) / 0.3 : t > b ? 1 - (t - b) / 0.3 : 1);
     }
     const mixed = [0, 0];
-    while (active + 1 < tracks.length && tracks[active + 1].start - 0.75 <= t) active++;
-    let remaining = 1;
-    for (let i = active; i >= 0 && remaining > 0; i--) {
-      const track = tracks[i];
-      const enter = track.start === 0 ? 1 : clamp((t - track.start + 0.75) / 1.5);
-      let gain = enter * remaining;
-      remaining *= 1 - enter;
-      if (!gain) continue;
-      gain *= track.volume * (1 - speech * (1 - track.duck));
+    for (const track of tracks) {
+      if (t < track.start || (track.outTo !== undefined && t >= track.outTo)) continue;
+      const enter = track.start === 0 ? 1 : Math.sin((Math.PI / 2) * clamp((t - track.start) / MUSIC_IN));
+      const leaving = track.outFrom !== undefined && t >= track.outFrom;
+      const leave = leaving ? Math.cos((Math.PI / 2) * clamp((t - track.outFrom) / (track.outTo - track.outFrom))) : 1;
+      let gain = enter * leave * track.volume * (1 - (leaving ? 1 : speech) * (1 - track.duck));
       gain *= Math.min(1, t / 0.8, (timing.total - t) / 2.5);
+      if (!gain) continue;
       const n = track.samples.length / 2;
-      // A track starts at the head of its crossfade, so what fades in is its own opening, never its looped-round end.
-      const at = ((f - Math.round(Math.max(0, track.start - 0.75) * rate)) % n + n) % n * 2;
+      // A track plays from its own opening at its boundary, never its looped-round end.
+      const at = ((f - Math.round(track.start * rate)) % n + n) % n * 2;
       mixed[0] += track.samples[at] * gain;
       mixed[1] += track.samples[at + 1] * gain;
     }

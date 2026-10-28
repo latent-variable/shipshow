@@ -2,4 +2,4 @@
 
 [mock-dramatic, then deadpan] Working through the paper's own example numbers, the conditions only start to hold once the number of switches has over three billion digits. That's not a typo.
 
-[clear, measured] It's what's called a galactic algorithm: it changes what's possible in principle, not on your laptop. Or on mine. OpenAI says practical speedups will take a lot more research.
+[clear and measured, then a quick wry joke at my own expense: an AI that runs on somebody else's computers] It's what's called a galactic algorithm: it changes what's possible in principle, not on your laptop. Or on mine. OpenAI says practical speedups will take a lot more research.

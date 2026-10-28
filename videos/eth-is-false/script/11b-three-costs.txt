@@ -6,4 +6,4 @@
 
 [clear, building to the point] Read the answer off zero: the exact count, without trying every setting.
 
-[clear, then dry] Balancing the costs, how many points, how many slopes, how big the groups, brings the time down to roughly two to the n over the square root of log n. The curve that bends under every straight line.
+[clear, then dry] Tune how many points, how many slopes and how big the groups are, and the time comes down to roughly two to the n over the square root of log n. The curve that bends under every straight line.

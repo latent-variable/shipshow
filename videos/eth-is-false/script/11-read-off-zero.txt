@@ -1,5 +1,5 @@
-[clear, quietly pleased] Idea three: read the answer off zero. Because every rule is now algebra, as you turn the dial, the count traces out a smooth curve with a fixed number of bends. Mathematicians call that a polynomial, in a different sense from P.
+[clear, quietly pleased] Idea three: read the answer off zero. Because every rule is now a little formula, the count changes smoothly as you turn the dial. It traces out a curve.
 
-[clear, explaining carefully] A polynomial is pinned down once you know enough about it. Two points fix a line. This curve bends many more times than we have easy points. But knowing the slope at a point is almost like knowing another point right next to it. So at each easy point you also compute its slope, and the slope of the slope, and so on. With enough of those, the curve is pinned down.
+[clear, explaining carefully, one step at a time] Two points pin down a straight line. A curve with more bends needs more to pin it down, and this one has far more bends than we have easy points. So at each easy point, you also work out its slope, which way the curve is heading, and how fast that slope is changing, and so on. Put all of that together, and only one curve fits.
 
-[building, then quietly satisfied] Then you read off its value at zero. That's the exact count.
+[building, then quietly satisfied] Then you follow that curve back to zero, and read off its value. That's the exact count, without ever trying every setting.

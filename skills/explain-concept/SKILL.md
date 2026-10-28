@@ -87,6 +87,10 @@ omission from an oversight.
   billion billion settings; three groups of twenty, a million each; three million steps. A claim about growth is drawn as the
   growth, a translation as the thing being translated (a Sudoku's 729 switches). The owner: "you have the ability to create
   animations that help convey exactly why".
+- **Explain the hard step on the example already on screen, in plain words.** The dial in eth-is-false was "too complicated to
+  follow" twice while it spoke of rules as algebra and notes as weighted sums; the sixth cut keeps the sixty switches in groups of
+  twenty, says a note is how many of a group's twenty switches are on, so only twenty one values, and shows the multiplication as
+  a tally of three settings. The source's terms go in small type on screen, for the viewer who wants them.
 - **Memes and GIFs by default, wherever one helps a viewer hold the point** (the owner, 2026-10-27: "by default we should be
   including GIFs and memes ... making light of it usually helps convey information"; of eth-is-false's three, "the meme to
   information ratio is very low"). Plan about one a minute in a video watched by choice, spread across every act (the first and
