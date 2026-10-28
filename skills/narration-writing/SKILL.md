@@ -92,6 +92,8 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   reads well but that they would not say out loud is a finding (2026-10-27).
 - **A punchline lands on one hearing.** Plain beats clever: "Artisanal. Small batch." replaced "Like animals." and the owner
   took the original back ("I don't even know what the hell that means"). A joke the listener has to decode is not one.
+- **Describe the owner's own work at its full size**: ShipShow is "my toolkit of skills and plugins that lets AI build this
+  whole video, end to end", not "the tool that voiced this video" (the owner: "that's underselling what it's actually doing").
 - **Introduce a person by what the viewer already knows them for**: "Dijkstra, as in Dijkstra's algorithm", not a deep cut
   like "the goto considered harmful guy" (the owner, 2026-10-27).
 - **A joke is one line: setup, turn and punchline in one take.** Each line is voiced on its own, with no memory of the
