@@ -474,6 +474,11 @@
         tl.to(el, a[1], at);
       });
 
+      // Frame exits share the seekable timeline; scene visibility and camera never target this layer.
+      document.querySelectorAll("#frame [data-leave-at]").forEach((el) => {
+        tl.fromTo(el, { opacity: 1 }, { opacity: 0, duration: 0.4, immediateRender: false }, +el.dataset.leaveAt);
+      });
+
       let lastEnd = -1;
       document.querySelectorAll(".cap span").forEach((c) => {
         const t = +c.parentElement.dataset.start, e = t + +c.parentElement.dataset.duration;

@@ -239,6 +239,8 @@ from the act's last word, held at its ducked level so it never swells back up, a
 starts from its own opening at the boundary and swells in over 2 s under the act's card. Absent or missing music keeps the previous bed's playhead. No moods keeps the single-bed path. The build warns when a mood starts less than 1.2 seconds before its scene's first word
 (`MOOD_BEAT`): give the change a beat with `leads`.
 
+**Frame.** Top-level `.ss-frame` blocks outside the sections in `scenes.html` are lifted, in source order, into one full-canvas `#frame` layer. It sits over the scenes and under both `#overlay` and captions, inherits the mood's tokens, and stays present from zero to the end without scene transitions or camera pushes. Uncued elements show from the first frame. An arrival uses a scene-qualified cue, such as `data-cue="02-start:Paste"`, `data-cue="02-start:word#2"` or `data-cue="02-start:+0.3"`, resolved exactly like that scene's own cues with the usual `data-anim`. Unqualified cues and unknown scene ids stop the build naming the element. Optional `data-leave="02-start:+3"` starts a 0.4-second fade at that time. The overlap check includes frame text against scene text (DESIGN D78).
+
 **Motion.** Theme tokens `--transition` (`none`, `fade`, `rise`, `slide`, `zoom`, `wipe`,
 `flash`), `--camera` (`none`, `push`: a slow push-in per scene), `--ambient` (`none`, `glow`,
 `grid`, `dots`, `stars`, `horizon` (a lit planet rim low in the frame), `blobs` (soft pools of light that drift and breathe;

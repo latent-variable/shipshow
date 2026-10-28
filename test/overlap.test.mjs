@@ -42,3 +42,16 @@ test("overlaps: text on text is found, a full-frame cover hides, its faded edge 
     "under the faded edge | the meme's last line | 6.8-9.6",
   ]);
 });
+
+test("overlaps: persistent frame text colliding with scene text is measured", { skip: !chrome && "no Chrome" }, async () => {
+  const dir = mkdtempSync(join(tmpdir(), "shipshow-frame-overlap-"));
+  writeFileSync(join(dir, "timing.json"), JSON.stringify({ total: 5, scenes: [{ id: "s1", start: 0, duration: 5, sentences: [] }] }));
+  writeFileSync(join(dir, "index.html"), `<!doctype html><html><body style="margin: 0">
+<section data-scene="s1">${at(100, 100, "Scene words")}</section>
+<div id="frame" style="position: absolute; inset: 0; z-index: 1; pointer-events: none"><div class="ss-frame">${at(100, 100, "Series plate")}</div></div>
+<script>window.__timelines = { main: { pause() {}, seek() {} } };</script></body></html>`);
+  const found = await overlaps(dir);
+  assert.equal(found.length, 1);
+  assert.equal(found[0].scene, "s1");
+  assert.deepEqual([found[0].a, found[0].b], ["Scene words", "Series plate"]);
+});
