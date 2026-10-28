@@ -86,8 +86,8 @@
   .prize .stamp small { display: block; font-size: 26px; letter-spacing: 0.04em; margin-top: 6px; opacity: 0.85; }
   .checkers .ss-portrait { --portrait-height: 400px; }
   .checkers .namecard { height: 400px !important; width: 360px !important; }
-  .stamp.flaw { position: absolute; right: 90px; bottom: 140px; font-size: 44px; }
-  .stamp.getaway { position: absolute; right: 110px; top: 150px; font-size: 48px; }
+  .stamp.flaw { align-self: flex-start; margin-top: 6px; font-size: 40px; }
+  .stamp.getaway { position: absolute; right: 140px; bottom: 60px; font-size: 48px; }
   .race .shave { font-family: var(--font-mono); font-size: 44px; font-weight: 700; fill: var(--accent-3); }
   .preprint .who { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.12em; color: #4b5a52; }
   .preprint .title { font-family: var(--font-display); font-weight: 600; font-size: 84px; line-height: 1.05; margin-top: 18px; }
@@ -555,7 +555,7 @@
       <svg class="floorplot" viewBox="0 0 820 440" width="820" height="440">
         <line class="ax" x1="60" y1="380" x2="800" y2="380"/><line class="ax" x1="60" y1="20" x2="60" y2="380"/>
         <text x="790" y="420" text-anchor="end">n →</text><text x="74" y="44">exponent</text>
-        <g data-cue="fraction" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="70" text-anchor="end" style="fill: var(--accent-3)">ETH's floor, as an exponent: a fixed fraction × n</text></g>
+        <g data-cue="fraction" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="70" text-anchor="end" style="fill: var(--accent-3)">ETH's floor: a fixed fraction × n</text></g>
         <path class="cur" d="M60 380 C 220 230, 480 175, 800 140" data-cue="ends" data-anim="draw"/><text class="lbl" x="790" y="200" text-anchor="end" style="fill: var(--accent)" data-cue="ends" data-anim="fade">n / √log n</text>
         <circle cx="641" cy="160" r="12" style="fill: var(--bad)" data-cue="every" data-anim="pop"/>
         <text x="420" y="420" text-anchor="middle">schematic</text>
@@ -645,8 +645,8 @@
         <div class="bus" data-cue="note" data-anim="grow">a note: a few weighted sums of each group's switches</div>
         <div class="panel" data-cue="few" data-anim="up">try every note<small>for each one, count every group <span id="alone10" data-cue="alone." data-anim="highlight">alone</span></small></div>
         <span id="catch10" data-cue="catch?" data-anim="fade"></span>
-        <div class="stamp flaw" data-cue="answer." data-anim="slam" data-sfx="scratch">the plan has one flaw</div>
         <div class="nozero" data-cue="catch?" data-anim="pop">✗ at T = 0 this shortcut doesn't apply</div>
+        <div class="stamp flaw" data-cue="answer." data-anim="slam" data-sfx="scratch">the plan has one flaw</div>
       </div>
     </div>
   </div>
