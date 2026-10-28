@@ -15,7 +15,7 @@ measurement date unless noted.
 | Skill front matter in use | `name`, `description` only | Also: `allowed-tools`, `disable-model-invocation`, `when_to_use`, `paths`, `context: fork`, `hooks` |
 | `agents/critic.md` | `tools` allowlist (Read, Grep, Glob, Bash, Skill), `model: inherit`, "told not to write", no `maxTurns`, no hooks | `disallowedTools`, `maxTurns`, scoped `hooks`, an explicit `model` |
 | Hooks (updated 2026-10-28) | Bash, file and Stop hooks are wired in `.claude/settings.json`; the docs-rule and reporting hooks remain open | 33 events; command, prompt, agent and http handlers |
-| `.claude/` (updated 2026-10-28) | `.claude/settings.json` and `.claude/hooks/*.mjs` are tracked. `.gitignore` ignores generated `.claude/skills/` links and `settings.local.json`; it also has narrow patterns for the tracked settings and hook files. | Project settings and rules are meant to be committed |
+| `.claude/` (updated 2026-10-28) | `.claude/settings.json` and `.claude/hooks/*.mjs` are tracked. `.gitignore` ignores only the generated `.claude/skills/` links and `settings.local.json`. | Project settings and rules are meant to be committed |
 | Evals | none; checks are `npm test` and six hand-run red-team rounds | `claude plugin eval` exists (Claude Code 2.1.302) with `--ablation with-without` |
 | Run data | `npm run usage` reads transcripts; nothing joins it to a video or a critic round | Record tokens, tool calls, runtime and errors per run |
 | Judges | Sonnet only, same family as the builder | Anthropic's sources do not name self-preference bias (**unconfirmed** there); they do say a fresh context keeps a reviewer unbiased toward code it just wrote |
@@ -66,8 +66,7 @@ the never-delete rule and protect the sample, recorded evidence, and lockfile; t
 docs-stay-current rule remains prose plus CI, and the sandbox and reporting hooks below are still open.
 
 2.0 **Done: commit project settings.** `.claude/settings.json` and `.claude/hooks/*.mjs` are tracked; generated
-    `.claude/skills/` links and `.claude/settings.local.json` are ignored. `.gitignore` also has narrow patterns for the
-    tracked settings and hook files.
+    `.claude/skills/` links and `.claude/settings.local.json` are ignored.
 2.1 **Done: PreToolUse guard on Bash** (`.claude/settings.json`, command hook, exit 2 with a reason on a match): `rm -r`,
     `rm -f`, `git restore`, `git checkout --`, `git clean`, `git push --force`, `git reset --hard`. This repo's rule is
     "scripts never delete files"; the project hook adds this guard to Claude Code sessions. *Source:* hooks guide
