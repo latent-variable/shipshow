@@ -205,3 +205,35 @@ at most 4 rounds; grounding's round 2 pass stands while the Lean excerpt is unch
   manager is now sourced (D).
 - **Pipeline.** Both listeners flagged "ETH." as unheard because they wrote it "E.T.H.": the missing-sentence check now joins spelled
   letters (DESIGN D60).
+
+## Round 6: 1 blocking, 10 major; seven critics, Sonnet (accuracy and consistency pass)
+
+| Critic | Verdict | Blocking | Major | Minor |
+|---|---|---|---|---|
+| accuracy | pass | 0 | 0 | 3 |
+| clarity | fail | 0 | 2 | 2 |
+| pacing | fail | 0 | 6 | 3 |
+| sync | fail | 0 | 1 | 1 |
+| visuals | fail | 1 | 0 | 3 |
+| consistency | pass | 0 | 0 | 3 |
+| engagement | fail | 0 | 1 | 2 |
+
+**Fixed:**
+- **Visuals (blocking).** The $1,000,000 stamp landed on the 88% poll: the scene now dims under it. The prize also opens 04, on "a
+  million dollar puzzle" (sync: seven seconds had nothing on screen).
+- **Clarity.** Both bridges are said aloud: "A base above one is just two to some fraction of n" before the floor in 08; "Move two makes
+  them split anyway", and "switches are only on or off, so a note has few possible values" in 10. "First, the setup" before the algebra;
+  "the count" traces the curve in 11.
+- **Engagement.** "The plan has one flaw" (with a scratch) after the catch in 10, "clean getaway" on the exact count in 11; 07 opens on
+  "Hundreds of papers built on that bet".
+- **Pacing.** Less to read: the sum's footnote, the 12 card's footnote, the 13b card, one line for the pulled papers, and the Lean excerpt
+  dims once its two lines are read. Pauses after 07 (0.5) and 11b (0.6) keep every gap under 2 s.
+- **Accuracy and consistency.** "In a pair of 2001 papers"; "over three billion digits"; DNF5 and libsolv sourced; the checkers are "the
+  checking team" everywhere (a "group" is a block of switches); "ETH's floor, as an exponent".
+
+**Declined, with reasons:**
+- Pacing's overall syllable rate (not raised this round, recorded here): the narrator reads briskly at any setting; slowed from the
+  audition's 1.2 to 1.1, the packet's target falls with it. The owner picked this voice by ear; his listen decides.
+- Pacing's "read by" chains (14, 12, 09) assume every card is read in order after the last; the packet also counts SVG geometry as text
+  (P5-5, P6-9). The cards were shortened; the chains themselves are a measurement limit.
+- Sync's late ding after the galaxy-brain meme: it lands on "right?", the punchline, on purpose.
