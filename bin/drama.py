@@ -218,6 +218,11 @@ def main(spec_path):
     if not ref_text:
         raise SystemExit(f"Drama 3 needs the words spoken in {clip}: write them in a .txt beside it "
                          f"(faster-whisper, which would hear them, is not installed: npm run setup:drama)")
+    import mlx.core as mx
+    # MLX keeps every freed GPU buffer in a cache to reuse, with no limit unless one is set: one video's takes grew this
+    # process to 114 GB (113 GB of it that cache; the 4-bit model is about 24 GB), eth-is-false, 2026-10-27. Cap the cache,
+    # and empty it after each take. The audio does not change.
+    mx.set_cache_limit(int(float(os.environ.get("SHIPSHOW_DRAMA_CACHE_GB", "2")) * 1024 ** 3))
     model = load_model(model_path(spec["model"]))
     ref = {"ref_audio": str(clip), "ref_text": ref_text}
     for i, job in enumerate(spec["jobs"], 1):
@@ -247,7 +252,9 @@ def main(spec_path):
         hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [f'not heard: "{s}"' for s in gone] + [f'spelled out: heard the letters "{g}"' for g in spelled] + ([fault] if fault else []), timing)
         if job.get("keyFile"):
             Path(job["keyFile"]).write_text(job["key"])   # kept: a run stopped after this keeps this take
+        mx.clear_cache()
         print(f"voiced {i}/{len(spec['jobs'])}" + (f" ({got:.0%} heard back)" if got is not None else "")
+              + f", GPU {mx.get_active_memory() / 1024 ** 3:.0f} GB in use, {mx.get_peak_memory() / 1024 ** 3:.0f} GB peak"
               + (f", {timing['matched']}/{timing['words']} words timed from what was heard" if timing else ""), flush=True)
 
 

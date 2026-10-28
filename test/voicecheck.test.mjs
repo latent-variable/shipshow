@@ -324,7 +324,7 @@ print(json.dumps([
 test("drama: when every seed stalls, the take with the shortest stall is kept with its fault instead of stopping the video", { skip: !numeric && "no python with numpy and soundfile" }, () => {
   const r = python(numeric, `
 import sys, types, numpy as np
-sys.modules["mlx"] = types.ModuleType("mlx"); core = types.ModuleType("mlx.core"); core.random = types.SimpleNamespace(seed=lambda s: None)
+sys.modules["mlx"] = types.ModuleType("mlx"); core = types.ModuleType("mlx.core"); core.random = types.SimpleNamespace(seed=lambda s: None); core.set_cache_limit = lambda n: None; core.clear_cache = lambda: None; core.get_active_memory = lambda: 0; core.get_peak_memory = lambda: 0
 sys.modules["mlx.core"] = core; sys.modules["mlx"].core = core
 import drama
 sr = 24000; rng = np.random.default_rng(2)
@@ -377,7 +377,7 @@ test("drama: a take that spells out letters is voiced again, and kept with the f
   writeFileSync(join(dir, "model", "config.json"), "{}");
   const r = spawnSync(numeric, ["-c", `import sys; sys.path.insert(0, ${JSON.stringify(BIN)})
 import json, types, numpy as np, soundfile as sf
-sys.modules["mlx"] = types.ModuleType("mlx"); core = types.ModuleType("mlx.core"); core.random = types.SimpleNamespace(seed=lambda s: None)
+sys.modules["mlx"] = types.ModuleType("mlx"); core = types.ModuleType("mlx.core"); core.random = types.SimpleNamespace(seed=lambda s: None); core.set_cache_limit = lambda n: None; core.clear_cache = lambda: None; core.get_active_memory = lambda: 0; core.get_peak_memory = lambda: 0
 sys.modules["mlx.core"] = core; sys.modules["mlx"].core = core
 heard = {"lines": []}
 class Model:
