@@ -535,3 +535,41 @@ What changed:
   pace on the owner's lines; "who built Fortran" is what the next scenes lean on); "He's right" after OCaml (words the owner did not
   say); the archive screenshots' address bars and side bands, 02's and 08's empty right side while a card is still to come, and the
   chip padding (minor looks, no reading lost); Backus sepia against Dijkstra in colour (each photo as Commons has it).
+
+### Round 4, the plan's cap (fresh agents: accuracy, pacing, sync on Sonnet; clarity, visuals, engagement on Opus; consistency passed round 3 and its ground moved only by a card's kicker): 0 blocking, 5 major; accuracy, clarity, sync and engagement pass
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 3 |
+| clarity | pass | 0 / 0 / 4 |
+| pacing | fail | 0 / 4 / 3 |
+| sync | pass | 0 / 0 / 4 |
+| visuals | fail | 0 / 1 / 5 |
+| engagement | pass | 0 / 0 / 3 |
+
+### After the cap: fixes with no new voice, checked by the builder in the render
+
+- **Visuals' major:** the Karpathy capture is smaller (560 px) and set lower, clear of the stage strip, with a one-line tag
+  ("Karpathy, who coined vibe coding · Jan 2026") above the caption band.
+- The act cards for the archive and now start with their beat (+0.0 to +0.35 s), so the sky's crossfade never shows bare grey.
+- The hook's headline leaves under the meme; DHH's and antirez's quotes arrive on "hasn't" and "hand" (sync, visuals);
+  "IBM grading its own homework" arrives on "grading" (engagement: it was read 4 s before it was said); "the cloned voice says
+  thanks" is stamped on its line (engagement).
+- Two more beats: after "Here's how I do it." and after "Same here." (pacing).
+- `sources.md`: the octal meme's text, the astronaut meme as a joke on "most", the bug's engine and line.
+
+### Left open at the cap, for the owner
+
+- **Pacing, major, declined:** 12-verify, 12a-loop and 13-close read 260 to 280 syllables a minute while speaking, against a
+  target of 210. The words are already cut once each round; what is left is how the clone reads these lines at its own pace (1.0).
+  Slowing the clone below its pace, cutting more of the owner's method, or splitting the close's callback from its setup (the joke
+  rule) are his calls. Everything before the workshop now measures 186 to 259.
+- **Pacing, major, declined:** 10-skeptics runs 40.2 s, 0.2 s over the bar, with the three builders and "Same here"; a beat now
+  separates the turn.
+- **Pacing and visuals, minor, declined:** 02's and 05's rate; the roast card a little narrower than the ladder; the bullet marker
+  and address bars on the archive captures; the grey edge of a light-to-dark sky crossfade, now carried by the cards (a darker
+  crossfade path would be a kit change); the scratch 0.4 s before the "Wait" meme (the sound rule will not let it move later).
+- **Clarity, minor, held for the owner (each would re-voice his line):** "stage four: it's the bar", "beat the optimizer" for "beat
+  the machine", splitting the OCaml sentence, "don't take the output on trust".
+- **Engagement, minor, declined:** the argument's turn arrives at 13.2 s, past this video's 10-second bar, because "Fair enough."
+  now gets its breath; the charge itself is on screen from 0.1 s.
