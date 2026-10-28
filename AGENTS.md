@@ -386,6 +386,7 @@ local/      gitignored, per person (tailor skill)
 
 ## Traps
 
+- **Another repo may be running this code with its own layer** (D75): `SHIPSHOW_LOCAL` (its `local/`), `SHIPSHOW_VENVS` (where `.venv*` live), `SHIPSHOW_OUT` (renders) and `SHIPSHOW_VIDEOS` (its video folders, for `memesUsed`). Read paths through `localDir()`, `VENVS` and `outDir()` in `bin/lib.mjs`, never `join(REPO, "local")`, `.venv` or `out` directly, or a repo on top silently reads ours.
 - **Kokoro's Python is this repo's `.venv`**, passed to `hyperframes tts` as `HYPERFRAMES_PYTHON` (`bin/lib.mjs` `ttsEnv`). A user-set `HYPERFRAMES_PYTHON` wins.
 - **`requirements.txt` pins phonemizer.** kokoro-onnx 0.6.1 needs `EspeakWrapper.set_data_path`, which phonemizer 3.3 lacks. Bump the two together and run `npm run doctor`.
 - **espeak-ng fails when its data path is 160 characters or longer** (measured 2026-10-17: 159 works, 160 fails). It reports a missing `.../site-packages//phontab`, not a path error. A venv deep in a temp or worktree path hits this; `doctor` checks the length.

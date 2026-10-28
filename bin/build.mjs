@@ -14,7 +14,7 @@
 // video's own styles, and video.json "flair" overrides the theme's motion. Captions are the
 // script's own words, one line at a time. Writes index.html, meta.json, assets/vendor/gsap.min.js
 // and assets/theme/ (the theme's fonts and images).
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { MEME_FONTS_CSS, memeScene } from "./meme.mjs";
 import { portraitScene } from "./portrait.mjs";
@@ -138,7 +138,6 @@ for (const w of moodWarnings) console.warn(w);
 const styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n");
 const script = [...src.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join("\n");
 const seen = new Set(), bodies = [];
-let usesMemes = false;
 const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<\/section>/g)].map(async (m) => {
   const id = (m[1].match(/data-scene="([^"]+)"/) || [])[1];
   if (!id) die(`scenes.html has a <section> with no data-scene: <section${m[1]}>`);
@@ -147,7 +146,6 @@ const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<
   seen.add(id);
   // bin/shot.mjs: a screenshot of a real page; bin/portrait.mjs: a Commons photo and its credit; bin/meme.mjs: a meme figure's picture and text boxes; an animated one is a video that starts at its cue and runs to the scene's end
   const withMemes = await memeScene(await portraitScene(await shotScene(m[2], dir, id), dir, id), dir, id, { start: scene.start, end: round(scene.start + scene.duration - 0.01), at: (cue) => cueTime(scene, cue, `scene ${id}`) });
-  usesMemes ||= withMemes !== m[2] && /data-(meme|clip)=/.test(m[2]);   // the meme fonts, for a still, an animated template or a clip
   const body = withMemes.replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
   // 10 ms short of the next scene: scenes share a track, and touching ends read as an overlap.
   const attrs = m[1].replace(/\s*class="([^"]*)"/, "");
@@ -163,6 +161,9 @@ const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<
 const missing = timing.scenes.filter((s) => !seen.has(s.id)).map((s) => s.id);
 if (missing.length) die(`scenes.html has no <section data-scene> for: ${missing.join(", ")}`);
 
+// kit/base.css names the meme fonts on every page, so every page declares and ships them, meme or not: a page that
+// named them undeclared failed hyperframes lint on a video with no meme (#103).
+cpSync(join(REPO, "kit", "fonts"), join(dir, "assets", "memes", "fonts"), { recursive: true });
 const music = musicBed(dir, cfg.music, timing, moods);
 let sfx = null;
 try { sfx = sfxTrack({ dir, cfg, timing, sections: bodies, script }); } catch (e) { die(`sound effects: ${e.message}`); }
@@ -175,7 +176,7 @@ const html = readFileSync(join(REPO, "kit", "shell.html"), "utf8")
   .replace("{{base}}", () => readFileSync(join(REPO, "kit", "base.css"), "utf8"))
   .replace("{{flair}}", () => flairCss(cfg.flair))
   .replaceAll("{{seed}}", String(cfg.seed ?? seedFor(basename(dir))))
-  .replace("{{styles}}", () => (usesMemes ? MEME_FONTS_CSS + "\n" : "") + styles)
+  .replace("{{styles}}", () => MEME_FONTS_CSS + "\n" + styles)
   .replace("{{scenes}}", () => sections.join("\n"))
   .replace("{{captions}}", () => captions())
   .replace("{{moods}}", () => moods.length ? `const MOODS = ${JSON.stringify(moods).replace(/</g, "\\u003c")};\n` : "")

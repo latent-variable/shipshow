@@ -7,7 +7,10 @@ import { fileURLToPath } from "node:url";
 
 export const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const HF = join(REPO, "node_modules", ".bin", "hyperframes");
-export const VENV_PY = join(REPO, ".venv", "bin", "python");
+// Where this repo's own Python venvs live: here, unless SHIPSHOW_VENVS names a folder for them. A repo that builds on
+// ShipShow (it pins a copy and sets SHIPSHOW_LOCAL to its own layer) shares one set across every checkout that way.
+export const VENVS = process.env.SHIPSHOW_VENVS || REPO;
+export const VENV_PY = join(VENVS, ".venv", "bin", "python");
 
 /** Whether a Python can be run: a path that exists, or a bare command (`python3`, which a person may set
  *  in HYPERFRAMES_PYTHON) found on PATH. */
@@ -57,7 +60,10 @@ export function flag(name, argv = process.argv) {
   }
 }
 
-const localDir = () => process.env.SHIPSHOW_LOCAL || join(REPO, "local");
+/** The person's or team's own layer: local/ here, or the folder SHIPSHOW_LOCAL names (a repo that builds on ShipShow). */
+export const localDir = () => process.env.SHIPSHOW_LOCAL || join(REPO, "local");
+/** Where renders and upload folders go: out/ here, or the folder SHIPSHOW_OUT names. */
+export const outDir = () => process.env.SHIPSHOW_OUT || join(REPO, "out");
 
 /** This person's settings, local/config.json (tailor skill): {speed, voice, theme, sfx}. */
 export function localConfig() {
@@ -115,9 +121,9 @@ const OMNI_SPEEDS = [1.0, 1.3];  // the range it was tested at; mlx-audio's own 
 // names a folder that already holds it. It reads at its own pace, slower than ShipShow's base (a 15 s clone of the owner:
 // about 130 words a minute), and has no speed control, so a take is time-stretched to `speed` after it is made.
 export const DRAMA = { repo: "mlx-community/fish-audio-drama-3-4bit", revision: "cc639e27aba7edb73429d3e3806f471dcd79d316" };
-export const DRAMA_PY = join(REPO, ".venv-drama", "bin", "python");
+export const DRAMA_PY = join(VENVS, ".venv-drama", "bin", "python");
 // The optional second listen (bin/listen.py): Parakeet on MLX hears the finished narration (npm run setup:listen).
-export const LISTEN_PY = join(REPO, ".venv-listen", "bin", "python");
+export const LISTEN_PY = join(VENVS, ".venv-listen", "bin", "python");
 const DRAMA_SPEEDS = [0.8, 1.5];
 
 /** A voice for the omnivoice engine: a clone (local/voices/<name>.wav, and <name>.txt beside it
@@ -721,10 +727,12 @@ export function masterLoudness(file, target) {
   if (tags === stamp) return null;
   const m = measureLoudness(file, target);
   const before = Number(m.input_i), peak = Number(m.input_tp);
-  const gain = Math.min(target - before, TRUE_PEAK + MAX_LIMIT - peak);
-  const limited = Math.max(0, peak + gain - TRUE_PEAK);
-  // the limiter's ceiling sits 0.5 dB under the true-peak line: it works on samples, and a reconstructed peak can sit a little higher
-  const ceiling = (10 ** ((TRUE_PEAK - 0.5) / 20)).toFixed(4);
+  // the limiter's ceiling sits 0.5 dB under the true-peak line: it works on samples, and a reconstructed peak can sit a
+  // little higher. The gain is budgeted against that ceiling, so the limiter takes at most MAX_LIMIT (#104).
+  const line = TRUE_PEAK - 0.5;
+  const gain = Math.min(target - before, line + MAX_LIMIT - peak);
+  const limited = Math.max(0, peak + gain - line);
+  const ceiling = (10 ** (line / 20)).toFixed(4);
   const tmp = file.replace(/\.mp4$/, ".mastering.mp4");
   const af = `volume=${gain.toFixed(2)}dB,alimiter=limit=${ceiling}:attack=5:release=50:level=false`;
   const r = spawnSync("ffmpeg", ["-hide_banner", "-y", "-v", "error", "-i", file, "-map", "0", "-c:v", "copy", "-af", af, "-ar", "48000", "-c:a", "aac", "-b:a", "192k", "-metadata", `comment=${stamp}`, "-movflags", "+faststart", tmp], { encoding: "utf8" });

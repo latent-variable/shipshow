@@ -401,7 +401,9 @@ export function memesIn(html) {
 export function memesUsed(root = REPO) {
   const used = new Map();
   const local = process.env.SHIPSHOW_LOCAL || join(root, "local");
-  for (const base of [join(root, "videos"), join(local, "videos")]) {
+  // SHIPSHOW_VIDEOS: more folders of videos, separated by ":" (a repo that builds on ShipShow keeps its own).
+  const more = (process.env.SHIPSHOW_VIDEOS || "").split(":").filter(Boolean);
+  for (const base of [join(root, "videos"), join(local, "videos"), ...more]) {
     if (!existsSync(base)) continue;
     for (const name of readdirSync(base)) {
       const f = join(base, name, "scenes.html");
