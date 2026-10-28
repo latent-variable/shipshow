@@ -20,6 +20,9 @@ with no rewind; the frames for what they see alongside it.
 - **blocking:** the viewer cannot tell what the video is about within its first scene.
 - **blocking:** a release video that never says what the viewer must do (upgrade, change
   this call, nothing), or says it so vaguely they could not act on it.
+- **major:** a comparison the viewer cannot make: two things measured in different units, or one of them never measured
+  (checking "is fast" against solving in "two to the n" steps), or a result shown on a picture the viewer has not seen before
+  when one they have would place it (`explain-concept`, *Compare like for like*).
 - **major:** a term, acronym or concept used before it is explained, or never explained,
   that this viewer would not know.
 - **major:** a scene that carries two ideas, or an order that makes the viewer hold

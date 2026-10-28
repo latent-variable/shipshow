@@ -4,7 +4,7 @@
 // knowyourmeme page, to credit in sources.md) and an example of what goes in the lines.
 // The catalog is cached (SHIPSHOW_MEMES_CACHE); --refresh fetches it again. bin/meme.mjs has the env vars.
 import { die, flag } from "./lib.mjs";
-import { catalog, search } from "./meme.mjs";
+import { catalog, memesUsed, search } from "./meme.mjs";
 
 const argv = process.argv.slice(2);
 const refresh = argv.includes("--refresh");
@@ -20,9 +20,11 @@ if (json) {
 } else if (!hits.length) {
   console.log(`no template matches "${words.join(" ")}" among ${list.length}; try fewer or other words`);
 } else {
+  const used = memesUsed();
   for (const t of hits.slice(0, limit)) {
     const ex = (t.example?.text || []).map((x) => `"${x}"`).join(" / ");
-    console.log(`${t.id}  ${t.name}  (${t.lines} line${t.lines === 1 ? "" : "s"})\n    e.g. ${ex}\n    ${t.source}`);
+    const seen = used.get(t.id);
+    console.log(`${t.id}  ${t.name}  (${t.lines} line${t.lines === 1 ? "" : "s"})${seen ? `  · already used in ${[...seen].join(", ")}` : ""}\n    e.g. ${ex}\n    ${t.source}`);
   }
   console.log(`\n${Math.min(limit, hits.length)} of ${hits.length} shown (${list.length} templates). Use <figure class="ss-meme" data-meme="<id>"> with one <span> per line.`);
 }

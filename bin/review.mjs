@@ -9,7 +9,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { basename, join } from "node:path";
 import { createHash } from "node:crypto";
 import { BASE_SPM, BASE_WPM, HF, REPO, config, die, reviewPlan, round, run, syllables, videoDir } from "./lib.mjs";
-import { memesIn } from "./meme.mjs";
+import { memesIn, memesUsed } from "./meme.mjs";
 import { creditLines, portraitsIn } from "./portrait.mjs";
 import { shotsIn } from "./shot.mjs";
 import { listenSection, voiceCheckSection } from "./hearback.mjs";
@@ -134,7 +134,9 @@ out.push(md(cues.map((c) => {
 const memes = memesIn(html);
 if (memes.length) {
   out.push("## Memes", "", "Each meme is a third-party picture, fetched at build: a memegen template, or a clip (GIF, MP4 or WebM) the figure names. Credit it in `sources.md` (template and source), and judge that its text is short and readable (`critic-visuals`). An animated one is a video the build made, starting at its cue and looping to the end of its scene.", "");
-  out.push(md(memes.map((x) => [`\`${x.id}\``, x.clip ? "animated" : "still", x.name, x.clip && x.clip !== x.source ? `${x.source} (clip: ${x.clip})` : x.source, x.lines.map((l) => l || "(blank)").join(" / ")]), ["template", "kind", "name", "source", "lines"]), "");
+  const used = memesUsed(), me = basename(dir);
+  const others = (x) => [...(used.get(x.clip ?? x.id) || [])].filter((v) => v !== me).join(", ") || "";
+  out.push(md(memes.map((x) => [`\`${x.id}\``, x.clip ? "animated" : "still", x.name, x.clip && x.clip !== x.source ? `${x.source} (clip: ${x.clip})` : x.source, x.lines.map((l) => l || "(blank)").join(" / "), others(x)]), ["template", "kind", "name", "source", "lines", "also in"]), "");
 }
 const portraits = portraitsIn(html);
 if (portraits.length) {

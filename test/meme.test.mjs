@@ -11,7 +11,7 @@ import { join } from "node:path";
 import { test } from "node:test";
 import { promisify } from "node:util";
 import { REPO } from "../bin/lib.mjs";
-import { boxPlacement, cropRect, gifFrames, imageSize, memesIn, parseConfig, parseCrop, search } from "../bin/meme.mjs";
+import { boxPlacement, cropRect, gifFrames, imageSize, memesIn, memesUsed, parseConfig, parseCrop, search } from "../bin/meme.mjs";
 
 const FIX = join(REPO, "test", "fixtures", "memegen");
 const tiny = readFileSync(join(FIX, "templates", "tiny", "config.yml"), "utf8");
@@ -347,4 +347,20 @@ test("a crop is read as sides and sizes, and kept to even pixels", () => {
   assert.deepEqual(cropRect(null, 40, 20), { x: 0, y: 0, w: 40, h: 20 });
   assert.throws(() => parseCrop("top"), /expected a side and a size/);
   assert.throws(() => cropRect(parseCrop("top 95%"), 64, 96), /leaves 64x5 px/);
+});
+
+test("memesUsed says which videos already use a template or a clip, across videos/ and local/videos/", () => {
+  const root = mkdtempSync(join(tmpdir(), "kx-used-"));
+  const put = (rel, html) => { mkdirSync(join(root, rel), { recursive: true }); writeFileSync(join(root, rel, "scenes.html"), html); };
+  put("videos/a", '<figure class="ss-meme" data-meme="drake"></figure><figure class="ss-meme" data-clip="https://i.imgflip.com/x.mp4"></figure>');
+  put("videos/b", '<figure class="ss-meme" data-meme="drake"></figure>');
+  put("local/videos/c", '<figure class="ss-meme" data-meme="gru"></figure>');
+  const prev = process.env.SHIPSHOW_LOCAL; delete process.env.SHIPSHOW_LOCAL;
+  try {
+    const used = memesUsed(root);
+    assert.deepEqual([...used.get("drake")].sort(), ["a", "b"]);
+    assert.deepEqual([...used.get("https://i.imgflip.com/x.mp4")], ["a"], "a clip is keyed by its URL");
+    assert.deepEqual([...used.get("gru")], ["c"], "a video about another code base counts too");
+    assert.equal(used.get("pooh"), undefined);
+  } finally { if (prev !== undefined) process.env.SHIPSHOW_LOCAL = prev; }
 });

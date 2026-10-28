@@ -65,6 +65,24 @@ can be hard to hear. Write for the ear, then check it against the clock.
   matches no spoken word and the build stops.
 - **One name per thing, throughout** (`glossary`). Do not vary words for style.
 
+## Who is talking, and how it is funny
+
+**A narrator that is an AI says so, and is funny from there.** When a synthetic voice explains someone else's work (an
+explainer, not an essay in a person's own voice), the narrator is the AI that made the video: it says what it is, once, early
+("I'm an AI too. Claude, made by Anthropic"), and its humor comes from that vantage when it is natural: an AI explaining
+another AI's work, the competition, the humans watching ("trust the checkers, not the AIs. Either of us"). Never an empty
+voice that only wants to please (the owner, eth-is-false, 2026-10-28: "be self-aware ... own it").
+
+**Funny, never cringe.** The joke is in the idea, said plainly. The owner's list of what reads as cringe, 2026-10-28, and why:
+- slang worn like a costume: "cracking SAT", "a heist in three moves", "the getaway" ("like when the teacher tries to say some
+  Gen Z lingo");
+- labels that tell the viewer how to feel: "a very rude title";
+- a metaphor used before it is set up: "card on card" before saying ETH is the bottom card of a house of cards. Say the
+  analogy plainly first, then use it;
+- "somebody" for a known actor: name them ("OpenAI pulled that bottom card") and the date;
+- a stake nobody watching has: "does your SAT solver get faster?" Ask what the viewer feels (is encryption broken?), even
+  if the answer is no, and answer it straight.
+
 ## For the ear
 
 - Short sentences, subject first, none that needs a second hearing. A sentence that holds a

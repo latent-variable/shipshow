@@ -79,11 +79,22 @@ omission from an oversight.
   music). Open each act on a hook, a question or a turn, never a signpost like "so how does it work". Show what failure
   looks like and why it matters to someone, not only the case that works. `critic-engagement` judges these (the owner,
   2026-10-27).
+- **Compare like for like, on one picture that comes back.** When two things are compared (checking an answer against
+  finding one), give both in the same unit, with numbers ("about n steps" against "two to the n tries"), on one chart, and
+  bring that chart back when the result lands, so the new thing is placed in a picture the viewer already holds (the owner,
+  2026-10-28: "it might just go over their head if we're not intentional about comparing apples to apples").
+- **Every mechanism gets numbers and an animation of why.** Not "split into groups and multiply": sixty switches, about a
+  billion billion settings; three groups of twenty, a million each; three million steps. A claim about growth is drawn as the
+  growth, a translation as the thing being translated (a Sudoku's 729 switches). The owner: "you have the ability to create
+  animations that help convey exactly why".
 - **Memes and GIFs by default, wherever one helps a viewer hold the point** (the owner, 2026-10-27: "by default we should be
   including GIFs and memes ... making light of it usually helps convey information"; of eth-is-false's three, "the meme to
   information ratio is very low"). Plan about one a minute in a video watched by choice, spread across every act (the first and
   last minutes too), at least one of them moving (`data-clip`), each tied to what the voice is saying at that moment, never
-  decoration. A meme that replaces a stamp or a chip saying the same thing is better than both. Leave it time to be read
+  decoration. A meme that replaces a stamp or a chip saying the same thing is better than both. A meme is the most compressed way to say one
+  idea, not decoration (the owner, 2026-10-28): a recap meme (a galaxy brain of the steps) is held and walked through panel by
+  panel, each with what it changed. And vary them: `npm run memes` and the packet's *Memes* table say which videos already use a
+  template or a clip; a template another of the person's videos used is a finding (`critic-engagement`). Leave it time to be read
   (`pauses`), and lay it on a scrim over its scene. A decision video someone is waiting on mid-work is the exception: one at
   most, if it lands.
 

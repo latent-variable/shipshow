@@ -25,7 +25,7 @@
 // <span class="top"> or <span class="bottom">, or first and second in order.
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { cpSync, existsSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, isAbsolute, join, resolve } from "node:path";
 import { REPO, die, round } from "./lib.mjs";
@@ -393,6 +393,27 @@ export function memesIn(html) {
       ...(clip === undefined ? {} : { clip: un(clip) }),
     };
   });
+}
+
+/** Which videos already use each meme: a Map from a template id or a clip URL to the video folders whose scenes.html
+ *  names it, across videos/ and local/videos/. A viewer who sees the same three templates in every video tires of them
+ *  (the owner, 2026-10-28), so `memes` and the review packet say where one has been used. */
+export function memesUsed(root = REPO) {
+  const used = new Map();
+  const local = process.env.SHIPSHOW_LOCAL || join(root, "local");
+  for (const base of [join(root, "videos"), join(local, "videos")]) {
+    if (!existsSync(base)) continue;
+    for (const name of readdirSync(base)) {
+      const f = join(base, name, "scenes.html");
+      if (!existsSync(f)) continue;
+      const html = readFileSync(f, "utf8");
+      for (const m of html.matchAll(/data-(?:meme|clip)="([^"]+)"/g)) {
+        if (!used.has(m[1])) used.set(m[1], new Set());
+        used.get(m[1]).add(name);
+      }
+    }
+  }
+  return used;
 }
 
 // ---- the catalog ----
