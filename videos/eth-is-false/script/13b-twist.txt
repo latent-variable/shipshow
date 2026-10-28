@@ -1,3 +1,3 @@
-[measured, then dry] And that house of cards? Those hundreds of papers just lost one of their reasons. Some land on weaker assumptions that may still hold. And no, your diff tool didn't get faster.
+[measured] Back to the house of cards. Those hundreds of results just lost one of their reasons. Some will stand on weaker assumptions that may still hold.
 
-[playful, then quietly smug] One more twist. Ryan Williams proved that if ETH is false, some problems can't be solved by any small circuit, the kind of hardware that grows only in step with its input. So if this holds, a faster algorithm also proves that something else is hard.
+[playful, then quietly smug] And one more twist. Ryan Williams proved that if ETH is false, some problems can't be solved by any small circuit, the kind of hardware that grows only in step with its input. So if this holds, a faster algorithm also proves that something else is hard.

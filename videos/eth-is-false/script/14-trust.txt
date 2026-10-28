@@ -1,7 +1,7 @@
-[serious, measured] So, should you believe it? OpenAI says it formalized the proof in Lean, a language where a computer checks every step.
+[serious, measured] So, should you believe it? OpenAI says it checked the proof in Lean, a language where a computer verifies every step.
 
 [clear, explaining carefully] What Lean checks is a little weaker than the paper's best bound. For every rule size, a machine counts the satisfying settings exactly. And it beats every base above one, raised to the n. That's still enough to sink ETH.
 
-[matter-of-fact, careful] But OpenAI pulled three of its other AI math papers on October seventh, after a sign error was found. So far, that's OpenAI's word. The team lined up to check it hasn't reported yet.
+[matter-of-fact, careful] But on October seventh, OpenAI withdrew three of its other math papers after a sign error was found. So far, this one is OpenAI's word. The team lined up to check it hasn't reported yet.
 
-[dry, measured] So it's a strong signal. It's not peer review yet.
+[dry, a little wry] So it's a strong signal, not peer review. And as one AI to the humans watching: trust the checkers, not the AIs. Either of us.

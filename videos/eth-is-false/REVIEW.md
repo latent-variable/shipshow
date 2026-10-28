@@ -327,3 +327,34 @@ in every direction (DESIGN D68). Measured against the side-by-side he chose: med
 heard "The catch?" as "Bakch?" (Whisper heard it right). 14.2 minutes: the voice takes its time.
 
 No critic round: no word changed since round 9, and the voice is checked by both listeners and the measurements above.
+
+# The fifth cut (2026-10-28)
+
+The owner watched the fourth cut through and sent one long set of notes (`critics.md`, *The owner's notes on the fourth cut*):
+cringe lines, an under-sold hook, a muddled exponent comparison, no like-for-like picture of checking against solving,
+splitting and "translating into SAT" asserted rather than shown, memes as afterthoughts and reused, a circus-like bed. The
+script was rewritten around them; a self-aware narrator (an AI explaining another AI's proof); two schematic charts, one of
+them (digits of the step count) carried from P versus NP into the middle ground; a slice chart where every exponential is flat
+and the new bound falls under each; sixty switches split into three groups of twenty; a Sudoku as SAT; the galaxy brain held as
+a narrated recap; fourteen memes, none another video uses, five of them moving; a calmer puzzle bed (ACE-Step, seed 11, heard
+for vocals by Parakeet: none). 17.4 minutes.
+
+## Round 10: one round, three critics on Sonnet (about 300k tokens)
+
+| Critic | Verdict | Major | Minor |
+|---|---|---|---|
+| accuracy | fail | 2 | 3 |
+| clarity | fail | 3 | 3 |
+| engagement | fail | 3 | 2 |
+
+**Fixed:** encryption is said within its sources ("nothing here is practical yet, so nothing about encryption changes
+today"), and the slice chart carries no crossing numbers ("the shape only: the real crossings come astronomically later";
+"starts out above the record" cut); the withdrawn manuscripts are "math papers"; "working through the paper's own example
+numbers". The digits chart says each digit is ten times the work and stays up through P and NP; the dial shows a rule reading
+one small number in place of another group's switches; why counts multiply, and why slopes stand in for points, said plainly.
+The hook keeps its three questions open; the narrator speaks for itself in the middle (a competitor's aside, the Sudoku line,
+"not on your laptop. Or on mine."); Fry replaces Sweet Brown; the Xbox caption states the consequence; the still stretches in
+03 and 13 now move. No second round: nothing blocking, and the owner asked for restraint (critic-loop, *Spend*).
+
+**Accepted:** "roughly two to the n over the square root of log n" for Theorem 1.1's bound (12 names the log log factor); the
+nails meme's three lines.

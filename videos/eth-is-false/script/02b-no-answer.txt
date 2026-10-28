@@ -1,4 +1,4 @@
-[curious, a little intrigued] And sometimes, there's no answer at all. Take two switches. That gives four settings. Now add four rules, each one ruling out a different setting.
+[curious, a little intrigued] And sometimes there's no answer at all. Take two switches. That gives four settings. Now add four rules, each one ruling out a different setting.
 
 [quiet, matter-of-fact] Every setting breaks something. Nothing works.
 

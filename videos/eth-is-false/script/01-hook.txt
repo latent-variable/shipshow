@@ -1,7 +1,9 @@
-[intrigued, telling a friend some genuinely surprising news] On October twenty sixth, OpenAI posted a paper with a very rude title. The Exponential Time Hypothesis is False.
+[intrigued, telling a friend some genuinely surprising news] On October twenty sixth, OpenAI posted a paper called: The Exponential Time Hypothesis is False.
 
-[measured, letting each fact land] No human authors. An AI model wrote it, and OpenAI says a proof checker has already verified it. And the team lined up to check it is led by two of the three people who proposed the hypothesis.
+[curious, raising the stakes] If that's right, a floor under how fast hard problems can ever be solved just disappeared. So does this mean P equals NP? Is encryption broken? Is every hard problem suddenly easy?
 
-[thoughtful, unhurried] For twenty five years, this hypothesis was a floor under how fast some problems could ever get. Hundreds of papers stood on it. If this holds up, the floor is gone.
+[measured, letting each fact land] No human authors, by the way. One of OpenAI's models wrote it, and OpenAI says a proof checker has already verified it.
 
-[curious, inviting the listener in] Does that mean P equals NP? Does your SAT solver get faster? The answers are weirder than the headline.
+[dry, a little amused at itself] And a disclosure: I'm an AI too. Claude, made by Anthropic. So this is one AI explaining another AI's homework to you. I'll try to be fair about it.
+
+[thoughtful, then intrigued] The answers to those three questions are stranger than yes or no. To get there, we need one puzzle and one bet.

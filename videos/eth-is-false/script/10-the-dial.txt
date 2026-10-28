@@ -1,5 +1,5 @@
-[storyteller, measured] Move two makes them split anyway. Add a dial, T. It slides from the problem you want to problems you can count. At T equals zero, it's exactly the original problem.
+[clear, measured] Idea two: a dial. Add a dial, T, that slides between the problem you want and problems that do split. At T equals zero, it's exactly the original problem, rules crossing everywhere.
 
-[clear, explaining carefully] At easy points, one, two, three and so on, each rule stops reading other groups' switches directly. It reads a note instead: a few weighted sums of their switches. Switches are only on or off, so a note has few possible values, few enough to try them all. With the notes fixed, every group is counted alone.
+[clear, explaining carefully] At a few easy settings of the dial, one, two, three and so on, the rules are rewritten so a rule no longer reads the other groups' switches directly. It reads a short note about them instead: a total, like how many of their switches are on. Switches are only on or off, so each note has only a few possible values. The easy points are exactly the ones where that rewrite is possible. Try every value of the notes, and for each one, the groups really are separate, so you can count them the fast way.
 
-[dry, understated] The catch? That only works at the easy points, never at zero. The one place you need the answer.
+[dry, understated] The catch: that only works at the easy points of the dial. Never at zero, the one point you actually need. I'll admit, I read this part of the paper more than once.

@@ -19,6 +19,8 @@ Lines marked **ours** are arithmetic done for this video on a source's numbers, 
 | I | F. Copty, L. Fix, R. Fraer, E. Giunchiglia, G. Kamhi, A. Tacchella, M. Y. Vardi, "Benefits of Bounded Model Checking at an Industrial Setting", CAV 2001, LNCS 2102, p. 436. Abstract: Thunder "performs BMC on top of a new satisfiability solver, SIMO"; "Real designs, taken from Intel's Pentium 4 ... were validated" | abstract, lsv.ens-paris-saclay.fr/Events/cav01/Abstracts/88.html, 2026-10-27 |
 | D | Wikipedia, "DNF (software)": "DNF has been the default package manager for Fedora since Fedora 22, released in May 2015"; "DNF uses libsolv, an external dependency resolver (developed by openSUSE)"; "Since the launch of Fedora Linux 41, DNF5 is the new default packaging tool"; and github.com/rpm-software-management/dnf5 `README`: "DNF5 is also powered with the libsolv library" | page text, 2026-10-27 |
 | M | Clay Mathematics Institute, Millennium Prize Problems (claymath.org/millennium-problems/): "$1 million allocated to the solution of each problem"; P vs NP listed as unsolved, only the Poincaré Conjecture solved | page text, 2026-10-27 |
+| W | Wikipedia, "P versus NP problem", *Consequences of solution*: "A solution showing P = NP could upend the field of cryptography, which relies on certain problems being difficult"; a footnote: how efficient a solution must be "to pose a threat to cryptography depends on the details" | page text, 2026-10-28 |
+| K | G. Kwon and H. Jain, "Optimized CNF Encoding for Sudoku Puzzles" (CMU): "A Sudoku puzzle can be regarded as a propositional SAT problem"; a variable (r, c, v) "is true if and only if the cell in row r and column c" holds v | PDF text, 2026-10-28 |
 | C1 | Commons, File:2012-06-15 Stephen A. Cook.jpg, orcmid, CC BY 2.0 | file page |
 | C2 | Commons, File:Russell Impagliazzo at the DIMACS Workshop on Cryptography.jpg, BöhmMartin, CC BY-SA 4.0 (2016) | file page |
 | C3 | Commons, File:Ryan Williams at Dagstuhl 10441.jpg, Thore Husfeldt (uploader; the description credits Alexander S. Kulikov as photographer), CC BY-SA 3.0 (2010) | file page |
@@ -97,6 +99,14 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 10 | "Switches are only on or off, so a note has few possible values, few enough to try them all" | P section 2.4: with 0/1 inputs and bounded integer coefficients the measurements take at most (2D+1)^(2τn) values, 2^(O(n/r)) in all, subexponential (section 2.6) |
 | 08 | "a fixed slice of n" is the third cut's plain word for the fixed fraction below; "about a quarter of n" at a million switches is the same 1/√ln(10^6) = 0.27 | **ours**, wording |
 | 13b | "no small circuit, the kind of hardware that grows only in step with its input": Corollary C.1's circuits of linear size, said plainly | P Appendix C.1 |
+| 01 | "I'm an AI too. Claude, made by Anthropic": the video was written by Claude (Opus 5.5, Anthropic) | the making of this video |
+| 01, 13 | "And encryption? It rests on certain problems staying hard in practice, and nothing here is practical yet. So nothing about encryption changes today." | W (cryptography "relies on certain problems being difficult"; the threat "depends on the details"); "nothing practical yet": B ("will require significant further research") and the 12 rows |
+| 04 | Checking an answer: read every rule once, roughly n steps when there are a few rules per switch; finding one by trying everything: up to 2ⁿ tries | standard; P section 1 ("checking a candidate assignment") and the 02 rows |
+| 04, 05 | The digits chart: the height is how many digits the step count has (log scale); polynomials flatten, 2ⁿ is a straight line, 2^√n bends under every straight line eventually | **ours**, schematic: the shapes of log(steps), not their scale; labelled so on screen |
+| 08 | The slice chart: every c^n is 2^(slice × n), a fixed slice, drawn flat; the new bound's slice falls like 1/√log n, under every fixed slice in turn; "the real crossings come astronomically later" | **ours**, schematic, no numbers on the n axis: constants and the log log factor left out; "astronomically later": the 12 rows (conditions hold past about three billion digits in the worked example) |
+| 09 | Sixty switches: 2⁶⁰ ≈ 1.15 × 10¹⁸, "about a billion billion"; three groups of twenty: 2²⁰ = 1,048,576 each, "about a million"; three million steps | **ours**, arithmetic; the split itself is P section 2.2's example |
+| 13 | A Sudoku as SAT: one switch per cell and digit (is row 1, column 3 a six?), 9 × 9 × 9 = 729; rules: one digit per cell, no repeats in a row, column or box | K; 729 is ours |
+| 15 | "a 67-page proof" | P: 67 pages |
 | 08 | ETH says the exponent can never drop below some fixed fraction of n (time 2^(δn) for some δ > 0); n/√log n ends up below δn for every δ > 0 once n is big enough | P section 1.1.1, ETH as 2^Ω(n); **ours**: n/√log n ÷ n = 1/√log n → 0 |
 | 10 | A note is "a few weighted sums of" a group's switches | P section 2.2 to 2.3: "shared linear summaries", built from the replacement linear forms Σ p(T)·X (weighted sums of the variables); "a few" because the measurements are few (section 2.4) |
 | 08 | It counts exactly; counting (#SAT) is #P-complete, harder than deciding | P section 1.1.2: "#SAT and #3-SAT are #P-complete" [Val79]; "Testing #F > 0 also decides satisfiability" |
@@ -141,15 +151,19 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 04, 05, 14 | Portraits: Cook (C1), Impagliazzo (C2), Williams (C3) | Commons, credits drawn on each photo |
 | 11b | Galaxy Brain meme (memegen `gb`, knowyourmeme.com/memes/galaxy-brain) | third-party template, fetched at build, never committed |
 | 07 | This Is Fine meme (memegen `fine`, gunshowcomic.com/648, K.C. Green): "hundreds of papers, one hypothesis / this is fine" | third-party template, fetched at build, never committed |
-| 12 | Drakeposting meme (memegen `drake`, knowyourmeme.com/memes/drakeposting) | third-party template, fetched at build, never committed |
-| 02 | Typing kitty, a moving GIF (imgflip.com/gif-templates, `https://i.imgflip.com/4bd1a0.mp4`): "me, trying / all two to the n settings" | third-party clip, fetched at build, never committed |
-| 03 | Panik Kalm Panik (memegen `panik-kalm-panik`, knowyourmeme.com/memes/panik-kalm): "2⁹⁰ settings / solvers skip cleverly / the hardest cases don't let you" | third-party template, fetched at build, never committed |
-| 06 | Stonks (memegen `stonks`): "27 years of records / −0.026" (1999 to 2026, 1.3333 − 1.3070, as above) | third-party template |
-| 08b | No no no wait wait wait, a moving GIF (`https://i.imgflip.com/6inpzl.mp4`): "ETH and its whole family / one paper, if it holds" | third-party clip |
-| 12 | IShowSpeed hands over face, a moving GIF (`https://i.imgflip.com/atgx12.mp4`, cropped): "a number of switches / with 3.3 billion digits" | third-party clip |
-| 13 | Is This a Pigeon? (memegen `pigeon`, knowyourmeme.com/memes/is-this-a-pigeon): "everyone online / a faster SAT algorithm / is this P = NP?" | third-party template; **opinion**, a joke |
-| 14b | Hide the Pain Harold (memegen `harold`, knowyourmeme.com/memes/hide-the-pain-harold): "proposing ETH, 2001 / proofreading its obituary, 2026" | third-party template |
-| 15 | Nanami vibing (Jujutsu Kaisen), a moving GIF (`https://i.imgflip.com/873a5j.mp4`): "my SAT solver / unchanged, still fine" | third-party clip |
+| 01 | Spider-Man Pointing at Spider-Man (memegen `spiderman`): "an AI, explaining / an AI's proof" | third-party template, fetched at build, never committed |
+| 03 | What Year Is It? (memegen `whatyear`): "brute-forcing ninety switches / what year is it?" | third-party template |
+| 04 | Tuxedo Winnie the Pooh (memegen `pooh`): "finding an answer: try all 2ⁿ settings / checking someone's answer: read the n rules" | third-party template |
+| 06 | Guy Hammering Nails Into Sand (memegen `nails`): "25 years of records / 1.333ⁿ → 1.307ⁿ / still a straight line" | third-party template |
+| 08 | Xbox achievement unlocked, a moving GIF (imgflip.com/gif-templates, `https://i.imgflip.com/83oypi.mp4`): "achievement unlocked / ETH's floor: removed" | third-party clip |
+| 09 | Gru's Plan (memegen `gru`): "split the switches into groups / count each group fast / rules cross between groups" | third-party template |
+| 10 | That Would Be Great (memegen `officespace`): "yeah, if the dial could also work at zero / that would be great" | third-party template |
+| 11b | Galaxy Brain (memegen `gb`), held as the recap, one panel per step | third-party template |
+| 12 | Futurama Fry (memegen `fry`): "not sure if a galactic algorithm / or just very, very patient" | third-party template |
+| 13 | Jim Halpert Pointing to Whiteboard (memegen `jim`): "every Sudoku / is secretly a SAT problem"; Homer backs into the bushes, a moving GIF (`https://i.imgflip.com/2txtm1.mp4`): "ETH / after October 26" | third-party template and clip |
+| 14 | Kurt Angle stare, a moving GIF (`https://i.imgflip.com/89540b.mp4`): "the checking team / reading OpenAI's proof" | third-party clip |
+| 14b | Grant Gustin Next To Oliver Queen's Grave (memegen `grave`): "here lies ETH, 2001 to 2026 / (blank) / OpenAI's model" | third-party template |
+| 15 | Fast guy explaining, a moving GIF (`https://i.imgflip.com/4uapcv.mp4`): "me, explaining a 67-page proof / in one page" | third-party clip |
 
 ## Voice
 

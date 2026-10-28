@@ -1,5 +1,5 @@
-[warm, setting out a puzzle for a curious friend] Try this puzzle. A row of switches, each one on or off. And a list of rules. Each rule names a few switches, and at least one of them has to be set its way.
+[warm, setting out a puzzle for a curious friend] Start with a puzzle. A row of switches, each one on or off. And a list of rules. Each rule names a few switches, and at least one of them has to be set its way.
 
-[clear, unhurried] Find a setting that makes every rule happy. That's SAT. When every rule names three switches, it's 3-SAT.
+[clear, unhurried] Find a setting that makes every rule happy. That's SAT. When every rule names three switches, it's called 3-SAT.
 
 [thoughtful] Checking an answer is easy. Finding one seems hard. With n switches, there are two to the n settings.
