@@ -99,17 +99,19 @@ function scan({ minOpacity, minShare }) {
   // touch (built-on-shipshow's cards, 2026-10-28; product-videos' paper notes before it). So a pair under a common
   // transformed ancestor is measured with that ancestor's transform and rotate set to none, then restored exactly. A scale
   // or a shift changes nothing by this, since both are measured in the same space; only a rotation's grown boxes go.
+  // Every common ancestor with a transform is cleared, not only the nearest: a shifted wrapper inside a rotated card
+  // would otherwise leave the card's rotation on both lines.
   const untilted = (a, b) => {
-    let t = null;
-    for (let e = a.el.parentElement; e && !t; e = e.parentElement) {
+    const ts = [];
+    for (let e = a.el.parentElement; e; e = e.parentElement) {
       const cs = getComputedStyle(e);
-      if (e.contains(b.el) && (cs.transform !== "none" || (cs.rotate && cs.rotate !== "none"))) t = e;
+      if (e.contains(b.el) && (cs.transform !== "none" || (cs.rotate && cs.rotate !== "none"))) ts.push(e);
     }
-    if (!t) return null;
-    const keep = ["transform", "rotate"].map((k) => [k, t.style.getPropertyValue(k), t.style.getPropertyPriority(k)]);
-    t.style.setProperty("transform", "none", "important"); t.style.setProperty("rotate", "none", "important");
+    if (!ts.length) return null;
+    const keep = ts.map((t) => [t, ["transform", "rotate"].map((k) => [k, t.style.getPropertyValue(k), t.style.getPropertyPriority(k)])]);
+    for (const t of ts) { t.style.setProperty("transform", "none", "important"); t.style.setProperty("rotate", "none", "important"); }
     try { return shared(rectsOf(a), rectsOf(b)); }
-    finally { for (const [k, v, pr] of keep) { if (v) t.style.setProperty(k, v, pr); else t.style.removeProperty(k); } }
+    finally { for (const [t, props] of keep) for (const [k, v, pr] of props) { if (v) t.style.setProperty(k, v, pr); else t.style.removeProperty(k); } }
   };
   const found = [];
   for (let i = 0; i < visible.length; i++) for (let j = i + 1; j < visible.length; j++) {
