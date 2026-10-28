@@ -195,10 +195,10 @@
     "studio": {
       "Audience": "No, it's not made for kids",
       "Paid promotion": "No",
-      "Altered or synthetic content": "Yes: the narration is a clone of my own voice (your call; the video says so itself)",
+      "Altered or synthetic content": "No: the owner's call (his own cloned voice saying his own words, and the video says it is a clone)",
       "Category": "Science & Technology",
       "Language": "English",
-      "Visibility": "your call"
+      "Visibility": "Public"
     }
   }
 }

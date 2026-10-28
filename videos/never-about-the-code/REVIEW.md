@@ -627,3 +627,9 @@ back on compilers too". Major: the title repeated the thumbnail and never said A
 Coding Gets Roasted"; a false alternative title struck. Minor, taken: the cadence line folded, Hopper's source credited to its
 author, the vibe-coding post and the Copilot page added to the sources, every meme named, and photo credits now read "John Backus:
 photo by ..." (ShipShow `creditLines` uses the caption's name, for every video).
+
+## Published (2026-10-27)
+
+Lino uploaded it to his personal channel the same night, with "altered or synthetic content" marked No (his own cloned voice,
+his own words, disclosed in the video). The upload folder moved to `~/Movies/Explainers/shipshow/youtube/uploaded/2026-10-27
+never-about-the-code/`. The link goes in `video.json` `"youtube"` `"url"` when it is recorded. ShipShow's first published video.
