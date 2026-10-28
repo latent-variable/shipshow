@@ -47,6 +47,7 @@ The skills in `skills/` are the team's baseline. Each person tailors on top of t
 | `explain-handoff` | Return a finished video with its status, next step and open questions |
 | `explainer-video` | Make or update a video. You are the builder |
 | `critic-loop` | Judge a video with fresh critics, fix, repeat until they pass; add a new critic |
+| `publish` | Put a finished video on YouTube: title, thumbnail, description, the upload folder, then the link recorded |
 | `tailor` | Record how one person wants their explainers, in `local/` |
 | `theme` | Make a theme, usually from a client's brand |
 | `critic-accuracy`, `critic-clarity`, `critic-pacing`, `critic-sync`, `critic-visuals`, `critic-consistency`, `critic-engagement`, `critic-decision`, `critic-grounding` | Be one critic, when the loop assigns you |
@@ -369,7 +370,7 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
 themes/     shipshow, paper, launch, buildday, lofi, signal, chalk and archive; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono, Bricolage Grotesque, Inter, Playfair Display, Courier Prime: SIL OFL)
-skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
+skills/     the explainer and development skills, critic-loop, publish, tailor, theme and the nine critics
 template/   what npm run new copies
 videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino-long.wav exists, with Drama 3 set up) and eth-is-false (OpenAI's ETH preprint explained, for the same channel, read by an invented Drama 3 narrator, `local/voices/eth-narrator.wav`, on the chalk theme)
 examples/   ledgerly, a fictional invoicing API with one authorization bug, a threat model and an access log
