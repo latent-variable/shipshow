@@ -471,3 +471,33 @@ What changed:
 - **Declined:** METR's three ideas (now two scenes), "Quattro" unexplained, and "a lot of code merged" without a number (the card
   gives it) are the owner's lines, kept in earlier cuts; the Backus and Dijkstra cards' reading time (the photo and the marked line
   carry them; the longer gaps add time); the lunch card's tilt (a joke beat).
+
+### Round 2 (fresh agents, Sonnet: all seven): 0 blocking, 6 major; accuracy, consistency and visuals pass
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 4 |
+| clarity | fail | 0 / 1 / 4 |
+| pacing | fail | 0 / 2 / 2 |
+| sync | fail | 0 / 1 / 4 |
+| consistency | pass | 0 / 0 / 5 |
+| visuals | pass | 0 / 0 / 7 |
+| engagement | fail | 0 / 2 / 3 |
+
+What changed:
+- **"That's the eighty percent"** pointed, by ear, at the bug story: now "Catching that is the other eighty percent" (clarity).
+- **A 75 s stretch with no joke** (Fort Knox to lunch): the bug story ends dry, "My cloned voice says thanks", and the hook's
+  punchline gets an "artisanal · small batch" stamp and a thump (engagement).
+- **Breath.** "Same here." ran 0.14 s into the next line (no quiet point for a breath inside the take): it is its own line now.
+  Scene breaks inside an act held 2.2 to 2.5 s of silence, longer than they need and stealing the act beats' contrast: those
+  pauses trimmed to 0.1 to 0.6 s. The bug line and the lunch line lost a clause each (pacing).
+- **Sync.** The full METR chart in one packet still was the still's capture, not the video: the render at 245.4 s and 249.0 s shows
+  empty axes and then the "half the time" note, on their words. Closed. The round chips arrive on their words, the check on "left";
+  the Dafoe meme leaves sooner so the error bars show; 03b's pause 0.3 to 0.6 s so the quote is read.
+- **Minor, taken:** "the other 80%: review" in both places; "pull request #14369"; the archive kicker in ink; a larger caption under
+  the PR #77 capture; air in the machine-word line; a swish on the close's kicker; the meme and round-chip rows in `sources.md`.
+- **Declined:** 12a-loop and 13-close still read 270 to 280 syllables a minute while speaking. That is the voice's own delivery of
+  the owner's method and close at speed 1.0; cutting more of his words, or slowing his clone below its pace, are his calls. 02 and
+  05 (257, 259), the same. Karpathy's descriptor at 03b (the post shows his name and photo), "almost nobody can" (beat what is in
+  the line before), three names in 10, the 04 card's three-line layout (each act's card is its own), step 5's large card (12b is its
+  own scene), the close quote's size.

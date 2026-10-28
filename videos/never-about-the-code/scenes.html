@@ -181,7 +181,7 @@
   .call .four { display: flex; gap: 18px; }
   .call .four span { font-family: var(--font-display); font-weight: 800; font-size: 50px; letter-spacing: -0.02em; padding: 14px 26px; white-space: nowrap; border: 3px solid var(--line); border-radius: 18px; }
   .call .four span b { color: var(--accent-3); margin-right: 14px; }
-  .unread { font-family: var(--font-mono); font-size: 44px; color: var(--muted); text-align: center; }
+  .unread { font-family: var(--font-mono); font-size: 44px; line-height: 1.5; color: var(--muted); text-align: center; }
   .unread s { color: var(--muted); text-decoration-color: var(--accent); text-decoration-thickness: 3px; }
   .big-step { display: grid; grid-template-columns: 90px 1fr; gap: 26px; align-items: center; width: 1300px; margin: 0 auto; padding: 34px 44px; font-size: 64px; font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; }
   .big-step .n { color: var(--accent-3); font-size: 96px; }
@@ -192,6 +192,7 @@
   .chapter .title { font-family: var(--font-display); font-weight: var(--display-weight, 800); font-size: 168px; line-height: 1; color: var(--accent); letter-spacing: var(--display-tracking, -0.02em); }
   .chapter .rule { width: 520px; height: 6px; border-radius: 3px; background: var(--accent-3); transform-origin: center; }
   .chapter.file .title { color: var(--ink); }
+  .chapter.file .kicker { color: var(--ink); font-weight: 700; }
   .chapter.neon .kicker { color: var(--ink); }
   .ask-kicker { font-family: var(--font-mono); font-size: 40px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); text-align: center; }
   .chapter.file .tab { font-family: var(--font-mono); font-size: 34px; padding: 10px 34px; border: 3px solid var(--frame, var(--ink)); border-bottom: none; border-radius: 12px 12px 0 0; background: var(--card); color: var(--accent); }
@@ -211,6 +212,7 @@
     <div class="scrim"></div>
     <figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="wrote" data-anim="pop"><span class="top">1950s programmers</span><span class="bottom">hand-crafted octal, no compiler added</span></figure>
   </div>
+  <div class="stamp hl" data-cue="Artisanal." data-anim="slam" data-sfx="thump" data-sfx-offset="2.15" style="position: absolute; right: 90px; top: 34px; font-size: 56px; transform: rotate(4deg); z-index: 5">artisanal · small batch</div>
 </section>
 
 <section data-scene="02-compiler">
@@ -489,7 +491,7 @@
 </section>
 
 <section data-scene="11b-ocaml">
-  <div class="zone full" style="top: 60px; bottom: auto" data-cue="+0.1" data-anim="fade"><div class="tag center">OCaml · PR #14369 · 13K lines, closed unmerged · a maintainer, Nov 2025</div></div>
+  <div class="zone full" style="top: 60px; bottom: auto" data-cue="+0.1" data-anim="fade"><div class="tag center">OCaml · pull request #14369 · 13K lines, closed unmerged · a maintainer, Nov 2025</div></div>
   <div class="diffstat" id="dstat" data-cue="thirteen" data-anim="slam" data-sfx="thump" data-sfx-offset="0.3"><span class="add">+<span data-cue="thirteen" data-anim="count">13,323</span></span> <span class="del">&minus;0</span> <small>lines to review</small></div>
   <div class="zone full" id="ocA" data-cue="+0.1" data-anim="up" style="top: 130px"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="hard to review, and very lightly tested" data-width="1100" data-pad="8" data-mark-cue="lightly" style="--shot-max-height: 760px"></figure></div></div>
   <div class="zone full" id="ocB" data-cue="passes" data-anim="up" style="top: 130px; display: flex; align-items: center"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="only 20% of the work, the other 80% are to get the feature discussed, reviewed and integrated" data-lines="0" data-width="1100" data-pad="8" data-mark-cue="only" style="--shot-max-height: 640px"></figure></div></div>
@@ -504,7 +506,7 @@
   </div>
   <div class="overlay" id="review" data-cue="bug" data-anim="fade">
     <div class="zone full" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 40px">
-      <div class="col" style="width: 1500px; flex: none; margin: 0 auto"><figure class="ss-shot" data-shot="https://github.com/latent-variable/shipshow/pull/77" data-select="#pullrequestreview-5662968608 h3:has(+ table), #pullrequestreview-5662968608 table" data-find="blocks clones without a transcript" data-width="700" data-pad="10" data-mark-cue="transcript" style="--shot-max-height: 600px"><figcaption>the last review round on ShipShow's pull request #77: the bug, resolved</figcaption></figure></div>
+      <div class="col" style="width: 1500px; flex: none; margin: 0 auto"><figure class="ss-shot" data-shot="https://github.com/latent-variable/shipshow/pull/77" data-select="#pullrequestreview-5662968608 h3:has(+ table), #pullrequestreview-5662968608 table" data-find="blocks clones without a transcript" data-width="700" data-pad="10" data-mark-cue="transcript" style="--shot-max-height: 600px"><figcaption style="font-size: 30px">the last review round on ShipShow's pull request #77: the bug, resolved</figcaption></figure></div>
       <div class="row" style="gap: 60px; justify-content: center">
         <span class="stamp" data-cue="refused" data-anim="slam" data-sfx="thump" style="font-size: 56px">cloned voice: refused</span>
         <span class="stamp good" data-cue="caught" data-anim="slam" data-sfx="ding" style="font-size: 56px">caught before merge &check;</span>
@@ -515,13 +517,13 @@
 
 <section data-scene="12a-loop">
   <div class="stage">
-    <div class="punch big" id="p80" data-cue="eighty" data-anim="pop" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px; color: var(--accent-3)">the other 80%: making sure it works</div>
+    <div class="punch big" id="p80" data-cue="eighty" data-anim="pop" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px; color: var(--accent-3)">the other 80%: review</div>
     <div class="punch big" id="h12" data-cue="Here's" data-anim="up" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px">the loop, on every feature</div>
     <div class="flow" id="flow">
       <div class="steps-list">
         <div class="step card" data-cue="tell" data-anim="left"><span class="n">1</span><span>I say what the feature has to do</span></div>
         <div class="step card" data-cue="builds" data-anim="left"><span class="n">2</span><span>the agent builds it, and tests it</span></div>
-        <div class="step card" data-cue="review" data-anim="left"><span class="n">3</span><span>another model reviews the pull request<small>round after round, until nothing serious is left</small><span class="rounds" data-cue="round" data-anim="stagger"><b>round 1</b><b>round 2</b><b class="done">round 3 &check;</b></span></span></div>
+        <div class="step card" data-cue="review" data-anim="left"><span class="n">3</span><span>another model reviews the pull request<small>round after round, until nothing serious is left</small><span class="rounds"><b data-cue="round" data-anim="pop">round 1</b><b data-cue="round," data-anim="pop">round 2</b><b class="done" data-cue="left." data-anim="pop">round 3 &check;</b></span></span></div>
         <div class="step card" data-cue="standing" data-anim="left"><span class="n">4</span><span>standing tests and checks<small>they know the project</small></span></div>
       </div>
       <div class="side">
@@ -560,7 +562,7 @@
 
 <section data-scene="13-close" data-mood="today">
   <div class="stage">
-    <div class="ask-kicker" data-cue="+0.2" data-anim="fade">so, the answer</div>
+    <div class="ask-kicker" data-cue="+0.2" data-anim="fade" data-sfx="swish">so, the answer</div>
     <div class="ask big" data-cue="+0.6" data-anim="fade" style="font-size: 88px; color: var(--accent)">“You don't understand the code.”</div>
     <div class="ask big" data-cue="agree," data-anim="slam" style="font-size: 104px">just agree.</div>
     <div class="ticks" data-cue="show" data-anim="stagger"><span>✓ reviewed</span><span>✓ tested</span><span>✓ verified</span></div>
@@ -589,7 +591,7 @@
   tl.to("#m08", { opacity: 0, duration: 0.3 }, cueAt("#m08") + 2.2);
   tl.to("#metr1", { opacity: 0, duration: 0.3 }, cueAt("#metr2") - 0.3);
   tl.to("#half", { opacity: 0, duration: 0.3 }, cueAt("#twelve") - 0.35);
-  tl.to("#m09", { opacity: 0, duration: 0.3 }, cueAt("#m09") + 2.0);
+  tl.to("#m09", { opacity: 0, duration: 0.3 }, cueAt("#m09") + 1.6);
   tl.to("#s3", { opacity: 0, duration: 0.3 }, cueAt("#k26") - 0.3);
   tl.to("#k26", { opacity: 0, duration: 0.3 }, cueAt("#p-dhh") - 0.3);
   tl.to("#pair", { opacity: 0, duration: 0.3 }, cueAt("#me") - 0.3);
