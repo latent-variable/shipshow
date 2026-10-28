@@ -1,5 +1,5 @@
-[sly, quietly pleased] Move three, the getaway. Because every rule is now algebra, as you turn the dial, the count traces out a smooth curve, a polynomial in T.
+[clear, quietly pleased] Idea three: read the answer off zero. Because every rule is now algebra, as you turn the dial, the count traces out a smooth curve, a polynomial in T.
 
-[clear, explaining carefully] And a polynomial is pinned down once you know enough about it. Two points fix a line. But this curve has far more bends than we have points. So at each easy point, you also compute its slope, the slope of the slope, and so on, to make up the difference.
+[clear, explaining carefully] A polynomial is pinned down once you know enough about it. Two points fix a line. This curve bends many more times than we have easy points, so at each easy point you also compute its slope, and the slope of the slope, and so on. With enough of those, the curve is pinned down.
 
-[building, then quietly smug] Do that at one, two, three and so on, solve for the curve, and read off its value at zero. That's the exact count.
+[building, then quietly satisfied] Then you read off its value at zero. That's the exact count.

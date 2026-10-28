@@ -1,5 +1,5 @@
-[storyteller, unhurried] And for twenty five years, the evidence looked good. Trying everything is two to the n. In 1999, Schöning's random walk got 3-SAT down to about one point three three to the n. Still exponential, but way smaller than two.
+[storyteller, unhurried] And for twenty five years, the evidence agreed. Trying everything is two to the n. In 1999, Schöning's random walk got 3-SAT down to about one point three three to the n. Still exponential, but much smaller than two.
 
-[dry, understated] A few more records since, down to one point three oh seven, in a preprint this year. Every one shaved a hair. Nobody got near one.
+[dry, understated] A few records since, down to one point three oh seven, in a preprint this year. Each one lowered the slope of the line a little. None of them left the family of straight lines.
 
-[serious, firm, letting it land] ETH says there's a line nobody will ever cross. The base has a floor above one, and no algorithm gets under it.
+[serious, firm, letting it land] ETH says none ever will. There's a floor above one, and no algorithm gets under it.

@@ -1,5 +1,7 @@
-[sly, intrigued] Count every setting, without trying every setting? It's a heist, in three moves.
+[curious, inviting] So how do you count every setting without trying every one? Three ideas, stacked.
 
-[clear, unhurried, explaining to a curious friend] First, the setup. Write each rule as a little piece of algebra that's one when the rule is happy and zero when it isn't. Multiply them, and the product is one only when every rule is happy. Add that up over every setting, and you get the exact count. Still two to the n terms.
+[clear, unhurried, explaining to a curious friend] First, a setup. Write each rule as a little piece of algebra that equals one when the rule is happy and zero when it isn't. Multiply all the rules together, and the product is one only when every rule is happy. Add that product up over every setting, and you get the exact count. Still two to the n terms, though.
 
-[curious, then deadpan] Move one. Imagine the switches split into separate groups, with no rule crossing between them. Then you count each group on its own and multiply. Several small brute forces instead of one giant one. Real problems don't split like that. Rules cross everywhere.
+[clear, letting the numbers land] Idea one: split. Take sixty switches. That's two to the sixty settings, about a billion billion. Now suppose the switches fell into three separate groups of twenty, with no rule touching two groups. Each group has two to the twenty settings, about a million. Count each group, a million steps each, and multiply the three counts. Three million steps instead of a billion billion.
+
+[dry, understated] The catch: real problems don't split like that. Rules cross between groups everywhere.

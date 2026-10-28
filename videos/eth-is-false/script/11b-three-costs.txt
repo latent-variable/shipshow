@@ -1,3 +1,9 @@
-[matter-of-fact, then dry] The hard part is the costs. More points mean fewer slopes at each one, but bigger notes. Smaller groups mean less to count, but bigger notes again. Turn one knob, and another one bites.
+[clear, warm, walking back through it] Here's the whole climb in one picture. Try every setting: two to the n.
 
-[clear, then deadpan] Balance them, and the exponent drops to roughly n over the square root of log n. Simple, right?
+[clear, unhurried] Split into groups: fast, but only when the problem splits.
+
+[clear, unhurried] Add a dial: now it splits, at the easy points.
+
+[clear, building to the point] Read the answer off zero: the exact count, without trying every setting.
+
+[clear, then dry] Balancing the costs, how many points, how many slopes, how big the groups, brings the time down to roughly two to the n over the square root of log n. The curve that bends under every straight line.

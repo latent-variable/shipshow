@@ -1,5 +1,5 @@
-[measured, setting the scene] Hundreds of papers built on that bet. They say, this can't be done faster, unless ETH is false. Graph theory, computational biology, databases, geometry.
+[measured, drawing the picture] Think of ETH as the bottom card in a house of cards. Hundreds of results are stacked on top of it. Each one says: this problem can't be solved faster, unless ETH is false. Graph theory, computational biology, databases, geometry.
 
-[playful, then landing a deadpan line] Its big sibling, the Strong ETH, went further. As rules get longer, you basically can't beat trying everything. Take edit distance, how many edits turn one string into another. The Strong ETH was the best-known reason it can't be done much faster than quadratic, roughly the square of the string's length. Unless the Strong ETH is false.
+[clear, explaining] Its big sibling, the Strong ETH, went further. As rules get longer, you basically can't beat trying everything. That was the best-known reason edit distance, how many edits turn one string into another, can't be done much faster than quadratic, roughly the square of the string's length.
 
-[serious, quiet] For a quarter century, unless ETH is false is where most arguments stopped. Card on card. And at the very bottom, one hypothesis nobody ever proved.
+[serious, quiet] So for twenty five years, the house stood. And at the very bottom was one card nobody had ever proved.
