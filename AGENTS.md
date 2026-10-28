@@ -254,7 +254,7 @@ resolved by `reviewPlan` in `bin/lib.mjs`. The builder picks the preset by setti
 an `"importance_reason"`. Most specific wins: flags, then `video.json` `"review"` (an
 explicit preset there beats importance), then importance, then `local/config.json`
 `"review"`, then the kind's default (`quick` for a decision video, else `standard`). `skills/critic-loop` has what each dial trades and the floor no dial lowers.
-The estimate's constants are measurements from 2026-10-17; replace them when you measure.
+The estimate's constants are measurements from 2026-10-17 and 2026-10-27, and its tokens grow with the video's length; replace them when you measure. The builder says the spend before round 1 and stops past it (`critic-loop`, *Spend is part of the plan*).
 
 **Memes.** A well-chosen meme lands a beat. `<figure class="ss-meme" data-meme="astronaut" data-cue="never" data-anim="pop">`
 with a `<span>` per line, filled into the template's text boxes in order (an empty span leaves a box blank,
