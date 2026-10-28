@@ -237,3 +237,31 @@ at most 4 rounds; grounding's round 2 pass stands while the Lean excerpt is unch
 - Pacing's "read by" chains (14, 12, 09) assume every card is read in order after the last; the packet also counts SVG geometry as text
   (P5-5, P6-9). The cards were shortened; the chains themselves are a measurement limit.
 - Sync's late ding after the galaxy-brain meme: it lands on "right?", the punchline, on purpose.
+
+## Round 7: 0 blocking, 7 major; seven critics, Opus for clarity, visuals and engagement (accuracy, pacing and consistency pass)
+
+| Critic | Model | Verdict | Blocking | Major | Minor |
+|---|---|---|---|---|---|
+| accuracy | Sonnet | pass | 0 | 0 | 3 |
+| clarity | Opus | fail | 0 | 1 | 4 |
+| pacing | Sonnet | pass | 0 | 0 | 4 |
+| sync | Sonnet | fail | 0 | 2 | 1 |
+| visuals | Opus | fail | 0 | 1 | 4 |
+| consistency | Sonnet | pass | 0 | 0 | 1 |
+| engagement | Opus | fail | 0 | 2 | 2 |
+
+**Fixed:**
+- **Clarity.** The swap from a base to an exponent is grounded in the record the viewer just saw: "Even the record, one point three oh
+  seven to the n, is two to about point three nine times n" (1.307ⁿ = 2^(0.39 n) on screen). The reason is said: n over root log n is a
+  fraction that keeps shrinking, "about a quarter" at a million switches (the same 3.7 as scene 12), and the chart draws a second, smaller
+  floor that the curve also crosses. Also: the setup's payoff named in 11 ("Because every rule is now algebra"), each 11b knob shown with
+  what it costs, "Here it is in thirty seconds", and "small circuits, ones that grow only in step with their input".
+- **Sync.** "Try every note" lands on "try" (it landed on the first "few"); the product lands on "Multiply" and the sum on "Add".
+- **Visuals.** The flaw stamp sits under the dial, inside the scene window (it was clipped at its bottom edge); the 02b crosses let their
+  settings show through; struck names keep their crossbars; clause cards on one line.
+- **Engagement.** "27 years · −0.026" is slammed with a thump in 06, "load-bearing" stamps the base of the tower in 07, 02 opens on "Try
+  this puzzle" with the switches on screen, 09 opens on the paradox, and P ≠ NP pulses on "untouched".
+- **Accuracy and consistency.** "Most famous" and "thirty seconds" tagged as opinion; "the team checking it" in 15.
+
+**Accepted:** the recap meme's 2.3 s (all four steps were on screen earlier; it is a stinger); the late curve in 03 (the pins arrive on
+their words); top-heavy frames in 14b and 15 until their stamps land.
