@@ -1,4 +1,3 @@
-[matter-of-fact] And that house of cards? Those hundreds of papers just lost one of their reasons. Some land on weaker assumptions that may still hold.
-[dry] And no, your diff tool didn't get faster.
-[playful] One more twist. Ryan Williams proved that if ETH is false, some problems can't be solved by small circuits, ones that grow only in step with their input.
-[smug] So if it holds, the paper's faster algorithm also proves something is hard.
+[measured, then dry] And that house of cards? Those hundreds of papers just lost one of their reasons. Some land on weaker assumptions that may still hold. And no, your diff tool didn't get faster.
+
+[playful, then quietly smug] One more twist. Ryan Williams proved that if ETH is false, some problems can't be solved by any small circuit, the kind of hardware that grows only in step with its input. So if this holds, a faster algorithm also proves that something else is hard.

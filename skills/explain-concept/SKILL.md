@@ -79,6 +79,13 @@ omission from an oversight.
   music). Open each act on a hook, a question or a turn, never a signpost like "so how does it work". Show what failure
   looks like and why it matters to someone, not only the case that works. `critic-engagement` judges these (the owner,
   2026-10-27).
+- **Memes and GIFs by default, wherever one helps a viewer hold the point** (the owner, 2026-10-27: "by default we should be
+  including GIFs and memes ... making light of it usually helps convey information"; of eth-is-false's three, "the meme to
+  information ratio is very low"). Plan about one a minute in a video watched by choice, spread across every act (the first and
+  last minutes too), at least one of them moving (`data-clip`), each tied to what the voice is saying at that moment, never
+  decoration. A meme that replaces a stamp or a chip saying the same thing is better than both. Leave it time to be read
+  (`pauses`), and lay it on a scrim over its scene. A decision video someone is waiting on mid-work is the exception: one at
+  most, if it lands.
 
 ## 3. Idea to picture
 

@@ -1,4 +1,3 @@
-[matter-of-fact] The hard part is the costs. More points mean fewer slopes at each one, but bigger notes. Smaller groups mean less to count, but bigger notes again.
-[dry] Turn one knob, and another one bites.
-[clear] Balance them, and the exponent drops to roughly n over the square root of log n.
-[deadpan] Simple, right?
+[matter-of-fact, then dry] The hard part is the costs. More points mean fewer slopes at each one, but bigger notes. Smaller groups mean less to count, but bigger notes again. Turn one knob, and another one bites.
+
+[clear, then deadpan] Balance them, and the exponent drops to roughly n over the square root of log n. Simple, right?

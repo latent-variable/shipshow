@@ -6,8 +6,8 @@
   "audience": "A developer on YouTube who knows roughly what P versus NP is, or has heard of it, and saw the headline that an AI refuted the Exponential Time Hypothesis. After watching, they can say what 3-SAT and ETH are, how ETH relates to P versus NP, what the paper claims and the core idea of how, why it does not make SAT solvers faster or settle P versus NP, and how far to trust it today.",
   "theme": "chalk",
   "engine": "drama",
-  "voice": "eth-narrator",
-  "speed": 1.1,
+  "voice": "eth-narrator-uk",
+  "speed": 1.0,
   "say": {
     "ETH": "E T H",
     "NP": "N P",
@@ -22,16 +22,22 @@
     "2016": "twenty sixteen",
     "2019": "twenty nineteen"
   },
-  "gap": 0.35,
+  "gap": 0.5,
   "hold": 3,
   "flair": {
     "ambient": "blobs dust vignette grain"
   },
   "pauses": {
-    "11b-three-costs": 0.6,
+    "11b-three-costs": 1.2,
     "08-the-claim": 0.5,
     "07-built-on-it": 0.5,
-    "02b-no-answer": 0.3
+    "02b-no-answer": 0.3,
+    "03-doubling": 1.0,
+    "06-the-race": 0.8,
+    "08b-counting": 0.8,
+    "13b-twist": 0.8,
+    "14b-who-checks": 1.6,
+    "02-puzzle": 1.4
   },
   "moods": {
     "headline": {
@@ -174,5 +180,17 @@
         "duck": 0.35
       }
     }
+  },
+  "tail": 1.2,
+  "beat": 0.9,
+  "leads": {
+    "02-puzzle": 2.6,
+    "04-p-vs-np": 2.6,
+    "07-built-on-it": 2.6,
+    "08-the-claim": 2.6,
+    "09-split": 2.6,
+    "12-galactic": 2.6,
+    "14-trust": 2.6,
+    "13-what-it-means": 1.5
   }
 }

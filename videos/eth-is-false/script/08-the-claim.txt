@@ -1,5 +1,7 @@
-[firm] Then, this October, somebody pulled on the bottom card.
-[clear, explaining] It gives an algorithm for SAT with rules of any fixed size, three switches, four, ten.
-[clear] And the speed. Still two to the something, but the something isn't n anymore. It grows roughly like n over the square root of log n.
-[clear] Even the record, one point three oh seven to the n, is two to about point three nine times n. ETH says the exponent never drops below some fixed fraction of n like that.
-[clear] This one is n over the square root of log n, and that fraction keeps shrinking. At a million switches it's already about a quarter. Pick a smaller fraction, and it ends up below that one too. If it's right, the floor is gone.
+[firm, quietly dramatic] Then, this October, somebody pulled on the bottom card.
+
+[clear, explaining carefully] It gives an algorithm for SAT with rules of any fixed size, three switches, four, ten. And the speed. Still two to the something, but the something isn't n anymore. It grows roughly like n over the square root of log n.
+
+[clear, unhurried, walking the listener through it] ETH says that exponent always stays at least some fixed slice of n. Even the record, one point three oh seven to the n, is two to a slice of about point three nine of n.
+
+[clear, building slowly to the point] This one is n divided by the square root of log n, so its slice keeps shrinking. At a million switches, it's already down to about a quarter of n. Pick any slice you like, and eventually this one falls below it. If it's right, the floor is gone.

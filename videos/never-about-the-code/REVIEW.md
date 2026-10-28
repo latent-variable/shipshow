@@ -616,7 +616,7 @@ essay in someone's own voice the way they talk to camera; his voice profile has 
 
 ## Packaged for YouTube (2026-10-27)
 
-The owner: good enough to ship; he wants the upload folder the product videos get. `npm run package` (new, D66) wrote it to
+The owner: good enough to ship; he wants the upload folder the product videos get. `npm run package` (new, D67) wrote it to
 `~/Movies/Explainers/shipshow/youtube/to-upload/never-about-the-code/`: the render, `thumbnail.html` set at 1280 by 720, and the
 title, description with 11 chapters, sources, credits, tags and Studio's answers from `video.json` `"youtube"`.
 

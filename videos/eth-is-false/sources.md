@@ -95,6 +95,8 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 08 | "Even the record, 1.307 to the n, is two to about 0.39 times n" (on screen 1.307ⁿ = 2^(0.39 n)): log2 1.307 = 0.386 | **ours**, arithmetic on P's 1.307 |
 | 08 | n / √log n is n times a fraction that keeps shrinking, 1/√log n; "at a million switches it's already about a quarter": 1/√ln(10^6) = 1/3.72 = 0.27 | **ours**, natural log as in P; the same 3.7 as scene 12 |
 | 10 | "Switches are only on or off, so a note has few possible values, few enough to try them all" | P section 2.4: with 0/1 inputs and bounded integer coefficients the measurements take at most (2D+1)^(2τn) values, 2^(O(n/r)) in all, subexponential (section 2.6) |
+| 08 | "a fixed slice of n" is the third cut's plain word for the fixed fraction below; "about a quarter of n" at a million switches is the same 1/√ln(10^6) = 0.27 | **ours**, wording |
+| 13b | "no small circuit, the kind of hardware that grows only in step with its input": Corollary C.1's circuits of linear size, said plainly | P Appendix C.1 |
 | 08 | ETH says the exponent can never drop below some fixed fraction of n (time 2^(δn) for some δ > 0); n/√log n ends up below δn for every δ > 0 once n is big enough | P section 1.1.1, ETH as 2^Ω(n); **ours**: n/√log n ÷ n = 1/√log n → 0 |
 | 10 | A note is "a few weighted sums of" a group's switches | P section 2.2 to 2.3: "shared linear summaries", built from the replacement linear forms Σ p(T)·X (weighted sums of the variables); "a few" because the measurements are few (section 2.4) |
 | 08 | It counts exactly; counting (#SAT) is #P-complete, harder than deciding | P section 1.1.2: "#SAT and #3-SAT are #P-complete" [Val79]; "Testing #F > 0 also decides satisfiability" |
@@ -140,6 +142,14 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 11b | Galaxy Brain meme (memegen `gb`, knowyourmeme.com/memes/galaxy-brain) | third-party template, fetched at build, never committed |
 | 07 | This Is Fine meme (memegen `fine`, gunshowcomic.com/648, K.C. Green): "hundreds of papers, one hypothesis / this is fine" | third-party template, fetched at build, never committed |
 | 12 | Drakeposting meme (memegen `drake`, knowyourmeme.com/memes/drakeposting) | third-party template, fetched at build, never committed |
+| 02 | Typing kitty, a moving GIF (imgflip.com/gif-templates, `https://i.imgflip.com/4bd1a0.mp4`): "me, trying / all two to the n settings" | third-party clip, fetched at build, never committed |
+| 03 | Panik Kalm Panik (memegen `panik-kalm-panik`, knowyourmeme.com/memes/panik-kalm): "2⁹⁰ settings / solvers skip cleverly / the hardest cases don't let you" | third-party template, fetched at build, never committed |
+| 06 | Stonks (memegen `stonks`): "27 years of records / −0.026" (1999 to 2026, 1.3333 − 1.3070, as above) | third-party template |
+| 08b | No no no wait wait wait, a moving GIF (`https://i.imgflip.com/6inpzl.mp4`): "ETH and its whole family / one paper, if it holds" | third-party clip |
+| 12 | IShowSpeed hands over face, a moving GIF (`https://i.imgflip.com/atgx12.mp4`, cropped): "a number of switches / with 3.3 billion digits" | third-party clip |
+| 13 | Is This a Pigeon? (memegen `pigeon`, knowyourmeme.com/memes/is-this-a-pigeon): "everyone online / a faster SAT algorithm / is this P = NP?" | third-party template; **opinion**, a joke |
+| 14b | Hide the Pain Harold (memegen `harold`, knowyourmeme.com/memes/hide-the-pain-harold): "proposing ETH, 2001 / proofreading its obituary, 2026" | third-party template |
+| 15 | Nanami vibing (Jujutsu Kaisen), a moving GIF (`https://i.imgflip.com/873a5j.mp4`): "my SAT solver / unchanged, still fine" | third-party clip |
 
 ## Voice
 
