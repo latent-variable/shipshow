@@ -28,7 +28,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { DRAMA, DRAMA_LINE_MAX, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, beatsAfter, breathe, drawled, config, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
+import { DRAMA, DRAMA_LINE_MAX, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, beatsAfter, breathe, drawled, config, styled, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
@@ -74,7 +74,8 @@ const plan = scenes(dir).map((s) => {
     id: s.id,
     beats: groups.map((idx) => beats.has(idx[idx.length - 1])),   // a blank line follows this take: a beat after it
     units: groups.map((idx, n) => {
-      const text = idx.map((i) => texts[i]).join(" "), say = idx.map((i) => says[i]).join(" "), told = idx.map((i) => directed[i]).join(" ");
+      const text = idx.map((i) => texts[i]).join(" "), say = idx.map((i) => says[i]).join(" ");
+      const told = drama ? styled(idx.map((i) => directed[i]).join(" "), cfg.omni?.style) : idx.map((i) => directed[i]).join(" ");
       const wav = join(vdir, RUNS ? `${s.id}-r${String(n + 1).padStart(2, "0")}.wav` : `${s.id}-${String(idx[0] + 1).padStart(2, "0")}.wav`);
       // A Kokoro take's key is unchanged from before omnivoice existed, so its takes stay valid.
       const key = JSON.stringify(drama

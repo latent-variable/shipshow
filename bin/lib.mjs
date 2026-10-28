@@ -130,7 +130,11 @@ export function omniVoice(name) {
     const txt = wav.replace(/\.wav$/, ".txt");
     const text = existsSync(txt) ? readFileSync(txt, "utf8").trim() : null;
     const sha = createHash("sha256").update(readFileSync(wav)).update(text ?? "").digest("hex").slice(0, 16);
-    return { name, wav, text, identity: `${name}@${sha}` };
+    // An invented voice keeps the description it was made from (<name>.style): Drama 3 is told it in every direction,
+    // because a clone copies the timbre and loses the style (eth-is-false, 2026-10-27).
+    const sf = wav.replace(/\.wav$/, ".style");
+    const style = existsSync(sf) ? readFileSync(sf, "utf8").trim().replace(/^\[|\]$/g, "") || null : null;
+    return { name, wav, text, style, identity: `${name}@${sha}${style ? `+${createHash("sha256").update(style).digest("hex").slice(0, 8)}` : ""}` };
   }
   if (OMNI.builtIn[name]) return { name, identity: `${name}@${OMNI.voicesRevision}` };
 }
@@ -213,6 +217,14 @@ export function sentences(text) {
 /** A stage direction in a script: `[deadpan]`, `[laughs]`, `[slowly, like it's obvious]`. Drama 3 performs it where it
  *  stands; nothing else ever shows or says it (DESIGN D55). */
 export const DIRECTION = /\[[^\]\n]*\]/g;
+
+/** A take's text as Drama 3 is told it, with a voice's style folded into its directions: "[measured] Hi." becomes
+ *  "[bright young narrator, measured] Hi.", and a take with no opening direction gets the style alone. */
+export function styled(told, style) {
+  if (!style) return told;
+  const out = told.replace(DIRECTION, (d) => `[${style}, ${d.slice(1, -1).trim()}]`);
+  return /^\s*\[/.test(out) ? out : `[${style}] ${out}`;
+}
 /** Text with its stage directions taken out, as captions show it and the other engines read it. */
 export const withoutDirections = (text) => text.replace(DIRECTION, " ").replace(/\s+/g, " ").replace(/\s+([,.!?;:])/g, "$1").trim();
 
