@@ -1078,6 +1078,22 @@ public credit for a voice the video does not use. **Costs.** A video that names 
 in `sources.md`; never-about-the-code now does. **Tested** by a unit test (a stale name, a longer name that contains it, a built-in
 voice, Kokoro) and by packaging eth-is-false and never-about-the-code.
 
+### D75. Another repo can build on ShipShow: its layer, venvs and renders live where it says (2026-10-28)
+**Decision.** Three settings, each read when a command starts and each defaulting to this repo, so nothing changes for anyone
+who sets none: `SHIPSHOW_LOCAL` (already read for config, themes, voices and sound kits; now also for the review packet's
+`preferences.md` and `critics.md`) is the layer on top, `SHIPSHOW_VENVS` is the folder holding `.venv`, `.venv-drama` and
+`.venv-listen` (`npm run setup*` makes them there; `setup:omnivoice` and `setup:hearback` now go through `bin/setup.mjs` so they
+follow it), and `SHIPSHOW_OUT` is where `render` and `package` write. `SHIPSHOW_VIDEOS` (folders, `:` between them) adds that
+repo's videos to the ones `memesUsed` scans, so a template reused across its videos is still called. A video folder could
+already be anywhere: `videoDir` takes any path with a `video.json`. **Why.** The owner, 2026-10-28: DAIS's internal
+product-videos repo is to build on ShipShow rather than copy from it, "ShipShow improves, product videos improves", with its own
+rules on top. That repo pins a ShipShow commit, keeps its videos, theme, rules and voices in its own layer, and shares one set of
+venvs across every checkout (a venv per worktree costs minutes and gigabytes). **Also.** Every page now declares and ships the
+meme fonts, because `kit/base.css` names them on every page and a page with no meme failed `hyperframes lint` (#103); and the
+render's limiter is budgeted against its own ceiling, so it takes at most `MAX_LIMIT` (#104). **Costs.** A pinned copy runs the
+code of its pin: a fix here reaches that repo when it moves the pin. **Tested** by `test/layered.test.mjs` (defaults, every
+override, the extra video folders, the template built with no meme declaring its fonts; that test fails with the old conditional).
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

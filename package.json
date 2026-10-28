@@ -10,10 +10,10 @@
   },
   "scripts": {
     "setup": "node bin/setup.mjs",
-    "setup:omnivoice": "[ -x .venv/bin/pip ] || npm run setup && .venv/bin/pip install -r requirements-omnivoice.txt -r requirements-hearback.txt",
+    "setup:omnivoice": "node bin/setup.mjs --omnivoice",
     "setup:drama": "node bin/setup.mjs --drama",
     "setup:listen": "node bin/setup.mjs --listen",
-    "setup:hearback": "[ -x .venv/bin/pip ] || npm run setup && .venv/bin/pip install -r requirements-hearback.txt",
+    "setup:hearback": "node bin/setup.mjs --hearback",
     "doctor": "node bin/doctor.mjs",
     "new": "node bin/new.mjs",
     "voice": "node bin/voice.mjs",

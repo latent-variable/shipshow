@@ -14,7 +14,7 @@
 import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { REPO, config, die, flag, outName, videoDir } from "./lib.mjs";
+import { REPO, config, die, flag, outDir, outName, videoDir } from "./lib.mjs";
 
 /** "m:ss" (or "h:mm:ss") for a time in seconds, as YouTube writes a chapter. */
 export function stamp(seconds) {
@@ -76,7 +76,7 @@ if (isMain) {
   const yt = cfg.youtube;
   if (!yt) die(`${dir}/video.json has no "youtube": give it a title, a description and chapters (explainer-video, *Publish*)`);
   const name = outName(dir);
-  const render = join(REPO, "out", `${name}.mp4`);
+  const render = join(outDir(), `${name}.mp4`);
   if (!existsSync(render)) die(`no render at ${render}: npm run render -- ${process.argv[2]}`);
   const timingFile = join(dir, "timing.json");
   if (!existsSync(timingFile)) die(`no timing.json in ${dir}: npm run voice -- ${process.argv[2]}`);
@@ -94,7 +94,7 @@ if (isMain) {
   const thumbHtml = join(dir, "thumbnail.html");
   if (!existsSync(thumbHtml)) die(`no thumbnail.html in ${dir}: a 1280 by 720 page (explainer-video, *Publish*)`);
 
-  const to = resolve(flag("to") || join(REPO, "out", "publish", name));
+  const to = resolve(flag("to") || join(outDir(), "publish", name));
   mkdirSync(to, { recursive: true });
   const thumb = join(to, `${name}-thumbnail.png`);
   const { chromePath } = await import("./shot.mjs");
