@@ -961,6 +961,19 @@ On the eighth cut the owner said the pace and transitions now play smoothly; wha
 "That's due diligence in 2026" read as written prose, not as he talks, so `narration-writing` now says to write an essay in
 someone's own voice the way they talk to camera, from their dictation.
 
+### D65. A take that drawls inside a sentence is a fault (2026-10-27)
+**Decision.** `bin/hearback.py` `drawled`: more than 2.5 s between two words of one sentence (by the word times hear-back
+already makes) is a drawl. `bin/drama.py` retakes it like any other fault and lists it if every try drawls; `bin/voice.mjs`
+applies the same rule (`bin/lib.mjs` `drawled`) to every take on the track and prints a LISTEN line, so a take made before the
+rule is caught too. A pause between sentences is a beat and is never judged. `DRAMA_RULES` is not bumped: re-voicing every
+Drama take to apply a rule that only rejects outliers would replace takes the owner has approved, and the voice step's flag
+covers the ones already made. **Why.** Restoring "Like animals." on never-about-the-code, Drama 3 read a 25-word line in
+23.1 s with 3.0 s between "Like" and "animals"; hear-back scored it 0.977, hiss filled the gap so the stall check passed it,
+and the punchline landed 15 s after its setup. A retake read it in 10.3 s. **Tested** on that take's word times. The first
+version judged words a second over the whole line and flagged "Wait. Fortran? The infantile disorder?", a double take slow on
+purpose; across 1,204 word pairs in two videos the longest gap inside a sentence was 1.9 s (a year said out loud), hence 2.5.
+**Costs.** A sentence directed to be slow with a long held pause in it is retaken; put the pause between sentences instead.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

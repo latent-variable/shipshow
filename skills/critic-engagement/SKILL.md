@@ -44,6 +44,9 @@ reason for pressing play, and watch it as them.
   conflict, a crash) and why it matters to someone, the video shows it; growth or scale the video leans on is drawn as a
   chart, not only said. Same review, on 3-SAT and exponential growth.
 - **major:** for a video meant to be fun (every essay is: it is watched by choice), a stretch of about thirty seconds with no joke, picture gag or turn.
+- **major:** a punchline the viewer has to decode, or a line in the author's own voice that they would not say out loud.
+  Plain beats clever ("Like animals." beat "Artisanal. Small batch."; "If you've been shipping code with AI, somebody has
+  probably told you that already" beat "That's the charge against AI pull requests now": the owner, 2026-10-27).
 - **minor:** motion that competes with the words: an effect on something the voice is not
   talking about, or so much movement the viewer cannot read.
 - **minor:** an opening or ending that is generic (a title card, "thanks for watching")

@@ -1,1 +1,1 @@
-[mock-dramatic, then wry, ending dry] Stage three, it rots your brain. By 1975, Dijkstra, the "goto considered harmful" guy, called Fortran an infantile disorder. Its sibling COBOL, on the same layer? It cripples the mind.
+[mock-dramatic, then wry, ending dry] Stage three, it rots your brain. By 1975, Dijkstra, as in Dijkstra's algorithm, called Fortran an infantile disorder. Its sibling COBOL, on the same layer? It cripples the mind.

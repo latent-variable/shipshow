@@ -277,6 +277,23 @@ print(round(drama.voiced(lead, sr)[0] * 0.01, 1))
   assert.ok(paused < 1.0, `half-second pauses are not a stall: ${paused} s`);
 });
 
+test("a take that drawls inside a sentence is found; the same line said well, and a pause between sentences, are not", { skip: !plain && "no python3" }, () => {
+  const r = python(plain, `
+import hearback, json
+bad = [{"words": [{"w": "hand.", "at": 30.65}]}, {"words": [{"w": "Like", "at": 32.97}, {"w": "animals.", "at": 35.95}]}]
+good = [{"words": [{"w": "hand.", "at": 21.97}]}, {"words": [{"w": "Like", "at": 23.1}, {"w": "animals.", "at": 23.24}]}]
+beat = [{"words": [{"w": "Wait.", "at": 1.0}]}, {"words": [{"w": "Fortran?", "at": 4.5}]}]
+year = [{"words": [{"w": "2026,", "at": 1.0}, {"w": "English", "at": 2.9}]}]
+print(json.dumps([hearback.drawled(bad), hearback.drawled(good), hearback.drawled(beat), hearback.drawled(year)]))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [bad, good, beat, year] = JSON.parse(r.stdout);
+  assert.equal(bad, '3.0 s between "Like" and "animals."', "the take that drawled");
+  assert.equal(good, null, "the retake");
+  assert.equal(beat, null, "a pause between two sentences is a beat, never a drawl");
+  assert.equal(year, null, "the longest gap measured in a good take (1.9 s, a year said out loud) passes");
+});
+
 test("hear-back finds a sentence that is missing altogether, which the letter score misses", { skip: !plain && "no python3" }, () => {
   const r = python(plain, `
 import hearback, json

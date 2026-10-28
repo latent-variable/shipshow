@@ -43,7 +43,8 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 | S32 | ShipShow's merged pull requests: `gh pr list --state merged` on latent-variable/shipshow, 66 on 2026-10-27, counted again before the eighth cut's render (this cut's own pull request not counted) | run 2026-10-27 |
 | S33 | OpenAI, "Introducing ChatGPT", 2022-11-30. openai.com/index/chatgpt (the page refused a direct fetch; the date agrees across en.wikipedia.org/wiki/ChatGPT and press coverage) | search, 2026-10-27 |
 | S34 | GitHub, "GitHub Copilot is generally available to all developers", 2022-06-21. github.blog/2022-06-21-github-copilot-is-generally-available-to-all-developers/: "When you type code or comments, GitHub Copilot suggests the next line of code." | page, captured 2026-10-27 |
-| S35 | Grace Hopper, quoted in Wikipedia, "Grace Hopper" (its note 32): "I could say 'Subtract income tax from pay' instead of trying to write that in octal code or using all kinds of symbols." en.wikipedia.org/wiki/Grace_Hopper | page, 2026-10-26 (research notes) |
+| S35 (unused: the octal line was cut for "Like animals", 2026-10-27) | Grace Hopper, quoted in Wikipedia, "Grace Hopper" (its note 32): "I could say 'Subtract income tax from pay' instead of trying to write that in octal code or using all kinds of symbols." en.wikipedia.org/wiki/Grace_Hopper | page, 2026-10-26 (research notes) |
+| S36 | Wikipedia, "Dijkstra's algorithm": "an algorithm for finding the shortest paths between nodes in a weighted graph ... conceived by computer scientist Edsger W. Dijkstra in 1956 and published three years later." en.wikipedia.org/wiki/Dijkstra%27s_algorithm | API extract, 2026-10-27 |
 | S18 | The compiler example: `int y(int m, int x, int b) { return m * x + b; }` compiled by Apple clang 21.0.0 (clang-2100.1.1.101) on this Mac, `clang -O0 -S -arch arm64` and `-O2`, directives stripped; both builds checked to return 13 for (2, 5, 3) | run 2026-10-26 |
 
 ## Claims (sixth cut, 2026-10-27: receipts on screen, the owner's own process, no "doubters")
@@ -52,7 +53,7 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 |---|---|---|
 | 01 | "You don't understand the code": if you've been shipping code with AI, somebody has probably told you that already; Ghostty, the terminal app, even made it a rule: you must understand your code | S24 (screenshot, the words marked); "the terminal app": the project's own README (github.com/ghostty-org/ghostty) says "Ghostty is a terminal emulator" (read 2026-10-27); "somebody has probably told you that" is **opinion**, framing |
 | 01 | Programmers pushed back on compilers too, in the 1950s (on screen: "pushback, about compilers") | **opinion**, framing: the pushback itself is sourced in 04 to 05b (S3, S2, S5). No source has a 1950s programmer say "you don't understand your code", and the video does not claim one |
-| 01 | "They wrote machine code by hand, in octal. Artisanal. Small batch." (meme: "1950s programmers" / "octal, by hand") | hand coding before Fortran, S1 and S4 ("3 days to code this job by hand"); octal, S35 (Hopper's own words); "artisanal, small batch" is a joke, **framing**, set up for antirez's "baking your own bread" in 10 |
+| 01 | "while writing machine code by hand. Like animals." (meme: "1950s programmers" / "writing machine code by hand") | hand coding before Fortran, S1 and S4 ("3 days to code this job by hand"); "like animals" is a joke, **framing** (the owner chose it back over "Artisanal. Small batch.", 2026-10-27) |
 | 02 | A processor runs tiny steps; one line becomes eleven instructions, two optimized (the card shows the first four of the eleven, then "and 7 more"); nobody reads them, and nobody today says you don't understand your code because of it; you know what it does, the part that mattered | S18; the rest is **opinion** |
 | 03 | The ladder (machine code, assembly, Fortran 1957, C, Python, plain English); each layer means writing less and trusting more; each was roasted by the layer below; the roasting has already started | **opinion**, framing; Fortran's year S1 |
 | 03 | Rewind to January 2023: ChatGPT is two months old (launched 2022-11-30) | S33; the post is dated 2023-01-24 (S26) |
@@ -61,7 +62,7 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 | 04 | "It goes in four stages, almost every time" | **opinion**, the video's frame for the evidence in 04 to 06 |
 | 04 | Stage one: Hopper had a working compiler in 1952 and nobody would touch it, because computers only do arithmetic | S3 |
 | 05 | Stage two: John Backus, who built Fortran, said many programmers saw themselves as a priesthood; to them a machine writing their programs was a foolish and arrogant dream | S2, section 4 ("so many programmers of the freewheeling 1950s began to regard themselves as members of a priesthood"); S1, S4 |
-| 05b | Stage three: by 1975 Dijkstra, the "goto considered harmful" guy (S21: his 1968 letter, titled by the editor), called Fortran an infantile disorder, and said COBOL cripples the mind | S5 (two screenshots of the page: "FORTRAN --"the infantile disorder"--" and "The use of COBOL cripples the mind") |
+| 05b | Stage three: by 1975 Dijkstra, "as in Dijkstra's algorithm" (S36), called Fortran an infantile disorder, and said COBOL cripples the mind | S5 (two screenshots of the page: "FORTRAN --"the infantile disorder"--" and "The use of COBOL cripples the mind") |
 | 05b | "Its sibling COBOL, on the same layer?" COBOL is Fortran's sibling on the same layer: the high-level languages of the late 1950s | S30 (COBOL designed from 1959), S1 (Fortran, 1957); "sibling" is framing |
 | 06 | Stage four: by 1983 the joke was that real programmers use Fortran; "Fortran? The infantile disorder?" calls back to S5 | S6 (satire); S5 |
 | 07 | Back then a great hand coder could beat the machine: Mel's hand-tuned code ran faster than the optimizing assembler | S7 ("Mel's always ran faster"; an optimizing assembler is a program that writes machine code, the video's "the machine") |
@@ -120,7 +121,7 @@ catalog's animated templates. The text on each restates a line the narration say
 
 | Scene | Meme | Source | Text | Restates |
 |---|---|---|---|---|
-| 01 | Typing kitty (clip) | i.imgflip.com/4bd1a0.mp4 (Imgflip GIF templates) | "1950s programmers" / "octal, by hand" | "They wrote machine code by hand, in octal. Artisanal. Small batch." |
+| 01 | Typing kitty (clip) | i.imgflip.com/4bd1a0.mp4 (Imgflip GIF templates) | "1950s programmers" / "writing machine code by hand" | "while writing machine code by hand" |
 | 02 | Jack Black opens the book, A Minecraft Movie (2025) (clip) | i.imgflip.com/aq7zsi.mp4 (Imgflip GIF templates) | "Me, once a year" / "opening the assembly" | "So, have you ever read them?" |
 | 03 | Pedro Pascal crying (clip) | i.imgflip.com/5pzpm5.mp4 (Imgflip GIF templates) | "Every new layer" / "reading the comments" | "every one of them got roasted" |
 | 05 | Odysseus tied to the mast, The Odyssey (2026 trailer) (clip, bottom 7% cropped) | i.imgflip.com/axqk4y.mp4 (Imgflip GIF templates) | "The priesthood" / "hearing about automatic coding" | the priesthood (S2) |

@@ -90,6 +90,10 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   been shipping code with AI, somebody has probably told you that already", never a written framing like "That's the charge
   against AI pull requests now" (the owner: "I would never say that"). Their dictation is the register to match; a line that
   reads well but that they would not say out loud is a finding (2026-10-27).
+- **A punchline lands on one hearing.** Plain beats clever: "Artisanal. Small batch." replaced "Like animals." and the owner
+  took the original back ("I don't even know what the hell that means"). A joke the listener has to decode is not one.
+- **Introduce a person by what the viewer already knows them for**: "Dijkstra, as in Dijkstra's algorithm", not a deep cut
+  like "the goto considered harmful guy" (the owner, 2026-10-27).
 - **A joke is one line: setup, turn and punchline in one take.** Each line is voiced on its own, with no memory of the
   line before, so a punchline on a line of its own is performed cold and lands like a separate thought (the owner on
   "Like animals." and "No. ... Also no.", 2026-10-27). Keep them together and let one direction describe the arc:

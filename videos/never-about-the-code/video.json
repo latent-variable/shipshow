@@ -24,7 +24,6 @@
     "4.5": "four point five",
     "DHH": "D H H",
     "704": "seven oh four",
-    "goto": "go to",
     "1950s": "nineteen fifties",
     "Andrej": "Andrey",
     "IBM's": "I B M's",
@@ -32,7 +31,8 @@
     "OCaml's": "Oh Camel's",
     "Ghostty": "Ghosty",
     "ShipShow": "Ship Show",
-    "OCaml": "Oh Camel"
+    "OCaml": "Oh Camel",
+    "Dijkstra's": "Dykstra's"
   },
   "music": {
     "file": "local/music/never-about-the-code-lofi.wav",
