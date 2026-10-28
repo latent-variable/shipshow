@@ -1002,8 +1002,8 @@ video, he marks No) is the `publish` skill, so the next video starts from what t
 
 ### D68. An invented voice keeps its style in every direction (2026-10-27)
 **Decision.** A clone in `local/voices/` may have `<name>.style`, the description it was invented from; Drama 3 is told it at
-the start of every direction of every take (`styled` in `bin/lib.mjs`), and it is part of the voice's identity, so changing it
-voices the video again. **Why.** eth-is-false's third cut cloned the owner's pick from its audition clip and read it with the
+the start of every direction of every take (`styled` in `bin/lib.mjs`), and a Drama take's cache key carries the styled text, so
+changing it voices a Drama video again and leaves OmniVoice takes alone. **Why.** eth-is-false's third cut cloned the owner's pick from its audition clip and read it with the
 script's own directions ("measured, unhurried"): it came out flatter (pitch swing 97 Hz against the audition's 128) and darker,
 and he said it sounded nothing like what he picked. A side-by-side of two clips, each with and without the style, had him pick
 the one with it. **Costs.** A longer direction on every take; a style that fights a line's direction is the writer's to fix.

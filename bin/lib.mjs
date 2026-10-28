@@ -134,7 +134,7 @@ export function omniVoice(name) {
     // because a clone copies the timbre and loses the style (eth-is-false, 2026-10-27).
     const sf = wav.replace(/\.wav$/, ".style");
     const style = existsSync(sf) ? readFileSync(sf, "utf8").trim().replace(/^\[|\]$/g, "") || null : null;
-    return { name, wav, text, style, identity: `${name}@${sha}${style ? `+${createHash("sha256").update(style).digest("hex").slice(0, 8)}` : ""}` };
+    return { name, wav, text, style, identity: `${name}@${sha}` };   // a Drama take's key carries its styled text, so a changed style re-voices only Drama
   }
   if (OMNI.builtIn[name]) return { name, identity: `${name}@${OMNI.voicesRevision}` };
 }
