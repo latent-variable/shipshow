@@ -935,7 +935,7 @@ feels like we're rushing from one piece to the next ... right now it feels like 
 and the transitions and creating interesting transitions ... as opposed to just rushing through it". That cut ran at 1.2
 with every mood change landing 0.4 s before a word, so each new look and bed arrived under the voice. Drama 3's own pace is
 about 230 syllables a minute while speaking; at 1.2 the packet measured 270 to 310. **Costs.** A slower essay is longer
-(the eighth cut runs about a quarter longer). Changing the speed re-voices every Drama take, because a take's key holds its
+(never-about-the-code went from 336.7 s to 429.9 s, 28% longer). Changing the speed re-voices every Drama take, because a take's key holds its
 speed and the stretch happens before the take is heard back and chosen. `critic-pacing`'s 2-second pause rule now exempts an
 act change carried by music and a card.
 

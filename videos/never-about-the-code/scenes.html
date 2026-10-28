@@ -181,7 +181,7 @@
   .call .four { display: flex; gap: 18px; }
   .call .four span { font-family: var(--font-display); font-weight: 800; font-size: 50px; letter-spacing: -0.02em; padding: 14px 26px; white-space: nowrap; border: 3px solid var(--line); border-radius: 18px; }
   .call .four span b { color: var(--accent-3); margin-right: 14px; }
-  .unread { font-family: var(--font-mono); font-size: 32px; color: var(--muted); text-align: center; }
+  .unread { font-family: var(--font-mono); font-size: 44px; color: var(--muted); text-align: center; }
   .unread s { color: var(--muted); text-decoration-color: var(--accent); text-decoration-thickness: 3px; }
   .big-step { display: grid; grid-template-columns: 90px 1fr; gap: 26px; align-items: center; width: 1300px; margin: 0 auto; padding: 34px 44px; font-size: 64px; font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; }
   .big-step .n { color: var(--accent-3); font-size: 96px; }
@@ -192,6 +192,8 @@
   .chapter .title { font-family: var(--font-display); font-weight: var(--display-weight, 800); font-size: 168px; line-height: 1; color: var(--accent); letter-spacing: var(--display-tracking, -0.02em); }
   .chapter .rule { width: 520px; height: 6px; border-radius: 3px; background: var(--accent-3); transform-origin: center; }
   .chapter.file .title { color: var(--ink); }
+  .chapter.neon .kicker { color: var(--ink); }
+  .ask-kicker { font-family: var(--font-mono); font-size: 40px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); text-align: center; }
   .chapter.file .tab { font-family: var(--font-mono); font-size: 34px; padding: 10px 34px; border: 3px solid var(--frame, var(--ink)); border-bottom: none; border-radius: 12px 12px 0 0; background: var(--card); color: var(--accent); }
   .chapter.neon .title { color: var(--accent-3); text-shadow: 0 0 40px var(--accent-3); font-size: 220px; }
   .chapter.alarm .title { color: var(--accent); border: 10px solid var(--accent); padding: 10px 50px; border-radius: 16px; transform: rotate(-3deg); text-transform: uppercase; font-size: 150px; }
@@ -202,12 +204,12 @@
   <div class="zone" id="ghostty" data-cue="Ghostty" data-anim="up">
     <figure class="ss-shot" data-shot="https://github.com/ghostty-org/ghostty/blob/main/CONTRIBUTING.md" data-find="you must understand your code" data-width="520" data-pad="8" data-mark-cue="must" style="--shot-width: 1500px; --shot-max-height: 720px"><figcaption>Ghostty, the terminal app: its contributing guide</figcaption></figure>
   </div>
-  <div class="zone" id="c1950" data-cue="compilers" data-anim="slam" data-sfx="scratch" style="display: flex; align-items: center">
+  <div class="zone" id="c1950" data-cue="1950s," data-anim="slam" data-sfx="scratch" data-sfx-offset="0.2" style="display: flex; align-items: center">
     <div class="then"><div class="tag">pushback, about</div><div class="yr">compilers</div><div class="about">1950s</div></div>
   </div>
   <div class="meme-wrap" id="m01" data-cue="wrote" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="wrote" data-anim="pop"><span class="top">Real programmers, 1950s</span><span class="bottom">machine code, one number at a time</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="wrote" data-anim="pop"><span class="top">1950s programmers</span><span class="bottom">hand-crafted octal, no compiler added</span></figure>
   </div>
 </section>
 
@@ -255,13 +257,28 @@
         <div class="rung card" data-cue="Fortran," data-anim="up">Fortran <small>1957</small></div>
         <div class="rung card" data-cue="C,#2" data-anim="up">C <small>Unix</small></div>
         <div class="rung card" data-cue="Python." data-anim="up">Python</div>
-        <div class="rung card top" id="r-eng" data-cue="English#2" data-anim="slam" data-sfx="whoosh" data-sfx-offset="0.15">Plain English <small style="color: var(--accent-3)">agents</small></div>
       </div>
     </div>
   </div>
   <div class="meme-wrap" id="m03" data-cue="roasted" data-anim="pop">
     <div class="scrim"></div>
     <figure class="ss-meme" data-clip="https://i.imgflip.com/5pzpm5.mp4" data-name="Pedro Pascal crying" data-credit="https://imgflip.com/gif-templates" data-cue="roasted" data-anim="pop"><span class="top">Every new layer</span><span class="bottom">reading the comments</span></figure>
+  </div>
+</section>
+
+<section data-scene="03b-rewind">
+  <div class="stage">
+    <div class="ladder-wrap" id="lw03b" data-cue="Now#2" data-anim="fade">
+      <div class="axis"><div>&uarr; write less<br>trust more</div><div class="line"></div><div>write it all</div></div>
+      <div class="ladder">
+        <div class="rung card">Machine code <small>numbers</small></div>
+        <div class="rung card">Assembly <small>mov, add, jmp</small></div>
+        <div class="rung card">Fortran <small>1957</small></div>
+        <div class="rung card">C <small>Unix</small></div>
+        <div class="rung card">Python</div>
+        <div class="rung card top" id="r-eng" data-cue="English#2" data-anim="slam" data-sfx="whoosh" data-sfx-offset="0.15">Plain English <small style="color: var(--accent-3)">agents</small></div>
+      </div>
+    </div>
   </div>
   <div class="overlay vhs" id="fb03" data-cue="rewind" data-anim="glitch" data-sfx="scratch" data-sfx-offset="0.5">
     <div class="scrim" style="background: radial-gradient(120% 90% at 50% 40%, #12303a 0%, #0b1a22 60%, #05090c 100%)"></div>
@@ -290,13 +307,13 @@
 
 <section data-scene="04-impossible" data-mood="archive">
   <div class="chapter file" id="ch04" data-cue="+0.2" data-anim="fade">
-    <div class="tab" data-cue="+0.35" data-anim="type">FILE 1952&ndash;1983</div>
-    <div class="title" data-cue="+0.9" data-anim="slam" data-sfx="thump">The Skeptics</div>
-    <div class="kicker" data-cue="+1.3" data-anim="fade">four stages, every time</div>
+    <div class="tab" data-cue="+0.25" data-anim="type">FILE 1952&ndash;1983</div>
+    <div class="title" data-cue="+0.5" data-anim="slam" data-sfx="thump">The Skeptics</div>
+    <div class="kicker" data-cue="+0.9" data-anim="fade">four stages, almost every time</div>
   </div>
   <div class="call" id="call4" data-cue="four" data-anim="stagger"><div class="four"><span><b>1</b>impossible</span><span><b>2</b>beneath you</span><span><b>3</b>rots your brain</span><span><b>4</b>the bar</span></div></div>
   <div class="stage">
-    <div class="stages" data-cue="four" data-anim="fade"><span class="">1 · impossible<b class="on" data-cue="one," data-anim="pop">1 · impossible</b></span><span class="">2 · beneath you</span><span class="">3 · rots your brain</span><span class="">4 · the bar</span></div>
+    <div class="stages" data-cue="Hopper" data-anim="fade"><span class="">1 · impossible<b class="on" data-cue="one," data-anim="pop">1 · impossible</b></span><span class="">2 · beneath you</span><span class="">3 · rots your brain</span><span class="">4 · the bar</span></div>
     <div class="solo card" data-cue="Hopper" data-anim="up">
       <figure class="ss-portrait" id="p-hopper" data-commons="File:Commodore Grace M. Hopper, USN (covered) head and shoulders crop.jpg" data-cue="Hopper" data-anim="pop"><figcaption>Grace Hopper<small>Navy officer · compiler pioneer</small></figcaption></figure>
       <div><div class="quote"><span data-cue="working" data-anim="fade">1952: a working compiler,</span> <span data-cue="nobody" data-anim="fade">and “nobody would <em>touch it</em>.”</span></div><div class="who" data-cue="arithmetic." data-anim="fade" style="font-size: 34px; font-family: var(--font)">“They told me computers could only do arithmetic.”</div></div>
@@ -381,7 +398,7 @@
   <div class="chapter neon" id="ch09" data-cue="+0.2" data-anim="fade">
     <div class="kicker" data-cue="+0.3" data-anim="fade">meanwhile</div>
     <div class="title" data-cue="+0.7" data-anim="glitch" data-sfx="whoosh">2026</div>
-    <div class="rule" data-cue="+1.1" data-anim="grow"></div>
+    <div class="rule" id="rule09" data-cue="+1.1" data-anim="fade"></div>
   </div>
   <div class="headline big" id="h09" data-cue="Now" data-anim="slam" style="color: var(--accent-3); font-size: 88px; top: 70px">this layer is moving fast</div>
   <div class="zone" id="metr1" data-cue="METR" data-anim="up" style="top: 220px">
@@ -390,6 +407,10 @@
   <div class="zone" id="metr2" data-cue="Then" data-anim="up" style="top: 220px">
     <div class="col"><div class="tag center">METR · February 2026</div><figure class="ss-shot" data-shot="https://metr.org/blog/2026-02-24-uplift-update/" data-find="do not wish to work without AI" data-lines="1" data-width="640" data-pad="10" data-mark-cue="without" style="--shot-max-height: 600px"></figure></div>
   </div>
+  <div class="stamp" id="noai" data-cue="wouldn't" data-anim="slam" data-sfx="thump" style="position: absolute; right: 150px; bottom: 190px; font-size: 52px; transform: rotate(-6deg)">the no-AI group? no thanks</div>
+</section>
+
+<section data-scene="09b-horizon">
   <div class="stage" id="chart" data-cue="measures" data-anim="fade">
     <div class="chart-title"><div class="big">Time horizon: the longest task an agent finishes half the time</div><div class="tag">METR</div></div>
     <div class="chart-note" data-cue="expert" data-anim="fade">task length = how long a <b>human expert</b> takes it</div>
@@ -403,7 +424,7 @@
         <!-- x: linear in time by release day, 2025-02-24 at 220, 2.83 px a day; the early-2026 point at 2026-02-15 -->
         <text class="lbl" x="220" y="660" text-anchor="middle">Feb 2025</text><text class="lbl" x="466" y="660" text-anchor="middle">May 2025</text><text class="lbl" x="684" y="660" text-anchor="middle">Aug 2025</text><text class="lbl" x="992" y="660" text-anchor="middle">Nov 2025</text><text class="lbl" x="1227" y="660" text-anchor="middle">early 2026</text>
         <g id="half" data-cue="half" data-anim="fade"><text class="pt hi" x="140" y="150" text-anchor="start">half the time: the agent finishes 1 task in 2</text></g>
-        <g data-cue="2025,#2" data-anim="pop"><circle class="dot" cx="220" cy="560" r="14"/><text class="pt" x="200" y="610" text-anchor="start">Claude 3.7 Sonnet · 1 h</text></g>
+        <g data-cue="2025," data-anim="pop"><circle class="dot" cx="220" cy="560" r="14"/><text class="pt" x="200" y="610" text-anchor="start">Claude 3.7 Sonnet · 1 h</text></g>
         <path class="trend" data-cue="2026," data-anim="draw" d="M 220 560 L 466 500 L 684 413 L 992 367 L 1227 273"/>
         <g data-cue="2026," data-anim="pop"><circle class="dot" cx="466" cy="500" r="12"/><circle class="dot" cx="684" cy="413" r="12"/><circle class="dot" cx="992" cy="367" r="14"/><text class="pt" x="1012" y="402" text-anchor="start">Claude Opus 4.5 · 5.3 h</text></g>
         <g id="twelve" data-cue="twelve" data-anim="pop" data-sfx="up" data-sfx-offset="-0.15"><rect class="band" x="1197" y="85" width="60" height="289" rx="10"/><circle class="dot" cx="1227" cy="273" r="16"/><text class="pt hi" x="1170" y="250" text-anchor="end">public frontier · ~12 h</text><text class="lbl" x="1170" y="190" text-anchor="end" style="font-size: 26px">Feb–Mar 2026 · range 5 to 61 h</text><text class="lbl" x="1170" y="145" text-anchor="end" style="font-size: 26px">highly uncertain: the test is near its limit</text></g>
@@ -425,7 +446,7 @@
     <div class="punch big" style="font-size: 84px; line-height: 1.2">“You don't understand the code.”<br><span style="color: var(--accent)" data-cue="three," data-anim="fade">is stage three.</span><br><span style="color: var(--good)" data-cue="four" data-anim="fade">the work is at stage four.</span></div>
   </div>
   <div class="zone" id="k26" data-cue="Karpathy" data-anim="up" style="top: 230px; bottom: 90px">
-    <figure class="ss-shot" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2015883857489522876&amp;theme=dark" data-source="x.com/karpathy/status/2015883857489522876" data-select="article" data-width="620" data-pad="0" data-find="80% agent coding" data-mark-cue="eighty" style="--shot-max-height: 680px"><figcaption>Andrej Karpathy, who coined the term vibe coding · January 2026</figcaption></figure>
+    <figure class="ss-shot" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2015883857489522876&amp;theme=dark" data-source="x.com/karpathy/status/2015883857489522876" data-select="article" data-width="620" data-pad="0" data-find="80% agent coding" data-mark-cue="most" style="--shot-max-height: 680px"><figcaption>Andrej Karpathy, who coined the term vibe coding · January 2026</figcaption></figure>
   </div>
   <div class="zone" id="pair" style="top: 220px; display: flex; align-items: center">
     <div class="row" style="width: 100%">
@@ -472,21 +493,35 @@
   <div class="diffstat" id="dstat" data-cue="thirteen" data-anim="slam" data-sfx="thump" data-sfx-offset="0.3"><span class="add">+<span data-cue="thirteen" data-anim="count">13,323</span></span> <span class="del">&minus;0</span> <small>lines to review</small></div>
   <div class="zone full" id="ocA" data-cue="+0.1" data-anim="up" style="top: 130px"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="hard to review, and very lightly tested" data-width="1100" data-pad="8" data-mark-cue="lightly" style="--shot-max-height: 760px"></figure></div></div>
   <div class="zone full" id="ocB" data-cue="passes" data-anim="up" style="top: 130px; display: flex; align-items: center"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="only 20% of the work, the other 80% are to get the feature discussed, reviewed and integrated" data-lines="0" data-width="1100" data-pad="8" data-mark-cue="only" style="--shot-max-height: 640px"></figure></div></div>
+  <div class="stamp hl" data-cue="eighty" data-anim="slam" style="position: absolute; right: 170px; bottom: 170px; font-size: 54px">the other 80%: review</div>
 </section>
 
 <section data-scene="12-verify" data-mood="workshop">
   <div class="chapter" id="ch12" data-cue="+0.2" data-anim="fade">
     <div class="kicker" data-cue="+0.3" data-anim="fade">the other eighty percent</div>
     <div class="title" data-cue="+0.7" data-anim="slam" data-sfx="up">How I Ship</div>
-    <div class="rule" data-cue="+1.1" data-anim="grow"></div>
+    <div class="rule" id="rule12" data-cue="+1.1" data-anim="fade"></div>
   </div>
+  <div class="overlay" id="review" data-cue="bug" data-anim="fade">
+    <div class="zone full" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 40px">
+      <div class="col" style="width: 1500px; flex: none; margin: 0 auto"><figure class="ss-shot" data-shot="https://github.com/latent-variable/shipshow/pull/77" data-select="#pullrequestreview-5662968608 h3:has(+ table), #pullrequestreview-5662968608 table" data-find="blocks clones without a transcript" data-width="700" data-pad="10" data-mark-cue="transcript" style="--shot-max-height: 600px"><figcaption>the last review round on ShipShow's pull request #77: the bug, resolved</figcaption></figure></div>
+      <div class="row" style="gap: 60px; justify-content: center">
+        <span class="stamp" data-cue="refused" data-anim="slam" data-sfx="thump" style="font-size: 56px">cloned voice: refused</span>
+        <span class="stamp good" data-cue="caught" data-anim="slam" data-sfx="ding" style="font-size: 56px">caught before merge &check;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="12a-loop">
   <div class="stage">
-    <div class="punch big" id="h12" data-cue="Here's#2" data-anim="up" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px">the loop, on every feature</div>
+    <div class="punch big" id="p80" data-cue="eighty" data-anim="pop" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px; color: var(--accent-3)">the other 80%: making sure it works</div>
+    <div class="punch big" id="h12" data-cue="Here's" data-anim="up" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px">the loop, on every feature</div>
     <div class="flow" id="flow">
       <div class="steps-list">
         <div class="step card" data-cue="tell" data-anim="left"><span class="n">1</span><span>I say what the feature has to do</span></div>
         <div class="step card" data-cue="builds" data-anim="left"><span class="n">2</span><span>the agent builds it, and tests it</span></div>
-        <div class="step card" data-cue="review" data-anim="left"><span class="n">3</span><span>another model reviews the PR<small>round after round, until nothing serious is left</small><span class="rounds" data-cue="round" data-anim="stagger"><b>round 1</b><b>round 2</b><b class="done">round 3 &check;</b></span></span></div>
+        <div class="step card" data-cue="review" data-anim="left"><span class="n">3</span><span>another model reviews the pull request<small>round after round, until nothing serious is left</small><span class="rounds" data-cue="round" data-anim="stagger"><b>round 1</b><b>round 2</b><b class="done">round 3 &check;</b></span></span></div>
         <div class="step card" data-cue="standing" data-anim="left"><span class="n">4</span><span>standing tests and checks<small>they know the project</small></span></div>
       </div>
       <div class="side">
@@ -494,23 +529,17 @@
         <div class="checks" id="checks" data-cue="standing" data-anim="up">
           <div class="ok">✓ npm test</div>
           <div class="ok">✓ security gate</div>
-          <div class="ok">✓ the PR's CI</div>
+          <div class="ok">✓ CI on every pull request</div>
           <div style="color: var(--muted); font-size: 28px; margin-top: 12px">ShipShow's checks, on every change</div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="overlay" id="review" data-cue="bug" data-anim="fade">
-    <div class="scrim solid"></div>
-    <div class="zone full" style="display: flex; flex-direction: column; justify-content: center">
-      <div class="col" style="width: 1500px; flex: none; margin: 0 auto"><figure class="ss-shot" data-shot="https://github.com/latent-variable/shipshow/pull/77" data-select="#pullrequestreview-5662968608 h3:has(+ table), #pullrequestreview-5662968608 table" data-find="blocks clones without a transcript" data-width="700" data-pad="10" data-mark-cue="caught" style="--shot-max-height: 720px"><figcaption>the last review round on ShipShow's PR #77: the bug, resolved; no open findings</figcaption></figure></div>
     </div>
   </div>
 </section>
 
 <section data-scene="12b-diligence">
   <div class="stage">
-    <div class="big-step card" data-cue="+0.1" data-anim="up"><span class="n">5</span><span>I run it myself<small>does it do what I meant?</small></span></div>
+    <div class="big-step card" data-cue="+0.1" data-anim="up"><span class="n">5</span><span>I validate it myself<small>I run the feature: does it do what I meant?</small></span></div>
   </div>
   <div class="overlay" id="split" data-cue="Building" data-anim="fade">
     <div class="scrim solid"></div>
@@ -519,7 +548,7 @@
         <div class="lbl">building</div><div class="bar build" data-cue="Building" data-anim="grow">the small part</div>
         <div class="lbl" data-cue="Most" data-anim="fade" style="margin-top: 20px">reviewing · testing · verifying</div><div class="bar verify" data-cue="reviewing," data-anim="grow">most of the work</div>
       </div>
-      <div class="who center" data-cue="merged" data-anim="fade" style="font-size: 34px">ShipShow alone: 65 merged pull requests</div>
+      <div class="who center" id="n66" data-cue="merged" data-anim="fade" style="font-size: 34px">ShipShow alone: 66 merged pull requests</div>
       <div class="center"><span class="stamp hl" data-cue="diligence" data-anim="slam" data-sfx="thump" data-sfx-offset="0.45" style="font-size: 60px">due diligence, 2026</span></div>
     </div>
   </div>
@@ -531,10 +560,11 @@
 
 <section data-scene="13-close" data-mood="today">
   <div class="stage">
-    <div class="ask big" data-cue="+0.4" data-anim="fade" style="font-size: 88px; color: var(--accent)">“You don't understand the code.”</div>
+    <div class="ask-kicker" data-cue="+0.2" data-anim="fade">so, the answer</div>
+    <div class="ask big" data-cue="+0.6" data-anim="fade" style="font-size: 88px; color: var(--accent)">“You don't understand the code.”</div>
     <div class="ask big" data-cue="agree," data-anim="slam" style="font-size: 104px">just agree.</div>
     <div class="ticks" data-cue="show" data-anim="stagger"><span>✓ reviewed</span><span>✓ tested</span><span>✓ verified</span></div>
-    <div class="unread" data-cue="Nobody" data-anim="fade"><s>sub sp, sp, #16 · str w0, [sp, #12] · str w1, [sp, #8] …</s><br>nobody read the machine code either</div>
+    <div class="unread" data-cue="Nobody" data-anim="fade"><s>d10043ff · b9000fe0 · b9000be1 …</s><br>nobody read the machine code either</div>
   </div>
 </section>
 
@@ -553,28 +583,28 @@
   tl.to("#m02", { opacity: 0, duration: 0.3 }, cueAt("#m02") + 3.0);
   tl.to("#m03", { opacity: 0, duration: 0.3 }, cueAt("#m03") + 2.6);
   tl.to("#fb03", { opacity: 0, duration: 0.3 }, cueAt("#k23") - 0.3);
-  tl.to("#lw03", { opacity: 0, duration: 0.3 }, cueAt("#fb03") + 0.3);
-  tl.to("#lw03", { opacity: 1, duration: 0.35 }, cueAt("#now26"));
   tl.to("#k23", { opacity: 0, duration: 0.35 }, cueAt("#now26"));
   tl.to("#m05", { opacity: 0, duration: 0.3 }, cueAt("#m05") + 2.3);
   tl.to("#m06", { opacity: 0, duration: 0.3 }, cueAt("#m06") + 3.6);
   tl.to("#m08", { opacity: 0, duration: 0.3 }, cueAt("#m08") + 2.2);
   tl.to("#metr1", { opacity: 0, duration: 0.3 }, cueAt("#metr2") - 0.3);
-  tl.to(["#metr2", "#h09"], { opacity: 0, duration: 0.3 }, cueAt("#chart") - 0.3);
   tl.to("#half", { opacity: 0, duration: 0.3 }, cueAt("#twelve") - 0.35);
   tl.to("#m09", { opacity: 0, duration: 0.3 }, cueAt("#m09") + 2.0);
   tl.to("#s3", { opacity: 0, duration: 0.3 }, cueAt("#k26") - 0.3);
   tl.to("#k26", { opacity: 0, duration: 0.3 }, cueAt("#p-dhh") - 0.3);
   tl.to("#pair", { opacity: 0, duration: 0.3 }, cueAt("#me") - 0.3);
   tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 1.9);
-  tl.to("#review", { opacity: 0, duration: 0.3 }, cueAt("#h12") - 0.3);
-  tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#m12") + 3.2);
+  tl.to("#m12", { opacity: 0, duration: 0.3 }, Math.min(cueAt("#m12") + 3.2, cueAt("#n66") - 0.35));   // the count is never hidden
   tl.to("#call4", { opacity: 0, duration: 0.3 }, cueAt("#p-hopper") - 0.3);
   tl.to("#call5", { opacity: 0, duration: 0.3 }, cueAt("#bk") - 0.3);
   tl.to("#call5b", { opacity: 0, duration: 0.3 }, cueAt("#dj") - 0.3);
   tl.to("#call6", { opacity: 0, duration: 0.3 }, cueAt("#c1983") - 0.3);
   tl.to(["#ocA", "#dstat"], { opacity: 0, duration: 0.3 }, cueAt("#ocB") - 0.3);
+  tl.to("#p80", { opacity: 0, duration: 0.3 }, cueAt("#h12") - 0.3);
   tl.to("#lunch", { opacity: 0, duration: 0.3 }, cueAt("#checks") - 0.3);
+  // A card's rule draws out from its centre.
+  tl.fromTo(["#rule09"], { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.out" }, cueAt("#rule09"));
+  tl.fromTo(["#rule12"], { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.out" }, cueAt("#rule12"));
   tl.to("#ch04", { opacity: 0, duration: 0.35 }, cueAt("#call4") - 0.35);
   tl.to("#ch09", { opacity: 0, duration: 0.35 }, cueAt("#h09") - 0.35);
   tl.to("#ch11", { opacity: 0, duration: 0.35 }, cueAt("#det") - 0.35);

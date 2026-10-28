@@ -56,3 +56,8 @@ he said was wrong with it, so they are the bar this version is judged by first.
 - **Every section is its own mood** (the owner, 2026-10-27): the opening, the history, now, the objection, the workshop and the
   close each look and sound different (`video.json` `moods`, the packet's *Moods* table), and each look and track fits what that
   section says. The priority is that it is fun to watch, on top of true.
+- **It breathes** (the owner on the seventh cut, 2026-10-27: "it feels like we're speed reading to try to get through the
+  information"). The voice runs at its own pace (speed 1.0), a punchline gets room before the next point, and every act change
+  is a transition with a beat of its own (`video.json` `leads`): the new look and music arrive alone, under a title card in the
+  act's style, before the voice comes in. A cut that rushes from one point to the next, or an act change that lands under the
+  voice, is a finding; so is a beat that holds nothing to see or hear.

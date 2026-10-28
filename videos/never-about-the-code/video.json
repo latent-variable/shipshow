@@ -40,14 +40,18 @@
     "duck": 0.35
   },
   "pauses": {
-    "01-hook": 1.0,
-    "02-compiler": 0.6,
-    "03-ladder": 0.8,
+    "01-hook": 0.8,
+    "02-compiler": 0.5,
+    "03b-rewind": 0.3,
+    "04-impossible": 0.8,
+    "05-beneath-you": 0.6,
+    "05b-rots-your-brain": 0.8,
     "06-flex": 0.8,
-    "08-the-trade": 0.8,
-    "10-skeptics": 0.8,
-    "11b-ocaml": 0.8,
-    "12b-diligence": 1.0,
+    "08-the-trade": 0.3,
+    "10-skeptics": 0.3,
+    "11b-ocaml": 0.3,
+    "12a-loop": 0.6,
+    "12b-diligence": 0.6,
     "13-close": 0.8
   },
   "leads": {
@@ -58,7 +62,7 @@
     "13-close": 1.5
   },
   "hold": 4,
-  "gap": 0.55,
+  "gap": 0.75,
   "moods": {
     "today": {
       "theme": "signal",

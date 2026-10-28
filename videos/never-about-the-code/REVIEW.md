@@ -431,3 +431,43 @@ the caption band was still there. The render had used a stale page: the build ha
 (a sentence's first word) and the command chain hid the failure. The ding is gone, the page rebuilt, the panels now fade at their
 foot, and the ladder hides while the 2023 flashback is up so nothing shows through the fade. **After the cap** this was checked by
 the builder's own frames (65.8, 74, 79.5, 136 and 311.5 s), not by a critic: the owner's eye is the last check.
+
+## Eighth cut (2026-10-27): it breathes
+
+The owner on the seventh cut: rewrite "Like animals."; Karpathy "coined the term", not "named" it; open the workshop on the bug
+story with a dry line (both held from the seventh cut's engagement critic, now approved); and "we shouldn't be afraid to let
+things breathe ... it feels like we're speed reading", with transitions that set the tone. So: speed 1.2 to 1.0 (the voice's own
+pace; ShipShow now makes that an essay's default, D63), gap 0.35 to 0.55, tail 0.9 to 1.1, and a beat before each act (`leads`,
+1.5 to 1.8 s) where the new look and music arrive alone under a title card in the act's style. Plan unchanged: `thorough`.
+
+### Round 1 (fresh agents, Sonnet: all seven): 0 blocking, 17 major
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | fail | 0 / 2 / 3 |
+| clarity | fail | 0 / 3 / 5 |
+| pacing | fail | 0 / 4 / 3 |
+| sync | fail | 0 / 2 / 4 |
+| consistency | fail | 0 / 1 / 5 |
+| visuals | pass | 0 / 2 / 3 |
+| engagement | fail | 0 / 4 / 2 |
+
+What changed:
+- **Still rushed between sentences.** Punchlines had 0.14 to 0.7 s before the next point ("Same here." 0.14 s) and the thesis was
+  the fastest scene. Gap 0.55 to 0.75 (inside runs too, D51), the thesis voiced as three lines, pauses before an act change cut to
+  0.3 s so the beat is the lead, not pause plus lead (engagement: "waiting more than anticipation").
+- **Scenes over 40 s split at their idea boundary:** 03 at the rewind (03b-rewind, the ladder returns for "English"), 09 at the time
+  horizon (09b-horizon), 12 at "That's the eighty percent" (12a-loop).
+- **The hook.** "One number at a time" had no source (accuracy) and did not land (engagement). Now "They wrote machine code by hand,
+  in octal. Artisanal. Small batch.", octal from Hopper's own words (S35), and the meme adds "no compiler added".
+- **The bug story** said plainly (the check that listens back; a clone without a transcript refused to run), the marker on
+  "transcript", stamps "cloned voice: refused" and "caught before merge".
+- **Sync and look.** The archive card says "almost every time", as the voice does; the stage strip waits for Hopper; the close gets
+  a kicker ("so, the answer"); the struck line is the arm64 machine words (d10043ff ...), not assembly; "pull request" on screen;
+  step 5 is "I validate it myself"; the astronaut meme leaves before the PR count; card rules draw from their centre; the neon kicker
+  is legible; gags on the METR rerun and the OCaml 80%.
+- **Clarity, cheap ones taken:** "The roasting goes in four stages", "Take IBM's own case study from 1957", "model-written code
+  passed", Karpathy's "most of his code" (so "eighty percent" means the OCaml one only).
+- **Declined:** METR's three ideas (now two scenes), "Quattro" unexplained, and "a lot of code merged" without a number (the card
+  gives it) are the owner's lines, kept in earlier cuts; the Backus and Dijkstra cards' reading time (the photo and the marked line
+  carry them; the longer gaps add time); the lunch card's tilt (a joke beat).

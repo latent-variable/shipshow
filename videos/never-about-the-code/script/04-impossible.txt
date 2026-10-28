@@ -1,2 +1,2 @@
-[confident] It goes in four stages, almost every time.
+[confident] The roasting goes in four stages, almost every time.
 [mock-dramatic, then a wry storyteller] Stage one, it's impossible. Grace Hopper had a working compiler in 1952, and nobody would touch it, because, they said, computers only do arithmetic.
