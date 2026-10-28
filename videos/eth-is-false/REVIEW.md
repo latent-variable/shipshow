@@ -394,3 +394,6 @@ Minor findings fixed:
 - "as of" now gives the date the sources were read.
 
 Declined: shortening the chapter list. The upload is the owner's; the link goes in `video.json` `youtube.url` once it is up.
+
+**Published 2026-10-28:** https://youtu.be/QBb53_LLMsU (uploaded by the owner; the folder moved to
+`youtube/uploaded/2026-10-28 eth-is-false/`).
