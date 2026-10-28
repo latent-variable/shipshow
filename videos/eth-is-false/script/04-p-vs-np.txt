@@ -2,10 +2,10 @@
 
 [clear, unhurried, comparing like for like] So let's compare like for like. Say a puzzle has n switches and a few rules for each. To check an answer, you read every rule once: roughly n steps. Double the switches, and checking takes twice as long.
 
-[clear, explaining carefully] To find an answer by trying everything, you need up to two to the n tries. Add one switch, and the work doubles. On this chart, the height is how many digits the number of steps has. Checking barely leaves the floor. Trying everything climbs in a straight line.
+[clear, explaining carefully] To find an answer by trying everything, you need up to two to the n tries. Add one switch, and the work doubles. On this chart, the height is how many digits the number of steps has. Each extra digit means ten times the work, so a straight line here is exponential growth. Checking barely leaves the floor. Trying everything climbs in a straight line.
 
 [clear, measured] P is the problems you can solve in polynomial time: steps like n squared or n cubed. They bend and flatten out. NP is the problems where checking an answer is that fast, even if finding one seems to need the straight line.
 
-[serious, measured] In 1971, Stephen Cook showed SAT is the hardest problem in NP: solve SAT fast, and you can solve all of NP fast. More on why later.
+[serious, measured] In 1971, Stephen Cook showed SAT is the hardest problem in NP: solve SAT fast, and you can solve all of NP fast. We'll see why with a Sudoku, later.
 
 [dry, understated] Most researchers bet that can't be done. Eighty eight percent, in a 2019 poll. Over fifty years, nobody has proved it either way, and the million dollars is still unclaimed.

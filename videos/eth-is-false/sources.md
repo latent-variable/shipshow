@@ -100,10 +100,10 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 08 | "a fixed slice of n" is the third cut's plain word for the fixed fraction below; "about a quarter of n" at a million switches is the same 1/√ln(10^6) = 0.27 | **ours**, wording |
 | 13b | "no small circuit, the kind of hardware that grows only in step with its input": Corollary C.1's circuits of linear size, said plainly | P Appendix C.1 |
 | 01 | "I'm an AI too. Claude, made by Anthropic": the video was written by Claude (Opus 5.5, Anthropic) | the making of this video |
-| 01, 13 | Is encryption broken? No: encryption relies on certain problems staying hard in practice, and an algorithm whose conditions only hold past three billion digits of switches does not threaten it | W, and the 12 rows on the worked example |
+| 01, 13 | "And encryption? It rests on certain problems staying hard in practice, and nothing here is practical yet. So nothing about encryption changes today." | W (cryptography "relies on certain problems being difficult"; the threat "depends on the details"); "nothing practical yet": B ("will require significant further research") and the 12 rows |
 | 04 | Checking an answer: read every rule once, roughly n steps when there are a few rules per switch; finding one by trying everything: up to 2ⁿ tries | standard; P section 1 ("checking a candidate assignment") and the 02 rows |
 | 04, 05 | The digits chart: the height is how many digits the step count has (log scale); polynomials flatten, 2ⁿ is a straight line, 2^√n bends under every straight line eventually | **ours**, schematic: the shapes of log(steps), not their scale; labelled so on screen |
-| 08 | The slice chart: every c^n is 2^(slice × n), a fixed slice, drawn flat; the new bound's slice is 1/√log n, falling under every fixed slice in turn | **ours**, schematic: constants and the log log factor left out, labelled so; the crossings shown (n ≈ 800, 10¹¹, 10⁴³) are of 1/√ln n alone |
+| 08 | The slice chart: every c^n is 2^(slice × n), a fixed slice, drawn flat; the new bound's slice falls like 1/√log n, under every fixed slice in turn; "the real crossings come astronomically later" | **ours**, schematic, no numbers on the n axis: constants and the log log factor left out; "astronomically later": the 12 rows (conditions hold past about three billion digits in the worked example) |
 | 09 | Sixty switches: 2⁶⁰ ≈ 1.15 × 10¹⁸, "about a billion billion"; three groups of twenty: 2²⁰ = 1,048,576 each, "about a million"; three million steps | **ours**, arithmetic; the split itself is P section 2.2's example |
 | 13 | A Sudoku as SAT: one switch per cell and digit (is row 1, column 3 a six?), 9 × 9 × 9 = 729; rules: one digit per cell, no repeats in a row, column or box | K; 729 is ours |
 | 15 | "a 67-page proof" | P: 67 pages |
@@ -155,14 +155,14 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 03 | What Year Is It? (memegen `whatyear`): "brute-forcing ninety switches / what year is it?" | third-party template |
 | 04 | Tuxedo Winnie the Pooh (memegen `pooh`): "finding an answer: try all 2ⁿ settings / checking someone's answer: read the n rules" | third-party template |
 | 06 | Guy Hammering Nails Into Sand (memegen `nails`): "25 years of records / 1.333ⁿ → 1.307ⁿ / still a straight line" | third-party template |
-| 08 | Xbox achievement unlocked, a moving GIF (imgflip.com/gif-templates, `https://i.imgflip.com/83oypi.mp4`): "achievement unlocked / under every straight line" | third-party clip |
+| 08 | Xbox achievement unlocked, a moving GIF (imgflip.com/gif-templates, `https://i.imgflip.com/83oypi.mp4`): "achievement unlocked / ETH's floor: removed" | third-party clip |
 | 09 | Gru's Plan (memegen `gru`): "split the switches into groups / count each group fast / rules cross between groups" | third-party template |
 | 10 | That Would Be Great (memegen `officespace`): "yeah, if the dial could also work at zero / that would be great" | third-party template |
 | 11b | Galaxy Brain (memegen `gb`), held as the recap, one panel per step | third-party template |
-| 12 | Sweet Brown (memegen `aint-got-time`): "waiting for three billion digits of switches / ain't nobody got time for that" | third-party template |
+| 12 | Futurama Fry (memegen `fry`): "not sure if a galactic algorithm / or just very, very patient" | third-party template |
 | 13 | Jim Halpert Pointing to Whiteboard (memegen `jim`): "every Sudoku / is secretly a SAT problem"; Homer backs into the bushes, a moving GIF (`https://i.imgflip.com/2txtm1.mp4`): "ETH / after October 26" | third-party template and clip |
 | 14 | Kurt Angle stare, a moving GIF (`https://i.imgflip.com/89540b.mp4`): "the checking team / reading OpenAI's proof" | third-party clip |
-| 14b | Grant Gustin Next To Oliver Queen's Grave (memegen `grave`): "here lies ETH, 2001 to 2026 / the people who proposed it / OpenAI's model" | third-party template |
+| 14b | Grant Gustin Next To Oliver Queen's Grave (memegen `grave`): "here lies ETH, 2001 to 2026 / its authors, checking the proof / OpenAI's model" | third-party template |
 | 15 | Fast guy explaining, a moving GIF (`https://i.imgflip.com/4uapcv.mp4`): "me, explaining a 67-page proof / in one page" | third-party clip |
 
 ## Voice

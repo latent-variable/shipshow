@@ -122,6 +122,7 @@
   .grid9 i { width: 52px; height: 52px; border: 2px solid var(--muted); border-radius: 4px; }
   .grid9 i.hot { background: var(--accent); border-color: var(--accent); }
   .card.sw { font-size: 40px; } .card.sw small { display: block; font-size: 28px; color: var(--muted); margin-top: 8px; }
+  .readsw { font-size: 34px; font-weight: 700; } .readsw .bad { color: var(--bad); }
   .race .shave { font-family: var(--font-mono); font-size: 44px; font-weight: 700; fill: var(--accent-3); }
   .preprint .who { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.12em; color: #4b5a52; }
   .preprint .title { font-family: var(--font-display); font-weight: 600; font-size: 84px; line-height: 1.05; margin-top: 18px; }
@@ -338,25 +339,29 @@
         <div class="title" data-cue="called:" data-anim="type">The Exponential Time Hypothesis is</div>
         <div class="stamp" data-cue="False" data-anim="slam" data-sfx="thump" data-sfx-offset="0.15">False</div>
       </div>
-      <div class="facts">
-        <div class="chip" data-cue="authors" data-anim="pop">no human authors</div>
-        <div class="chip" data-cue="AI" data-anim="pop">an unreleased AI model</div>
-        <div class="chip blue" data-cue="verified" data-anim="pop">verified in Lean, says OpenAI</div>
-      </div>
     </div>
   </div>
   <div class="phase" id="p01b">
     <div class="stage">
       <div class="floor-wrap">
-        <div class="stack" data-cue="Hundreds" data-anim="stagger">
+        <div class="stack" data-cue="floor" data-anim="stagger">
           <div class="paper-slip">… cannot be solved faster, unless ETH is false</div>
           <div class="paper-slip">… unless ETH is false</div>
           <div class="paper-slip">… assuming ETH</div>
         </div>
-        <div class="floorline" data-cue="floor" data-anim="grow"><div class="crack" data-cue="break" data-anim="grow"></div></div>
+        <div class="floorline" data-cue="floor" data-anim="grow"><div class="crack" data-cue="disappeared." data-anim="grow"></div></div>
         <div class="floorlabel" data-cue="floor" data-anim="fade">the floor: the Exponential Time Hypothesis</div>
         <div class="row" style="margin-top: 26px"><div class="chip hot" data-cue="equals" data-anim="pop">P = NP?</div><div class="chip hot" data-cue="encryption" data-anim="pop">encryption broken?</div><div class="chip hot" data-cue="every" data-anim="pop">every hard problem easy?</div></div>
-        <div class="row"><div class="stamp green" data-cue="Short" data-anim="slam">no · no · no</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p01c">
+    <div class="stage">
+      <div class="facts" style="flex-direction: column; align-items: center; gap: 26px">
+        <div class="chip" data-cue="authors" data-anim="pop">no human authors</div>
+        <div class="chip" data-cue="models" data-anim="pop">one of OpenAI's models wrote it</div>
+        <div class="chip blue" data-cue="verified" data-anim="pop">verified in Lean, says OpenAI</div>
+        <div class="stamp green" style="margin-top: 20px" data-cue="stranger" data-anim="slam">stranger than yes or no</div>
       </div>
     </div>
   </div>
@@ -448,6 +453,7 @@
       <div class="chip blue zoombadge" id="zb03">zoom out</div>
     </div>
     
+    <div class="row" style="margin-top: 10px"><div class="chip hot" data-cue="clever" data-anim="pop">solvers skip cleverly</div><div class="chip" data-cue="hardest" data-anim="pop">the hardest cases: still exponential</div></div>
   </div>
   <div class="meme-wrap pop" id="m03" data-cue="universe." data-anim="pop"><figure class="ss-meme" data-meme="whatyear"><span>brute-forcing ninety switches</span><span>what year is it?</span></figure></div>
 </section>
@@ -493,7 +499,7 @@
     <div class="prize"><div class="stamp green" data-cue="dollars" data-anim="slam" data-sfx="ding" data-sfx-offset="0.3">$1,000,000 · still unclaimed</div></div>
   </div>
   </div>
-  <div class="meme-wrap pop" id="m04" data-cue="line." data-anim="pop"><figure class="ss-meme" data-meme="pooh"><span>finding an answer: try all 2ⁿ settings</span><span>checking someone's answer: read the n rules</span></figure></div>
+  <div class="meme-wrap pop" id="m04" data-cue="line.#2" data-anim="pop"><figure class="ss-meme" data-meme="pooh"><span>finding an answer: try all 2ⁿ settings</span><span>checking someone's answer: read the n rules</span></figure></div>
 </section>
 
 <!-- 05: the middle ground -->
@@ -610,8 +616,8 @@
       <svg class="slices" viewBox="0 0 1100 560" width="960" height="489">
         <line class="ax" x1="90" y1="500" x2="1070" y2="500"/><line class="ax" x1="90" y1="30" x2="90" y2="500"/>
         <text x="104" y="40">the slice: time = 2 to the (slice × n)</text>
-        <text x="90" y="530" text-anchor="middle">10</text><text x="200" y="530" text-anchor="middle">a million</text><text x="509" y="530" text-anchor="middle">10²⁰</text><text x="1060" y="530" text-anchor="middle">10⁴⁵</text>
-        <text x="575" y="556" text-anchor="middle">n, switches, growing by powers of ten · schematic: constants left out</text>
+        <text x="1060" y="530" text-anchor="end">n, switches, growing →</text>
+        <text x="575" y="556" text-anchor="middle">the shape only: the real crossings come astronomically later</text>
         <g data-cue="chart." data-anim="fade"><path class="h brute" d="M90.0 62.0 L1059.8 62.0"/><text class="lbl" x="1060" y="52" text-anchor="end" style="fill: var(--bad)">try everything: 2ⁿ, slice 1</text></g>
         <g data-cue="record," data-anim="fade"><path class="h" d="M90.0 330.9 L1059.8 330.9"/><text class="lbl" x="1060" y="320" text-anchor="end" style="fill: var(--accent-3)">the record: 1.307ⁿ = 2^(0.39 n)</text></g>
         <path class="new" d="M90.0 211.4 L94.8 238.7 L99.7 259.5 L104.5 276.0 L109.4 289.5 L114.2 300.8 L119.1 310.5 L123.9 318.9 L128.8 326.3 L133.6 332.8 L138.5 338.6 L143.3 343.9 L148.2 348.7 L153.0 353.1 L157.9 357.1 L162.7 360.8 L167.6 364.2 L172.4 367.4 L177.3 370.4 L182.1 373.2 L187.0 375.8 L191.8 378.2 L196.7 380.6 L201.5 382.7 L206.4 384.8 L211.2 386.8 L216.1 388.7 L220.9 390.4 L225.8 392.1 L230.6 393.7 L235.5 395.3 L240.3 396.8 L245.2 398.2 L250.0 399.6 L254.9 400.9 L259.7 402.1 L264.6 403.4 L269.4 404.5 L274.3 405.7 L279.1 406.7 L284.0 407.8 L288.8 408.8 L293.6 409.8 L298.5 410.8 L303.3 411.7 L308.2 412.6 L313.0 413.4 L317.9 414.3 L322.7 415.1 L327.6 415.9 L332.4 416.7 L337.3 417.4 L342.1 418.2 L347.0 418.9 L351.8 419.6 L356.7 420.3 L361.5 420.9 L366.4 421.6 L371.2 422.2 L376.1 422.8 L380.9 423.4 L385.8 424.0 L390.6 424.6 L395.5 425.1 L400.3 425.7 L405.2 426.2 L410.0 426.7 L414.9 427.2 L419.7 427.7 L424.6 428.2 L429.4 428.7 L434.3 429.2 L439.1 429.7 L444.0 430.1 L448.8 430.6 L453.7 431.0 L458.5 431.4 L463.4 431.9 L468.2 432.3 L473.1 432.7 L477.9 433.1 L482.8 433.5 L487.6 433.8 L492.5 434.2 L497.3 434.6 L502.1 435.0 L507.0 435.3 L511.8 435.7 L516.7 436.0 L521.5 436.4 L526.4 436.7 L531.2 437.0 L536.1 437.4 L540.9 437.7 L545.8 438.0 L550.6 438.3 L555.5 438.6 L560.3 438.9 L565.2 439.2 L570.0 439.5 L574.9 439.8 L579.7 440.1 L584.6 440.4 L589.4 440.7 L594.3 440.9 L599.1 441.2 L604.0 441.5 L608.8 441.7 L613.7 442.0 L618.5 442.2 L623.4 442.5 L628.2 442.7 L633.1 443.0 L637.9 443.2 L642.8 443.5 L647.6 443.7 L652.5 443.9 L657.3 444.2 L662.2 444.4 L667.0 444.6 L671.9 444.9 L676.7 445.1 L681.6 445.3 L686.4 445.5 L691.3 445.7 L696.1 445.9 L700.9 446.1 L705.8 446.3 L710.6 446.5 L715.5 446.7 L720.3 446.9 L725.2 447.1 L730.0 447.3 L734.9 447.5 L739.7 447.7 L744.6 447.9 L749.4 448.1 L754.3 448.3 L759.1 448.5 L764.0 448.6 L768.8 448.8 L773.7 449.0 L778.5 449.2 L783.4 449.3 L788.2 449.5 L793.1 449.7 L797.9 449.8 L802.8 450.0 L807.6 450.2 L812.5 450.3 L817.3 450.5 L822.2 450.7 L827.0 450.8 L831.9 451.0 L836.7 451.1 L841.6 451.3 L846.4 451.4 L851.3 451.6 L856.1 451.7 L861.0 451.9 L865.8 452.0 L870.7 452.2 L875.5 452.3 L880.4 452.5 L885.2 452.6 L890.1 452.7 L894.9 452.9 L899.7 453.0 L904.6 453.2 L909.4 453.3 L914.3 453.4 L919.1 453.6 L924.0 453.7 L928.8 453.8 L933.7 453.9 L938.5 454.1 L943.4 454.2 L948.2 454.3 L953.1 454.5 L957.9 454.6 L962.8 454.7 L967.6 454.8 L972.5 454.9 L977.3 455.1 L982.2 455.2 L987.0 455.3 L991.9 455.4 L996.7 455.5 L1001.6 455.7 L1006.4 455.8 L1011.3 455.9 L1016.1 456.0 L1021.0 456.1 L1025.8 456.2 L1030.7 456.3 L1035.5 456.4 L1040.4 456.5 L1045.2 456.7 L1050.1 456.8 L1054.9 456.9 L1059.8 457.0" data-cue="isn't" data-anim="draw"/><text class="lbl" x="120" y="190" style="fill: var(--accent)" data-cue="isn't" data-anim="fade">the new algorithm: n / √log n</text>
@@ -624,7 +630,7 @@
     </div>
   </div>
   </div>
-  <div class="meme-wrap pop" id="m08" data-cue="gone." data-anim="fade"><figure class="ss-meme" data-clip="https://i.imgflip.com/83oypi.mp4" data-name="Xbox achievement unlocked" data-credit="https://imgflip.com/gif-templates" data-cue="gone." data-anim="pop" style="width: 1000px; height: 560px"><span class="top">achievement unlocked</span><span class="bottom">under every straight line</span></figure></div>
+  <div class="meme-wrap pop" id="m08" data-cue="gone." data-anim="fade"><figure class="ss-meme" data-clip="https://i.imgflip.com/83oypi.mp4" data-name="Xbox achievement unlocked" data-credit="https://imgflip.com/gif-templates" data-cue="gone." data-anim="pop" style="width: 1000px; height: 560px"><span class="top">achievement unlocked</span><span class="bottom">ETH's floor: removed</span></figure></div>
 </section>
 
 <!-- 08b: it counts -->
@@ -674,7 +680,7 @@
       </div>
       <div class="bignum" data-cue="sixty" data-anim="up">2<sup>60</sup> settings ≈ <b>a billion billion</b></div>
       <div class="mult" data-cue="million." data-anim="up">each group: 2<sup>20</sup> ≈ <b>a million</b></div>
-      <div class="mult math" data-cue="multiply#2" data-anim="up">count = <i>N</i><sub>1</sub> × <i>N</i><sub>2</sub> × <i>N</i><sub>3</sub> <span style="font-family: var(--font); color: var(--good)" data-cue="Three#4" data-anim="pop">· 3 million steps</span></div>
+      <div class="mult math" data-cue="multiply#2" data-anim="up">count = <i>N</i><sub>1</sub> × <i>N</i><sub>2</sub> × <i>N</i><sub>3</sub> <span style="font-family: var(--font); color: var(--good)" data-cue="Three#3" data-anim="pop">· 3 million steps</span></div>
     </div>
   </div>
   <div class="meme-wrap pop" id="m09" data-cue="catch:" data-anim="pop"><figure class="ss-meme" data-meme="gru"><span>split the switches into groups</span><span>count each group fast</span><span>rules cross between groups</span><span>rules cross between groups</span></figure></div>
@@ -708,7 +714,8 @@
           <div class="grp"><div class="dots"><i></i><i></i><i></i></div></div>
           <div class="grp"><div class="dots"><i></i><i></i><i></i></div></div>
         </div>
-        <div class="bus" data-cue="note" data-anim="grow">a note: a few weighted sums of each group's switches</div>
+        <div class="readsw" data-cue="directly." data-anim="up">a rule in group 1 → <span class="bad">reads group 2's switches</span></div>
+        <div class="bus" data-cue="note" data-anim="grow">→ reads one small number instead: a note, like how many of group 2's switches are on</div>
         <div class="panel" data-cue="try" data-anim="up">try every note<small>for each one, count every group <span id="alone10" data-cue="separate," data-anim="highlight">alone</span></small></div>
         <span id="catch10" data-cue="catch:" data-anim="fade"></span>
         <div class="nozero" data-cue="catch:" data-anim="pop">✗ at T = 0 this shortcut doesn't apply</div>
@@ -781,7 +788,7 @@
       <div class="card" data-cue="OpenAI" data-anim="up"><div class="quote">practical improvements "will require <em>significant further research</em>"</div><div class="src center">OpenAI, October 26, 2026</div></div>
     </div>
   </div>
-  <div class="meme-wrap pop" id="m12" data-cue="typo." data-anim="pop"><figure class="ss-meme" data-meme="aint-got-time"><span>waiting for three billion digits of switches</span><span>ain't nobody got time for that</span></figure></div>
+  <div class="meme-wrap pop" id="m12" data-cue="typo." data-anim="pop"><figure class="ss-meme" data-meme="fry"><span>not sure if a galactic algorithm</span><span>or just very, very patient</span></figure></div>
 </section>
 
 <!-- 13: what it means -->
@@ -796,7 +803,7 @@
         <div class="col">
           <div class="q big" style="font-size: 84px" data-cue="+0.1" data-anim="pop">does this give<br>P = NP?</div>
           <div class="stamp green" style="font-size: 64px; align-self: center" data-cue="No." data-anim="slam">no</div>
-          <div class="chip" style="align-self: center" data-cue="encryption?" data-anim="pop">encryption: still a safe bet</div>
+          <div class="chip" style="align-self: center" data-cue="encryption?" data-anim="pop">encryption: nothing changes today</div>
         </div>
       </div>
     </div>
@@ -874,7 +881,7 @@
   </div>
   <div class="phase" id="p14b">
     <div class="stage">
-      <div class="pulled3" data-cue="withdrew" data-anim="stagger"><div class="pp">AI math paper</div><div class="pp">AI math paper</div><div class="pp">AI math paper</div></div>
+      <div class="pulled3" data-cue="withdrew" data-anim="stagger"><div class="pp">math paper</div><div class="pp">math paper</div><div class="pp">math paper</div></div>
       <div class="src center" data-cue="seventh," data-anim="fade">October 7 · a sign error · algebraic geometry, not this paper</div>
       <div class="chip" style="align-self: center" data-cue="far," data-anim="pop">so far, OpenAI's word: the checking team hasn't reported</div>
       <div class="row" style="gap: 60px"><div class="stamp green" data-cue="signal," data-anim="slam">strong signal</div><div class="stamp yellow" data-cue="peer" data-anim="slam">not peer reviewed yet</div></div>
@@ -893,7 +900,7 @@
     </div>
     
   </div>
-  <div class="meme-wrap pop" id="m14b" data-cue="obituary." data-anim="pop"><figure class="ss-meme" data-meme="grave"><span>here lies ETH, 2001 to 2026</span><span>the people who proposed it</span><span>OpenAI's model</span></figure></div>
+  <div class="meme-wrap pop" id="m14b" data-cue="false." data-anim="pop"><figure class="ss-meme" data-meme="grave"><span>here lies ETH, 2001 to 2026</span><span>its authors, checking the proof</span><span>OpenAI's model</span></figure></div>
 </section>
 
 <!-- 15: close -->
@@ -922,6 +929,10 @@
   const LEAD_IN = { "02-puzzle": 3.1, "04-p-vs-np": 3.1, "07-built-on-it": 3.1, "08-the-claim": 3.1, "09-split": 3.1, "12-galactic": 3.1, "14-trust": 3.1 };
   // Scenes in two phases: the first steps aside just before the second arrives.
   tl.to("#p01a", { opacity: 0, duration: 0.35 }, cueAt("#p01b .floorline") - 0.4);
+  tl.to("#p01b", { opacity: 0, duration: 0.35 }, cueAt("#p01c .chip") - 0.4);
+  tl.set("#p01c", { opacity: 0 }, 0);
+  tl.to("#p01c", { opacity: 1, duration: 0.35 }, cueAt("#p01c .chip") - 0.4);
+  tl.to("#m01", { opacity: 0, duration: 0.3 }, cueAt("#p01c .stamp") - 0.5);
 
   // 02b: each rule crosses out the setting it rules out (rule 1 the last cell, rule 4 the first), then the uses arrive.
   tl.set("#grid02b .x", { opacity: 0, scale: 1.6 }, 0);
@@ -957,8 +968,11 @@
   });
   // Pop memes that leave before their scene goes on; the rest hold to their scene's end.
   tl.to("#m06", { opacity: 0, duration: 0.3 }, cueAt("#m06") + 3.4);
+  tl.to("#m03", { opacity: 0, duration: 0.3 }, cueAt("[data-scene='03-doubling'] .chip.hot") - 0.4);
   tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#p12b .card") - 0.4);
   tl.to("#p13x", { opacity: 0, duration: 0.35 }, cueAt("#p13s .grid9") - 0.4);
+  tl.to("#p13s .grid9 i", { backgroundColor: "rgba(143, 211, 244, 0.35)", duration: 0.2, stagger: 0.03 }, cueAt("#p13s .bignum"));
+  tl.to("#p13s .grid9", { borderColor: "#e8a87c", duration: 0.4 }, cueAt("#p13s .chip"));
   tl.set("#p13s", { opacity: 0 }, 0);
   tl.to("#p13s", { opacity: 1, duration: 0.35 }, cueAt("#p13s .grid9") - 0.4);
   tl.to("#m13", { opacity: 0, duration: 0.3 }, cueAt("#p13s .card[data-cue='bigger']") - 0.4);
@@ -968,10 +982,10 @@
   tl.to("#p04a", { opacity: 0, duration: 0.35 }, cueAt("[data-scene='04-p-vs-np'] .digits g") - 0.6);
   tl.set("#p04c", { opacity: 0 }, 0);
   tl.to("#p04c", { opacity: 1, duration: 0.35 }, cueAt("[data-scene='04-p-vs-np'] .digits g") - 0.6);
-  tl.to("#m04", { opacity: 0, duration: 0.3 }, cueAt("#card04p") - 0.5);
-  tl.to("#p04c", { opacity: 0, duration: 0.35 }, cueAt("#card04p") - 0.4);
+  tl.to("#m04", { opacity: 0, duration: 0.3 }, cueAt("[data-scene='04-p-vs-np'] .cook") - 0.5);
+  tl.to("#p04c", { opacity: 0, duration: 0.35 }, cueAt("[data-scene='04-p-vs-np'] .cook") - 0.4);
   tl.set("#p04b", { opacity: 0 }, 0);
-  tl.to("#p04b", { opacity: 1, duration: 0.35 }, cueAt("#card04p") - 0.4);
+  tl.to("#p04b", { opacity: 1, duration: 0.35 }, cueAt("[data-scene='04-p-vs-np'] .cook") - 0.4);
   tl.to(["#p04b .pnp", "#p04b .row"], { opacity: 0.1, duration: 0.3 }, cueAt("#p04b .prize .stamp") - 0.2);
   tl.to("#p08a", { opacity: 0, duration: 0.35 }, cueAt("#p08b .thm") - 0.4);
   tl.set("#p08b", { opacity: 0 }, 0);

@@ -1,7 +1,7 @@
-[firm, quietly dramatic] Then, on October twenty sixth, OpenAI pulled that bottom card.
+[firm, quietly dramatic, then dry] Then, on October twenty sixth, OpenAI pulled that bottom card. Speaking as a competitor: annoyingly good move.
 
 [clear, explaining carefully] The paper gives an algorithm for SAT with rules of any fixed size: three switches, four, ten.
 
 [clear, unhurried, walking the listener through it] Back to the chart. Every algorithm in that race was a straight line: two to some fixed slice of n. Even the record, one point three oh seven to the n, is two to about point three nine of n. ETH says there's a slice nothing can go below.
 
-[clear, building slowly to the point] The new algorithm isn't a straight line. Its time is roughly two to the n divided by the square root of log n. It starts out above the record. But the square root of log n keeps growing, so the curve keeps bending down. Pick any straight line, any slice, and eventually the curve falls below it. That's exactly what ETH said couldn't happen. If it's right, the floor is gone.
+[clear, building slowly to the point] The new algorithm isn't a straight line. Its time is roughly two to the n divided by the square root of log n. Log n is a number that creeps up very slowly, but it never stops, so the curve keeps bending down. This chart shows only the shape: the real crossings come astronomically later. Pick any straight line, any slice, and eventually the curve falls below it. That's exactly what ETH said couldn't happen. If it's right, the floor is gone.

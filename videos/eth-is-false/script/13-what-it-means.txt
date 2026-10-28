@@ -1,6 +1,6 @@
-[clear, unhurried] So, does it mean P equals NP? No. Its time still grows faster than any polynomial, so P versus NP is untouched. And encryption? Encryption bets on problems staying impractically slow. An algorithm that only kicks in past three billion digits doesn't change that bet.
+[clear, unhurried] So, does it mean P equals NP? No. Its time still grows faster than any polynomial, so P versus NP is untouched. And encryption? It rests on certain problems staying hard in practice, and nothing here is practical yet. So nothing about encryption changes today.
 
-[clear, explaining carefully] Here's the subtle part. Solving SAT fast would solve all of NP, because almost any puzzle of that kind can be translated into SAT. Take a Sudoku. Make one switch for every cell and every digit: is the cell in row one, column three, a six? That's seven hundred twenty nine switches. Then write the rules: every cell gets one digit, and no digit repeats in a row, a column, or a box. Now any SAT solver solves your Sudoku.
+[clear, explaining carefully] Here's the subtle part. Solving SAT fast would solve all of NP, because almost any puzzle of that kind can be translated into SAT. Take a Sudoku. Make one switch for every cell and every digit: is the cell in row one, column three, a six? That's seven hundred twenty nine switches. Then write the rules: every cell gets one digit, and no digit repeats in a row, a column, or a box. Now any SAT solver solves your Sudoku. Humans invented Sudoku to relax. Computers turn it into this.
 
 [measured, careful] But translations make problems bigger, and a speedup this small doesn't automatically survive the trip. So for other problems, the consequences need care.
 
