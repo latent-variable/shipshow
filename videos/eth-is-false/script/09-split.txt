@@ -1,6 +1,6 @@
-[clear, explaining] So how does it work? Here's the core idea.
-[matter-of-fact] Write each rule as a little piece of algebra that's one when the rule is happy and zero when it isn't. Multiply them, and the product is one only when every rule is happy. Add that up over every setting, and you get the exact count.
-[dry] That's still two to the n terms. No progress yet.
-[curious] But imagine the switches split into separate groups, with no rule crossing between them.
+[sly] Count every setting, without trying every setting? It's a heist, in three moves.
+[matter-of-fact] First, the setup. Write each rule as a little piece of algebra that's one when the rule is happy and zero when it isn't. Multiply them, and the product is one only when every rule is happy. Add that up over every setting, and you get the exact count.
+[dry] Still two to the n terms.
+[curious] Move one. Imagine the switches split into separate groups, with no rule crossing between them.
 [excited] Then you count each group on its own and multiply. Several small brute forces instead of one giant one.
 [deadpan] Real problems don't split like that. Rules cross everywhere.

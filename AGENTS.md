@@ -137,7 +137,7 @@ A change to `bin/`, `kit/` or `template/` is validated by running `make` and `re
 
 | File | What it is |
 |---|---|
-| `script/01-intro.txt`, `02-...` | One file per scene, read aloud in file-name order. A sentence ends at `.`, `!` or `?` and a space. With OmniVoice runs, write one thought per line: each line is one take, so sentences meant to land together are voiced together (`lineRuns`, D54; a line over 70 words is split). A blank line between two lines is a beat: `video.json` `beat` seconds (0.6) more than the gap, so a punchline lands before the next point (`beatsAfter`, D63) |
+| `script/01-intro.txt`, `02-...` | One file per scene, read aloud in file-name order. A sentence ends at `.`, `!` or `?` and a space. With OmniVoice runs, write one thought per line: each line is one take, so sentences meant to land together are voiced together (`lineRuns`, D54; a line over 70 words is split). A blank line between two lines is a beat: `video.json` `beat` seconds (0.6) more than the gap, so a punchline lands before the next point (`beatsAfter`, D64) |
 | `scenes.html` | One `<section data-scene="01-intro">` per script file, a `<style>` for the look, optionally a `<script>` |
 | `video.json` | `title`, `kind` (`decision`, `feature`, `release`, `essay`: an idea argued in the author's own voice, to share), `importance` and `importance_reason` (set by the builder), `sfx` (sound effects: `false`, a kit name, or `{kit, under, tonic}`), `shows_code` (puts `critic-grounding` on the floor; read from `scenes.html` when absent: a `<pre>`, `<code>` or `.ss-code` sets it, and `false` cannot lower it), `voice`, `speed`, `theme`, `flair`, `moods` (named looks, ambient and music selected by `data-mood`), `review`, `say`, `audience`; optional `lead`, `gap`, `tail` (seconds of pause), `pauses` (`{"<scene>": seconds}`: a beat after one scene, so a meme or a stamp at its end can be read), `leads` (`{"<scene>": seconds}`: a beat before one scene's first word, so a new act's look and music arrive first), `beat` (seconds a blank line in a script adds, 0.6), `hold` (still seconds after the last word; the last scene never fades), `seed`, `loudness` (LUFS the render is mastered to; -14 by default, `false` for none) |
 | `sources.md` | Every claim the video makes, with its source |
@@ -255,7 +255,7 @@ resolved by `reviewPlan` in `bin/lib.mjs`. The builder picks the preset by setti
 an `"importance_reason"`. Most specific wins: flags, then `video.json` `"review"` (an
 explicit preset there beats importance), then importance, then `local/config.json`
 `"review"`, then the kind's default (`quick` for a decision video, else `standard`). `skills/critic-loop` has what each dial trades and the floor no dial lowers.
-The estimate's constants are measurements from 2026-10-17; replace them when you measure.
+The estimate's constants are measurements from 2026-10-17 and 2026-10-27, and its tokens grow with the video's length; replace them when you measure. The builder says the spend before round 1 and stops past it (`critic-loop`, *Spend is part of the plan*).
 
 **Memes.** A well-chosen meme lands a beat. `<figure class="ss-meme" data-meme="astronaut" data-cue="never" data-anim="pop">`
 with a `<span>` per line, filled into the template's text boxes in order (an empty span leaves a box blank,
@@ -369,7 +369,7 @@ kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.
 themes/     shipshow, paper, launch, buildday, lofi, signal, chalk and archive; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono, Bricolage Grotesque, Inter, Playfair Display, Courier Prime: SIL OFL)
 skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
 template/   what npm run new copies
-videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino-long.wav exists, with Drama 3 set up) and eth-is-false (OpenAI's ETH preprint explained, for the same channel and voice, on the chalk theme)
+videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino-long.wav exists, with Drama 3 set up) and eth-is-false (OpenAI's ETH preprint explained, for the same channel, read by an invented Drama 3 narrator, `local/voices/eth-narrator.wav`, on the chalk theme)
 examples/   ledgerly, a fictional invoicing API with one authorization bug, a threat model and an access log
 skills/critic-grounding/scripts/  excerpt.mjs and check-excerpt.mjs, the excerpt check (run through the skill)
 skills/evidence-standard/scripts/  sandbox-run.sh, capture.mjs, verify-vendored.sh (run through the skill)

@@ -1,6 +1,6 @@
 # Review: eth-is-false
 
-Plan: `thorough` (importance high: public, in Lino's voice, on a result experts are still checking). Critics: accuracy, clarity,
+Plan: `thorough` (importance high: public, on Lino's channel, on a result experts are still checking). Critics: accuracy, clarity,
 pacing, sync, visuals, consistency, engagement, and grounding (scene 14 shows a Lean excerpt); Sonnet, Opus for the last round's
 clarity, visuals and engagement; at most 4 rounds; until no blocking or objective major finding is left. Every critic is a fresh
 agent that never saw the build.
@@ -167,3 +167,119 @@ and "stopped" heard as "stop".
 
 **For the owner's listen:** each direction (the deadpans in 01, 03, 09, 12 and 14b; "That's not a typo"), the name "Impagliazzo"
 (respelled "Impalyatso" for Drama 3), the 2.16 s beat after "Simple, right?", and the pace of 09, 12 and 14b.
+
+# The second cut (2026-10-27)
+
+The owner watched half of the first cut and asked for more: a mood per act, act openers that hook, 3-SAT's "no answer" shown and why
+it matters, a growth chart, more fun, and the letter n never spelled "E N". Then he moved the video off his cloned voice: he is not the
+one explaining the paper, so an invented Drama 3 narrator (picked by him from twelve auditions) reads it. Plan as before: `thorough`,
+at most 4 rounds; grounding's round 2 pass stands while the Lean excerpt is unchanged.
+
+## Round 5: 1 blocking, 18 major; seven critics, Sonnet
+
+| Critic | Verdict | Blocking | Major | Minor |
+|---|---|---|---|---|
+| accuracy | pass | 0 | 0 | 3 |
+| clarity | fail | 0 | 3 | 4 |
+| pacing | fail | 0 | 4 | 2 |
+| sync | fail | 0 | 3 | 2 |
+| visuals | fail | 1 | 4 | 2 |
+| consistency | fail | 0 | 1 | 2 |
+| engagement | fail | 0 | 2 | 2 |
+
+**Fixed:**
+- **Visuals (blocking).** Scene 08's theorem chart showed through the house of cards: the chart's phase now waits for its own cue.
+- **Pace.** The new narrator ran 20 to 40% over the target at speed 1.2, the speed of the audition the owner picked: now 1.1, and lines
+  that restated the one before are cut ("No progress yet", "Stick around", "polynomial memory", the 11b knob list). Pauses after 07 and
+  11b are under 2 s.
+- **Clarity.** The step from "a smaller exponent" to "ETH is false" is said plainly and drawn: "ETH says the exponent can never drop below
+  some fixed fraction of n. This one ends up below every fraction you pick." A note is "a few weighted sums" of a group's switches. 11b
+  is two pulls, both making the notes bigger. "Easy points" in both 10 and 11.
+- **Engagement.** 04 opens on a million dollar puzzle and closes on "the million dollars is still sitting there" (Clay, source M);
+  06 shows what twenty five years of records shaved (−0.026); the NP card lands on its definition and the n-squared line on its words.
+- **Sync and consistency.** "Move 1" lands on "Move one" (it landed on "moves" 15 s early); the growth chart pins 30 and 40 on their
+  words; the 12 card on "million"; the relatives one at a time; the catch card on "The catch?".
+- **Visuals.** The growth chart's labels sit left of every curve, at chart sizes of 28 px and up; the title's FALSE stamp is larger and
+  red; scene 14 shows the three pulled papers struck through and ends on two stamps, "strong signal" and "not peer reviewed yet".
+- **Accuracy.** "In a preprint this year" for 1.307; "in the worked example the paper itself walks through"; DNF as Fedora's package
+  manager is now sourced (D).
+- **Pipeline.** Both listeners flagged "ETH." as unheard because they wrote it "E.T.H.": the missing-sentence check now joins spelled
+  letters (DESIGN D60).
+
+## Round 6: 1 blocking, 10 major; seven critics, Sonnet (accuracy and consistency pass)
+
+| Critic | Verdict | Blocking | Major | Minor |
+|---|---|---|---|---|
+| accuracy | pass | 0 | 0 | 3 |
+| clarity | fail | 0 | 2 | 2 |
+| pacing | fail | 0 | 6 | 3 |
+| sync | fail | 0 | 1 | 1 |
+| visuals | fail | 1 | 0 | 3 |
+| consistency | pass | 0 | 0 | 3 |
+| engagement | fail | 0 | 1 | 2 |
+
+**Fixed:**
+- **Visuals (blocking).** The $1,000,000 stamp landed on the 88% poll: the scene now dims under it. The prize also opens 04, on "a
+  million dollar puzzle" (sync: seven seconds had nothing on screen).
+- **Clarity.** Both bridges are said aloud: "A base above one is just two to some fraction of n" before the floor in 08; "Move two makes
+  them split anyway", and "switches are only on or off, so a note has few possible values" in 10. "First, the setup" before the algebra;
+  "the count" traces the curve in 11.
+- **Engagement.** "The plan has one flaw" (with a scratch) after the catch in 10, "clean getaway" on the exact count in 11; 07 opens on
+  "Hundreds of papers built on that bet".
+- **Pacing.** Less to read: the sum's footnote, the 12 card's footnote, the 13b card, one line for the pulled papers, and the Lean excerpt
+  dims once its two lines are read. Pauses after 07 (0.5) and 11b (0.6) keep every gap under 2 s.
+- **Accuracy and consistency.** "In a pair of 2001 papers"; "over three billion digits"; DNF5 and libsolv sourced; the checkers are "the
+  checking team" everywhere (a "group" is a block of switches); "ETH's floor, as an exponent".
+
+**Declined, with reasons:**
+- Pacing's overall syllable rate (not raised this round, recorded here): the narrator reads briskly at any setting; slowed from the
+  audition's 1.2 to 1.1, the packet's target falls with it. The owner picked this voice by ear; his listen decides.
+- Pacing's "read by" chains (14, 12, 09) assume every card is read in order after the last; the packet also counts SVG geometry as text
+  (P5-5, P6-9). The cards were shortened; the chains themselves are a measurement limit.
+- Sync's late ding after the galaxy-brain meme: it lands on "right?", the punchline, on purpose.
+
+## Round 7: 0 blocking, 7 major; seven critics, Opus for clarity, visuals and engagement (accuracy, pacing and consistency pass)
+
+| Critic | Model | Verdict | Blocking | Major | Minor |
+|---|---|---|---|---|---|
+| accuracy | Sonnet | pass | 0 | 0 | 3 |
+| clarity | Opus | fail | 0 | 1 | 4 |
+| pacing | Sonnet | pass | 0 | 0 | 4 |
+| sync | Sonnet | fail | 0 | 2 | 1 |
+| visuals | Opus | fail | 0 | 1 | 4 |
+| consistency | Sonnet | pass | 0 | 0 | 1 |
+| engagement | Opus | fail | 0 | 2 | 2 |
+
+**Fixed:**
+- **Clarity.** The swap from a base to an exponent is grounded in the record the viewer just saw: "Even the record, one point three oh
+  seven to the n, is two to about point three nine times n" (1.307ⁿ = 2^(0.39 n) on screen). The reason is said: n over root log n is a
+  fraction that keeps shrinking, "about a quarter" at a million switches (the same 3.7 as scene 12), and the chart draws a second, smaller
+  floor that the curve also crosses. Also: the setup's payoff named in 11 ("Because every rule is now algebra"), each 11b knob shown with
+  what it costs, "Here it is in thirty seconds", and "small circuits, ones that grow only in step with their input".
+- **Sync.** "Try every note" lands on "try" (it landed on the first "few"); the product lands on "Multiply" and the sum on "Add".
+- **Visuals.** The flaw stamp sits under the dial, inside the scene window (it was clipped at its bottom edge); the 02b crosses let their
+  settings show through; struck names keep their crossbars; clause cards on one line.
+- **Engagement.** "27 years · −0.026" is slammed with a thump in 06, "load-bearing" stamps the base of the tower in 07, 02 opens on "Try
+  this puzzle" with the switches on screen, 09 opens on the paradox, and P ≠ NP pulses on "untouched".
+- **Accuracy and consistency.** "Most famous" and "thirty seconds" tagged as opinion; "the team checking it" in 15.
+
+**Accepted:** the recap meme's 2.3 s (all four steps were on screen earlier; it is a stinger); the late curve in 03 (the pins arrive on
+their words); top-heavy frames in 14b and 15 until their stamps land.
+
+## Round 8 (the cap): the floor re-checked on the changed lines only; the builder's look
+
+The owner asked for restraint: the first cut had four full rounds, and a revision should not get a fresh thorough plan. So the last
+round ran one critic: accuracy (Sonnet) on the lines changed since round 7, not the whole video (pass; one minor taken: the
+"load-bearing" stamp is on the house-of-cards opinion row). The builder looked at every changed frame and fixed what it found: 08's
+schematic curve, reshaped in round 7, bent back down as if the exponent shrank; it now rises and flattens, crossing both floors. The
+1.307 note, the "load-bearing" stamp and the flaw stamp were moved clear of other text.
+
+**Spend on the second cut:** 22 critic agents, about 2.8M tokens (rounds 5 to 7 at about 0.8M, 0.9M and 1.1M; round 8 at 70k). A
+revision this size should cost one round on the changed scenes; the critic-loop change that makes that the rule is its own PR.
+
+**Open at the cap, accepted:** the narrator's overall rate (his pick by ear); the recap meme's 2.3 s; the 03 curve drawing before
+"Forty"; top-heavy frames in 14b and 15 until their stamps land; Parakeet writing "E.T. H." in 14b (the voice says the letters, as
+written).
+
+**For the owner's listen:** the new narrator at speed 1.1, the names (Impagliazzo, Paturi), the 2.0 s beat after "Simple, right?", and
+whether the gags in 04, 06, 07, 10 and 11 land.

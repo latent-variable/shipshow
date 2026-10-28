@@ -335,6 +335,15 @@ test("importance: the builder's call picks the preset; a person's explicit prese
     const plan = (cfg, argv = []) => reviewPlan({ title: "t", ...cfg }, argv);
     for (const [level, preset] of Object.entries(IMPORTANCE)) assert.equal(plan({ importance: level }).preset, preset);
     assert.equal(plan({ importance: "high" }).presetFrom, "importance");
+    // Thorough is three rounds and re-runs only critics that failed (the owner, 2026-10-27: 22 critics on one revision).
+    assert.equal(plan({ importance: "high" }).rounds, 3);
+    assert.equal(plan({ importance: "high" }).rerun, "failed");
+    // The token estimate grows with the video: a ten minute video's first round costs more than a 70 second one's,
+    // and lands near what eth-is-false measured (about 800k for seven critics).
+    const short = reviewPlan({ title: "t", importance: "high" }, [], 70).estimate.firstRoundTokens;
+    const long = reviewPlan({ title: "t", importance: "high" }, [], 605).estimate.firstRoundTokens;
+    assert.ok(long > short * 1.5, `${long}k for ten minutes against ${short}k for 70 s`);
+    assert.ok(long > 650 && long < 950, `a ten minute first round: ${long}k`);
     // Beats a person's general default...
     writeFileSync(join(local, "config.json"), JSON.stringify({ review: { preset: "quick" } }));
     assert.equal(plan({ importance: "high" }).preset, "thorough");

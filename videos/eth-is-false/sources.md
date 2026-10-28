@@ -1,9 +1,9 @@
 # Sources: eth-is-false
 
-An explainer for Lino's YouTube channel, narrated by Lino Valdovinos in his own cloned voice: what the Exponential Time
+An explainer for Lino's YouTube channel, narrated by an invented narrator voice (no real person cloned; see *Voice* below): what the Exponential Time
 Hypothesis (ETH) is, how it relates to P versus NP, what OpenAI's preprint "The Exponential Time Hypothesis is False" claims,
 the core idea of its algorithm, what it does and does not mean, and how far to trust it on 2026-10-27, the day after release.
-Every fact below was read at its source on 2026-10-27. Lines marked **opinion** are the narrator's view, said in his voice.
+Every fact below was read at its source on 2026-10-27. Lines marked **opinion** are the channel's view (Lino's), said by the narrator.
 Lines marked **ours** are arithmetic done for this video on a source's numbers, shown with the working.
 
 ## Primary sources
@@ -15,6 +15,10 @@ Lines marked **ours** are arithmetic done for this video on a source's numbers, 
 | R | github.com/openai/math `README.md` and `history.md` at the same commit | files |
 | L | github.com/openai/math `lean/ComparatorChallenges/SubexponentialSAT.lean` (220 lines) and `lean/ComparatorChallenges/SubexponentialSAT.json` at the same commit; `lean/formalization.yaml` lists it with declaration `OAI.Algorithms.SubexponentialSAT.SqrtLogSpace.exact_count_and_sat`; 3,984 files under `lean/` have `SubexponentialSAT` in their path | files |
 | G | William Gasarch, "Guest Column: The Third P=?NP Poll", SIGACT News Complexity Theory Column 100, 2019. cs.umd.edu/users/gasarch/papers/poll3.pdf, section 2.1 | PDF text |
+| F | openSUSE/libsolv `README`: "a free package dependency solver using a satisfiability algorithm"; LWN, "A first look at DNF" (2012-06-19, lwn.net/Articles/503581/): DNF resolves dependencies with hawkey, "a wrapper around the libsolv dependency resolver from openSUSE" | page text, 2026-10-27 |
+| I | F. Copty, L. Fix, R. Fraer, E. Giunchiglia, G. Kamhi, A. Tacchella, M. Y. Vardi, "Benefits of Bounded Model Checking at an Industrial Setting", CAV 2001, LNCS 2102, p. 436. Abstract: Thunder "performs BMC on top of a new satisfiability solver, SIMO"; "Real designs, taken from Intel's Pentium 4 ... were validated" | abstract, lsv.ens-paris-saclay.fr/Events/cav01/Abstracts/88.html, 2026-10-27 |
+| D | Wikipedia, "DNF (software)": "DNF has been the default package manager for Fedora since Fedora 22, released in May 2015"; "DNF uses libsolv, an external dependency resolver (developed by openSUSE)"; "Since the launch of Fedora Linux 41, DNF5 is the new default packaging tool"; and github.com/rpm-software-management/dnf5 `README`: "DNF5 is also powered with the libsolv library" | page text, 2026-10-27 |
+| M | Clay Mathematics Institute, Millennium Prize Problems (claymath.org/millennium-problems/): "$1 million allocated to the solution of each problem"; P vs NP listed as unsolved, only the Poincaré Conjecture solved | page text, 2026-10-27 |
 | C1 | Commons, File:2012-06-15 Stephen A. Cook.jpg, orcmid, CC BY 2.0 | file page |
 | C2 | Commons, File:Russell Impagliazzo at the DIMACS Workshop on Cryptography.jpg, BöhmMartin, CC BY-SA 4.0 (2016) | file page |
 | C3 | Commons, File:Ryan Williams at Dagstuhl 10441.jpg, Thore Husfeldt (uploader; the description credits Alexander S. Kulikov as photographer), CC BY-SA 3.0 (2010) | file page |
@@ -46,6 +50,8 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 |---|---|---|
 | 01 | OpenAI posted the paper on October 26 | B (dated 2026-10-26); R `history.md` "October 26, 2026 ... *The Exponential Time Hypothesis is False*" |
 | 01 | "a very rude title" | **opinion**, a joke |
+| 07, 08, 13b | The house of cards: papers stacked on ETH and the Strong ETH; "somebody pulled on the bottom card"; the "load-bearing" stamp on ETH and the Strong ETH; cards falling, some landing on weaker assumptions | **opinion**, a picture of B's "hundreds of papers" and P section 1.1.3 (lower bounds that also follow from weaker hypotheses such as the Orthogonal Vectors Conjecture). The field labels on the cards are the fields named in 07 |
+| 09 to 11 | "A heist, in three moves": split, a dial, the getaway | **opinion**, a frame for the three steps of P section 2 |
 | 01 | "No human authors" | P title page names only "OpenAI"; R README: "produced by an unnamed internal OpenAI model" (a quip on that; R does not say whether people prompted or selected) |
 | 01 | "Does that mean P equals NP? Does your SAT solver get faster? Stick around. The answers are weirder than the headline." | **opinion**, the video's two questions, answered in 12 and 13 |
 | 01 | ETH was a floor under how fast some problems could get; hundreds of papers stood on it; if this holds, the floor is gone | **opinion**, framing; "hundreds of papers": B; the floor is ETH's c^n lower bound (05b, 06) |
@@ -56,9 +62,17 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 02 | Switches and rules; each rule names three switches, at least one set its way; find a setting that satisfies every rule: 3-SAT | P section 1, (1.1): a k-CNF is an AND of clauses, each an OR of k literals; 3-SAT is k = 3. The switch-and-rule picture is ours |
 | 02 | Checking is easy; finding one seems hard (nobody knows a fast way, 04); with n switches there are 2^n settings | P (2.2) sums over x ∈ {0,1}^n; evaluating a clause on a setting is direct |
 | 02 | On screen: "in the papers: variables", "clauses · each needs at least one" | P section 1 and 2.1: Boolean variables, clauses; a clause is an OR of literals |
-| 03 | 2^10 = 1,024; 2^50 ≈ 1.13 × 10^15 (a quadrillion); 2^300 has 91 digits | **ours**: 300 × log10 2 = 90.3, so 91 digits |
-| 03 | "No computer is getting through that list" | **opinion**, a figure of speech |
+| 02b | Two switches give four settings; four rules (A on or B on, A on or B off, A off or B on, A off or B off) each rule out one setting, so no setting satisfies all four | **ours**, a standard unsatisfiable example; each rule fails only on the one setting that sets both its switches the other way |
+| 02b | Fedora's package manager is DNF (DNF5 since Fedora 41), powered by libsolv | D |
+| 02b | Fedora's package manager hands "which versions fit together" to a SAT solver; when no setting fits, that is a dependency conflict | F: DNF resolves dependencies through libsolv, a SAT-based solver. "That's your dependency conflict" is our plain reading: no satisfying assignment is what the solver reports as a problem |
+| 02b | Intel did it the other way round on the Pentium 4: write a bug as rules; no setting, no bug, within the steps checked | I: bounded model checking (a bug within k steps as a satisfiability problem) on a SAT solver, validating real Pentium 4 designs. "Within the steps they checked" is what *bounded* means |
+| 02b | You can't prove "no" by getting lucky: a satisfying setting proves yes; no is proven only by ruling out every setting, somehow | **ours**, the asymmetry of NP: a certificate exists for yes; this sets up exact counting (a count of zero is a proof of no) |
+| 03 | At a billion settings a second: 30 switches 1 second, 40 eighteen minutes, 50 two weeks, 60 thirty six years, 90 longer than the age of the universe | **ours**: 2^30/10^9 = 1.07 s; 2^40/10^9 = 1,100 s = 18.3 min; 2^50/10^9 = 1.13 × 10^6 s = 13.0 days; 2^60/10^9 = 1.15 × 10^9 s = 36.5 years; 2^90/10^9 = 1.24 × 10^18 s = 3.9 × 10^10 years, against an age of the universe of 1.38 × 10^10 years (Planck 2018). Chart drawn from the same formula; on screen "our arithmetic" |
+| 03 | "And ninety is a small problem" | **opinion**; 02b's package and chip problems run far larger |
+| 03 | Solvers survive by being clever about what to skip; for the hardest cases nobody knows how to beat exponential by much | **opinion** for the first half; the second is the record table of 06 (best known 3-SAT bases above 1.3) |
 | 04 | P: solvable in polynomial time; NP: an answer can be checked in polynomial time | standard definitions; P section 1 calls k-SAT "the canonical NP-complete problem" |
+| 04 | "the most famous open problem in computer science"; "Here it is in thirty seconds" (a promise about the explanation's length) | **opinion** |
+| 04 | P versus NP carries a million dollar prize, still unclaimed ("a million dollar puzzle"; "the million dollars is still sitting there"; on screen "$1,000,000 prize · still unclaimed") | M |
 | 04 | In 1971 Stephen Cook showed SAT is NP-complete, the hardest of that whole bunch | P [Coo71]: S. Cook, "The Complexity of Theorem-Proving Procedures", STOC 1971; P section 1 |
 | 04 | In a 2019 poll of researchers, 88% said P is not NP; nobody has proved it either way | G, section 2.1 table: 2019, P≠NP 109 (88%), P=NP 15 (12%). "Researchers": G polled theorists and others. Open: B calls P vs NP open by implication; the paper does not claim it |
 | 05 | P ≠ NP says only that SAT has no polynomial-time algorithm | definition |
@@ -69,6 +83,7 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 06 | Schöning 1999: about 1.33^n (exactly (4/3)^n) for 3-SAT, randomized; all three record bars are randomized algorithms and say so on screen (ETH is stated for deterministic time; the paper gives Liu's deterministic 1.32793^n [Liu18], not charted) | P section 1.1.1: "(n+m)^O(1)(4/3)^n time for 3-SAT" [Sch99], FOCS 1999 |
 | 06 | Then 1.308^n | P: "for 3-SAT this gave a randomized O(1.308^n) bound [Her14]" (Hertli, SICOMP 2014, FOCS 2011) |
 | 06 | This year, a preprint: 1.307^n | P: "a preprint by Jiang and Cai gives a randomized O*(1.307031578^n) bound [JC26]" (arXiv 2607.10697, 2026) |
+| 06 | "Every one shaved a hair": "27 years · −0.026" on screen (1999 to 2026; 1.3333 − 1.3070 = 0.026) | **ours**, on P's numbers above |
 | 06 | ETH says there's a line nobody will ever cross: some base above one no algorithm beats | P section 1.1.1, restated: 2^Ω(n) means time at least c^n for some fixed c > 1 |
 | 07 | ETH has been used in hundreds of papers to derive conditional hardness, across graph theory, computational biology, databases, computational geometry | B: "used in hundreds of papers to derive conditional computational hardness results across a wide variety of fields including graph theory, computational biology, databases, computational geometry, and more" |
 | 07 | The Strong ETH: as rules get longer, you basically can't beat trying everything | P section 1.1.1: SETH "made the sharper prediction that k-SAT requires 2^(n(1−o_k(1))) time as k grows" [IP01, IPZ01]; on screen "longer rules: almost no escape from trying everything" |
@@ -77,6 +92,11 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 07, 15 | "For a quarter century, unless ETH is false is where most arguments stopped" | **opinion**, framing (a conditional result's usual last word, not a claim that experts stopped asking) |
 | 08 | A deterministic algorithm, polynomial space, for SAT with any fixed rule size (k-CNF, k ≥ 2), exactly counting satisfying assignments in (n+m)^O(1) 2^O(n log log n / √log n); 2^O(n/√log n) when m ≤ Dn | P abstract and Theorem 1.1. Spoken "about two to the n over the square root of log n"; the screen shows Theorem 1.1's bound |
 | 08 | Any base above one, c^n, is 2 to some constant times n (c^n = 2^(n log2 c)); this exponent grows slower than any constant times n, so eventually it gets under every one; whatever base above one ETH demands, it eventually gets under it; ETH is refuted, if the proof holds (said "if it's right") | P abstract: "Our algorithm refutes the Exponential Time Hypothesis"; 2^o(n) by definition |
+| 08 | "Even the record, 1.307 to the n, is two to about 0.39 times n" (on screen 1.307ⁿ = 2^(0.39 n)): log2 1.307 = 0.386 | **ours**, arithmetic on P's 1.307 |
+| 08 | n / √log n is n times a fraction that keeps shrinking, 1/√log n; "at a million switches it's already about a quarter": 1/√ln(10^6) = 1/3.72 = 0.27 | **ours**, natural log as in P; the same 3.7 as scene 12 |
+| 10 | "Switches are only on or off, so a note has few possible values, few enough to try them all" | P section 2.4: with 0/1 inputs and bounded integer coefficients the measurements take at most (2D+1)^(2τn) values, 2^(O(n/r)) in all, subexponential (section 2.6) |
+| 08 | ETH says the exponent can never drop below some fixed fraction of n (time 2^(δn) for some δ > 0); n/√log n ends up below δn for every δ > 0 once n is big enough | P section 1.1.1, ETH as 2^Ω(n); **ours**: n/√log n ÷ n = 1/√log n → 0 |
+| 10 | A note is "a few weighted sums of" a group's switches | P section 2.2 to 2.3: "shared linear summaries", built from the replacement linear forms Σ p(T)·X (weighted sums of the variables); "a few" because the measurements are few (section 2.4) |
 | 08 | It counts exactly; counting (#SAT) is #P-complete, harder than deciding | P section 1.1.2: "#SAT and #3-SAT are #P-complete" [Val79]; "Testing #F > 0 also decides satisfiability" |
 | 08b | If it holds, it refutes ETH, the Strong ETH and a few relatives (on screen: Gap-ETH, NSETH, #ETH) | P section 1.1.1: "Theorem 1.1 refutes ETH, SETH, Gap-ETH, and NSETH" and the randomized versions; 1.1.2: refutes #ETH |
 | 09 | Each rule becomes a little piece of algebra (the paper's clause polynomial Φe) that is 1 when satisfied and 0 otherwise; the count is the sum over all settings of their product; still 2^n terms | P section 2.2, Φe and (2.2): "evaluating its 2^n summands would be exhaustive search" |
@@ -120,6 +140,14 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 11b | Galaxy Brain meme (memegen `gb`, knowyourmeme.com/memes/galaxy-brain) | third-party template, fetched at build, never committed |
 | 07 | This Is Fine meme (memegen `fine`, gunshowcomic.com/648, K.C. Green): "hundreds of papers, one hypothesis / this is fine" | third-party template, fetched at build, never committed |
 | 12 | Drakeposting meme (memegen `drake`, knowyourmeme.com/memes/drakeposting) | third-party template, fetched at build, never committed |
+
+## Voice
+
+The narrator is an invented voice, not a person: Fish Audio Drama 3 (`mlx-community/fish-audio-drama-3-4bit`) given only the
+description "energetic young male tech YouTuber, upbeat and clear" and seed 89, no reference clip, picked by the owner from twelve
+auditions on 2026-10-27. That take (13.3 s, `local/voices/eth-narrator.wav`, never committed) is the reference every line clones.
+Drama 3's output is used under the Fish Audio Community License (commercial use allowed under $500K a year in revenue). The owner's own
+cloned voice stays for his opinion videos, since he is not the one explaining this paper.
 
 ## Left out, and why
 

@@ -884,7 +884,10 @@ which is what a second listen is for (it heard "Ed TEH" where an ETH sounded wro
 spelled out where the script does not spell it is missed. **Tested** by unit tests on Whisper's and Parakeet's real
 transcripts of the published cut, a Drama 3 run with a fake model and fake hearing (retaken until clean; kept with the fault
 when every round spells), a control with the retake rule removed (the test fails), and an end-to-end voice and listen on a
-throwaway Kokoro video.
+throwaway Kokoro video. **Then** (same day): the missing-sentence check reads a run of single letters as one word on both
+sides (`joined_letters`), because the script writes an initialism one way and each listener another: eth-is-false's "ETH."
+(told to the voice as "E T H.") was reported unheard by both Whisper and Parakeet, which wrote "E.T.H.". Tested both ways
+round, and that a dropped sentence starting with a letter ("A cat.") is still found.
 
 ### D61. Named moods give each act its own look and music (2026-10-27)
 **Decision.** `video.json` `"moods"` names sets of look and music; a section's `data-mood` picks one, and it carries forward to
@@ -924,7 +927,20 @@ filed as `feature`. **Costs.** The kind changes no code path but the check that 
 section's music is generated per video (ACE-Step, local, MIT) and kept in `local/music/`, so a teammate without it builds in
 silence for those sections (D61's warning).
 
-### D63. An essay breathes: the voice's own pace, and a beat at each act change (2026-10-27)
+### D63. Critic spend is sized before the loop, and a revision gets one round (2026-10-27)
+**Decision.** `thorough` is three rounds, not four, and re-runs only critics with an open blocking or major finding
+(`rerun: failed`, as `quick` and `standard` already did). The token estimate grows with the video's length (`critics` reads
+`timing.json`): a Sonnet critic is about 60k plus 5k a minute, Opus 100k plus 10k. The builder says the spend before round 1 and
+stops past it; a re-run critic is told which scenes changed and judges those; a revision of a video that already cleared review
+gets one round on what changed, not a fresh plan. **Why.** eth-is-false's second cut ran 22 critics, about 2.8M tokens, on top of
+the first cut's four rounds, and the owner said it was excessive: `rerun: touched` re-ran nearly every critic each round, since a
+script edit touches nearly everything, and every critic re-read the whole ten-minute video. The old estimate (520k a first round,
+measured on a 70-second video) said nothing of that; seven critics on ten minutes measured about 800k. A narrow re-run of accuracy
+on the changed lines cost 70k and caught the same class of finding. **Costs.** A fix can break something a critic that passed would
+have caught; the builder's own look at the changed frames is the guard (it caught a reshaped chart curve bending the wrong way that
+round). **Tested** by a unit test on the plan (rounds, rerun, the estimate at 70 s and ten minutes).
+
+### D64. An essay breathes: the voice's own pace, and a beat at each act change (2026-10-27)
 **Decision.** An essay with no `speed` of its own is read at 1.0 (`ESSAY_SPEED`; a person's `local/config.json` speed and
 the video's own still win). `video.json` `"leads": {"<scene>": seconds}` adds plain seconds before a scene's first word, the
 mirror of `pauses` (D46): the scene starts where it did, so a mood's look and music, which change at the scene's start (D61),

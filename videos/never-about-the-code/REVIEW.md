@@ -437,7 +437,7 @@ the builder's own frames (65.8, 74, 79.5, 136 and 311.5 s), not by a critic: the
 The owner on the seventh cut: rewrite "Like animals."; Karpathy "coined the term", not "named" it; open the workshop on the bug
 story with a dry line (both held from the seventh cut's engagement critic, now approved); and "we shouldn't be afraid to let
 things breathe ... it feels like we're speed reading", with transitions that set the tone. So: speed 1.2 to 1.0 (the voice's own
-pace; ShipShow now makes that an essay's default, D63), gap 0.35 to 0.55, tail 0.9 to 1.1, and a beat before each act (`leads`,
+pace; ShipShow now makes that an essay's default, D64), gap 0.35 to 0.55, tail 0.9 to 1.1, and a beat before each act (`leads`,
 1.5 to 1.8 s) where the new look and music arrive alone under a title card in the act's style. Plan unchanged: `thorough`.
 
 ### Round 1 (fresh agents, Sonnet: all seven): 0 blocking, 17 major
@@ -515,7 +515,7 @@ What changed:
 | engagement | fail | 0 / 2 / 2 |
 
 What changed:
-- **A beat between two lines** (ShipShow, D63): pacing asked for the second round running for room after particular punchlines,
+- **A beat between two lines** (ShipShow, D64): pacing asked for the second round running for room after particular punchlines,
   and nothing could put a pause between two lines of one scene (`gap` moves every sentence, `pauses` only a scene's end). A blank
   line in a script is now a beat (`video.json` `beat`, 0.6 s on top of the gap). Used before "You know what it does", "Same here",
   "Both true", "The model reviewing the pull request caught it", the line after the lunch joke, the astronaut meme's line, and

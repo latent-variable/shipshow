@@ -412,13 +412,14 @@ export const IMPORTANCE = { low: "quick", normal: "standard", high: "thorough" }
 export const PRESETS = {
   quick: { critics: ["critic-accuracy", "critic-sync", "critic-visuals"], rounds: 1, until: "blocking", model: "sonnet", final: null, frames: "scenes", rerun: "failed" },
   standard: { critics: BASE_CRITICS, rounds: 2, until: "major", model: "sonnet", final: null, frames: "cues", rerun: "failed" },
-  thorough: { critics: BASE_CRITICS, rounds: 4, until: "major", model: "sonnet", final: "opus", frames: "cues", rerun: "touched" },
+  thorough: { critics: BASE_CRITICS, rounds: 3, until: "major", model: "sonnet", final: "opus", frames: "cues", rerun: "failed" },
 };
 const ONE_OF = { until: ["blocking", "major", "minor"], frames: ["cues", "scenes"], rerun: ["failed", "touched", "all"] };
-// Wall-clock minutes and thousands of tokens for one critic, and minutes for the packet and a
-// rebuild, measured on how-it-works (about 70 s of video), 2026-10-17. Rough by design.
-// The slowest critic sets a round's time: Sonnet 10 to 50 s, Opus 45 to 145 s; Haiku not yet measured.
-const CRITIC_COST = { haiku: { min: 0.5, k: 50 }, sonnet: { min: 0.8, k: 65 }, opus: { min: 2.0, k: 110 } };
+// Wall-clock minutes for one critic, and thousands of tokens as a base plus a share per minute of
+// video (a critic reads the whole packet and its frames). Measured on how-it-works (about 70 s),
+// 2026-10-17, and eth-is-false (about 10 min), 2026-10-27: Sonnet 65k and about 110k (90 to 200k),
+// Opus 110k and about 200k. The slowest critic sets a round's time. Haiku is a guess. Rough by design.
+const CRITIC_COST = { haiku: { min: 0.5, k: 45, perMin: 3 }, sonnet: { min: 0.8, k: 60, perMin: 5 }, opus: { min: 2.0, k: 100, perMin: 10 } };
 const PACKET_MIN = { cues: 0.15, scenes: 0.1 }, REBUILD_MIN = 0.3;
 
 function dial(key, value) {
@@ -438,7 +439,8 @@ function dial(key, value) {
   return String(value);
 }
 
-export function reviewPlan(cfg, argv = process.argv) {
+/** `seconds`: the video's length, when known (timing.json), so the token estimate scales with it. */
+export function reviewPlan(cfg, argv = process.argv, seconds = 70) {
   const kind = cfg.kind || "feature";
   if (!["decision", "feature", "release", "essay"].includes(kind)) die(`video.json kind is "${kind}"; it takes decision, feature, release, essay`);
   if (cfg.critics) die(`video.json "critics" moved into "review": {"critics": [...]} (skills/critic-loop)`);
@@ -478,7 +480,7 @@ export function reviewPlan(cfg, argv = process.argv) {
   const cost = (model) => CRITIC_COST[model] || CRITIC_COST.sonnet;
   const round = (last) => {
     const models = plan.critics.map((c) => (last && plan.final && taste.includes(c) ? plan.final : plan.model));
-    return { min: Math.max(...models.map((m) => cost(m).min)) + PACKET_MIN[plan.frames], k: models.reduce((a, m) => a + cost(m).k, 0) };
+    return { min: Math.max(...models.map((m) => cost(m).min)) + PACKET_MIN[plan.frames], k: models.reduce((a, m) => a + cost(m).k + cost(m).perMin * (seconds / 60), 0) };
   };
   const first = round(plan.rounds === 1), middle = round(false), last = round(true);
   const worst = plan.rounds === 1 ? first : { min: first.min + (plan.rounds - 2) * (middle.min + REBUILD_MIN) + last.min + REBUILD_MIN, k: first.k + (plan.rounds - 2) * middle.k + last.k };

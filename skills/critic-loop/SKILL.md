@@ -32,10 +32,12 @@ it first and follow it. **The person's word in the moment beats all of it** ("qu
 |---|---|---|---|---|---|---|---|
 | `quick` | accuracy, sync, visuals | 1 | blocking | sonnet | scenes | 1 min | a decision video mid-work (its default), a draft, a private video |
 | `standard` | all seven | 2 | major | sonnet | cues | 1 to 2 min | the default |
-| `thorough` | all seven | 4 | major | sonnet, Opus for the last round's taste critics | cues | up to 6 min | a video going public |
+| `thorough` | all seven | 3 | major | sonnet, Opus for the last round's taste critics still failing | cues | up to 5 min | a video going public |
 
 Times are critic time on a 70 second video; the builder's fixes between rounds come on top,
-and are usually most of it. Each dial, and what it trades:
+and are usually most of it. Tokens grow with the video: a Sonnet critic reads about 65k on a 70 second
+video and about 110k on a ten minute one, an Opus critic about twice that, so one round of seven on a
+ten minute video is about 800k (eth-is-false, 2026-10-27). Each dial, and what it trades:
 
 | Dial | Values | Turning it down saves | and costs |
 |---|---|---|---|
@@ -72,6 +74,27 @@ A person's word still wins over the builder's judgment: a preset they set on the
 `reviewPlan`; `npm run critics` says where the preset came from). With no importance set, a
 decision video defaults to `quick` and every other to `standard`; a decision video always
 adds `critic-decision`.
+
+### Spend is part of the plan
+
+Critics run on the person's usage, so the loop is sized before it starts, not discovered after (the owner,
+2026-10-27, after a second cut of eth-is-false ran 22 critics and about 2.8M tokens on top of its first cut's
+four rounds):
+
+- **Say the spend first.** Before round 1, tell the person the plan's critics, models, rounds and
+  `npm run critics`' token estimate. Past that estimate, stop and ask; a cap reached is not a reason to
+  start one more round.
+- **Later rounds re-run only critics with an open blocking or objective major finding** (`rerun: failed`,
+  every preset's default). A critic that passed keeps its pass unless a fix changed what it judged in a way
+  it would care about (a new claim for accuracy, a moved cue for sync); then re-run it on those scenes only.
+- **A re-run judges what changed.** Name the scenes and lines that changed in the brief and ask for a verdict
+  on those, not a fresh pass over the whole video: about 70k tokens instead of 110k and up.
+- **A revision of a video that already cleared review gets one round, on the scenes that changed:**
+  accuracy on the changed claims, plus the one or two critics whose ground the revision is about (engagement
+  for a "make it more fun" pass, visuals for a new look). It is not a fresh `thorough` plan, whatever its
+  importance. A second round only for a blocking finding.
+- **Opus is the exception.** Sonnet (or Codex on Luna, another vendor) by default; Opus only in a final
+  round, for a taste critic still failing.
 
 **The floor no dial lowers.** Whatever the caps, a video never ships with an open blocking
 finding from `critic-accuracy` (or, for a decision video, `critic-decision`, and for a video that shows
@@ -177,7 +200,8 @@ Save each one as `<video dir>/review/round-<n>/<critic>.json`.
 3. Decline a finding that is wrong with evidence (the source line, the measurement), and
    record it. Never quietly "fix" a wrong finding.
 4. If rounds remain, rebuild (`npm run make -- <folder> --draft`, `npm run review --
-   <folder>`) and run **fresh** critics, chosen by the plan's `rerun`. When the cap is
+   <folder>`) and run **fresh** critics, chosen by the plan's `rerun`, each told which scenes changed
+   (*Spend is part of the plan*). When the cap is
    reached, stop: what is still open is recorded in `REVIEW.md` as accepted, with its
    severity, except the floor above.
 5. **Look before you spend.** Before each new round, open the contact sheets yourself: a
