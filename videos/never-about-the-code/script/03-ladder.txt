@@ -1,4 +1,2 @@
 [storyteller] Every few decades, we add a new layer. Machine code, assembly, Fortran, C, Python. Each one lets you write less, and trust more.
 [amused] And every one of them got roasted by the people on the layer below.
-[storyteller, rewinding the tape] Now rewind to January 2023. ChatGPT is two months old, and most of us use AI as fancy autocomplete.
-[admiring, then wry] And Karpathy posts this: the hottest new programming language is English. Way ahead of his time. Now it's 2026, English is the new layer, and the roasting has already started: you don't understand the code.

@@ -431,3 +431,145 @@ the caption band was still there. The render had used a stale page: the build ha
 (a sentence's first word) and the command chain hid the failure. The ding is gone, the page rebuilt, the panels now fade at their
 foot, and the ladder hides while the 2023 flashback is up so nothing shows through the fade. **After the cap** this was checked by
 the builder's own frames (65.8, 74, 79.5, 136 and 311.5 s), not by a critic: the owner's eye is the last check.
+
+## Eighth cut (2026-10-27): it breathes
+
+The owner on the seventh cut: rewrite "Like animals."; Karpathy "coined the term", not "named" it; open the workshop on the bug
+story with a dry line (both held from the seventh cut's engagement critic, now approved); and "we shouldn't be afraid to let
+things breathe ... it feels like we're speed reading", with transitions that set the tone. So: speed 1.2 to 1.0 (the voice's own
+pace; ShipShow now makes that an essay's default, D64), gap 0.35 to 0.55, tail 0.9 to 1.1, and a beat before each act (`leads`,
+1.5 to 1.8 s) where the new look and music arrive alone under a title card in the act's style. Plan unchanged: `thorough`.
+
+### Round 1 (fresh agents, Sonnet: all seven): 0 blocking, 17 major
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | fail | 0 / 2 / 3 |
+| clarity | fail | 0 / 3 / 5 |
+| pacing | fail | 0 / 4 / 3 |
+| sync | fail | 0 / 2 / 4 |
+| consistency | fail | 0 / 1 / 5 |
+| visuals | pass | 0 / 2 / 3 |
+| engagement | fail | 0 / 4 / 2 |
+
+What changed:
+- **Still rushed between sentences.** Punchlines had 0.14 to 0.7 s before the next point ("Same here." 0.14 s) and the thesis was
+  the fastest scene. Gap 0.55 to 0.75 (inside runs too, D51), the thesis voiced as three lines, pauses before an act change cut to
+  0.3 s so the beat is the lead, not pause plus lead (engagement: "waiting more than anticipation").
+- **Scenes over 40 s split at their idea boundary:** 03 at the rewind (03b-rewind, the ladder returns for "English"), 09 at the time
+  horizon (09b-horizon), 12 at "That's the eighty percent" (12a-loop).
+- **The hook.** "One number at a time" had no source (accuracy) and did not land (engagement). Now "They wrote machine code by hand,
+  in octal. Artisanal. Small batch.", octal from Hopper's own words (S35), and the meme adds "no compiler added".
+- **The bug story** said plainly (the check that listens back; a clone without a transcript refused to run), the marker on
+  "transcript", stamps "cloned voice: refused" and "caught before merge".
+- **Sync and look.** The archive card says "almost every time", as the voice does; the stage strip waits for Hopper; the close gets
+  a kicker ("so, the answer"); the struck line is the arm64 machine words (d10043ff ...), not assembly; "pull request" on screen;
+  step 5 is "I validate it myself"; the astronaut meme leaves before the PR count; card rules draw from their centre; the neon kicker
+  is legible; gags on the METR rerun and the OCaml 80%.
+- **Clarity, cheap ones taken:** "The roasting goes in four stages", "Take IBM's own case study from 1957", "model-written code
+  passed", Karpathy's "most of his code" (so "eighty percent" means the OCaml one only).
+- **Declined:** METR's three ideas (now two scenes), "Quattro" unexplained, and "a lot of code merged" without a number (the card
+  gives it) are the owner's lines, kept in earlier cuts; the Backus and Dijkstra cards' reading time (the photo and the marked line
+  carry them; the longer gaps add time); the lunch card's tilt (a joke beat).
+
+### Round 2 (fresh agents, Sonnet: all seven): 0 blocking, 6 major; accuracy, consistency and visuals pass
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 4 |
+| clarity | fail | 0 / 1 / 4 |
+| pacing | fail | 0 / 2 / 2 |
+| sync | fail | 0 / 1 / 4 |
+| consistency | pass | 0 / 0 / 5 |
+| visuals | pass | 0 / 0 / 7 |
+| engagement | fail | 0 / 2 / 3 |
+
+What changed:
+- **"That's the eighty percent"** pointed, by ear, at the bug story: now "Catching that is the other eighty percent" (clarity).
+- **A 75 s stretch with no joke** (Fort Knox to lunch): the bug story ends dry, "My cloned voice says thanks", and the hook's
+  punchline gets an "artisanal · small batch" stamp and a thump (engagement).
+- **Breath.** "Same here." ran 0.14 s into the next line (no quiet point for a breath inside the take): it is its own line now.
+  Scene breaks inside an act held 2.2 to 2.5 s of silence, longer than they need and stealing the act beats' contrast: those
+  pauses trimmed to 0.1 to 0.6 s. The bug line and the lunch line lost a clause each (pacing).
+- **Sync.** The full METR chart in one packet still was the still's capture, not the video: the render at 245.4 s and 249.0 s shows
+  empty axes and then the "half the time" note, on their words. Closed. The round chips arrive on their words, the check on "left";
+  the Dafoe meme leaves sooner so the error bars show; 03b's pause 0.3 to 0.6 s so the quote is read.
+- **Minor, taken:** "the other 80%: review" in both places; "pull request #14369"; the archive kicker in ink; a larger caption under
+  the PR #77 capture; air in the machine-word line; a swish on the close's kicker; the meme and round-chip rows in `sources.md`.
+- **Declined:** 12a-loop and 13-close still read 270 to 280 syllables a minute while speaking. That is the voice's own delivery of
+  the owner's method and close at speed 1.0; cutting more of his words, or slowing his clone below its pace, are his calls. 02 and
+  05 (257, 259), the same. Karpathy's descriptor at 03b (the post shows his name and photo), "almost nobody can" (beat what is in
+  the line before), three names in 10, the 04 card's three-line layout (each act's card is its own), step 5's large card (12b is its
+  own scene), the close quote's size.
+
+### Round 3 (fresh agents: accuracy, pacing, sync, consistency on Sonnet; clarity, visuals, engagement on Opus): 0 blocking, 7 major; accuracy, clarity, sync and consistency pass
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 2 |
+| clarity | pass | 0 / 0 / 5 |
+| pacing | fail | 0 / 4 / 3 |
+| sync | pass | 0 / 0 / 3 |
+| consistency | pass | 0 / 0 / 3 |
+| visuals | fail | 0 / 2 / 7 |
+| engagement | fail | 0 / 2 / 2 |
+
+What changed:
+- **A beat between two lines** (ShipShow, D64): pacing asked for the second round running for room after particular punchlines,
+  and nothing could put a pause between two lines of one scene (`gap` moves every sentence, `pauses` only a scene's end). A blank
+  line in a script is now a beat (`video.json` `beat`, 0.6 s on top of the gap). Used before "You know what it does", "Same here",
+  "Both true", "The model reviewing the pull request caught it", the line after the lunch joke, the astronaut meme's line, and
+  between the three thesis lines.
+- **The workshop thinner:** the bug line "With one check switched off, cloned voices without a transcript refused to run" (clarity);
+  12a cut to "It builds it, and tests it" and "Then another model reviews the pull request, round after round"; pauses after 09 and
+  12 so their last card is read.
+- **Visuals:** the OCaml tag fits one line again ("a maintainer" dropped; the voice now says "a maintainer of the OCaml compiler",
+  clarity); the "artisanal / small batch" stamp sits inside the frame, beside the meme; inactive stage labels in ink; "the other
+  80%: review" large while it is said.
+- **Engagement:** the meme no longer tells the punchline first ("octal, by hand"; the stamp lands on "batch", with its thump); the
+  Fort Knox meme holds 3.4 s; the 56% card arrives on "passed" and counts up on "fifty"; the OCaml marker sweeps on "hard"; the 12
+  card's kicker is "the method", so "the other eighty" is said and shown fewer times.
+- **Smaller:** DHH's quote carries an ellipsis where Lex interjects (accuracy, S14 notes it); "You don't understand the code? That's
+  stage three" (clarity: it was heard as "you don't understand that the code is stage three"); the round chips each on their word.
+- **Declined:** 13-close as one line (setup and callback stay one take, the joke rule); 02's and 05's syllable rate (the voice's
+  pace on the owner's lines; "who built Fortran" is what the next scenes lean on); "He's right" after OCaml (words the owner did not
+  say); the archive screenshots' address bars and side bands, 02's and 08's empty right side while a card is still to come, and the
+  chip padding (minor looks, no reading lost); Backus sepia against Dijkstra in colour (each photo as Commons has it).
+
+### Round 4, the plan's cap (fresh agents: accuracy, pacing, sync on Sonnet; clarity, visuals, engagement on Opus; consistency passed round 3 and its ground moved only by a card's kicker): 0 blocking, 5 major; accuracy, clarity, sync and engagement pass
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 3 |
+| clarity | pass | 0 / 0 / 4 |
+| pacing | fail | 0 / 4 / 3 |
+| sync | pass | 0 / 0 / 4 |
+| visuals | fail | 0 / 1 / 5 |
+| engagement | pass | 0 / 0 / 3 |
+
+### After the cap: fixes with no new voice, checked by the builder in the render
+
+- **Visuals' major:** the Karpathy capture is smaller (560 px) and set lower, clear of the stage strip, with a one-line tag
+  ("Karpathy, who coined vibe coding · Jan 2026") above the caption band.
+- The act cards for the archive and now start with their beat (+0.0 to +0.35 s), so the sky's crossfade never shows bare grey.
+- The hook's headline leaves under the meme; DHH's and antirez's quotes arrive on "hasn't" and "hand" (sync, visuals);
+  "IBM grading its own homework" arrives on "grading" (engagement: it was read 4 s before it was said); "the cloned voice says
+  thanks" is stamped on its line (engagement).
+- Two more beats: after "Here's how I do it." and after "Same here." (pacing).
+- `sources.md`: the octal meme's text, the astronaut meme as a joke on "most", the bug's engine and line.
+
+### Left open at the cap, for the owner
+
+- **Pacing, major, declined:** 12-verify, 12a-loop and 13-close read 260 to 280 syllables a minute while speaking, against a
+  target of 210. The words are already cut once each round; what is left is how the clone reads these lines at its own pace (1.0).
+  Slowing the clone below its pace, cutting more of the owner's method, or splitting the close's callback from its setup (the joke
+  rule) are his calls. Everything before the workshop now measures 186 to 259.
+- **Pacing, major, declined:** 10-skeptics runs 40.2 s, 0.2 s over the bar, with the three builders and "Same here"; a beat now
+  separates the turn.
+- **Pacing and visuals, minor, declined:** 02's and 05's rate; the roast card a little narrower than the ladder; the bullet marker
+  and address bars on the archive captures; the grey edge of a light-to-dark sky crossfade, now carried by the cards (a darker
+  crossfade path would be a kit change); the scratch 0.4 s before the "Wait" meme (the sound rule will not let it move later).
+- **Clarity, minor, held for the owner (each would re-voice his line):** "stage four: it's the bar", "beat the optimizer" for "beat
+  the machine", splitting the OCaml sentence, "don't take the output on trust".
+- **Engagement, minor, declined:** the argument's turn arrives at 13.2 s, past this video's 10-second bar, because "Fair enough."
+  now gets its breath; the charge itself is on screen from 0.1 s.

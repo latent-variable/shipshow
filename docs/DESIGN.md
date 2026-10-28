@@ -159,7 +159,7 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
 every turn (measured: 22 skills, 7,957 characters, about 1,989 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 233). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+and SKILL.md under 500 lines (longest 236). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -939,6 +939,24 @@ measured on a 70-second video) said nothing of that; seven critics on ten minute
 on the changed lines cost 70k and caught the same class of finding. **Costs.** A fix can break something a critic that passed would
 have caught; the builder's own look at the changed frames is the guard (it caught a reshaped chart curve bending the wrong way that
 round). **Tested** by a unit test on the plan (rounds, rerun, the estimate at 70 s and ten minutes).
+
+### D64. An essay breathes: the voice's own pace, and a beat at each act change (2026-10-27)
+**Decision.** An essay with no `speed` of its own is read at 1.0 (`ESSAY_SPEED`; a person's `local/config.json` speed and
+the video's own still win). `video.json` `"leads": {"<scene>": seconds}` adds plain seconds before a scene's first word, the
+mirror of `pauses` (D46): the scene starts where it did, so a mood's look and music, which change at the scene's start (D61),
+play alone for that long. A blank line between two lines of a script is a beat: `video.json` `beat` seconds (0.6) on top of the
+gap after the take before it (`beatsAfter`), the one place a pause can be put between two lines of a scene, since `gap` moves every
+sentence and `pauses` only a scene's end; no script used a blank line before, so no video's timing changed. The build warns when
+a mood starts under `MOOD_BEAT` (1.2 s) before its first word. The skills
+add what a beat holds: a title card in the act's own style, and room after a punchline.
+**Why.** The owner on never-about-the-code's seventh cut (2026-10-27): "we shouldn't be afraid to let things breathe. It
+feels like we're rushing from one piece to the next ... right now it feels like we're speed reading", and "setting the tone
+and the transitions and creating interesting transitions ... as opposed to just rushing through it". That cut ran at 1.2
+with every mood change landing 0.4 s before a word, so each new look and bed arrived under the voice. Drama 3's own pace is
+about 230 syllables a minute while speaking; at 1.2 the packet measured 270 to 310. **Costs.** A slower essay is longer
+(never-about-the-code went from 336.7 s to 429.9 s, 28% longer). Changing the speed re-voices every Drama take, because a take's key holds its
+speed and the stretch happens before the take is heard back and chosen. `critic-pacing`'s 2-second pause rule now exempts an
+act change carried by music and a card.
 
 ## Behaviour
 

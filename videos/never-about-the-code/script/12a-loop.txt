@@ -1,0 +1,6 @@
+[sincere, getting practical] Catching that is the other eighty percent. Here's how I do it.
+
+[matter-of-fact] I tell the agent what the feature has to do. It builds it, and tests it.
+[confident, then dry] Then another model reviews the pull request, round after round, until nothing serious is left. And it never approves anything just to get to lunch.
+
+[confident] My standing tests and checks already know the project, so they catch what should never happen.

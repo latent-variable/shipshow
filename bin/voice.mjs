@@ -28,7 +28,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { DRAMA, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, breathe, config, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
+import { DRAMA, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, beatsAfter, breathe, config, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
@@ -69,8 +69,10 @@ const plan = scenes(dir).map((s) => {
   const directed = ds.map((d) => spoken(d.directed, cfg.say));
   // a script written one thought per line is voiced a line at a time (lineRuns); otherwise up to 45 words a take
   const groups = RUNS ? lineRuns(s.text, says).runs : texts.map((_, i) => [i]);
+  const beats = beatsAfter(s.text);
   return {
     id: s.id,
+    beats: groups.map((idx) => beats.has(idx[idx.length - 1])),   // a blank line follows this take: a beat after it
     units: groups.map((idx, n) => {
       const text = idx.map((i) => texts[i]).join(" "), say = idx.map((i) => says[i]).join(" "), told = idx.map((i) => directed[i]).join(" ");
       const wav = join(vdir, RUNS ? `${s.id}-r${String(n + 1).padStart(2, "0")}.wav` : `${s.id}-${String(idx[0] + 1).padStart(2, "0")}.wav`);
@@ -226,7 +228,7 @@ const timing = { engine: cfg.engine, voice: cfg.voice, speed: cfg.speed, scenes:
 const placed = [];
 for (const s of plan) {
   const scene = { id: s.id, start: round(t), sentences: [] };
-  t += cfg.lead / cfg.speed;
+  t += cfg.lead / cfg.speed + (cfg.leads[s.id] || 0);   // a beat before this scene: a new act's look and music arrive first
   s.units.forEach((unit, i) => {
     const wav = readWav(unit.wav);
     if (!rate) ({ rate, channels } = wav);
@@ -242,7 +244,7 @@ for (const s of plan) {
     const dur = samples.length / channels / rate;
     placed.push({ at: t, samples });
     scene.sentences.push(...sentenceTimes(unit, t, dur, shifts));
-    t += dur + (i < s.units.length - 1 ? cfg.gap / cfg.speed : 0);
+    t += dur + (i < s.units.length - 1 ? cfg.gap / cfg.speed + (s.beats[i] ? cfg.beat : 0) : 0);
   });
   t += cfg.tail / cfg.speed;
   t += cfg.pauses[s.id] || 0;                         // a beat after this scene: a meme or a stamp is read in it

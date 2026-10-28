@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { test } from "node:test";
 import { runInNewContext } from "node:vm";
 import { REPO, musicBed, readWav, themeCss, writeWav } from "../bin/lib.mjs";
-import { resolveMoods } from "../bin/moods.mjs";
+import { MOOD_BEAT, resolveMoods } from "../bin/moods.mjs";
 
 const scratch = () => mkdtempSync(join(tmpdir(), "shipshow-moods-"));
 const timing = { total: 16, scenes: [0, 4, 8, 12].map((start, i) => ({ id: `s${i}`, start, duration: 4, sentences: [] })) };
@@ -153,4 +153,15 @@ test("a mood's overlay layers make no stacking context, so grain blends with the
   const rule = css.match(/#overlay \.mood-overlay \{([^}]*)\}/);
   assert.ok(rule, "base.css has no #overlay .mood-overlay rule");
   assert.match(rule[1], /z-index:\s*auto/);
+});
+
+test("a mood that starts with its first word close behind is named, so a new act gets a beat before the voice", () => {
+  const dir = scratch();
+  const cfg = { moods: { history: { look: { "--accent": "#aabbcc" } }, night: { look: { "--ink": "#ffffff" } } } };
+  const voiced = (beat) => ({ total: 16, scenes: [0, 4, 8, 12].map((start, i) => ({ id: `s${i}`, start, duration: 4, sentences: [{ text: "x", start: start + (i ? beat : 0.4), duration: 1 }] })) });
+  const rushed = resolveMoods(cfg, voiced(0.4), source, themeCss("shipshow", dir), dir).warnings;
+  assert.equal(rushed.length, 2, "both mood changes are named");
+  assert.match(rushed[0], /scene s1 starts mood "history" 0\.4 s before its first word.*"leads": \{"s1"/);
+  assert.deepEqual(resolveMoods(cfg, voiced(MOOD_BEAT + 0.3), source, themeCss("shipshow", dir), dir).warnings, [], "a beat long enough says nothing");
+  assert.deepEqual(resolveMoods(cfg, timing, source, themeCss("shipshow", dir), dir).warnings, [], "no sentences, nothing to judge");
 });

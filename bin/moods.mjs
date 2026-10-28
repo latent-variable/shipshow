@@ -7,12 +7,15 @@ export function cssTokens(css) {
   return Object.fromEntries(roots.flatMap((m) => [...m[1].matchAll(/(--[\w-]+)\s*:\s*([^;]+);?/g)].map((x) => [x[1], x[2].trim()])));
 }
 
+export const MOOD_BEAT = 1.2;   // seconds between a mood's start and its first word, below which the change is rushed
+
 export function resolveMoods(cfg, timing, src, theme, dir) {
   const sections = new Map([...src.matchAll(/<section([^>]*)>/g)].map((m) => [m[1].match(/data-scene="([^"]+)"/)?.[1], m[1].match(/data-mood="([^"]*)"/)?.[1]]));
   const base = cssTokens(theme + "\n" + flairCss(cfg.flair));
   const schedule = [{ name: null, start: 0, tokens: base }];
   const cache = new Map();
   let fonts = "", current = null;
+  const warnings = [];
   for (const scene of timing.scenes) {
     const name = sections.get(scene.id);
     if (name === undefined) continue;
@@ -31,9 +34,14 @@ export function resolveMoods(cfg, timing, src, theme, dir) {
       cache.set(name, { tokens, ambient: spec.ambient, music: spec.music });
     }
     schedule.push({ name, start: scene.start, ...cache.get(name) });
+    // A new act is felt before it is heard: its look and music need a beat alone before the voice (owner, 2026-10-27).
+    const first = scene.sentences?.[0]?.start;
+    if (scene.start > 0 && first !== undefined && first - scene.start < MOOD_BEAT) {
+      warnings.push(`scene ${scene.id} starts mood "${name}" ${(first - scene.start).toFixed(1)} s before its first word: give the change a beat of ${MOOD_BEAT} s or more (video.json "leads": {"${scene.id}": 1.5})`);
+    }
   }
-  if (schedule.length === 1) return { moods: [], fonts: "" };
+  if (schedule.length === 1) return { moods: [], fonts: "", warnings };
   const keys = new Set(schedule.flatMap((m) => Object.keys(m.tokens)));
   for (const mood of schedule) mood.tokens = Object.fromEntries([...keys].map((key) => [key, mood.tokens[key] ?? base[key] ?? ""]));
-  return { moods: schedule, fonts };
+  return { moods: schedule, fonts, warnings };
 }

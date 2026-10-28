@@ -71,6 +71,9 @@ watch**, on top of true.
 - **Music per section** from `local-imagegen`'s ACE-Step (instrumental, the section's length or longer, a couple of
   seeds), checked for singing with Whisper before it goes under a voice. It lives in `local/music/`, never committed.
 - Every joke is directed as one take; every quote is shown where it was said.
+- **It breathes**: the voice's own pace (no `speed` is 1.0), room after a punchline (a blank line in the script, or `pauses` at a scene's end), and a beat at each act
+  change (`leads`, 1.5 to 2 s) where the new look and music arrive alone under a title card in the act's style. Rushing
+  reads as speed reading (the owner, 2026-10-27).
 
 ## 1. Facts first: `sources.md`
 

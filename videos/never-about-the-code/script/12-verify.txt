@@ -1,5 +1,3 @@
-[sincere, getting practical] So here's how I actually do that eighty percent.
-[matter-of-fact] I tell the agent what the feature has to do. It builds it, and tests it as hard as it can.
-[confident] Then the pull request goes through review by another model, round after round, until nothing serious is left.
-[storyteller] On ShipShow, the tool that voiced this video, the reviewer caught a bug: switch off one check, and some cloned voices stopped working. Fixed before it merged.
-[confident] And my standing tests and checks already know the project, so they catch what should never happen.
+[storyteller, leaning in] Here's a bug from ShipShow, the tool that voiced this video. With one check switched off, cloned voices without a transcript refused to run.
+
+[matter-of-fact, then dry] The model reviewing the pull request caught it, before it ever merged. My cloned voice says thanks.
