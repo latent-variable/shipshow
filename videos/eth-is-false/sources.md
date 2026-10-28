@@ -50,7 +50,7 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 |---|---|---|
 | 01 | OpenAI posted the paper on October 26 | B (dated 2026-10-26); R `history.md` "October 26, 2026 ... *The Exponential Time Hypothesis is False*" |
 | 01 | "a very rude title" | **opinion**, a joke |
-| 07, 08, 13b | The house of cards: papers stacked on ETH and the Strong ETH; "somebody pulled on the bottom card"; cards falling, some landing on weaker assumptions | **opinion**, a picture of B's "hundreds of papers" and P section 1.1.3 (lower bounds that also follow from weaker hypotheses such as the Orthogonal Vectors Conjecture). The field labels on the cards are the fields named in 07 |
+| 07, 08, 13b | The house of cards: papers stacked on ETH and the Strong ETH; "somebody pulled on the bottom card"; the "load-bearing" stamp on ETH and the Strong ETH; cards falling, some landing on weaker assumptions | **opinion**, a picture of B's "hundreds of papers" and P section 1.1.3 (lower bounds that also follow from weaker hypotheses such as the Orthogonal Vectors Conjecture). The field labels on the cards are the fields named in 07 |
 | 09 to 11 | "A heist, in three moves": split, a dial, the getaway | **opinion**, a frame for the three steps of P section 2 |
 | 01 | "No human authors" | P title page names only "OpenAI"; R README: "produced by an unnamed internal OpenAI model" (a quip on that; R does not say whether people prompted or selected) |
 | 01 | "Does that mean P equals NP? Does your SAT solver get faster? Stick around. The answers are weirder than the headline." | **opinion**, the video's two questions, answered in 12 and 13 |

@@ -265,3 +265,21 @@ at most 4 rounds; grounding's round 2 pass stands while the Lean excerpt is unch
 
 **Accepted:** the recap meme's 2.3 s (all four steps were on screen earlier; it is a stinger); the late curve in 03 (the pins arrive on
 their words); top-heavy frames in 14b and 15 until their stamps land.
+
+## Round 8 (the cap): the floor re-checked on the changed lines only; the builder's look
+
+The owner asked for restraint: the first cut had four full rounds, and a revision should not get a fresh thorough plan. So the last
+round ran one critic: accuracy (Sonnet) on the lines changed since round 7, not the whole video (pass; one minor taken: the
+"load-bearing" stamp is on the house-of-cards opinion row). The builder looked at every changed frame and fixed what it found: 08's
+schematic curve, reshaped in round 7, bent back down as if the exponent shrank; it now rises and flattens, crossing both floors. The
+1.307 note, the "load-bearing" stamp and the flaw stamp were moved clear of other text.
+
+**Spend on the second cut:** 22 critic agents, about 2.8M tokens (rounds 5 to 7 at about 0.8M, 0.9M and 1.1M; round 8 at 70k). A
+revision this size should cost one round on the changed scenes; the critic-loop change that makes that the rule is its own PR.
+
+**Open at the cap, accepted:** the narrator's overall rate (his pick by ear); the recap meme's 2.3 s; the 03 curve drawing before
+"Forty"; top-heavy frames in 14b and 15 until their stamps land; Parakeet writing "E.T. H." in 14b (the voice says the letters, as
+written).
+
+**For the owner's listen:** the new narrator at speed 1.1, the names (Impagliazzo, Paturi), the 2.0 s beat after "Simple, right?", and
+whether the gags in 04, 06, 07, 10 and 11 land.
