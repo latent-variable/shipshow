@@ -1,11 +1,12 @@
 # Plan: Claude best practices, applied to ShipShow
 
-Written 2026-10-17. Nothing here is done; each step is a proposal with the fact that motivates it, the source, and how
-to tell it worked. Sources are Anthropic's own docs and engineering posts, read by a research agent on 2026-10-17 (listed
-at the end); where a source did not say something, it is marked **unconfirmed** rather than filled in. The repo facts
-were measured on the same day.
+Written 2026-10-17 from a measured snapshot. Progress checked 2026-10-28: completed work is marked **Done** or **Partly
+done**; the remaining steps are proposals with the fact that motivates them, the source, and how to tell they worked.
+Sources are Anthropic's own docs and engineering posts, read by a research agent on 2026-10-17 (listed at the end); where
+a source did not say something, it is marked **unconfirmed** rather than filled in. Repo facts below retain their original
+measurement date unless noted.
 
-## What the repo looks like today (measured)
+## Repo snapshot (originally measured 2026-10-17; selected facts updated 2026-10-28)
 
 | Fact | Value | Best-practice yardstick |
 |---|---|---|
@@ -13,15 +14,15 @@ were measured on the same day.
 | Skills | 22, descriptions 213 to 529 characters, all trigger-last ("Load when ..." at the end) | Trigger first; `description` plus `when_to_use` under 1,536 characters |
 | Skill front matter in use | `name`, `description` only | Also: `allowed-tools`, `disable-model-invocation`, `when_to_use`, `paths`, `context: fork`, `hooks` |
 | `agents/critic.md` | `tools` allowlist (Read, Grep, Glob, Bash, Skill), `model: inherit`, "told not to write", no `maxTurns`, no hooks | `disallowedTools`, `maxTurns`, scoped `hooks`, an explicit `model` |
-| Hooks | none | 33 events; command, prompt, agent and http handlers |
-| `.claude/` | **gitignored whole** (`.gitignore:21`), so `settings.json` and `rules/` cannot be committed | Project settings and rules are meant to be committed |
+| Hooks (updated 2026-10-28) | Bash, file and Stop hooks are wired in `.claude/settings.json`; the docs-rule and reporting hooks remain open | 33 events; command, prompt, agent and http handlers |
+| `.claude/` (updated 2026-10-28) | `.claude/settings.json` and `.claude/hooks/*.mjs` are tracked. `.gitignore` ignores only the generated `.claude/skills/` links and `settings.local.json`. | Project settings and rules are meant to be committed |
 | Evals | none; checks are `npm test` and six hand-run red-team rounds | `claude plugin eval` exists (Claude Code 2.1.302) with `--ablation with-without` |
 | Run data | `npm run usage` reads transcripts; nothing joins it to a video or a critic round | Record tokens, tool calls, runtime and errors per run |
 | Judges | Sonnet only, same family as the builder | Anthropic's sources do not name self-preference bias (**unconfirmed** there); they do say a fresh context keeps a reviewer unbiased toward code it just wrote |
 
 ## Phase 0: measure first (so every later step has a number)
 
-0.1 **A `results/` folder per video.** `videos/<name>/results/` holds `run.json` (start and end time, branch, pin, model,
+0.1 **Done: record the first run in a `results/` folder.** `videos/<name>/results/` holds `run.json` (start and end time, branch, pin, model,
     voice, speed, plan and importance), `usage-at-start.json` and `usage-at-end.json` with the delta (`npm run usage --
     --json`), the critic rounds (findings by critic and severity, who agreed), the captures, and a short `run.md`. The
     first one is this video's (`videos/pacer-dev-journey/results/`), written by hand; step 0.2 automates it.
@@ -60,21 +61,22 @@ were measured on the same day.
 
 ## Phase 2: hooks and settings (rules that must hold every time)
 
-CLAUDE.md is advisory; hooks and deny rules are enforced (memory and permissions docs). Today every hard rule in this repo
-("never delete", "docs stay current", "the sample stays buggy") is prose plus CI.
+CLAUDE.md is advisory; hooks and deny rules are enforced (memory and permissions docs). The Bash and file hooks now enforce
+the never-delete rule and protect the sample, recorded evidence, and lockfile; the Stop hook runs the test suite. The
+docs-stay-current rule remains prose plus CI, and the sandbox and reporting hooks below are still open.
 
-2.0 **Commit project settings.** Change `.gitignore` from `.claude/` to `.claude/skills/` (the links `npm install`
-    makes), so `.claude/settings.json` and `.claude/rules/` are tracked. Check `git status` shows no secrets first.
-2.1 **PreToolUse guard on Bash** (`.claude/settings.json`, command hook, exit 2 with a reason on a match): `rm -r`,
+2.0 **Done: commit project settings.** `.claude/settings.json` and `.claude/hooks/*.mjs` are tracked; generated
+    `.claude/skills/` links and `.claude/settings.local.json` are ignored.
+2.1 **Done: PreToolUse guard on Bash** (`.claude/settings.json`, command hook, exit 2 with a reason on a match): `rm -r`,
     `rm -f`, `git restore`, `git checkout --`, `git clean`, `git push --force`, `git reset --hard`. This repo's rule is
-    "scripts never delete files"; a contributor without the user-level hook has no guard today. *Source:* hooks guide
+    "scripts never delete files"; the project hook adds this guard to Claude Code sessions. *Source:* hooks guide
     (PreToolUse exit 2 or `permissionDecision: "deny"`; a hook block overrides allow rules).
-2.2 **Protect what must not change.** PreToolUse on `Edit|Write` denying `sample_application/src/**` (the demo's bugs
-    are the point), `videos/*/results/captures/*` (captures and their `.sha256`), and `package-lock.json`. Override by an env var for
-    a deliberate change. *Source:* hooks guide (protect files).
-2.3 **Stop hook that runs `npm test`** (about 7 s) and blocks with the failing test names; read `stop_hook_active` to avoid
-    loops (Claude Code stops overriding after eight consecutive blocks). *Source:* hooks guide. *Why:* today a failing
-    docs-count test is found by CI, not by the agent.
+2.2 **Done: protect what must not change.** PreToolUse on `Edit|Write` denying `sample_application/src/**` (the demo's bugs
+    are the point), `videos/*/results/captures/*` (captures and their `.sha256`), and `package-lock.json`. A deliberate
+    sample change uses `SHIPSHOW_EDIT_SAMPLE=1`. *Source:* hooks guide (protect files).
+2.3 **Done: Stop hook that runs `npm test`** (about 7 s) and blocks with the failing test names; read `stop_hook_active` to avoid
+    loops (Claude Code stops overriding after eight consecutive blocks). *Source:* hooks guide. *Why:* run the same suite
+    before the agent hands back the change.
 2.4 **Docs-rule hook** (Stop): if `bin/`, `kit/`, `skills/`, `template/` changed and neither `docs/PRD.md` nor
     `docs/DESIGN.md` has a substantive added text, block with the CI's own message. Reuse the CI check's code from
     `test/pipeline.test.mjs`, so the rule lives in one place. This shifts the check left of the PR.
@@ -83,8 +85,9 @@ CLAUDE.md is advisory; hooks and deny rules are enforced (memory and permissions
     three rules that must survive compaction (never delete, docs stay current, the builder never judges).
 2.6 **Token logging**: a `SubagentStop` command hook appending one line per critic to `videos/*/results/agents.jsonl`
     (agent id, skill, tokens from its transcript). Output goes to a file, not to Claude. Feeds 0.1 without anyone remembering.
-2.7 **Permissions**: `permissions.deny` for `Read(./.env*)` and `Read(./local/voices/**)` (a clone is somebody's voice);
-    `sandbox.enabled` with `failIfUnavailable: true` for headless critic runs. *Source:* permissions and sandboxing docs.
+2.7 **Partly done: permissions.** `permissions.deny` covers `Read(./.env)`, `Read(./.env.*)` and
+    `Read(./local/voices/**)` (a clone is somebody's voice). Still open: `sandbox.enabled` with
+    `failIfUnavailable: true` for headless critic runs. *Source:* permissions and sandboxing docs.
     Note the sandbox covers shell commands only; file tools, MCP and hooks run outside it.
 
 ## Phase 3: harden the critic agent
@@ -153,9 +156,11 @@ round here is about 520k tokens by our own estimate.
 
 ## Order I would do it in
 
-1. 0.1 (this run), 2.0, 2.1, 2.3 (a day: they make everything after safer and measurable).
+Done: 0.1, 2.0 to 2.3, and the permission-deny part of 2.7. Remaining order:
+
+1. 0.2, finish 2.7, then 2.4 and 2.5.
 2. 3.1, 3.2, 1.3, 1.6 (the critic becomes read-only in fact; descriptions trigger-first).
-3. 0.2, 2.6, 5.1 (cases from the red-team findings), then 5.2 (is each skill earning its tokens).
+3. 2.6, 5.1 (cases from the red-team findings), then 5.2 (is each skill earning its tokens).
 4. 1.1, 1.2 (the AGENTS.md diet, once the Stop hook protects the docs rule).
 5. 4.1 to 4.3 (clean-machine install), then 6.1.
 6. 5.4 (the human-labelled sample) before claiming the critics are reliable.
