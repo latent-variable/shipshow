@@ -162,7 +162,7 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 12 | Futurama Fry (memegen `fry`): "not sure if a galactic algorithm / or just very, very patient" | third-party template |
 | 13 | Jim Halpert Pointing to Whiteboard (memegen `jim`): "every Sudoku / is secretly a SAT problem"; Homer backs into the bushes, a moving GIF (`https://i.imgflip.com/2txtm1.mp4`): "ETH / after October 26" | third-party template and clip |
 | 14 | Kurt Angle stare, a moving GIF (`https://i.imgflip.com/89540b.mp4`): "the checking team / reading OpenAI's proof" | third-party clip |
-| 14b | Grant Gustin Next To Oliver Queen's Grave (memegen `grave`): "here lies ETH, 2001 to 2026 / its authors, checking the proof / OpenAI's model" | third-party template |
+| 14b | Grant Gustin Next To Oliver Queen's Grave (memegen `grave`): "here lies ETH, 2001 to 2026 / (blank) / OpenAI's model" | third-party template |
 | 15 | Fast guy explaining, a moving GIF (`https://i.imgflip.com/4uapcv.mp4`): "me, explaining a 67-page proof / in one page" | third-party clip |
 
 ## Voice
