@@ -129,5 +129,76 @@
     "under": 12
   },
   "tail": 1.1,
-  "beat": 0.6
+  "beat": 0.6,
+  "youtube": {
+    "title": "It Was Never About the Code: Why AI Coding Gets Roasted",
+    "alternatives": [
+      "It Was Never About the Code (Programmers Roasted Compilers Too)",
+      "Every New Layer of Programming Got Roasted. AI Is Next."
+    ],
+    "description": [
+      "If you've been shipping code with AI, somebody has probably told you that you don't understand the code. Programmers pushed back on compilers too, in the 1950s, and on every new layer since, and the layer won anyway.",
+      "It goes from Grace Hopper's first compiler to Fortran becoming the bar, then where AI coding is in 2026, and how I verify what my agents build before it ships.",
+      "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narration is my own cloned voice. https://github.com/latent-variable/shipshow"
+    ],
+    "chapters": {
+      "01-hook": "You don't understand the code",
+      "02-compiler": "Nobody reads what the compiler writes",
+      "03-ladder": "Every new layer gets roasted",
+      "03b-rewind": "Karpathy called it in 2023",
+      "04-impossible": "The four stages of the roast",
+      "07-the-cost": "What the skeptics got right",
+      "08-the-trade": "IBM's 1957 bet",
+      "09-now": "2026: our turn",
+      "11-objection": "The fair objection",
+      "12-verify": "How I ship with agents",
+      "13-close": "So, can you?"
+    },
+    "sources": [
+      "Philip Schieber, \"The Wit and Wisdom of Grace Hopper\", OCLC Newsletter, 1987: https://www.cs.yale.edu/homes/tap/Files/hopper-wit.html",
+      "John Backus, \"The History of FORTRAN I, II, and III\", 1978: https://www.softwarepreservation.org/projects/FORTRAN/paper/p25-backus.pdf",
+      "John Backus, \"Programming in America in the 1950s\", 1976: https://www.softwarepreservation.org/projects/FORTRAN/paper/Backus-ProgrammingInAmerica-1976.pdf",
+      "Backus et al., \"The FORTRAN Automatic Coding System\", 1957: http://www.bitsavers.org/pdf/ibm/704/FORTRAN_paper_1957.pdf",
+      "Edsger W. Dijkstra, EWD 498, 1975: https://www.cs.virginia.edu/~evans/cs655/readings/ewd498.html",
+      "Ed Post, \"Real Programmers Don't Use Pascal\", Datamation, 1983: https://www.pbm.com/~lindahl/real.programmers.html",
+      "Ed Nather, \"The Story of Mel\", 1983: http://www.catb.org/jargon/html/story-of-mel.html",
+      "GitHub, \"GitHub Copilot is generally available to all developers\", 2022: https://github.blog/2022-06-21-github-copilot-is-generally-available-to-all-developers/",
+      "Andrej Karpathy, January 2023: https://x.com/karpathy/status/1617979122625712128",
+      "Andrej Karpathy coining \"vibe coding\", February 2025: https://x.com/karpathy/status/1886192184808149383",
+      "Andrej Karpathy, January 2026: https://x.com/karpathy/status/2015883857489522876",
+      "DHH on the Lex Fridman Podcast #501: https://lexfridman.com/dhh-2-transcript/",
+      "antirez, \"Don't fall into the anti-AI hype\": https://antirez.com/news/158",
+      "Veracode, 2026 GenAI Code Security Report: https://www.veracode.com/news/llms-are-getting-smarter-but-not-safer-veracode-2026-genai-code-security-report-finds-ai-generated-code-security-has-stalled-at-56%25-pass-rate/",
+      "OCaml pull request #14369: https://github.com/ocaml/ocaml/pull/14369",
+      "Ghostty's contributing guide: https://github.com/ghostty-org/ghostty/blob/main/CONTRIBUTING.md"
+    ],
+    "credits": [
+      "Narration: my own voice, cloned with Fish Audio Drama 3 (built with Fish Audio).",
+      "Music: machine-generated with ACE-Step 1.5.",
+      "Memes: templates from Imgflip (https://imgflip.com/gif-templates) and memegen (https://github.com/jacebrowning/memegen): Typing kitty; Jack Black opening the book (A Minecraft Movie, 2025); Pedro Pascal crying; Odysseus and the sirens (The Odyssey, 2026); No no no wait wait wait; Nanami vibing (Jujutsu Kaisen); IShowSpeed; Always has been.",
+      "Made with ShipShow and HyperFrames."
+    ],
+    "tags": [
+      "AI coding",
+      "agentic engineering",
+      "vibe coding",
+      "AI agents",
+      "software engineering",
+      "programming history",
+      "compilers",
+      "Fortran",
+      "Grace Hopper",
+      "Dijkstra",
+      "Karpathy",
+      "code review"
+    ],
+    "studio": {
+      "Audience": "No, it's not made for kids",
+      "Paid promotion": "No",
+      "Altered or synthetic content": "Yes: the narration is a clone of my own voice (your call; the video says so itself)",
+      "Category": "Science & Technology",
+      "Language": "English",
+      "Visibility": "your call"
+    }
+  }
 }

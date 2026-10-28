@@ -79,7 +79,7 @@ test("build stops on a non-free file, naming the scene and the file, and on a mi
 
 test("build accepts public domain and CC BY-SA, copies the picture, and draws the credit from the metadata with the HTML stripped", () => {
   const api = source();
-  const dir = demo(fig("Free PD.png") + fig("Free BYSA.png", "<figcaption>Edsger Dijkstra</figcaption>"));
+  const dir = demo(fig("Free PD.png") + fig("Free BYSA.png", "<figcaption>Edsger Dijkstra &amp; O&#39;Brien</figcaption>"));
   const r = build(dir, env(api));
   assert.equal(r.status, 0, r.stderr);
   const html = readFileSync(join(dir, "index.html"), "utf8");
@@ -93,7 +93,7 @@ test("build accepts public domain and CC BY-SA, copies the picture, and draws th
   assert.deepEqual(portraitsIn(html).map((p) => [p.author, p.licence, p.licenceUrl, p.page]), [
     ["James S. Davis", "public domain", "", "https://commons.wikimedia.org/wiki/File:Free_PD.png"],
     ["Hamilton Richards & Co", "CC BY-SA 3.0", "http://creativecommons.org/licenses/by-sa/3.0/", "https://commons.wikimedia.org/wiki/File:Free_BYSA.png"],
-  ]);
+  ]);  assert.deepEqual(portraitsIn(html).map((p) => p.name), ["Grace Hopper", "Edsger Dijkstra & O'Brien"], "the caption's name, without its small print or entities, for the credit line");
 });
 
 test("the credit strips tags and entities from the artist, and a public-domain file with no artist credits Commons", () => {

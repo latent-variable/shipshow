@@ -1349,6 +1349,21 @@ test("leads add a beat before one scene: it starts where it did, its first word 
   assert.match(bad.r.stderr, /leads\[".*"\] is -1; it takes 0 to 10 seconds/);
 });
 
+test("package: chapters come from scene starts, and what YouTube would refuse or ignore is named before anything is written", async () => {
+  const { chapters, descriptionText, stamp, youtubeProblems } = await import("../bin/package.mjs");
+  const timing = { total: 425.66, scenes: [{ id: "01", start: 0 }, { id: "02", start: 25.8 }, { id: "03", start: 59.1 }, { id: "04", start: 3725.2 }] };
+  assert.deepEqual([stamp(0), stamp(59.9), stamp(3725.2)], ["0:00", "0:59", "1:02:05"]);
+  const ch = chapters(timing, { "02": "Two", "01": "One", "03": "Three" });
+  assert.deepEqual(ch.map((c) => c.title), ["One", "Two", "Three"], "in time order, whatever order video.json lists them");
+  const text = descriptionText({ description: ["First.", "Second."], sources: ["A: https://a"], credits: ["Music: made"] }, ch, ["Photo: x"]);
+  assert.match(text, /^First\.\n\nSecond\.\n\n0:00 One\n0:25 Two\n0:59 Three\n\nSources\nA: https:\/\/a\n\nCredits\nMusic: made\nPhoto: x$/);
+  assert.deepEqual(youtubeProblems({ title: "T", description: text, chapters: ch, total: 425.66 }), []);
+  const bad = youtubeProblems({ title: "x".repeat(101), description: "a <b>" + "y".repeat(5000), chapters: ch.slice(1, 3), total: 65 });
+  assert.equal(bad.length, 6, bad.join("; "));
+  assert.ok(bad.some((p) => /100/.test(p)) && bad.some((p) => /5000/.test(p)) && bad.some((p) => /< and >/.test(p)), "title, length and brackets");
+  assert.ok(bad.some((p) => /0:00/.test(p)) && bad.some((p) => /three or more/.test(p)) && bad.some((p) => /lasts 5\.9 s/.test(p)), "first at 0:00, at least three, each ten seconds");
+});
+
 test("drawled: the voice step flags a sentence dragged apart, with the same rule as bin/hearback.py", async () => {
   const { drawled } = await import("../bin/lib.mjs");
   assert.equal(drawled([{ words: [{ w: "Like", at: 32.97 }, { w: "animals.", at: 35.95 }] }]), '3.0 s between "Like" and "animals."');

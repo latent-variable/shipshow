@@ -30,7 +30,8 @@
     "test": "node --test test/*.test.mjs",
     "postinstall": "node bin/link-skills.mjs",
     "audit:deps": "bash scripts/audit-deps.sh",
-    "audit:code": "bash scripts/audit-code.sh"
+    "audit:code": "bash scripts/audit-code.sh",
+    "package": "node bin/package.mjs"
   },
   "devDependencies": {
     "gsap": "3.14.2",

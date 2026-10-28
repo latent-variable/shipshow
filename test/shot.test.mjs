@@ -101,10 +101,12 @@ test("a shot that cannot be taken stops the build, naming the scene and the page
 
 test("the credits for a description: a line per portrait and per screenshot, the embed cited by its real address", () => {
   assert.deepEqual(creditLines(
-    [{ file: "File:Edsger Wybe Dijkstra.jpg", author: "Hamilton Richards", licence: "CC BY-SA 3.0", page: "https://commons.wikimedia.org/wiki/File:Edsger_Wybe_Dijkstra.jpg" }],
+    [{ file: "File:Edsger Wybe Dijkstra.jpg", author: "Hamilton Richards", licence: "CC BY-SA 3.0", page: "https://commons.wikimedia.org/wiki/File:Edsger_Wybe_Dijkstra.jpg" },
+     { file: "File:John Backus 2.jpg", author: "PIerre.Lescanne", licence: "CC BY-SA 4.0", page: "https://commons.wikimedia.org/wiki/File:John_Backus_2.jpg", name: "John Backus" }],
     [{ url: URL1, taken: "2026-10-27", source: "" }, { url: URL1, taken: "2026-10-27", source: "" }, { url: "https://platform.twitter.com/embed/Tweet.html?id=1", taken: "2026-10-27", source: "x.com/karpathy/status/1" }],
   ), [
     "Photo of Edsger Wybe Dijkstra: Hamilton Richards · CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Edsger_Wybe_Dijkstra.jpg",
+    "John Backus: photo by PIerre.Lescanne, CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:John_Backus_2.jpg",
     `Screenshot: ${URL1} (captured 2026-10-27)`,
     "Screenshot: https://x.com/karpathy/status/1 (captured 2026-10-27)",
   ]);

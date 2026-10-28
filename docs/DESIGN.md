@@ -159,7 +159,7 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
 every turn (measured: 22 skills, 7,957 characters, about 1,989 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 236). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+and SKILL.md under 500 lines (longest 241). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -984,6 +984,19 @@ so fast through the content that it's hard to follow". Takes a line apart each s
 take into chunks that each hear the one before (mlx-audio `fish_drama3.generate`), so the paragraph is the unit that keeps one
 delivery. **Costs.** A retake re-voices a whole paragraph; a dropped word in a long take is found by hear-back's
 missing-sentence check, as before. **Tested** by a unit test on `lineRuns`, and by the eth-is-false pilot heard by the owner.
+
+### D67. A video ships with its upload folder (2026-10-27)
+**Decision.** `bin/package.mjs` (`npm run package`) writes one folder per video, the shape the owner's product-videos channel
+already uses (`~/Movies/Explainers/findbusiness/youtube/`): the MP4, `<name>-thumbnail.png` and `<name>-youtube.txt` (title, other
+titles considered, the description with chapters, sources and credits, tags, and what Studio asks). Everything comes from the
+video's own files: `video.json` `"youtube"`, chapter times from `timing.json`'s scene starts (so they move with the cut), credits
+from `review/credits.txt`, and `thumbnail.html` rendered at 1280 by 720 in the same headless Chrome as screenshots (`shot.mjs`
+`chromePath`). It stops before writing on what YouTube refuses (a title over 100 characters, a description over 5000, `<` or `>`)
+or silently ignores (chapters that do not start at 0:00, fewer than three, or one under ten seconds), and on a render older than
+the timing. It copies; it never moves or deletes. **Why.** The owner, ready to publish never-about-the-code on his channel: "the
+same thing that we do for the product videos: a dedicated thumbnail and a dedicated title, descriptions, all the other stuff",
+and that every lesson feed back into ShipShow so the next video starts from it. **Costs.** The description is written by the
+builder in the owner's voice and judged by a fresh critic, not generated; a thumbnail is a page the builder designs per video.
 
 ## Behaviour
 
