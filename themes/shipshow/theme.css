@@ -39,7 +39,8 @@
   --cap-radius: 12px;
   --cap-style: plain;         /* plain, or karaoke: each word lights as it is spoken */
   --cap-words: 12;            /* the longest caption line, in words */
-  /* Also read when set: --cap-hot (karaoke's lit word; --accent when unset), --cap-font (--font),
+  /* Also read when set: --cap-hot (karaoke's lit word; --accent when unset), --cap-wait (how bright karaoke's words
+     not yet spoken wait: 0.38; 0.62 measures about 7:1 on the caption box), --cap-font (--font),
      --cap-weight (500), --cap-tracking (normal), --cap-case (none, or uppercase). */
 
   /* motion: the defaults a video's flair can override (video.json "flair") */

@@ -1094,6 +1094,15 @@ render's limiter is budgeted against its own ceiling, so it takes at most `MAX_L
 code of its pin: a fix here reaches that repo when it moves the pin. **Tested** by `test/layered.test.mjs` (defaults, every
 override, the extra video folders, the template built with no meme declaring its fonts; that test fails with the old conditional).
 
+### D76. Karaoke's waiting words take a token, --cap-wait (2026-10-28)
+**Decision.** A word a karaoke caption has not reached yet waits at `--cap-wait`'s opacity, read from `#root` like every token
+(0.38 when unset, the old fixed value, so no video's look changes). **Why.** product-videos' first ShipShow video ran its critics
+against that team's bar, words at 7:1 or better, and the waiting words failed it: white at 38% on the signal theme's caption box
+is about 3.5:1, under WCAG's 4.5:1 for text too. A video or a team's theme now raises it (0.62 is about 7:1) without forking the kit.
+Whether the default itself should rise is the owner's call: it is part of how karaoke reads, and the measurement is here for it.
+**Tested** by `test/captions.test.mjs`: it builds the template on the signal theme, seeks Chrome to a moment a word is waiting, and
+reads 0.38 unset and 0.62 set; with the old fixed value it fails.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
