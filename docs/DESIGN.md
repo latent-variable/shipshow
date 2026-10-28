@@ -1017,6 +1017,18 @@ showed the worker at 114 GB, 113 GB of it GPU buffers MLX had freed and kept to 
 grow faster. **Costs.** A buffer is allocated again instead of reused; the audio is the same. **Tested** by the suite (the fake
 MLX module now has the cache calls) and by the memory each take prints on the next voice run.
 
+### D70. An AI narrator is self-aware, comparisons are like for like, and memes are compression that is not reused (2026-10-28)
+**Decision.** An explainer an AI narrates says so and is funny from that vantage, never with slang worn like a costume
+(`narration-writing`, *Who is talking, and how it is funny*); a comparison is in one unit on one picture that comes back when
+the result lands, and every mechanism gets numbers and an animation of why (`explain-concept`); a meme compresses one idea, a
+recap meme is held and walked through, and `memesUsed` in `bin/meme.mjs` tells `npm run memes` and the packet's *Memes* table
+("also in") which other videos used a template or clip, so a repeat is visible and `critic-engagement` can call it.
+**Why.** The owner's notes on eth-is-false's fourth cut: cringe lines ("a very rude title", "a heist in three moves",
+"cracking"), an under-sold hook, checking and solving never compared in the same terms, an exponent chart he could not read,
+memes shown for two seconds as afterthoughts, and the same few templates across his videos. **Costs.** A longer video (the
+fifth cut is 17.4 minutes); a scan of every video's scenes.html on each search and packet. **Tested** by a unit test on
+`memesUsed`, and by the fifth cut's round (accuracy, clarity, engagement), whose findings were fixed.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
