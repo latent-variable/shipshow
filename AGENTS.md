@@ -368,7 +368,7 @@ kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.
 themes/     shipshow, paper, launch, buildday, lofi, signal, chalk and archive; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono, Bricolage Grotesque, Inter, Playfair Display, Courier Prime: SIL OFL)
 skills/     the explainer and development skills, critic-loop, tailor, theme and the nine critics
 template/   what npm run new copies
-videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino-long.wav exists, with Drama 3 set up) and eth-is-false (OpenAI's ETH preprint explained, for the same channel and voice, on the chalk theme)
+videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino-long.wav exists, with Drama 3 set up) and eth-is-false (OpenAI's ETH preprint explained, for the same channel, read by an invented Drama 3 narrator, `local/voices/eth-narrator.wav`, on the chalk theme)
 examples/   ledgerly, a fictional invoicing API with one authorization bug, a threat model and an access log
 skills/critic-grounding/scripts/  excerpt.mjs and check-excerpt.mjs, the excerpt check (run through the skill)
 skills/evidence-standard/scripts/  sandbox-run.sh, capture.mjs, verify-vendored.sh (run through the skill)

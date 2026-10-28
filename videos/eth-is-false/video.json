@@ -2,12 +2,12 @@
   "title": "The Exponential Time Hypothesis is False",
   "kind": "feature",
   "importance": "high",
-  "importance_reason": "public: Lino's YouTube channel, in his own voice, explaining a complexity-theory result experts are still checking; a viewer may repeat any claim",
+  "importance_reason": "public: Lino's YouTube channel, in a narrator voice, explaining a complexity-theory result experts are still checking; a viewer may repeat any claim",
   "audience": "A developer on YouTube who knows roughly what P versus NP is, or has heard of it, and saw the headline that an AI refuted the Exponential Time Hypothesis. After watching, they can say what 3-SAT and ETH are, how ETH relates to P versus NP, what the paper claims and the core idea of how, why it does not make SAT solvers faster or settle P versus NP, and how far to trust it today.",
   "theme": "chalk",
   "engine": "drama",
-  "voice": "lino-long",
-  "speed": 1.2,
+  "voice": "eth-narrator",
+  "speed": 1.1,
   "say": {
     "ETH": "E T H",
     "NP": "N P",
@@ -20,22 +20,159 @@
     "2001": "two thousand one",
     "2010": "twenty ten",
     "2016": "twenty sixteen",
-    "2019": "twenty nineteen",
-    "n": "en",
-    "T": "tee"
+    "2019": "twenty nineteen"
   },
   "gap": 0.35,
   "hold": 3,
   "flair": {
     "ambient": "blobs dust vignette grain"
   },
-  "music": {
-    "file": "local/music/eth-is-false-bed.wav",
-    "volume": 0.18,
-    "duck": 0.35
-  },
   "pauses": {
-    "11b-three-costs": 0.9,
-    "08-the-claim": 0.5
+    "11b-three-costs": 0.6,
+    "08-the-claim": 0.5,
+    "07-built-on-it": 0.5,
+    "02b-no-answer": 0.3
+  },
+  "moods": {
+    "headline": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 80% 70% at 50% 42%, #3a2020 0%, #251516 55%, #140b0c 100%)",
+        "--accent": "#ffb36b",
+        "--blob-1": "#ff6b5b",
+        "--blob-2": "#ffb36b",
+        "--line": "#5c3a36",
+        "--card": "rgba(32, 18, 18, 0.92)"
+      },
+      "music": {
+        "file": "local/music/eth/headline.wav",
+        "volume": 0.193,
+        "duck": 0.35
+      }
+    },
+    "puzzle": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 80% 70% at 50% 42%, #1f3d3b 0%, #16302e 55%, #0c1b1a 100%)",
+        "--accent-2": "#7ee0c3",
+        "--blob-1": "#7ee0c3",
+        "--blob-2": "#ffd66b",
+        "--line": "#3a5e58",
+        "--card": "rgba(16, 36, 34, 0.92)"
+      },
+      "music": {
+        "file": "local/music/eth/puzzle.wav",
+        "volume": 0.146,
+        "duck": 0.35
+      }
+    },
+    "archive": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 80% 70% at 50% 42%, #3d3024 0%, #2b2119 55%, #17110c 100%)",
+        "--ink": "#f3e9d2",
+        "--muted": "#c9b99a",
+        "--accent": "#f0c070",
+        "--accent-2": "#d9c9a3",
+        "--accent-3": "#e8a890",
+        "--blob-1": "#e8c890",
+        "--blob-2": "#a07850",
+        "--line": "#6b5640",
+        "--card": "rgba(42, 32, 24, 0.92)",
+        "--font-display": "\"IBM Plex Mono\", \"SF Mono\", Menlo, monospace",
+        "--display-tracking": "-0.02em"
+      },
+      "music": {
+        "file": "local/music/eth/archive.wav",
+        "volume": 0.166,
+        "duck": 0.35
+      },
+      "ambient": "dust vignette grain"
+    },
+    "cards": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 80% 70% at 50% 42%, #2e2340 0%, #1f182c 55%, #100c17 100%)",
+        "--accent-2": "#c3a6ff",
+        "--blob-1": "#7a5cc0",
+        "--blob-2": "#c3a6ff",
+        "--line": "#4b3d63",
+        "--card": "rgba(30, 22, 42, 0.92)"
+      },
+      "music": {
+        "file": "local/music/eth/cards.wav",
+        "volume": 0.186,
+        "duck": 0.35
+      }
+    },
+    "drop": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 80% 70% at 50% 42%, #2c1010 0%, #1a0909 55%, #0a0404 100%)",
+        "--accent": "#ff7b6b",
+        "--blob-1": "#ff3b30",
+        "--blob-2": "#ff7b6b",
+        "--line": "#5a2a2a",
+        "--card": "rgba(28, 10, 10, 0.92)"
+      },
+      "music": {
+        "file": "local/music/eth/drop.wav",
+        "volume": 0.166,
+        "duck": 0.35
+      }
+    },
+    "heist": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 80% 70% at 50% 42%, #12263a 0%, #0c1a28 55%, #050b12 100%)",
+        "--accent": "#7dffb8",
+        "--accent-2": "#8fd3f4",
+        "--blob-1": "#1f8f6b",
+        "--blob-2": "#2a5f8f",
+        "--line": "#2a4256",
+        "--card": "rgba(10, 22, 34, 0.92)"
+      },
+      "music": {
+        "file": "local/music/eth/heist.wav",
+        "volume": 0.204,
+        "duck": 0.35
+      },
+      "ambient": "blobs vignette grain"
+    },
+    "galactic": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 90% 80% at 50% 40%, #1c1844 0%, #0e0c26 55%, #04030c 100%)",
+        "--accent-2": "#9fb4ff",
+        "--blob-1": "#4b3fb0",
+        "--blob-2": "#9fb4ff",
+        "--line": "#3a3670",
+        "--card": "rgba(14, 12, 38, 0.9)"
+      },
+      "music": {
+        "file": "local/music/eth/galactic.wav",
+        "volume": 0.188,
+        "duck": 0.35
+      },
+      "ambient": "stars glow vignette grain"
+    },
+    "fallout": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 80% 70% at 50% 42%, #2c3138 0%, #1d2126 55%, #0f1114 100%)",
+        "--accent-2": "#a8c0d6",
+        "--blob-1": "#8a9aaa",
+        "--blob-2": "#d6b98a",
+        "--line": "#46505a",
+        "--card": "rgba(24, 28, 32, 0.92)"
+      },
+      "music": {
+        "file": "local/music/eth/fallout.wav",
+        "volume": 0.211,
+        "duck": 0.35
+      }
+    },
+    "verdict": {
+      "look": {
+        "--blob-1": "#ffe6b0"
+      },
+      "music": {
+        "file": "local/music/eth/verdict.wav",
+        "volume": 0.133,
+        "duck": 0.35
+      }
+    }
   }
 }

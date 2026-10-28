@@ -1,5 +1,5 @@
-[building] Every switch you add doubles the work.
-[matter-of-fact] Ten switches, about a thousand settings. Fifty switches, about a quadrillion.
-[mock-dramatic] Three hundred switches, and the number of settings has ninety one digits.
-[deadpan] No computer is getting through that list. Not yours, not anyone's.
-[clear] So the whole game is being smarter than trying everything.
+[building] And there are a lot of settings. Every switch you add doubles them.
+[matter-of-fact] Say you check a billion settings a second. Thirty switches, one second. Forty, eighteen minutes. Fifty, two weeks. Sixty, thirty six years.
+[mock-dramatic] Ninety switches, and you'd still be going after the age of the universe.
+[deadpan] And ninety is a small problem.
+[clear] Solvers survive by being clever about what to skip. But for the hardest cases, nobody knows how to beat exponential by much. That's the question this whole story is about.

@@ -1,4 +1,4 @@
-[sly] Here's the trick. As you turn the dial, the total traces out a smooth curve, a polynomial in T.
+[sly] Move three, the getaway. Because every rule is now algebra, as you turn the dial, the count traces out a smooth curve, a polynomial in T.
 [clear, explaining] And a polynomial is pinned down once you know enough about it. Two points fix a line.
 [clear] But this curve has far more bends than we have points. So at each easy point, you also compute its slope, the slope of the slope, and so on, to make up the difference.
 [excited] Do that at one, two, three and so on, solve for the curve, and read off its value at zero.
