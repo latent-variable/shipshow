@@ -1,6 +1,9 @@
-[curious] And sometimes, there's no answer at all.
-[playful] Two switches give four settings. Now add four rules, each one ruling out a different setting.
-[deadpan] Every setting breaks something. Nothing works.
-[clear, explaining] And no is often the answer you need. Fedora's package manager hands the question of which versions fit together to a SAT solver. When no setting fits, that's your dependency conflict.
-[matter-of-fact] Intel did it the other way round, on the Pentium 4. Write a bug as rules. No setting, no bug, at least within the steps they checked.
-[dry] But you can't prove no by getting lucky. You have to rule out every setting, somehow.
+[curious, a little intrigued] And sometimes, there's no answer at all. Take two switches. That gives four settings. Now add four rules, each one ruling out a different setting.
+
+[quiet, matter-of-fact] Every setting breaks something. Nothing works.
+
+[clear, explaining why it matters] And no is often the answer you actually need. Fedora's package manager hands the question of which versions fit together to a SAT solver. When no setting fits, that's your dependency conflict.
+
+[clear] Intel did it the other way round, on the Pentium 4. They wrote a bug as rules. No setting meant no bug, at least within the steps they checked.
+
+[thoughtful, slowing down] But you can't prove no by getting lucky. You have to rule out every setting, somehow.

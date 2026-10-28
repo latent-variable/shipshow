@@ -974,6 +974,17 @@ version judged words a second over the whole line and flagged "Wait. Fortran? Th
 purpose; across 1,204 word pairs in two videos the longest gap inside a sentence was 1.9 s (a year said out loud), hence 2.5.
 **Costs.** A sentence directed to be slow with a long held pause in it is retaken; put the pause between sentences instead.
 
+### D66. Drama 3 voices a paragraph per take, and an explainer breathes (2026-10-27)
+**Decision.** With Drama 3 a script line (a paragraph) of up to 160 words is one take (`DRAMA_LINE_MAX`; OmniVoice keeps
+`LINE_MAX`, 70); a scene is a few paragraphs, each under one direction written as an actor's note, with a blank line (a beat)
+between. Every video made to explain, not only an essay (D64), reads at the voice's own pace with a wordless card opening each act
+(`leads`), and `critic-pacing` calls rushing a major for all of them. A narrator is invented from a description, never borrowed
+from a real person without consent. **Why.** The owner on eth-is-false's second cut: "too much inconsistency" and "we're moving
+so fast through the content that it's hard to follow". Takes a line apart each start cold, and the port already splits a long
+take into chunks that each hear the one before (mlx-audio `fish_drama3.generate`), so the paragraph is the unit that keeps one
+delivery. **Costs.** A retake re-voices a whole paragraph; a dropped word in a long take is found by hear-back's
+missing-sentence check, as before. **Tested** by a unit test on `lineRuns`, and by the eth-is-false pilot heard by the owner.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
