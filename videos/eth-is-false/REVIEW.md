@@ -381,3 +381,16 @@ inferred in `sources.md`.
 the chart from 05 and 08, which the owner asked to see return); "in the paper: Taylor coefficients" in small type (the source's
 term, kept for the viewer who wants it, `explain-concept`); "two to the n over the square root of log n" said aloud (accepted
 in round 10; the screen shows the exponent). No second round: nothing blocking, a revision gets one (critic-loop, *Spend*).
+
+## Publish: packaged 2026-10-28
+
+The owner on the sixth cut: "good enough to post ... everything landed really well". `npm run package` wrote
+`~/Movies/Explainers/shipshow/youtube/to-upload/eth-is-false/`. One Sonnet critic judged the package (publish skill). It passed with
+one major, fixed: the title stated the paper's claim as the channel's; it now attributes it ("OpenAI Says ... (Opus 5.5 Explains)").
+Minor findings fixed:
+- the thumbnail curve, drawn turning down and then flat, now keeps rising under the floor;
+- the tag "AI explains AI" repeated the title, so it now reads "No human authors";
+- three sources were added: OpenAI's history, Jiang and Cai, and DNF;
+- "as of" now gives the date the sources were read.
+
+Declined: shortening the chapter list. The upload is the owner's; the link goes in `video.json` `youtube.url` once it is up.

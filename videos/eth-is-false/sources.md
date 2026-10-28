@@ -168,11 +168,16 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 
 ## Voice
 
-The narrator is an invented voice, not a person: Fish Audio Drama 3 (`mlx-community/fish-audio-drama-3-4bit`) given only the
-description "energetic young male tech YouTuber, upbeat and clear" and seed 89, no reference clip, picked by the owner from twelve
-auditions on 2026-10-27. That take (13.3 s, `local/voices/eth-narrator.wav`, never committed) is the reference every line clones.
-Drama 3's output is used under the Fish Audio Community License (commercial use allowed under $500K a year in revenue). The owner's own
-cloned voice stays for his opinion videos, since he is not the one explaining this paper.
+The narrator is an invented voice, not a person: Fish Audio Drama 3 (`mlx-community/fish-audio-drama-3-4bit`) given only a
+description of a young British tech YouTuber and seed 263, no reference clip, picked by the owner from a numbered audition on
+2026-10-27 (`local/voices/narrator-uk.wav`, never committed, is that take, and every line clones it). Its description, "bright,
+articulate young British tech YouTuber, curious and calm, crisp enunciation", is folded into every line's direction, because the
+clone alone lost the audition's style (`local/voices/narrator-uk.style`, DESIGN D68). It replaced the first narrator, an energetic
+American voice (`eth-narrator`), from the third cut on. Drama 3's output is used under the Fish Audio Community License (commercial
+use allowed under $500K a year in revenue). The narration says it is an AI (Claude, made by Anthropic); the owner's own cloned voice
+stays for his opinion videos, since he is not the one explaining this paper.
+
+The music is machine-generated with ACE-Step 1.5 (local, MIT), one bed per act (`local/music/eth/`, never committed).
 
 ## Left out, and why
 
