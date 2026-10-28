@@ -924,6 +924,19 @@ filed as `feature`. **Costs.** The kind changes no code path but the check that 
 section's music is generated per video (ACE-Step, local, MIT) and kept in `local/music/`, so a teammate without it builds in
 silence for those sections (D61's warning).
 
+### D63. Critic spend is sized before the loop, and a revision gets one round (2026-10-27)
+**Decision.** `thorough` is three rounds, not four, and re-runs only critics with an open blocking or major finding
+(`rerun: failed`, as `quick` and `standard` already did). The token estimate grows with the video's length (`critics` reads
+`timing.json`): a Sonnet critic is about 60k plus 5k a minute, Opus 100k plus 10k. The builder says the spend before round 1 and
+stops past it; a re-run critic is told which scenes changed and judges those; a revision of a video that already cleared review
+gets one round on what changed, not a fresh plan. **Why.** eth-is-false's second cut ran 22 critics, about 2.8M tokens, on top of
+the first cut's four rounds, and the owner said it was excessive: `rerun: touched` re-ran nearly every critic each round, since a
+script edit touches nearly everything, and every critic re-read the whole ten-minute video. The old estimate (520k a first round,
+measured on a 70-second video) said nothing of that; seven critics on ten minutes measured about 800k. A narrow re-run of accuracy
+on the changed lines cost 70k and caught the same class of finding. **Costs.** A fix can break something a critic that passed would
+have caught; the builder's own look at the changed frames is the guard (it caught a reshaped chart curve bending the wrong way that
+round). **Tested** by a unit test on the plan (rounds, rerun, the estimate at 70 s and ten minutes).
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
