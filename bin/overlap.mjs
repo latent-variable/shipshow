@@ -41,12 +41,13 @@ function scan({ minOpacity, minShare }) {
     if (!n.textContent.trim()) continue;
     const el = n.parentElement;
     if (!el || skipped(el)) continue;
-    const range = document.createRange(); range.selectNodeContents(n);
-    const rects = [...range.getClientRects()].filter((r) => r.width > 2 && r.height > 2);
     if (!own.has(el)) own.set(el, []);
-    own.get(el).push(...rects);
+    own.get(el).push(n);
   }
-  for (const [el, rects] of own) if (rects.length) items.push({ el, rects });
+  // A text item's lines, measured again on demand: a pair on a tilted card is measured a second time, untilted (below).
+  const lines = (nodes) => nodes.flatMap((n) => { const r = document.createRange(); r.selectNodeContents(n); return [...r.getClientRects()].filter((q) => q.width > 2 && q.height > 2); });
+  const rectsOf = (it) => (it.nodes ? lines(it.nodes) : [it.el.getBoundingClientRect()]);
+  for (const [el, nodes] of own) { const rects = lines(nodes); if (rects.length) items.push({ el, nodes, rects }); }
   // Pictures.
   for (const el of document.querySelectorAll("img, video")) {
     if (skipped(el)) continue;
@@ -84,19 +85,42 @@ function scan({ minOpacity, minShare }) {
     for (const sel of ["figure", "svg"]) { const fa = a.closest(sel); if (fa && fa === b.closest(sel)) return true; }
     return false;
   };
+  // The largest shared area of two sets of boxes that is at least minShare of the smaller box, else 0.
+  const shared = (ra, rb) => {
+    let best = 0;
+    for (const x of ra) for (const y of rb) {
+      const w = Math.min(x.right, y.right) - Math.max(x.left, y.left), h = Math.min(x.bottom, y.bottom) - Math.max(x.top, y.top);
+      if (w < 4 || h < 4) continue;
+      if ((w * h) / Math.min(x.width * x.height, y.width * y.height) >= minShare) best = Math.max(best, Math.round(w * h));
+    }
+    return best;
+  };
+  // On a tilted card a line's box is its upright bounding box, which grows into the next line though the letters never
+  // touch (built-on-shipshow's cards, 2026-10-28; product-videos' paper notes before it). So a pair under a common
+  // transformed ancestor is measured with that ancestor's transform and rotate set to none, then restored exactly. A scale
+  // or a shift changes nothing by this, since both are measured in the same space; only a rotation's grown boxes go.
+  // Every common ancestor with a transform is cleared, not only the nearest: a shifted wrapper inside a rotated card
+  // would otherwise leave the card's rotation on both lines.
+  const untilted = (a, b) => {
+    const ts = [];
+    for (let e = a.el.parentElement; e; e = e.parentElement) {
+      const cs = getComputedStyle(e);
+      if (e.contains(b.el) && (cs.transform !== "none" || (cs.rotate && cs.rotate !== "none"))) ts.push(e);
+    }
+    if (!ts.length) return null;
+    const keep = ts.map((t) => [t, ["transform", "rotate"].map((k) => [k, t.style.getPropertyValue(k), t.style.getPropertyPriority(k)])]);
+    for (const t of ts) { t.style.setProperty("transform", "none", "important"); t.style.setProperty("rotate", "none", "important"); }
+    try { return shared(rectsOf(a), rectsOf(b)); }
+    finally { for (const [t, props] of keep) for (const [k, v, pr] of props) { if (v) t.style.setProperty(k, v, pr); else t.style.removeProperty(k); } }
+  };
   const found = [];
   for (let i = 0; i < visible.length; i++) for (let j = i + 1; j < visible.length; j++) {
     const a = visible[i], b = visible[j];
     if (a.el.contains(b.el) || b.el.contains(a.el) || sameGroup(a.el, b.el)) continue;
     // Letters of one word animated one by one (type, scramble, glitch) sit in sibling spans whose glyph boxes touch.
     if (a.el.parentElement === b.el.parentElement && a.el.textContent.trim().length <= 2 && b.el.textContent.trim().length <= 2) continue;
-    let best = 0;
-    for (const ra of a.rects) for (const rb of b.rects) {
-      const w = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left), h = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
-      if (w < 4 || h < 4) continue;
-      const share = (w * h) / Math.min(ra.width * ra.height, rb.width * rb.height);
-      if (share >= minShare) best = Math.max(best, Math.round(w * h));
-    }
+    let best = shared(a.rects, b.rects);
+    if (best) { const f = untilted(a, b); if (f !== null) best = f; }
     if (best) {
       const scene = (a.el.closest("[data-scene]") || b.el.closest("[data-scene]"))?.dataset.scene ?? "";
       found.push([label(a.el), label(b.el), best, scene]);

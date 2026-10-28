@@ -1055,7 +1055,7 @@ text sitting on other text or on a picture. Text is measured by the boxes of its
 fifth cut the check found all three. It found five more where a pop meme's scrim, faded over its bottom 20%, let the scene's text
 show through the meme, so that fade is gone. **Costs.** About 3 s for a 17-minute video. Without Chrome, the packet says it was
 not measured. Any other mask counts as hiding nothing, so it may report too much. An overlap that starts and ends between two
-samples is missed. **Tested** by `test/overlap.test.mjs`, which fails without the faded-edge rule, and on the fifth and sixth cuts.
+samples is missed. **Tested** by `test/overlap.test.mjs`, which fails without the faded-edge rule, and on the fifth and sixth cuts. **Then (2026-10-28): tilted cards.** A line on a rotated card measures as its upright bounding box, which grows into the next line though the letters never touch: both of `built-on-shipshow`'s tilted cards (product-videos, the first video built on ShipShow from another repo) were reported. A pair under common transformed ancestors is now measured with every one of them set to `transform` and `rotate` none (a shifted wrapper inside a rotated card included) and restored exactly; a scale or a shift changes nothing by it, since both are measured in one space. Lines that truly collide on a tilted card are still found, and the test fails without the rule. Two elements each rotated on their own are still measured upright. The rule came back from product-videos' port of this check (its #220), where it was found first.
 
 ### D73. A joke's direction says what the joke is (2026-10-28)
 **Decision.** A joke on the Drama 3 engine is directed with what it is and how it should land: who is joking, at whose expense,
