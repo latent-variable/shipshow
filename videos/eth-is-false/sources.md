@@ -155,9 +155,9 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 03 | What Year Is It? (memegen `whatyear`): "brute-forcing ninety switches / what year is it?" | third-party template |
 | 04 | Tuxedo Winnie the Pooh (memegen `pooh`): "finding an answer: try all 2ⁿ settings / checking someone's answer: read the n rules" | third-party template |
 | 06 | Guy Hammering Nails Into Sand (memegen `nails`): "25 years of records / 1.333ⁿ → 1.307ⁿ / still a straight line" | third-party template |
-| 08 | Xbox achievement unlocked, a moving GIF (imgflip.com/gif-templates, `https://i.imgflip.com/83oypi.mp4`): "achievement unlocked / beat every straight line" | third-party clip |
+| 08 | Xbox achievement unlocked, a moving GIF (imgflip.com/gif-templates, `https://i.imgflip.com/83oypi.mp4`): "achievement unlocked / under every straight line" | third-party clip |
 | 09 | Gru's Plan (memegen `gru`): "split the switches into groups / count each group fast / rules cross between groups" | third-party template |
-| 10 | We Have Food at Home (memegen `home`): "can we split the problem? / we have a split at home / the split at home: only at the easy points" | third-party template |
+| 10 | That Would Be Great (memegen `officespace`): "yeah, if the dial could also work at zero / that would be great" | third-party template |
 | 11b | Galaxy Brain (memegen `gb`), held as the recap, one panel per step | third-party template |
 | 12 | Sweet Brown (memegen `aint-got-time`): "waiting for three billion digits of switches / ain't nobody got time for that" | third-party template |
 | 13 | Jim Halpert Pointing to Whiteboard (memegen `jim`): "every Sudoku / is secretly a SAT problem"; Homer backs into the bushes, a moving GIF (`https://i.imgflip.com/2txtm1.mp4`): "ETH / after October 26" | third-party template and clip |
