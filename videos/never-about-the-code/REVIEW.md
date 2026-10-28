@@ -610,3 +610,6 @@ essay in someone's own voice the way they talk to camera; his voice profile has 
 - ShipShow learned both: `narration-writing` (a punchline lands on one hearing; introduce a person by what the viewer knows them
   for) and `critic-engagement` (a punchline to decode, or a line the author would not say, is a major finding).
 - No critic round: one restored line the earlier rounds reviewed, and one descriptor checked against its source.
+- "We're underselling ShipShow ... it's the whole suite of skills, plugins that help the AI models build the entire video
+  end-to-end." The bug story now opens "Here's a bug from ShipShow. That's my toolkit of skills and plugins that lets AI build
+  this whole video, end to end." (heard back at 100%). `narration-writing`: describe the owner's own work at its full size.
