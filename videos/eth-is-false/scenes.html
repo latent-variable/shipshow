@@ -35,6 +35,11 @@
   .namecard b { font-family: var(--font-display); font-size: 36px; line-height: 1.15; }
   .namecard small { font-size: 28px; color: var(--muted); margin-top: 12px; line-height: 1.25; }
   .phase { position: absolute; inset: 0; }
+  /* A new act opens on its own card while its music and look arrive alone (video.json leads). */
+  .chapter { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center; }
+  .chapter .kicker { font-family: var(--font-mono); font-size: 40px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); }
+  .chapter .title { font-family: var(--font-display); font-size: 150px; line-height: 1; color: var(--accent); }
+  .chapter .rule { width: 520px; height: 6px; border-radius: 3px; background: var(--accent-3); transform-origin: center; }
   /* 02b: no answer */
   .nobox { display: flex; gap: 70px; align-items: center; justify-content: center; }
   .nogrid { display: grid; grid-template-columns: repeat(2, 300px); gap: 22px; }
@@ -336,9 +341,10 @@
 
 <!-- 02: switches, rules, SAT -->
 <section data-scene="02-puzzle" data-mood="puzzle">
+  <div class="chapter" id="ch02" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part one</div><div class="title" data-cue="+0.4" data-anim="up">The puzzle</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
   <div class="stage">
     <div class="col" style="gap: 12px">
-      <div class="switches" data-cue="+0.1" data-anim="stagger">
+      <div class="switches" id="sw02" data-cue="Try" data-anim="stagger">
         <div class="sw"><div class="name">A</div><div class="track"><div class="knob k-on"></div></div></div>
         <div class="sw"><div class="name">B</div><div class="track"><div class="knob k-on"></div></div></div>
         <div class="sw"><div class="name">C</div><div class="track"><div class="knob k-on"></div></div></div>
@@ -876,6 +882,7 @@
   // 08: somebody pulls the bottom card, the tower lurches, then the theorem.
   tl.to("#hoc08 .t0 .pc:first-child", { x: -700, rotation: -25, opacity: 0, duration: 0.7, ease: "power2.in" }, cueAt("[data-zoom='pulled']"));
   tl.to(["#hoc08 .t1", "#hoc08 .t2", "#hoc08 .t3"], { rotation: 4, x: 30, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, cueAt("[data-zoom='pulled']") + 0.5);
+  tl.to("#ch02", { opacity: 0, duration: 0.4 }, cueAt("#sw02") - 0.4);
   tl.to("#p04a", { opacity: 0, duration: 0.35 }, cueAt("#card04p") - 0.4);
   tl.set("#p04b", { opacity: 0 }, 0);
   tl.to("#p04b", { opacity: 1, duration: 0.35 }, cueAt("#card04p") - 0.4);

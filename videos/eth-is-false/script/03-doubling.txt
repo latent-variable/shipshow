@@ -1,5 +1,7 @@
-[building] And there are a lot of settings. Every switch you add doubles them.
-[matter-of-fact] Say you check a billion settings a second. Thirty switches, one second. Forty, eighteen minutes. Fifty, two weeks. Sixty, thirty six years.
-[mock-dramatic] Ninety switches, and you'd still be going after the age of the universe.
-[deadpan] And ninety is a small problem.
-[clear] Solvers survive by being clever about what to skip. But for the hardest cases, nobody knows how to beat exponential by much. That's the question this whole story is about.
+[building, with quiet wonder] And there are a lot of settings. Every switch you add doubles them.
+
+[measured, letting each number land] Say you check a billion settings a second. Thirty switches, one second. Forty, eighteen minutes. Fifty, two weeks. Sixty, thirty six years. Ninety switches, and you'd still be going after the age of the universe.
+
+[dry] And ninety is a small problem.
+
+[clear, thoughtful] Solvers survive by being clever about what to skip. But for the hardest cases, nobody knows how to beat exponential by much. That's the question this whole story is about.

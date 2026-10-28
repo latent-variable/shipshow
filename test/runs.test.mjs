@@ -9,7 +9,7 @@ import { tmpdir } from "node:os";
 import { delimiter, join } from "node:path";
 import { test } from "node:test";
 import { createHash } from "node:crypto";
-import { BASE_PACE, LINE_MAX, REPO, VENV_PY, breathe, groupRuns, lineRuns, pythonExists, readWav, sentences, spokenWords, writeWav } from "../bin/lib.mjs";
+import { BASE_PACE, DRAMA_LINE_MAX, LINE_MAX, REPO, VENV_PY, breathe, groupRuns, lineRuns, pythonExists, readWav, sentences, spokenWords, writeWav } from "../bin/lib.mjs";
 import { hearbackAvailable, levelStamp, voiceCheckSection } from "../bin/hearback.mjs";
 
 const BIN = join(REPO, "bin");
@@ -319,4 +319,14 @@ test("runs by line: a script written one thought per line is voiced a line at a 
   assert.ok(long.split(/\s+/).length > LINE_MAX);
   assert.deepEqual(r.runs[0], [0]);
   assert.ok(r.runs.length > 2 && r.runs.slice(1).flat().join() === [1, 2, 3, 4, 5, 6].join(), "the long line is split, in order, and nothing is lost");
+});
+
+test("Drama 3 voices a paragraph of up to DRAMA_LINE_MAX words in one take; OmniVoice still splits at LINE_MAX", () => {
+  const sentence = "one two three four five six seven eight nine ten.";
+  const para = Array.from({ length: 10 }, () => sentence).join(" ");          // 100 words, ten sentences
+  const text = `${para}\n\n${sentence}`;
+  const says = [...Array(10).fill(sentence), sentence];
+  assert.deepEqual(lineRuns(text, says, DRAMA_LINE_MAX).runs, [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [10]], "the paragraph is one take");
+  assert.ok(lineRuns(text, says).runs.length > 2, "at LINE_MAX the 100-word line is split");
+  assert.deepEqual(lineRuns(para, says.slice(0, 10), DRAMA_LINE_MAX).runs, [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]], "a one-paragraph scene is one take too");
 });

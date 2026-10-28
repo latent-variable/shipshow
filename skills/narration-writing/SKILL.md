@@ -25,9 +25,17 @@ can be hard to hear. Write for the ear, then check it against the clock.
   against about 210 syllables a minute times the speed. At 1.25 a 30 second scene holds about 90 words once the pauses between sentences and scenes are counted. The packet's rate is
   speech-only and the speed is not yours to change, so a scene that is off target is fixed with fewer or
   plainer words: digits, identifiers and long clauses read slowly; short plain sentences read at the target.
-  Do not pad to slow a scene or cram to speed one up. An essay is the exception to brisk: it is read at the voice's own
-  pace (1.0 unless its `video.json` says otherwise), and the build-up gets time: a pause after a punchline, a beat
-  before a new act (`pauses`, `leads`).
+  Do not pad to slow a scene or cram to speed one up. Brisk is for a decision video someone is waiting on mid-work.
+  **A video made to explain (an essay, a feature, a release) breathes**: it is read at the voice's own pace (1.0 unless
+  its `video.json` says otherwise), each act opens on a wordless title card while its music and look arrive alone
+  (`leads`, about 2.5 s), a blank line between thoughts is a beat, and a punchline or a turn gets a pause after it
+  (`pauses`). The owner on eth-is-false's second cut, 2026-10-27: "we're moving so fast through the content that it's hard
+  to follow ... we're not a speed run, we want to do the content justice." Word count follows: cut a fact before you
+  cut a pause.
+- **Structure is felt, never announced.** Background, setup, the problem, what it proves, why it matters: each is its own
+  act, opened by its card and separated by silence, a new look and the picture. The narration never says "here's the
+  setup" or "now, why does this matter" (the same note: highlight each section "through pauses and through content,
+  without being explicit about it").
 - **Length is set by words.** A scene `critic-pacing` calls too long holds two ideas: cut words
   or split it.
 - **What is said matches what is shown**, when it is shown. Name a thing as it appears, and
@@ -80,11 +88,16 @@ With `"engine": "drama"` the voice is directed: a stage direction in brackets at
 other engines and the packet's word counts all read the line without it; DESIGN D55). It is how a joke, an
 aside or a turn of tone is heard as one instead of read flat. Write the script for the ear first, then direct it:
 
+- **Write a direction as an actor's note**: the feeling, what is under it, and who is listening, in one breath:
+  `[calm, explaining to a curious friend, unhurried]`, `[thoughtful, slowing down]`, `[measured, letting each number land]`
+  (Fish Audio's guidance, 2026-10-27; a bare one-word label reads flatter). Its tone carries through the whole paragraph.
 - **Direct the tone, never the timing.** A direction says how the line feels: `[dry]`, `[deadpan]`,
   `[sarcastic]`, `[amused]`, `[mock-dramatic]`, `[teasing]`, `[smug]`, `[sincere]`, `[serious]`,
   `[energetic]`, `[storyteller, with a smirk]`, `[playing devil's advocate]`. Plain words, one to four of them.
   `[pause]`, `[long pause]` and `[slowly]` stalled the voice into seconds of silence and lost the rest of the line on
-  every seed measured; `[shouting]` and a `[laughs]` did on one seed in two. A pause is a line break, a sentence
+  every seed measured; `[shouting]` and a `[laughs]` did on one seed in two. Fish's own guide lists `slow`, `fast`,
+  `whisper` and `emphasis` as paired tags that must be closed, which may be why a bare `[slowly]` failed; untested here,
+  so leave pace to the direction's words ("unhurried", "letting it land") until it is measured. A pause is a line break, a sentence
   end, a blank line (a beat, `video.json` `beat`) or `video.json` `gap` and `pauses`.
 - **In someone's own voice, write it the way they talk to camera.** Speak to the viewer, as a YouTuber does: "If you've
   been shipping code with AI, somebody has probably told you that already", never a written framing like "That's the charge
@@ -106,8 +119,11 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
 - **Never respell a letter.** A variable is written as itself, "two to the n", and Drama 3 says the letter. The respelling
   `"n": "en"` was read as the letters E, N on nearly every line of eth-is-false, and the owner heard it (2026-10-27, D60);
   hear-back now retakes a take that spells out letters the script never spells.
-- **A line is still one thought.** Splitting at every sentence, or at every turn of tone, breaks the prosody the owner
-  asked for; a line runs as long as the thought, up to about 45 words.
+- **A paragraph is one take.** Drama 3 splits a long take itself, about 50 words a chunk, and each chunk hears the one
+  before (mlx-audio's `fish_drama3`), so a paragraph keeps one delivery where takes a line apart each start cold and sound
+  uneven (the owner: "too much inconsistency", eth-is-false, 2026-10-27). Write a scene as a few paragraphs, each one
+  thought under one direction, up to 160 words (`DRAMA_LINE_MAX`), with a blank line (a beat) between them. Splitting at
+  every sentence, or at every turn of tone, breaks the prosody.
 
 Measured 2026-10-27 on a clone of the owner, one line three seeds each (D55): `[excited]` widened the pitch range
 from about 2 semitones to 3.5 and quickened the read, `[deadpan]` narrowed it to about 1.5, `[whispers]` dropped

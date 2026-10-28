@@ -7,7 +7,7 @@
   "theme": "chalk",
   "engine": "drama",
   "voice": "eth-narrator",
-  "speed": 1.1,
+  "speed": 1.0,
   "say": {
     "ETH": "E T H",
     "NP": "N P",
@@ -22,7 +22,7 @@
     "2016": "twenty sixteen",
     "2019": "twenty nineteen"
   },
-  "gap": 0.35,
+  "gap": 0.5,
   "hold": 3,
   "flair": {
     "ambient": "blobs dust vignette grain"
@@ -174,5 +174,10 @@
         "duck": 0.35
       }
     }
+  },
+  "tail": 1.2,
+  "beat": 0.9,
+  "leads": {
+    "02-puzzle": 2.6
   }
 }

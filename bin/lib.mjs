@@ -285,6 +285,10 @@ export function spokenWords(sentence, say = {}) {
  *  be one after the other"). A line over LINE_MAX words is split by groupRuns, since OmniVoice drops words in long takes. A file
  *  that is one paragraph, or whose lines do not each end a sentence, falls back to groupRuns. Returns {runs, byLine}. */
 export const LINE_MAX = 70;
+/** Drama 3 splits a long take itself, about 50 words a chunk, and each chunk hears the one before (mlx-audio
+ *  fish_drama3 generate), so a paragraph voiced in one take keeps one delivery where takes a line apart reset it
+ *  (eth-is-false third cut, 2026-10-27). Its takes may run to this many words. */
+export const DRAMA_LINE_MAX = 160;
 /** The sentences a blank line follows in a scene's script: after each, the voice step leaves a beat (video.json `beat`
  *  seconds on top of the gap) so a punchline lands before the next point. Indices into directedSentences(text); empty
  *  when the lines do not split into whole sentences. */
@@ -301,18 +305,18 @@ export function beatsAfter(text) {
   return beats;
 }
 
-export function lineRuns(text, says) {
+export function lineRuns(text, says, max = LINE_MAX) {
   const lines = text.split(/\n/).map((l) => l.trim()).filter(Boolean);
-  if (lines.length < 2) return { runs: groupRuns(says), byLine: false };
+  if (lines.length < 2) return { runs: groupRuns(says, max === LINE_MAX ? 45 : max), byLine: false };
   const counts = lines.map((l) => directedSentences(l).length);
-  if (counts.reduce((x, y) => x + y, 0) !== says.length) return { runs: groupRuns(says), byLine: false };
+  if (counts.reduce((x, y) => x + y, 0) !== says.length) return { runs: groupRuns(says, max === LINE_MAX ? 45 : max), byLine: false };
   const runs = [];
   let at = 0;
   for (const n of counts) {
     const idx = Array.from({ length: n }, (_, k) => at + k);
     const words = idx.reduce((w, i) => w + says[i].split(/\s+/).filter(Boolean).length, 0);
-    if (words <= LINE_MAX) runs.push(idx);
-    else for (const sub of groupRuns(idx.map((i) => says[i]))) runs.push(sub.map((k) => idx[k]));
+    if (words <= max) runs.push(idx);
+    else for (const sub of groupRuns(idx.map((i) => says[i]), max === LINE_MAX ? 45 : max)) runs.push(sub.map((k) => idx[k]));
     at += n;
   }
   return { runs, byLine: true };
