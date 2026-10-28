@@ -1,2 +1,3 @@
-[storyteller, leaning in] Here's a bug from ShipShow, the tool that voiced this video. Turn off the check that listens back, and any cloned voice without a transcript refused to run.
+[storyteller, leaning in] Here's a bug from ShipShow, the tool that voiced this video. With one check switched off, cloned voices without a transcript refused to run.
+
 [matter-of-fact, then dry] The model reviewing the pull request caught it, before it ever merged. My cloned voice says thanks.

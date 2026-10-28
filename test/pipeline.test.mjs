@@ -1340,6 +1340,36 @@ test("leads add a beat before one scene: it starts where it did, its first word 
   assert.match(bad.r.stderr, /leads\[".*"\] is -1; it takes 0 to 10 seconds/);
 });
 
+test("beatsAfter: a blank line between two lines marks the sentence before it; edges, doubled blanks and prose do not", async () => {
+  const { beatsAfter } = await import("../bin/lib.mjs");
+  assert.deepEqual([...beatsAfter("One. Two.\n\nThree.\nFour.")], [1], "the blank line follows sentence 2 (index 1)");
+  assert.deepEqual([...beatsAfter("[dry] One.\n\n\n[deadpan] Two.")], [0], "two blank lines are one beat");
+  assert.deepEqual([...beatsAfter("\nOne.\nTwo.\n")], [], "a blank line at either edge is not a beat");
+  assert.deepEqual([...beatsAfter("One.\nTwo.")], [], "no blank line, no beat");
+});
+
+test("a blank line in a script leaves video.json beat seconds between the two takes, and nothing else moves", () => {
+  const dir = newVideo(), local = fakeLocal(), py = fakeWorker();
+  const cfg = JSON.parse(readFileSync(join(dir, "video.json"), "utf8"));
+  writeFileSync(join(dir, "video.json"), JSON.stringify({ ...cfg, engine: "omnivoice", beat: 1.2 }));
+  const file = join(dir, "script", "01-intro.txt");
+  const voiced = (text) => {
+    writeFileSync(file, text);
+    const r = voiceRun(dir, local, py);
+    assert.equal(r.status, 0, r.stderr);
+    return JSON.parse(readFileSync(join(dir, "timing.json"), "utf8"));
+  };
+  const lines = ["This is the first scene.", "Each sentence is voiced on its own."];
+  const before = voiced(lines.join("\n") + "\n"), after = voiced(lines.join("\n\n") + "\n");
+  const r2 = (x) => Math.round(x * 100) / 100;
+  const [a, b] = [before.scenes[0].sentences, after.scenes[0].sentences];
+  assert.equal(a.length, 2, "two sentences either way");
+  assert.equal(b[0].start, a[0].start, "the first line does not move");
+  assert.equal(r2(b[1].start - a[1].start), 1.2, "the second line comes a beat later");
+  assert.equal(r2(after.total - before.total), 1.2);
+  assert.deepEqual(after.scenes[0].sentences.map((x) => x.text), before.scenes[0].sentences.map((x) => x.text), "the blank line is never spoken or captioned");
+});
+
 test("pauses add a beat after one scene: that scene grows, later scenes move by it, earlier ones do not", () => {
   const dir = newVideo(), local = fakeLocal(), py = fakeWorker();
   const cfg = JSON.parse(readFileSync(join(dir, "video.json"), "utf8"));

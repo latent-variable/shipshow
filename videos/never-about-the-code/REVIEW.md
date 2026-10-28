@@ -501,3 +501,37 @@ What changed:
   05 (257, 259), the same. Karpathy's descriptor at 03b (the post shows his name and photo), "almost nobody can" (beat what is in
   the line before), three names in 10, the 04 card's three-line layout (each act's card is its own), step 5's large card (12b is its
   own scene), the close quote's size.
+
+### Round 3 (fresh agents: accuracy, pacing, sync, consistency on Sonnet; clarity, visuals, engagement on Opus): 0 blocking, 7 major; accuracy, clarity, sync and consistency pass
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | pass | 0 / 0 / 2 |
+| clarity | pass | 0 / 0 / 5 |
+| pacing | fail | 0 / 4 / 3 |
+| sync | pass | 0 / 0 / 3 |
+| consistency | pass | 0 / 0 / 3 |
+| visuals | fail | 0 / 2 / 7 |
+| engagement | fail | 0 / 2 / 2 |
+
+What changed:
+- **A beat between two lines** (ShipShow, D63): pacing asked for the second round running for room after particular punchlines,
+  and nothing could put a pause between two lines of one scene (`gap` moves every sentence, `pauses` only a scene's end). A blank
+  line in a script is now a beat (`video.json` `beat`, 0.6 s on top of the gap). Used before "You know what it does", "Same here",
+  "Both true", "The model reviewing the pull request caught it", the line after the lunch joke, the astronaut meme's line, and
+  between the three thesis lines.
+- **The workshop thinner:** the bug line "With one check switched off, cloned voices without a transcript refused to run" (clarity);
+  12a cut to "It builds it, and tests it" and "Then another model reviews the pull request, round after round"; pauses after 09 and
+  12 so their last card is read.
+- **Visuals:** the OCaml tag fits one line again ("a maintainer" dropped; the voice now says "a maintainer of the OCaml compiler",
+  clarity); the "artisanal / small batch" stamp sits inside the frame, beside the meme; inactive stage labels in ink; "the other
+  80%: review" large while it is said.
+- **Engagement:** the meme no longer tells the punchline first ("octal, by hand"; the stamp lands on "batch", with its thump); the
+  Fort Knox meme holds 3.4 s; the 56% card arrives on "passed" and counts up on "fifty"; the OCaml marker sweeps on "hard"; the 12
+  card's kicker is "the method", so "the other eighty" is said and shown fewer times.
+- **Smaller:** DHH's quote carries an ellipsis where Lex interjects (accuracy, S14 notes it); "You don't understand the code? That's
+  stage three" (clarity: it was heard as "you don't understand that the code is stage three"); the round chips each on their word.
+- **Declined:** 13-close as one line (setup and callback stay one take, the joke rule); 02's and 05's syllable rate (the voice's
+  pace on the owner's lines; "who built Fortran" is what the next scenes lean on); "He's right" after OCaml (words the owner did not
+  say); the archive screenshots' address bars and side bands, 02's and 08's empty right side while a card is still to come, and the
+  chip padding (minor looks, no reading lost); Backus sepia against Dijkstra in colour (each photo as Commons has it).

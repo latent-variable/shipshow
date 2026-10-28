@@ -928,7 +928,10 @@ silence for those sections (D61's warning).
 **Decision.** An essay with no `speed` of its own is read at 1.0 (`ESSAY_SPEED`; a person's `local/config.json` speed and
 the video's own still win). `video.json` `"leads": {"<scene>": seconds}` adds plain seconds before a scene's first word, the
 mirror of `pauses` (D46): the scene starts where it did, so a mood's look and music, which change at the scene's start (D61),
-play alone for that long. The build warns when a mood starts under `MOOD_BEAT` (1.2 s) before its first word. The skills
+play alone for that long. A blank line between two lines of a script is a beat: `video.json` `beat` seconds (0.6) on top of the
+gap after the take before it (`beatsAfter`), the one place a pause can be put between two lines of a scene, since `gap` moves every
+sentence and `pauses` only a scene's end; no script used a blank line before, so no video's timing changed. The build warns when
+a mood starts under `MOOD_BEAT` (1.2 s) before its first word. The skills
 add what a beat holds: a title card in the act's own style, and room after a punchline.
 **Why.** The owner on never-about-the-code's seventh cut (2026-10-27): "we shouldn't be afraid to let things breathe. It
 feels like we're rushing from one piece to the next ... right now it feels like we're speed reading", and "setting the tone

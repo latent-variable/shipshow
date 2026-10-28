@@ -155,6 +155,7 @@ export function config(dir, argv = process.argv) {
     hold: 0,           // still frame after the video's last word, in plain seconds (not scaled by speed)
     pauses: {},        // extra plain seconds after a scene's last sentence: {"04-theory": 2}
     leads: {},         // extra plain seconds before a scene's first sentence: a new act's look and music arrive alone
+    beat: 0.6,         // extra plain seconds where a blank line in the script separates two lines (beatsAfter)
     ...own,
   };
   // An essay with no speed of its own is read at the voice's pace; a person's local speed still wins.
@@ -165,6 +166,7 @@ export function config(dir, argv = process.argv) {
   if (flag("speed", argv) !== undefined) cfg.speed = Number(flag("speed", argv));
   if (flag("theme", argv) !== undefined) cfg.theme = flag("theme", argv);
   if (!(cfg.speed >= 0.5 && cfg.speed <= 2)) die(`speed ${cfg.speed} is outside 0.5 to 2`);
+  if (!(typeof cfg.beat === "number" && cfg.beat >= 0 && cfg.beat <= 5)) die(`beat is ${JSON.stringify(cfg.beat)}; it takes 0 to 5 seconds`);
   for (const field of ["pauses", "leads"]) for (const [id, sec] of Object.entries(cfg[field] || {})) {
     if (!(typeof sec === "number" && sec >= 0 && sec <= 10)) die(`${field}["${id}"] is ${JSON.stringify(sec)}; it takes 0 to 10 seconds`);
   }
@@ -283,6 +285,22 @@ export function spokenWords(sentence, say = {}) {
  *  be one after the other"). A line over LINE_MAX words is split by groupRuns, since OmniVoice drops words in long takes. A file
  *  that is one paragraph, or whose lines do not each end a sentence, falls back to groupRuns. Returns {runs, byLine}. */
 export const LINE_MAX = 70;
+/** The sentences a blank line follows in a scene's script: after each, the voice step leaves a beat (video.json `beat`
+ *  seconds on top of the gap) so a punchline lands before the next point. Indices into directedSentences(text); empty
+ *  when the lines do not split into whole sentences. */
+export function beatsAfter(text) {
+  const lines = text.split(/\n/).map((l) => l.trim());
+  const counts = lines.map((l) => (l ? directedSentences(l).length : 0));
+  if (counts.reduce((x, y) => x + y, 0) !== directedSentences(text).length) return new Set();
+  const beats = new Set();
+  let at = 0;
+  lines.forEach((l, i) => {
+    at += counts[i];
+    if (!l && at > 0 && lines.slice(i + 1).some(Boolean) && lines[i - 1]) beats.add(at - 1);
+  });
+  return beats;
+}
+
 export function lineRuns(text, says) {
   const lines = text.split(/\n/).map((l) => l.trim()).filter(Boolean);
   if (lines.length < 2) return { runs: groupRuns(says), byLine: false };

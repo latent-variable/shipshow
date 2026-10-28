@@ -85,7 +85,7 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   `[energetic]`, `[storyteller, with a smirk]`, `[playing devil's advocate]`. Plain words, one to four of them.
   `[pause]`, `[long pause]` and `[slowly]` stalled the voice into seconds of silence and lost the rest of the line on
   every seed measured; `[shouting]` and a `[laughs]` did on one seed in two. A pause is a line break, a sentence
-  end or `video.json` `gap` and `pauses`.
+  end, a blank line (a beat, `video.json` `beat`) or `video.json` `gap` and `pauses`.
 - **A joke is one line: setup, turn and punchline in one take.** Each line is voiced on its own, with no memory of the
   line before, so a punchline on a line of its own is performed cold and lands like a separate thought (the owner on
   "Like animals." and "No. ... Also no.", 2026-10-27). Keep them together and let one direction describe the arc:

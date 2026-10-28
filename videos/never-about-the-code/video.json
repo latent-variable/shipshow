@@ -32,7 +32,8 @@
     "2023": "twenty twenty three",
     "OCaml's": "Oh Camel's",
     "Ghostty": "Ghosty",
-    "ShipShow": "Ship Show"
+    "ShipShow": "Ship Show",
+    "OCaml": "Oh Camel"
   },
   "music": {
     "file": "local/music/never-about-the-code-lofi.wav",
@@ -52,7 +53,9 @@
     "11b-ocaml": 0.3,
     "12a-loop": 0.6,
     "12b-diligence": 0.6,
-    "13-close": 0.8
+    "13-close": 0.8,
+    "09-now": 0.8,
+    "12-verify": 0.8
   },
   "leads": {
     "04-impossible": 1.8,
@@ -127,5 +130,6 @@
     "kit": "default",
     "under": 12
   },
-  "tail": 1.1
+  "tail": 1.1,
+  "beat": 0.6
 }

@@ -79,7 +79,7 @@
   /* 04 to 06: the four stages */
   .stage:has(> .stages) { top: 170px; }
   .stages { position: absolute; left: 0; right: 0; top: -100px; display: flex; gap: 14px; justify-content: center; }
-  .stages span { position: relative; white-space: nowrap; flex: none; font-family: var(--font-mono); font-size: 28px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 22px; border: 2px solid var(--line); border-radius: 999px; color: var(--muted); }
+  .stages span { position: relative; white-space: nowrap; flex: none; font-family: var(--font-mono); font-size: 28px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 22px; border: 2px solid var(--line); border-radius: 999px; color: var(--ink); }
   .stages span.on { color: var(--bg); background: var(--accent); border-color: var(--accent); }
   .stages span.done { color: var(--accent); border-color: var(--accent); }
   .stages span.win { color: var(--bg); background: var(--good); border-color: var(--good); }
@@ -210,9 +210,9 @@
   </div>
   <div class="meme-wrap" id="m01" data-cue="wrote" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="wrote" data-anim="pop"><span class="top">1950s programmers</span><span class="bottom">hand-crafted octal, no compiler added</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="wrote" data-anim="pop"><span class="top">1950s programmers</span><span class="bottom">octal, by hand</span></figure>
   </div>
-  <div class="stamp hl" data-cue="Artisanal." data-anim="slam" data-sfx="thump" data-sfx-offset="2.15" style="position: absolute; right: 90px; top: 34px; font-size: 56px; transform: rotate(4deg); z-index: 5">artisanal · small batch</div>
+  <div class="stamp hl" data-cue="batch." data-anim="slam" data-sfx="thump" data-sfx-offset="0.45" style="position: absolute; right: 70px; top: 150px; font-size: 52px; line-height: 1.15; text-align: center; transform: rotate(4deg); z-index: 5">artisanal<br>small batch</div>
 </section>
 
 <section data-scene="02-compiler">
@@ -454,7 +454,7 @@
     <div class="row" style="width: 100%">
       <div class="person card" data-cue="DHH," data-anim="up">
         <figure class="ss-portrait" id="p-dhh" data-commons="File:David Heinemeier Hansson Driver of Abu Dhabi Proton Racing's Porsche 911 RSR (27225732035) (cropped).jpg" data-cue="DHH," data-anim="pop" style="--portrait-height: 300px"><figcaption>DHH<small>made Rails</small></figcaption></figure>
-        <div class="line" data-cue="Quattro." data-anim="up">“I have not written any of the code that's shipped in Quattro by hand”</div>
+        <div class="line" data-cue="Quattro." data-anim="up">“I have not written … any of the code that's shipped in Quattro by hand”</div>
       </div>
       <div class="person card" data-cue="antirez," data-anim="up">
         <figure class="ss-portrait" id="p-antirez" data-commons="File:Salvatore Sanfilippo.png" data-cue="antirez," data-anim="pop" style="--portrait-height: 300px"><figcaption>antirez<small>made Redis</small></figcaption></figure>
@@ -481,7 +481,7 @@
       <div class="card" data-cue="Run" data-anim="right"><div class="tag">an agent</div><div class="big">same prompt, new program</div>
         <div class="runs"><div class="run">run 1 <b>program A</b></div><div class="run">run 2 <b>program B</b></div></div></div>
     </div>
-    <div class="pct card" data-cue="Veracode's" data-anim="up"><div class="num">56%</div><div class="what">of model code passed Veracode's security tests, on average, with no security guidance<div class="who">Veracode, 2026 GenAI Code Security Report</div></div></div>
+    <div class="pct card" data-cue="passed" data-anim="up"><div class="num" data-cue="fifty" data-anim="count">56%</div><div class="what">of model code passed Veracode's security tests, on average, with no security guidance<div class="who">Veracode, 2026 GenAI Code Security Report</div></div></div>
     <div class="punch big"><span data-cue="Both" data-anim="slam" style="color: var(--muted)">both true.</span> <span data-cue="trust" data-anim="slam">don't trust the output.</span> <em data-cue="verify" data-anim="fade">verify it.</em></div>
   </div>
   <div class="meme-wrap" id="m11" data-cue="Fort" data-anim="pop">
@@ -491,16 +491,16 @@
 </section>
 
 <section data-scene="11b-ocaml">
-  <div class="zone full" style="top: 60px; bottom: auto" data-cue="+0.1" data-anim="fade"><div class="tag center">OCaml · pull request #14369 · 13K lines, closed unmerged · a maintainer, Nov 2025</div></div>
+  <div class="zone full" style="top: 60px; bottom: auto" data-cue="+0.1" data-anim="fade"><div class="tag center">OCaml · pull request #14369 · 13K lines, closed unmerged · Nov 2025</div></div>
   <div class="diffstat" id="dstat" data-cue="thirteen" data-anim="slam" data-sfx="thump" data-sfx-offset="0.3"><span class="add">+<span data-cue="thirteen" data-anim="count">13,323</span></span> <span class="del">&minus;0</span> <small>lines to review</small></div>
-  <div class="zone full" id="ocA" data-cue="+0.1" data-anim="up" style="top: 130px"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="hard to review, and very lightly tested" data-width="1100" data-pad="8" data-mark-cue="lightly" style="--shot-max-height: 760px"></figure></div></div>
+  <div class="zone full" id="ocA" data-cue="+0.1" data-anim="up" style="top: 130px"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="hard to review, and very lightly tested" data-width="1100" data-pad="8" data-mark-cue="hard" style="--shot-max-height: 760px"></figure></div></div>
   <div class="zone full" id="ocB" data-cue="passes" data-anim="up" style="top: 130px; display: flex; align-items: center"><div class="col"><figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972" data-find="only 20% of the work, the other 80% are to get the feature discussed, reviewed and integrated" data-lines="0" data-width="1100" data-pad="8" data-mark-cue="only" style="--shot-max-height: 640px"></figure></div></div>
   <div class="stamp hl" data-cue="eighty" data-anim="slam" style="position: absolute; right: 170px; bottom: 170px; font-size: 54px">the other 80%: review</div>
 </section>
 
 <section data-scene="12-verify" data-mood="workshop">
   <div class="chapter" id="ch12" data-cue="+0.2" data-anim="fade">
-    <div class="kicker" data-cue="+0.3" data-anim="fade">the other eighty percent</div>
+    <div class="kicker" data-cue="+0.3" data-anim="fade">the method</div>
     <div class="title" data-cue="+0.7" data-anim="slam" data-sfx="up">How I Ship</div>
     <div class="rule" id="rule12" data-cue="+1.1" data-anim="fade"></div>
   </div>
@@ -517,13 +517,13 @@
 
 <section data-scene="12a-loop">
   <div class="stage">
-    <div class="punch big" id="p80" data-cue="eighty" data-anim="pop" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px; color: var(--accent-3)">the other 80%: review</div>
+    <div class="punch big" id="p80" data-cue="eighty" data-anim="pop" style="position: absolute; left: 0; right: 0; top: 360px; font-size: 120px; color: var(--accent-3)">the other 80%: review</div>
     <div class="punch big" id="h12" data-cue="Here's" data-anim="up" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px">the loop, on every feature</div>
     <div class="flow" id="flow">
       <div class="steps-list">
         <div class="step card" data-cue="tell" data-anim="left"><span class="n">1</span><span>I say what the feature has to do</span></div>
         <div class="step card" data-cue="builds" data-anim="left"><span class="n">2</span><span>the agent builds it, and tests it</span></div>
-        <div class="step card" data-cue="review" data-anim="left"><span class="n">3</span><span>another model reviews the pull request<small>round after round, until nothing serious is left</small><span class="rounds"><b data-cue="round" data-anim="pop">round 1</b><b data-cue="round," data-anim="pop">round 2</b><b class="done" data-cue="left." data-anim="pop">round 3 &check;</b></span></span></div>
+        <div class="step card" data-cue="review" data-anim="left"><span class="n">3</span><span>another model reviews the pull request<small>round after round, until nothing serious is left</small><span class="rounds"><b data-cue="round" data-anim="pop">round 1</b><b data-cue="round#2" data-anim="pop">round 2</b><b class="done" data-cue="left." data-anim="pop">round 3 &check;</b></span></span></div>
         <div class="step card" data-cue="standing" data-anim="left"><span class="n">4</span><span>standing tests and checks<small>they know the project</small></span></div>
       </div>
       <div class="side">
@@ -595,7 +595,7 @@
   tl.to("#s3", { opacity: 0, duration: 0.3 }, cueAt("#k26") - 0.3);
   tl.to("#k26", { opacity: 0, duration: 0.3 }, cueAt("#p-dhh") - 0.3);
   tl.to("#pair", { opacity: 0, duration: 0.3 }, cueAt("#me") - 0.3);
-  tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 1.9);
+  tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 3.4);
   tl.to("#m12", { opacity: 0, duration: 0.3 }, Math.min(cueAt("#m12") + 3.2, cueAt("#n66") - 0.35));   // the count is never hidden
   tl.to("#call4", { opacity: 0, duration: 0.3 }, cueAt("#p-hopper") - 0.3);
   tl.to("#call5", { opacity: 0, duration: 0.3 }, cueAt("#bk") - 0.3);
