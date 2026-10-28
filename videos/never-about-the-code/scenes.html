@@ -114,20 +114,6 @@
   .fact { font-size: 50px; font-weight: 700; width: 1500px; margin: 0 auto; padding-left: 360px; }
   .fact em { font-style: normal; color: var(--good); }
 
-  /* 09-now: METR */
-  .chart { position: relative; height: 520px; }
-  .chart svg { width: 100%; height: 100%; overflow: visible; }
-  .chart .lbl { font-family: var(--font-mono); font-size: 30px; fill: var(--muted); paint-order: stroke; stroke: var(--bg); stroke-width: 8px; stroke-linejoin: round; }
-  .chart .pt { font-family: var(--font); font-size: 32px; font-weight: 700; fill: var(--ink); paint-order: stroke; stroke: var(--bg); stroke-width: 10px; stroke-linejoin: round; }
-  .chart .pt.hi { fill: var(--accent-3); font-size: 40px; font-weight: 800; }
-  .chart .grid { stroke: var(--line); stroke-width: 2; }
-  .chart .trend { stroke: var(--accent-3); stroke-width: 7; fill: none; stroke-linecap: round; }
-  .chart .dot { fill: var(--accent-3); }
-  .chart .band { fill: var(--accent-3); opacity: 0.2; }
-  .chart-title { display: flex; justify-content: space-between; align-items: baseline; }
-  .chart-title .big { font-size: 54px; }
-  .chart-note { font-family: var(--font-mono); font-size: 30px; color: var(--muted); text-align: center; line-height: 1.5; }
-  .chart-note b { color: var(--accent-3); font-weight: 700; }
   .pair { display: flex; gap: 40px; align-items: flex-start; }
   .pair .col .tag { font-size: 28px; }
 
@@ -205,7 +191,7 @@
   <div class="zone" id="ghostty" data-cue="Ghostty" data-anim="up">
     <figure class="ss-shot" data-shot="https://github.com/ghostty-org/ghostty/blob/main/CONTRIBUTING.md" data-find="you must understand your code" data-width="520" data-pad="8" data-mark-cue="must" style="--shot-width: 1500px; --shot-max-height: 720px"><figcaption>Ghostty, the terminal app: its contributing guide</figcaption></figure>
   </div>
-  <div class="zone" id="c1950" data-cue="1950s," data-anim="slam" data-sfx="scratch" data-sfx-offset="0.2" style="display: flex; align-items: center">
+  <div class="zone" id="c1950" data-cue="compilers" data-anim="slam" data-sfx="scratch" data-sfx-offset="0.2" style="display: flex; align-items: center">
     <div class="then"><div class="tag">pushback, about</div><div class="yr">compilers</div><div class="about">1950s</div></div>
   </div>
   <div class="meme-wrap" id="m01" data-cue="wrote" data-anim="pop">
@@ -402,43 +388,9 @@
     <div class="title" data-cue="+0.35" data-anim="glitch" data-sfx="whoosh">2026</div>
     <div class="rule" id="rule09" data-cue="+1.1" data-anim="fade"></div>
   </div>
-  <div class="headline big" id="h09" data-cue="Now" data-anim="slam" style="color: var(--accent-3); font-size: 88px; top: 70px">this layer is moving fast</div>
-  <div class="zone" id="metr1" data-cue="METR" data-anim="up" style="top: 220px">
-    <div class="col"><div class="tag center">METR · July 2025</div><figure class="ss-shot" data-shot="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" data-find="AI makes them slower" data-lines="1" data-width="640" data-pad="10" data-mark-cue="slower." style="--shot-max-height: 600px"></figure></div>
-  </div>
-  <div class="zone" id="metr2" data-cue="Then" data-anim="up" style="top: 220px">
-    <div class="col"><div class="tag center">METR · February 2026</div><figure class="ss-shot" data-shot="https://metr.org/blog/2026-02-24-uplift-update/" data-find="do not wish to work without AI" data-lines="1" data-width="640" data-pad="10" data-mark-cue="without" style="--shot-max-height: 600px"></figure></div>
-  </div>
-  <div class="stamp" id="noai" data-cue="wouldn't" data-anim="slam" data-sfx="thump" style="position: absolute; right: 150px; bottom: 190px; font-size: 52px; transform: rotate(-6deg)">the no-AI group? no thanks</div>
+  <div class="headline big" id="h09" data-cue="fast." data-anim="slam" style="color: var(--accent-3); font-size: 120px; top: 420px">this layer is moving fast</div>
 </section>
 
-<section data-scene="09b-horizon">
-  <div class="stage" id="chart" data-cue="measures" data-anim="fade">
-    <div class="chart-title"><div class="big">Time horizon: the longest task an agent finishes half the time</div><div class="tag">METR</div></div>
-    <div class="chart-note" data-cue="expert" data-anim="fade">task length = how long a <b>human expert</b> takes it</div>
-    <div class="chart">
-      <svg viewBox="0 0 1600 690" preserveAspectRatio="none">
-        <!-- y: log scale, y = 640 - 600*log2(h/0.5)/7.5: 1 h at 560, 4 h at 400, 16 h at 240, 64 h at 80 -->
-        <line class="grid" x1="120" x2="1560" y1="560" y2="560"/><text class="lbl" x="100" y="568" text-anchor="end">1 h</text>
-        <line class="grid" x1="120" x2="1560" y1="400" y2="400"/><text class="lbl" x="100" y="408" text-anchor="end">4 h</text>
-        <line class="grid" x1="120" x2="1560" y1="240" y2="240"/><text class="lbl" x="100" y="248" text-anchor="end">16 h</text>
-        <line class="grid" x1="120" x2="1560" y1="80" y2="80"/><text class="lbl" x="100" y="88" text-anchor="end">64 h</text>
-        <!-- x: linear in time by release day, 2025-02-24 at 220, 2.83 px a day; the early-2026 point at 2026-02-15 -->
-        <text class="lbl" x="220" y="660" text-anchor="middle">Feb 2025</text><text class="lbl" x="466" y="660" text-anchor="middle">May 2025</text><text class="lbl" x="684" y="660" text-anchor="middle">Aug 2025</text><text class="lbl" x="992" y="660" text-anchor="middle">Nov 2025</text><text class="lbl" x="1227" y="660" text-anchor="middle">early 2026</text>
-        <g id="half" data-cue="half" data-anim="fade"><text class="pt hi" x="140" y="150" text-anchor="start">half the time: the agent finishes 1 task in 2</text></g>
-        <g data-cue="2025," data-anim="pop"><circle class="dot" cx="220" cy="560" r="14"/><text class="pt" x="200" y="610" text-anchor="start">Claude 3.7 Sonnet · 1 h</text></g>
-        <path class="trend" data-cue="2026," data-anim="draw" d="M 220 560 L 466 500 L 684 413 L 992 367 L 1227 273"/>
-        <g data-cue="2026," data-anim="pop"><circle class="dot" cx="466" cy="500" r="12"/><circle class="dot" cx="684" cy="413" r="12"/><circle class="dot" cx="992" cy="367" r="14"/><text class="pt" x="1012" y="402" text-anchor="start">Claude Opus 4.5 · 5.3 h</text></g>
-        <g id="twelve" data-cue="twelve" data-anim="pop" data-sfx="up" data-sfx-offset="-0.15"><rect class="band" x="1197" y="85" width="60" height="289" rx="10"/><circle class="dot" cx="1227" cy="273" r="16"/><text class="pt hi" x="1170" y="250" text-anchor="end">public frontier · ~12 h</text><text class="lbl" x="1170" y="190" text-anchor="end" style="font-size: 26px">Feb–Mar 2026 · range 5 to 61 h</text><text class="lbl" x="1170" y="145" text-anchor="end" style="font-size: 26px">highly uncertain: the test is near its limit</text></g>
-      </svg>
-    </div>
-    <div class="chart-note" data-cue="doubling" data-anim="up"><b>doubling about every 3 months since 2024</b> · METR, “Time Horizon 1.1” (Jan 2026) and Frontier Risk Report (May 2026)</div>
-  </div>
-  <div class="meme-wrap" id="m09" data-cue="bars" data-anim="pop">
-    <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/62yufy.mp4" data-crop="top 29%" data-name="Willem Dafoe looking up" data-credit="https://imgflip.com/gif-templates" data-cue="bars" data-anim="pop"><span class="top">Me looking at</span><span class="bottom">METR's error bars</span></figure>
-  </div>
-</section>
 
 <section data-scene="10-skeptics">
   <div class="stage" style="justify-content: flex-start; padding-top: 10px">
@@ -525,11 +477,11 @@
         <div class="step card" data-cue="tell" data-anim="left"><span class="n">1</span><span>I say what the feature has to do</span></div>
         <div class="step card" data-cue="builds" data-anim="left"><span class="n">2</span><span>the agent builds it, and tests it</span></div>
         <div class="step card" data-cue="review" data-anim="left"><span class="n">3</span><span>another model reviews the pull request<small>round after round, until nothing serious is left</small><span class="rounds"><b data-cue="round" data-anim="pop">round 1</b><b data-cue="round#2" data-anim="pop">round 2</b><b class="done" data-cue="left." data-anim="pop">round 3 &check;</b></span></span></div>
-        <div class="step card" data-cue="standing" data-anim="left"><span class="n">4</span><span>standing tests and checks<small>they know the project</small></span></div>
+        <div class="step card" data-cue="tests#2" data-anim="left"><span class="n">4</span><span>my tests and checks<small>they know the project</small></span></div>
       </div>
       <div class="side">
         <div class="lunch card" id="lunch" data-cue="lunch." data-anim="pop"><b>0</b> approvals just to get to lunch</div>
-        <div class="checks" id="checks" data-cue="standing" data-anim="up">
+        <div class="checks" id="checks" data-cue="checks"  data-anim="up">
           <div class="ok">✓ npm test</div>
           <div class="ok">✓ security gate</div>
           <div class="ok">✓ CI on every pull request</div>
@@ -591,9 +543,6 @@
   tl.to("#m05", { opacity: 0, duration: 0.3 }, cueAt("#m05") + 2.3);
   tl.to("#m06", { opacity: 0, duration: 0.3 }, cueAt("#m06") + 3.6);
   tl.to("#m08", { opacity: 0, duration: 0.3 }, cueAt("#m08") + 2.2);
-  tl.to("#metr1", { opacity: 0, duration: 0.3 }, cueAt("#metr2") - 0.3);
-  tl.to("#half", { opacity: 0, duration: 0.3 }, cueAt("#twelve") - 0.35);
-  tl.to("#m09", { opacity: 0, duration: 0.3 }, cueAt("#m09") + 1.6);
   tl.to("#s3", { opacity: 0, duration: 0.3 }, cueAt("#k26") - 0.3);
   tl.to("#k26", { opacity: 0, duration: 0.3 }, cueAt("#p-dhh") - 0.3);
   tl.to("#pair", { opacity: 0, duration: 0.3 }, cueAt("#me") - 0.3);

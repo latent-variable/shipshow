@@ -573,3 +573,28 @@ What changed:
   the machine", splitting the OCaml sentence, "don't take the output on trust".
 - **Engagement, minor, declined:** the argument's turn arrives at 13.2 s, past this video's 10-second bar, because "Fair enough."
   now gets its breath; the charge itself is on screen from 0.1 s.
+
+## Ninth cut (2026-10-27): his own register; METR out
+
+The owner on the eighth cut: the pacing, transitions and scenes are smooth; what is left is register. "I would never say that's
+the charge against AI pull requests now ... think about how YouTubers do dialogue", and "That's due diligence in 2026" should be
+"this is what due diligence looks like in 2026 with agentic engineering". He also did not want METR in it (not for its numbers),
+and is still lukewarm on the Fortran example. Changes: the intro talks to the viewer ("If you've been shipping code with AI,
+somebody has probably told you that already. Ghostty, the terminal app, even made it a rule ..."); his due-diligence line;
+"the stuff that should never happen" in 12a; METR cut entirely (the slowdown study, the time-horizon chart and its meme), so
+"this layer is moving fast" now leads straight into Karpathy, DHH and antirez. ShipShow: `narration-writing` says to write an
+essay in someone's own voice the way they talk to camera; his voice profile has the correction row.
+
+### One round on what changed (the revision rule, D63): accuracy on Sonnet, engagement on Opus
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy | fail | 0 / 1 / 3 |
+| engagement | fail | 0 / 1 / 3 |
+
+- **Accuracy's major:** a `sources.md` bullet still described the METR study as shown. Rewritten as cut; S19 marked cut; the
+  Ghostty descriptor sourced to its README ("Ghostty is a terminal emulator"); the `METR` respelling and the chart's CSS removed.
+- **Engagement's major:** the due-diligence line dragged (a second's hesitation after "And", then about 100 words a minute) and
+  read as a tagline. The owner's wording stays; "And" dropped and the line voiced again. Minors taken: "too, in the 1950s" (it said
+  "back" twice), the compiler card on "compilers" and the "now" headline on "fast.", "already" dropped from 12a's last line, no
+  pause after 09. Engagement passed the new intro ("it now hooks") and the "now" act without METR.

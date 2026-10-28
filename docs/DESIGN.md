@@ -957,6 +957,9 @@ about 230 syllables a minute while speaking; at 1.2 the packet measured 270 to 3
 (never-about-the-code went from 336.7 s to 429.9 s, 28% longer). Changing the speed re-voices every Drama take, because a take's key holds its
 speed and the stretch happens before the take is heard back and chosen. `critic-pacing`'s 2-second pause rule now exempts an
 act change carried by music and a card.
+On the eighth cut the owner said the pace and transitions now play smoothly; what was left was register: the intro and
+"That's due diligence in 2026" read as written prose, not as he talks, so `narration-writing` now says to write an essay in
+someone's own voice the way they talk to camera, from their dictation.
 
 ## Behaviour
 

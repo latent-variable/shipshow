@@ -1,4 +1,4 @@
 [serious] Then I validate it myself. I run the feature, and make sure it does what I meant.
 [emphatic] Building is the small part now. Most of the work is reviewing, testing, and verifying.
 
-[warm, proud] I've gotten a lot of code merged this way. That's due diligence in 2026.
+[warm, proud] I've gotten a lot of code merged this way. That's what due diligence looks like in 2026, with agentic engineering.
