@@ -884,7 +884,10 @@ which is what a second listen is for (it heard "Ed TEH" where an ETH sounded wro
 spelled out where the script does not spell it is missed. **Tested** by unit tests on Whisper's and Parakeet's real
 transcripts of the published cut, a Drama 3 run with a fake model and fake hearing (retaken until clean; kept with the fault
 when every round spells), a control with the retake rule removed (the test fails), and an end-to-end voice and listen on a
-throwaway Kokoro video.
+throwaway Kokoro video. **Then** (same day): the missing-sentence check reads a run of single letters as one word on both
+sides (`joined_letters`), because the script writes an initialism one way and each listener another: eth-is-false's "ETH."
+(told to the voice as "E T H.") was reported unheard by both Whisper and Parakeet, which wrote "E.T.H.". Tested both ways
+round, and that a dropped sentence starting with a letter ("A cat.") is still found.
 
 ### D61. Named moods give each act its own look and music (2026-10-27)
 **Decision.** `video.json` `"moods"` names sets of look and music; a section's `data-mood` picks one, and it carries forward to
