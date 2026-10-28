@@ -144,8 +144,11 @@ Never clone, or make variants of, a real person's voice without their consent, a
 declined, 2026-10-27). Invent one instead: Drama 3 with no reference clip and a bracketed description,
 `[bright, articulate young British tech YouTuber, curious and calm, crisp enunciation]`, several seeds read one paragraph
 each, one numbered file for the person to pick from, and the picked take's unstretched clip kept as
-`local/voices/<name>.wav` with its words in `<name>.txt`. Every take then clones that one clip, so the voice stays the same
-across the video. Record who each voice is, and where it may be used, in `local/voices/VOICES.md`.
+`local/voices/<name>.wav` with its words in `<name>.txt`, **and the description it was made from in `<name>.style`**. Every
+take then clones that one clip, so the voice stays the same across the video, and the voice step folds the style into every
+direction (`[<style>, measured, letting it land]`): a clone copies the timbre but not the style, and without it the owner's
+pick read flat and dark, "nothing like" the audition (eth-is-false, 2026-10-27; with it, the pitch swing went from 89 to
+100 Hz and he chose it in a side-by-side). Audition a clone the way the video will use it before committing to it. Record who each voice is, and where it may be used, in `local/voices/VOICES.md`.
 
 ## Pronunciation
 

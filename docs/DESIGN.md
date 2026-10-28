@@ -1000,6 +1000,23 @@ builder in the owner's voice and judged by a fresh critic, not generated; a thum
 The bar for each (and the owner's call on "altered or synthetic content": his own clone saying his own words, disclosed in the
 video, he marks No) is the `publish` skill, so the next video starts from what the first one learned.
 
+### D68. An invented voice keeps its style in every direction (2026-10-27)
+**Decision.** A clone in `local/voices/` may have `<name>.style`, the description it was invented from; Drama 3 is told it at
+the start of every direction of every take (`styled` in `bin/lib.mjs`), and a Drama take's cache key carries the styled text, so
+changing it voices a Drama video again and leaves OmniVoice takes alone. **Why.** eth-is-false's third cut cloned the owner's pick from its audition clip and read it with the
+script's own directions ("measured, unhurried"): it came out flatter (pitch swing 97 Hz against the audition's 128) and darker,
+and he said it sounded nothing like what he picked. A side-by-side of two clips, each with and without the style, had him pick
+the one with it. **Costs.** A longer direction on every take; a style that fights a line's direction is the writer's to fix.
+**Tested** by a unit test on `styled`, and the side-by-side the owner chose from.
+
+### D69. The voice worker caps MLX's buffer cache (2026-10-27)
+**Decision.** `bin/drama.py` sets MLX's cache limit to 2 GB (`SHIPSHOW_DRAMA_CACHE_GB`), empties the cache after each take, and
+prints the GPU memory in use and the peak with every take. **Why.** The owner saw memory go from 30 GB to 120 GB whenever a video
+was voiced and asked whether a bigger model than needed was running. It was not: the 4-bit model is about 24 GB, and `footprint`
+showed the worker at 114 GB, 113 GB of it GPU buffers MLX had freed and kept to reuse, with no limit set; paragraph takes made it
+grow faster. **Costs.** A buffer is allocated again instead of reused; the audio is the same. **Tested** by the suite (the fake
+MLX module now has the cache calls) and by the memory each take prints on the next voice run.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
