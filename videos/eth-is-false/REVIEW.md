@@ -322,7 +322,7 @@ the memes add no claim (their facts are the video's own, sourced) and the rule f
 The third cut's narrator was the clip he named, but cloned and read with the script's own directions it came out flat and dark:
 he said it sounded "nothing like" the audition. A side-by-side of options 5 and 6, each with and without the voice's description
 in every direction, had him choose option 6 with it. `narrator-uk` is now that clip, its description in `narrator-uk.style`, told
-in every direction (DESIGN D67). Measured against the side-by-side he chose: median pitch 137 to 142 Hz against 146, swing 80 to
+in every direction (DESIGN D68). Measured against the side-by-side he chose: median pitch 137 to 142 Hz against 146, swing 80 to
 99 Hz against 100, similar brightness; speech levels within 0.55 dB (sd) across 62 takes; every take heard back over 97%; Parakeet
 heard "The catch?" as "Bakch?" (Whisper heard it right). 14.2 minutes: the voice takes its time.
 
