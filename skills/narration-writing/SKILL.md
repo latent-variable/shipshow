@@ -86,6 +86,10 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   `[pause]`, `[long pause]` and `[slowly]` stalled the voice into seconds of silence and lost the rest of the line on
   every seed measured; `[shouting]` and a `[laughs]` did on one seed in two. A pause is a line break, a sentence
   end, a blank line (a beat, `video.json` `beat`) or `video.json` `gap` and `pauses`.
+- **In someone's own voice, write it the way they talk to camera.** Speak to the viewer, as a YouTuber does: "If you've
+  been shipping code with AI, somebody has probably told you that already", never a written framing like "That's the charge
+  against AI pull requests now" (the owner: "I would never say that"). Their dictation is the register to match; a line that
+  reads well but that they would not say out loud is a finding (2026-10-27).
 - **A joke is one line: setup, turn and punchline in one take.** Each line is voiced on its own, with no memory of the
   line before, so a punchline on a line of its own is performed cold and lands like a separate thought (the owner on
   "Like animals." and "No. ... Also no.", 2026-10-27). Keep them together and let one direction describe the arc:

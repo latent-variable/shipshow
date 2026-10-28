@@ -19,7 +19,6 @@
     "2025": "twenty twenty five",
     "2026": "twenty twenty six",
     "IBM": "I B M",
-    "METR": "meter",
     "Dijkstra": "Dykstra",
     "COBOL": "Cobol",
     "4.5": "four point five",
@@ -54,7 +53,6 @@
     "12a-loop": 0.6,
     "12b-diligence": 0.6,
     "13-close": 0.8,
-    "09-now": 0.8,
     "12-verify": 0.8
   },
   "leads": {
