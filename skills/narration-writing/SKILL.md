@@ -138,6 +138,15 @@ from about 2 semitones to 3.5 and quickened the read, `[deadpan]` narrowed it to
 the level about 6 dB on one seed. Drama 3 drops a short last sentence now and then even with no direction, so every
 take is heard back and retaken up to five times (`bin/drama.py`); one still under 97% is kept and listed, often for Whisper's spelling of a name, so listen to the ones the voice step lists.
 
+## A narrator
+
+Never clone, or make variants of, a real person's voice without their consent, a public presenter's included (asked for and
+declined, 2026-10-27). Invent one instead: Drama 3 with no reference clip and a bracketed description,
+`[bright, articulate young British tech YouTuber, curious and calm, crisp enunciation]`, several seeds read one paragraph
+each, one numbered file for the person to pick from, and the picked take's unstretched clip kept as
+`local/voices/<name>.wav` with its words in `<name>.txt`. Every take then clones that one clip, so the voice stays the same
+across the video. Record who each voice is, and where it may be used, in `local/voices/VOICES.md`.
+
 ## Pronunciation
 
 Kokoro mispronounces names and acronyms. Put the spoken form in `video.json` `"say"` and
