@@ -19,7 +19,7 @@
   .chip.hot { border-color: var(--accent); color: var(--accent); }
   .chip.blue { border-color: var(--accent-2); color: var(--accent-2); }
   .chip.pink { border-color: var(--accent-3); color: var(--accent-3); }
-  .chip.dead { border-color: var(--bad); color: var(--bad); text-decoration: line-through; text-decoration-thickness: 5px; }
+  .chip.dead { border-color: var(--bad); color: var(--bad); text-decoration: line-through; text-decoration-thickness: 3px; text-decoration-color: rgba(255, 143, 132, 0.6); }
   .chip.alive { border-color: var(--good); color: var(--good); }
   .stamp { display: inline-block; padding: 8px 26px; border: 6px solid var(--bad); border-radius: 10px; color: var(--bad); font-family: var(--font-mono); font-weight: 600; font-size: 46px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; transform: rotate(-5deg); }
   .stamp.yellow { border-color: var(--accent); color: var(--accent); }
@@ -39,7 +39,7 @@
   .nobox { display: flex; gap: 70px; align-items: center; justify-content: center; }
   .nogrid { display: grid; grid-template-columns: repeat(2, 300px); gap: 22px; }
   .nogrid .cell { height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 34px; font-weight: 700; position: relative; line-height: 1.3; }
-  .nogrid .cell .x { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 150px; color: var(--bad); font-weight: 800; }
+  .nogrid .cell .x { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 100px; color: var(--bad); font-weight: 800; opacity: 0.7; }
   .norules { display: flex; flex-direction: column; gap: 16px; }
   .norules .rule { font-size: 36px; padding: 14px 28px; }
   .uses { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
@@ -66,6 +66,9 @@
   .hoc .pc.base { min-width: 400px; padding: 30px 36px; font-family: var(--font-display); font-size: 66px; background: var(--accent); border-color: var(--accent); color: #1b211e; }
   .hoc .pc.base.seth { background: var(--accent-2); border-color: var(--accent-2); }
   .hoc .pc.more { background: transparent; color: var(--muted); border-style: dashed; border-color: var(--muted); box-shadow: none; }
+  .hoc { position: relative; }
+  .hoc .lb { position: absolute; left: 0; right: 0; bottom: 18px; display: flex; justify-content: center; pointer-events: none; }
+  .hoc .lb .stamp { font-size: 54px; background: rgba(20, 16, 24, 0.92); }
   .hoclabel { font-family: var(--font-mono); font-size: 28px; color: var(--muted); text-align: center; }
   .net { width: 1100px; height: 10px; border-radius: 5px; background: var(--good); margin: 0 auto; }
   .netlab { font-size: 40px; font-weight: 700; color: var(--good); text-align: center; }
@@ -86,8 +89,10 @@
   .prize .stamp small { display: block; font-size: 26px; letter-spacing: 0.04em; margin-top: 6px; opacity: 0.85; }
   .checkers .ss-portrait { --portrait-height: 400px; }
   .checkers .namecard { height: 400px !important; width: 360px !important; }
-  .stamp.flaw { align-self: flex-start; margin-top: 6px; font-size: 40px; }
+  .stamp.flaw { margin-top: -30px; font-size: 34px; }
   .stamp.getaway { position: absolute; right: 140px; bottom: 60px; font-size: 48px; }
+  .shavewrap { position: absolute; right: 150px; top: 46%; pointer-events: none; }
+  .shavewrap .stamp { font-size: 46px; }
   .race .shave { font-family: var(--font-mono); font-size: 44px; font-weight: 700; fill: var(--accent-3); }
   .preprint .who { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.12em; color: #4b5a52; }
   .preprint .title { font-family: var(--font-display); font-weight: 600; font-size: 84px; line-height: 1.05; margin-top: 18px; }
@@ -115,7 +120,7 @@
   .sw .knob { position: absolute; top: 7px; left: 8px; width: 56px; height: 56px; border-radius: 50%; background: var(--muted); }
   .vocab { font-family: var(--font-mono); font-size: 28px; color: var(--accent-2); text-align: center; }
   .rules { display: flex; gap: 26px; justify-content: center; }
-  .rule { padding: 24px 76px 24px 34px; font-size: 44px; font-weight: 700; position: relative; }
+  .rule { padding: 24px 70px 24px 26px; white-space: nowrap; font-size: 44px; font-weight: 700; position: relative; }
   .rule .or { color: var(--muted); font-weight: 500; }
   .rule .ok { position: absolute; right: 14px; top: 50%; margin-top: -42px; font-size: 64px; color: var(--good); }
 
@@ -242,7 +247,7 @@
   .plot .zl { font-family: var(--font); font-size: 40px; font-weight: 800; fill: var(--accent); }
   .readoff { display: grid; grid-template-columns: 1100px 1fr; gap: 30px; align-items: center; }
   .fix { font-size: 38px; font-weight: 700; line-height: 1.35; display: flex; flex-direction: column; gap: 22px; }
-  .costs { display: flex; gap: 20px; justify-content: center; }
+  .costs { display: flex; flex-direction: column; align-items: center; gap: 20px; }
   .costs .chip { font-size: 44px; }
   .result { font-size: 110px; text-align: center; }
   .result .math { color: var(--accent); }
@@ -332,7 +337,7 @@
 <section data-scene="02-puzzle" data-mood="puzzle">
   <div class="stage">
     <div class="col" style="gap: 12px">
-      <div class="switches" data-cue="switches," data-anim="stagger">
+      <div class="switches" data-cue="+0.1" data-anim="stagger">
         <div class="sw"><div class="name">A</div><div class="track"><div class="knob k-on"></div></div></div>
         <div class="sw"><div class="name">B</div><div class="track"><div class="knob k-on"></div></div></div>
         <div class="sw"><div class="name">C</div><div class="track"><div class="knob k-on"></div></div></div>
@@ -495,9 +500,10 @@
       <g data-cue="everything" data-anim="left"><text class="lab" x="390" y="88" text-anchor="end">try everything</text><text class="sub" x="390" y="124" text-anchor="end">brute force</text><rect class="bar brute" x="420" y="56" width="1140" height="78" rx="8"/><text class="val" x="1530" y="112" text-anchor="end" style="fill: var(--bg)">2</text></g>
       <g data-cue="Schöning's" data-anim="left"><text class="lab" x="390" y="228" text-anchor="end">Schöning</text><text class="sub" x="390" y="264" text-anchor="end">1999 · 4/3 · randomized</text><rect class="bar" x="420" y="196" width="380" height="78" rx="8"/><text class="val" x="820" y="252">1.333</text></g>
       <g data-cue="records" data-anim="left"><text class="lab" x="390" y="368" text-anchor="end">Hertli</text><text class="sub" x="390" y="404" text-anchor="end">PPSZ 2011 · randomized</text><rect class="bar" x="420" y="336" width="351" height="78" rx="8"/><text class="val" x="790" y="392">1.308</text></g>
-      <text class="shave" x="1540" y="400" text-anchor="end" data-cue="hair." data-anim="pop">1999 → 2026: −0.026</text><g data-cue="seven" data-anim="left"><text class="lab" x="390" y="508" text-anchor="end">Jiang, Cai, preprint</text><text class="sub" x="390" y="544" text-anchor="end">2026 · randomized</text><rect class="bar" x="420" y="476" width="350" height="78" rx="8"/><text class="val" x="790" y="532">1.307</text></g>
+      <g data-cue="seven" data-anim="left"><text class="lab" x="390" y="508" text-anchor="end">Jiang, Cai, preprint</text><text class="sub" x="390" y="544" text-anchor="end">2026 · randomized</text><rect class="bar" x="420" y="476" width="350" height="78" rx="8"/><text class="val" x="790" y="532">1.307</text></g>
     </svg>
   </div>
+  <div class="shavewrap"><div class="stamp yellow" data-cue="hair." data-anim="slam" data-sfx="thump">27 years · −0.026</div></div>
 </section>
 
 <!-- 07: what was built on it -->
@@ -511,6 +517,7 @@
           <div class="tier t2"><div class="pc">edit distance</div><div class="pc">geometry</div></div>
           <div class="tier t1"><div class="pc">graph theory</div><div class="pc">biology</div><div class="pc">databases</div></div>
           <div class="tier t0"><div class="pc base">ETH</div><div class="pc base seth">Strong ETH</div></div>
+          <div class="lb"><div class="stamp" data-cue="Unless#2" data-anim="slam">load-bearing</div></div>
         </div>
         <div class="hoclabel" data-cue="Hundreds" data-anim="fade">"… cannot be done faster, unless ETH is false"</div>
       </div>
@@ -554,10 +561,11 @@
       </div>
       <svg class="floorplot" viewBox="0 0 820 440" width="820" height="440">
         <line class="ax" x1="60" y1="380" x2="800" y2="380"/><line class="ax" x1="60" y1="20" x2="60" y2="380"/>
-        <text x="790" y="420" text-anchor="end">n →</text><text x="74" y="44">exponent</text>
+        <text x="790" y="420" text-anchor="end">n →</text><text x="74" y="44">exponent</text><text x="74" y="84" style="fill: var(--accent-3)" data-cue="record," data-anim="fade">1.307ⁿ = 2^(0.39 n)</text>
         <g data-cue="fraction" data-anim="fade"><path class="lin" d="M60 380 L800 100"/><text class="lbl" x="790" y="70" text-anchor="end" style="fill: var(--accent-3)">ETH's floor: a fixed fraction × n</text></g>
-        <path class="cur" d="M60 380 C 220 230, 480 175, 800 140" data-cue="ends" data-anim="draw"/><text class="lbl" x="790" y="200" text-anchor="end" style="fill: var(--accent)" data-cue="ends" data-anim="fade">n / √log n</text>
-        <circle cx="641" cy="160" r="12" style="fill: var(--bad)" data-cue="every" data-anim="pop"/>
+        <g data-cue="smaller" data-anim="fade"><path class="lin" d="M60 380 L800 200"/><text class="lbl" x="790" y="180" text-anchor="end" style="fill: var(--accent-3); font-size: 26px">a smaller fraction</text></g>
+        <path class="cur" d="M60 380 C 130 190, 420 215, 800 262" data-cue="shrinking." data-anim="draw"/><text class="lbl" x="790" y="305" text-anchor="end" style="fill: var(--accent)" data-cue="shrinking." data-anim="fade">n / √log n</text>
+        <circle cx="458" cy="230" r="12" style="fill: var(--bad)" data-cue="quarter." data-anim="pop"/><circle cx="627" cy="242" r="12" style="fill: var(--bad)" data-cue="too." data-anim="pop"/>
         <text x="420" y="420" text-anchor="middle">schematic</text>
       </svg>
     </div>
@@ -596,7 +604,7 @@
         <div class="math" style="color: var(--accent)">1 − (1 − <i>A</i>) · <i>B</i> · (1 − <i>C</i>)</div>
       </div>
       <div class="row"><div class="chip alive" data-cue="happy" data-anim="pop">happy: 1</div><div class="chip" style="border-color: var(--bad); color: var(--bad)" data-cue="isn't." data-anim="pop">unhappy: 0</div></div>
-      <div class="sumline math" data-cue="Add" data-anim="up">count = Σ<sub>every setting</sub> rule<sub>1</sub> × rule<sub>2</sub> × … × rule<sub><i>m</i></sub><small>the paper, section 2.2</small></div>
+      <div class="sumline math" data-cue="Multiply" data-anim="up"><span data-cue="Add" data-anim="fade">count = Σ<sub>every setting</sub></span> rule<sub>1</sub> × rule<sub>2</sub> × … × rule<sub><i>m</i></sub><small>the paper, section 2.2</small></div>
       <div class="row"><div class="chip" style="border-color: var(--bad); color: var(--bad)" data-cue="still" data-anim="pop">still 2<sup>n</sup> terms</div></div>
     </div>
   </div>
@@ -621,6 +629,7 @@
   <div class="move" data-cue="Move" data-anim="slam">move 2 · a dial</div>
   <div class="stage">
     <div class="dialrow">
+      <div class="col" style="align-items: center; gap: 0">
       <svg class="dial" viewBox="0 0 520 540" width="600" height="623" data-cue="dial," data-anim="pop">
         <circle class="face" cx="260" cy="270" r="185"/>
         <text class="zero" x="74" y="440" text-anchor="middle">0</text>
@@ -634,6 +643,8 @@
         <g id="needle"><line class="needle" x1="260" y1="270" x2="150" y2="380"/></g>
         <circle class="hub" cx="260" cy="270" r="20"/>
       </svg>
+      <div class="stamp flaw" data-cue="answer." data-anim="slam" data-sfx="scratch">the plan has one flaw</div>
+      </div>
       <div class="col">
         <div class="panel card" data-cue="zero," data-anim="up">T = 0: the original problem<small>rules cross between groups</small></div>
         <div class="panel" data-cue="easy" data-anim="up">T = 1, 2, 3 …: the easy points, rules rewritten</div>
@@ -643,10 +654,9 @@
           <div class="grp"><div class="dots"><i></i><i></i><i></i></div></div>
         </div>
         <div class="bus" data-cue="note" data-anim="grow">a note: a few weighted sums of each group's switches</div>
-        <div class="panel" data-cue="few" data-anim="up">try every note<small>for each one, count every group <span id="alone10" data-cue="alone." data-anim="highlight">alone</span></small></div>
+        <div class="panel" data-cue="try" data-anim="up">try every note<small>for each one, count every group <span id="alone10" data-cue="alone." data-anim="highlight">alone</span></small></div>
         <span id="catch10" data-cue="catch?" data-anim="fade"></span>
         <div class="nozero" data-cue="catch?" data-anim="pop">✗ at T = 0 this shortcut doesn't apply</div>
-        <div class="stamp flaw" data-cue="answer." data-anim="slam" data-sfx="scratch">the plan has one flaw</div>
       </div>
     </div>
   </div>
@@ -682,7 +692,7 @@
 <section data-scene="11b-three-costs">
   <div class="phase" id="p11b">
     <div class="stage">
-      <div class="costs"><div class="chip blue" data-cue="slopes" data-anim="pop">slopes at each point <span data-cue="fewer" data-anim="pop" style="color: var(--good)">↓</span></div><div class="chip blue" data-cue="notes" data-anim="pop">note size <span data-cue="bigger" data-anim="pop" style="color: var(--bad)">↑</span></div><div class="chip blue" data-cue="group" data-anim="pop">group size <span data-cue="Smaller" data-anim="pop" style="color: var(--good)">↓</span></div></div>
+      <div class="costs"><div class="chip blue" data-cue="More" data-anim="pop">more points → fewer slopes, <span style="color: var(--bad)">bigger notes</span></div><div class="chip blue" data-cue="Smaller" data-anim="pop">smaller groups → less to count, <span style="color: var(--bad)">bigger notes</span></div></div>
       <div class="row"><div class="chip hot" data-cue="bites." data-anim="pop">turn one knob, another one bites</div></div>
       <div class="result" data-cue="Balance" data-anim="pop">time ≈ <span class="math">2<sup><i>n</i> / √log <i>n</i></sup></span></div>
       <div class="src center" data-cue="roughly" data-anim="fade">log is the natural log · up to log log factors · the paper, section 2.6</div>
@@ -726,7 +736,7 @@
     <div class="meaning">
       <div class="tower">
         <div class="block top" data-cue="bigger#3" data-anim="up">ETH<div class="strike" data-cue="fell." data-anim="grow"></div></div>
-        <div class="block base" data-cue="polynomial" data-anim="up">P ≠ NP<small>still standing, still open</small></div>
+        <div class="block base" data-cue="polynomial" data-anim="up">P ≠ NP<small data-cue="untouched." data-anim="pulse">still standing, still open</small></div>
       </div>
       <div class="col">
         <div class="q big" style="font-size: 84px" data-cue="+0.1" data-anim="pop">does this give<br>P = NP?</div>

@@ -1,4 +1,4 @@
-[playful] And that question is tied to a million dollar puzzle, the most famous open problem in computer science. Thirty seconds.
+[playful] And that question is tied to a million dollar puzzle, the most famous open problem in computer science. Here it is in thirty seconds.
 [matter-of-fact] P is the problems a computer solves fast, where the work grows like n squared or n cubed, not doubling with every switch. NP is the problems where you can check an answer fast.
 [serious] In 1971, Stephen Cook showed SAT is NP-complete, the hardest of that whole bunch. Crack it fast, and you crack all of NP fast.
 [dry] Most researchers bet nobody ever will. Eighty eight percent, in a 2019 poll.
