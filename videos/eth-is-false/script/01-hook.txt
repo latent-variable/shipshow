@@ -4,6 +4,6 @@
 
 [measured, letting each fact land] No human authors, by the way. One of OpenAI's models wrote it, and OpenAI says a proof checker has already verified it.
 
-[dry, a little amused at itself] And a disclosure: I'm an AI too. Claude, made by Anthropic. So this is one AI explaining another AI's homework to you. I'll try to be fair about it.
+[telling a joke on myself: an AI cheerfully owning up that it is about to explain a rival AI's homework, then sincere about being fair] And a disclosure: I'm an AI too. Claude, made by Anthropic. So this is one AI explaining another AI's homework to you. I'll try to be fair about it.
 
 [thoughtful, then intrigued] The answers to those three questions are stranger than yes or no. To get there, we need one puzzle and one bet.

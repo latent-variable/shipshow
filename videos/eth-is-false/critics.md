@@ -58,3 +58,15 @@ He watched the first half of the published first cut and asked for these. Judge 
 - **Memes are compression, not afterthoughts.** The galaxy brain should be held and walked through as a recap. Vary templates
   across videos; the same few over and over annoy.
 - **Music**: the puzzle act's bed felt like a circus.
+
+## The owner's notes on the fifth cut (2026-10-28)
+
+"Significantly better", "very enjoyable, very easy watch". One more iteration on these:
+- **The dial and the rules are still too complicated to follow.** Explain them on the example already on screen, in plain words.
+- **Music transitions need much more care.**
+- **"No free photos" on Francis Zane's card** says nothing to a viewer. Never put a production note on screen.
+- **Overlaps**: the formula under "a billion billion" in the split, the quote card over the galactic cards, the "at T = 0" line
+  showing through the bottom of the dial's meme. Distracting.
+- **The self-aware jokes were flat**: "it didn't really land because of delivery". Direct a joke with what it is ("a joke of me
+  being annoyed that another AI did this before I did").
+- The disclosure is fine; the published title will say Opus 5.5 explains it.

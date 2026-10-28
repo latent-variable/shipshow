@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-10-28 (after runs of sentences were added).
+Last reviewed: 2026-10-28 (after the overlap check and the music handoff were added).
 
 ## Problem
 
@@ -124,6 +124,8 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F56 | A narrator is invented from a description, never a real person's voice without consent; the person picks from a numbered audition and the take is kept as the clone every line uses, its description kept in `<name>.style` and told in every direction (`narration-writing`, *A narrator*; DESIGN D68) | done; `narrator-uk` |
 | F57 | A finished video is packaged for YouTube: `npm run package` writes the upload folder (the render, a thumbnail set from `thumbnail.html`, and the title, description with chapters, sources, credits, tags and Studio's answers from `video.json` `"youtube"`), refusing anything YouTube would refuse or ignore (DESIGN D67) | done; tests; first used by never-about-the-code |
 | F58 | An explainer an AI narrates is self-aware and funny without cringe; comparisons are like for like on a picture that returns; memes compress one idea and are not reused across the person's videos (`npm run memes` and the packet say where one was used; DESIGN D70) | done; eth-is-false's fifth cut |
+| F59 | Text drawn over other text or over a picture is measured at every cue, not left to stills: `npm run overlaps`, and the packet's *Overlaps* section (DESIGN D72) | done; eth-is-false's sixth cut has none |
+| F60 | A new act's music hands off: the old bed fades from the act's last word, the new one swells in from its own opening under the act card (DESIGN D71) | done |
 | F52 | An essay breathes: read at the voice's own pace (1.0 when it sets no speed), a beat before a new act (`video.json` `leads`, before a scene's first word, as `pauses` is after its last), a beat where a blank line separates two lines of a script (`beat`), and a build warning when a mood starts under 1.2 s before its first word (DESIGN D64) | done; tests; first used by never-about-the-code's eighth cut |
 | F51 | An essay: `"kind": "essay"` is a video someone makes to share an idea in their own voice, built in sections, each with its own mood (a look and a music bed made for what it says); facts from `sources.md`, the author's view tagged as opinion, and enjoyment judged on top of truth (`critic-engagement`); the `archive` theme (a 1950s file drawer) is the first theme made to be one section's mood (DESIGN D62) | done; first used by never-about-the-code's seventh cut, the look and sound judged by its owner |
 | F20 | Per-person preferences and private videos stay local (`tailor`, `local/`) | done in this repo; elsewhere a skill checks `local/` is ignored and uses `.git/info/exclude` |

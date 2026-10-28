@@ -27,7 +27,7 @@
   .stamp.pink { border-color: var(--accent-3); color: var(--accent-3); }
   .center { text-align: center; }
   .meme-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-  .meme-wrap.pop { z-index: 6; background: rgba(8, 10, 12, 0.82); -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%); mask-image: linear-gradient(to bottom, #000 80%, transparent 100%); }
+  .meme-wrap.pop { z-index: 6; background: rgba(8, 10, 12, 0.82); }
   .ss-meme { --meme-height: 780px; }
   .stage .ss-portrait { --portrait-height: 290px; position: relative; inset: auto; margin: 0; max-width: none; flex: none; font-size: 32px; }
   .stage .ss-portrait figcaption small { font-size: 28px; }
@@ -240,7 +240,10 @@
   .rule2poly { display: flex; align-items: center; gap: 30px; justify-content: center; }
   .rule2poly .math { font-size: 64px; }
   .arrow { font-size: 64px; color: var(--muted); }
-  .sumline { font-size: 68px; text-align: center; }
+  .sumline { font-size: 64px; text-align: center; }
+  .tally { display: flex; flex-direction: column; gap: 6px; font-size: 50px; }
+  .trow { display: flex; align-items: baseline; gap: 30px; } .trow .k { font-family: var(--font-mono); font-size: 28px; color: var(--muted); width: 180px; text-align: right; }
+  .tally b.o { color: var(--good); } .tally b.z { color: var(--bad); }
   .sumline small { display: block; font-family: var(--font-mono); font-size: 28px; color: var(--muted); font-weight: 500; margin-top: 8px; }
   .groups { display: flex; gap: 60px; justify-content: center; position: relative; }
   .grp { width: 440px; padding: 30px; border: 4px dashed var(--accent-2); border-radius: 18px; text-align: center; background: var(--bg); position: relative; z-index: 1; }
@@ -533,7 +536,7 @@
           <figure class="ss-portrait" data-commons="File:Russell Impagliazzo at the DIMACS Workshop on Cryptography.jpg" data-cue="Impagliazzo," data-anim="pop"><figcaption>Russell Impagliazzo<small>UC San Diego</small></figcaption></figure>
           <div class="col" style="gap: 14px">
             <div class="namecard" style="height: 160px; width: 330px" data-cue="Paturi" data-anim="pop"><b>Ramamohan Paturi</b><small>UC San Diego</small></div>
-            <div class="namecard" style="height: 160px; width: 330px" data-cue="Zane" data-anim="pop"><b>Francis Zane</b><small>no free photos</small></div>
+            <div class="namecard" style="height: 160px; width: 330px" data-cue="Zane" data-anim="pop"><b>Francis Zane</b><small>co-proposer, 2001</small></div>
           </div>
         </div>
         <div class="big eth-title" data-cue="Hypothesis" data-anim="pop">the <em>Exponential Time Hypothesis</em></div>
@@ -659,18 +662,22 @@
   </div>
   <div class="phase" id="p09a">
     <div class="stage">
-      <div class="rule2poly" data-cue="algebra" data-anim="up">
+      <div class="rule2poly" data-cue="formula" data-anim="up">
         <div class="chip">A on <span style="color: var(--muted)">or</span> B off <span style="color: var(--muted)">or</span> C on</div>
         <div class="arrow">→</div>
-        <div class="math" style="color: var(--accent)">1 − (1 − <i>A</i>) · <i>B</i> · (1 − <i>C</i>)</div>
+        <div class="chip alive" data-cue="happy" data-anim="pop">happy: 1</div><div class="chip" style="border-color: var(--bad); color: var(--bad)" data-cue="isn't." data-anim="pop">unhappy: 0</div>
       </div>
-      <div class="row"><div class="chip alive" data-cue="happy" data-anim="pop">happy: 1</div><div class="chip" style="border-color: var(--bad); color: var(--bad)" data-cue="isn't." data-anim="pop">unhappy: 0</div></div>
-      <div class="sumline math" data-cue="Multiply" data-anim="up"><span data-cue="Add" data-anim="fade">count = Σ<sub>every setting</sub></span> rule<sub>1</sub> × rule<sub>2</sub> × … × rule<sub><i>m</i></sub><small>the paper, section 2.2</small></div>
-      <div class="row"><div class="chip" style="border-color: var(--bad); color: var(--bad)" data-cue="still" data-anim="pop">still 2<sup>n</sup> terms</div></div>
+      <div class="tally" data-cue="multiply" data-anim="stagger">
+        <div class="trow"><span class="k">setting 1</span><span class="math">1 × 0 × 1 = <b class="z">0</b></span></div>
+        <div class="trow"><span class="k">setting 2</span><span class="math">1 × 1 × 1 = <b class="o">1</b></span></div>
+        <div class="trow"><span class="k">setting 3</span><span class="math">0 × 1 × 1 = <b class="z">0</b></span></div>
+      </div>
+      <div class="sumline" data-cue="add" data-anim="up"><span class="math">count = 0 + 1 + 0 + …</span><small>the paper, section 2.2</small></div>
+      <div class="row"><div class="chip" style="border-color: var(--bad); color: var(--bad)" data-cue="still" data-anim="pop">still 2<sup>n</sup> settings</div></div>
     </div>
   </div>
   <div class="phase" id="p09b">
-    <div class="move" data-cue="Idea" data-anim="slam">idea 1 · split</div>
+    <div class="move" data-cue="Idea#2" data-anim="slam">idea 1 · split</div>
     <div class="stage">
       <div class="groups" data-cue="groups," data-anim="stagger">
         <div class="grp"><div class="dots"><i></i><i></i><i></i><i></i></div><div class="n">N<sub>1</sub></div></div>
@@ -714,9 +721,10 @@
           <div class="grp"><div class="dots"><i></i><i></i><i></i></div></div>
           <div class="grp"><div class="dots"><i></i><i></i><i></i></div></div>
         </div>
-        <div class="readsw" data-cue="directly." data-anim="up">a rule in group 1 → <span class="bad">reads group 2's switches</span></div>
-        <div class="bus" data-cue="note" data-anim="grow">→ reads one small number instead: a note, like how many of group 2's switches are on</div>
-        <div class="panel" data-cue="try" data-anim="up">try every note<small>for each one, count every group <span id="alone10" data-cue="separate," data-anim="highlight">alone</span></small></div>
+        <div class="readsw" data-cue="used" data-anim="up">a rule in group 1 → <span class="bad">reads group 2's switches</span></div>
+        <div class="bus" data-cue="note" data-anim="grow">→ now reads a short note, like how many of group 2's switches are on</div>
+        <div class="panel" data-cue="Twenty" data-anim="up">say 0 to 20 on → only 21 possible notes</div>
+        <div class="panel" data-cue="guess" data-anim="up">guess the notes: say group 2 has 7 on<small>count every group <span id="alone10" data-cue="own," data-anim="highlight">on its own</span>, then add over every guess</small></div>
         <span id="catch10" data-cue="catch:" data-anim="fade"></span>
         <div class="nozero" data-cue="catch:" data-anim="pop">✗ at T = 0 this shortcut doesn't apply</div>
       </div>
@@ -736,15 +744,16 @@
         <text x="1070" y="540" text-anchor="end">dial T</text><text x="118" y="50">count H(T)</text>
         <path class="curve" d="M260 320 C 330 140, 420 160, 500 250 S 650 440, 740 350 S 860 170, 960 220" data-cue="curve." data-anim="draw"/>
         <g data-cue="easy" data-anim="stagger"><circle class="pt" cx="260" cy="320" r="16"/><circle class="pt" cx="420" cy="186" r="16"/><circle class="pt" cx="580" cy="340" r="16"/><circle class="pt" cx="740" cy="350" r="16"/><circle class="pt" cx="900" cy="196" r="16"/></g>
-        <g data-cue="slope," data-anim="stagger"><line class="tan" x1="210" y1="400" x2="310" y2="240"/><line class="tan" x1="360" y1="186" x2="480" y2="186"/><line class="tan" x1="530" y1="285" x2="630" y2="395"/><line class="tan" x1="690" y1="380" x2="790" y2="320"/><line class="tan" x1="850" y1="190" x2="950" y2="202"/></g>
-        <path class="ext" d="M260 320 C 210 440, 150 470, 100 460" data-cue="pinned#2" data-anim="fade"/>
-        <g data-cue="zero." data-anim="pop"><circle class="z" cx="100" cy="460" r="24"/><text class="zl" x="136" y="500">H(0) = the exact count</text></g>
+        <g data-cue="heading" data-anim="stagger"><line class="tan" x1="210" y1="400" x2="310" y2="240"/><line class="tan" x1="360" y1="186" x2="480" y2="186"/><line class="tan" x1="530" y1="285" x2="630" y2="395"/><line class="tan" x1="690" y1="380" x2="790" y2="320"/><line class="tan" x1="850" y1="190" x2="950" y2="202"/></g>
+        <path class="ext" d="M260 320 C 210 440, 150 470, 100 460" data-cue="back" data-anim="fade"/>
+        <g data-cue="exact" data-anim="pop"><circle class="z" cx="100" cy="460" r="24"/><text class="zl" x="136" y="500">H(0) = the exact count</text></g>
       </svg>
       <div class="fix">
-        <div data-cue="Two" data-anim="up">2 points fix a line</div>
-        <div data-cue="bends" data-anim="up">far more bends than points</div>
-        <div data-cue="slope," data-anim="up" style="color: var(--accent)">so at each easy point: the slope, the slope of the slope, …</div>
-        <div class="src" data-cue="bends" data-anim="fade">the paper, section 2.5 · in the paper: Taylor coefficients</div>
+        <div data-cue="Two#2" data-anim="up">2 points pin down a line</div>
+        <div data-cue="bends#2" data-anim="up">this curve: far more bends than points</div>
+        <div data-cue="heading" data-anim="up" style="color: var(--accent)">at each easy point: which way it's heading, how that bends, …</div>
+        <div data-cue="passes" data-anim="up">→ only one curve passes through them all</div>
+        <div class="src" data-cue="bends#2" data-anim="fade">the paper, section 2.5 · in the paper: Taylor coefficients</div>
       </div>
     </div>
   </div>
@@ -760,7 +769,7 @@
         <div class="stepc" data-cue="Split" data-anim="left">fast <small>only if the problem splits</small></div>
         <div class="stepc" data-cue="Add" data-anim="left">it splits <small>at the easy points of the dial</small></div>
         <div class="stepc" data-cue="Read" data-anim="left">the exact count <small>without trying every setting</small></div>
-        <div class="stepc res" data-cue="Balancing" data-anim="pop">≈ 2<sup><i>n</i> / √log <i>n</i></sup> <small>bends under every straight line</small></div>
+        <div class="stepc res" data-cue="Tune" data-anim="pop">≈ 2<sup><i>n</i> / √log <i>n</i></sup> <small>bends under every straight line</small></div>
       </div>
     </div>
   </div>
@@ -970,6 +979,7 @@
   tl.to("#m06", { opacity: 0, duration: 0.3 }, cueAt("#m06") + 3.4);
   tl.to("#m03", { opacity: 0, duration: 0.3 }, cueAt("[data-scene='03-doubling'] .chip.hot") - 0.4);
   tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#p12b .card") - 0.4);
+  tl.to("#p12a", { opacity: 0, duration: 0.35 }, cueAt("#p12b .card") - 0.4);
   tl.to("#p13x", { opacity: 0, duration: 0.35 }, cueAt("#p13s .grid9") - 0.4);
   tl.to("#p13s .grid9 i", { backgroundColor: "rgba(143, 211, 244, 0.35)", duration: 0.2, stagger: 0.03 }, cueAt("#p13s .bignum"));
   tl.to("#p13s .grid9", { borderColor: "#e8a87c", duration: 0.4 }, cueAt("#p13s .chip"));
@@ -1000,11 +1010,11 @@
   tl.to("#hoc13 .t3 .pc", { y: 500, opacity: 0, duration: 0.9, ease: "power2.in" }, cueAt("[data-zoom='reasons']"));
   tl.to("#hoc13 .t2 .pc", { y: 232, rotation: (i) => [-6, 5][i], duration: 0.8, ease: "bounce.out", stagger: 0.1 }, cueAt("#p13a .net"));
   tl.to("#p13a .col", { y: -150, duration: 0.9, ease: "power2.inOut" }, cueAt("#p13a .net") + 1.0);
-  tl.to("#p09a", { opacity: 0, duration: 0.35 }, cueAt("#p09b .groups") - 0.4);
+  tl.to("#p09a", { opacity: 0, duration: 0.35 }, cueAt("#p09b .move") - 0.4);
   tl.to("[data-scene='07-built-on-it'] .stage", { opacity: 0.06, duration: 0.3 }, cueAt("#m07") - 0.2);
   tl.to("#p13a", { opacity: 0, duration: 0.35 }, cueAt("#p13b .ss-portrait") - 0.4);
   tl.to("#p14a pre", { opacity: 0.3, duration: 0.4 }, cueAt("#p14a .trustrow .chip:nth-child(2)") + 1.2);
-  tl.to("#p14a", { opacity: 0, duration: 0.35 }, cueAt("#p14b .pulled3") - 0.4);
+  tl.to("#p14a", { opacity: 0, duration: 0.35 }, cueAt("#p14b .src") - 0.4);
   tl.to("#p15a", { opacity: 0, duration: 0.35 }, cueAt("#p15b .last") - 0.4);
 
   // 02: the switches flip to a setting that makes every rule happy (A, B, C on), and the rules get their ticks.

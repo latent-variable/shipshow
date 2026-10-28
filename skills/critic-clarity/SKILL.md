@@ -24,7 +24,9 @@ with no rewind; the frames for what they see alongside it.
   (checking "is fast" against solving in "two to the n" steps), or a result shown on a picture the viewer has not seen before
   when one they have would place it (`explain-concept`, *Compare like for like*).
 - **major:** a term, acronym or concept used before it is explained, or never explained,
-  that this viewer would not know.
+  that this viewer would not know. So is a step told in the source's vocabulary ("a piece of algebra", "a polynomial",
+  "Taylor coefficients") where the example the viewer already holds would carry it (the owner on eth-is-false's dial,
+  twice: "still a little bit too complicated to follow").
 - **major:** a scene that carries two ideas, or an order that makes the viewer hold
   something unexplained for more than a scene.
 - **major:** time spent on what this viewer does not need, while something they need is

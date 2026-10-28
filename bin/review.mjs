@@ -12,6 +12,7 @@ import { BASE_SPM, BASE_WPM, HF, REPO, config, die, reviewPlan, round, run, syll
 import { memesIn, memesUsed } from "./meme.mjs";
 import { creditLines, portraitsIn } from "./portrait.mjs";
 import { shotsIn } from "./shot.mjs";
+import { overlaps } from "./overlap.mjs";
 import { listenSection, voiceCheckSection } from "./hearback.mjs";
 import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
 
@@ -115,7 +116,7 @@ if (cfg.moods && Object.keys(cfg.moods).length) {
     prev = s;
   }
   flush(prev);
-  out.push("## Moods", "", "Each section of the video and its mood: the look (a theme, then token overrides), the ambient and the music under it. Neighbouring sections should look and sound different, and each should fit what it says (`critic-engagement`); the look crossfades over 1.2 s and the music over 1.5 s at each change.", "", md(rows, ["mood", "scenes", "starts (s)", "theme", "look overrides", "ambient", "music"]), "");
+  out.push("## Moods", "", "Each section of the video and its mood: the look (a theme, then token overrides), the ambient and the music under it. Neighbouring sections should look and sound different, and each should fit what it says (`critic-engagement`); the look crossfades over 1.2 s at each change, and a new act's music hands off: the old bed fades from the act's last word and the new one swells in from its opening over 2 s.", "", md(rows, ["mood", "scenes", "starts (s)", "theme", "look overrides", "ambient", "music"]), "");
 }
 out.push("## Cues", "", `Each element that arrives on a word: when it lands, what is being said then, and how long it stays up. Reading time assumes ${READ_WPS} words a second for prose and ${READ_CODE_TPS} identifier tokens a second for code; "short" means it leaves before a viewer could read it while listening, and "late" means that, reading in order, the viewer cannot finish it before its scene ends.`, "");
 // Reading is queued: a viewer reads in order, so text that lands together or in quick succession waits.
@@ -167,6 +168,17 @@ if (sfxRecord.events.length) {
   out.push(md(soundRows(sfxRecord, timing), ["at (s)", "scene", "sound", "on", "being said", "level", "audible", "flag"]), "");
 } else {
   out.push("This video has no sound effects.", "");
+}
+// Overlaps: measured at every cue, so one a still would miss is still found (bin/overlap.mjs, D72).
+const found = await overlaps(dir).catch((e) => { console.warn(`overlaps: not measured (${e.message})`); return null; });
+out.push("## Overlaps", "");
+if (found) writeFileSync(join(dir, "review", "overlaps.json"), JSON.stringify(found, null, 2) + "\n");
+if (!found) out.push("Not measured: no Chrome to load the page in (`npx hyperframes browser ensure`). Look for text on text in every frame.", "");
+else if (!found.length) out.push("None: at a moment after every cue and before every scene end, no visible text sat on other text or on a picture (`bin/overlap.mjs`).", "");
+else {
+  out.push(`${found.length} measured at a moment after every cue and before every scene end (\`bin/overlap.mjs\`, \`review/overlaps.json\`): visible text on other text or on a picture. Each is blocking unless the scene means it (a label on purpose over a picture); \`data-overlap="ok"\` on the element says so and removes it from this list.`, "");
+  out.push(md(found.map((o) => [o.from, round(o.to - o.from), o.scene, o.a, o.b, o.px]), ["from (s)", "lasts (s)", "scene", "this", "over this", "shared px²"]), "");
+  for (const o of found) console.log(`OVERLAP ${o.from} s ${o.scene}: "${o.a}" and "${o.b}"`);
 }
 out.push("## Frames", "", `In \`review/frames/\`, ${frames.length} stills (${frameMode === "scenes" ? "mid-scene and scene end only" : "after each cue and at each scene end"}); ${sheets.map((f) => `\`${f}\``).join(", ")} show them together.`, "");
 const sceneEnd = (t) => timing.scenes.some((s) => Math.abs(s.start + s.duration - 0.4 - t) < 0.01);

@@ -1029,6 +1029,45 @@ memes shown for two seconds as afterthoughts, and the same few templates across 
 fifth cut is 17.4 minutes); a scan of every video's scenes.html on each search and packet. **Tested** by a unit test on
 `memesUsed`, and by the fifth cut's round (accuracy, clarity, engagement), whose findings were fixed.
 
+### D71. A new act's music hands off instead of crossfading (2026-10-28)
+**Decision.** Where a mood changes the music, the old bed fades out from the act's last word (no earlier than 4 s and no later than
+1 s before the boundary), held at its ducked level so it never swells back up in the pause, and is gone 0.5 s after the boundary;
+the new bed starts from its own opening at the boundary and swells in over 2 s under the act's card. Both curves are equal-power
+(`MUSIC_OUT_MAX`, `MUSIC_OUT_MIN`, `MUSIC_OUT_PAST`, `MUSIC_IN` in `bin/lib.mjs`). This replaces D61's 1.5 s linear crossfade
+centred on the boundary. **Why.** The owner, on eth-is-false's fifth cut: the music transitions need "a lot more care". The old
+bed came back to full volume in the pause before each act card (its duck lifts 0.3 s after the last word), then two beds in
+different keys played together for 1.5 s. **Costs.** A quiet beat between acts, which is the point; where an act starts speaking
+at its boundary, the old bed fades under its first words. **Tested** by `test/moods.test.mjs`, which measures the level at points
+of the handoff; without the hold, the paused bed measured 3535 where 1768 was wanted, so the test fails. Also tested on the sixth cut.
+
+### D72. Overlaps are measured, not left to the critics' stills (2026-10-28)
+**Decision.** `bin/overlap.mjs` (`npm run overlaps`, and the packet's *Overlaps* section through `npm run review`) loads the built
+page in headless Chrome. It seeks the kit's timeline to 0.8 s after every cue and 0.4 s before every scene end, and lists visible
+text sitting on other text or on a picture. Text is measured by the boxes of its lines, not its element's box. It skips:
+- an element and its own ancestor;
+- two things in one figure or one SVG;
+- the letters of one animated word;
+- the captions;
+- anything inside `[data-overlap="ok"]`;
+- anything under a full-frame cover. A cover masked solid to N% and then fading hides only what is above N%.
+
+**Why.** The owner found three overlaps in the fifth cut after its critic round had passed: a still lands where it lands. On the
+fifth cut the check found all three. It found five more where a pop meme's scrim, faded over its bottom 20%, let the scene's text
+show through the meme, so that fade is gone. **Costs.** About 3 s for a 17-minute video. Without Chrome, the packet says it was
+not measured. Any other mask counts as hiding nothing, so it may report too much. An overlap that starts and ends between two
+samples is missed. **Tested** by `test/overlap.test.mjs`, which fails without the faded-edge rule, and on the fifth and sixth cuts.
+
+### D73. A joke's direction says what the joke is (2026-10-28)
+**Decision.** A joke on the Drama 3 engine is directed with what it is and how it should land: who is joking, at whose expense,
+and the feeling under it, for example `[telling a joke at my own expense: an AI grudgingly tipping its hat to a rival, mock-annoyed
+that another AI got there first]` (`narration-writing`, *Direction*). The note describes the intent, never the line's words.
+**Why.** The owner heard the self-aware jokes in the fifth cut as flat ("because of delivery") and asked whether telling the model
+the intent would land them. The same line was voiced once under three directions. The short tags `[firm, quietly dramatic, then
+dry]` gave a pitch range of 92 Hz, the intent note 108 Hz, and "through gritted teeth" 64 Hz. One note that restated its line
+("one AI telling the humans not to trust either of us") made the take repeat a sentence and drop the punchline on all five tries;
+a shorter note passed. **Costs.** One take per direction shows the read changed, not that it is funnier: the owner's ear decides.
+**Tested** by that A/B (`local/videos/joke-ab`) and by the sixth cut's hear-back, which caught the repeat.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
