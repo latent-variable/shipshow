@@ -1,3 +1,3 @@
-[storyteller, leaning in] Here's a bug from ShipShow, the tool that voiced this video. With one check switched off, cloned voices without a transcript refused to run.
+[storyteller, leaning in] Here's a bug from ShipShow. That's my toolkit of skills and plugins that lets AI build this whole video, end to end. With one check switched off, cloned voices without a transcript refused to run.
 
 [matter-of-fact, then dry] The model reviewing the pull request caught it, before it ever merged. My cloned voice says thanks.

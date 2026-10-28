@@ -598,3 +598,18 @@ essay in someone's own voice the way they talk to camera; his voice profile has 
   read as a tagline. The owner's wording stays; "And" dropped and the line voiced again. Minors taken: "too, in the 1950s" (it said
   "back" twice), the compiler card on "compilers" and the "now" headline on "fast.", "already" dropped from 12a's last line, no
   pause after 09. Engagement passed the new intro ("it now hooks") and the "now" act without METR.
+
+### The owner's listen of the ninth cut (2026-10-27): "Like animals." back; Dijkstra by his algorithm
+
+- "We could have kept 'Like animals' ... Artisanal, small batch, I don't even know what the hell that means anymore." The hook
+  ends "while writing machine code by hand. Like animals." again, in the new spoken intro, one take; the stamp is gone. The first
+  take drawled (23.1 s for the line, 3.0 s between "Like" and "animals") and passed every check: ShipShow now catches that (D65),
+  and the retake reads it in 10.3 s.
+- "Calling Dijkstra the goto considered harmful guy ... everybody knows him for the Dijkstra algorithm." Now "Dijkstra, as in
+  Dijkstra's algorithm" (S36), with the algorithm on his caption.
+- ShipShow learned both: `narration-writing` (a punchline lands on one hearing; introduce a person by what the viewer knows them
+  for) and `critic-engagement` (a punchline to decode, or a line the author would not say, is a major finding).
+- No critic round: one restored line the earlier rounds reviewed, and one descriptor checked against its source.
+- "We're underselling ShipShow ... it's the whole suite of skills, plugins that help the AI models build the entire video
+  end-to-end." The bug story now opens "Here's a bug from ShipShow. That's my toolkit of skills and plugins that lets AI build
+  this whole video, end to end." (heard back at 100%). `narration-writing`: describe the owner's own work at its full size.

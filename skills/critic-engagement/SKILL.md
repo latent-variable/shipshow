@@ -47,6 +47,9 @@ reason for pressing play, and watch it as them.
 - **major:** for any video made to explain (not a decision video mid-work), fewer than about one meme or GIF a minute, a whole
   act without one, or none that moves (`explain-concept`, *Memes and GIFs by default*). Count them in the packet's *Memes*.
   A meme that has nothing to do with what is being said at that moment is a finding too.
+- **major:** a punchline the viewer has to decode, or a line in the author's own voice that they would not say out loud.
+  Plain beats clever ("Like animals." beat "Artisanal. Small batch."; "If you've been shipping code with AI, somebody has
+  probably told you that already" beat "That's the charge against AI pull requests now": the owner, 2026-10-27).
 - **minor:** motion that competes with the words: an effect on something the voice is not
   talking about, or so much movement the viewer cannot read.
 - **minor:** an opening or ending that is generic (a title card, "thanks for watching")

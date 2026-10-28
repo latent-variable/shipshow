@@ -288,7 +288,7 @@ whether the gags in 04, 06, 07, 10 and 11 land.
 
 The owner on the second cut: too inconsistent, and "moving so fast through the content that it's hard to follow". A new
 narrator he picked (`narrator-uk`, invented, young British, `local/voices/VOICES.md`) at speed 1.0, one reference clip for
-every take; the script regrouped into paragraphs, each one take (`DRAMA_LINE_MAX`, DESIGN D64), so the delivery carries
+every take; the script regrouped into paragraphs, each one take (`DRAMA_LINE_MAX`, DESIGN D66), so the delivery carries
 through; seven acts, each opened by a wordless title card during a 2.6 s lead while its look and music arrive; a beat between
 thoughts. 62 takes, speech levels within 0.6 dB (standard deviation) of each other; 12.8 minutes.
 
