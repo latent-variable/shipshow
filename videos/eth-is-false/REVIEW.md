@@ -358,3 +358,26 @@ The hook keeps its three questions open; the narrator speaks for itself in the m
 
 **Accepted:** "roughly two to the n over the square root of log n" for Theorem 1.1's bound (12 names the log log factor); the
 nails meme's three lines.
+
+## Round 11: the sixth cut, one round, two critics on Sonnet (about 160k tokens)
+
+The owner's notes on the fifth cut (`critics.md`) set the scope: the dial and the rules, music handoffs, Zane's card, three
+overlaps, flat jokes. The overlaps are now measured (`npm run overlaps`, D72): the fifth cut had 8 places, the sixth has none.
+
+| Critic | Verdict | Major | Minor |
+|---|---|---|---|
+| accuracy (09 to 11b, 05b) | pass | 0 | 2 |
+| clarity (09 to 11b) | fail | 4 | 3 |
+
+**Fixed:** the dial now says why the easy points are easy (the paper builds the rewrite so a note is all a rule needs there,
+and at zero it needs the real switches), that a note is guessed ("say group two has seven on"), each group counted alone, and
+every combination of guesses added up; the curve is "the number of settings that work", smooth because the rewritten rules are
+still little formulas with the dial inside them, worked out at one, two, three and wanted at zero; slopes are what an easy point
+gives besides its height; idea one says the counts multiply but the steps add ("a million steps per group: three million in
+all"); the dial's screen text says "like" and "say", as the narration does; the clause on why the curve is smooth is marked
+inferred in `sources.md`.
+
+**Declined:** "n" before "n switches" (defined in 03); the recap's "the curve that bends under every straight line" (it names
+the chart from 05 and 08, which the owner asked to see return); "in the paper: Taylor coefficients" in small type (the source's
+term, kept for the viewer who wants it, `explain-concept`); "two to the n over the square root of log n" said aloud (accepted
+in round 10; the screen shows the exponent). No second round: nothing blocking, a revision gets one (critic-loop, *Spend*).

@@ -1,5 +1,5 @@
-[clear, quietly pleased] Idea three: read the answer off zero. Because every rule is now a little formula, the count changes smoothly as you turn the dial. It traces out a curve.
+[clear, quietly pleased] Idea three: read the answer off zero. Turn the dial, and the number of settings that work changes smoothly, because the rewritten rules are still little formulas, with the dial inside them. It traces out a curve. We can work it out at one, two, three, but we want it at zero.
 
-[clear, explaining carefully, one step at a time] Two points pin down a straight line. A curve with more bends needs more to pin it down, and this one has far more bends than we have easy points. So at each easy point, you also work out its slope, which way the curve is heading, and how fast that slope is changing, and so on. Put all of that together, and only one curve fits.
+[clear, explaining carefully, one step at a time] Two points pin down a straight line. A curve with more bends needs more, and this one has far more bends than we have easy points. But at an easy point we can work out more than its height: which way the curve is heading there, how that is bending, and so on. Enough of those, and only one curve passes through them all.
 
 [building, then quietly satisfied] Then you follow that curve back to zero, and read off its value. That's the exact count, without ever trying every setting.
