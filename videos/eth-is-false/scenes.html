@@ -27,6 +27,7 @@
   .stamp.pink { border-color: var(--accent-3); color: var(--accent-3); }
   .center { text-align: center; }
   .meme-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .meme-wrap.pop { z-index: 6; background: rgba(8, 10, 12, 0.82); -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%); mask-image: linear-gradient(to bottom, #000 80%, transparent 100%); }
   .ss-meme { --meme-height: 780px; }
   .stage .ss-portrait { --portrait-height: 290px; position: relative; inset: auto; margin: 0; max-width: none; flex: none; font-size: 32px; }
   .stage .ss-portrait figcaption small { font-size: 28px; }
@@ -372,6 +373,7 @@
       <div class="chip" data-cue="settings." data-anim="pop"><span class="math">2<sup><i>n</i></sup></span>&nbsp;settings</div>
     </div>
   </div>
+  <div class="meme-wrap pop" id="m02" data-cue="settings." data-anim="fade"><figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="settings." data-anim="pop"><span class="top">me, trying</span><span class="bottom">all two to the n settings</span></figure></div>
 </section>
 
 <!-- 03: the doubling -->
@@ -423,8 +425,9 @@
       </svg>
       <div class="chip blue zoombadge" id="zb03">zoom out</div>
     </div>
-    <div class="row"><div class="stamp" data-cue="small" data-anim="slam">and 90 is small</div><div class="chip hot" data-cue="clever" data-anim="pop">solvers: skip cleverly</div><div class="chip" data-cue="hardest" data-anim="pop">hardest cases: still exponential</div></div>
+    
   </div>
+  <div class="meme-wrap pop" id="m03" data-cue="small" data-anim="fade"><figure class="ss-meme" data-meme="panik-kalm-panik"><span data-cue="small" data-anim="pop">2⁹⁰ settings</span><span data-cue="clever" data-anim="pop">solvers skip cleverly</span><span data-cue="hardest" data-anim="pop">the hardest cases don't let you</span></figure></div>
 </section>
 
 <!-- 04: P versus NP, Cook, the poll -->
@@ -511,7 +514,7 @@
       <g data-cue="seven" data-anim="left"><text class="lab" x="390" y="508" text-anchor="end">Jiang, Cai, preprint</text><text class="sub" x="390" y="544" text-anchor="end">2026 · randomized</text><rect class="bar" x="420" y="476" width="350" height="78" rx="8"/><text class="val" x="790" y="532">1.307</text></g>
     </svg>
   </div>
-  <div class="shavewrap"><div class="stamp yellow" data-cue="hair." data-anim="slam" data-sfx="thump">27 years · −0.026</div></div>
+  <div class="meme-wrap pop" id="m06" data-cue="hair." data-anim="pop" data-sfx="thump"><figure class="ss-meme" data-meme="stonks"><span>27 years of records</span><span>−0.026</span></figure></div>
 </section>
 
 <!-- 07: what was built on it -->
@@ -592,6 +595,7 @@
       <div class="chip dead" data-cue="ETH," data-anim="pop">ETH</div><div class="chip dead" data-cue="Strong" data-anim="pop">Strong ETH</div><div class="row" style="gap: inherit" data-cue="few" data-anim="stagger"><div class="chip dead">Gap-ETH</div><div class="chip dead">NSETH</div><div class="chip dead">#ETH</div></div>
     </div>
   </div>
+  <div class="meme-wrap pop" id="m08b" data-cue="relatives," data-anim="fade"><figure class="ss-meme" data-clip="https://i.imgflip.com/6inpzl.mp4" data-name="No no no wait wait wait" data-credit="https://imgflip.com/gif-templates" data-cue="relatives," data-anim="pop"><span class="top">ETH and its whole family</span><span class="bottom">one paper, if it holds</span></figure></div>
 </section>
 
 <!-- 09: counting as a sum, and the split -->
@@ -740,6 +744,7 @@
       <div class="card" data-cue="OpenAI" data-anim="up"><div class="quote">practical improvements "will require <em>significant further research</em>"</div><div class="src center">OpenAI, October 26, 2026</div></div>
     </div>
   </div>
+  <div class="meme-wrap pop" id="m12b" data-cue="typo." data-anim="fade"><figure class="ss-meme" data-clip="https://i.imgflip.com/atgx12.mp4" data-crop="top 22% bottom 12%" data-name="IShowSpeed hands over face" data-credit="https://imgflip.com/gif-templates" data-cue="typo." data-anim="pop"><span class="top">a number of switches</span><span class="bottom">with 3.3 billion digits</span></figure></div>
 </section>
 
 <!-- 13: what it means -->
@@ -760,6 +765,7 @@
       </div>
     </div>
   </div>
+  <div class="meme-wrap pop" id="m13" data-cue="mean" data-anim="fade"><figure class="ss-meme" data-meme="pigeon"><span>everyone online</span><span>a faster SAT algorithm</span><span>is this P = NP?</span></figure></div>
 </section>
 
 <!-- 13b: those papers, and the twist -->
@@ -832,8 +838,9 @@
       <div class="namecard" data-cue="Paturi," data-anim="pop"><b>Ramamohan Paturi</b><small>proposed ETH</small></div>
       <figure class="ss-portrait" data-commons="File:Ryan Williams at Dagstuhl 10441.jpg" data-cue="Williams," data-anim="pop"><figcaption>Ryan Williams<small>refuted MA-SETH, 2016</small></figcaption></figure>
     </div>
-    <div class="obit"><div class="stamp" data-cue="obituary." data-anim="slam">proofreading its obituary</div></div>
+    
   </div>
+  <div class="meme-wrap pop" id="m14b" data-cue="obituary." data-anim="pop"><figure class="ss-meme" data-meme="harold"><span>proposing ETH, 2001</span><span>proofreading its obituary, 2026</span></figure></div>
 </section>
 
 <!-- 15: close -->
@@ -855,6 +862,7 @@
       <div class="last big" style="font-size: 84px" data-cue="starts." data-anim="slam" data-sfx="thump" data-sfx-offset="0.15">now it's where one <em>starts</em></div>
     </div>
   </div>
+  <div class="meme-wrap pop" id="m15" data-cue="solver," data-anim="fade"><figure class="ss-meme" data-clip="https://i.imgflip.com/873a5j.mp4" data-name="Nanami vibing (Jujutsu Kaisen)" data-credit="https://imgflip.com/gif-templates" data-cue="solver," data-anim="pop"><span class="top">my SAT solver</span><span class="bottom">unchanged, still fine</span></figure></div>
 </section>
 
 <script>
@@ -895,6 +903,11 @@
     const id = ch.closest("section").dataset.scene;
     tl.to(ch, { opacity: 0, duration: 0.45 }, sceneStart(id) + LEAD_IN[id] - 0.35);
   });
+  // Pop memes that leave before their scene goes on; the rest hold to their scene's end.
+  tl.to("#m06", { opacity: 0, duration: 0.3 }, cueAt("#m06") + 3.2);
+  tl.to("#m12b", { opacity: 0, duration: 0.3 }, cueAt("#m12") - 0.4);
+  tl.to("#m13", { opacity: 0, duration: 0.3 }, cueAt("[data-scene='13-what-it-means'] .stamp.green") - 0.3);
+  tl.to("#m15", { opacity: 0, duration: 0.3 }, cueAt("#p15b .last") - 0.5);
   tl.to("#p04a", { opacity: 0, duration: 0.35 }, cueAt("#card04p") - 0.4);
   tl.set("#p04b", { opacity: 0 }, 0);
   tl.to("#p04b", { opacity: 1, duration: 0.35 }, cueAt("#card04p") - 0.4);

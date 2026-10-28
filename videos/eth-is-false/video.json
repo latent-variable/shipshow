@@ -36,7 +36,8 @@
     "06-the-race": 0.8,
     "08b-counting": 0.8,
     "13b-twist": 0.8,
-    "14b-who-checks": 0.3
+    "14b-who-checks": 1.6,
+    "02-puzzle": 1.4
   },
   "moods": {
     "headline": {

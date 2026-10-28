@@ -310,3 +310,9 @@ said in short sentences without the letter c; "quadratic" glossed.
 still past 9.7 s; `critic-pacing` now judges a long scene by its ideas, not the clock alone. The two act changes at 5.4 and 5.6 s
 of voice-free time (a card carries them); the recap meme's 3.4 s; "SAT solver" asked in the hook before SAT is defined (a tease
 paid off in 13b); Whisper hearing "floor" as "flaw" in the British accent (Parakeet heard "floor").
+
+**After round 9, at the owner's word:** "the meme to information ratio is very low". Eight more, for eleven across 12.8
+minutes, four of them moving: typing kitty (02), Panik Kalm Panik (03, replacing a stamp and two chips), Stonks (06,
+replacing the "27 years" stamp), no no no wait (08b), IShowSpeed (12), Is This a Pigeon? (13), Hide the Pain Harold (14b,
+replacing the obituary stamp) and Nanami (15). Each lies on a scrim over its scene; every frame looked at. No critic re-run:
+the memes add no claim (their facts are the video's own, sourced) and the rule for them is now `explain-concept`'s.
