@@ -47,4 +47,5 @@ async function waitingOpacity(style) {
 test("a word not yet spoken waits at 0.38, or at --cap-wait when a video sets it", { skip: !chrome && "no Chrome" }, async () => {
   assert.equal(await waitingOpacity(""), 0.38);
   assert.equal(await waitingOpacity("<style>#root { --cap-wait: 0.62; }</style>\n"), 0.62);
+  assert.equal(await waitingOpacity("<style>#root { --cap-wait: 0; }</style>\n"), 0);   // zero is a value, not a missing one
 });

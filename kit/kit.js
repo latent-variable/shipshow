@@ -495,7 +495,8 @@
           }
           // --cap-wait: how bright a word not yet spoken waits (0.38 by default). Raise it where captions must read at a
           // contrast bar: at 0.62, white over --cap-bg measures about 7:1.
-          gsap.set(words, { opacity: Math.min(1, Math.max(0, parseFloat(token("--cap-wait", "0.38")) || 0.38)) });
+          const wait = parseFloat(token("--cap-wait", "0.38"));   // 0 hides waiting words; not a number falls back
+          gsap.set(words, { opacity: Number.isFinite(wait) ? Math.min(1, Math.max(0, wait)) : 0.38 });
           words.forEach((w, i) => {
             const at = Math.max(t, +w.dataset.wordAt), next = words[i + 1] ? +words[i + 1].dataset.wordAt : e;
             // A lift and a glow, never a scale: a scaled word grows into the spaces beside it.
