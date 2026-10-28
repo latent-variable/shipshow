@@ -226,7 +226,7 @@ const timing = { engine: cfg.engine, voice: cfg.voice, speed: cfg.speed, scenes:
 const placed = [];
 for (const s of plan) {
   const scene = { id: s.id, start: round(t), sentences: [] };
-  t += cfg.lead / cfg.speed;
+  t += cfg.lead / cfg.speed + (cfg.leads[s.id] || 0);   // a beat before this scene: a new act's look and music arrive first
   s.units.forEach((unit, i) => {
     const wav = readWav(unit.wav);
     if (!rate) ({ rate, channels } = wav);

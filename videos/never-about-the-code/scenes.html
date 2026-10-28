@@ -159,6 +159,8 @@
   .step small { display: block; font-family: var(--font-mono); font-size: 28px; font-weight: 400; color: var(--muted); margin-top: 4px; }
   .side { position: relative; height: 820px; }
   .side > * { position: absolute; inset: 0; margin: auto; height: fit-content; }
+  .lunch { font-family: var(--font-display); font-size: 44px; line-height: 1.2; padding: 36px 40px; text-align: center; transform: rotate(-2deg); }
+  .lunch b { display: block; font-size: 150px; line-height: 1; color: var(--accent-3); }
   .checks { font-family: var(--font-mono); font-size: 34px; background: var(--code-bg); color: var(--code-ink); border-radius: var(--radius); padding: 30px 36px; box-shadow: var(--code-shadow); }
   .checks div { padding: 8px 0; }
   .checks .ok { color: var(--good); font-weight: 700; }
@@ -184,6 +186,15 @@
   .big-step { display: grid; grid-template-columns: 90px 1fr; gap: 26px; align-items: center; width: 1300px; margin: 0 auto; padding: 34px 44px; font-size: 64px; font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; }
   .big-step .n { color: var(--accent-3); font-size: 96px; }
   .big-step small { display: block; font-family: var(--font-mono); font-size: 32px; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-top: 8px; }
+  /* A new act opens on its own card, in its own look, while its music plays alone (video.json leads). */
+  .chapter { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center; }
+  .chapter .kicker { font-family: var(--font-mono); font-size: 40px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); }
+  .chapter .title { font-family: var(--font-display); font-weight: var(--display-weight, 800); font-size: 168px; line-height: 1; color: var(--accent); letter-spacing: var(--display-tracking, -0.02em); }
+  .chapter .rule { width: 520px; height: 6px; border-radius: 3px; background: var(--accent-3); transform-origin: center; }
+  .chapter.file .title { color: var(--ink); }
+  .chapter.file .tab { font-family: var(--font-mono); font-size: 34px; padding: 10px 34px; border: 3px solid var(--frame, var(--ink)); border-bottom: none; border-radius: 12px 12px 0 0; background: var(--card); color: var(--accent); }
+  .chapter.neon .title { color: var(--accent-3); text-shadow: 0 0 40px var(--accent-3); font-size: 220px; }
+  .chapter.alarm .title { color: var(--accent); border: 10px solid var(--accent); padding: 10px 50px; border-radius: 16px; transform: rotate(-3deg); text-transform: uppercase; font-size: 150px; }
 </style>
 
 <section data-scene="01-hook">
@@ -191,12 +202,12 @@
   <div class="zone" id="ghostty" data-cue="Ghostty" data-anim="up">
     <figure class="ss-shot" data-shot="https://github.com/ghostty-org/ghostty/blob/main/CONTRIBUTING.md" data-find="you must understand your code" data-width="520" data-pad="8" data-mark-cue="must" style="--shot-width: 1500px; --shot-max-height: 720px"><figcaption>Ghostty, the terminal app: its contributing guide</figcaption></figure>
   </div>
-  <div class="zone" id="c1950" data-cue="compilers," data-anim="slam" data-sfx="scratch" style="display: flex; align-items: center">
+  <div class="zone" id="c1950" data-cue="compilers" data-anim="slam" data-sfx="scratch" style="display: flex; align-items: center">
     <div class="then"><div class="tag">pushback, about</div><div class="yr">compilers</div><div class="about">1950s</div></div>
   </div>
-  <div class="meme-wrap" id="m01" data-cue="writing" data-anim="pop">
+  <div class="meme-wrap" id="m01" data-cue="wrote" data-anim="pop">
     <div class="scrim"></div>
-    <figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="writing" data-anim="pop"><span class="top">1950s programmers</span><span class="bottom">writing machine code by hand</span></figure>
+    <figure class="ss-meme" data-clip="https://i.imgflip.com/4bd1a0.mp4" data-name="Typing kitty" data-credit="https://imgflip.com/gif-templates" data-cue="wrote" data-anim="pop"><span class="top">Real programmers, 1950s</span><span class="bottom">machine code, one number at a time</span></figure>
   </div>
 </section>
 
@@ -278,9 +289,14 @@
 </section>
 
 <section data-scene="04-impossible" data-mood="archive">
+  <div class="chapter file" id="ch04" data-cue="+0.2" data-anim="fade">
+    <div class="tab" data-cue="+0.35" data-anim="type">FILE 1952&ndash;1983</div>
+    <div class="title" data-cue="+0.9" data-anim="slam" data-sfx="thump">The Skeptics</div>
+    <div class="kicker" data-cue="+1.3" data-anim="fade">four stages, every time</div>
+  </div>
   <div class="call" id="call4" data-cue="four" data-anim="stagger"><div class="four"><span><b>1</b>impossible</span><span><b>2</b>beneath you</span><span><b>3</b>rots your brain</span><span><b>4</b>the bar</span></div></div>
   <div class="stage">
-    <div class="stages" data-cue="+0.1" data-anim="fade"><span class="">1 · impossible<b class="on" data-cue="one," data-anim="pop">1 · impossible</b></span><span class="">2 · beneath you</span><span class="">3 · rots your brain</span><span class="">4 · the bar</span></div>
+    <div class="stages" data-cue="four" data-anim="fade"><span class="">1 · impossible<b class="on" data-cue="one," data-anim="pop">1 · impossible</b></span><span class="">2 · beneath you</span><span class="">3 · rots your brain</span><span class="">4 · the bar</span></div>
     <div class="solo card" data-cue="Hopper" data-anim="up">
       <figure class="ss-portrait" id="p-hopper" data-commons="File:Commodore Grace M. Hopper, USN (covered) head and shoulders crop.jpg" data-cue="Hopper" data-anim="pop"><figcaption>Grace Hopper<small>Navy officer · compiler pioneer</small></figcaption></figure>
       <div><div class="quote"><span data-cue="working" data-anim="fade">1952: a working compiler,</span> <span data-cue="nobody" data-anim="fade">and “nobody would <em>touch it</em>.”</span></div><div class="who" data-cue="arithmetic." data-anim="fade" style="font-size: 34px; font-family: var(--font)">“They told me computers could only do arithmetic.”</div></div>
@@ -362,7 +378,12 @@
 </section>
 
 <section data-scene="09-now" data-mood="now">
-  <div class="headline big" id="h09" data-cue="+0.1" data-anim="slam" style="color: var(--accent-3); font-size: 88px; top: 70px">this layer is moving fast</div>
+  <div class="chapter neon" id="ch09" data-cue="+0.2" data-anim="fade">
+    <div class="kicker" data-cue="+0.3" data-anim="fade">meanwhile</div>
+    <div class="title" data-cue="+0.7" data-anim="glitch" data-sfx="whoosh">2026</div>
+    <div class="rule" data-cue="+1.1" data-anim="grow"></div>
+  </div>
+  <div class="headline big" id="h09" data-cue="Now" data-anim="slam" style="color: var(--accent-3); font-size: 88px; top: 70px">this layer is moving fast</div>
   <div class="zone" id="metr1" data-cue="METR" data-anim="up" style="top: 220px">
     <div class="col"><div class="tag center">METR · July 2025</div><figure class="ss-shot" data-shot="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" data-find="AI makes them slower" data-lines="1" data-width="640" data-pad="10" data-mark-cue="slower." style="--shot-max-height: 600px"></figure></div>
   </div>
@@ -404,7 +425,7 @@
     <div class="punch big" style="font-size: 84px; line-height: 1.2">“You don't understand the code.”<br><span style="color: var(--accent)" data-cue="three," data-anim="fade">is stage three.</span><br><span style="color: var(--good)" data-cue="four" data-anim="fade">the work is at stage four.</span></div>
   </div>
   <div class="zone" id="k26" data-cue="Karpathy" data-anim="up" style="top: 230px; bottom: 90px">
-    <figure class="ss-shot" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2015883857489522876&amp;theme=dark" data-source="x.com/karpathy/status/2015883857489522876" data-select="article" data-width="620" data-pad="0" data-find="80% agent coding" data-mark-cue="eighty" style="--shot-max-height: 680px"><figcaption>Andrej Karpathy, who named vibe coding · January 2026</figcaption></figure>
+    <figure class="ss-shot" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2015883857489522876&amp;theme=dark" data-source="x.com/karpathy/status/2015883857489522876" data-select="article" data-width="620" data-pad="0" data-find="80% agent coding" data-mark-cue="eighty" style="--shot-max-height: 680px"><figcaption>Andrej Karpathy, who coined the term vibe coding · January 2026</figcaption></figure>
   </div>
   <div class="zone" id="pair" style="top: 220px; display: flex; align-items: center">
     <div class="row" style="width: 100%">
@@ -426,9 +447,13 @@
 </section>
 
 <section data-scene="11-objection" data-mood="objection">
+  <div class="chapter alarm" id="ch11" data-cue="+0.2" data-anim="fade">
+    <div class="kicker" data-cue="+0.3" data-anim="fade">the fair point</div>
+    <div class="title" data-cue="+0.7" data-anim="slam" data-sfx="sting">Objection</div>
+  </div>
   <div class="stage" id="obj">
     <div class="vs">
-      <div class="card" data-cue="deterministic." data-anim="left"><div class="tag">a compiler</div><div class="big">same input, same output</div>
+      <div class="card" id="det" data-cue="deterministic." data-anim="left"><div class="tag">a compiler</div><div class="big">same input, same output</div>
         <div class="runs"><div class="run">run 1 <b>program A</b></div><div class="run">run 2 <b>program A</b></div></div></div>
       <div class="card" data-cue="Run" data-anim="right"><div class="tag">an agent</div><div class="big">same prompt, new program</div>
         <div class="runs"><div class="run">run 1 <b>program A</b></div><div class="run">run 2 <b>program B</b></div></div></div>
@@ -450,8 +475,13 @@
 </section>
 
 <section data-scene="12-verify" data-mood="workshop">
+  <div class="chapter" id="ch12" data-cue="+0.2" data-anim="fade">
+    <div class="kicker" data-cue="+0.3" data-anim="fade">the other eighty percent</div>
+    <div class="title" data-cue="+0.7" data-anim="slam" data-sfx="up">How I Ship</div>
+    <div class="rule" data-cue="+1.1" data-anim="grow"></div>
+  </div>
   <div class="stage">
-    <div class="punch big" data-cue="+0.1" data-anim="up" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px">how I actually ship with agents</div>
+    <div class="punch big" id="h12" data-cue="Here's#2" data-anim="up" style="position: absolute; left: 0; right: 0; top: 10px; font-size: 56px">the loop, on every feature</div>
     <div class="flow" id="flow">
       <div class="steps-list">
         <div class="step card" data-cue="tell" data-anim="left"><span class="n">1</span><span>I say what the feature has to do</span></div>
@@ -460,7 +490,8 @@
         <div class="step card" data-cue="standing" data-anim="left"><span class="n">4</span><span>standing tests and checks<small>they know the project</small></span></div>
       </div>
       <div class="side">
-        <div class="checks" id="checks" data-cue="Fixed" data-anim="up">
+        <div class="lunch card" id="lunch" data-cue="lunch." data-anim="pop"><b>0</b> approvals just to get to lunch</div>
+        <div class="checks" id="checks" data-cue="standing" data-anim="up">
           <div class="ok">✓ npm test</div>
           <div class="ok">✓ security gate</div>
           <div class="ok">✓ the PR's CI</div>
@@ -469,10 +500,10 @@
       </div>
     </div>
   </div>
-  <div class="overlay" id="review" data-cue="tool" data-anim="fade">
+  <div class="overlay" id="review" data-cue="bug" data-anim="fade">
     <div class="scrim solid"></div>
     <div class="zone full" style="display: flex; flex-direction: column; justify-content: center">
-      <div class="col" style="width: 1500px; flex: none; margin: 0 auto"><figure class="ss-shot" data-shot="https://github.com/latent-variable/shipshow/pull/77" data-select="#pullrequestreview-5662968608 h3:has(+ table), #pullrequestreview-5662968608 table" data-find="blocks clones without a transcript" data-width="700" data-pad="10" data-mark-cue="bug:" style="--shot-max-height: 720px"><figcaption>the last review round on ShipShow's PR #77: the bug, resolved; no open findings</figcaption></figure></div>
+      <div class="col" style="width: 1500px; flex: none; margin: 0 auto"><figure class="ss-shot" data-shot="https://github.com/latent-variable/shipshow/pull/77" data-select="#pullrequestreview-5662968608 h3:has(+ table), #pullrequestreview-5662968608 table" data-find="blocks clones without a transcript" data-width="700" data-pad="10" data-mark-cue="caught" style="--shot-max-height: 720px"><figcaption>the last review round on ShipShow's PR #77: the bug, resolved; no open findings</figcaption></figure></div>
     </div>
   </div>
 </section>
@@ -500,7 +531,7 @@
 
 <section data-scene="13-close" data-mood="today">
   <div class="stage">
-    <div class="ask big" data-cue="+0.1" data-anim="fade" style="font-size: 88px; color: var(--accent)">“You don't understand the code.”</div>
+    <div class="ask big" data-cue="+0.4" data-anim="fade" style="font-size: 88px; color: var(--accent)">“You don't understand the code.”</div>
     <div class="ask big" data-cue="agree," data-anim="slam" style="font-size: 104px">just agree.</div>
     <div class="ticks" data-cue="show" data-anim="stagger"><span>✓ reviewed</span><span>✓ tested</span><span>✓ verified</span></div>
     <div class="unread" data-cue="Nobody" data-anim="fade"><s>sub sp, sp, #16 · str w0, [sp, #12] · str w1, [sp, #8] …</s><br>nobody read the machine code either</div>
@@ -536,11 +567,16 @@
   tl.to("#k26", { opacity: 0, duration: 0.3 }, cueAt("#p-dhh") - 0.3);
   tl.to("#pair", { opacity: 0, duration: 0.3 }, cueAt("#me") - 0.3);
   tl.to("#m11", { opacity: 0, duration: 0.3 }, cueAt("#m11") + 1.9);
-  tl.to("#review", { opacity: 0, duration: 0.3 }, cueAt("#checks") + 0.2);
+  tl.to("#review", { opacity: 0, duration: 0.3 }, cueAt("#h12") - 0.3);
   tl.to("#m12", { opacity: 0, duration: 0.3 }, cueAt("#m12") + 3.2);
   tl.to("#call4", { opacity: 0, duration: 0.3 }, cueAt("#p-hopper") - 0.3);
   tl.to("#call5", { opacity: 0, duration: 0.3 }, cueAt("#bk") - 0.3);
   tl.to("#call5b", { opacity: 0, duration: 0.3 }, cueAt("#dj") - 0.3);
   tl.to("#call6", { opacity: 0, duration: 0.3 }, cueAt("#c1983") - 0.3);
   tl.to(["#ocA", "#dstat"], { opacity: 0, duration: 0.3 }, cueAt("#ocB") - 0.3);
+  tl.to("#lunch", { opacity: 0, duration: 0.3 }, cueAt("#checks") - 0.3);
+  tl.to("#ch04", { opacity: 0, duration: 0.35 }, cueAt("#call4") - 0.35);
+  tl.to("#ch09", { opacity: 0, duration: 0.35 }, cueAt("#h09") - 0.35);
+  tl.to("#ch11", { opacity: 0, duration: 0.35 }, cueAt("#det") - 0.35);
+  tl.to("#ch12", { opacity: 0, duration: 0.35 }, cueAt("#review") - 0.35);
 </script>

@@ -51,6 +51,7 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 |---|---|---|
 | 01 | "You don't understand the code" is the charge against AI pull requests now; Ghostty, the terminal app, made it a rule: you must understand your code | S24 (screenshot, the words marked); "the charge against AI pull requests now" is **opinion**, framing |
 | 01 | Programmers pushed back on compilers too, in the 1950s (on screen: "pushback, about compilers") | **opinion**, framing: the pushback itself is sourced in 04 to 05b (S3, S2, S5). No source has a 1950s programmer say "you don't understand your code", and the video does not claim one |
+| 01 | "Real programmers wrote machine code by hand, one number at a time" (meme: "Real programmers, 1950s" / "machine code, one number at a time") | machine code is numbers (the ladder's first rung, 03); hand coding before Fortran, S1 and S4 ("3 days to code this job by hand"); "real programmers" is a joke borrowed from S6 (1983), which 06 calls back, **framing** |
 | 02 | A processor runs tiny steps; one line becomes eleven instructions, two optimized (the card shows the first four of the eleven, then "and 7 more"); nobody reads them, and nobody today says you don't understand your code because of it; you know what it does, the part that mattered | S18; the rest is **opinion** |
 | 03 | The ladder (machine code, assembly, Fortran 1957, C, Python, plain English); each layer means writing less and trusting more; each was roasted by the layer below; the roasting has already started | **opinion**, framing; Fortran's year S1 |
 | 03 | Rewind to January 2023: ChatGPT is two months old (launched 2022-11-30) | S33; the post is dated 2023-01-24 (S26) |
@@ -70,7 +71,7 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 | 09 | "This layer is moving fast" (on screen: "this layer is moving fast") | **opinion**, carried by the doubling below; the video does not compare it with earlier layers |
 | 09 | METR measures the longest task an agent can finish half the time, in human expert hours; early 2025 about an hour; early 2026 about twelve hours, wide error bars; doubling about every three months | S10, S11, S19: doubling 88.6 days since 2024 (TH1.1), 105 days (FRR); Claude 3.7 Sonnet 59 min, Claude Opus 4 101 min, GPT-5 214 min, Claude Opus 4.5 320 min (TH1.1) |
 | 10 | "You don't understand the code" is stage three; the work moved on to stage four | **opinion** |
-| 10 | By the end of 2025, Karpathy, who named vibe coding, had agents writing eighty percent of his code | S22 (named it, February 2025); S13 (screenshot: "80% agent coding and 20% edits+touchups in December", posted 2026-01-26) |
+| 10 | By the end of 2025, Karpathy, who coined the term vibe coding, had agents writing eighty percent of his code | S22 (coined it, February 2025); S13 (screenshot: "80% agent coding and 20% edits+touchups in December", posted 2026-01-26) |
 | 10 | DHH, who made Rails, hasn't hand written any of the code he shipped in Quattro | S14; S23 |
 | 10 | antirez, who made Redis, says hand coding is mostly for fun now (the card quotes him whole: "for most projects, ...") | S15 ("for most projects, writing the code yourself is no longer sensible, if not to have fun"); the bread line is a joke |
 | 10 | "Same here. I'm not going to out-code the AI. My job is using it to build things that scale." | **opinion**, the owner, in his words (2026-10-27) |
@@ -79,7 +80,9 @@ read at its source on 2026-10-26; research notes with the exact passages are in 
 | 11 | So you don't trust the output, you verify it | **opinion** |
 | 11b | When a maintainer closed OCaml's 13,000-line AI pull request, he wrote, among other things: hard to review, and very lightly tested; code that passes tests is only 20% of the work, the other 80% is getting it discussed, reviewed and integrated | S25 (two screenshots, the words marked). Spoken as "among other things": his comment lists copyright and design first |
 | 12, 12b | How the owner ships with agents ("how I actually do that eighty percent", a callback to 11b): he says what the feature has to do; the agent builds and tests it; another model reviews the pull request round after round until nothing serious is left; standing tests and checks that know the project catch what should never happen; he runs the feature himself; most of the work is reviewing, testing and verifying; he has gotten a lot of code merged this way (on screen: "ShipShow alone: 58 merged pull requests", S32) | **opinion**, the owner's own process in his words (2026-10-27). The review screenshot is S29; the checks card names ShipShow's own (`npm test`, the security gate, CI: `AGENTS.md`) |
-| 12 | On ShipShow, the tool that voiced this video, the reviewer caught a bug: switch off one check, and some cloned voices stopped working; fixed before it merged | S29 (the ledger: "`--no-hearback` blocks clones without a transcript ... ✅ resolved"); ShipShow PR #77 added the Drama engine that voices this video |
+| 12 | A bug from ShipShow, the tool that voiced this video: switch off one check, and some cloned voices stopped working; the model reviewing the pull request caught it before it merged | S29 (the ledger: "`--no-hearback` blocks clones without a transcript ... ✅ resolved"); ShipShow PR #77 added the Drama engine that voices this video |
+| 12 | The reviewing model "never gets bored, and it never approves anything just to get to lunch" (card: "0 approvals just to get to lunch") | **opinion**, a joke about review fatigue; it claims nothing about any person. "Lunch" calls back 08's meme |
+| 04, 09, 11, 12 | The act cards: "FILE 1952–1983 · The Skeptics · four stages, every time"; "meanwhile · 2026"; "the fair point · Objection"; "the other eighty percent · How I Ship" | 1952 is Hopper's compiler (S3), 1983 the Datamation letter (S6); the rest is **framing** |
 | 13, 13b | Just agree, and show them how you verified it; nobody read the machine code either (the struck line is the first three instructions of S18); it was never about the code, it was about what it does and whether you can prove it | **opinion**; S18 |
 
 ## Portraits
@@ -118,7 +121,7 @@ catalog's animated templates. The text on each restates a line the narration say
 
 | Scene | Meme | Source | Text | Restates |
 |---|---|---|---|---|
-| 01 | Typing kitty (clip) | i.imgflip.com/4bd1a0.mp4 (Imgflip GIF templates) | "1950s programmers" / "writing machine code by hand" | "while writing machine code by hand" |
+| 01 | Typing kitty (clip) | i.imgflip.com/4bd1a0.mp4 (Imgflip GIF templates) | "Real programmers, 1950s" / "machine code, one number at a time" | "Real programmers wrote machine code by hand, one number at a time" |
 | 02 | Jack Black opens the book, A Minecraft Movie (2025) (clip) | i.imgflip.com/aq7zsi.mp4 (Imgflip GIF templates) | "Me, once a year" / "opening the assembly" | "So, have you ever read them?" |
 | 03 | Pedro Pascal crying (clip) | i.imgflip.com/5pzpm5.mp4 (Imgflip GIF templates) | "Every new layer" / "reading the comments" | "every one of them got roasted" |
 | 05 | Odysseus tied to the mast, The Odyssey (2026 trailer) (clip, bottom 7% cropped) | i.imgflip.com/axqk4y.mp4 (Imgflip GIF templates) | "The priesthood" / "hearing about automatic coding" | the priesthood (S2) |

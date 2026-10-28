@@ -157,6 +157,28 @@ test("speed: --speed beats video.json beats local/config.json beats 1.25, and sc
   }
 });
 
+test("speed: an essay with no speed of its own is read at the voice's pace; video.json and local/config.json still win", async () => {
+  const { config, DEFAULT_SPEED, ESSAY_SPEED } = await import("../bin/lib.mjs");
+  const root = mkdtempSync(join(tmpdir(), "kx-test-"));
+  const dir = join(root, "v"), local = join(root, "local");
+  mkdirSync(dir); mkdirSync(local);
+  process.env.SHIPSHOW_LOCAL = local;
+  try {
+    writeFileSync(join(dir, "video.json"), JSON.stringify({ kind: "essay" }));
+    assert.equal(config(dir, []).speed, ESSAY_SPEED);
+    assert.notEqual(ESSAY_SPEED, DEFAULT_SPEED, "the essay default differs, or this test proves nothing");
+    writeFileSync(join(dir, "video.json"), JSON.stringify({ kind: "decision" }));
+    assert.equal(config(dir, []).speed, DEFAULT_SPEED, "other kinds keep the default");
+    writeFileSync(join(dir, "video.json"), JSON.stringify({ kind: "essay", speed: 1.1 }));
+    assert.equal(config(dir, []).speed, 1.1, "an essay's own speed wins");
+    writeFileSync(join(dir, "video.json"), JSON.stringify({ kind: "essay" }));
+    writeFileSync(join(local, "config.json"), JSON.stringify({ speed: 1.3 }));
+    assert.equal(config(dir, []).speed, 1.3, "the person's own speed wins");
+  } finally {
+    delete process.env.SHIPSHOW_LOCAL;
+  }
+});
+
 test("themes: a local theme wins over a shared one, its files are copied and its url()s rewritten", async () => {
   const { themeDir, themeCss } = await import("../bin/lib.mjs");
   const local = mkdtempSync(join(tmpdir(), "kx-test-"));
@@ -1293,6 +1315,29 @@ test("hold keeps the last frame up after the video's last word, and moves nothin
   const last = before.scenes.length - 1;
   assert.equal(Math.round((after.scenes[last].duration - before.scenes[last].duration) * 100) / 100, 2.5);
   assert.deepEqual(after.scenes.slice(0, last), before.scenes.slice(0, last), "earlier scenes keep their times");
+});
+
+test("leads add a beat before one scene: it starts where it did, its first word moves by it, and so does everything after", () => {
+  const dir = newVideo(), local = fakeLocal(), py = fakeWorker();
+  const cfg = JSON.parse(readFileSync(join(dir, "video.json"), "utf8"));
+  const timing = (leads) => {
+    writeFileSync(join(dir, "video.json"), JSON.stringify({ ...cfg, engine: "omnivoice", leads }));
+    const r = voiceRun(dir, local, py);
+    return { r, t: r.status === 0 ? JSON.parse(readFileSync(join(dir, "timing.json"), "utf8")) : null };
+  };
+  const before = timing({}).t;
+  assert.ok(before.scenes.length >= 2, "the template has at least two scenes");
+  const second = before.scenes[1].id;
+  const after = timing({ [second]: 1.5 }).t;
+  const r2 = (x) => Math.round(x * 100) / 100;
+  assert.deepEqual(after.scenes[0], before.scenes[0], "the scene before is untouched");
+  assert.equal(after.scenes[1].start, before.scenes[1].start, "the led scene starts where it did");
+  assert.equal(r2(after.scenes[1].sentences[0].start - before.scenes[1].sentences[0].start), 1.5, "its first word comes 1.5 s later");
+  assert.equal(r2(after.scenes[1].duration - before.scenes[1].duration), 1.5);
+  assert.equal(r2(after.total - before.total), 1.5);
+  const bad = timing({ [second]: -1 });
+  assert.notEqual(bad.r.status, 0, "a negative lead stops the voice step");
+  assert.match(bad.r.stderr, /leads\[".*"\] is -1; it takes 0 to 10 seconds/);
 });
 
 test("pauses add a beat after one scene: that scene grows, later scenes move by it, earlier ones do not", () => {

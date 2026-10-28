@@ -159,7 +159,7 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
 every turn (measured: 22 skills, 7,957 characters, about 1,989 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 233). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+and SKILL.md under 500 lines (longest 236). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -923,6 +923,21 @@ Neither of his two channel videos (never-about-the-code, eth-is-false) is a deci
 filed as `feature`. **Costs.** The kind changes no code path but the check that accepts it; the bar lives in the skills. Each
 section's music is generated per video (ACE-Step, local, MIT) and kept in `local/music/`, so a teammate without it builds in
 silence for those sections (D61's warning).
+
+### D63. An essay breathes: the voice's own pace, and a beat at each act change (2026-10-27)
+**Decision.** An essay with no `speed` of its own is read at 1.0 (`ESSAY_SPEED`; a person's `local/config.json` speed and
+the video's own still win). `video.json` `"leads": {"<scene>": seconds}` adds plain seconds before a scene's first word, the
+mirror of `pauses` (D46): the scene starts where it did, so a mood's look and music, which change at the scene's start (D61),
+play alone for that long. The build warns when a mood starts under `MOOD_BEAT` (1.2 s) before its first word. The skills
+add what a beat holds: a title card in the act's own style, and room after a punchline.
+**Why.** The owner on never-about-the-code's seventh cut (2026-10-27): "we shouldn't be afraid to let things breathe. It
+feels like we're rushing from one piece to the next ... right now it feels like we're speed reading", and "setting the tone
+and the transitions and creating interesting transitions ... as opposed to just rushing through it". That cut ran at 1.2
+with every mood change landing 0.4 s before a word, so each new look and bed arrived under the voice. Drama 3's own pace is
+about 230 syllables a minute while speaking; at 1.2 the packet measured 270 to 310. **Costs.** A slower essay is longer
+(the eighth cut runs about a quarter longer). Changing the speed re-voices every Drama take, because a take's key holds its
+speed and the stretch happens before the take is heard back and chosen. `critic-pacing`'s 2-second pause rule now exempts an
+act change carried by music and a card.
 
 ## Behaviour
 

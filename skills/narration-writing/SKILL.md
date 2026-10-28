@@ -25,7 +25,9 @@ can be hard to hear. Write for the ear, then check it against the clock.
   against about 210 syllables a minute times the speed. At 1.25 a 30 second scene holds about 90 words once the pauses between sentences and scenes are counted. The packet's rate is
   speech-only and the speed is not yours to change, so a scene that is off target is fixed with fewer or
   plainer words: digits, identifiers and long clauses read slowly; short plain sentences read at the target.
-  Do not pad to slow a scene or cram to speed one up.
+  Do not pad to slow a scene or cram to speed one up. An essay is the exception to brisk: it is read at the voice's own
+  pace (1.0 unless its `video.json` says otherwise), and the build-up gets time: a pause after a punchline, a beat
+  before a new act (`pauses`, `leads`).
 - **Length is set by words.** A scene `critic-pacing` calls too long holds two ideas: cut words
   or split it.
 - **What is said matches what is shown**, when it is shown. Name a thing as it appears, and

@@ -133,7 +133,8 @@ function captions() {
 
 // scenes.html: its styles, its script, and its sections.
 const src = readFileSync(join(dir, "scenes.html"), "utf8");
-const { moods, fonts: moodFonts } = resolveMoods(cfg, timing, src, theme, dir);
+const { moods, fonts: moodFonts, warnings: moodWarnings } = resolveMoods(cfg, timing, src, theme, dir);
+for (const w of moodWarnings) console.warn(w);
 const styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n");
 const script = [...src.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join("\n");
 const seen = new Set(), bodies = [];

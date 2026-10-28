@@ -47,6 +47,7 @@ export function syllables(word) {
   return Math.max(1, groups ? groups.length : 1);
 }
 export const DEFAULT_SPEED = 1.25;
+export const ESSAY_SPEED = 1.0;   // an essay is listened to for its own sake, at the voice's own pace (the owner, 2026-10-27: 1.2 "feels like speed reading")
 
 /** A --name value from the command line: `--speed 1.4` or `--speed=1.4`; undefined if absent. */
 export function flag(name, argv = process.argv) {
@@ -138,6 +139,7 @@ export function omniVoice(name) {
  *  on the command line, then video.json, then local/config.json, then the defaults. */
 export function config(dir, argv = process.argv) {
   const local = localConfig();
+  const own = JSON.parse(readFileSync(join(dir, "video.json"), "utf8"));
   const cfg = {
     title: basename(dir),
     engine: local.engine || "kokoro",  // "kokoro", "omnivoice" (higher quality, cloned voices) or "drama" (directed delivery, cloned voices); both Apple Silicon
@@ -152,16 +154,19 @@ export function config(dir, argv = process.argv) {
     tail: 0.9,         // after a scene's last sentence
     hold: 0,           // still frame after the video's last word, in plain seconds (not scaled by speed)
     pauses: {},        // extra plain seconds after a scene's last sentence: {"04-theory": 2}
-    ...JSON.parse(readFileSync(join(dir, "video.json"), "utf8")),
+    leads: {},         // extra plain seconds before a scene's first sentence: a new act's look and music arrive alone
+    ...own,
   };
+  // An essay with no speed of its own is read at the voice's pace; a person's local speed still wins.
+  if (cfg.kind === "essay" && local.speed === undefined && own.speed === undefined) cfg.speed = ESSAY_SPEED;
   if (flag("engine", argv) !== undefined) cfg.engine = flag("engine", argv);
   if (flag("voice", argv) !== undefined) cfg.voice = flag("voice", argv);
   if (!["kokoro", "omnivoice", "drama"].includes(cfg.engine)) die(`engine is "${cfg.engine}"; it takes kokoro, omnivoice or drama`);
   if (flag("speed", argv) !== undefined) cfg.speed = Number(flag("speed", argv));
   if (flag("theme", argv) !== undefined) cfg.theme = flag("theme", argv);
   if (!(cfg.speed >= 0.5 && cfg.speed <= 2)) die(`speed ${cfg.speed} is outside 0.5 to 2`);
-  for (const [id, sec] of Object.entries(cfg.pauses || {})) {
-    if (!(typeof sec === "number" && sec >= 0 && sec <= 10)) die(`pauses["${id}"] is ${JSON.stringify(sec)}; it takes 0 to 10 seconds`);
+  for (const field of ["pauses", "leads"]) for (const [id, sec] of Object.entries(cfg[field] || {})) {
+    if (!(typeof sec === "number" && sec >= 0 && sec <= 10)) die(`${field}["${id}"] is ${JSON.stringify(sec)}; it takes 0 to 10 seconds`);
   }
   if (cfg.engine === "omnivoice" || cfg.engine === "drama") {
     // Both clone from a recording: a clip in local/voices/ or one of the built-in ones. A Kokoro voice id (af_heart)

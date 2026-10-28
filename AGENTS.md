@@ -139,7 +139,7 @@ A change to `bin/`, `kit/` or `template/` is validated by running `make` and `re
 |---|---|
 | `script/01-intro.txt`, `02-...` | One file per scene, read aloud in file-name order. A sentence ends at `.`, `!` or `?` and a space. With OmniVoice runs, write one thought per line: each line is one take, so sentences meant to land together are voiced together (`lineRuns`, D54; a line over 70 words is split) |
 | `scenes.html` | One `<section data-scene="01-intro">` per script file, a `<style>` for the look, optionally a `<script>` |
-| `video.json` | `title`, `kind` (`decision`, `feature`, `release`, `essay`: an idea argued in the author's own voice, to share), `importance` and `importance_reason` (set by the builder), `sfx` (sound effects: `false`, a kit name, or `{kit, under, tonic}`), `shows_code` (puts `critic-grounding` on the floor; read from `scenes.html` when absent: a `<pre>`, `<code>` or `.ss-code` sets it, and `false` cannot lower it), `voice`, `speed`, `theme`, `flair`, `moods` (named looks, ambient and music selected by `data-mood`), `review`, `say`, `audience`; optional `lead`, `gap`, `tail` (seconds of pause), `pauses` (`{"<scene>": seconds}`: a beat after one scene, so a meme or a stamp at its end can be read), `hold` (still seconds after the last word; the last scene never fades), `seed`, `loudness` (LUFS the render is mastered to; -14 by default, `false` for none) |
+| `video.json` | `title`, `kind` (`decision`, `feature`, `release`, `essay`: an idea argued in the author's own voice, to share), `importance` and `importance_reason` (set by the builder), `sfx` (sound effects: `false`, a kit name, or `{kit, under, tonic}`), `shows_code` (puts `critic-grounding` on the floor; read from `scenes.html` when absent: a `<pre>`, `<code>` or `.ss-code` sets it, and `false` cannot lower it), `voice`, `speed`, `theme`, `flair`, `moods` (named looks, ambient and music selected by `data-mood`), `review`, `say`, `audience`; optional `lead`, `gap`, `tail` (seconds of pause), `pauses` (`{"<scene>": seconds}`: a beat after one scene, so a meme or a stamp at its end can be read), `leads` (`{"<scene>": seconds}`: a beat before one scene's first word, so a new act's look and music arrive first), `hold` (still seconds after the last word; the last scene never fades), `seed`, `loudness` (LUFS the render is mastered to; -14 by default, `false` for none) |
 | `sources.md` | Every claim the video makes, with its source |
 | `critics.md` | This video's own bar, applied by every critic |
 | `brief.md` | A decision video's handoff from the agent that asked for it |
@@ -231,7 +231,8 @@ from the base tokens, takes its optional theme's tokens, then its `look`. Mood t
 Skies and explicit ambient layers crossfade over 1.2 seconds centred on the boundary; colours and plain numbers tween on the
 shared timeline, while fonts, caption tokens and other values switch at the midpoint. No `ambient` keeps the base ambient.
 Music accepts a file string or the usual object, starts at the head of its 1.5 second crossfade (so its opening fades in), and
-loops if short. Absent or missing music keeps the previous bed's playhead. No moods keeps the single-bed path.
+loops if short. Absent or missing music keeps the previous bed's playhead. No moods keeps the single-bed path. The build warns when a mood starts less than 1.2 seconds before its scene's first word
+(`MOOD_BEAT`): give the change a beat with `leads`.
 
 **Motion.** Theme tokens `--transition` (`none`, `fade`, `rise`, `slide`, `zoom`, `wipe`,
 `flash`), `--camera` (`none`, `push`: a slow push-in per scene), `--ambient` (`none`, `glow`,
@@ -347,8 +348,8 @@ Leave a pause after `boom` (about 1 s) and `sad_trombone` (about 2.5 s): `gap` i
 a minute), not either engine's own: 1.25 by default. OmniVoice takes 1.0 to 1.3, the range it was tested at. The packet
 measures pace in syllables a minute (base about 210, `BASE_SPM`), since words a minute runs high on short words.
 Pauses shrink with it. The most specific wins: `--speed` on
-`make` or `voice`, then `video.json`, then the person's `local/config.json`, then 1.25
-(`bin/lib.mjs`, `config`). A take is re-voiced when its speed changes.
+`make` or `voice`, then `video.json`, then the person's `local/config.json`, then 1.25, or 1.0 for an essay
+(`bin/lib.mjs`, `config`, `ESSAY_SPEED`). A take is re-voiced when its speed changes.
 
 ## How the timing works
 
