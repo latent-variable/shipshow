@@ -16,7 +16,7 @@ and find where every fact came from. The owner uploads; you hand over a folder h
 
 | Field | The bar |
 |---|---|
-| `title` | Says the topic the viewer searches for (AI coding, not just "compilers") and why it is worth a click, under 100 characters. It complements the thumbnail and never repeats it |
+| `title` | Says the topic the viewer searches for (AI coding, not just "compilers") and why it is worth a click, under 100 characters, with the hook in the first 50 or so (mobile cuts the rest). It complements the thumbnail and never repeats it. A claim still being checked is attributed or quoted, never the channel's own: "Opus 5.5 Explains OpenAI's Paper: The Exponential Time Hypothesis Is False" read as the channel asserting it; "OpenAI Says the Exponential Time Hypothesis Is False (Opus 5.5 Explains)" did not (eth-is-false's package critic, 2026-10-28) |
 | `alternatives` | One or two other titles considered. Every one must be true: a false alternative gets picked later |
 | `description` | Paragraphs in the author's own voice, as they talk to camera (`narration-writing`): what the video argues, what it covers, and the tool it was made with. No announcing ("In this video we will"), no cadence line to close on |
 | `chapters` | `{"<scene>": "title"}` at each act's first scene. YouTube shows chapters only from 0:00, three or more, each ten seconds or longer; `npm run package` refuses anything else |
@@ -27,7 +27,9 @@ and find where every fact came from. The owner uploads; you hand over a folder h
 **Altered or synthetic content is the owner's call.** The question is whether a viewer could be misled. Lino's own cloned
 voice saying his own words, with the video saying so out loud, he marks *No* (2026-10-27: "it's not used in a way that's
 deceiving; we're being intentional about it"). A clone of anyone else, or a voice that hides it is a clone, is *Yes*.
-Write your recommendation in `studio` and let the owner decide.
+An invented voice that imitates no one, in a video that says out loud it is an AI, is *No* by the same test (eth-is-false,
+recommended; the owner's call). Write your recommendation in `studio` and let the owner decide. `npm run package` refuses a
+clone or invented voice that `sources.md` never names (D74), so the credits never describe an earlier voice.
 
 ## The thumbnail: `thumbnail.html`
 
@@ -43,6 +45,12 @@ by `npm run package`.
   first draft of never-about-the-code's; a fresh critic caught them.)
 - A real person's photo is a portrait the video already used, so its licence passed the build's gate and its credit is in
   the description.
+- **A chart on a thumbnail tells the truth its video's chart tells.** eth-is-false's first draft drew the new algorithm's cost
+  curve turning back down, which says the time shrinks as problems grow; the second went flat, which says it stops growing. It
+  keeps rising, only more slowly. Draw it from the video's own scene, and look at it as a reader of that chart would.
+- **The small tag adds a hook the title lacks.** "AI explains AI" repeated the title's "Opus 5.5 Explains"; "No human authors",
+  from the video's own hook, does not. Lay the words out with explicit line breaks and `white-space: nowrap`: a wrapped word
+  ("25-" over "year") or a tag that runs into the picture is the first draft's other failure.
 
 ## Make the folder, then judge it
 

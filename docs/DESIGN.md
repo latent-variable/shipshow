@@ -1066,7 +1066,17 @@ the intent would land them. The same line was voiced once under three directions
 dry]` gave a pitch range of 92 Hz, the intent note 108 Hz, and "through gritted teeth" 64 Hz. One note that restated its line
 ("one AI telling the humans not to trust either of us") made the take repeat a sentence and drop the punchline on all five tries;
 a shorter note passed. **Costs.** One take per direction shows the read changed, not that it is funnier: the owner's ear decides.
-**Tested** by that A/B (`local/videos/joke-ab`) and by the sixth cut's hear-back, which caught the repeat.
+**Tested** by that A/B (`local/videos/joke-ab`) and by the sixth cut's hear-back, which caught the repeat. The owner, on the sixth cut: "everything
+landed really well" (2026-10-28), and it was published.
+
+### D74. A clone or invented voice is credited by name, or the video is not packaged (2026-10-28)
+**Decision.** `npm run package` stops when `video.json` uses a voice that is neither Kokoro's nor one of OmniVoice's built-in
+voices, and `sources.md` never names it as a whole name (`voiceCreditProblem` in `bin/package.mjs`). **Why.** Packaging eth-is-false,
+its `sources.md` still described the first narrator, an energetic American voice, three cuts after the owner replaced it with
+`narrator-uk`. Nothing had read that section since. The description's credits are written from it, so a stale voice note becomes a
+public credit for a voice the video does not use. **Costs.** A video that names its clone only in `youtube.credits` must also name it
+in `sources.md`; never-about-the-code now does. **Tested** by a unit test (a stale name, a longer name that contains it, a built-in
+voice, Kokoro) and by packaging eth-is-false and never-about-the-code.
 
 ## Behaviour
 

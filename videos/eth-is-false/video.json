@@ -196,5 +196,75 @@
     "12-galactic": 2.6,
     "14-trust": 2.6,
     "13-what-it-means": 1.5
+  },
+  "youtube": {
+    "title": "OpenAI Says the Exponential Time Hypothesis Is False (Opus 5.5 Explains)",
+    "alternatives": [
+      "Opus 5.5 Explains OpenAI's \"The Exponential Time Hypothesis Is False\"",
+      "Did an AI Just Refute the Exponential Time Hypothesis? Opus 5.5 Explains"
+    ],
+    "description": [
+      "On October 26, OpenAI posted a paper called \"The Exponential Time Hypothesis is False\". One of its models wrote it, and OpenAI says a proof checker has verified it. If it holds, a floor under how fast hard problems can be solved, one that hundreds of papers have assumed for 25 years, isn't there.",
+      "I had Opus 5.5 explain it, so this is one AI explaining another AI's paper, and it says so. It covers what ETH is and how it relates to P versus NP, the three ideas behind the new algorithm, and how far to trust it while the team checking it, led by two of the people who proposed ETH, hasn't reported yet (as of October 27, 2026).",
+      "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
+    ],
+    "chapters": {
+      "01-hook": "OpenAI's paper",
+      "02-puzzle": "The puzzle: SAT",
+      "04-p-vs-np": "The bet: P vs NP and ETH",
+      "07-built-on-it": "The house of cards",
+      "08-the-claim": "The claim",
+      "09-split": "How it works",
+      "12-galactic": "What it means",
+      "14-trust": "Should you believe it?"
+    },
+    "sources": [
+      "OpenAI, \"The Exponential Time Hypothesis is False\", preprint, October 2026: https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf",
+      "OpenAI, \"Working with academic communities to build scientific understanding\", October 26, 2026: https://openai.com/index/building-scientific-understanding-with-academic-communities/",
+      "OpenAI's math repository, README and history (including the October 7 withdrawals): https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/history.md",
+      "OpenAI's Lean statement of the result: https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/lean/ComparatorChallenges/SubexponentialSAT.lean",
+      "R. Impagliazzo and R. Paturi, \"On the Complexity of k-SAT\", JCSS, 2001; R. Impagliazzo, R. Paturi and F. Zane, \"Which Problems Have Strongly Exponential Complexity?\", JCSS, 2001",
+      "S. Cook, \"The Complexity of Theorem-Proving Procedures\", STOC 1971",
+      "U. Schöning, \"A probabilistic algorithm for k-SAT and constraint satisfaction problems\", FOCS 1999",
+      "Jiang and Cai, \"A Better Analysis For PPSZ For 3-SAT\", 2026: https://arxiv.org/abs/2607.10697",
+      "R. Williams, \"Improving Exhaustive Search Implies Superpolynomial Lower Bounds\", SICOMP, 2013",
+      "William Gasarch, \"The Third P=?NP Poll\", SIGACT News, 2019: https://www.cs.umd.edu/users/gasarch/papers/poll3.pdf",
+      "Clay Mathematics Institute, Millennium Prize Problems: https://www.claymath.org/millennium-problems/",
+      "Wikipedia, \"P versus NP problem\": https://en.wikipedia.org/wiki/P_versus_NP_problem",
+      "G. Kwon and H. Jain, \"Optimized CNF Encoding for Sudoku Puzzles\": https://www.cs.cmu.edu/~hjain/papers/sudoku-as-SAT.pdf",
+      "F. Copty et al., \"Benefits of Bounded Model Checking at an Industrial Setting\", CAV 2001",
+      "LWN, \"A first look at DNF\", 2012: https://lwn.net/Articles/503581/",
+      "Wikipedia, \"DNF (software)\": https://en.wikipedia.org/wiki/DNF_(software)"
+    ],
+    "credits": [
+      "Narration: an invented voice, not a real person, made with Fish Audio Drama 3 (built with Fish Audio). The script is by Claude Opus 5.5.",
+      "Music: machine-generated with ACE-Step 1.5.",
+      "Memes: templates from memegen (https://github.com/jacebrowning/memegen) and Imgflip (https://imgflip.com/gif-templates): Spider-Man Pointing at Spider-Man; What Year Is It?; Tuxedo Winnie the Pooh; Guy Hammering Nails Into Sand; This is Fine (KC Green, Gunshow); Xbox achievement unlocked; Gru's Plan; That Would Be Great (Office Space); Galaxy Brain; Futurama Fry; Jim Halpert Pointing to Whiteboard (The Office); Homer backs into the bushes (The Simpsons); Kurt Angle stare; Grant Gustin Next To Oliver Queen's Grave; Fast guy explaining.",
+      "Made with ShipShow and HyperFrames."
+    ],
+    "tags": [
+      "Exponential Time Hypothesis",
+      "ETH",
+      "P vs NP",
+      "SAT",
+      "3-SAT",
+      "computational complexity",
+      "OpenAI",
+      "AI math",
+      "Claude",
+      "Opus 5.5",
+      "algorithms",
+      "computer science",
+      "Lean",
+      "theorem proving"
+    ],
+    "studio": {
+      "Audience": "No, it's not made for kids",
+      "Paid promotion": "No",
+      "Altered or synthetic content": "Recommended No, the owner's call: the narrator is an invented AI voice that imitates no real person, and it says out loud that it is an AI",
+      "Category": "Science & Technology",
+      "Language": "English",
+      "Visibility": "Public"
+    }
   }
 }

@@ -1,6 +1,6 @@
 # Sources: never-about-the-code
 
-An opinion video, narrated by Lino Valdovinos in his own cloned voice, for his YouTube channel. The thesis is his: "you don't
+An opinion video, narrated by Lino Valdovinos in his own cloned voice (`local/voices/lino-long.wav`, never committed; Fish Audio Drama 3), for his YouTube channel. The thesis is his: "you don't
 understand the code", said of AI coding agents, is the suspicion every earlier layer of abstraction met, from the compiler on;
 those skeptics were right about the cost and lost anyway; what you need to understand is the behaviour and how you know it.
 Rewritten on 2026-10-26 after Lino rejected the first cut (2025 numbers, too little history, plain look). Every fact below was

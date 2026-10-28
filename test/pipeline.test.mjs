@@ -1364,6 +1364,16 @@ test("package: chapters come from scene starts, and what YouTube would refuse or
   assert.ok(bad.some((p) => /0:00/.test(p)) && bad.some((p) => /three or more/.test(p)) && bad.some((p) => /lasts 5\.9 s/.test(p)), "first at 0:00, at least three, each ten seconds");
 });
 
+test("package: a clone or invented voice must be named in sources.md, so credits never describe an earlier voice", async () => {
+  const { voiceCreditProblem } = await import("../bin/package.mjs");
+  const builtIn = { eve: "vctk/p361.wav" };
+  assert.match(voiceCreditProblem({ engine: "drama", voice: "narrator-uk" }, "an energetic American voice (`eth-narrator`)", builtIn), /never names the voice "narrator-uk"/);
+  assert.equal(voiceCreditProblem({ engine: "drama", voice: "narrator-uk" }, "`local/voices/narrator-uk.wav`, an invented voice", builtIn), null);
+  assert.match(voiceCreditProblem({ engine: "drama", voice: "lino" }, "lino-long is his clone", builtIn), /"lino"/, "a longer name is not a mention");
+  assert.equal(voiceCreditProblem({ engine: "omnivoice", voice: "eve" }, "", builtIn), null, "a built-in voice");
+  assert.equal(voiceCreditProblem({ voice: "af_heart" }, "", builtIn), null, "Kokoro");
+});
+
 test("drawled: the voice step flags a sentence dragged apart, with the same rule as bin/hearback.py", async () => {
   const { drawled } = await import("../bin/lib.mjs");
   assert.equal(drawled([{ words: [{ w: "Like", at: 32.97 }, { w: "animals.", at: 35.95 }] }]), '3.0 s between "Like" and "animals."');

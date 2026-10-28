@@ -49,6 +49,17 @@ export function youtubeProblems({ title, description, chapters: ch, total }) {
 }
 
 /** The description as pasted into Studio: the text, the chapters, sources, then credits. */
+/** A clone or an invented voice is credited by name: `sources.md` must name the voice `video.json` uses, so credits written
+ *  for an earlier voice are caught (eth-is-false's still named its first narrator after the third cut replaced it,
+ *  2026-10-28). Kokoro's voices and OmniVoice's built-in ones are exempt. Returns the problem, or null. */
+export function voiceCreditProblem(cfg, sourcesText, builtIn) {
+  const engine = cfg.engine || "kokoro";
+  if (engine === "kokoro" || !cfg.voice || cfg.voice in builtIn) return null;
+  // A name is a whole name: "lino" is not mentioned by "lino-long".
+  if (new RegExp(`(?<![\\w-])${cfg.voice.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w-])`).test(sourcesText)) return null;
+  return `sources.md never names the voice "${cfg.voice}" that video.json uses: say what it is (a clone, or an invented voice and how it was made), so the credits match the narration`;
+}
+
 export function descriptionText(yt, ch, credits) {
   const parts = [[].concat(yt.description || []).join("\n\n")];
   if (ch.length) parts.push(ch.map((c) => `${stamp(c.at)} ${c.title}`).join("\n"));
@@ -77,6 +88,9 @@ if (isMain) {
   const description = descriptionText(yt, ch, credits);
   const problems = youtubeProblems({ title: yt.title, description, chapters: ch, total: timing.total });
   if (problems.length) die(`not packaged, YouTube would refuse or ignore it:\n  ${problems.join("\n  ")}`);
+  const builtIn = JSON.parse(readFileSync(join(REPO, "bin", "omnivoice-voices.json"), "utf8")).builtIn;
+  const voiceProblem = voiceCreditProblem(cfg, existsSync(join(dir, "sources.md")) ? readFileSync(join(dir, "sources.md"), "utf8") : "", builtIn);
+  if (voiceProblem) die(`not packaged: ${voiceProblem}`);
   const thumbHtml = join(dir, "thumbnail.html");
   if (!existsSync(thumbHtml)) die(`no thumbnail.html in ${dir}: a 1280 by 720 page (explainer-video, *Publish*)`);
 
