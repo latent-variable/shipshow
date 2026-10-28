@@ -17,6 +17,8 @@
 import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { MEME_FONTS_CSS, memeScene } from "./meme.mjs";
+import { liftFrames } from "./frame.mjs";
+import { footageScene } from "./footage.mjs";
 import { portraitScene } from "./portrait.mjs";
 import { shotScene } from "./shot.mjs";
 import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir } from "./lib.mjs";
@@ -137,8 +139,15 @@ const { moods, fonts: moodFonts, warnings: moodWarnings } = resolveMoods(cfg, ti
 for (const w of moodWarnings) console.warn(w);
 const styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n");
 const script = [...src.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join("\n");
+const lifted = liftFrames(src, (qualified, where, kind) => {
+  const colon = qualified.indexOf(":");
+  if (colon < 1) die(`${where}: data-${kind}="${qualified}" needs a scene-qualified cue (<scene>:<cue>)`);
+  const id = qualified.slice(0, colon), scene = byId[id];
+  if (!scene) die(`${where}: data-${kind}="${qualified}" names unknown scene ${id}`);
+  return cueTime(scene, qualified.slice(colon + 1), where);
+});
 const seen = new Set(), bodies = [];
-const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<\/section>/g)].map(async (m) => {
+const sections = await Promise.all([...lifted.scenes.matchAll(/<section([^>]*)>([\s\S]*?)<\/section>/g)].map(async (m) => {
   const id = (m[1].match(/data-scene="([^"]+)"/) || [])[1];
   if (!id) die(`scenes.html has a <section> with no data-scene: <section${m[1]}>`);
   const scene = byId[id];
@@ -146,10 +155,11 @@ const sections = await Promise.all([...src.matchAll(/<section([^>]*)>([\s\S]*?)<
   seen.add(id);
   // bin/shot.mjs: a screenshot of a real page; bin/portrait.mjs: a Commons photo and its credit; bin/meme.mjs: a meme figure's picture and text boxes; an animated one is a video that starts at its cue and runs to the scene's end
   const withMemes = await memeScene(await portraitScene(await shotScene(m[2], dir, id), dir, id), dir, id, { start: scene.start, end: round(scene.start + scene.duration - 0.01), at: (cue) => cueTime(scene, cue, `scene ${id}`) });
-  const body = withMemes.replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
+  const withFootage = footageScene(withMemes, dir, id, { start: scene.start, end: round(scene.start + scene.duration - 0.01), at: (cue) => cueTime(scene, cue, `scene ${id}`) });
+  const body = withFootage.replace(/data-cue="([^"]+)"/g, (_, cue) => `data-cue="${cue}" data-at="${cueTime(scene, cue, `scene ${id}`)}"`);
   // 10 ms short of the next scene: scenes share a track, and touching ends read as an overlap.
   const attrs = m[1].replace(/\s*class="([^"]*)"/, "");
-  // A scene with a meme video is not itself timed: HyperFrames cannot place a video inside a timed
+  // A scene with a video is not itself timed: HyperFrames cannot place a video inside a timed
   // element (its frame extractor and its visibility disagree), so the scene keeps its times in
   // data-scene-* for kit.js, which already shows and hides every scene on the GSAP timeline.
   const hasVideo = /<video[\s>]/.test(body);
@@ -178,6 +188,7 @@ const html = readFileSync(join(REPO, "kit", "shell.html"), "utf8")
   .replaceAll("{{seed}}", String(cfg.seed ?? seedFor(basename(dir))))
   .replace("{{styles}}", () => MEME_FONTS_CSS + "\n" + styles)
   .replace("{{scenes}}", () => sections.join("\n"))
+  .replace("{{frame}}", () => lifted.frames ? `<div id="frame">${lifted.frames}</div>` : "")
   .replace("{{captions}}", () => captions())
   .replace("{{moods}}", () => moods.length ? `const MOODS = ${JSON.stringify(moods).replace(/</g, "\\u003c")};\n` : "")
   .replace("{{kit}}", () => readFileSync(join(REPO, "kit", "kit.js"), "utf8").trimEnd())

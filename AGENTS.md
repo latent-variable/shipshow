@@ -24,7 +24,7 @@ The skills in `skills/` are the team's baseline. Each person tailors on top of t
 | `docs/PRD.md`, `docs/DESIGN.md` | The requirements, and the design decisions and behaviour. Kept current (*Docs that stay current*) |
 | `skills/` | Every skill. `npm install` links them into `.claude/skills/` for Claude Code; other agents read them here |
 | `videos/<name>/` | One video: `script/`, `scenes.html`, `video.json`, `sources.md`, `critics.md`, `REVIEW.md` |
-| `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; `memes` (search the memegen catalog, with `meme.mjs` behind it and `build`); `portrait.mjs` (Commons photos, credit and licence gate, called by `build` and `review`); `shot.mjs` (screenshots of real pages, taken in headless Chrome, called by `build` and `review`); and `usage` (token and context tracking) |
+| `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; `memes` (search the memegen catalog, with `meme.mjs` behind it and `build`); `portrait.mjs` (Commons photos, credit and licence gate, called by `build` and `review`); `shot.mjs` (screenshots of real pages, taken in headless Chrome, called by `build` and `review`); `footage.mjs` (local app recordings played once and held, called by `build` and listed by `review`); and `usage` (token and context tracking) |
 | `kit/` | The page, base styles (including `ss-portrait`) and timeline every video shares; `kit/fonts/` holds the meme fonts (Titillium Web, Anton: SIL OFL, licences beside them) |
 | `themes/` | Shared themes (`shipshow`, `paper`, `launch`, `buildday`, `lofi`, `signal`, `chalk`, `archive`); a client's goes in `local/themes/` |
 | `template/` | What `npm run new` copies |
@@ -239,6 +239,8 @@ from the act's last word, held at its ducked level so it never swells back up, a
 starts from its own opening at the boundary and swells in over 2 s under the act's card. Absent or missing music keeps the previous bed's playhead. No moods keeps the single-bed path. The build warns when a mood starts less than 1.2 seconds before its scene's first word
 (`MOOD_BEAT`): give the change a beat with `leads`.
 
+**Frame.** Top-level `.ss-frame` blocks outside the sections in `scenes.html` are lifted, in source order, into one full-canvas `#frame` layer. It sits over the scenes and under both `#overlay` and captions, inherits the mood's tokens, and stays present from zero to the end without scene transitions or camera pushes. Uncued elements show from the first frame. An arrival uses a scene-qualified cue, such as `data-cue="02-start:Paste"`, `data-cue="02-start:word#2"` or `data-cue="02-start:+0.3"`, resolved exactly like that scene's own cues with the usual `data-anim`. Unqualified cues and unknown scene ids stop the build naming the element. Optional `data-leave="02-start:+3"` starts a 0.4-second fade at that time. The overlap check includes frame text against scene text (DESIGN D78).
+
 **Motion.** Theme tokens `--transition` (`none`, `fade`, `rise`, `slide`, `zoom`, `wipe`,
 `flash`), `--camera` (`none`, `push`: a slow push-in per scene), `--ambient` (`none`, `glow`,
 `grid`, `dots`, `stars`, `horizon` (a lit planet rim low in the frame), `blobs` (soft pools of light that drift and breathe;
@@ -290,6 +292,8 @@ a second, looped to cover the figure's cue to its scene's end) and the figure ho
 holds one keeps its times in `data-scene-start` and `data-scene-duration`, because HyperFrames refuses a video inside a timed
 element. A bad crop, a clip that is not a GIF, MP4 or WebM, or one with nothing cached and no network stops the build naming the scene. The
 packet lists each animated meme with its source URL; credit it in `sources.md` (third-party, as above).
+
+**Footage** (DESIGN D77). The video's own app recording uses `<figure class="ss-footage" data-footage="footage/03-try.mp4" data-cue="paste" data-anim="fade"></figure>`: a local MP4, WebM or GIF relative to the video's folder, or an absolute path; URLs are refused. It plays once at 1x from its cue (the scene's start without one), from the file's start or `data-from="<seconds>"`. A short recording holds its last frame to the scene's end, never loops. `bin/footage.mjs` shares the clip encoder and seekable video markup with moving memes, writing `assets/footage/<key>.mp4`; it adds no text bands or meme attributes, and asks for no third-party credit. The packet's *Footage* section lists the scene, file, length, offset, scene-relative start and final-frame hold duration. A framed window uses `--footage-width` (1344px by default), the file's aspect ratio, `--footage-radius`, `--footage-border` (the card border when unset) and `--footage-shadow`. Like the other figures it is centred in the scene window; inside a layout set `position: relative; inset: auto; margin: 0`.
 
 **Portraits.** To show who is being talked about: `<figure class="ss-portrait" data-commons="File:Edsger Wybe Dijkstra.jpg" data-cue="Dijkstra" data-anim="pop"><figcaption>Edsger Dijkstra<small>1930-2002 · structured programming</small></figcaption></figure>`
 (the name is the Commons file page's title; the figcaption is yours and optional). The build (`bin/portrait.mjs`) asks the Commons API
@@ -369,7 +373,7 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ## Layout
 
 ```
-bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, overlap (text on text, measured), critics, memes, new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
+bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, overlap (text on text, measured), critics, memes, footage.mjs (local recordings, played once and held), new, doctor, setup, link-skills, usage; lib.mjs is shared, measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
 themes/     shipshow, paper, launch, buildday, lofi, signal, chalk and archive; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono, Bricolage Grotesque, Inter, Playfair Display, Courier Prime: SIL OFL)
 skills/     the explainer and development skills, critic-loop, publish, tailor, theme and the nine critics

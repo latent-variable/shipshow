@@ -1103,6 +1103,26 @@ Whether the default itself should rise is the owner's call: it is part of how ka
 **Tested** by `test/captions.test.mjs`: it builds the template on the signal theme, seeks Chrome to a moment a word is waiting, and
 reads 0.38 unset and 0.62 set; with the old fixed value it fails.
 
+### D77. Footage is the video's own recording, played once and held, never a meme (2026-10-28)
+
+**Decision.** `ss-footage` figures name a local MP4, WebM or GIF with `data-footage` (relative to the video's folder or absolute; URLs refused). They play at 1x from their cue, or the scene's start when uncued. `data-from` selects an offset into the recording; an offset outside the recording fails with the scene and file named. A recording shorter than its remaining scene window holds its last frame with ffmpeg `tpad=stop_mode=clone`, without a warning or a restart.
+
+**Why.** A product video built on ShipShow needs its app's footage. A moving meme loops to cover its scene, carries meme framing and text bands, and is listed as third-party material to credit. Those behaviours misrepresent our own recording and can restart an answer halfway through a scene.
+
+**How.** `bin/footage.mjs` shares `bin/meme.mjs`'s local file validation, size probe, H.264 encoder (30 fps, a keyframe each second) and timed video element with a shared track counter. The footage branch never uses `-stream_loop`, strips audio and pads the final frame, writing `assets/footage/<key>.mp4`, keyed by source bytes, offset, window and encoding parameters. The scene retains `data-scene-start` and `data-scene-duration` as it does for any video. The figure has no meme text bands or generated meme attributes. `--footage-width` defaults to 1344px; the file sets its aspect ratio, and `--footage-radius`, `--footage-border` and `--footage-shadow` fall back to the card tokens. These opt-in styles leave existing figures and themes unchanged. The packet's *Footage* table gives scene, file, source length, offset, scene-relative start and whether and how long the final frame holds, outside memes and credits.
+
+**Tested.** `test/footage.test.mjs` generates a tiny moving testsrc MP4 without Kokoro or network access, builds it into a scene, probes the encoded window and compares held frames. It captures actual encoder arguments to check that footage never loops, verifies offsets, cache identity, GIF and WebM input, scene-start playback, URL rejection with the scene named, and exclusion from meme discovery. The hold test is also run with padding removed and must fail before the implementation is restored.
+
+### D78. A series frame lives outside the scenes and never moves (2026-10-28)
+
+**Why.** A product series' plate and price tag dipped and slid at every cut when repeated per scene. A shared series frame belongs to the canvas, independent of each scene's transition and camera.
+
+**Decision.** Every top-level `.ss-frame` block in `scenes.html` is lifted into one `#frame` layer in source order, over all scenes and under both `#overlay` and captions. The positioned full-canvas layer has `pointer-events: none`, inherits mood tokens, and exists from zero to the end. Its elements without cues are visible immediately; section show/hide and camera pushes never target it. Nested frame classes inside a scene stay in that scene.
+
+**How.** `bin/frame.mjs` extracts balanced top-level blocks while preserving styles, scripts and comments. `build` resolves frame `data-cue="<scene>:<cue>"` through the same `cueTime()` as scene cues, including word, occurrence and relative-second forms, writing `data-at`. Missing qualification and unknown scenes stop the build with the element named. Optional `data-leave="<scene>:<cue>"` writes `data-leave-at`; the shared kit timeline fades that element to zero over 0.4 seconds starting at the resolved time. It works with or without an arrival cue. Entrances keep the usual `data-anim`. No per-frame visual styles are imposed.
+
+**Tested.** `test/frame.test.mjs` builds multiple blocks with nested markup, verifies their position outside all scenes and exact cue-time equality, checks invalid cues, and runs the kit in a VM with recorded GSAP operations to prove scene visibility and camera operations leave the frame alone while arrival and exit animations run. `test/overlap.test.mjs` adds a frame/scene text collision to the whole-page measurement. The lifting control disables the layer output, runs the lifting test and requires it to fail, then restores the build file.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
@@ -1146,7 +1166,7 @@ What an agent or person observes. Each line is checkable against the cited file.
   no edits and no untracked files.
 - Scripts never delete files. Generated files are gitignored. The kit renders entrances on a
   cue (the list, `up` to `slam` including `type`, `draw`, `count`, `highlight`, `scramble` and `glitch`, is in `AGENTS.md`); an
-  exit, a swap and a connector between boxes need a custom `<script>`.
+  exit outside the frame (D78), a swap and a connector between boxes need a custom `<script>`.
 
 **The skills**
 - A context line is `[tag] claim. path:line`, with `tested` or `untested` on behaviour lines.
