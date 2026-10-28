@@ -95,6 +95,8 @@ No free photo of Ramamohan Paturi was found on Commons (searched "Ramamohan Patu
 | 08 | "Even the record, 1.307 to the n, is two to about 0.39 times n" (on screen 1.307ⁿ = 2^(0.39 n)): log2 1.307 = 0.386 | **ours**, arithmetic on P's 1.307 |
 | 08 | n / √log n is n times a fraction that keeps shrinking, 1/√log n; "at a million switches it's already about a quarter": 1/√ln(10^6) = 1/3.72 = 0.27 | **ours**, natural log as in P; the same 3.7 as scene 12 |
 | 10 | "Switches are only on or off, so a note has few possible values, few enough to try them all" | P section 2.4: with 0/1 inputs and bounded integer coefficients the measurements take at most (2D+1)^(2τn) values, 2^(O(n/r)) in all, subexponential (section 2.6) |
+| 08 | "a fixed slice of n" is the third cut's plain word for the fixed fraction below; "about a quarter of n" at a million switches is the same 1/√ln(10^6) = 0.27 | **ours**, wording |
+| 13b | "no small circuit, the kind of hardware that grows only in step with its input": Corollary C.1's circuits of linear size, said plainly | P Appendix C.1 |
 | 08 | ETH says the exponent can never drop below some fixed fraction of n (time 2^(δn) for some δ > 0); n/√log n ends up below δn for every δ > 0 once n is big enough | P section 1.1.1, ETH as 2^Ω(n); **ours**: n/√log n ÷ n = 1/√log n → 0 |
 | 10 | A note is "a few weighted sums of" a group's switches | P section 2.2 to 2.3: "shared linear summaries", built from the replacement linear forms Σ p(T)·X (weighted sums of the variables); "a few" because the measurements are few (section 2.4) |
 | 08 | It counts exactly; counting (#SAT) is #P-complete, harder than deciding | P section 1.1.2: "#SAT and #3-SAT are #P-complete" [Val79]; "Testing #F > 0 also decides satisfiability" |

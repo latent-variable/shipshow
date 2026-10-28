@@ -283,3 +283,30 @@ written).
 
 **For the owner's listen:** the new narrator at speed 1.1, the names (Impagliazzo, Paturi), the 2.0 s beat after "Simple, right?", and
 whether the gags in 04, 06, 07, 10 and 11 land.
+
+# The third cut (2026-10-27)
+
+The owner on the second cut: too inconsistent, and "moving so fast through the content that it's hard to follow". A new
+narrator he picked (`narrator-uk`, invented, young British, `local/voices/VOICES.md`) at speed 1.0, one reference clip for
+every take; the script regrouped into paragraphs, each one take (`DRAMA_LINE_MAX`, DESIGN D64), so the delivery carries
+through; seven acts, each opened by a wordless title card during a 2.6 s lead while its look and music arrive; a beat between
+thoughts. 62 takes, speech levels within 0.6 dB (standard deviation) of each other; 12.8 minutes.
+
+## Round 9: one light round, as a revision gets (critic-loop, *Spend is part of the plan*)
+
+Planned and said before it ran: three Sonnet critics, about 300k tokens. Measured: about 235k.
+
+| Critic | Scope | Verdict | Major | Minor |
+|---|---|---|---|---|
+| accuracy | the changed lines only | pass | 0 | 0 |
+| clarity | the whole video | fail | 3 | 3 |
+| pacing | the whole video, the new "breathe" bar | fail | 1 | 3 |
+
+**Fixed (no second round: nothing blocking):** the step from the record to "ETH is false" is said with one plain word, a
+"slice" of n, and "about a quarter of n"; the circuit twist says what a small circuit is and why it matters; what Lean checks is
+said in short sentences without the letter c; "quadratic" glossed.
+
+**Accepted:** eight scenes run 42 to 51 s now that they breathe (pacing's major). Each turns its picture in phases and none sits
+still past 9.7 s; `critic-pacing` now judges a long scene by its ideas, not the clock alone. The two act changes at 5.4 and 5.6 s
+of voice-free time (a card carries them); the recap meme's 3.4 s; "SAT solver" asked in the hook before SAT is defined (a tease
+paid off in 13b); Whisper hearing "floor" as "flaw" in the British accent (Parakeet heard "floor").
