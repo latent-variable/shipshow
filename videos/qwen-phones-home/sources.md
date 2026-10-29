@@ -206,6 +206,18 @@ Nothing in this research contacted any host a model invented. The routify and sa
 | 05 | Qwen Code's Routify doc | `ss-shot` of github.com/QwenLM/qwen-code/blob/d7b36db889b2863572b9de8d48c5346fbd5a9504/docs/design/2026-09-03-outbound-session-id-header.md |
 | 05 | Vals AI's post | `ss-shot` of VA |
 
+## Voice and music
+
+- **Voice:** the invented `narrator-uk` voice (`local/voices/narrator-uk.wav`, never committed), made with Fish Audio Drama 3
+  (`mlx-community/fish-audio-drama-3-4bit`) from a description and a seed, no real person cloned (how it was invented:
+  `videos/eth-is-false/sources.md`, *Voice*). `video.json` `"engine": "drama"`, `"voice": "narrator-uk"`. Voiced again on
+  2026-10-29 with each line hearing the take before it (DESIGN D83). Drama 3's output is used under the Fish Audio Community
+  License. The narration says it is an AI (01-hook).
+- **Music:** seven act beds, one per mood in `video.json` `"moods"`, generated locally with ACE-Step 1.5 through
+  `~/.agents/bin/localaudio` (instrumental, no vocals; prompts and seeds in `local/music/qwen/gen.log`, never committed:
+  PR #115).
+- **Built with:** ShipShow (this repo) and HyperFrames (`npm run render`).
+
 ## Left out, and why
 
 - **Cohere's policy section** (DeepSeek bans, Huawei, robot dogs, the CrowdStrike, Booz Allen and Hirundo code studies): about other

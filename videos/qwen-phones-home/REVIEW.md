@@ -163,3 +163,14 @@ files, is dropped: the capture is 39 tool calls, every one a search, fetch, brow
 - **Also found.** The round-3 pauses were set after that round's voice step and missed the first final render; this re-lay has them.
 - The meme timing, face and credit notes are now written into `explain-concept`, `critic-engagement`, `critic-visuals` and
   `explainer-video`, so the critics hold the next video to them.
+
+## The YouTube package (2026-10-29)
+
+After the narration was voiced again with each line hearing the one before (DESIGN D83) and re-rendered, `npm run package` wrote
+`~/Movies/Explainers/shipshow/youtube/to-upload/qwen-phones-home/`, judged by three fresh critics (Codex gpt-6-luna), one per round:
+
+| Round | Findings | What was done |
+|---|---|---|
+| 1 | thumbnail repeated the title's question; description stated the training fossil as settled; "(Opus 5.5 Investigates)" overcredits; "I had Opus 5.5 investigate it" reads as a credit | thumbnail leads with the three suspects and the hook's "we have the logs"; description hedged. Declined: Opus 5.5 did the research (07c-close says so; the credit now reads "Researched and written by"), and the suggested first-person rewrite would say Lino investigated, which is untrue |
+| 2 | credits not traceable to `sources.md` | `sources.md` gained *Voice and music*: Drama 3 and `narrator-uk`, ACE-Step 1.5 beds (PR #115), ShipShow and HyperFrames |
+| 3 | description still firmer than the narration; "data exfiltration" tag implies data left; "Beijing bucket" small at 320 px; synthetic-content answer | the critic's wording taken; tag dropped; label enlarged. The synthetic-content answer stays the owner's call (recommended No: an invented voice, and the video says it is an AI) |
