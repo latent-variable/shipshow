@@ -1159,6 +1159,8 @@ What an agent or person observes. Each line is checkable against the cited file.
 - `review` writes `review/packet.md` (words a minute while speaking, every pause, every cue's
   time and reading time, with code counted in tokens, the longest still stretch of each scene) and
   `review/frames/`. The packet measures; the critics judge.
+  Text is read once (`newReadingText` in `bin/measure.mjs`): a highlight, a line inside a block already shown, and
+  the same text on an element and one cued inside it (a meme and its backdrop, #62) add no reading time.
 - `usage` prints, per agent, API calls, input, output, cache-write and cache-read tokens,
   peak and last context, wall time and model, and a total; `--json` for data.
 - `critic-grounding` runs `check-excerpt.mjs <source> <excerpt> --ranges ...`: exit 0 and `ok: true`

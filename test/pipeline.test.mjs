@@ -1230,6 +1230,12 @@ test("packet: a count or pulse is photographed after it finishes, a highlight or
   assert.equal(newReadingText({ text: "return total;", anim: "highlight" }, [block]), "", "a highlight is not new reading");
   assert.equal(newReadingText({ text: "return total;", anim: "up" }, [block]), "", "a line inside an earlier block is already counted there");
   assert.equal(newReadingText({ text: "something else", anim: "up" }, [block]), "something else");
+  // the same text on an element and one inside it is read once, whichever is cued first (#62); two separate elements are each read
+  const backdrop = { text: "Left exit 12 me", anim: "fade", span: [100, 400] }, figure = { text: "Left exit 12 me", anim: "pop", span: [150, 390] };
+  assert.equal(newReadingText(figure, [backdrop]), "", "a meme inside its cued backdrop is not read twice");
+  assert.equal(newReadingText(backdrop, [figure]), "", "nor a backdrop cued after the meme inside it");
+  assert.equal(newReadingText({ ...figure, span: [500, 600] }, [backdrop]), "Left exit 12 me", "two separate cards that say the same thing are each read");
+  assert.equal(newReadingText(figure, [{ ...backdrop, span: undefined }]), "Left exit 12 me", "without positions, the same text is not assumed to be one element");
   // a block, then each of its lines cued as it is named: only the block is read, so nothing is late
   const lines = ["const total = a + b;", "return total;"];
   const items = [{ at: 10, text: block.text }, ...lines.map((text, i) => ({ at: 12 + i, text: newReadingText({ text, anim: "highlight" }, [block]) }))];
