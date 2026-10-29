@@ -301,6 +301,24 @@ test("breathe: silence goes in at the quietest point between two sentences that 
   assert.deepEqual(calm.shifts, [0]);
 });
 
+test("breathe: a word's trailing 's' is never split; the breath goes in the pause after it (qwen-phones-home, 'addre... ss')", () => {
+  const rate = 1000, tone = (n, a = 10000) => Array.from({ length: n }, (_, i) => Math.round(Math.sin(i) * a));
+  // "address": voice, a 10 ms dip as the s starts, 220 ms of s hiss at about -42 dBFS, a 60 ms pause, then the next sentence.
+  // Whisper ends the word at the dip and starts the next sentence 40 ms later, inside the hiss.
+  const hiss = (n) => Array.from({ length: n }, (_, i) => (i % 2 ? 1 : -1) * 260);
+  const samples = Int16Array.from([...tone(1000), ...Array(10).fill(40), ...hiss(220), ...Array(60).fill(0), ...tone(1000)]);
+  const { samples: out, shifts } = breathe(samples, rate, 1, [[1.0, 1.04]], 0.35);
+  assert.equal(Math.round(shifts[0] * 1000), 310, "0.35 s wanted, 0.04 s already there");
+  // The hiss is whole and in one piece: every sample of it is still followed by the next, with no silence inside it.
+  const at = [...out].findIndex((x, i) => i > 1010 && x === 0);
+  assert.ok(at >= 1230, `the breath went in at ${at} ms, inside the hiss (1010 to 1230)`);
+  assert.deepEqual([...out.slice(1010, 1230)], [...samples.slice(1010, 1230)], "the s is untouched");
+  // A dip shorter than BREATH_RUN with no real pause near it is not a pause: the boundary is left alone.
+  const dip_only = Int16Array.from([...tone(1000), ...Array(10).fill(40), ...hiss(220), ...tone(1000)]);
+  const kept = breathe(dip_only, rate, 1, [[1.0, 1.04]], 0.35);
+  assert.equal(kept.samples, dip_only);
+});
+
 test("runs by line: a script written one thought per line is voiced a line at a time", () => {
   const one = (t) => sentences(t);
   // three lines, the middle one two sentences: three takes, the two sentences together

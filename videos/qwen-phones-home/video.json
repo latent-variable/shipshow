@@ -39,13 +39,13 @@
     "02b-the-trace": 1.2,
     "02c-the-payload": 1.0,
     "03b-the-url": 0.8,
-    "04c-control": 0.4,
+    "04c-control": 2.0,
     "05c-fingerprints": 1.0,
     "06b-the-framing": 1.0,
     "07-verdict": 0.6,
-    "07b-what-to-do": 0.1,
+    "07b-what-to-do": 3.0,
     "04-the-numbers": 1.0,
-    "05b-only-38": 1.6
+    "05b-only-38": 3.0
   },
   "moods": {
     "headline": {

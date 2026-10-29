@@ -98,8 +98,11 @@ omission from an oversight.
   decoration. A meme that replaces a stamp or a chip saying the same thing is better than both. A meme is the most compressed way to say one
   idea, not decoration (the owner, 2026-10-28): a recap meme (a galaxy brain of the steps) is held and walked through panel by
   panel, each with what it changed. And vary them: `npm run memes` and the packet's *Memes* table say which videos already use a
-  template or a clip; a template another of the person's videos used is a finding (`critic-engagement`). Leave it time to be read
-  (`pauses`), and lay it on a scrim over its scene. A decision video someone is waiting on mid-work is the exception: one at
+  template or a clip; a template another of the person's videos used is a finding (`critic-engagement`). It lands on the start of
+  the sentence that sets it up, not on a scene's last word as a transition, and stays up about five seconds or more so the viewer can
+  take it in (`pauses` when it closes a scene); its text sits clear of the face or expression the joke turns on, short enough to
+  keep to its box (the owner on qwen-phones-home, 2026-10-29: Gandalf's "I have no memory" line covered his face, and memes shown
+  "just as transition points" left no time to digest them). Lay it on an opaque scrim over its scene. A decision video someone is waiting on mid-work is the exception: one at
   most, if it lands.
 
 ## 3. Idea to picture

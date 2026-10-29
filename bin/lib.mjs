@@ -646,12 +646,18 @@ function moodMusicBed(dir, music, timing, moods) {
 }
 
 /** A run's take with a breath between its sentences: where Whisper heard sentence k end and k+1 start less than `minGap`
- *  seconds apart, silence is inserted at the quietest 10 ms near the boundary, with 5 ms fades either side, so the voice is
- *  never cut mid-word and its prosody is kept; a boundary with no window under BREATH_QUIET_DB near it is left alone. `bounds` is [[end of sentence k, start of sentence k+1], ...] in seconds into
- *  the take. Returns {samples, shifts}: the new interleaved Int16 samples, and for each boundary how many seconds everything
- *  after it moved (cumulative), to add to the times of the sentences that follow. */
-export const BREATH_QUIET_DB = -40;   // a 10 ms window quieter than this (dBFS) is between words; speech sits around -23
-
+ *  seconds apart, silence is inserted in the middle of the quietest stretch of real silence near the boundary, with 5 ms fades
+ *  either side, so the voice is never cut mid-word and its prosody is kept. A stretch counts only when it is at least
+ *  BREATH_RUN long and every 10 ms of it is under BREATH_QUIET_DB, so the dip as a word's last "s" starts, or the hiss of the
+ *  "s" itself, is never taken for the pause after it (qwen-phones-home, 2026-10-29: "addre... ss"). The search runs from
+ *  BREATH_BEFORE before Whisper's end to BREATH_AFTER past its start, because Whisper ends a word before its trailing sibilant
+ *  has. A boundary with no such stretch near it is left alone. `bounds` is [[end of sentence k, start of sentence k+1], ...] in
+ *  seconds into the take. Returns {samples, shifts}: the new interleaved Int16 samples, and for each boundary how many seconds
+ *  everything after it moved (cumulative), to add to the times of the sentences that follow. */
+export const BREATH_QUIET_DB = -50;   // a 10 ms window quieter than this (dBFS) is silence; speech sits around -23, a trailing "s" at -40 to -46
+export const BREATH_RUN = 0.03;       // seconds of such windows in a row before a stretch counts as a pause
+export const BREATH_BEFORE = 0.08;    // seconds searched before Whisper's end of sentence k
+export const BREATH_AFTER = 0.3;      // seconds searched past its start of sentence k+1: a sibilant runs on after Whisper's word end
 export function breathe(samples, rate, channels, bounds, minGap) {
   const frames = samples.length / channels, win = Math.max(1, Math.round(rate * 0.01));
   const energy = (f0) => {
@@ -664,13 +670,22 @@ export function breathe(samples, rate, channels, bounds, minGap) {
   const shifts = bounds.map(([end, start]) => {
     const need = minGap - Math.max(0, start - end);
     if (need > 0.02) {
-      const lo = Math.max(0, Math.round((Math.min(end, start) - 0.08) * rate)), hi = Math.min(frames - win, Math.round((Math.max(end, start) + 0.08) * rate));
-      let at = Math.round(((end + start) / 2) * rate), best = Infinity;
-      for (let f = lo; f <= hi; f += win) { const e = energy(f); if (e < best) { best = e; at = f + Math.floor(win / 2); } }
-      // Only where it is really quiet: a boundary with no window under QUIET_DB near it is left as it is, never cut mid-word.
-      const db = 20 * Math.log10(Math.sqrt(best / (win * channels)) / 32768 + 1e-9);
-      if (db < BREATH_QUIET_DB) {
-        cuts.push({ at: Math.min(Math.max(at, 0), frames), add: Math.round(need * rate) });
+      const lo = Math.max(0, Math.round((Math.min(end, start) - BREATH_BEFORE) * rate)), hi = Math.min(frames - win, Math.round((Math.max(end, start) + BREATH_AFTER) * rate));
+      const dbOf = (e) => 20 * Math.log10(Math.sqrt(e / (win * channels)) / 32768 + 1e-9);
+      // Runs of 10 ms windows all under QUIET_DB; the one with the lowest mean is the pause. A boundary with none is left as it is.
+      const need_run = Math.max(1, Math.round(BREATH_RUN * rate / win));
+      let best = null, run = [];
+      const close = () => {
+        if (run.length >= need_run) {
+          const mean = run.reduce((a, r) => a + r.db, 0) / run.length;
+          if (!best || mean < best.mean) best = { mean, at: run[Math.floor(run.length / 2)].f + Math.floor(win / 2) };
+        }
+        run = [];
+      };
+      for (let f = lo; f <= hi; f += win) { const db = dbOf(energy(f)); if (db < BREATH_QUIET_DB) run.push({ f, db }); else close(); }
+      close();
+      if (best) {
+        cuts.push({ at: Math.min(Math.max(best.at, 0), frames), add: Math.round(need * rate) });
         total += need;
       }
     }
