@@ -78,8 +78,8 @@ npm run package -- videos/<name> --to "$HOME/Movies/Explainers/shipshow/youtube/
 
 `npm run package` (DESIGN D67) copies the render, sets the thumbnail and writes `<name>-youtube.txt`: title, alternatives,
 the description with chapters, sources and credits, tags, and Studio's answers. It stops on what YouTube refuses or ignores,
-on a render older than the timing, and on screenshot or portrait credits not yet written (`npm run review` writes
-them). Then **a fresh critic judges the folder** (`critic-loop`'s rule, applied to the
+on a render older than the timing, and on screenshot or portrait credits not yet written or older than `scenes.html` (`npm run review`
+writes them). Then **a fresh critic judges the folder** (`critic-loop`'s rule, applied to the
 package): truth first (the title, thumbnail and description claim nothing the video and `sources.md` do not), then whether a
 developer would click it at 320 by 180, then the author's voice, then the YouTube mechanics. Fix and repackage; one round
 is usually enough.

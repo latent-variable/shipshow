@@ -1397,6 +1397,7 @@ test("package: a clone or invented voice must be named in sources.md, so credits
   assert.match(creditsProblem('<figure class="ss-shot" data-shot="https://x.test/a"></figure>', false), /npm run review first/);
   assert.match(creditsProblem('<figure class="ss-portrait" data-commons="File:A.jpg"></figure>', false), /npm run review first/);
   assert.equal(creditsProblem('<figure class="ss-shot" data-shot="https://x.test/a"></figure>', true), null, "the file is there");
+  assert.match(creditsProblem('<figure class="ss-shot" data-shot="https://x.test/a"></figure>', true, true), /older than scenes\.html/, "written before the scenes last changed");
   assert.equal(creditsProblem('<figure class="ss-meme" data-meme="pigeon"></figure>', false), null, "memes are credited from video.json, not review");
   const builtIn = { eve: "vctk/p361.wav" };
   assert.match(voiceCreditProblem({ engine: "drama", voice: "narrator-uk" }, "an energetic American voice (`eth-narrator`)", builtIn), /never names the voice "narrator-uk"/);

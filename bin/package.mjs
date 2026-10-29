@@ -64,10 +64,12 @@ export function voiceCreditProblem(cfg, sourcesText, builtIn) {
 /** A video that shows third-party pictures (screenshots, Commons portraits) owes them credit lines, which only `npm run review`
  *  writes (review/credits.txt). Without the file the description would go out with none of them and nothing would say so: a
  *  fresh worktree packaged qwen-phones-home 560 characters short, 2026-10-29. null when there is nothing to owe or it is there. */
-export function creditsProblem(scenesHtml, hasCreditsFile) {
-  if (hasCreditsFile) return null;
+export function creditsProblem(scenesHtml, hasCreditsFile, olderThanScenes = false) {
   const owed = /\bdata-(?:shot|commons)=/.test(scenesHtml || "");
-  return owed ? "review/credits.txt is missing, and the video shows screenshots or portraits that need credit: npm run review first" : null;
+  if (!owed) return null;
+  if (!hasCreditsFile) return "review/credits.txt is missing, and the video shows screenshots or portraits that need credit: npm run review first";
+  // scenes.html changed after the credits were written: a picture added since would go uncredited
+  return olderThanScenes ? "review/credits.txt is older than scenes.html, so a screenshot or portrait added since would go uncredited: npm run review first" : null;
 }
 
 export function descriptionText(yt, ch, credits) {
@@ -93,7 +95,10 @@ if (isEntry(import.meta.url)) {
   if (statSync(timingFile).mtimeMs > statSync(render).mtimeMs) die(`the render is older than the timing: render again before packaging`);
   const ch = chapters(timing, yt.chapters);
   const creditsFile = join(dir, "review", "credits.txt");
-  const owed = creditsProblem(existsSync(join(dir, "scenes.html")) ? readFileSync(join(dir, "scenes.html"), "utf8") : "", existsSync(creditsFile));
+  const scenesFile = join(dir, "scenes.html");
+  const hasCredits = existsSync(creditsFile);
+  const owed = creditsProblem(existsSync(scenesFile) ? readFileSync(scenesFile, "utf8") : "", hasCredits,
+    hasCredits && existsSync(scenesFile) && statSync(scenesFile).mtimeMs > statSync(creditsFile).mtimeMs);
   if (owed) die(`not packaged: ${owed}`);
   const credits = existsSync(creditsFile) ? readFileSync(creditsFile, "utf8").split("\n").map((l) => l.trim()).filter(Boolean) : [];
   const description = descriptionText(yt, ch, credits);

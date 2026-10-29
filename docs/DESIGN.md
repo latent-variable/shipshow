@@ -1208,7 +1208,7 @@ fact and a reaction to it, never the verdict; three or four concepts compared at
 (the GPU box or this Mac, whichever the machine has) makes only the picture underneath, and every word, label, arrow and pin is
 HTML and SVG drawn by us; with no generator, the picture is built from SVG, frames and captures. A generated asset stays in the
 video's gitignored `assets/thumbnail/`, with its prompt, model and seed committed. And `npm run package` stops when a video
-shows screenshots or portraits but `review/credits.txt` is missing. **Why.** qwen-phones-home's package passed three truth
+shows screenshots or portraits but `review/credits.txt` is missing, or older than `scenes.html` (a picture added since would go uncredited). **Why.** qwen-phones-home's package passed three truth
 critics with a diagram thumbnail the owner called "very weak" and "mid"; three generated-picture drafts were "not clickbait"
 because they argued the case ("Spy or fossil?") instead of asking it; the one he took is Earth at night with a red arc from a
 laptop labelled "QWEN 3.8 / LOCAL AI" over the ocean to a Beijing pin, "WAIT... WHAT?!". He asked that a generator never make the
