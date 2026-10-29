@@ -405,7 +405,7 @@
       <div class="card redditq" data-cue="hallucinated" data-anim="up"><span class="tag">u/PerfectOlive1324 · r/LocalLLaMA · October 5</span>"My qwen model hallucinated a signed URL to Alibaba cloud, normal or sketchy?"</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m03" data-cue="sketchy?" data-anim="pop"><figure class="ss-meme" data-meme="ds"><span>normal</span><span>sketchy</span><span>r/LocalLLaMA</span></figure></div>
+  <div class="meme-wrap" id="m03" data-cue="Normal," data-anim="pop"><figure class="ss-meme" data-meme="ds"><span>normal</span><span>sketchy</span><span>r/LocalLLaMA</span></figure></div>
   <div class="phase" id="p03c">
     <div class="stage">
       <div class="onehost">
@@ -755,7 +755,7 @@
       <div class="card" id="c07b3" data-cue="never" data-anim="up"><span class="n">3</span><span>The reasoning is not a security guard<small>watch the commands it actually runs</small></span></div>
     </div>
   </div>
-  <div class="meme-wrap" id="m07b" data-cue="Watch" data-anim="pop"><figure class="ss-meme" data-meme="rollsafe"><span>can't phone home</span><span>if there's no network</span></figure></div>
+  <div class="meme-wrap" id="m07b" data-cue="network" data-anim="pop"><figure class="ss-meme" data-meme="rollsafe"><span>can't phone home</span><span>if there's no network</span></figure></div>
 </section>
 
 <section data-scene="07c-close">
@@ -829,7 +829,9 @@
   ["#c07b1", "#c07b2", "#c07b3"].forEach((c) => tl.to(c, { borderColor: "#ffd43b", duration: 0.3 }, cueAt(c)));
   // The verdict card steps aside for its meme.
   tl.to("#p07b", { opacity: 0, duration: 0.3 }, cueAt("#m07") - 0.1);
+  away("#m07b", "#c07b2");
   tl.to("#s07b", { opacity: 0, duration: 0.3 }, cueAt("#m07b") - 0.1);
+  tl.to("#s07b", { opacity: 1, duration: 0.3 }, cueAt("#c07b2") - 0.5);
   tl.to("#p04ca", { opacity: 0, duration: 0.3 }, cueAt("#m04c1") - 0.1);
   tl.to("#p04cc", { opacity: 0, duration: 0.3 }, cueAt("#m04c2") - 0.1);
 </script>
