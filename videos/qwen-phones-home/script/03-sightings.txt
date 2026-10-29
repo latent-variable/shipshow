@@ -1,0 +1,3 @@
+[intrigued, revealing a twist: this was not the first time] Here's the thing, though. Cohere wasn't first. In August, someone on Hacker News reported Qwen 3.8 fetching strange web addresses on Alibaba Cloud, sixteen times in one session. In September, an agent project logged eleven more, and a developer built a plugin just to block them. And on October fifth, on the LocalLLaMA subreddit: My Qwen model hallucinated a signed URL to Alibaba cloud. Normal, or sketchy?
+
+[noticing a pattern, quietly pointed, then flagging something to hold on to] Every one of those was a download, not an upload. Every one went to the same address. And it isn't the Beijing bucket from Cohere's sandbox. It's a different address, in Singapore. Hold on to that.

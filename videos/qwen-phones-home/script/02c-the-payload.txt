@@ -1,0 +1,3 @@
+[careful, setting the record straight, then a dry, amused turn] Now look at what it tried to send. Not the file list. Not the network settings. This: probe payload, A B C one two three. A placeholder. The package it tried to mail was an envelope with the word test written on it.
+
+[fair, giving the other side its due, measured] The upload itself happened less than once in a hundred thousand calls, and run again, the same prompt wrote a perfect rule. But Cohere makes a fair point. Even a test upload, from a laptop with a normal connection, would tell a stranger's server your address, the time, and that an agent is running inside your network.

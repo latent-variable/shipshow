@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>qwen-phones-home thumbnail</title>
+<style>
+  /* The YouTube thumbnail, 1280 by 720 (bin/package.mjs renders it), in the video's signal look. The picture is the video's own
+     moment (scene 02b): the request leaves the sandbox and hits the wall before Beijing. The question mark is the video's
+     stance: an investigation, not an accusation. */
+  @font-face { font-family: "Bricolage Grotesque"; font-weight: 800; src: url("../../themes/signal/fonts/bricolage-grotesque-latin-800-normal.woff2") format("woff2"); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url("../../themes/signal/fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 800; src: url("../../themes/signal/fonts/inter-latin-800-normal.woff2") format("woff2"); }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
+  body { background: radial-gradient(120% 90% at 30% 0%, #2a1416 0%, #170c0e 55%, #0b0607 100%); position: relative; font-family: "Inter", sans-serif; color: #f6f5f1; }
+  body::after { content: ""; position: absolute; inset: 0; background: radial-gradient(130% 100% at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.6) 100%); }
+  .big { position: absolute; left: 60px; top: 70px; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 132px; line-height: 0.95; letter-spacing: -0.03em; text-shadow: 0 6px 30px rgba(0, 0, 0, 0.6); z-index: 2; }
+  .big em { font-style: normal; color: #ffd43b; }
+  .scene { position: absolute; left: 60px; right: 60px; bottom: 70px; height: 210px; display: flex; align-items: center; z-index: 2; }
+  .qwen { width: 300px; height: 160px; border: 6px solid #6cb8ff; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 54px; background: rgba(20, 22, 30, 0.9); }
+  .beam { flex: 1; height: 12px; background: #ff5d4d; border-radius: 6px; margin-left: 20px; }
+  .wall { width: 44px; height: 210px; background: repeating-linear-gradient(to bottom, #8a735e 0 42px, #4a3d31 42px 50px); border-radius: 6px; }
+  .x { font-family: "Inter", sans-serif; font-size: 150px; font-weight: 800; color: #ff5d4d; margin: 0 22px; line-height: 1; }
+  .dest { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 44px; color: #a3a8b4; line-height: 1.1; }
+  .tag { position: absolute; right: 60px; top: 90px; font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 40px; color: #121317; background: #ffd43b; padding: 14px 24px; border-radius: 12px; transform: rotate(3deg); z-index: 3; }
+</style>
+</head>
+<body>
+  <div class="big">Did Qwen<br>phone home<em>?</em></div>
+  <div class="tag">spy, fossil or setup</div>
+  <div class="scene">
+    <div class="qwen">Qwen</div>
+    <div class="beam"></div>
+    <div class="wall"></div>
+    <div class="x">✕</div>
+    <div class="dest">Beijing<br>bucket</div>
+  </div>
+</body>
+</html>

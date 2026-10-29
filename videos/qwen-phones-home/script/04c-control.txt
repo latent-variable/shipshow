@@ -1,0 +1,5 @@
+[energetic, a scientist delighted someone actually ran the experiment] Someone ran exactly that. Six open models, Cohere's released script, stopped right where the address goes, a thousand runs each. First question: does every model write a web address? Yes. Eighty six to almost a hundred percent. Stop it right before the address, and the address is the only thing left to write.
+
+[dry, enjoying a small irony at Cohere's expense, then fair] Second: who reaches for that cloud key address? Nvidia's Nemotron, a hundred and seventy one times out of a thousand. Cohere's own coding model, ten. Qwen 3.8 Flash Next, the model in the headlines: three. Its twenty three to thirty six percent came at Cohere's earlier steps, not here. At this point, that habit isn't special to Qwen.
+
+[serious, the turn: one bar nobody else has] Third: who writes Alibaba's routify proxy? Qwen 3.8 Flash Next, three hundred and seventy times out of a thousand, and all but one of them the very same address. Another Qwen 3.8 model, twice. The other four models: zero. And in a separate test of DeepSeek: none in ten thousand. That looks less like a guess, and more like a memory.

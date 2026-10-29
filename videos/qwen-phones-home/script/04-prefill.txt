@@ -1,0 +1,1 @@
+[curious and unhurried, explaining a clever trick to a friend, letting the example land] Nobody could make the model do it on demand. So Cohere used a technique called prefilling. You write the start of the model's answer for it, and let it finish. Like saying: my favourite pizza topping is... and waiting. You'll get a topping.

@@ -1,0 +1,3 @@
+[clear, laying out the second clue] The second clue: Vals AI, a company that benchmarks models, searched its own test logs. Three Qwen 3.8 models fetched the routify proxy. The two Qwen 3.7 models they checked never did. The simplest reading: something changed in 3.8's training. Most likely reinforcement learning: the stage where a model practises real tasks with real tools, in the lab's training setup, and gets graded.
+
+[gently amused, then landing the insight] Vals AI's guess: in training, Qwen's web fetches came back as links on a routify file proxy, or got rewritten to one. And sometimes the model gets confused by that, in its own reasoning. It wonders why it visited Alibaba's server, or suspects something is rewriting its web addresses.

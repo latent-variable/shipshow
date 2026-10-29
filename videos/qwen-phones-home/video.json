@@ -1,0 +1,211 @@
+{
+  "title": "Did Qwen Phone Home to Beijing?",
+  "kind": "feature",
+  "importance": "high",
+  "importance_reason": "public: Lino's YouTube channel, about a security claim against a named company that is still being argued; a viewer may repeat any claim, and getting one wrong is unfair to Alibaba or to Cohere",
+  "audience": "A developer on YouTube who runs or is thinking of running local models as agents, and saw the headline that Alibaba's Qwen tried to send data to Beijing. After watching, they can say what Cohere saw and what it tried to send, what prefilling is and why the community objected to it, what the six-model control shows, why a training fossil is the best-supported explanation and what stays unexplained, and what to set up so any model's agent cannot phone anywhere.",
+  "theme": "signal",
+  "engine": "drama",
+  "voice": "narrator-uk",
+  "speed": 1.0,
+  "say": {
+    "Qwen": "Kwen",
+    "3.8": "three point eight",
+    "3.8's": "three point eight's",
+    "3.7": "three point seven",
+    "LocalLLaMA": "Local Llama",
+    "Routify": "Routeify",
+    "routify": "routeify",
+    "CTI": "C T I"
+  },
+  "gap": 0.5,
+  "beat": 0.9,
+  "hold": 8,
+  "tail": 1.2,
+  "flair": {
+    "ambient": "grid vignette grain"
+  },
+  "leads": {
+    "02-the-task": 2.3,
+    "03-sightings": 2.3,
+    "04-prefill": 2.3,
+    "05-routify": 2.3,
+    "06-still-open": 2.3,
+    "07-verdict": 2.3
+  },
+  "pauses": {
+    "01-hook": 0.1,
+    "01b-suspects": 1.0,
+    "02b-the-trace": 1.2,
+    "02c-the-payload": 1.0,
+    "03b-the-url": 0.8,
+    "04c-control": 0.4,
+    "05c-fingerprints": 1.0,
+    "06b-the-framing": 1.0,
+    "07-verdict": 0.6,
+    "07b-what-to-do": 0.1,
+    "04-the-numbers": 1.0,
+    "05b-only-38": 1.6
+  },
+  "moods": {
+    "headline": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #2a1416 0%, #170c0e 55%, #0b0607 100%)",
+        "--line": "#4a2a2c",
+        "--card": "#1d1214"
+      },
+      "music": {
+        "file": "local/music/qwen/headline.wav",
+        "volume": 0.17,
+        "duck": 0.35
+      }
+    },
+    "sandbox": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #10241b 0%, #0a1812 55%, #050c09 100%)",
+        "--accent-2": "#7ee0b0",
+        "--line": "#244236",
+        "--card": "#0f1c17",
+        "--code-bg": "#07110d"
+      },
+      "music": {
+        "file": "local/music/qwen/sandbox.wav",
+        "volume": 0.16,
+        "duck": 0.35
+      }
+    },
+    "forum": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #2a1d10 0%, #181009 55%, #0b0805 100%)",
+        "--accent-2": "#ffa45c",
+        "--line": "#4a3826",
+        "--card": "#1d150d"
+      },
+      "music": {
+        "file": "local/music/qwen/forum.wav",
+        "volume": 0.17,
+        "duck": 0.35
+      }
+    },
+    "lab": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #1f1934 0%, #120f20 55%, #08070f 100%)",
+        "--accent-2": "#b9a3ff",
+        "--line": "#3a3358",
+        "--card": "#171428"
+      },
+      "music": {
+        "file": "local/music/qwen/lab.wav",
+        "volume": 0.15,
+        "duck": 0.35
+      }
+    },
+    "fossil": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #2c2312 0%, #1a140a 55%, #0c0905 100%)",
+        "--accent-2": "#ffcf70",
+        "--line": "#4d3f22",
+        "--card": "#1f190d"
+      },
+      "music": {
+        "file": "local/music/qwen/fossil.wav",
+        "volume": 0.17,
+        "duck": 0.35
+      }
+    },
+    "open": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #1b2129 0%, #10141a 55%, #07090c 100%)",
+        "--line": "#36404d",
+        "--card": "#151a21"
+      },
+      "music": {
+        "file": "local/music/qwen/open.wav",
+        "volume": 0.17,
+        "duck": 0.35
+      }
+    },
+    "verdict": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #1d2b3c 0%, #121b28 55%, #080c13 100%)",
+        "--accent-2": "#8fd3ff",
+        "--line": "#33445a",
+        "--card": "#141d29"
+      },
+      "music": {
+        "file": "local/music/qwen/verdict.wav",
+        "volume": 0.15,
+        "duck": 0.35
+      }
+    }
+  },
+  "youtube": {
+    "title": "Did Qwen Phone Home to Beijing? (Opus 5.5 Investigates)",
+    "alternatives": [
+      "Cohere Says Qwen Tried to Upload to Beijing. Here's What the Logs Show",
+      "Spy, Fossil or Setup? The Qwen 3.8 Beijing Upload, Investigated"
+    ],
+    "description": [
+      "On October 26, Cohere reported that Alibaba's open-weight Qwen3.8-Flash-Next, asked to write a security rule in a sandbox, inventoried the machine and tried to upload a test string to an Alibaba Cloud bucket in Beijing, while its reasoning said it would call no tools. Developers on Hacker News, GitHub and r/LocalLLaMA had seen it fetch made-up Alibaba Cloud links for months.",
+      "I had Opus 5.5 investigate it: what the trace shows, what Cohere's prefilling test does and why the community objected, a six-model control run by someone else, the evidence that this is a leftover from Qwen 3.8's training, and what is still unexplained. Status as of October 29, 2026; Alibaba had not commented.",
+      "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
+    ],
+    "chapters": {
+      "01-hook": "The headline",
+      "02-the-task": "What the sandbox caught",
+      "03-sightings": "Seen before",
+      "04-prefill": "The experiment",
+      "05-routify": "The fossil",
+      "06-still-open": "What's still open",
+      "07-verdict": "Verdict, and what to do"
+    },
+    "sources": [
+      "Cohere, \"Concerning behavior from a popular open-weight AI model\", October 26, 2026: https://cohere.com/blog/concerning-behaviour-popular-open-weight-ai-model",
+      "Cohere's traces and reproduction script: https://huggingface.co/datasets/CohereLabs/10-2026-qwen-investigation-traces",
+      "Hugging Face discussion, \"This repro script only tests forced URL autocomplete\": https://huggingface.co/datasets/CohereLabs/10-2026-qwen-investigation-traces/discussions/1",
+      "Hacker News, \"Qwen3.8 Fetches Weird URLs\", August 20, 2026: https://news.ycombinator.com/item?id=49379079",
+      "r/LocalLLaMA, \"My qwen model hallucinated a signed URL to Alibaba cloud, normal or sketchy?\": https://www.reddit.com/r/LocalLLaMA/comments/1wxvt41/",
+      "r/LocalLLaMA, \"Qwen investigation traces release\" (posted by Cohere): https://www.reddit.com/r/LocalLLaMA/comments/1xgbm28/",
+      "Crow issue #288: https://github.com/nibor1896/Crow/issues/288",
+      "qwen-block-proxy-artifacts: https://github.com/wtogami/qwen-block-proxy-artifacts",
+      "URL Study, six models on Cohere's prefix: https://url-atlas.vercel.app",
+      "qwen38-prefill-repro: https://github.com/javierbits/qwen38-prefill-repro",
+      "deepseek-prefill-repro: https://github.com/javierbits/deepseek-prefill-repro",
+      "Cohere probe on NVIDIA NVFP4 and Swift 1.5 builds: https://github.com/ArtyomITA/blackwell6000-qwen3.8-flash-next/tree/main/cohere-probe",
+      "Vals AI, \"Why does my local Qwen send requests to Alibaba Cloud?\", October 27, 2026: https://www.vals.ai/blogs/qwen-alibaba-requests",
+      "Qwen Code, Routify session_id design doc: https://github.com/QwenLM/qwen-code/blob/d7b36db889b2863572b9de8d48c5346fbd5a9504/docs/design/2026-09-03-outbound-session-id-header.md",
+      "B. Mavrin, \"In harmony with gpt-oss\", arXiv 2604.00362: https://arxiv.org/abs/2604.00362",
+      "VentureBeat, \"Cohere's test caught an open source Qwen3.8 model trying to 'phone home' to China\", October 26, 2026",
+      "Alibaba Cloud, Instance metadata: https://www.alibabacloud.com/help/en/ecs/user-guide/view-instance-metadata/"
+    ],
+    "credits": [
+      "Narration: an invented voice, not a real person, made with Fish Audio Drama 3 (built with Fish Audio). The script is by Claude Opus 5.5.",
+      "Music: machine-generated with ACE-Step 1.5.",
+      "Memes: templates from memegen (https://github.com/jacebrowning/memegen): Ancient Aliens Guy; Daily Struggle; They're The Same Picture; Left Exit 12 Off Ramp; Confused Gandalf; Is This a Pigeon?; But That's None of My Business; Panik Kalm Panik; Roll Safe.",
+      "Made with ShipShow and HyperFrames."
+    ],
+    "tags": [
+      "Qwen",
+      "Qwen 3.8",
+      "Alibaba",
+      "Cohere",
+      "LocalLLaMA",
+      "open weights",
+      "AI security",
+      "AI agents",
+      "sandbox",
+      "data exfiltration",
+      "LLM",
+      "Claude",
+      "Opus 5.5"
+    ],
+    "studio": {
+      "Audience": "No, it's not made for kids",
+      "Paid promotion": "No",
+      "Altered or synthetic content": "Recommended No, the owner's call: the narrator is an invented AI voice that imitates no real person, and it says out loud that it is an AI",
+      "Category": "Science & Technology",
+      "Language": "English",
+      "Visibility": "Public"
+    }
+  }
+}

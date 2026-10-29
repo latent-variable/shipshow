@@ -1,0 +1,1 @@
+[fair, weighing both sides] And yet the other side had a point. The first upload attempt didn't come from prefilling. As one Redditor put it: the URL was not part of the prompt. What this argument needs is a control group. Same unfinished command, other models. That's how you test suspect three, the setup.

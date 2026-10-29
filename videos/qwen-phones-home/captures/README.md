@@ -1,0 +1,1 @@
+Captured 2026-10-29 from https://cohere.com/blog/concerning-behaviour-popular-open-weight-ai-model (page HTML fetched with curl, text extracted). Lines copied verbatim, trailing spaces included; Cohere defanged the URL itself (hXXp, the * footnote).
