@@ -480,6 +480,34 @@ print(json.dumps([calls, json.load(open(d + "/b.check"))["heard"], json.load(ope
   assert.match(r.stderr, /voicing it again without hearing them/);
 });
 
+test("hear-back reads numbers as the script says them, and a name Whisper writes in capitals is not spelled out (2026-10-29)", { skip: !plain && "no python3" }, () => {
+  const r = python(plain, `
+import hearback as h, json
+print(json.dumps([
+  round(h.agreement("Nvidia's Nemotron, a hundred and seventy one times out of a thousand.", "Invidia's NemoTron, 171 times out of 1,000."), 3),
+  round(h.agreement("This: probe payload, A B C one two three.", "This, probe payload, ABC-123."), 3),
+  round(h.agreement("three hundred and seventy times", "370 times"), 3),
+  round(h.agreement("It began in nineteen fifty two.", "It began in 1952."), 3),
+  h.vanished("Cohere's own coding model, ten. Qwen, three.", "Cohere's own coding model, 10. Quen, 3."),
+  h.spelled_out("Qwen 3.8 Flash Next ran it.", "Kwen three point eight Flash Next ran it.", "QUEN 3.8 flash next ran it."),
+  h.spelled_out("With n switches, two to the n.", "With en switches, two to the en.", "With EN switches, two to the EN."),
+  h.spelled_out("It ran fine.", "It ran fine.", "It ran WXYZ fine."),
+  h.spelled_out("Start the node server.", "Start the node server.", "Start the NODE server."),
+]))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [hundredAnd, digitwise, threeHundred, year, gone, quen, en, stray, node] = JSON.parse(r.stdout);
+  assert.ok(hundredAnd >= 0.97, `"a hundred and seventy one" is "171": ${hundredAnd}`);
+  assert.ok(digitwise >= 0.97, `"A B C one two three" is "ABC-123": ${digitwise}`);
+  assert.ok(threeHundred >= 0.97, `"three hundred and seventy" is "370": ${threeHundred}`);
+  assert.ok(year >= 0.97, `years still read as years: ${year}`);
+  assert.deepEqual(gone, [], "digits for words are not a missing sentence");
+  assert.deepEqual(quen, [], "a name heard in capitals, close to a word of the line, is that word");
+  assert.deepEqual(en, ["EN"], "a short letter respelling is still caught");
+  assert.deepEqual(stray, ["WXYZ"], "a capital word like nothing in the line still counts");
+  assert.deepEqual(node, ["NODE"], "an ordinary word spelled out letter by letter comes back as itself and still counts");
+});
+
 test("hear-back finds letters spelled out that the script never spells: the respelling \"en\" said \"E N\"", { skip: !plain && "no python3" }, () => {
   const r = python(plain, `
 import hearback as h, json

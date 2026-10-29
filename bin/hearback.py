@@ -80,19 +80,31 @@ def year_words(n):
     return int_words(hi) + " " + ("oh " + ONES[lo] if lo < 10 else int_words(lo))
 
 
+# The ways a number is read aloud, each tried and the closest kept: as a quantity, as a year ("nineteen fifty two"), or digit
+# by digit ("A B C one two three", which Whisper writes "ABC-123"). Measured on qwen-phones-home, 2026-10-29: the digit-by-digit
+# line kept failing at 96.5%, and its retakes were pointless.
+READINGS = (False, True, "digits")
+
+
 def spoken_numbers(text, years=False):
     """Numbers as a narrator says them, so a take heard as "29.3" compares with a script that says
     "twenty nine point three". Close is enough: this ranks takes, and a time read the other way only costs
     a few letters. A four digit number is a quantity by default ("one thousand nine hundred fifty two");
     with `years` one from 1100 to 1999 or 2010 to 2099 is read as a year, which is how a script that
-    says "nineteen fifty two" is spelled out: agreement() tries both."""
+    says "nineteen fifty two" is spelled out; with `years="digits"` every whole number is read a digit at a time.
+    agreement() tries each (READINGS). "a hundred" is "one hundred" and the "and" in "a hundred and seventy one" is dropped,
+    so a script that says it that way matches Whisper's "171" (qwen-phones-home's 04c, retaken four times at 96%, 2026-10-29)."""
     text = re.sub(r"(?<=\d),(?=\d{3}\b)", "", text)                  # 2,916
     text = re.sub(r"(?<=\d)\s*%", " percent", text)                  # 40%: Whisper writes the sign, the script says the word
     text = re.sub(r"(\d+)\s*([.:])\s*(\d+)", _pair, text)           # 29.3, Whisper's "29 .3", 4:57
     text = re.sub(r"(\d+)(?:st|nd|rd|th)\b", lambda m: ordinal(int_words(int(m.group(1)))), text)
-    if years:
+    if years == "digits":
+        text = re.sub(r"\d+", lambda m: " " + " ".join(ONES[int(d)] for d in m.group()) + " ", text)
+    elif years:
         text = re.sub(r"(?<!\d)(?:1[1-9]\d\d|20[1-9]\d)(?!\d)", lambda m: year_words(int(m.group())), text)
-    return re.sub(r"\d+", lambda m: int_words(int(m.group())), text)
+    text = re.sub(r"\d+", lambda m: int_words(int(m.group())), text)
+    text = re.sub(r"\ba (hundred|thousand|million)\b", r"one \1", text, flags=re.I)
+    return re.sub(r"\b(hundred|thousand|million) and\b", r"\1", text, flags=re.I)
 
 
 def agreement(text, heard):
@@ -100,7 +112,7 @@ def agreement(text, heard):
     gone: Whisper writes "FindBusiness" as "Find Business" and "Next.js" as "next JS", which a
     word-by-word match counts as misses."""
     best = 0.0
-    for years in (False, True):      # "1952" is "one thousand nine hundred fifty two" or "nineteen fifty two"
+    for years in READINGS:      # "1952" is "one thousand nine hundred fifty two" or "nineteen fifty two"
         norm = lambda t: re.sub(r"[^a-z0-9]", "", spoken_numbers(t, years).lower())
         best = max(best, difflib.SequenceMatcher(None, norm(without_marks(text)), norm(heard), autojunk=False).ratio())
     return best
@@ -129,7 +141,7 @@ def vanished(text, heard):
     import collections
     words = lambda t, years: joined_letters([w.replace("'", "") for w in re.findall(r"[a-z0-9']+", spoken_numbers(without_marks(t), years).lower())])
     found = None
-    for years in (False, True):
+    for years in READINGS:
         short = collections.Counter(words(text, years)) - collections.Counter(words(heard, years))
         gone = []
         for sentence in re.split(r"(?<=[.!?])\s+", text.strip()):
@@ -151,7 +163,7 @@ def added(text, heard, run=ADDED_RUN):
     qwen-phones-home, 2026-10-29). Numbers are read both ways, as in vanished(), and the reading that adds least wins."""
     best = None
     words = lambda t, years: joined_letters([w.replace("'", "") for w in re.findall(r"[a-z0-9']+", spoken_numbers(without_marks(t), years).lower())])
-    for years in (False, True):
+    for years in READINGS:
         a, b = words(text, years), words(heard, years)
         out = [" ".join(b[j1:j2]) for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes()
                if op in ("insert", "replace") and (j2 - j1) - (i2 - i1) >= run]
@@ -209,9 +221,17 @@ def spelled_out(written, said, heard):
             allowed.update(caps)
             if len(re.findall(r"[A-Z]", tok)) >= 2:
                 allowed.add(re.sub(r"[^A-Za-z]", "", tok).upper())
+    # Whisper writes some names in capitals: "QUEN" for the narrator's "Kwen", which the script writes "Qwen" (qwen-phones-home,
+    # 2026-10-29: two lines retaken five times each for it). A single capital word of four letters or more that is nearly, but
+    # not exactly, a name of the line (a capitalised word of the script) is that name misheard. A word spelled out letter by
+    # letter comes back as itself ("NODE" for "node") and still counts, as does a short respelling ("EN" for "en").
+    names = {w.lower() for line in (written, said) for w in re.findall(r"\b[A-Z][A-Za-z]{2,}", without_marks(line))}
+    whole = {t for t in re.findall(r"[A-Za-z]+", heard) if re.fullmatch(r"[A-Z]{4,}", t)}
+    def a_word(g):
+        return g in whole and g.lower() not in names and any(difflib.SequenceMatcher(None, g.lower(), w).ratio() >= 0.75 for w in names)
     found = []
     for g in letter_groups(heard):
-        if g not in allowed and g not in found:
+        if g not in allowed and g not in found and not a_word(g):
             found.append(g)
     return found
 

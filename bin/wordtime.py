@@ -63,7 +63,7 @@ def match(words, heard, years):
 def align(parts, heard, total):
     words = [(k, w) for k, part in enumerate(parts) for w in part]
     # "1952" in a transcript is "nineteen fifty two" to a script that says so, and a quantity to one that does not
-    script, spans, when, at, _ = max((match(words, heard, years) for years in (False, True)), key=lambda m: m[4])
+    script, spans, when, at, _ = max((match(words, heard, years) for years in hearback.READINGS), key=lambda m: m[4])
     n = len(words)
     start, end, matched = [None] * n, [None] * n, [False] * n
     for k, (a, b) in enumerate(spans):
