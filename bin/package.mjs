@@ -14,6 +14,7 @@
 import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { isEntry } from "./entry.mjs";
 import { REPO, config, die, flag, outDir, outName, videoDir } from "./lib.mjs";
 
 /** "m:ss" (or "h:mm:ss") for a time in seconds, as YouTube writes a chapter. */
@@ -69,8 +70,7 @@ export function descriptionText(yt, ch, credits) {
   return parts.filter(Boolean).join("\n\n");
 }
 
-const isMain = process.argv[1] && resolve(process.argv[1]) === resolve(new URL(import.meta.url).pathname);
-if (isMain) {
+if (isEntry(import.meta.url)) {
   const dir = videoDir(process.argv[2]);
   const cfg = config(dir);
   const yt = cfg.youtube;
