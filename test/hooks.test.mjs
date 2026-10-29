@@ -1,7 +1,9 @@
 // The project hooks (.claude/settings.json): what they refuse, what they let through, and that the settings name files that exist.
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import * as require_fs from "node:fs";
 import { existsSync, readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 import { REPO } from "../bin/lib.mjs";
@@ -108,4 +110,53 @@ test("hooks: .claude/settings.json is valid, tracked, and names hook files that 
   assert.ok(s.permissions.deny.includes("Read(./local/voices/**)"), "a voice clone is somebody's voice");
   for (const f of [".claude/settings.json", ".claude/hooks/lib.mjs"]) assert.equal(spawnSync("git", ["check-ignore", "-q", f], { cwd: REPO }).status, 1, `${f} must not be gitignored`);
   assert.equal(spawnSync("git", ["check-ignore", "-q", ".claude/skills/x"], { cwd: REPO }).status, 0, "the skill links stay ignored");
+});
+
+test("hooks: the git rules are this repo's; a squash-merged branch may be deleted with -D (#64, #105)", () => {
+  const { mkdtempSync, writeFileSync, mkdirSync, chmodSync } = require_fs;
+  const tmp = mkdtempSync(join(tmpdir(), "kx-hook-git-"));
+  const sh = (cwd, ...args) => { const r = spawnSync("git", args, { cwd, encoding: "utf8" }); assert.equal(r.status, 0, r.stderr); return r.stdout.trim(); };
+  const repo = (name) => {
+    const d = join(tmp, name);
+    mkdirSync(d);
+    sh(d, "init", "-q", "-b", "main");
+    sh(d, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "one");
+    sh(d, "branch", "landed");
+    sh(d, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "two");
+    sh(d, "branch", "other");   // a commit of its own, so an answer about landed says nothing about it
+    sh(d, "update-ref", "refs/remotes/origin/main", "HEAD");
+    sh(d, "symbolic-ref", "refs/remotes/origin/HEAD", "refs/remotes/origin/main");
+    return d;
+  };
+  const ours = repo("ours"), theirs = repo("theirs");
+  sh(ours, "worktree", "add", "-q", join(tmp, "ours-wt"), "other");
+  const tip = sh(ours, "rev-parse", "landed");
+  // gh stands in: it records what it was asked and answers from $FAKE_GH_OUT, or fails
+  const gh = join(tmp, "gh"), calls = join(tmp, "gh-calls");
+  writeFileSync(gh, `#!/bin/sh\necho "$@" >> "${calls}"\n[ -n "$FAKE_GH_OUT" ] || exit 1\nprintf '%s' "$FAKE_GH_OUT"\n`);
+  chmodSync(gh, 0o755);
+  const run = (command, out, cwd = ours) => hook("guard-bash.mjs", { tool_name: "Bash", tool_input: { command }, cwd }, { CLAUDE_PROJECT_DIR: ours, SHIPSHOW_GH: gh, FAKE_GH_OUT: out ?? "", HOME: tmp });
+  const merged = (oid, cross = false) => JSON.stringify([{ headRefOid: oid, isCrossRepository: cross }]);
+
+  // #105: another repo's branches, stashes and resets are its business, however the command gets there
+  for (const c of [`cd ${theirs} && git branch -D other`, "cd ~/theirs && git branch -D other", `git -C ${theirs} reset --hard`, "git -C ~/theirs clean -fd", "cd $HOME/theirs && git stash drop"]) {
+    assert.equal(run(c).status, 0, `${c} is another repo's and should pass`);
+  }
+  // ...but this repo, a worktree of it, and a directory git cannot place still refuse
+  for (const c of ["git reset --hard", `cd ${join(tmp, "ours-wt")} && git clean -fd`, `git -C ${join(tmp, "nowhere")} restore .`, `cd ${theirs} && cd ${ours} && git branch -D other`]) {
+    assert.equal(run(c).status, 2, `${c} is this repo's and should be refused`);
+  }
+
+  // #64: -D on a branch whose tip is a merged pull request's head, here, is allowed; the guard asked gh about it
+  writeFileSync(calls, "");
+  assert.equal(run("git fetch -p && git branch -D landed", merged(tip)).status, 0, "a squash-merged branch can be deleted");
+  assert.match(readFileSync(calls, "utf8"), /pr list --state merged --head landed --base main/, "the guard asked gh for merged pull requests from that branch into main");
+  const refused = (c, out, why) => { const r = run(c, out); assert.equal(r.status, 2, why); assert.match(r.stderr, /git branch -D deletes a branch/, why); };
+  refused("git branch -D landed", merged("0".repeat(40)), "a branch that moved after its pull request merged is refused");
+  refused("git branch -D landed", merged(tip, true), "a fork's pull request with the same name does not count");
+  refused("git branch -D landed", undefined, "gh failing (offline, signed out) keeps the refusal");
+  refused("git branch -D landed", "not json", "an answer gh garbled keeps the refusal");
+  refused("git branch -D landed other", merged(tip), "every branch named must have landed");
+  refused("git branch -D missing", merged(tip), "a branch that is not there is refused");
+  refused("git branch -D", merged(tip), "no branch named is refused");
 });

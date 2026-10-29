@@ -1131,6 +1131,16 @@ reads 0.38 unset and 0.62 set; with the old fixed value it fails.
 
 **Tested.** `test/pipeline.test.mjs` copies `bin/` and the hooks under a folder named with a space and an accented letter, and reaches it again through a symlink, then runs `package`, `overlap`, `sounds`, `usage`, `guard-bash` and `protect-files` from both and requires each to do its job (a usage line and its exit code, or a refusal). With the old guards put back it fails on `package.mjs`.
 
+### D80. The Bash guard's git rules are this repo's, and a landed branch may be deleted (2026-10-28; narrows D41)
+
+**Why.** Two refusals cost work and protected nothing. `pr merge` ends a squash merge by saying to run `git branch -D <branch>` (a squash leaves the branch unmerged to git, so `-d` refuses), and the guard refused it, so merged branches piled up until `branch-gc.sh --apply` (#64). And the guard read every command from a session started here, so `cd ~/Documents/DAIS/product-videos && git branch -D <merged branch>` was refused although that repo has rules of its own (#105).
+
+**Decision.** The git rules (restore, clean, reset --hard, checkout --, branch -D, stash drop, force push) apply when the command works in this repository: the directory it runs in, moved by `cd` (with `~` and `$HOME`) and by `git -C`, shares this checkout's git store, so a worktree of ShipShow counts and another clone does not. A directory git cannot place counts as this repo. `git branch -D` here is allowed when every branch it names has a tip equal to the head of a pull request merged into the default branch from this repo, the test `branch-gc.sh` uses; `gh` answers it, and anything it cannot establish (no such branch, `gh` missing or offline, a moved tip, a fork's pull request) keeps the refusal. `rm` and the write and read rules are unchanged.
+
+**How.** `.claude/hooks/guard-bash.mjs`: `isThisRepo` compares `git rev-parse --git-common-dir`, `landedBranch` asks `gh pr list --state merged --head <branch> --base <default>` (`SHIPSHOW_GH` names another `gh`, which is how the test answers).
+
+**Tested.** `test/hooks.test.mjs` makes two throwaway repos and a worktree, and a `gh` that records its arguments: another repo's `branch -D`, `reset --hard`, `clean` and `stash drop` pass by path, `~`, `$HOME` and `-C`; this repo, its worktree, an unknown directory and a `cd` back here are refused; `-D` passes for a branch whose tip a merged pull request names, and is refused for a moved tip, a fork, `gh` failing or garbled, one branch of two unlanded, a missing branch and none named. With the old guard the test fails. Against the real `gh`, the guard allowed `-D` on three branches merged that day and refused `main`.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

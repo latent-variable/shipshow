@@ -10,6 +10,8 @@
 // THIS IS A SEATBELT, NOT A SANDBOX. It reads the command text, so it stops a well-meaning agent's slip (sed -i on the
 // sample's bug, cat .env), never a determined one: a path built in a variable, a glob that expands to it, a script that
 // writes it from inside, a heredoc fed to python. sandbox-run.sh is the sandbox.
+import { spawnSync } from "node:child_process";
+import { homedir } from "node:os";
 import { isAbsolute, relative, resolve } from "node:path";
 import { deny, input, projectDir } from "./lib.mjs";
 import { isEntry } from "../../bin/entry.mjs";
@@ -48,21 +50,60 @@ export function segments(cmd) {
   return out;
 }
 
+// git's own options before the subcommand, the ones that take a value
+const GIT_VALUE_OPTS = ["-C", "-c", "--git-dir", "--work-tree", "--namespace"];
+
 function gitReason(args) {
   // skip git's own options (and the value of those that take one) to find the subcommand
   let i = 0;
-  while (i < args.length && args[i].startsWith("-")) i += ["-C", "-c", "--git-dir", "--work-tree", "--namespace"].includes(args[i]) ? 2 : 1;
+  while (i < args.length && args[i].startsWith("-")) i += GIT_VALUE_OPTS.includes(args[i]) ? 2 : 1;
   const sub = args[i];
   const rest = args.slice(i + 1);
   if (sub === "restore") return "git restore overwrites uncommitted work";
   if (sub === "clean") return "git clean deletes untracked files";
   if (sub === "reset" && rest.includes("--hard")) return "git reset --hard discards work";
   if (sub === "checkout" && (rest.includes("--") || rest.includes("."))) return "git checkout -- discards uncommitted changes";
-  if (sub === "branch" && rest.includes("-D")) return "git branch -D deletes a branch that may be unmerged";
+  if (sub === "branch" && rest.includes("-D")) return { why: "git branch -D deletes a branch that may be unmerged", branches: rest.filter((a) => !a.startsWith("-")) };
   if (sub === "stash" && ["drop", "clear"].includes(rest[0])) return "git stash drop loses stashed work";
   if (sub === "push" && rest.some((a) => a === "--force" || a === "-f" || a.startsWith("--force-with-lease"))) return "a force push rewrites shared history";
   return null;
 }
+
+// The directory a git command works in: where the command runs, moved by each -C.
+function gitDir(args, cwd) {
+  let dir = cwd;
+  for (let i = 0; i < args.length && args[i].startsWith("-"); i += GIT_VALUE_OPTS.includes(args[i]) ? 2 : 1) if (args[i] === "-C" && args[i + 1]) dir = resolve(dir, home(args[i + 1]));
+  return dir;
+}
+
+const git = (dir, ...args) => {
+  const r = spawnSync("git", ["-C", dir, ...args], { encoding: "utf8", timeout: 10000 });
+  return r.status === 0 ? r.stdout.trim() : null;
+};
+
+// Whether a directory is this repository: the same git store, so a worktree of ShipShow is ShipShow and another clone is
+// not. The git rules are this repo's (#105); another repo's branches and stashes are that repo's business. A directory git
+// cannot place (not there yet, not a repo) counts as this repo, so the rule still applies when we cannot tell.
+export function isThisRepo(dir, root) {
+  const store = (d) => git(d, "rev-parse", "--path-format=absolute", "--git-common-dir");
+  const theirs = store(dir), ours = store(root);
+  return !theirs || !ours || theirs === ours;
+}
+
+// A branch whose tip is exactly the head of a pull request merged into the default branch from this repo has landed:
+// a squash merge leaves it unmerged to git, so -d refuses and `pr merge` says to use -D (#64). The same test as
+// branch-gc.sh. Anything it cannot establish (no such branch, gh missing or offline, another head) keeps the refusal.
+export function landedBranch(dir, branch, gh = process.env.SHIPSHOW_GH || "gh") {
+  if (!branch || branch.startsWith("-")) return false;
+  const tip = git(dir, "rev-parse", "--verify", "--quiet", `refs/heads/${branch}^{commit}`);
+  const base = (git(dir, "symbolic-ref", "--short", "refs/remotes/origin/HEAD") || "").replace(/^origin\//, "");
+  if (!tip || !base) return false;
+  const r = spawnSync(gh, ["pr", "list", "--state", "merged", "--head", branch, "--base", base, "--limit", "100", "--json", "headRefOid,isCrossRepository"], { cwd: dir, encoding: "utf8", timeout: 20000 });
+  if (r.status !== 0) return false;
+  try { return JSON.parse(r.stdout).some((pr) => pr.headRefOid === tip && pr.isCrossRepository === false); } catch { return false; }
+}
+
+const home = (p) => (p === "~" || p.startsWith("~/") ? homedir() + p.slice(1) : p.replace(/^\$HOME(?=\/|$)/, homedir()));
 
 // A heredoc body is text, not commands: cut it out of the command. One with a quoted delimiter is inert (nothing in
 // it runs); one without can hold $( ) and backticks, which still run, so those bodies are returned to be scanned.
@@ -180,10 +221,16 @@ export function reason(full, depth = 0, ctx = { root: resolve(process.env.CLAUDE
     while (w.length && (/^[A-Za-z_][A-Za-z0-9_]*=/.test(w[0]) || WRAPPERS.has(w[0]) || KEYWORDS.has(w[0]))) w.shift();
     if (!w.length) continue;
     const base = w[0].split("/").pop();
-    if (base === "cd" && w[1]) { ctx = { ...ctx, cwd: resolve(ctx.cwd, w[1]) }; continue; }
+    if (base === "cd" && w[1]) { ctx = { ...ctx, cwd: resolve(ctx.cwd, home(w[1])) }; continue; }
     if (["rm", "unlink", "shred"].includes(base)) return `${base} deletes files, and this repo's scripts and agents never do: move it aside with mv (AGENTS.md, Traps)`;
     if (base === "find" && (w.includes("-delete") || (w.includes("-exec") && w.some((x) => ["rm", "unlink"].includes(x))))) return "find with -delete or -exec rm deletes files: move them aside instead";
-    if (base === "git") { const r = gitReason(w.slice(1)); if (r) return r; }
+    if (base === "git") {
+      const r = gitReason(w.slice(1)), dir = r && gitDir(w.slice(1), ctx.cwd);
+      if (r && isThisRepo(dir, ctx.root)) {
+        if (typeof r === "string") return r;
+        if (!r.branches.length || !r.branches.every((b) => landedBranch(dir, b))) return `${r.why} (one whose tip is a merged pull request's head is allowed)`;
+      }
+    }
     if (SHELLS.has(base) && !w.includes("-c") && all.length) feedsShell = true;   // bash <<EOF: the body runs, quoted delimiter or not
     if (SHELLS.has(base)) {
       const i = w.indexOf("-c");
