@@ -58,11 +58,14 @@ export const settleFor = (anim) => ENTRANCE_SETTLE[anim] ?? DEFAULT_SETTLE;
 /**
  * The text a cue adds for the viewer to read. A highlight marks text already shown, and an element whose text is
  * part of an earlier cued element in the same scene (a line cued inside a code block that has already landed) is
- * already counted there: neither is new reading.
+ * already counted there: neither is new reading. The same text twice is one read when one element holds the other
+ * (`span`, where each sits in the page): a meme's backdrop and its figure cued together (#62). Two separate elements
+ * that say the same thing are each read.
  */
 export function newReadingText(cue, earlierInScene) {
   if (cue.anim === "highlight") return "";
-  if (cue.text && earlierInScene.some((e) => e.text !== cue.text && e.text.includes(cue.text))) return "";
+  const nested = (a, b) => a?.span && b?.span && ((a.span[0] <= b.span[0] && b.span[1] <= a.span[1]) || (b.span[0] <= a.span[0] && a.span[1] <= b.span[1]));
+  if (cue.text && earlierInScene.some((e) => e.text.includes(cue.text) && (e.text !== cue.text || nested(e, cue)))) return "";
   return cue.text;
 }
 

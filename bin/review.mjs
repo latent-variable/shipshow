@@ -24,8 +24,8 @@ for (const f of ["timing.json", "index.html"]) if (!existsSync(join(dir, f))) di
 const timing = JSON.parse(readFileSync(join(dir, "timing.json"), "utf8"));
 const html = readFileSync(join(dir, "index.html"), "utf8");
 
-/** The text inside the element whose opening tag starts at `i`, nested tags of its kind included. */
-function elementText(i) {
+/** The text inside the element whose opening tag starts at `i`, nested tags of its kind included, and where it ends. */
+function element(i) {
   const tag = html.slice(i + 1).match(/^\w+/)[0];
   const re = new RegExp(`<(/?)${tag}\\b[^>]*>`, "g");
   re.lastIndex = i;
@@ -34,8 +34,9 @@ function elementText(i) {
     depth += m[1] ? -1 : 1;
     if (!depth) break;
   }
-  const inner = html.slice(html.indexOf(">", i) + 1, m ? m.index : html.length);
-  return inner.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&rarr;/g, "->").replace(/\s+/g, " ").trim();
+  const end = m ? m.index : html.length;
+  const inner = html.slice(html.indexOf(">", i) + 1, end);
+  return { end, text: inner.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&rarr;/g, "->").replace(/\s+/g, " ").trim() };
 }
 
 const sceneEndOf = (id) => { const sc = timing.scenes.find((x) => x.id === id); return sc.start + sc.duration; };
@@ -48,8 +49,8 @@ const sentenceAt = (t) => {
 // Every cued element, in time order.
 const cues = [];
 for (const m of html.matchAll(/<\w+[^>]*?data-cue="([^"]*)" data-at="([\d.]+)"[^>]*>/g)) {
-  const at = +m[2], scene = sceneAt(at);
-  cues.push({ at, cue: m[1], anim: (m[0].match(/data-anim="([^"]*)"/) || [])[1] || "", scene: scene.id, text: elementText(m.index), saying: sentenceAt(at + 0.15)?.text || "(between sentences)", up: round(scene.start + scene.duration - at) });
+  const at = +m[2], scene = sceneAt(at), el = element(m.index);
+  cues.push({ at, cue: m[1], anim: (m[0].match(/data-anim="([^"]*)"/) || [])[1] || "", scene: scene.id, text: el.text, span: [m.index, el.end], saying: sentenceAt(at + 0.15)?.text || "(between sentences)", up: round(scene.start + scene.duration - at) });
 }
 cues.sort((a, b) => a.at - b.at);
 
