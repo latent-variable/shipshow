@@ -87,6 +87,7 @@ def spoken_numbers(text, years=False):
     with `years` one from 1100 to 1999 or 2010 to 2099 is read as a year, which is how a script that
     says "nineteen fifty two" is spelled out: agreement() tries both."""
     text = re.sub(r"(?<=\d),(?=\d{3}\b)", "", text)                  # 2,916
+    text = re.sub(r"(?<=\d)\s*%", " percent", text)                  # 40%: Whisper writes the sign, the script says the word
     text = re.sub(r"(\d+)\s*([.:])\s*(\d+)", _pair, text)           # 29.3, Whisper's "29 .3", 4:57
     text = re.sub(r"(\d+)(?:st|nd|rd|th)\b", lambda m: ordinal(int_words(int(m.group(1)))), text)
     if years:

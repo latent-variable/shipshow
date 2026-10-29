@@ -41,10 +41,14 @@ print(a(words, "something else entirely"))
 print(h.MIN)
 print(a("Go back to nineteen fifty two.", "Go back to 1952."))
 print(a("Meet in 1905, not 2026.", "Meet in nineteen oh five, not twenty twenty six."))
+print(a("About forty percent of them.", "About 40% of them."))
+print(a("A 2.5% rise.", "A two point five percent rise."))
 `);
   assert.equal(r.status, 0, r.stderr);
-  const [name, num, clock, mark, dropped, wrong, other, min, year, years] = r.stdout.trim().split("\n").map(Number);
+  const [name, num, clock, mark, dropped, wrong, other, min, year, years, pct, pctDecimal] = r.stdout.trim().split("\n").map(Number);
   for (const x of [name, num, clock, mark, year, years]) assert.equal(x, 1);   // a year is read as a year or as a quantity, whichever the take matches
+  assert.equal(pct, 1, "Whisper's 40% is the script's forty percent (#61)");
+  assert.equal(pctDecimal, 1, "and the other way round, with a decimal");
   assert.ok(dropped < min, `one dropped word in twelve is under the threshold (${dropped})`);
   assert.ok(wrong < min, `one wrong word in twelve is under the threshold (${wrong})`);
   assert.ok(other < 0.5);
