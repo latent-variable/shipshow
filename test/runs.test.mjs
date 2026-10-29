@@ -29,7 +29,10 @@ if (first === "-c") process.exit(second.includes("faster_whisper") ? 0 : 1);
 const spec = JSON.parse(readFileSync(second, "utf8"));
 appendFileSync(second + ".log", JSON.stringify(spec) + "\\n");
 for (const j of spec.jobs) {
-  writeWav(j.wav, { rate: 24000, channels: 1, samples: new Int16Array(24000 * 4) });
+  // a tone where each sentence is heard (2k + 0.1 to 2k + 1.9 s), silence between them, as a real take has
+  const take = new Int16Array(24000 * 4);
+  (j.parts || []).forEach((_, k) => { for (let f = Math.round((2 * k + 0.1) * 24000); f < Math.min(take.length, Math.round((2 * k + 1.9) * 24000)); f++) take[f] = Math.round(Math.sin(f / 4) * 8000); });
+  writeWav(j.wav, { rate: 24000, channels: 1, samples: take });
   if (!spec.hearback) continue;
   const sentences = (j.parts || []).map((part, k) => ({ start: 2 * k + 0.1, end: 2 * k + 1.9, words: part.map((w, i) => ({ w: w.w, at: 2 * k + 0.1 + i * 0.1, end: 2 * k + 0.2 + i * 0.1 })) }));
   const n = (j.parts || []).flat().length;
@@ -102,13 +105,13 @@ test("a run's sentences and words are placed where the take says they are, at th
   const timing = JSON.parse(readFileSync(join(dir, "timing.json"), "utf8"));
   const [intro] = timing.scenes;
   // lead 0.5 / speed 1.25 = 0.4 s, then the run: sentence k is heard at 2k + 0.1 into its take. The fake leaves 0.2 s between
-  // sentences, under the gap (0.35 / 1.25 = 0.28 s), so each boundary inside the take gets a 0.08 s breath and the sentences
-  // after it move. The fake's fourth sentence lies past its 4 s take: no audio there to splice, so no breath before it.
-  assert.deepEqual(intro.sentences.slice(0, 4).map((s) => [s.start, s.duration]), [[0.5, 1.8], [2.58, 1.8], [4.66, 1.8], [6.66, 1.8]]);
+  // sentences, under the gap (0.35 / 1.25 = 0.28 s), so a boundary with voice after its pause gets a 0.08 s breath and the
+  // sentences after it move. The second boundary falls at the 4 s take's end, with no voice after its pause, so it gets none.
+  assert.deepEqual(intro.sentences.slice(0, 4).map((s) => [s.start, s.duration]), [[0.5, 1.8], [2.58, 1.8], [4.58, 1.8], [6.58, 1.8]]);
   assert.deepEqual(intro.sentences[1].words.slice(0, 3), [{ w: "Sentence", at: 2.58 }, { w: "2", at: 2.68 }, { w: "has", at: 2.78 }]);
-  // the next run starts after the 4 s take, its two breaths (0.16 s) and the gap
-  assert.equal(intro.sentences[4].start, round2(0.4 + 4 + 0.16 + 0.28 + 0.1));
-  assert.match(r.stdout, /3 breath\(s\) put between sentences/, "two in the first run, one in the second");
+  // the next run starts after the 4 s take, its one breath (0.08 s) and the gap
+  assert.equal(intro.sentences[4].start, round2(0.4 + 4 + 0.08 + 0.28 + 0.1));
+  assert.match(r.stdout, /2 breath\(s\) put between sentences/, "one in the first run, one in the second");
   assert.equal(intro.sentences.length, 6);
   const vc = timing.voiceCheck;
   assert.deepEqual(vc.runs, { takes: 4, words: 113, matched: 109 }, "the packet is told how many words Whisper matched: 60 + 50 + 3 words, one missed per take in the fake");
@@ -313,6 +316,17 @@ test("breathe: a word's trailing 's' is never split; the breath goes in the paus
   const at = [...out].findIndex((x, i) => i > 1010 && x === 0);
   assert.ok(at >= 1230, `the breath went in at ${at} ms, inside the hiss (1010 to 1230)`);
   assert.deepEqual([...out.slice(1010, 1230)], [...samples.slice(1010, 1230)], "the s is untouched");
+  // A longer, quieter pause further on (a comma inside the next sentence) is not taken: the first pause after the word is.
+  const comma = Int16Array.from([...tone(1000), ...Array(10).fill(40), ...hiss(150), ...Array(60).fill(5), ...tone(40), ...Array(150).fill(0), ...tone(1000)]);
+  const first = breathe(comma, rate, 1, [[1.0, 1.04]], 0.35).samples;
+  const cut = [...first].findIndex((x, i) => i > 1010 && x === 0);
+  assert.ok(cut >= 1160 && cut < 1220, `the breath went in at ${cut} ms, not in the 60 ms pause after the s (1160 to 1220)`);
+  // "first": the s, a 40 ms closure, the t's burst, then the real pause before the next sentence. The closure is followed by a
+  // burst and quiet, not voice, so the breath goes in the pause after the t, never between the s and the t.
+  const first_t = Int16Array.from([...tone(1000), ...hiss(100), ...Array(40).fill(0), ...hiss(20), ...Array(150).fill(3), ...tone(1000)]);
+  const t_out = breathe(first_t, rate, 1, [[1.0, 1.05]], 0.35).samples;
+  assert.deepEqual([...t_out.slice(1000, 1160)], [...first_t.slice(1000, 1160)], "the s, the closure and the t's burst stay together");
+  assert.ok(t_out.length > first_t.length, "the breath went in somewhere");
   // A dip shorter than BREATH_RUN with no real pause near it is not a pause: the boundary is left alone.
   const dip_only = Int16Array.from([...tone(1000), ...Array(10).fill(40), ...hiss(220), ...tone(1000)]);
   const kept = breathe(dip_only, rate, 1, [[1.0, 1.04]], 0.35);

@@ -154,7 +154,7 @@ files, is dropped: the capture is 39 tool calls, every one a search, fetch, brow
 - **"addre... ss" at 6:43, "key... s" at 6:49.** The breath between two sentences in a take went in at the dip where the last
   word's "s" began, so the silence split the word. The rule in `bin/lib.mjs` (`breathe`, DESIGN D51) now cuts only inside 30 ms or
   more of real silence, searched past the word's end far enough to clear a trailing sibilant. The narration was re-laid from the
-  cached takes, nothing re-voiced: 41 inserted gaps, none with hiss or speech on both sides (before: the two he heard).
+  cached takes, nothing re-voiced: 38 inserted gaps, none splitting a sound (a sibilant, a stop's burst, or speech on both sides) and every one just before a sentence; two run-together boundaries with no clear pause are left alone (before: the two he heard). The PR reviewer caught that "the quietest stretch" could be a comma pause inside the next sentence, and the first version's "first stretch" took the closure in "firs-t" and "ea-ch"; the rule now takes the first silence that voice follows.
 - **Memes "just as transition points", with no time to digest them.** Each of the nine now lands on the sentence that sets it up
   and holds 5 to 12 s (Gandalf went from 2 s to about 10, Roll Safe from 3 to 6), with longer pauses where one closes a scene.
 - **Gandalf's text over his face.** One line, "I have no memory of this proxy", in the top box; his face is clear.

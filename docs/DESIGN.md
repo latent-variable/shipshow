@@ -728,15 +728,17 @@ run swings on this machine were up to 8 s; the shipped fonts account for much of
 ### D51. A run gets a breath between sentences that ran together (2026-10-27)
 **Decision.** When `voice` lays out a run that Whisper timed, every boundary where sentence k's last word ends less than the
 video's `gap` (divided by speed) before sentence k+1's first word starts gets silence for the difference. It goes in at the
-middle of the quietest stretch of real silence from 80 ms before Whisper's end of sentence k to 300 ms past its start of k+1
-(`BREATH_BEFORE`, `BREATH_AFTER`), with a 5 ms fade out and in. A stretch counts only when it is at least 30 ms long (`BREATH_RUN`)
-and every 10 ms of it is under -50 dBFS (`BREATH_QUIET_DB`; speech sits around -23, a trailing "s" at -40 to -46), so no word is
-cut: a boundary with no such stretch near it is left as it is; the sentences and words after it move by the same amount in
+middle of the first stretch of real silence that reaches past Whisper's end of sentence k and is followed by voice, searched from
+80 ms before that end to 300 ms past the start of k+1 (`BREATH_BEFORE`, `BREATH_AFTER`), with a 5 ms fade out and in. A stretch
+counts only when it is at least 30 ms long (`BREATH_RUN`), every 10 ms of it is under -50 dBFS (`BREATH_QUIET_DB`; speech sits
+around -23, a trailing "s" at -40 to -46), and 30 ms of voice (over -35 dBFS, `BREATH_VOICE_DB`) follow within 150 ms
+(`BREATH_ONSET`): a stop's closure inside the last word (the silence in "firs-t") is followed by a burst and quiet, not voice. The
+first such stretch, never a later one, because a comma pause inside sentence k+1 would put the breath mid-sentence and move words
+whose times do not move (the PR reviewer, #117). So no word is cut: a boundary with no such stretch near it is left as it is; the sentences and words after it move by the same amount in
 `timing.json`. **Changed 2026-10-29.** The first rule took the quietest single window within 80 ms under -40 dBFS. In
 qwen-phones-home that was the dip as "address" and "keys" began their final "s": the breath split the word, "addre... ss", and the
 owner heard it at 6:43 and 6:49. Whisper ends a word before its sibilant has, so the real pause lay past the old window, and the
-"s" itself, at about -42 dBFS, counted as quiet. Measured on that video's 39 runs: 41 inserted gaps, none with hiss on both sides
-or speech up to both edges (before: 2 split words). Nothing is voiced again and the take on disk is unchanged. **Why.** Round 2 of the
+"s" itself, at about -42 dBFS, counted as quiet. Re-laid on that video's 39 runs from the cached takes; the measured gaps are in its REVIEW.md. Nothing is voiced again and the take on disk is unchanged. **Why.** Round 2 of the
 never-about-the-code critics measured gaps of 0 to 0.25 s inside runs (eight of them, four at 0 or 0.02 s) next to 3 s pauses
 between scenes, the rushed-then-stopped rhythm the owner had called choppy. Runs keep one prosody (D47); this keeps their sentences
 apart. **Measured (2026-10-27, the 12-scene video, speed 1.0, gap 0.35).** 5 breaths inserted across 23 runs; every one of 66

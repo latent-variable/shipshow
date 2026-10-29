@@ -646,7 +646,8 @@ function moodMusicBed(dir, music, timing, moods) {
 }
 
 /** A run's take with a breath between its sentences: where Whisper heard sentence k end and k+1 start less than `minGap`
- *  seconds apart, silence is inserted in the middle of the quietest stretch of real silence near the boundary, with 5 ms fades
+ *  seconds apart, silence is inserted in the middle of the first stretch of real silence past Whisper's end of sentence k
+ *  that the next word's voice follows, with 5 ms fades
  *  either side, so the voice is never cut mid-word and its prosody is kept. A stretch counts only when it is at least
  *  BREATH_RUN long and every 10 ms of it is under BREATH_QUIET_DB, so the dip as a word's last "s" starts, or the hiss of the
  *  "s" itself, is never taken for the pause after it (qwen-phones-home, 2026-10-29: "addre... ss"). The search runs from
@@ -658,6 +659,8 @@ export const BREATH_QUIET_DB = -50;   // a 10 ms window quieter than this (dBFS)
 export const BREATH_RUN = 0.03;       // seconds of such windows in a row before a stretch counts as a pause
 export const BREATH_BEFORE = 0.08;    // seconds searched before Whisper's end of sentence k
 export const BREATH_AFTER = 0.3;      // seconds searched past its start of sentence k+1: a sibilant runs on after Whisper's word end
+export const BREATH_VOICE_DB = -35;   // a window louder than this is voice, not a burst or hiss
+export const BREATH_ONSET = 0.15;     // the pause before a sentence is followed by voice within this; a stop's closure (the silence in "firs-t") is not
 export function breathe(samples, rate, channels, bounds, minGap) {
   const frames = samples.length / channels, win = Math.max(1, Math.round(rate * 0.01));
   const energy = (f0) => {
@@ -672,18 +675,25 @@ export function breathe(samples, rate, channels, bounds, minGap) {
     if (need > 0.02) {
       const lo = Math.max(0, Math.round((Math.min(end, start) - BREATH_BEFORE) * rate)), hi = Math.min(frames - win, Math.round((Math.max(end, start) + BREATH_AFTER) * rate));
       const dbOf = (e) => 20 * Math.log10(Math.sqrt(e / (win * channels)) / 32768 + 1e-9);
-      // Runs of 10 ms windows all under QUIET_DB; the one with the lowest mean is the pause. A boundary with none is left as it is.
-      const need_run = Math.max(1, Math.round(BREATH_RUN * rate / win));
+      // Runs of 10 ms windows all under QUIET_DB. The pause between the two sentences is the first run that reaches past
+      // Whisper's end of sentence k and is followed by voice (BREATH_VOICE_DB for 30 ms, within BREATH_ONSET). A trailing
+      // sibilant is never such a run; a stop's closure inside the last word is followed by a burst or hiss, not voice
+      // ("firs... t"); a later pause (a comma inside sentence k+1) would put the breath mid-sentence and move words whose
+      // times do not move. A boundary with none is left as it is.
+      const need_run = Math.max(1, Math.round(BREATH_RUN * rate / win)), endF = Math.round(end * rate);
+      const onsetF = Math.round(BREATH_ONSET * rate);
+      const voiced = (from) => {
+        let loud = 0;
+        for (let f = from; f < Math.min(frames - win, from + onsetF); f += win) { loud = dbOf(energy(f)) > BREATH_VOICE_DB ? loud + 1 : 0; if (loud >= 3) return true; }
+        return false;
+      };
       let best = null, run = [];
-      const close = () => {
-        if (run.length >= need_run) {
-          const mean = run.reduce((a, r) => a + r.db, 0) / run.length;
-          if (!best || mean < best.mean) best = { mean, at: run[Math.floor(run.length / 2)].f + Math.floor(win / 2) };
-        }
+      const close = (next) => {
+        if (!best && run.length >= need_run && run.at(-1).f + win > endF && voiced(next)) best = { at: run[Math.floor(run.length / 2)].f + Math.floor(win / 2) };
         run = [];
       };
-      for (let f = lo; f <= hi; f += win) { const db = dbOf(energy(f)); if (db < BREATH_QUIET_DB) run.push({ f, db }); else close(); }
-      close();
+      for (let f = lo; f <= hi && !best; f += win) { const db = dbOf(energy(f)); if (db < BREATH_QUIET_DB) run.push({ f, db }); else close(f); }
+      close(hi + win);
       if (best) {
         cuts.push({ at: Math.min(Math.max(best.at, 0), frames), add: Math.round(need * rate) });
         total += need;
