@@ -195,7 +195,7 @@ silence after it, a take that starts with no lead-in or shouts (a 400 ms stretch
 is voiced again with another seed, up to three times, then kept and reported. *Hear-back*, optional
 (`npm run setup:hearback`; `--no-hearback` turns it off): faster-whisper small.en transcribes each take and
 `bin/hearback.py` scores it against the text the engine was told to say, by letters with spaces, punctuation and
-marks gone and numbers spelled out. It also looks for letters spelled out that the script never spells (`spelled_out`:
+marks gone and numbers spelled out (a percent sign as the word). It also looks for letters spelled out that the script never spells (`spelled_out`:
 Whisper writes letters it hears spelled as capitals, "two to the EN"), against the script as written and as told; Drama 3
 retakes such a take, and one kept with it is listed (D60). *Second listen*, optional (`npm run setup:listen`, Apple Silicon;
 `--no-listen` skips it): after the track is laid, `bin/listen.py` has NVIDIA's Parakeet hear each scene of

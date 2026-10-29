@@ -1142,6 +1142,8 @@ What an agent or person observes. Each line is checkable against the cited file.
 - `voice` also levels every take and, with faster-whisper installed, hears each back (`bin/voice.mjs`,
   `bin/hearback.py`, `bin/voicecheck.py`; D44): it prints `LISTEN` for a sentence under 0.97 or kept with a fault, and
   records them in `timing.json` `voiceCheck`, which `review` prints as *Voice checks*.
+  It compares a take with its text after spelling numbers out on both sides: a year read as a year or a quantity, a
+  decimal, a time, an ordinal, and a percent sign as the word (Whisper writes "40%" for a take that said "forty percent", #61).
 - `build` also places sound effects (D43): a `data-sfx` or `sfx()` call becomes a sound in `assets/sfx.wav`, peaking (or starting) at the cue; it stops on a run of one sound, on a sound over a sentence's first word, and on an unknown sound; `"sfx": false` turns it off. `review` lists each sound with its time, scene, level against the voice and audible span under *Sound effects*.
 - `render` writes `out/<name>.mp4`; `make` chains voice, build, lint and render.
 - `build` expands each `ss-portrait` figure (D48): a refused licence, a missing file or an unreachable Commons with nothing cached stops it naming the scene and the file; `review` lists each portrait under *Portraits*, and every portrait and screenshot under *Credits* and in `review/credits.txt`; the credit is not drawn on the photo (D57).
