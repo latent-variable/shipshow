@@ -500,6 +500,9 @@ test("drama is told the stage directions, a line at a time, and the captions and
     "One more. [sigh. then, quietly] Really.",
   ], "one take per line, each with its directions where they stand; a full stop inside a direction ends no sentence");
   assert.deepEqual(first.jobs.map((j) => j.plain), ["Programmers said the same about compilers. Like animals.", "It was fine.", "One more. Really."]);
+  // Each line names the take before it, across scenes, and the video's first take (D83); the first line names neither.
+  const wavs = first.jobs.map((j) => j.wav);
+  assert.deepEqual(first.jobs.map((j) => [j.after, j.anchor]), [[null, null], [wavs[0], wavs[0]], [wavs[1], wavs[0]]]);
   assert.equal(first.voice.text, "The words in the clip.");
   assert.equal(first.model.repo, "mlx-community/fish-audio-drama-3-4bit");
   const timing = JSON.parse(readFileSync(join(dir, "timing.json"), "utf8"));
@@ -513,6 +516,7 @@ test("drama is told the stage directions, a line at a time, and the captions and
   r = dramaRun(dir, local, py, "--voice", "mine");
   assert.equal(r.status, 0, r.stderr);
   assert.deepEqual(jobsOf()[1].jobs.map((j) => j.text), ["[deadpan] It was fine. [laughs]"]);
+  assert.deepEqual(jobsOf()[1].jobs.map((j) => [j.after, j.anchor]), [[wavs[0], wavs[0]]], "a line voiced again alone still names the takes it hears");
 
   // OmniVoice, given the same script, is told the words only.
   r = voiceRun(dir, local, py, "--engine", "omnivoice");

@@ -341,15 +341,65 @@ class Model:
         a = np.concatenate([voice(1.2), hiss(s), voice(1.0)]) if s else np.concatenate([voice(1.2), hiss(0.4), voice(1.0)])
         return [types.SimpleNamespace(audio=a, sample_rate=sr)]
 job = {"seed": 1, "text": "x"}
-a, _, fault = drama.one_take(Model([3.0, 2.4, 2.8]), job, 0, {})
+a, _, fault, _ = drama.one_take(Model([3.0, 2.4, 2.8]), job, 0, {})
 print(fault, round(len(a) / sr, 1))
-a, _, fault = drama.one_take(Model([3.0, 0, 2.8]), job, 0, {})
+a, _, fault, _ = drama.one_take(Model([3.0, 0, 2.8]), job, 0, {})
 print(fault, round(len(a) / sr, 1))
 `);
   assert.equal(r.status, 0, r.stderr);
   const [stalled, clean] = r.stdout.trim().split("\n");
   assert.match(stalled, /^stalled for 2\.\d s mid-line 4\.\d$/, `the 2.4 s stall is the one kept, with its fault: ${stalled}`);
   assert.match(clean, /^None 2\.\d$/, `a clean seed is taken as soon as it comes: ${clean}`);
+});
+
+test("drama: each line hears the video's first take and the take before it, as one long generate() call would (D83)", { skip: !numeric && "no python with numpy and soundfile" }, () => {
+  const dir = mkdtempSync(join(tmpdir(), "heard-"));
+  mkdirSync(join(dir, "model"));
+  writeFileSync(join(dir, "model", "config.json"), "{}");
+  const r = spawnSync(numeric, ["-c", `import sys; sys.path.insert(0, ${JSON.stringify(BIN)})
+import json, types, numpy as np
+sys.modules["mlx"] = types.ModuleType("mlx"); core = types.ModuleType("mlx.core"); core.random = types.SimpleNamespace(seed=lambda s: None); core.set_cache_limit = lambda n: None; core.clear_cache = lambda: None; core.get_active_memory = lambda: 0; core.get_peak_memory = lambda: 0
+core.stack = lambda xs, axis=0: np.stack(xs, axis=axis); core.array = np.asarray
+sys.modules["mlx.core"] = core; sys.modules["mlx"].core = core
+d3 = types.ModuleType("d3"); d3.DEFAULT_TEMPERATURE, d3.DEFAULT_TOP_K, d3.DEFAULT_TOP_P, d3.DEFAULT_MAX_FRAMES = 0.7, 30, 0.7, 1024
+chunking = types.ModuleType("chunking"); chunking.split_text = lambda t: t.split("|")
+pkg = types.ModuleType("mlx_audio.tts.models.fish_drama3"); pkg.drama3 = d3; pkg.chunking = chunking
+for m in ("mlx_audio", "mlx_audio.tts", "mlx_audio.tts.models"): sys.modules[m] = types.ModuleType(m)
+sys.modules["mlx_audio.tts.models.fish_drama3"] = pkg; sys.modules["mlx_audio.tts.models.fish_drama3.drama3"] = d3
+sys.modules["mlx_audio.tts.models.fish_drama3.chunking"] = chunking
+heard = []
+class Model:
+    sample_rate = 24000
+    codec = types.SimpleNamespace(reset_streaming_state=lambda: None)
+    def _voice(self, audio, text): return types.SimpleNamespace(references=[("ref", None)])
+    def build_frames(self, refs, history, chunk):
+        heard.append([chunk, [t for t, _ in history]]); return chunk, None
+    def _frames(self, frames, rows, voice, n, *sampling): return [np.full(10, len(frames), dtype=np.int32)] * 3
+    def _result(self, codes, i, t, stream, final):
+        t = np.arange(12000) / 24000
+        return types.SimpleNamespace(audio=(0.14 * np.sin(2 * np.pi * 180 * t)).astype(np.float32))
+utils = types.ModuleType("mlx_audio.tts.utils"); utils.load_model = lambda p: Model(); sys.modules["mlx_audio.tts.utils"] = utils
+import soundfile as sf, drama
+d = sys.argv[1]
+sf.write(d + "/ref.wav", np.zeros(48000, dtype=np.float32), 24000)
+def video(name, lines, only=None):
+    wavs = [f"{d}/{name}-{i}.wav" for i in range(len(lines))]
+    jobs = [{"text": t, "plain": t, "written": t, "wav": w, "key": "k", "seed": 1, "after": wavs[i - 1] if i else None, "anchor": wavs[0] if i else None}
+            for i, (t, w) in enumerate(zip(lines, wavs))]
+    json.dump({"speed": 1.0, "voice": {"name": "x", "wav": d + "/ref.wav", "text": "hello"}, "model": {"path": d + "/model"}, "hearback": False,
+               "jobs": [jobs[i] for i in (only if only is not None else range(len(jobs)))]}, open(d + "/spec.json", "w"))
+    heard.clear(); drama.main(d + "/spec.json"); return list(heard)
+print(json.dumps(video("long", ["a1|a2", "b1", "c1|c2"])))
+print(json.dumps(video("short", ["a1", "b1", "c1"])))
+print(json.dumps(video("long", ["a1|a2", "B1", "c1|c2"], only=[1])))
+`, dir], { encoding: "utf8", env: { ...process.env, SHIPSHOW_DRAMA_FORCE: "1" } });
+  assert.equal(r.status, 0, r.stderr);
+  const [long, short, edited] = r.stdout.trim().split("\n").filter((l) => l.startsWith("[")).map((l) => JSON.parse(l));
+  assert.deepEqual(long, [["a1", []], ["a2", ["a1"]], ["b1", ["a1", "a2"]], ["c1", ["a1", "b1"]], ["c2", ["a1", "c1"]]],
+    "every chunk hears the video's first chunk and the chunk just before it, across lines as within one");
+  assert.deepEqual(short, [["a1", []], ["b1", ["a1"]], ["c1", ["a1", "b1"]]], "a one-chunk first take is heard once, as the pinned chunk");
+  assert.deepEqual(edited, [["B1", ["a1", "a2"]]], "a line voiced again on its own hears the takes kept beside it, read from their turns files");
+  assert.ok(existsSync(join(dir, "long-0.turns.npz")), "a kept take saves its turns beside it");
 });
 
 test("hear-back finds letters spelled out that the script never spells: the respelling \"en\" said \"E N\"", { skip: !plain && "no python3" }, () => {

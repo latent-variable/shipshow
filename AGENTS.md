@@ -181,7 +181,9 @@ the other engines never see it (`directedSentences` in `bin/lib.mjs`). How to di
 "Di... kistra"), so respell only a name it gets wrong, as one word ("Dykstra"; D55). Voices are the same recordings as OmniVoice's, but a clone may be 3 to 30 seconds. Each line is one take,
 made by `bin/drama.py` in one process: retaken when it is silent, stalls for 2 s (silence read against its own hiss and 18 dB under its voice), ends in 3 s of silence, is heard back missing a whole sentence (a dropped punchline) or drawls (over 2.5 s between two words of one sentence, D65), time-stretched
 to `speed` (0.8 to 1.5; it has no speed control and reads slower than the base pace), levelled, heard back with word
-times, and the best of five kept. Its licence is the Fish Audio Community License: free for research and non-commercial
+times, and the best of five kept. Each line hears the video's first take and the take kept for the line before it (D83), so the
+voice carries on instead of resetting at every line; a line voiced again alone hears its neighbours' kept takes, and the lines
+after it keep theirs. Its licence is the Fish Audio Community License: free for research and non-commercial
 use and for commercial use under $500K a year in revenue, never as a hosted service, and never a voice cloned without
 consent.
 

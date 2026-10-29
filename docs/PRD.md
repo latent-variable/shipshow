@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-10-29 (after the breath rule stopped splitting words and meme timing became a critic's bar).
+Last reviewed: 2026-10-29 (after Drama 3's lines began hearing the line before, the owner's pick from a four-way listening test).
 
 ## Problem
 
@@ -126,6 +126,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F58 | An explainer an AI narrates is self-aware and funny without cringe; comparisons are like for like on a picture that returns; memes compress one idea and are not reused across the person's videos (`npm run memes` and the packet say where one was used; DESIGN D70) | done; eth-is-false's fifth cut |
 | F59 | Text drawn over other text or over a picture is measured at every cue, not left to stills: `npm run overlaps`, and the packet's *Overlaps* section (DESIGN D72) | done; eth-is-false's sixth cut has none |
 | F60 | A new act's music hands off: the old bed fades from the act's last word, the new one swells in from its own opening under the act card (DESIGN D71) | done |
+| F61 | Drama 3's voice stays steady from line to line: each line hears the video's first take and the take before it, for about a tenth more voicing time (DESIGN D83) | done; the owner picked it by ear over three other versions, 2026-10-29 |
 | F52 | An essay breathes: read at the voice's own pace (1.0 when it sets no speed), a beat before a new act (`video.json` `leads`, before a scene's first word, as `pauses` is after its last), a beat where a blank line separates two lines of a script (`beat`), and a build warning when a mood starts under 1.2 s before its first word (DESIGN D64) | done; tests; first used by never-about-the-code's eighth cut |
 | F51 | An essay: `"kind": "essay"` is a video someone makes to share an idea in their own voice, built in sections, each with its own mood (a look and a music bed made for what it says); facts from `sources.md`, the author's view tagged as opinion, and enjoyment judged on top of truth (`critic-engagement`); the `archive` theme (a 1950s file drawer) is the first theme made to be one section's mood (DESIGN D62) | done; first used by never-about-the-code's seventh cut, the look and sound judged by its owner |
 | F53 | Another repo builds on ShipShow: it pins a commit and runs it with its own layer (`SHIPSHOW_LOCAL`), venvs (`SHIPSHOW_VENVS`), render folder (`SHIPSHOW_OUT`) and video folders (`SHIPSHOW_VIDEOS`), so its videos, theme, rules and voices stay its own (DESIGN D75) | done; tests; first used by DAIS product-videos |

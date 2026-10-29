@@ -129,8 +129,8 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   "My cloned voice says thanks" (the owner liked that "we're not hiding it", 2026-10-27).
 - **Introduce a person by what the viewer already knows them for**: "Dijkstra, as in Dijkstra's algorithm", not a deep cut
   like "the goto considered harmful guy" (the owner, 2026-10-27).
-- **A joke is one line: setup, turn and punchline in one take.** Each line is voiced on its own, with no memory of the
-  line before, so a punchline on a line of its own is performed cold and lands like a separate thought (the owner on
+- **A joke is one line: setup, turn and punchline in one take.** A line hears the take before it (D83), but its direction
+  is its own, so a punchline on a line of its own is performed as a new thought and lands like a separate one (the owner on
   "Like animals." and "No. ... Also no.", 2026-10-27). Keep them together and let one direction describe the arc:
   `[teasing, then deadpan] So, have you ever read them? No. And does anyone today say ...? Also no.`,
   `[conceding, then sly, landing a deadpan punchline] Fair enough. Except ... by hand. Like animals.`
@@ -152,8 +152,9 @@ aside or a turn of tone is heard as one instead of read flat. Write the script f
   `"n": "en"` was read as the letters E, N on nearly every line of eth-is-false, and the owner heard it (2026-10-27, D60);
   hear-back now retakes a take that spells out letters the script never spells.
 - **A paragraph is one take.** Drama 3 splits a long take itself, about 50 words a chunk, and each chunk hears the one
-  before (mlx-audio's `fish_drama3`), so a paragraph keeps one delivery where takes a line apart each start cold and sound
-  uneven (the owner: "too much inconsistency", eth-is-false, 2026-10-27). Write a scene as a few paragraphs, each one
+  before (mlx-audio's `fish_drama3`), so a paragraph keeps one delivery; takes a line apart each started cold and sounded
+  uneven (the owner: "too much inconsistency", eth-is-false, 2026-10-27). Each line now hears the take before it too (D83),
+  which steadies the voice between paragraphs, but a direction still belongs to its own line. Write a scene as a few paragraphs, each one
   thought under one direction, up to 160 words (`DRAMA_LINE_MAX`), with a blank line (a beat) between them. Splitting at
   every sentence, or at every turn of tone, breaks the prosody.
 

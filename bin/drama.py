@@ -7,11 +7,14 @@ jobs.json, written by bin/voice.mjs:
    "model": {"repo": "...", "revision": "..."} | {"path": "<a folder holding the model>"},
    "cache": "<dir>", "hearback": true, "min": 0.97,
    "jobs": [{"text": "<the line with its [directions]>", "plain": "<the line without them>", "written": "<as the script writes it>", "wav": "...",
-             "key": "...", "seed": 1, "parts": [[{"w": "...", "say": "..."}]]}]}
+             "key": "...", "seed": 1, "parts": [[{"w": "...", "say": "..."}]],
+             "after": "<the take before this one>", "anchor": "<the video's first take>"}]}
 
 Drama 3 is the directed engine (DESIGN D55): a script line carries stage directions in brackets where they land,
 "[deadpan] Like animals." or "It's fine. [laughs]", and the model performs them. Every take is one line of the script
-(bin/lib.mjs lineRuns), so a line keeps one delivery. A voice is a recording, as for OmniVoice: a clip in
+(bin/lib.mjs lineRuns), so a line keeps one delivery, and every line hears the video's first take and the take kept for
+the line before it, as the chunks of one long generate() call hear each other, so the voice carries on from line to line
+instead of starting cold (D83; each kept take's first and last chunk are saved beside it as <take>.turns.npz). A voice is a recording, as for OmniVoice: a clip in
 local/voices/ (3 to 30 s, with the words spoken in it beside it as <name>.txt) or a built-in one. The clip goes to the
 model exactly as recorded, never denoised (D53).
 
@@ -168,19 +171,84 @@ def stretch(audio, sr, speed):
     return np.frombuffer(r.stdout, dtype=np.float32)
 
 
-def one_take(model, job, round_, ref):
-    """(audio at the model's pace with its edges trimmed, sample rate, fault or None): the line voiced until it is not
-    silent, does not stall and does not end in a long silence, up to TRIES seeds. When every seed stalls or trails off, the
-    take with the shortest silence comes back with its fault, to be ranked against the other rounds and listed, rather than
-    stopping the whole video (a directed punchline paused 2.2 to 2.7 s on three seeds running, 2026-10-27). Only a line that
-    is silent on every seed stops it."""
+def speak(model, text, ref, heard):
+    """(audio, sample rate, turns): the line generated as mlx-audio's Drama 3 generate() does it, chunk by chunk, except
+    that the chunks it hears first are passed in, so a line carries on from the line before instead of starting cold (D83).
+    `heard` is (the video's first chunk, the chunk just before this line), either None; with both None this is generate()
+    exactly (same seed, same samples: checked on the real model, 2026-10-29). `turns` is (this take's first chunk, its last
+    chunk), each (text, codes), for the lines after it. A model without generate()'s chunk internals (another mlx-audio, the
+    tests' fakes) is asked generate() and hears nothing, with turns None."""
+    if not all(hasattr(model, a) for a in ("build_frames", "_frames", "_result", "_voice", "codec")):
+        out = list(model.generate(text=text, **ref))
+        return np.concatenate([np.asarray(r.audio, dtype=np.float32).reshape(-1) for r in out]), out[0].sample_rate, None
+    import time
+    import mlx.core as mx
+    from mlx_audio.tts.models.fish_drama3 import drama3 as d3
+    from mlx_audio.tts.models.fish_drama3.chunking import split_text
+    voice = model._voice(ref["ref_audio"], ref["ref_text"])
+    pinned, latest = heard
+    sampling = (d3.DEFAULT_TEMPERATURE, d3.DEFAULT_TOP_K, d3.DEFAULT_TOP_P)
+    model.codec.reset_streaming_state()
+    chunks = split_text(text)
+    pieces, first, last = [], None, None
+    for i, chunk in enumerate(chunks):
+        frames, rows = model.build_frames(voice.references, [t for t in (pinned, latest) if t is not None], chunk)
+        codes = list(model._frames(frames, rows, voice, d3.DEFAULT_MAX_FRAMES, *sampling))
+        if codes:
+            turn = (chunk, mx.stack(codes, axis=1))
+            first, last = first or turn, turn
+            if pinned is None:
+                pinned = turn
+            else:
+                latest = turn
+        r = model._result(codes, i, time.perf_counter(), False, i == len(chunks) - 1)
+        pieces.append(np.asarray(r.audio, dtype=np.float32).reshape(-1))
+    audio = np.concatenate(pieces) if pieces else np.zeros(0, dtype=np.float32)
+    return audio, model.sample_rate, (first, last) if first else None
+
+
+def turns_file(wav):
+    return Path(wav).with_suffix(".turns.npz")
+
+
+def save_turns(wav, turns):
+    """A kept take's first and last chunk, beside it, for the lines voiced after it (D83)."""
+    (ft, fc), (lt, lc) = turns
+    np.savez(turns_file(wav), first_text=ft, first_codes=np.array(fc), last_text=lt, last_codes=np.array(lc),
+             single=np.array(turns[0] is turns[1]))
+
+
+def heard_before(job):
+    """(the video's first chunk, the chunk just before this line) for a job, from the turns saved beside the takes it
+    names: `anchor`, the video's first take, and `after`, the take before this one. Either is None when the job names none
+    (the first line), or its take was made before takes kept their turns."""
+    import mlx.core as mx
+
+    def load(wav, which):
+        f = turns_file(wav) if wav else None
+        if not f or not f.exists():
+            return None, None
+        z = np.load(f)
+        return (str(z[f"{which}_text"]), mx.array(z[f"{which}_codes"])), bool(z["single"])
+
+    pinned, _ = load(job.get("anchor"), "first")
+    latest, single = load(job.get("after"), "last")
+    if job.get("after") == job.get("anchor") and single:
+        latest = None   # the first take was one chunk: it is already the pinned one, as inside generate()
+    return pinned, latest
+
+
+def one_take(model, job, round_, ref, heard=(None, None)):
+    """(audio at the model's pace with its edges trimmed, sample rate, fault or None, turns): the line voiced until it is not
+    silent, does not stall and does not end in a long silence, up to TRIES seeds, hearing `heard` first (speak). When every
+    seed stalls or trails off, the take with the shortest silence comes back with its fault, to be ranked against the other
+    rounds and listed, rather than stopping the whole video (a directed punchline paused 2.2 to 2.7 s on three seeds running,
+    2026-10-27). Only a line that is silent on every seed stops it."""
     import mlx.core as mx
     worst_kept = None
     for attempt in range(TRIES):
         mx.random.seed(job["seed"] + (round_ * TRIES + attempt) * 7919)
-        out = list(model.generate(text=job["text"], **ref))
-        sr = out[0].sample_rate
-        audio = np.concatenate([np.asarray(r.audio, dtype=np.float32).reshape(-1) for r in out])
+        audio, sr, turns = speak(model, job["text"], ref, heard)
         span = voiced(audio, sr)
         if span is None:
             print("take came out silent; voicing it again", file=sys.stderr, flush=True)
@@ -190,13 +258,13 @@ def one_take(model, job, round_, ref):
         fault = (f"ended in {tail:.1f} s of silence" if tail > TAIL_DROP else
                  f"stalled for {gap:.1f} s mid-line" if gap > GAP_DROP else None)
         if fault is None:
-            return trim(audio, sr, span), sr, None
+            return trim(audio, sr, span), sr, None, turns
         print(f"take {fault}; voicing it again", file=sys.stderr, flush=True)
         if worst_kept is None or max(tail, gap) < worst_kept[0]:
-            worst_kept = (max(tail, gap), trim(audio, sr, span), sr, fault)
+            worst_kept = (max(tail, gap), trim(audio, sr, span), sr, fault, turns)
     if worst_kept is None:
         raise SystemExit(f"Drama 3 gave silence {TRIES} times for: {job['text']}")
-    return worst_kept[1], worst_kept[2], worst_kept[3]
+    return worst_kept[1:]
 
 
 def main(spec_path):
@@ -228,8 +296,9 @@ def main(spec_path):
     for i, job in enumerate(spec["jobs"], 1):
         best = None
         run = bool(job.get("parts"))
+        before = heard_before(job)   # the video's first take and the take before this line (D83)
         for round_ in range(HEAR_TRIES if hear_on else 1):
-            audio, sr, fault = one_take(model, job, round_, ref)
+            audio, sr, fault, turns = one_take(model, job, round_, ref, before)
             final = voicecheck.level(stretch(audio, sr, spec["speed"]), sr)
             words, got, heard, gone, spelled = [], None, "", [], []
             if hear_on:
@@ -243,11 +312,13 @@ def main(spec_path):
             ok = (got is None or got >= floor) and not gone and not spelled and fault is None
             rank = (ok, -len(gone), -len(spelled), fault is None, got or 0.0)
             if best is None or rank > best[0]:
-                best = (rank, final, sr, got, heard, words, gone, spelled, fault)
+                best = (rank, final, sr, got, heard, words, gone, spelled, fault, turns)
             if ok:
                 break
-        _, final, sr, got, heard, words, gone, spelled, fault = best
+        _, final, sr, got, heard, words, gone, spelled, fault, turns = best
         sf.write(job["wav"], final, sr, subtype="PCM_16")
+        if turns:
+            save_turns(job["wav"], turns)   # before the next job reads it: jobs come in the video's order
         timing = wordtime.align(job["parts"], words, len(final) / sr) if run and hear_on else None
         hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [f'not heard: "{s}"' for s in gone] + [f'spelled out: heard the letters "{g}"' for g in spelled] + ([fault] if fault else []), timing)
         if job.get("keyFile"):
@@ -255,7 +326,8 @@ def main(spec_path):
         mx.clear_cache()
         print(f"voiced {i}/{len(spec['jobs'])}" + (f" ({got:.0%} heard back)" if got is not None else "")
               + f", GPU {mx.get_active_memory() / 1024 ** 3:.0f} GB in use, {mx.get_peak_memory() / 1024 ** 3:.0f} GB peak"
-              + (f", {timing['matched']}/{timing['words']} words timed from what was heard" if timing else ""), flush=True)
+              + (f", {timing['matched']}/{timing['words']} words timed from what was heard" if timing else "")
+              + (", heard the line before" if before[1] is not None else ", heard the first take" if before[0] is not None else ""), flush=True)
 
 
 if __name__ == "__main__":
