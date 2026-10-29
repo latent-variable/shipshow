@@ -1140,6 +1140,13 @@ reads 0.38 unset and 0.62 set; with the old fixed value it fails.
 **How.** `.claude/hooks/guard-bash.mjs`: `isThisRepo` compares `git rev-parse --git-common-dir`, `landedBranch` asks `gh pr list --state merged --head <branch> --base <default>` (`SHIPSHOW_GH` names another `gh`, which is how the test answers).
 
 **Tested.** `test/hooks.test.mjs` makes two throwaway repos and a worktree, and a `gh` that records its arguments: another repo's `branch -D`, `reset --hard`, `clean` and `stash drop` pass by path, `~`, `$HOME` and `-C`; this repo, its worktree, an unknown directory and a `cd` back here are refused; `-D` passes for a branch whose tip a merged pull request names, and is refused for a moved tip, a fork, `gh` failing or garbled, one branch of two unlanded, a missing branch and none named. With the old guard the test fails. Against the real `gh`, the guard allowed `-D` on three branches merged that day and refused `main`.
+### D81. An animated template's box shows in its own part of the loop (2026-10-28; extends D49)
+
+**Why.** memegen gives each text box of an animated template a `start` and `stop`, fractions of the GIF's loop. `crowd` (Soccer Celebration in a Bar) shows its first line from 0 to 0.54, while the bar watches the screen, and its second from 0.61 to 0.75, as it erupts, both in the same corner. D49 drew every box for the whole time, so the two lines sat on top of each other (never-about-the-code, #68).
+
+**Decision.** For an animated template, a box whose times are not 0 to 1 (`boxSpan` in `bin/meme.mjs`) gets `data-show="<start> <stop>"`, and its figure gets `data-loop` (one pass of the GIF, from ffprobe) and `data-loop-start` (the figure's cue, where its video starts). `kit/kit.js` drives the box's opacity from the time alone through `driveBy` (D50): shown while the time's place in the loop, counted from the cue, is in its span. The box, not the line, so an entrance on the line still plays. A box with no times, 0 to 1, or times that make no span, and every still template and clip, are drawn as before. The `overlay` section's times (memegen's stickers) are not read.
+
+**Tested.** `test/meme.test.mjs`: `boxSpan` on crowd's times and the cases that mean always; a fixture template with two timed boxes and one untimed builds with the loop, the cue and each span on the page, and an untimed animated template carries none; kit.js in a VM samples each box out of order across four loops (first line early, second in the middle, neither late). With the old kit.js or the old build the test fails. A scratch video with the real `crowd`, rendered: at 3.5 s only "Push to CI" on the screen, at 5.0 s only "It turns green", at 6.0 s neither, at 7.5 s the first line again.
 
 ## Behaviour
 

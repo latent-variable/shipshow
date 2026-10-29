@@ -11,7 +11,7 @@ import { join } from "node:path";
 import { test } from "node:test";
 import { promisify } from "node:util";
 import { REPO } from "../bin/lib.mjs";
-import { boxPlacement, cropRect, gifFrames, imageSize, memesIn, memesUsed, parseConfig, parseCrop, search } from "../bin/meme.mjs";
+import { boxPlacement, boxSpan, cropRect, gifFrames, imageSize, memesIn, memesUsed, parseConfig, parseCrop, search } from "../bin/meme.mjs";
 
 const FIX = join(REPO, "test", "fixtures", "memegen");
 const tiny = readFileSync(join(FIX, "templates", "tiny", "config.yml"), "utf8");
@@ -214,6 +214,7 @@ test("an animated template becomes a video that starts at its cue and runs to th
   assert.ok(keys.length >= Math.floor(+attr(tag, "data-duration")), `${keys.length} keyframes`);
   assert.match(html, /style="--ar:2;/);
   assert.equal((html.match(/class="ss-meme-box"/g) || []).length, 2);
+  assert.ok(!/data-show=|data-loop=/.test(html), "a template whose boxes show the whole loop is drawn as before");
   assert.deepEqual(memesIn(html), [{ id: "blink", name: "Blink Test Meme", source: "https://example.com/memes/blink", lines: ["Top line", "Bottom line"], clip: `${FIX}/templates/blink/default.gif` }]);
   // The cache keeps the GIF, not the still beside it.
   assert.ok(existsSync(join(e.SHIPSHOW_MEMES_CACHE, "blink", "default.gif")));
@@ -363,4 +364,46 @@ test("memesUsed says which videos already use a template or a clip, across video
     assert.deepEqual([...used.get("gru")], ["c"], "a video about another code base counts too");
     assert.equal(used.get("pooh"), undefined);
   } finally { if (prev !== undefined) process.env.SHIPSHOW_LOCAL = prev; }
+});
+
+test("an animated template's box shows only in its part of every loop, from the figure's cue (#68)", async () => {
+  // memegen's start and stop: crowd shows its first line from 0 to 0.54 of the loop and its second from 0.61 to 0.75, in the same corner
+  assert.deepEqual(boxSpan({ start: 0, stop: 0.54 }), [0, 0.54]);
+  assert.deepEqual(boxSpan({ start: 0.61, stop: 0.75 }), [0.61, 0.75]);
+  for (const b of [{}, { start: 0, stop: 1 }, { start: 0.5, stop: 0.5 }, { start: 0.8, stop: 0.2 }, { start: -1, stop: 0.5 }, { start: 0.2, stop: 1.5 }]) assert.equal(boxSpan(b), null, JSON.stringify(b));
+  assert.deepEqual(parseConfig(readFileSync(join(FIX, "templates", "relay", "config.yml"), "utf8")).boxes.map(boxSpan), [[0, 0.5], [0.5, 0.75], null], "the overlay section's times are not a box's");
+
+  // The build carries the clip's loop and the cue onto the figure, and each timed box's span onto the box.
+  const dir = demo(`<figure class="ss-meme" data-meme="relay" data-cue="never" data-anim="pop"><span>First</span><span>Second</span><span>Always</span></figure>`);
+  const r = build(dir, env());
+  assert.equal(r.status, 0, r.stderr);
+  const html = readFileSync(join(dir, "index.html"), "utf8");
+  const fig = html.match(/<figure[^>]*data-meme="relay"[^>]*>/)[0];
+  const at = +attr(fig, "data-at");
+  assert.equal(+attr(fig, "data-loop"), 0.6, "the fixture GIF's loop, as ffprobe reads it");
+  assert.equal(+attr(fig, "data-loop-start"), at, "counted from the cue, where the video starts");
+  assert.equal(+attr(videoTag(html), "data-start"), at);
+  const boxes = [...html.matchAll(/<span class="ss-meme-box"[^>]*>/g)].map((m) => m[0]);
+  assert.deepEqual(boxes.map((b) => (b.match(/data-show="([^"]*)"/) || [])[1] ?? null), ["0 0.5", "0.5 0.75", null]);
+
+  // kit.js drives each timed box's opacity from the time alone: sampled out of order, as a render worker seeks.
+  const { runInNewContext } = await import("node:vm");
+  const kit = readFileSync(join(REPO, "kit", "kit.js"), "utf8");
+  const figure = { dataset: { loop: "0.6", loopStart: String(at) } };
+  const box = (show) => ({ dataset: { show }, style: {}, closest: (sel) => (sel === "[data-loop]" ? figure : null) });
+  const timed = [box("0 0.5"), box("0.5 0.75")];
+  const driven = [], sets = [];
+  const tl = { to() { return tl; }, set() { return tl; }, fromTo(t, from, to) { if (to?.modifiers) driven.push({ t, f: to.modifiers }); return tl; } };
+  const gsap = { timeline: () => tl, set: (t, v) => sets.push({ t, v }) };
+  const el = () => ({ style: {}, dataset: {}, attrs: {}, children: [], setAttribute() {}, hasAttribute: () => false, appendChild: (c) => c, insertBefore: (c) => c, querySelectorAll: () => [] });
+  const document = { getElementById: () => el(), querySelector: () => null, createElement: el, querySelectorAll: (s) => (s === ".ss-meme-box[data-show]" ? timed : []) };
+  runInNewContext(kit, { TOTAL: 6, SEED: 1, gsap, document, window: {}, getComputedStyle: () => ({ getPropertyValue: () => "" }), console });
+  const opacity = (b, t) => +driven.find((d) => d.t === b).f.opacity(String(t));
+  const cycle = (k, frac) => at + 0.6 * (k + frac);
+  for (const k of [3, 0, 2, 1]) {
+    assert.deepEqual([opacity(timed[0], cycle(k, 0.1)), opacity(timed[1], cycle(k, 0.1))], [1, 0], `loop ${k}, early: the first line only`);
+    assert.deepEqual([opacity(timed[0], cycle(k, 0.6)), opacity(timed[1], cycle(k, 0.6))], [0, 1], `loop ${k}, middle: the second line only`);
+    assert.deepEqual([opacity(timed[0], cycle(k, 0.9)), opacity(timed[1], cycle(k, 0.9))], [0, 0], `loop ${k}, late: neither`);
+  }
+  assert.deepEqual(sets.filter((s) => timed.includes(s.t)).map((s) => s.v.opacity), [opacity(timed[0], 0), opacity(timed[1], 0)], "time 0 is drawn as the same function says");
 });
