@@ -300,17 +300,23 @@ def main(spec_path):
         for round_ in range(HEAR_TRIES if hear_on else 1):
             audio, sr, fault, turns = one_take(model, job, round_, ref, before)
             final = voicecheck.level(stretch(audio, sr, spec["speed"]), sr)
-            words, got, heard, gone, spelled = [], None, "", [], []
+            words, got, heard, gone, spelled, extra = [], None, "", [], [], []
             if hear_on:
                 heard, words = hearback.hear_words(hearback.samples_from(final, sr))
                 got = hearback.agreement(job["plain"], heard)
                 gone = hearback.vanished(job["plain"], heard)   # a dropped punchline barely moves the letter score
                 spelled = hearback.spelled_out(job.get("written", job["plain"]), job["plain"], heard)   # "n" said "E N"
+                extra = hearback.added(job["plain"], heard)   # part of a take it heard, said again
             slow = hearback.drawled(wordtime.align(job["parts"], words, len(final) / sr)["sentences"]) if run and words else None
             if slow and fault is None:
                 fault = f"drawled: {slow}"   # a sentence dragged apart, which no silence check sees through hiss
+            if extra and fault is None:
+                fault = f'said more than its line: "{extra[0]}"'
+            if extra and before != (None, None):
+                print(f"take repeated a take it heard; voicing it again without hearing them: {extra[0]}", file=sys.stderr, flush=True)
+                before = (None, None)   # the rest of this line's rounds start cold, as before D83: never worse than that
             ok = (got is None or got >= floor) and not gone and not spelled and fault is None
-            rank = (ok, -len(gone), -len(spelled), fault is None, got or 0.0)
+            rank = (ok, -len(gone), -len(extra), -len(spelled), fault is None, got or 0.0)
             if best is None or rank > best[0]:
                 best = (rank, final, sr, got, heard, words, gone, spelled, fault, turns)
             if ok:

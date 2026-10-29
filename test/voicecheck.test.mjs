@@ -402,6 +402,84 @@ print(json.dumps(video("long", ["a1|a2", "B1", "c1|c2"], only=[1])))
   assert.ok(existsSync(join(dir, "long-0.turns.npz")), "a kept take saves its turns beside it");
 });
 
+test("hear-back finds words a take says that its line does not: a take it heard, said again (D83)", { skip: !plain && "no python3" }, () => {
+  const r = python(plain, `
+import hearback as h, json
+cases = [
+  ("And speaking as a model that finishes sentences for a living: stop me in the middle of a curl command, and I'll write you a web address too.",
+   "On October 26th, the AI company Cohere published this in speaking as a model that finishes sentences for a living. Stop me in the middle of a curl command and I'll write you a web address too."),
+  ("That looks less like a guess, and more like a memory.", "That looks less like a guess and more like a memory. Quen 3.8 flash next, 170 times out of a thousand,"),
+  ("Nvidia's Nemotron, a hundred and seventy one times out of a thousand. Cohere's own coding model, ten.", "Invidia's NemoTron, 171 times out of 1,000. Cohere's own coding model, 10."),
+  ("Not the file list. Not the network settings. This: probe payload, A B C one two three.", "Not the file list, not the network settings. This, probe payload, ABC123."),
+  ("I said a thing. A cat.", "I said a thing."),
+]
+print(json.dumps([h.added(*c) for c in cases]))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [opening, previous, numbers, letters, dropped] = JSON.parse(r.stdout);
+  assert.equal(opening.length, 1, "the video's first line said again at the start of another");
+  assert.match(opening[0], /october twenty sixth/);
+  assert.equal(previous.length, 1, "the line before said again at the end");
+  assert.deepEqual(numbers, [], "digits for words are not extra words");
+  assert.deepEqual(letters, [], "letters run together are not extra words");
+  assert.deepEqual(dropped, [], "a dropped sentence adds nothing");
+});
+
+test("drama: a take that says part of a take it heard is voiced again without hearing them, and the clean one is kept (D83)", { skip: !numeric && "no python with numpy and soundfile" }, () => {
+  const dir = mkdtempSync(join(tmpdir(), "repeat-"));
+  mkdirSync(join(dir, "model"));
+  writeFileSync(join(dir, "model", "config.json"), "{}");
+  const r = spawnSync(numeric, ["-c", `import sys; sys.path.insert(0, ${JSON.stringify(BIN)})
+import json, types, numpy as np
+sys.modules["mlx"] = types.ModuleType("mlx"); core = types.ModuleType("mlx.core"); core.random = types.SimpleNamespace(seed=lambda s: None); core.set_cache_limit = lambda n: None; core.clear_cache = lambda: None; core.get_active_memory = lambda: 0; core.get_peak_memory = lambda: 0
+core.stack = lambda xs, axis=0: np.stack(xs, axis=axis); core.array = np.asarray
+sys.modules["mlx.core"] = core; sys.modules["mlx"].core = core
+d3 = types.ModuleType("d3"); d3.DEFAULT_TEMPERATURE, d3.DEFAULT_TOP_K, d3.DEFAULT_TOP_P, d3.DEFAULT_MAX_FRAMES = 0.7, 30, 0.7, 1024
+chunking = types.ModuleType("chunking"); chunking.split_text = lambda t: [t]
+pkg = types.ModuleType("mlx_audio.tts.models.fish_drama3"); pkg.drama3 = d3; pkg.chunking = chunking
+for m in ("mlx_audio", "mlx_audio.tts", "mlx_audio.tts.models"): sys.modules[m] = types.ModuleType(m)
+sys.modules["mlx_audio.tts.models.fish_drama3"] = pkg; sys.modules["mlx_audio.tts.models.fish_drama3.drama3"] = d3
+sys.modules["mlx_audio.tts.models.fish_drama3.chunking"] = chunking
+calls = []
+class Model:
+    sample_rate = 24000
+    codec = types.SimpleNamespace(reset_streaming_state=lambda: None)
+    def _voice(self, audio, text): return types.SimpleNamespace(references=[])
+    def build_frames(self, refs, history, chunk):
+        calls.append([chunk, [t for t, _ in history]]); return chunk, None
+    def _frames(self, frames, rows, voice, n, *sampling): return [np.zeros(10, dtype=np.int32)] * 3
+    def _result(self, codes, i, t, stream, final):
+        t = np.arange(24000) / 24000
+        return types.SimpleNamespace(audio=(0.14 * np.sin(2 * np.pi * 180 * t)).astype(np.float32))
+utils = types.ModuleType("mlx_audio.tts.utils"); utils.load_model = lambda p: Model(); sys.modules["mlx_audio.tts.utils"] = utils
+import soundfile as sf, drama, hearback
+hearback.available = lambda: True
+hearback.samples_from = lambda a, sr: a
+said = {"first line here": "first line here", "second line here": "second line here"}
+def hear_words(_):
+    chunk, history = calls[-1]
+    text = said[chunk] + (" and the first line here said again" if history else "")
+    return text, [{"w": w, "start": i * 0.05, "end": i * 0.05 + 0.04} for i, w in enumerate(text.split())]
+hearback.hear_words = hear_words
+d = sys.argv[1]
+sf.write(d + "/ref.wav", np.zeros(48000, dtype=np.float32), 24000)
+wavs = [d + "/a.wav", d + "/b.wav"]
+parts = lambda t: [[{"w": w, "say": w} for w in t.split()]]
+jobs = [{"text": t, "plain": t, "written": t, "wav": w, "key": "k", "seed": 1, "parts": parts(t), "after": wavs[i - 1] if i else None, "anchor": wavs[0] if i else None}
+        for i, (t, w) in enumerate(zip(["first line here", "second line here"], wavs))]
+json.dump({"speed": 1.0, "voice": {"name": "x", "wav": d + "/ref.wav", "text": "hello"}, "model": {"path": d + "/model"}, "hearback": True, "min": 0.9, "jobs": jobs}, open(d + "/spec.json", "w"))
+drama.main(d + "/spec.json")
+print(json.dumps([calls, json.load(open(d + "/b.check"))["heard"], json.load(open(d + "/b.check"))["faults"]]))
+`, dir], { encoding: "utf8", env: { ...process.env, SHIPSHOW_DRAMA_FORCE: "1" } });
+  assert.equal(r.status, 0, r.stderr);
+  const [calls, heard, faults] = JSON.parse(r.stdout.trim().split("\n").filter((l) => l.startsWith("[")).at(-1));
+  assert.deepEqual(calls, [["first line here", []], ["second line here", ["first line here"]], ["second line here", []]],
+    "the second line hears the first, repeats it, and is voiced again without hearing it");
+  assert.equal(heard, "second line here", "the clean take is the one kept");
+  assert.deepEqual(faults, []);
+  assert.match(r.stderr, /voicing it again without hearing them/);
+});
+
 test("hear-back finds letters spelled out that the script never spells: the respelling \"en\" said \"E N\"", { skip: !plain && "no python3" }, () => {
   const r = python(plain, `
 import hearback as h, json

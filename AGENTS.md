@@ -183,7 +183,8 @@ made by `bin/drama.py` in one process: retaken when it is silent, stalls for 2 s
 to `speed` (0.8 to 1.5; it has no speed control and reads slower than the base pace), levelled, heard back with word
 times, and the best of five kept. Each line hears the video's first take and the take kept for the line before it (D83), so the
 voice carries on instead of resetting at every line; a line voiced again alone hears its neighbours' kept takes, and the lines
-after it keep theirs. Its licence is the Fish Audio Community License: free for research and non-commercial
+after it keep theirs. A take that says part of what it heard again (five or more words its line lacks, `hearback.added`) is retaken
+hearing nothing. Its licence is the Fish Audio Community License: free for research and non-commercial
 use and for commercial use under $500K a year in revenue, never as a hosted service, and never a voice cloned without
 consent.
 
