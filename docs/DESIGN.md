@@ -1217,6 +1217,18 @@ in 4 of 4 tries, hence placing it in the layout. Separately, packaging from a fr
 short, with none of the five screenshot credits, and said nothing. **Costs.** More drafts per video (each local image about
 15 s); the generated asset is not in the repo, so a clone without it cannot package until it is made again: `npm run package`
 stops on any local file `thumbnail.html` draws that is missing (`missingThumbnailFiles`), rather than rendering it on black.
+### D85. Hear-back stops failing takes for how Whisper writes numbers and names (2026-10-29)
+
+**Decision.** `hearback.spoken_numbers` reads "a hundred" as "one hundred" and drops the "and" in "a hundred and seventy one", and
+every comparison tries a third reading of a number, digit by digit (`READINGS`: quantity, year, digits), keeping the closest.
+`spelled_out` no longer counts a single capital word of four letters or more that is nearly a word of the line (ratio 0.75 or
+more) as letters spelled out: Whisper's "QUEN" for the narrator's "Kwen", written "Qwen". A short respelling ("EN" for "en") still
+counts. **Why.** The owner asked for the voicing bottlenecks after qwen-phones-home took 18 minutes to voice: the number-heavy
+lines failed at 96% with every word said ("171" against "a hundred and seventy one"; "ABC-123" against "A B C one two three") and
+two lines were retaken five times each for "QUEN", every round, for nothing. Rescored with the old and new rules, the 47 takes on
+disk: those four pass now and none that passed fails. **Costs.** A take that drops a digit of a number read digit by digit may now
+pass by the closest reading; the missing-sentence check is unchanged. `CHECK_VERSION` is not bumped, so no video voices again for
+this: kept takes are unaffected, and the next voicing simply retakes less.
 
 ## Behaviour
 
