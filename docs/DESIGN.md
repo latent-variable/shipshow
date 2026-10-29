@@ -1170,6 +1170,37 @@ be wrong: round 1's clarity critic proposed that curl's `-o` is followed by a we
 critic caught it (`-o` takes a file name). Accuracy re-runs after every revision for this reason, and a fix is checked against the
 sources before it is applied, not only the finding.
 
+### D83. Each Drama 3 line hears the video's first take and the take before it (2026-10-29; extends D66)
+
+**Decision.** `bin/drama.py` voices each line as mlx-audio's `generate()` does a long text, chunk by chunk, but with the chunks it
+hears passed in (`speak`): the video's first chunk, pinned, and the last chunk of the take kept for the line before, as if the
+whole narration were one call. Each kept take saves its first and last chunk beside it (`<take>.turns.npz`); `voice.mjs` names
+each job's `after` (the take before it in the video, across scenes) and `anchor` (the video's first take). A line voiced again
+alone hears its neighbours' kept takes, and the lines after it are not voiced again: a line's key does not carry the take before
+it, so one edit never re-voices the rest of a video. `DRAMA_RULES` 6 voices every Drama video once more. **Why.** Takes a line
+apart reset the voice: the owner heard lines that "sound different" from each other on qwen-phones-home, preferred OmniVoice's
+evenness but kept Drama 3 for its reliability, and asked for the published tips. Fish's technical report has the model condition on
+the latest take; inside one `generate()` call mlx-audio already does it for chunks. A four-way test on qwen-phones-home's 10 lines
+(four scenes), same seeds and the pipeline's own checks, compared today's takes, this, three reference clips (the report's only
+measured lever: speaker similarity 0.605 to 0.633), and both. None dropped a sentence. Time for the 10 lines: 4.8, 5.4, 10.6 and
+13.3 min (1x, 1.1x, 2.2x, 2.8x); lines needing another try 4, 4, 2, 2; three references alone froze 2.8 s mid-line on the payload
+line on every seed. Three references re-read every clip for every chunk, which is the cost. The owner listened side by side and
+chose hearing the line before as "the best trade-off" for the time. **Then learned.** Voiced in full (39 lines), two takes said part
+of a take they had heard, on every round: one opened with the video's first line ("On October twenty sixth, the AI company Cohere
+published this"), one ended with a piece of the line before. The letter score saw both (81%, 88%) but retakes heard the same takes
+and repeated them again. So a take heard saying five or more words in a row that its line lacks (`hearback.added`, `ADDED_RUN`) is a
+fault, and the rest of that line's rounds hear nothing, as before this decision: never worse than a cold take. Of the 88 takes on
+disk (this video's 39, its published 49), only those two pass four words. The full run took 1,103 s against 620 s for the previous
+full voicing of a shorter script (1,849 words to 2,073: about 1.6x for the length), much of it the two lines' five rounds each and the
+number-heavy lines' retakes; an uneventful take costs about 0.7 s per second of audio. **Costs.** About a tenth more voicing time; `speak` uses
+mlx-audio's private chunk methods (`build_frames`, `_frames`, `_result`, `_voice`), stable under the commit `requirements-drama.txt`
+pins, and with no history it is `generate()` exactly (same seed, same samples, checked on the real model); a model without them
+falls back to `generate()` and hears nothing. A line voiced after its neighbour changed hears the new take, so re-voicing a whole
+video can differ from voicing lines one at a time. **Tested** by a unit test with a fake model (which chunks each line hears,
+across lines, a one-chunk first take, and a line voiced alone), one where a take repeats what it heard and is voiced again
+hearing nothing, a unit test of `added` on the two real takes and on digits and letters heard for words, controls with the
+history and the fallback switched off that fail them, and qwen-phones-home voiced again in full on the real model.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
@@ -1179,6 +1210,7 @@ What an agent or person observes. Each line is checkable against the cited file.
   voice and speed, so inserting a sentence re-voices every later sentence in that scene (numbering restarts per
   scene; the cost per take has not been measured).
 - A bracketed stage direction in a script line reaches only the Drama 3 engine; captions, cues, `timing.json` and the other engines get the line without it, and a line's direction moves with the line, never to the next one (`directedSentences`, D55).
+- A Drama 3 line is generated hearing the video's first take and the take kept for the line before it, and every kept take has a `<take>.turns.npz` beside it (`bin/drama.py` `speak`, D83). A take heard saying five or more words in a row that its line does not have is retaken, and the rest of that line's rounds hear nothing; one kept with it lists `said more than its line` in its `.check` faults (`hearback.added`).
 - A sentence timed from a run carries `words: [{"w", "at"}]` in `timing.json`; `build` places cues and caption lines on those times (`bin/build.mjs`, `heardAts`), and on the letter share for a sentence without.
 - `build` writes `index.html` from `scenes.html` and the timing. It stops on a cue word its
   scene never says and warns when a bare cue word occurs more than once in its scene. A cue

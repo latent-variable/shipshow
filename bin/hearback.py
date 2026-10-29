@@ -142,6 +142,23 @@ def vanished(text, heard):
     return found
 
 
+ADDED_RUN = 5   # words in a row a take says that its line does not: the only two takes past 4 of 88 on disk repeated earlier lines (D83)
+
+
+def added(text, heard, run=ADDED_RUN):
+    """What a take says that its line does not, as runs of `run` words or more: Drama 3 hearing the takes before a line can
+    say part of them again ("On October twenty sixth, the AI company Cohere published this" opened another scene's line,
+    qwen-phones-home, 2026-10-29). Numbers are read both ways, as in vanished(), and the reading that adds least wins."""
+    best = None
+    words = lambda t, years: joined_letters([w.replace("'", "") for w in re.findall(r"[a-z0-9']+", spoken_numbers(without_marks(t), years).lower())])
+    for years in (False, True):
+        a, b = words(text, years), words(heard, years)
+        out = [" ".join(b[j1:j2]) for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes()
+               if op in ("insert", "replace") and (j2 - j1) - (i2 - i1) >= run]
+        best = out if best is None or len(out) < len(best) else best
+    return best
+
+
 LETTER_WORDS = {"A", "I"}   # a capital A or I alone is usually a word, not a letter being spelled
 
 

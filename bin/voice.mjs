@@ -47,7 +47,7 @@ const noHear = process.argv.includes("--no-hearback");
 const hear = !noHear && hearbackAvailable(py);
 const RUNS = (omni && hear) || drama;   // OmniVoice voices runs of sentences when it can hear them back (D47); Drama 3 always does (D55)
 // The rules bin/drama.py makes, retakes and finishes a take by. Bump it when they change, so takes are voiced again.
-const DRAMA_RULES = 5;   // bin/drama.py's rules: 2 reads a stall against the voice (GAP_BELOW_VOICE), 3 trims edges by it, 4 retakes a take missing a whole sentence, 5 one that spells out letters (2026-10-27)
+const DRAMA_RULES = 6;   // bin/drama.py's rules: 2 reads a stall against the voice (GAP_BELOW_VOICE), 3 trims edges by it, 4 retakes a take missing a whole sentence, 5 one that spells out letters (2026-10-27), 6 each line hears the first take and the take before it (D83, 2026-10-29)
 // A run takes its speed from a shorter window, as DAIS product-videos does, not from atempo: measured 2026-10-26
 // at speed 1.2 on 5 runs three times each, both heard back at 0.998 and none under 0.988 (DESIGN D47).
 // Measured only up to 1.2; above it (the 1.25 default, up to 1.3) a run is generated at its natural length and
@@ -133,14 +133,21 @@ async function voiceAllOmni() {
 async function voiceAllDrama() {
   if (!pythonExists(py)) die("drama needs its own venv: npm run setup:drama (Apple Silicon)");
   const spec = join(dir, "assets", "drama-jobs.json");
+  const order = plan.flatMap((s) => s.units.map((u) => u.wav));   // every take of the video, in the order it is heard
   writeFileSync(spec, JSON.stringify({
     speed: cfg.speed,
     voice: { name: cfg.omni.name, wav: cfg.omni.wav, text: cfg.omni.text },
     model: cfg.dramaModel ? { path: cfg.dramaModel } : DRAMA,
     hearback: hear,
     min: HEARBACK_MIN,
-    // keyFile: the worker writes each take's key as soon as the take is kept, so a long run stopped halfway keeps what it made
-    jobs: jobs.map((j) => ({ text: j.told, plain: j.say, written: j.text, wav: j.wav, key: j.key, keyFile: j.keyFile, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16) })),
+    // keyFile: the worker writes each take's key as soon as the take is kept, so a long run stopped halfway keeps what it made.
+    // after and anchor: the take before this line in the video and the video's first take, which the line hears (D83). Jobs go
+    // in the video's order, so a stale line after a stale line hears the take just made for it.
+    jobs: jobs.map((j) => {
+      const at = order.indexOf(j.wav);
+      return { text: j.told, plain: j.say, written: j.text, wav: j.wav, key: j.key, keyFile: j.keyFile, parts: j.parts, seed: parseInt(createHash("sha256").update(j.key).digest("hex").slice(0, 8), 16),
+        after: at > 0 ? order[at - 1] : null, anchor: at > 0 ? order[0] : null };
+    }),
   }));
   try {
     await run(py, [join(REPO, "bin", "drama.py"), spec]);
