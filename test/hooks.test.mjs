@@ -143,7 +143,8 @@ test("hooks: the git rules are this repo's; a squash-merged branch may be delete
     assert.equal(run(c).status, 0, `${c} is another repo's and should pass`);
   }
   // ...but this repo, a worktree of it, and a directory git cannot place still refuse
-  for (const c of ["git reset --hard", `cd ${join(tmp, "ours-wt")} && git clean -fd`, `git -C ${join(tmp, "nowhere")} restore .`, `cd ${theirs} && cd ${ours} && git branch -D other`]) {
+  for (const c of ["git reset --hard", `cd ${join(tmp, "ours-wt")} && git clean -fd`, `git -C ${join(tmp, "nowhere")} restore .`, `cd ${theirs} && cd ${ours} && git branch -D other`,
+    `cd ${theirs} && git --git-dir=${ours}/.git reset --hard`, `cd ${theirs} && git --work-tree ${ours} clean -fd`, `cd ${theirs} && GIT_DIR=${ours}/.git git stash drop`, `cd ${theirs} && env GIT_WORK_TREE=${ours} git restore .`]) {
     assert.equal(run(c).status, 2, `${c} is this repo's and should be refused`);
   }
 

@@ -69,10 +69,14 @@ function gitReason(args) {
   return null;
 }
 
-// The directory a git command works in: where the command runs, moved by each -C.
+// The directory a git command works in: where the command runs, moved by each -C. Null when --git-dir or --work-tree
+// points git somewhere else, which this guard does not follow: unknown, so the rule applies.
 function gitDir(args, cwd) {
   let dir = cwd;
-  for (let i = 0; i < args.length && args[i].startsWith("-"); i += GIT_VALUE_OPTS.includes(args[i]) ? 2 : 1) if (args[i] === "-C" && args[i + 1]) dir = resolve(dir, home(args[i + 1]));
+  for (let i = 0; i < args.length && args[i].startsWith("-"); i += GIT_VALUE_OPTS.includes(args[i]) ? 2 : 1) {
+    if (/^--(git-dir|work-tree)(=|$)/.test(args[i])) return null;
+    if (args[i] === "-C" && args[i + 1]) dir = resolve(dir, home(args[i + 1]));
+  }
   return dir;
 }
 
@@ -85,6 +89,7 @@ const git = (dir, ...args) => {
 // not. The git rules are this repo's (#105); another repo's branches and stashes are that repo's business. A directory git
 // cannot place (not there yet, not a repo) counts as this repo, so the rule still applies when we cannot tell.
 export function isThisRepo(dir, root) {
+  if (!dir) return true;
   const store = (d) => git(d, "rev-parse", "--path-format=absolute", "--git-common-dir");
   const theirs = store(dir), ours = store(root);
   return !theirs || !ours || theirs === ours;
@@ -218,14 +223,15 @@ export function reason(full, depth = 0, ctx = { root: resolve(process.env.CLAUDE
     }
     for (const p of outs) { const r = writeBlock(ctx, p); if (r) return r; }
     for (const p of ins) if (isPrivate(relOf(ctx, p)) && process.env.SHIPSHOW_ALLOW_PRIVATE !== "1") return `it reads ${relOf(ctx, p)}, which is private`;
-    while (w.length && (/^[A-Za-z_][A-Za-z0-9_]*=/.test(w[0]) || WRAPPERS.has(w[0]) || KEYWORDS.has(w[0]))) w.shift();
+    let gitEnv = false;   // GIT_DIR= or GIT_WORK_TREE= before the command points git elsewhere, as --git-dir does
+    while (w.length && (/^[A-Za-z_][A-Za-z0-9_]*=/.test(w[0]) || WRAPPERS.has(w[0]) || KEYWORDS.has(w[0]))) { if (/^GIT_(DIR|WORK_TREE)=/.test(w[0])) gitEnv = true; w.shift(); }
     if (!w.length) continue;
     const base = w[0].split("/").pop();
     if (base === "cd" && w[1]) { ctx = { ...ctx, cwd: resolve(ctx.cwd, home(w[1])) }; continue; }
     if (["rm", "unlink", "shred"].includes(base)) return `${base} deletes files, and this repo's scripts and agents never do: move it aside with mv (AGENTS.md, Traps)`;
     if (base === "find" && (w.includes("-delete") || (w.includes("-exec") && w.some((x) => ["rm", "unlink"].includes(x))))) return "find with -delete or -exec rm deletes files: move them aside instead";
     if (base === "git") {
-      const r = gitReason(w.slice(1)), dir = r && gitDir(w.slice(1), ctx.cwd);
+      const r = gitReason(w.slice(1)), dir = r && !gitEnv && gitDir(w.slice(1), ctx.cwd);
       if (r && isThisRepo(dir, ctx.root)) {
         if (typeof r === "string") return r;
         if (!r.branches.length || !r.branches.every((b) => landedBranch(dir, b))) return `${r.why} (one whose tip is a merged pull request's head is allowed)`;
