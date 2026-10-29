@@ -1,9 +1,9 @@
 // Render a built video to out/<name>.mp4 (SHIPSHOW_OUT moves out/), the name taken from its path (lib.mjs outName).
 //   node bin/render.mjs videos/<name> [--draft]
 // and masters its audio to video.json "loudness" (LUFS; -14 by default, YouTube's; false for none).
-import { existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { HF, die, loudnessTarget, masterLoudness, outDir, outName, run, videoDir } from "./lib.mjs";
+import { HF, die, loudnessTarget, masterLoudness, outDir, outName, run, videoDir, recordStep } from "./lib.mjs";
 
 const dir = videoDir(process.argv[2]);
 if (!existsSync(join(dir, "index.html"))) die("no index.html yet: node bin/build.mjs first");
@@ -21,3 +21,6 @@ if (target !== null) {
   else console.log(`audio mastered from ${m.before} to ${m.after} LUFS (${m.gain >= 0 ? "+" : ""}${m.gain.toFixed(1)} dB, peaks limited by up to ${m.limited.toFixed(1)} dB)${m.after < target - 0.5 ? `; held under ${target} so no peak loses more than 3 dB` : ""}`);
 }
 console.log(`${out} in ${((Date.now() - t0) / 1000).toFixed(0)} s`);
+let video = null;
+try { video = JSON.parse(readFileSync(join(dir, "timing.json"), "utf8")).total; } catch { /* timing is optional here */ }
+recordStep(dir, draft ? "render-draft" : "render", t0, { video });

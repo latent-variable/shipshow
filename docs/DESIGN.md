@@ -1230,6 +1230,20 @@ disk: those four pass now and none that passed fails. **Costs.** A take that dro
 pass by the closest reading; the missing-sentence check is unchanged. `CHECK_VERSION` is not bumped, so no video voices again for
 this: kept takes are unaffected, and the next voicing simply retakes less.
 
+### D86. Every step records how long it took (2026-10-29)
+
+**Decision.** `voice`, `build`, `overlaps`, `review`, `render` and `package` each append one line to the video's
+`review/timeline.jsonl` when they finish (`recordStep` in `bin/lib.mjs`): the step, when it started, its seconds, the commit that
+ran it, and what it worked on (voice: engine, voice, speed, takes voiced of the total, hear-back rounds summed from each take's
+`.check`, which Drama 3 now writes as `rounds`, and seconds of narration; build and render: seconds of video). `npm run timeline`
+(`bin/timeline.mjs`) summarizes it. A failed step is not recorded, and a write that fails is skipped: timing is a record, never a
+gate. The file is gitignored with the rest of `review/`, so it is per machine. **Why.** The owner asked what a video's timeline is
+and said it should be tracked so the slow steps can be found; nothing recorded it, and the numbers had to be read back from
+terminal logs and file times. Measured by hand on qwen-phones-home (15.6 min, 2026-10-29): Drama 3 voicing 1,103 s (about 0.7 s
+of work per second of audio when no take is retaken; retakes were the rest), the second render 700 s (1.34x real time), build
+under a minute (3.7 s with music and moods, measured by this step), the overlap check 4.3 s. **Costs.** One `git rev-parse` per
+step; rounds are known only for Drama 3 takes (other engines count one a take).
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

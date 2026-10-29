@@ -312,13 +312,15 @@ def score(text, samples):
     return agreement(text, heard), heard
 
 
-def write_check(wav, key, text, got, heard, faults=(), timing=None):
+def write_check(wav, key, text, got, heard, faults=(), timing=None, rounds=None):
     """The `.check` file beside a take: what it was judged by, so bin/voice.mjs and the review packet
     can say which sentences to listen to. `score` is None when nothing could hear it back. `timing`, for a
     run of sentences, is bin/wordtime.py's {"sentences", "matched", "words"}."""
     check = {"key": key, "text": text, "score": None if got is None else round(got, 3), "heard": heard, "faults": list(faults), "spelledChecked": True}
     if timing is not None:
         check["timing"] = timing
+    if rounds is not None:
+        check["rounds"] = rounds   # hear-back rounds this take needed, for the voice step's timeline line (D86)
     Path(wav).with_suffix(".check").write_text(json.dumps(check) + "\n")
 
 

@@ -32,7 +32,8 @@
     "postinstall": "node bin/link-skills.mjs",
     "audit:deps": "bash scripts/audit-deps.sh",
     "audit:code": "bash scripts/audit-code.sh",
-    "package": "node bin/package.mjs"
+    "package": "node bin/package.mjs",
+    "timeline": "node bin/timeline.mjs"
   },
   "devDependencies": {
     "gsap": "3.14.2",

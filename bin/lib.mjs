@@ -1,7 +1,7 @@
 // Shared plumbing for the bin/ scripts: paths, the video's config, sentence splitting, WAV I/O.
 import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
+import { appendFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { basename, delimiter, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -773,4 +773,23 @@ export function masterLoudness(file, target) {
   if (r.status !== 0) die(`could not master the loudness of ${file}\n${r.stderr}`);
   renameSync(tmp, file);
   return { before, after: Number(measureLoudness(file, target).input_i), gain, limited };
+}
+
+/** One step of the pipeline, timed: a line appended to <video>/review/timeline.jsonl (gitignored, D86) with the step, when it
+ *  started, how long it took, the commit that ran it, and what it worked on (`details`: an engine, takes, seconds of audio).
+ *  A step that fails is not recorded. Timing never fails a step: a write that cannot happen is skipped. */
+export function recordStep(dir, step, startedMs, details = {}) {
+  try {
+    const commit = spawnSync("git", ["-C", REPO, "rev-parse", "--short", "HEAD"], { encoding: "utf8" }).stdout?.trim() || null;
+    mkdirSync(join(dir, "review"), { recursive: true });
+    const row = { step, at: new Date(startedMs).toISOString(), seconds: Math.round((Date.now() - startedMs) / 100) / 10, commit, ...details };
+    appendFileSync(join(dir, "review", "timeline.jsonl"), JSON.stringify(row) + "\n");
+  } catch { /* timing is a record, never a gate */ }
+}
+
+/** Every step recorded for a video, oldest first; [] when nothing has been timed. A line that does not parse is skipped. */
+export function readTimeline(dir) {
+  const f = join(dir, "review", "timeline.jsonl");
+  if (!existsSync(f)) return [];
+  return readFileSync(f, "utf8").split("\n").filter(Boolean).flatMap((l) => { try { return [JSON.parse(l)]; } catch { return []; } });
 }
