@@ -31,9 +31,13 @@ export function summarize(rows) {
     const mine = rows.filter((r) => r.step === step);
     return { step, runs: mine.length, last: mine.at(-1), median: median(mine.map((r) => r.seconds)) };
   });
-  const last = (s) => per.find((p) => p.step === s)?.last;
-  const parts = ["voice", "build", "render"].map(last);
-  const rebuild = parts.every(Boolean) ? Math.round(parts.reduce((a, r) => a + r.seconds, 0)) : null;
+  // One rebuild: the last voice, the first build after it, the first full render after that build. A voice run with no build or
+  // render since is not added to older ones; the rebuild is unknown until they run.
+  const at = (r) => Date.parse(r.at);
+  const voice = rows.filter((r) => r.step === "voice").at(-1);
+  const build = voice && rows.find((r) => r.step === "build" && at(r) >= at(voice));
+  const render = build && rows.find((r) => r.step === "render" && at(r) >= at(build));
+  const rebuild = render ? Math.round(voice.seconds + build.seconds + render.seconds) : null;
   return { steps: per, rebuild };
 }
 
