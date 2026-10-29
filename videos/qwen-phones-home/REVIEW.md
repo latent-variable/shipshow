@@ -182,3 +182,6 @@ case instead of asking it). Three clickbait drafts followed (a map, the real tra
 map and asked that the laptop sit off the Chinese coast and that "QWEN 3.8" and "LOCAL AI" read at feed size. A fresh critic
 (Codex gpt-6-luna) found that an arrow ending on Beijing reads as arrived, though the sandbox blocked it: the arc now carries
 "TRIED TO UPLOAD". Declined: "LOCAL AI" clipped (it ends 67 px from the edge) and shrinking it (the owner asked for it big).
+
+**Published 2026-10-29:** https://youtu.be/ghKD5M6ZOtg (uploaded by the owner with the map thumbnail, then replaced with the
+"TRIED TO UPLOAD" version; the folder moved to `youtube/uploaded/2026-10-29 qwen-phones-home/`).
