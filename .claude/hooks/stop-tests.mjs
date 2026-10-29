@@ -4,12 +4,12 @@
 // so a test that cannot be fixed does not loop. SHIPSHOW_TEST_CMD replaces the command; SHIPSHOW_STOP_ALWAYS=1 skips
 // the check for changed files.
 import { spawnSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
 import { deny, input, projectDir } from "./lib.mjs";
+import { isEntry } from "../../bin/entry.mjs";
 
 const WATCHED = /^.. "?((bin|kit|skills|template|themes|agents|test|docs|examples|\.claude|\.github)\/|(package\.json|package-lock\.json|AGENTS\.md|README\.md|requirements[^/]*\.txt)$)/;
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntry(import.meta.url)) {
   const i = input();
   if (i.stop_hook_active) process.exit(0);
   const root = projectDir(i);

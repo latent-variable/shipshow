@@ -14,7 +14,7 @@
 import { spawnSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { isEntry } from "./entry.mjs";
 
 export const RATE = 48000;
 const NOTES = { C: 0, "C#": 1, Db: 1, D: 2, "D#": 3, Eb: 3, E: 4, F: 5, "F#": 6, Gb: 6, G: 7, "G#": 8, Ab: 8, A: 9, "A#": 10, Bb: 10, B: 11 };
@@ -300,7 +300,7 @@ export function previewKit(kit, tonic = kit.tonic ?? "C", findFile) {
   return out;
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+if (isEntry(import.meta.url)) {
   const a = process.argv.slice(2);
   if (a[0] === "preview" && a.length >= 3) {
     const kit = JSON.parse(readFileSync(a[1], "utf8"));

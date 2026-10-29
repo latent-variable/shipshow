@@ -1433,3 +1433,30 @@ test("pauses add a beat after one scene: that scene grows, later scenes move by 
   assert.notEqual(bad.r.status, 0, "a pause that is not a number stops the voice step");
   assert.match(bad.r.stderr, /pauses\[".*"\] is "long"; it takes 0 to 10 seconds/);
 });
+
+test("every CLI and hook runs from a path with a space or through a symlink, never skipping its body to exit 0 (#96)", () => {
+  // A file URL escapes a space ("%20") and a symlink is another path to the same file: a guard that compared either way
+  // skipped the whole script and exited 0 having done nothing. Each one here is run where it would have, and must do its job.
+  const root = mkdtempSync(join(tmpdir(), "kx-entry-"));
+  const real = join(root, "sp ace é");
+  mkdirSync(join(real, ".claude"), { recursive: true });
+  cpSync(join(REPO, "bin"), join(real, "bin"), { recursive: true });
+  cpSync(join(REPO, ".claude", "hooks"), join(real, ".claude", "hooks"), { recursive: true });
+  symlinkSync(real, join(root, "link"));
+  const run = (file, args = [], input = "") => spawnSync(process.execPath, [file, ...args], { input, encoding: "utf8", env: { ...process.env, CLAUDE_PROJECT_DIR: real, CLAUDE_PROJECTS_DIR: root } });
+  for (const base of [real, join(root, "link")]) {
+    const said = (r) => `${r.status} ${r.stdout}${r.stderr}`;
+    let r = run(join(base, "bin", "package.mjs"));
+    assert.match(said(r), /^1 [\s\S]*name a video folder/, `package.mjs from ${base}`);
+    r = run(join(base, "bin", "overlap.mjs"));
+    assert.match(said(r), /^2 [\s\S]*usage: node bin\/overlap\.mjs/, `overlap.mjs from ${base}`);
+    r = run(join(base, "bin", "sounds.mjs"));
+    assert.match(said(r), /usage: node bin\/sounds\.mjs/, `sounds.mjs from ${base}`);
+    r = run(join(base, "bin", "usage.mjs"), ["--bogus"]);
+    assert.equal(r.status, 2, `usage.mjs from ${base}: ${said(r)}`);
+    r = run(join(base, ".claude", "hooks", "guard-bash.mjs"), [], JSON.stringify({ tool_input: { command: "rm x" }, cwd: real }));
+    assert.match(said(r), /^2 [\s\S]*Blocked: rm deletes files/, `guard-bash.mjs from ${base}`);
+    r = run(join(base, ".claude", "hooks", "protect-files.mjs"), [], JSON.stringify({ tool_input: { file_path: "package-lock.json" }, cwd: real }));
+    assert.match(said(r), /^2 [\s\S]*written by npm/, `protect-files.mjs from ${base}`);
+  }
+});

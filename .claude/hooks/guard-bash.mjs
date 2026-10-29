@@ -10,9 +10,9 @@
 // THIS IS A SEATBELT, NOT A SANDBOX. It reads the command text, so it stops a well-meaning agent's slip (sed -i on the
 // sample's bug, cat .env), never a determined one: a path built in a variable, a glob that expands to it, a script that
 // writes it from inside, a heredoc fed to python. sandbox-run.sh is the sandbox.
-import { fileURLToPath } from "node:url";
 import { isAbsolute, relative, resolve } from "node:path";
 import { deny, input, projectDir } from "./lib.mjs";
+import { isEntry } from "../../bin/entry.mjs";
 import { reason as protectedReason } from "./protect-files.mjs";
 
 const WRAPPERS = new Set(["sudo", "command", "env", "time", "nice", "nohup", "xargs", "exec"]);
@@ -198,7 +198,7 @@ export function reason(full, depth = 0, ctx = { root: resolve(process.env.CLAUDE
   return null;
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntry(import.meta.url)) {
   const i = input();
   const cmd = i.tool_input?.command;
   if (typeof cmd === "string" && process.env.SHIPSHOW_ALLOW_DESTRUCTIVE !== "1") {

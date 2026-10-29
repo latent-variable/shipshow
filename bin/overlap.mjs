@@ -14,6 +14,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { isEntry } from "./entry.mjs";
 import { chromePath } from "./shot.mjs";
 
 export const MIN_OPACITY = 0.25, MIN_SHARE = 0.12, SETTLE = 0.8;
@@ -170,7 +171,7 @@ export async function overlaps(dir) {
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (isEntry(import.meta.url)) {
   const dir = process.argv[2];
   if (!dir || !existsSync(join(dir, "index.html"))) { console.error("usage: node bin/overlap.mjs videos/<name> [--json]   (build it first)"); process.exit(2); }
   const found = await overlaps(dir);

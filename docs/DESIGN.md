@@ -1123,6 +1123,14 @@ reads 0.38 unset and 0.62 set; with the old fixed value it fails.
 
 **Tested.** `test/frame.test.mjs` builds multiple blocks with nested markup, verifies their position outside all scenes and exact cue-time equality, checks invalid cues, and runs the kit in a VM with recorded GSAP operations to prove scene visibility and camera operations leave the frame alone while arrival and exit animations run. `test/overlap.test.mjs` adds a frame/scene text collision to the whole-page measurement. The lifting control disables the layer output, runs the lifting test and requires it to fail, then restores the build file.
 
+### D79. A script knows it is the one node runs by comparing real paths (2026-10-28)
+
+**Why.** `npm run package` did nothing and exited 0 from a checkout whose path holds a space or a non-ASCII letter (#96): its guard compared `process.argv[1]` with the module URL's pathname, which is percent-encoded. `bin/overlap.mjs` compared against a hand-built `file://` URL and failed the same way; `bin/sounds.mjs` and the three hooks compared against `fileURLToPath`, which survives a space but not a symlink, and a hook that skips its body lets every command through without a word.
+
+**Decision.** Every CLI in `bin/` and every hook asks `isEntry(import.meta.url)` (`bin/entry.mjs`): the real paths of `process.argv[1]` and the module, compared, and false on any error. It is the rule `bin/usage.mjs` already followed, now in one place.
+
+**Tested.** `test/pipeline.test.mjs` copies `bin/` and the hooks under a folder named with a space and an accented letter, and reaches it again through a symlink, then runs `package`, `overlap`, `sounds`, `usage`, `guard-bash` and `protect-files` from both and requires each to do its job (a usage line and its exit code, or a refusal). With the old guards put back it fails on `package.mjs`.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

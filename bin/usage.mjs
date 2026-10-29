@@ -4,10 +4,10 @@
 //   node bin/usage.mjs [session id | transcript path] [--json]
 // With no argument: the newest session of this repo. Context is the prompt size of one API
 // call (fresh + cache-written + cache-read input tokens); "peak" is the largest of them.
-import { existsSync, readdirSync, readFileSync, realpathSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { isEntry } from "./entry.mjs";
 import { REPO } from "./lib.mjs";
 
 const projects = process.env.CLAUDE_PROJECTS_DIR || join(homedir(), ".claude", "projects");
@@ -75,9 +75,7 @@ const secs = (a) => {
   return Number.isFinite(d) ? d : 0;
 };
 
-// Run as a script, also from a path with a space or through a symlink: compare real paths, never URLs.
-let entry = false;
-try { entry = process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url)); } catch { entry = false; }
+const entry = isEntry(import.meta.url);   // also from a path with a space or through a symlink
 if (entry) {
   const args = process.argv.slice(2), json = args.includes("--json");
   const unknown = args.filter((a) => a.startsWith("-") && a !== "--json");
