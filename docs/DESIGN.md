@@ -1131,6 +1131,14 @@ reads 0.38 unset and 0.62 set; with the old fixed value it fails.
 
 **Tested.** `test/pipeline.test.mjs` copies `bin/` and the hooks under a folder named with a space and an accented letter, and reaches it again through a symlink, then runs `package`, `overlap`, `sounds`, `usage`, `guard-bash` and `protect-files` from both and requires each to do its job (a usage line and its exit code, or a refusal). With the old guards put back it fails on `package.mjs`.
 
+### D81. An animated template's box shows in its own part of the loop (2026-10-28; extends D49)
+
+**Why.** memegen gives each text box of an animated template a `start` and `stop`, fractions of the GIF's loop. `crowd` (Soccer Celebration in a Bar) shows its first line from 0 to 0.54, while the bar watches the screen, and its second from 0.61 to 0.75, as it erupts, both in the same corner. D49 drew every box for the whole time, so the two lines sat on top of each other (never-about-the-code, #68).
+
+**Decision.** For an animated template, a box whose times are not 0 to 1 (`boxSpan` in `bin/meme.mjs`) gets `data-show="<start> <stop>"`, and its figure gets `data-loop` (one pass of the GIF, from ffprobe) and `data-loop-start` (the figure's cue, where its video starts). `kit/kit.js` drives the box's opacity from the time alone through `driveBy` (D50): shown while the time's place in the loop, counted from the cue, is in its span. The box, not the line, so an entrance on the line still plays. A box with no times, 0 to 1, or times that make no span, and every still template and clip, are drawn as before. The `overlay` section's times (memegen's stickers) are not read.
+
+**Tested.** `test/meme.test.mjs`: `boxSpan` on crowd's times and the cases that mean always; a fixture template with two timed boxes and one untimed builds with the loop, the cue and each span on the page, and an untimed animated template carries none; kit.js in a VM samples each box out of order across four loops (first line early, second in the middle, neither late). With the old kit.js or the old build the test fails. A scratch video with the real `crowd`, rendered: at 3.5 s only "Push to CI" on the screen, at 5.0 s only "It turns green", at 6.0 s neither, at 7.5 s the first line again.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

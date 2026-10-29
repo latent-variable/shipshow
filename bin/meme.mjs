@@ -186,14 +186,15 @@ const attrOf = (attrs, name) => (attrs.match(new RegExp(`(?:^|\\s)${name}="([^"]
 
 /** One figure's HTML: the picture (an img, or the video element of an animated meme), a box per span.
  *  `lines` are the spans as written: {attrs, html}. `extra` is added to the figure's attributes. */
-export function figureHtml(attrs, tpl, size, lines, where, { media, extra = "" } = {}) {
+export function figureHtml(attrs, tpl, size, lines, where, { media, extra = "", timed = false } = {}) {
   if (lines.length > tpl.boxes.length) {
     die(`${where}: meme "${tpl.id}" has ${tpl.boxes.length} text box(es) but the figure has ${lines.length} spans`);
   }
   const boxes = lines.map((line, i) => {
     const p = boxPlacement(tpl.boxes[i], tpl.id);
     const style = `left:${p.left}%;top:${p.top}%;width:${p.width}%;height:${p.height}%;--rot:${p.angle}deg;--fill:${p.fill};--stroke:${p.stroke};text-align:${p.align}`;
-    return `<span class="ss-meme-box" data-font="${p.font}" style="${style}"><span class="ss-meme-line"${line.attrs}>${line.html}</span></span>`;
+    const span = timed ? boxSpan(tpl.boxes[i]) : null;
+    return `<span class="ss-meme-box" data-font="${p.font}"${span ? ` data-show="${span[0]} ${span[1]}"` : ""} style="${style}"><span class="ss-meme-line"${line.attrs}>${line.html}</span></span>`;
   });
   const ar = Math.round((size.w / size.h) * 10000) / 10000;
   const cls = ((attrs.match(/class="([^"]*)"/) || [, ""])[1].split(/\s+/).filter(Boolean));
@@ -202,6 +203,15 @@ export function figureHtml(attrs, tpl, size, lines, where, { media, extra = "" }
   const rest = attrs.replace(/\s*(class|style)="[^"]*"/g, "");
   const tagged = `${rest} class="${cls.join(" ")}" data-meme-name="${esc(tpl.name)}" data-meme-source="${esc(tpl.source)}"${extra} style="--ar:${ar};${style}"`;
   return `<figure${tagged}>${media ?? `<img class="ss-meme-img" src="assets/memes/${tpl.id}.${tpl.ext}" alt="" />`}${boxes.join("")}</figure>`;
+}
+
+/** The part of each loop an animated template shows a box, as memegen's `start` and `stop` (fractions of the GIF's
+ *  loop): [start, stop], or null for a box shown the whole time (no times, 0 to 1, or times that make no span).
+ *  `crowd` shows its first line from 0 to 0.54 and its second from 0.61 to 0.75, in the same corner (#68). */
+export function boxSpan(box) {
+  const s = Number.isFinite(box.start) ? box.start : 0, e = Number.isFinite(box.stop) ? box.stop : 1;
+  if (!(s >= 0 && e <= 1 && s < e) || (s === 0 && e === 1)) return null;
+  return [s, e];
 }
 
 // ---- animated memes: a clip turned into a video the renderer can seek ----
@@ -231,6 +241,15 @@ export function cropRect(crop, w, h) {
   const kw = w - l - r, kh = h - t - b;
   if (kw < 16 || kh < 16) throw new Error(`the crop leaves ${Math.max(kw, 0)}x${Math.max(kh, 0)} px of a ${w}x${h} picture`);
   return { x: l, y: t, w: kw - (kw % 2), h: kh - (kh % 2) };
+}
+
+/** How long one pass of a clip lasts, in seconds, as ffmpeg plays it: a GIF's frame delays summed. */
+export function clipSeconds(file) {
+  const r = spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file], { encoding: "utf8" });
+  if (r.error?.code === "ENOENT") throw new Error(FFMPEG_MISSING);
+  const d = r.status === 0 ? parseFloat(r.stdout) : NaN;
+  if (!(d > 0)) throw new Error(`ffprobe could not read how long ${file} lasts`);
+  return d;
 }
 
 function ffprobeSize(file) {
@@ -367,9 +386,13 @@ export async function memeScene(html, dir, sceneId, ctx = { start: 0, end: 10, a
     try { tpl = await loadTemplate(id); } catch (e) { die(`${where}: ${e.message}`); }
     const lines = [...inner.matchAll(/<span([^>]*)>([\s\S]*?)<\/span>/g)].map((s) => ({ attrs: s[1], html: s[2].trim() }));
     if (tpl.animated) {
-      let video;
-      try { video = encodeClip(tpl.image, null, window, dir); } catch (e) { die(`${where}: ${e.message}`); }
-      out = out.replace(whole, () => figureHtml(attrs, tpl, video, lines, where, { media: videoHtml(video.file, start, window), extra: ` data-meme-clip="${esc(`${files()}/templates/${id}/default.gif`)}"` }));
+      // A box with its own start and stop is shown in that part of every loop, counted from the figure's cue, where
+      // the video starts (kit.js); a template with none is drawn as before.
+      const timed = tpl.boxes.slice(0, lines.length).some((b) => boxSpan(b));
+      let video, loop;
+      try { video = encodeClip(tpl.image, null, window, dir); if (timed) loop = clipSeconds(tpl.image); } catch (e) { die(`${where}: ${e.message}`); }
+      const clock = timed ? ` data-loop="${round(loop)}" data-loop-start="${round(start)}"` : "";
+      out = out.replace(whole, () => figureHtml(attrs, tpl, video, lines, where, { media: videoHtml(video.file, start, window), extra: ` data-meme-clip="${esc(`${files()}/templates/${id}/default.gif`)}"${clock}`, timed }));
       continue;
     }
     let size;

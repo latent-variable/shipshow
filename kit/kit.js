@@ -339,6 +339,17 @@
       fitMemes();
       if (document.fonts) document.fonts.ready.then(fitMemes);
 
+      // An animated template's box with a start and stop (bin/meme.mjs, boxSpan) shows only in that part of every loop
+      // of its clip, counted from the figure's cue, where the video starts (#68). Driven by the time alone, so a worker
+      // that seeks anywhere draws the right box. The box's opacity is free: an entrance animates the line inside it.
+      document.querySelectorAll(".ss-meme-box[data-show]").forEach((box) => {
+        const fig = box.closest("[data-loop]");
+        const loop = fig ? +fig.dataset.loop : 0, from = fig ? +fig.dataset.loopStart : 0;
+        const [show, hide] = box.dataset.show.split(" ").map(Number);
+        if (!(loop > 0)) return;
+        driveBy(box, { opacity: (t) => { const p = ((((t - from) / loop) % 1) + 1) % 1; return p >= show && p < hide ? 1 : 0; } });
+      });
+
       // Each element with a cue arrives when the voice reaches its word. data-anim picks how;
       // without one it gets the theme's --entrance.
       const SIMPLE = {
