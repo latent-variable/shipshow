@@ -130,6 +130,7 @@ checks it and voices one word; `-- --hearback` checks the hear-back and hears on
 | `npm run memes -- <words>` | Search the memegen catalog (211 templates) by id, name, keywords or example text: id (what `data-meme` takes), lines, an example, the `source` to credit (`--refresh` refetches the cached list, `--limit N`, `--json`) |
 | `npm run skills` | Link new skills in `skills/` or `local/skills/` into `.claude/skills/` |
 | `npm run usage` | Tokens and context per agent for the newest Claude Code session of this repo, subagents included (`-- <session id>` for another, `-- --json` for data); read from `~/.claude/projects/`, or from `CLAUDE_PROJECTS_DIR` |
+| `npm run timeline -- <folder>` | How long each step took for that video, from what each step records as it runs in `review/timeline.jsonl` (voice, build, overlaps, review, render, package; D86): runs, last and median per step, voicing in seconds per narration minute and hear-back rounds per take, render as a multiple of real time, and the last voice + build + render as one rebuild (`-- --json` for data) |
 | `claude plugin validate .` | The two manifests only (`plugin.json`, `marketplace.json`); `claude plugin validate skills` and `agents` look at components but only warn on a broken one, so a test parses every `SKILL.md` and `agents/critic.md` front matter. One warning is expected (no `version`, on purpose: the commit SHA versions the plugin); `--strict` fails on it |
 | `npm test` | No Kokoro needed; CI runs only this |
 
@@ -376,7 +377,7 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ## Layout
 
 ```
-bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, overlap (text on text, measured), critics, memes, footage.mjs (local recordings, played once and held), new, doctor, setup, link-skills, usage; lib.mjs is shared, entry.mjs says whether a file is the script node runs (D79), measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
+bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, timeline (how long each step took), overlap (text on text, measured), critics, memes, footage.mjs (local recordings, played once and held), new, doctor, setup, link-skills, usage; lib.mjs is shared, entry.mjs says whether a file is the script node runs (D79), measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
 themes/     shipshow, paper, launch, buildday, lofi, signal, chalk and archive; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono, Bricolage Grotesque, Inter, Playfair Display, Courier Prime: SIL OFL)
 skills/     the explainer and development skills, critic-loop, publish, tailor, theme and the nine critics

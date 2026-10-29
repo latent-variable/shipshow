@@ -8,7 +8,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { createHash } from "node:crypto";
-import { BASE_SPM, BASE_WPM, HF, REPO, config, die, localDir, reviewPlan, round, run, syllables, videoDir } from "./lib.mjs";
+import { BASE_SPM, BASE_WPM, HF, REPO, config, die, localDir, reviewPlan, round, run, syllables, videoDir, recordStep } from "./lib.mjs";
 import { memesIn, memesUsed } from "./meme.mjs";
 import { creditLines, portraitsIn } from "./portrait.mjs";
 import { footageIn } from "./footage.mjs";
@@ -18,6 +18,7 @@ import { listenSection, voiceCheckSection } from "./hearback.mjs";
 import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
 
 
+const STARTED = Date.now();
 const dir = videoDir(process.argv[2]);
 const cfg = config(dir);
 for (const f of ["timing.json", "index.html"]) if (!existsSync(join(dir, f))) die(`no ${f} yet: npm run make first`);
@@ -196,3 +197,4 @@ out.push(md(frames.map((f) => {
 }), ["file", "at (s)", "scene", "taken", "being said"]), "");
 writeFileSync(join(dir, "review", "packet.md"), out.join("\n"));
 console.log(`review/packet.md: ${cues.length} cues, ${sfxRecord.events.length} sounds, ${frames.length} frames`);
+recordStep(dir, "review", STARTED, { frames: frames.length });

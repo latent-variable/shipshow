@@ -326,7 +326,7 @@ def main(spec_path):
         if turns:
             save_turns(job["wav"], turns)   # before the next job reads it: jobs come in the video's order
         timing = wordtime.align(job["parts"], words, len(final) / sr) if run and hear_on else None
-        hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [f'not heard: "{s}"' for s in gone] + [f'spelled out: heard the letters "{g}"' for g in spelled] + ([fault] if fault else []), timing)
+        hearback.write_check(job["wav"], job.get("key", ""), job["plain"], got, heard, [f'not heard: "{s}"' for s in gone] + [f'spelled out: heard the letters "{g}"' for g in spelled] + ([fault] if fault else []), timing, rounds=round_ + 1)
         if job.get("keyFile"):
             Path(job["keyFile"]).write_text(job["key"])   # kept: a run stopped after this keeps this take
         mx.clear_cache()

@@ -1498,3 +1498,30 @@ test("every CLI and hook runs from a path with a space or through a symlink, nev
     assert.match(said(r), /^2 [\s\S]*written by npm/, `protect-files.mjs from ${base}`);
   }
 });
+
+test("timeline: every step records how long it took, and the summary reads voicing per narration minute and render against real time (D86)", async () => {
+  const { recordStep, readTimeline } = await import("../bin/lib.mjs");
+  const { summarize, rate } = await import("../bin/timeline.mjs");
+  const dir = mkdtempSync(join(tmpdir(), "kx-time-"));
+  assert.deepEqual(readTimeline(dir), [], "nothing timed yet");
+  recordStep(dir, "build", Date.now() - 1500, { scenes: 3, video: 60 });
+  const [row] = readTimeline(dir);
+  assert.equal(row.step, "build");
+  assert.ok(row.seconds >= 1.4 && row.seconds < 5, `seconds measured from the start: ${row.seconds}`);
+  assert.equal(row.scenes, 3);
+  writeFileSync(join(dir, "review", "timeline.jsonl"), [
+    { step: "voice", at: "2026-10-29T20:00:00Z", seconds: 1103, voiced: 39, takes: 39, rounds: 78, audio: 937 },
+    { step: "build", at: "2026-10-29T20:20:00Z", seconds: 40 },
+    { step: "render", at: "2026-10-29T20:21:00Z", seconds: 700, video: 937 },
+    { step: "voice", at: "2026-10-29T21:00:00Z", seconds: 9, voiced: 0, takes: 39, rounds: 0, audio: 937 },
+  ].map((r) => JSON.stringify(r)).join("\n") + "\nnot json\n");
+  const sum = summarize(readTimeline(dir));
+  assert.deepEqual(sum.steps.map((s) => [s.step, s.runs]), [["voice", 2], ["build", 1], ["render", 1]], "pipeline order; a bad line is skipped");
+  assert.equal(sum.steps[0].median, 556);
+  assert.equal(sum.rebuild, null, "the last voice has no build or render after it, so no rebuild is claimed");
+  const done = summarize([...readTimeline(dir), { step: "build", at: "2026-10-29T21:01:00Z", seconds: 4 }, { step: "render", at: "2026-10-29T21:02:00Z", seconds: 690, video: 937 }]);
+  assert.equal(done.rebuild, 703, "the last voice, then the build and render after it");
+  assert.match(rate({ step: "voice", seconds: 1103, voiced: 39, takes: 39, rounds: 78, audio: 937 }), /^71 s per narration minute, 2\.0 rounds a take/);
+  assert.match(rate({ step: "voice", seconds: 9, voiced: 0, takes: 39, rounds: 0, audio: 937 }), /nothing voiced again/);
+  assert.equal(rate({ step: "render", seconds: 700, video: 937 }), "1.34x real time");
+});

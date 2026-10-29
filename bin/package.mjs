@@ -15,7 +15,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileS
 import { basename, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { isEntry } from "./entry.mjs";
-import { REPO, config, die, flag, outDir, outName, videoDir } from "./lib.mjs";
+import { REPO, config, die, flag, outDir, outName, videoDir, recordStep } from "./lib.mjs";
 
 /** "m:ss" (or "h:mm:ss") for a time in seconds, as YouTube writes a chapter. */
 export function stamp(seconds) {
@@ -89,6 +89,7 @@ export function descriptionText(yt, ch, credits) {
 }
 
 if (isEntry(import.meta.url)) {
+  const started = Date.now();
   const dir = videoDir(process.argv[2]);
   const cfg = config(dir);
   const yt = cfg.youtube;
@@ -162,4 +163,5 @@ if (isEntry(import.meta.url)) {
   ].join("\n");
   writeFileSync(join(to, `${name}-youtube.txt`), txt);
   console.log(`${to}\n  ${name}.mp4, ${basename(thumb)}, ${name}-youtube.txt (${ch.length} chapters, description ${description.length} characters)`);
+  recordStep(dir, "package", started);
 }

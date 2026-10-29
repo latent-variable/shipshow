@@ -28,11 +28,12 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { DRAMA, DRAMA_LINE_MAX, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, beatsAfter, breathe, drawled, config, styled, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav } from "./lib.mjs";
+import { DRAMA, DRAMA_LINE_MAX, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, beatsAfter, breathe, drawled, config, styled, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav, recordStep } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
 
+const STARTED = Date.now();   // the whole step, listen included, for review/timeline.jsonl (D86)
 const dir = videoDir(process.argv[2]);
 const cfg = config(dir);
 if (!existsSync(HF)) die("HyperFrames is not installed here: npm install");
@@ -306,3 +307,9 @@ if (!process.argv.includes("--no-listen")) {
     if (r.status !== 0) console.warn("second listen failed; the narration is written, but nobody listened to it again");
   } else console.log("no second listen (npm run setup:listen lets Parakeet hear the finished narration against the script, Apple Silicon)");
 }
+
+// How long this voicing took and what it did, for `npm run timeline` (D86). `rounds`: hear-back rounds summed over the takes
+// voiced this time, from each take's .check (Drama 3 writes it; a take with none counts one).
+const roundsOf = (wav) => { try { return JSON.parse(readFileSync(wav.replace(/\.wav$/, ".check"), "utf8")).rounds ?? 1; } catch { return 1; } };
+recordStep(dir, "voice", STARTED, { engine: cfg.engine, voice: cfg.voice, speed: cfg.speed, voiced: jobs.length,
+  takes: plan.reduce((a, s) => a + s.units.length, 0), rounds: jobs.reduce((a, j) => a + roundsOf(j.wav), 0), audio: timing.total });

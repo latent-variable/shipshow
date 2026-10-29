@@ -21,7 +21,7 @@ import { liftFrames } from "./frame.mjs";
 import { footageScene } from "./footage.mjs";
 import { portraitScene } from "./portrait.mjs";
 import { shotScene } from "./shot.mjs";
-import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir } from "./lib.mjs";
+import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir, recordStep } from "./lib.mjs";
 import { resolveMoods } from "./moods.mjs";
 import { sfxTrack } from "./sfx.mjs";
 
@@ -29,6 +29,7 @@ const CUE_LEAD = 0.15;      // a piece lands just before its word, so the eye ge
 const LINE_WORDS = 12;      // the longest caption line
 const WEAK = new Set(["a", "an", "the", "to", "of", "and", "or", "but", "in", "on", "at", "for", "with", "by", "as", "its", "their", "that"]); // never the last word of a line
 
+const STARTED = Date.now();
 const dir = videoDir(process.argv[2]);
 const cfg = config(dir);
 if (!existsSync(join(dir, "timing.json"))) die("no timing.json yet: node bin/voice.mjs first");
@@ -203,3 +204,4 @@ mkdirSync(join(dir, "assets", "vendor"), { recursive: true });
 copyFileSync(gsap, join(dir, "assets", "vendor", "gsap.min.js"));
 
 console.log(`index.html: ${timing.scenes.length} scenes, ${timing.total} s, theme ${cfg.theme}${music ? ", music" : ""}${sfx ? `, ${sfx.events.length} sound effect${sfx.events.length > 1 ? "s" : ""}` : ""}`);
+recordStep(dir, "build", STARTED, { scenes: timing.scenes.length, video: timing.total });
