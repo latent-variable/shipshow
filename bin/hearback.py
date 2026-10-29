@@ -222,12 +222,13 @@ def spelled_out(written, said, heard):
             if len(re.findall(r"[A-Z]", tok)) >= 2:
                 allowed.add(re.sub(r"[^A-Za-z]", "", tok).upper())
     # Whisper writes some names in capitals: "QUEN" for the narrator's "Kwen", which the script writes "Qwen" (qwen-phones-home,
-    # 2026-10-29: two lines retaken five times each for it). A single capital word of four letters or more that is nearly a word
-    # of the line is that word. A letter respelling is short ("EN" for "en") and still counts.
-    line_words = {w.lower() for line in (written, said) for w in re.findall(r"[A-Za-z]{3,}", without_marks(line))}
+    # 2026-10-29: two lines retaken five times each for it). A single capital word of four letters or more that is nearly, but
+    # not exactly, a name of the line (a capitalised word of the script) is that name misheard. A word spelled out letter by
+    # letter comes back as itself ("NODE" for "node") and still counts, as does a short respelling ("EN" for "en").
+    names = {w.lower() for line in (written, said) for w in re.findall(r"\b[A-Z][A-Za-z]{2,}", without_marks(line))}
     whole = {t for t in re.findall(r"[A-Za-z]+", heard) if re.fullmatch(r"[A-Z]{4,}", t)}
     def a_word(g):
-        return g in whole and any(difflib.SequenceMatcher(None, g.lower(), w).ratio() >= 0.75 for w in line_words)
+        return g in whole and g.lower() not in names and any(difflib.SequenceMatcher(None, g.lower(), w).ratio() >= 0.75 for w in names)
     found = []
     for g in letter_groups(heard):
         if g not in allowed and g not in found and not a_word(g):

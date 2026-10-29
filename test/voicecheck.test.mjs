@@ -492,10 +492,11 @@ print(json.dumps([
   h.spelled_out("Qwen 3.8 Flash Next ran it.", "Kwen three point eight Flash Next ran it.", "QUEN 3.8 flash next ran it."),
   h.spelled_out("With n switches, two to the n.", "With en switches, two to the en.", "With EN switches, two to the EN."),
   h.spelled_out("It ran fine.", "It ran fine.", "It ran WXYZ fine."),
+  h.spelled_out("Start the node server.", "Start the node server.", "Start the NODE server."),
 ]))
 `);
   assert.equal(r.status, 0, r.stderr);
-  const [hundredAnd, digitwise, threeHundred, year, gone, quen, en, stray] = JSON.parse(r.stdout);
+  const [hundredAnd, digitwise, threeHundred, year, gone, quen, en, stray, node] = JSON.parse(r.stdout);
   assert.ok(hundredAnd >= 0.97, `"a hundred and seventy one" is "171": ${hundredAnd}`);
   assert.ok(digitwise >= 0.97, `"A B C one two three" is "ABC-123": ${digitwise}`);
   assert.ok(threeHundred >= 0.97, `"three hundred and seventy" is "370": ${threeHundred}`);
@@ -504,6 +505,7 @@ print(json.dumps([
   assert.deepEqual(quen, [], "a name heard in capitals, close to a word of the line, is that word");
   assert.deepEqual(en, ["EN"], "a short letter respelling is still caught");
   assert.deepEqual(stray, ["WXYZ"], "a capital word like nothing in the line still counts");
+  assert.deepEqual(node, ["NODE"], "an ordinary word spelled out letter by letter comes back as itself and still counts");
 });
 
 test("hear-back finds letters spelled out that the script never spells: the respelling \"en\" said \"E N\"", { skip: !plain && "no python3" }, () => {
