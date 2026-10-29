@@ -1201,6 +1201,23 @@ across lines, a one-chunk first take, and a line voiced alone), one where a take
 hearing nothing, a unit test of `added` on the two real takes and on digits and letters heard for words, controls with the
 history and the fallback switched off that fail them, and qwen-phones-home voiced again in full on the real model.
 
+### D84. A thumbnail is clickbait built on a true fact, from generated assets and our own type (2026-10-29)
+
+**Decision.** `publish`'s thumbnail bar: make the viewer need to know what happened, leading with the most alarming undisputed
+fact and a reaction to it, never the verdict; three or four concepts compared at 320 by 180 for the owner to pick; a generator
+(the GPU box or this Mac, whichever the machine has) makes only the picture underneath, and every word, label, arrow and pin is
+HTML and SVG drawn by us; with no generator, the picture is built from SVG, frames and captures. A generated asset stays in the
+video's gitignored `assets/thumbnail/`, with its prompt, model and seed committed. And `npm run package` stops when a video
+shows screenshots or portraits but `review/credits.txt` is missing, or older than `scenes.html` (a picture added since would go uncredited). **Why.** qwen-phones-home's package passed three truth
+critics with a diagram thumbnail the owner called "very weak" and "mid"; three generated-picture drafts were "not clickbait"
+because they argued the case ("Spy or fossil?") instead of asking it; the one he took is Earth at night with a red arc from a
+laptop labelled "QWEN 3.8 / LOCAL AI" over the ocean to a Beijing pin, "WAIT... WHAT?!". He asked that a generator never make the
+whole thumbnail ("it's just gonna immediately scream AI generated"). The image model ignored where it was asked to put a subject
+in 4 of 4 tries, hence placing it in the layout. Separately, packaging from a fresh worktree wrote a description 560 characters
+short, with none of the five screenshot credits, and said nothing. **Costs.** More drafts per video (each local image about
+15 s); the generated asset is not in the repo, so a clone without it cannot package until it is made again: `npm run package`
+stops on any local file `thumbnail.html` draws that is missing (`missingThumbnailFiles`), rather than rendering it on black.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

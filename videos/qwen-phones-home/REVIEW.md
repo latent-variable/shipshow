@@ -174,3 +174,14 @@ After the narration was voiced again with each line hearing the one before (DESI
 | 1 | thumbnail repeated the title's question; description stated the training fossil as settled; "(Opus 5.5 Investigates)" overcredits; "I had Opus 5.5 investigate it" reads as a credit | thumbnail leads with the three suspects and the hook's "we have the logs"; description hedged. Declined: Opus 5.5 did the research (07c-close says so; the credit now reads "Researched and written by"), and the suggested first-person rewrite would say Lino investigated, which is untrue |
 | 2 | credits not traceable to `sources.md` | `sources.md` gained *Voice and music*: Drama 3 and `narrator-uk`, ACE-Step 1.5 beds (PR #115), ShipShow and HyperFrames |
 | 3 | description still firmer than the narration; "data exfiltration" tag implies data left; "Beijing bucket" small at 320 px; synthetic-content answer | the critic's wording taken; tag dropped; label enlarged. The synthetic-content answer stays the owner's call (recommended No: an invented voice, and the video says it is an AI) |
+
+### The thumbnail, redone (2026-10-29)
+
+The owner called the package's diagram thumbnail "very weak" and three generated-picture drafts "not clickbait" (they argued the
+case instead of asking it). Three clickbait drafts followed (a map, the real trace command, a blocked-upload warning); he picked the
+map and asked that the laptop sit off the Chinese coast and that "QWEN 3.8" and "LOCAL AI" read at feed size. A fresh critic
+(Codex gpt-6-luna) found that an arrow ending on Beijing reads as arrived, though the sandbox blocked it: the arc now carries
+"TRIED TO UPLOAD". Declined: "LOCAL AI" clipped (it ends 67 px from the edge) and shrinking it (the owner asked for it big).
+
+**Published 2026-10-29:** https://youtu.be/ghKD5M6ZOtg (uploaded by the owner with the map thumbnail, then replaced with the
+"TRIED TO UPLOAD" version; the folder moved to `youtube/uploaded/2026-10-29 qwen-phones-home/`).

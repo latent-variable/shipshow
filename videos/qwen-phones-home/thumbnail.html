@@ -4,36 +4,48 @@
 <meta charset="utf-8">
 <title>qwen-phones-home thumbnail</title>
 <style>
-  /* The YouTube thumbnail, 1280 by 720 (bin/package.mjs renders it), in the video's signal look. The picture is the video's own
-     moment (scene 02b): the request leaves the sandbox and hits the wall before Beijing. The words are the video's three
-     suspects (01b), not the title's question, so the two complement each other; each ends in a question mark because the video
-     weighs them and the thumbnail does not pick one. The tag is the hook's own line (01-hook). */
-  @font-face { font-family: "Bricolage Grotesque"; font-weight: 800; src: url("../../themes/signal/fonts/bricolage-grotesque-latin-800-normal.woff2") format("woff2"); }
+  /* The YouTube thumbnail, 1280 by 720 (bin/package.mjs renders it). The picture is a generated asset only, Earth at night over
+     East Asia (assets/thumbnail/earth.png, gitignored: Qwen-Image 2.1 Turbo on this Mac, seed 5, 1664x928, from
+     thumbnail-earth.txt; regenerate with ~/.agents/bin/localimg --size 1664x928 --seed 5 --out assets/thumbnail/earth.png
+     "$(cat thumbnail-earth.txt)"). Every word, the laptop, the arc and the pin are drawn here. The story it tells is the one fact
+     nobody disputes: a model running locally tried to upload to a bucket in Beijing (scene 02b); the tag on the arc says tried,
+     because the sandbox blocked it and an arrow alone reads as arrived (the package critic, 2026-10-29). The laptop sits over the
+     ocean so it does not read as being in China; "Wait... what?!" asks, it does not answer. The pin is placed by eye on the
+     generated map, near the Bohai Gulf. */
+  @font-face { font-family: "Anton"; src: url("../../kit/fonts/anton-latin-400-normal.woff2") format("woff2"); }
   @font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url("../../themes/signal/fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2"); }
-  @font-face { font-family: "Inter"; font-weight: 800; src: url("../../themes/signal/fonts/inter-latin-800-normal.woff2") format("woff2"); }
-  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; }
-  body { background: radial-gradient(120% 90% at 30% 0%, #2a1416 0%, #170c0e 55%, #0b0607 100%); position: relative; font-family: "Inter", sans-serif; color: #f6f5f1; }
-  body::after { content: ""; position: absolute; inset: 0; background: radial-gradient(130% 100% at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.6) 100%); }
-  .big { position: absolute; left: 60px; top: 44px; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 124px; line-height: 0.92; white-space: nowrap; letter-spacing: -0.03em; text-shadow: 0 6px 30px rgba(0, 0, 0, 0.6); z-index: 2; }
-  .big em { font-style: normal; color: #ffd43b; }
-  .scene { position: absolute; left: 60px; right: 60px; bottom: 44px; height: 190px; display: flex; align-items: center; z-index: 2; }
-  .qwen { width: 300px; height: 150px; border: 6px solid #6cb8ff; border-radius: 22px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 54px; background: rgba(20, 22, 30, 0.9); }
-  .beam { flex: 1; height: 12px; background: #ff5d4d; border-radius: 6px; margin-left: 20px; }
-  .wall { width: 44px; height: 190px; background: repeating-linear-gradient(to bottom, #8a735e 0 42px, #4a3d31 42px 50px); border-radius: 6px; }
-  .x { font-family: "Inter", sans-serif; font-size: 130px; font-weight: 800; color: #ff5d4d; margin: 0 16px; line-height: 1; }
-  .dest { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 58px; color: #a3a8b4; line-height: 1.1; }
-  .tag { position: absolute; right: 60px; top: 150px; white-space: nowrap; font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 52px; color: #121317; background: #ffd43b; padding: 14px 24px; border-radius: 12px; transform: rotate(3deg); z-index: 3; }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; background: #000; position: relative; }
+  .pic { position: absolute; left: -40px; top: -20px; height: 760px; width: auto; }
+  .vig { position: absolute; inset: 0; background: radial-gradient(120% 110% at 60% 45%, transparent 55%, rgba(0, 0, 0, 0.75) 100%); }
+  .mono { font-family: "JetBrains Mono", monospace; font-weight: 700; }
+  .words { position: absolute; left: 50px; top: 40px; font-family: "Anton", sans-serif; font-size: 150px; line-height: 0.9; text-transform: uppercase;
+    color: #fff; white-space: nowrap; text-shadow: 0 0 2px #000, 0 6px 0 rgba(0, 0, 0, 0.55), 0 10px 40px rgba(0, 0, 0, 0.8); }
+  .hi { color: #ffd43b; }
+  .pin-label { position: absolute; left: 300px; top: 420px; font-size: 46px; color: #fff; background: #e5322b; padding: 6px 16px 4px; border-radius: 8px;
+    transform: rotate(-3deg); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7); }
+  .tried { position: absolute; left: 600px; top: 168px; font-size: 34px; color: #fff; background: rgba(10, 10, 14, 0.85); border: 3px solid #ff4b3e;
+    padding: 6px 14px 4px; border-radius: 8px; transform: rotate(4deg); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7); white-space: nowrap; }
+  .ai { position: absolute; right: 30px; bottom: 30px; width: 280px; text-align: center; }
+  .ai .scr { margin: 0 auto; width: 236px; height: 140px; border: 7px solid #fff; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(120% 120% at 50% 40%, #2a6fdb 0%, #0d2a5c 70%); box-shadow: 0 0 30px rgba(80, 150, 255, 0.55), 0 10px 30px rgba(0, 0, 0, 0.7);
+    font-size: 40px; color: #fff; }
+  .ai .base { margin: 0 auto; width: 280px; height: 14px; border-radius: 0 0 10px 10px; background: #fff; }
+  .ai .lbl { margin-top: 10px; font-size: 44px; color: #ffd43b; text-shadow: 0 3px 10px rgba(0, 0, 0, 0.9); }
 </style>
 </head>
 <body>
-  <div class="big">Spy<em>?</em><br>Fossil<em>?</em><br>Setup<em>?</em></div>
-  <div class="tag">we have the logs</div>
-  <div class="scene">
-    <div class="qwen">Qwen</div>
-    <div class="beam"></div>
-    <div class="wall"></div>
-    <div class="x">✕</div>
-    <div class="dest">Beijing<br>bucket</div>
-  </div>
+  <img class="pic" src="assets/thumbnail/earth.png" alt="">
+  <div class="vig"></div>
+  <svg style="position: absolute; inset: 0" width="1280" height="720" viewBox="0 0 1280 720">
+    <defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <path d="M1000 478 C 880 190, 600 210, 452 352" fill="none" stroke="#ff4b3e" stroke-width="11" stroke-linecap="round" stroke-dasharray="3 26" filter="url(#glow)"/>
+    <path d="M486 354 L 440 366 L 453 320" fill="none" stroke="#ff4b3e" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+    <circle cx="415" cy="378" r="46" fill="none" stroke="#ff4b3e" stroke-width="5" opacity="0.6" filter="url(#glow)"/>
+    <circle cx="415" cy="378" r="17" fill="#ff4b3e" filter="url(#glow)"/>
+  </svg>
+  <div class="pin-label mono">BEIJING</div>
+  <div class="tried mono">TRIED TO UPLOAD</div>
+  <div class="ai mono"><div class="scr">QWEN 3.8</div><div class="base"></div><div class="lbl">LOCAL AI</div></div>
+  <div class="words">Wait<span class="hi">...</span><br><span class="hi">what?!</span></div>
 </body>
 </html>

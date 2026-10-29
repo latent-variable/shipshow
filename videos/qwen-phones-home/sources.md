@@ -217,6 +217,10 @@ Nothing in this research contacted any host a model invented. The routify and sa
   `~/.agents/bin/localaudio` (instrumental, no vocals; prompts and seeds in `local/music/qwen/gen.log`, never committed:
   PR #115).
 - **Built with:** ShipShow (this repo) and HyperFrames (`npm run render`).
+- **Thumbnail:** the picture is generated, Earth at night over East Asia (Qwen-Image 2.1 Turbo through `~/.agents/bin/localimg`,
+  seed 5, from `thumbnail-earth.txt`; kept in `assets/thumbnail/`, never committed). Everything on it is drawn in
+  `thumbnail.html`: the claim it shows is 02b's, a model running locally tried to upload to a bucket in Beijing, and the sandbox
+  blocked it, hence "TRIED TO UPLOAD". The pin is placed by eye on the generated map.
 
 ## Left out, and why
 

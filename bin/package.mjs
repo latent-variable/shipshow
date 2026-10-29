@@ -61,6 +61,24 @@ export function voiceCreditProblem(cfg, sourcesText, builtIn) {
   return `sources.md never names the voice "${cfg.voice}" that video.json uses: say what it is (a clone, or an invented voice and how it was made), so the credits match the narration`;
 }
 
+/** A video that shows third-party pictures (screenshots, Commons portraits) owes them credit lines, which only `npm run review`
+ *  writes (review/credits.txt). Without the file the description would go out with none of them and nothing would say so: a
+ *  fresh worktree packaged qwen-phones-home 560 characters short, 2026-10-29. null when there is nothing to owe or it is there. */
+export function creditsProblem(scenesHtml, hasCreditsFile, olderThanScenes = false) {
+  const owed = /\bdata-(?:shot|commons)=/.test(scenesHtml || "");
+  if (!owed) return null;
+  if (!hasCreditsFile) return "review/credits.txt is missing, and the video shows screenshots or portraits that need credit: npm run review first";
+  // scenes.html changed after the credits were written: a picture added since would go uncredited
+  return olderThanScenes ? "review/credits.txt is older than scenes.html, so a screenshot or portrait added since would go uncredited: npm run review first" : null;
+}
+
+/** The local files a thumbnail page draws (img src, url()) that are not there: a generated asset is gitignored (D84), so a clone
+ *  without it would render the thumbnail on black and package it. Web addresses and data: URIs are not checked. */
+export function missingThumbnailFiles(html, dir) {
+  const refs = [...html.matchAll(/\bsrc="([^"]+)"/g), ...html.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]);
+  return [...new Set(refs)].filter((r) => !/^(?:[a-z]+:|#)/i.test(r)).filter((r) => !existsSync(join(dir, r)));
+}
+
 export function descriptionText(yt, ch, credits) {
   const parts = [[].concat(yt.description || []).join("\n\n")];
   if (ch.length) parts.push(ch.map((c) => `${stamp(c.at)} ${c.title}`).join("\n"));
@@ -84,6 +102,11 @@ if (isEntry(import.meta.url)) {
   if (statSync(timingFile).mtimeMs > statSync(render).mtimeMs) die(`the render is older than the timing: render again before packaging`);
   const ch = chapters(timing, yt.chapters);
   const creditsFile = join(dir, "review", "credits.txt");
+  const scenesFile = join(dir, "scenes.html");
+  const hasCredits = existsSync(creditsFile);
+  const owed = creditsProblem(existsSync(scenesFile) ? readFileSync(scenesFile, "utf8") : "", hasCredits,
+    hasCredits && existsSync(scenesFile) && statSync(scenesFile).mtimeMs > statSync(creditsFile).mtimeMs);
+  if (owed) die(`not packaged: ${owed}`);
   const credits = existsSync(creditsFile) ? readFileSync(creditsFile, "utf8").split("\n").map((l) => l.trim()).filter(Boolean) : [];
   const description = descriptionText(yt, ch, credits);
   const problems = youtubeProblems({ title: yt.title, description, chapters: ch, total: timing.total });
@@ -93,6 +116,8 @@ if (isEntry(import.meta.url)) {
   if (voiceProblem) die(`not packaged: ${voiceProblem}`);
   const thumbHtml = join(dir, "thumbnail.html");
   if (!existsSync(thumbHtml)) die(`no thumbnail.html in ${dir}: a 1280 by 720 page (explainer-video, *Publish*)`);
+  const missing = missingThumbnailFiles(readFileSync(thumbHtml, "utf8"), dir);
+  if (missing.length) die(`not packaged: thumbnail.html draws files that are not here (a generated asset is not committed: make it again, its prompt is beside the page):\n  ${missing.join("\n  ")}`);
 
   const to = resolve(flag("to") || join(outDir(), "publish", name));
   mkdirSync(to, { recursive: true });
