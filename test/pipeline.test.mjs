@@ -385,6 +385,23 @@ test("music bed: lower under the voice than in the gaps, and silent where it fad
   assert.equal(musicBed(dir, { file: "missing.wav" }, timing), false);
 });
 
+test("music: a local/ path is found in the person's local layer, so a worktree or another repo gets its beds (D75)", async () => {
+  const { musicFile } = await import("../bin/lib.mjs");
+  const local = mkdtempSync(join(tmpdir(), "kx-local-")), dir = mkdtempSync(join(tmpdir(), "kx-test-"));
+  mkdirSync(join(local, "music", "qwen"), { recursive: true });
+  writeFileSync(join(local, "music", "qwen", "bed.wav"), "");
+  const was = process.env.SHIPSHOW_LOCAL;
+  process.env.SHIPSHOW_LOCAL = local;
+  try {
+    assert.equal(musicFile(dir, "local/music/qwen/bed.wav"), join(local, "music", "qwen", "bed.wav"));
+    assert.equal(musicFile(dir, "local/music/qwen/gone.wav"), undefined);
+    writeFileSync(join(dir, "own.wav"), "");
+    assert.equal(musicFile(dir, "own.wav"), join(dir, "own.wav"), "a file beside the video still comes first");
+  } finally {
+    if (was === undefined) delete process.env.SHIPSHOW_LOCAL; else process.env.SHIPSHOW_LOCAL = was;
+  }
+});
+
 // The omnivoice engine. The model itself needs a Mac and about 2 GB, so a fake worker stands in for
 // bin/omnivoice.py: it writes a one-second tone per job and records the job file it was given.
 const fakeLocal = () => {
