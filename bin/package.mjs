@@ -61,6 +61,15 @@ export function voiceCreditProblem(cfg, sourcesText, builtIn) {
   return `sources.md never names the voice "${cfg.voice}" that video.json uses: say what it is (a clone, or an invented voice and how it was made), so the credits match the narration`;
 }
 
+/** A video that shows third-party pictures (screenshots, Commons portraits) owes them credit lines, which only `npm run review`
+ *  writes (review/credits.txt). Without the file the description would go out with none of them and nothing would say so: a
+ *  fresh worktree packaged qwen-phones-home 560 characters short, 2026-10-29. null when there is nothing to owe or it is there. */
+export function creditsProblem(scenesHtml, hasCreditsFile) {
+  if (hasCreditsFile) return null;
+  const owed = /\bdata-(?:shot|commons)=/.test(scenesHtml || "");
+  return owed ? "review/credits.txt is missing, and the video shows screenshots or portraits that need credit: npm run review first" : null;
+}
+
 export function descriptionText(yt, ch, credits) {
   const parts = [[].concat(yt.description || []).join("\n\n")];
   if (ch.length) parts.push(ch.map((c) => `${stamp(c.at)} ${c.title}`).join("\n"));
@@ -84,6 +93,8 @@ if (isEntry(import.meta.url)) {
   if (statSync(timingFile).mtimeMs > statSync(render).mtimeMs) die(`the render is older than the timing: render again before packaging`);
   const ch = chapters(timing, yt.chapters);
   const creditsFile = join(dir, "review", "credits.txt");
+  const owed = creditsProblem(existsSync(join(dir, "scenes.html")) ? readFileSync(join(dir, "scenes.html"), "utf8") : "", existsSync(creditsFile));
+  if (owed) die(`not packaged: ${owed}`);
   const credits = existsSync(creditsFile) ? readFileSync(creditsFile, "utf8").split("\n").map((l) => l.trim()).filter(Boolean) : [];
   const description = descriptionText(yt, ch, credits);
   const problems = youtubeProblems({ title: yt.title, description, chapters: ch, total: timing.total });

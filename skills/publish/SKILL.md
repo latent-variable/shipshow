@@ -33,13 +33,28 @@ clone or invented voice that `sources.md` never names (D74), so the credits neve
 
 ## The thumbnail: `thumbnail.html`
 
-A 1280 by 720 page beside the video, in the video's own look (its theme's fonts and colours, read from `themes/`), rendered
-by `npm run package`.
+A 1280 by 720 page beside the video, rendered by `npm run package`. It is the click, so it has to be incredibly good: "mid" is
+a failure, not a pass (the owner on qwen-phones-home, 2026-10-29, after three rounds of fair, accurate, unclickable drafts).
 
-- **One face or picture, and three to five big words.** It is judged at 320 by 180, the size most viewers see: anything
-  smaller than about 60 px at full size does not exist.
+- **Make the viewer need to know what happened.** The thumbnail asks; the video answers. Lead with the most alarming thing that
+  is true and undisputed, and a reaction to it ("WAIT... WHAT?!", "WHY BEIJING?!"), never the verdict or the argument ("Spy or
+  fossil?" gave the video's case away; a laptop wired to Beijing did not). Clickbait is the goal; a false claim is never part of it.
+- **One picture, three to five big words.** It is judged at 320 by 180, the size most viewers see: anything smaller than about
+  60 px at full size does not exist. Make three or four concepts, look at them side by side at 320 px, and let the owner pick.
+- **A generator makes assets, never the thumbnail.** A whole generated thumbnail screams AI and nobody clicks it. Generate only
+  the picture underneath (a place, an object, a background) with whatever image or video generator this machine has, and draw
+  every word, label, arrow, pin, chip and window yourself in HTML and SVG on top. With no generator, build the picture from
+  what the repo can make: SVG, the video's own frames and captures, a portrait it already used. Text a model draws comes out
+  wrong or reads as AI, so a word you need on an object is set by you, or accepted only after checking it letter by letter.
+- **Models ignore where you ask a subject to sit.** Place it in the layout instead: move or scale the picture and fade its edge
+  into the background, so the words get a clear side.
+- **It reads at a glance, in one direction.** A map from here to there puts the origin outside the destination (the local AI on
+  a laptop over the ocean, not on the Chinese coast), names both ends, and shows the direction with an arrowhead. The topic
+  (the model's name) is on the picture itself, big enough at 320 px, rather than in a chip nobody reads.
 - **It complements the title.** The title says the topic; the thumbnail says the hook. never-about-the-code's: Grace
   Hopper's photo, "Compilers got roasted too", "Now it's AI's turn".
+- **Every label is true as drawn.** A laptop labelled "your PC" says the viewer's machine did it; "local AI" does not. A mocked-up
+  warning says exactly what the video shows ("qwen3.8-flash-next tried to upload to ...", not "your model sent data").
 - **Nothing on it misdates a photo or puts words in a real person's mouth.** A quote beside a face reads as that person's;
   a year under a photo reads as the photo's date. Name the person, and leave the dates to the video. (Both happened on the
   first draft of never-about-the-code's; a fresh critic caught them.)
@@ -51,6 +66,8 @@ by `npm run package`.
 - **The small tag adds a hook the title lacks.** "AI explains AI" repeated the title's "Opus 5.5 Explains"; "No human authors",
   from the video's own hook, does not. Lay the words out with explicit line breaks and `white-space: nowrap`: a wrapped word
   ("25-" over "year") or a tag that runs into the picture is the first draft's other failure.
+- **A generated asset is not committed** (the repo is public): it sits in the video's `assets/thumbnail/`, and the prompt,
+  model and seed that made it are committed beside `thumbnail.html`, so anyone can make it again.
 
 ## Make the folder, then judge it
 
@@ -61,7 +78,8 @@ npm run package -- videos/<name> --to "$HOME/Movies/Explainers/shipshow/youtube/
 
 `npm run package` (DESIGN D67) copies the render, sets the thumbnail and writes `<name>-youtube.txt`: title, alternatives,
 the description with chapters, sources and credits, tags, and Studio's answers. It stops on what YouTube refuses or ignores,
-and on a render older than the timing. Then **a fresh critic judges the folder** (`critic-loop`'s rule, applied to the
+on a render older than the timing, and on screenshot or portrait credits not yet written (`npm run review` writes
+them). Then **a fresh critic judges the folder** (`critic-loop`'s rule, applied to the
 package): truth first (the title, thumbnail and description claim nothing the video and `sources.md` do not), then whether a
 developer would click it at 320 by 180, then the author's voice, then the YouTube mechanics. Fix and repackage; one round
 is usually enough.

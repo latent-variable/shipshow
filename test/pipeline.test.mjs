@@ -1392,7 +1392,12 @@ test("package: chapters come from scene starts, and what YouTube would refuse or
 });
 
 test("package: a clone or invented voice must be named in sources.md, so credits never describe an earlier voice", async () => {
-  const { voiceCreditProblem } = await import("../bin/package.mjs");
+  const { voiceCreditProblem, creditsProblem } = await import("../bin/package.mjs");
+  // A video showing third-party pictures is not packaged without its credit lines (2026-10-29).
+  assert.match(creditsProblem('<figure class="ss-shot" data-shot="https://x.test/a"></figure>', false), /npm run review first/);
+  assert.match(creditsProblem('<figure class="ss-portrait" data-commons="File:A.jpg"></figure>', false), /npm run review first/);
+  assert.equal(creditsProblem('<figure class="ss-shot" data-shot="https://x.test/a"></figure>', true), null, "the file is there");
+  assert.equal(creditsProblem('<figure class="ss-meme" data-meme="pigeon"></figure>', false), null, "memes are credited from video.json, not review");
   const builtIn = { eve: "vctk/p361.wav" };
   assert.match(voiceCreditProblem({ engine: "drama", voice: "narrator-uk" }, "an energetic American voice (`eth-narrator`)", builtIn), /never names the voice "narrator-uk"/);
   assert.equal(voiceCreditProblem({ engine: "drama", voice: "narrator-uk" }, "`local/voices/narrator-uk.wav`, an invented voice", builtIn), null);
