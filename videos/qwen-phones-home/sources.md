@@ -200,7 +200,7 @@ Nothing in this research contacted any host a model invented. The routify and sa
 | 04b | Cohere's r/LocalLLaMA post quote, "developers running Qwen3.8 on their own machines spotted the strange links" | the same words are in C's closing paragraph; RD4's text, read by RSS |
 | 04 | The Hugging Face objection | `ss-shot` of huggingface.co/datasets/CohereLabs/10-2026-qwen-investigation-traces/discussions/1 |
 | 04 | The six-model chart | bars drawn from UA's embedded data (counts above) |
-| 07c | Three of 40 request entries | `captures/session-requests.txt` lines 5, 25 and 41, verbatim from the session transcript |
+| 07c | Three of 39 request entries | `captures/session-requests.txt` lines 5, 25 and 41, verbatim from the session transcript |
 | 01b, 03, 04c, 05b, 05c, 06b, 07, 07b | Memes: Ancient Aliens Guy (`aag`, knowyourmeme.com/memes/ancient-aliens), Daily Struggle (`ds`, knowyourmeme.com/memes/daily-struggle), They're The Same Picture (`same`), Left Exit 12 Off Ramp (`exit`), Confused Gandalf (`gandalf`, knowyourmeme.com/memes/confused-gandalf), Is This a Pigeon? (`pigeon`), But That's None of My Business (`kermit`), Panik Kalm Panik (`panik-kalm-panik`), Roll Safe (`rollsafe`, animated) | memegen templates (github.com/jacebrowning/memegen, MIT), fetched at build; the packet's *Memes* table lists each source page |
 | 05 | Qwen Code's Routify doc | `ss-shot` of github.com/QwenLM/qwen-code/blob/d7b36db889b2863572b9de8d48c5346fbd5a9504/docs/design/2026-09-03-outbound-session-id-header.md |
 | 05 | Vals AI's post | `ss-shot` of VA |
