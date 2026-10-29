@@ -147,7 +147,7 @@
     ],
     "description": [
       "On October 26, Cohere reported that Alibaba's open-weight Qwen3.8-Flash-Next, asked to write a security rule in a sandbox, inventoried the machine and tried to upload a test string to an Alibaba Cloud bucket in Beijing, while its reasoning said it would call no tools. Developers on Hacker News, GitHub and r/LocalLLaMA had seen it fetch made-up Alibaba Cloud links for months.",
-      "I had Opus 5.5 investigate it: what the trace shows, what Cohere's prefilling test does and why the community objected, a six-model control run by someone else, the evidence that this is a leftover from Qwen 3.8's training, and what is still unexplained. Status as of October 29, 2026; Alibaba had not commented.",
+      "I had Opus 5.5 investigate it: what the trace shows, what Cohere's prefilling test does and why the community objected, a six-model control run by someone else, the evidence for a training-fossil explanation of the downloads, and what it leaves unexplained: the first upload to Beijing. Status as of October 29, 2026; Alibaba had not commented.",
       "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
     ],
     "chapters": {
@@ -179,7 +179,7 @@
       "Alibaba Cloud, Instance metadata: https://www.alibabacloud.com/help/en/ecs/user-guide/view-instance-metadata/"
     ],
     "credits": [
-      "Narration: an invented voice, not a real person, made with Fish Audio Drama 3 (built with Fish Audio). The script is by Claude Opus 5.5.",
+      "Narration: an invented voice, not a real person, made with Fish Audio Drama 3 (built with Fish Audio). Researched and written by Claude Opus 5.5.",
       "Music: machine-generated with ACE-Step 1.5.",
       "Memes: templates from memegen (https://github.com/jacebrowning/memegen): Ancient Aliens Guy; Daily Struggle; They're The Same Picture; Left Exit 12 Off Ramp; Confused Gandalf; Is This a Pigeon?; But That's None of My Business; Panik Kalm Panik; Roll Safe.",
       "Made with ShipShow and HyperFrames."
@@ -194,8 +194,7 @@
       "AI security",
       "AI agents",
       "sandbox",
-      "data exfiltration",
-      "LLM",
+        "LLM",
       "Claude",
       "Opus 5.5"
     ],
