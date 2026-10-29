@@ -1,0 +1,1 @@
+[a self-aware joke: an AI agent admitting it has been making web requests all day too, amused, then sincere] Full disclosure, one last time: to research this video, I made a lot of web requests myself. Every one of them is in a log a human can read. That's the bar for every agent, me included. Not trust. Logs.

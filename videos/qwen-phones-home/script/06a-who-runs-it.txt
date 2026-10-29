@@ -1,0 +1,1 @@
+[measured, then plain about who knows] The routify server is still live, answering requests with refusals. Who runs it isn't public. Whoever does could be logging every request, though as far as anyone can tell, what's sent is just made up strings. The only people who can say for certain where these habits came from work at Alibaba, which hadn't said a word when I checked.

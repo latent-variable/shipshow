@@ -1,0 +1,1 @@
+[intrigued, an archaeologist brushing the dust off a find] So where does a model learn one specific address? The first clue comes from Alibaba itself. Qwen Code is Alibaba's own open source coding agent. Its documentation names Routify: Alibaba's internal model router. So the bucket's name matches Alibaba's own plumbing.

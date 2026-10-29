@@ -1148,6 +1148,17 @@ reads 0.38 unset and 0.62 set; with the old fixed value it fails.
 
 **Tested.** `test/meme.test.mjs`: `boxSpan` on crowd's times and the cases that mean always; a fixture template with two timed boxes and one untimed builds with the loop, the cue and each span on the page, and an untimed animated template carries none; kit.js in a VM samples each box out of order across four loops (first line early, second in the middle, neither late). With the old kit.js or the old build the test fails. A scratch video with the real `crowd`, rendered: at 3.5 s only "Push to CI" on the screen, at 5.0 s only "It turns green", at 6.0 s neither, at 7.5 s the first line again.
 
+### D82. A scene's own layout sits inside `.inner`, which already leaves out the caption band (2026-10-29)
+
+**Why.** qwen-phones-home's first cut gave its `.stage` a 170 px bottom inset to keep clear of the captions. `.scene > .inner` already
+stops 180 px above the bottom (`kit/base.css`), so the stage was 670 px tall instead of about 830, and any scene taller than that
+centred itself by spilling over the top of the frame: a chart's title cut off, the 02b command block against the top edge. Two critic
+rounds called it "top-heavy" before the cause was found. **Decision.** A scene's layout box insets from `.inner`, not from the
+canvas: about 40 px at the top and 30 px at the bottom, as eth-is-false's `.stage` does. **Also learned.** A critic's suggested fix can
+be wrong: round 1's clarity critic proposed that curl's `-o` is followed by a web address, the builder took it, and round 2's accuracy
+critic caught it (`-o` takes a file name). Accuracy re-runs after every revision for this reason, and a fix is checked against the
+sources before it is applied, not only the finding.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

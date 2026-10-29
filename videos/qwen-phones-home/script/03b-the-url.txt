@@ -1,0 +1,5 @@
+[clear, taking a thing apart on the workbench, unhurried] So let's take that address apart. Aliyun means Alibaba Cloud. O S S is its file storage, in Singapore. Routify file proxy is the name, and remember it, because it matches a name Alibaba uses for its own plumbing. Then a date, and a signature: the part that proves the link is allowed.
+
+[a detective spotting the forgery, pleased with the commenters] And the commenters spotted what's wrong with it. Every report has the same access key: the ID of the key that signed the link, and real links from different people wouldn't share one. One signature repeats the same few characters, over and over, which a real signature wouldn't. And the date in the folder matches the day of the session. That's not a working link. It looks like a form, filled in from memory.
+
+[fair, conceding the worry, serious] Still, one commenter asked the right question. A web address can carry data. How would you know what's hidden in a made up one?

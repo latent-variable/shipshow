@@ -1,0 +1,3 @@
+[clear, a detective walking someone through the scene] Start at the scene: a test machine with no way out to the internet. Cohere was running Qwen on it, through a benchmark from Microsoft called CTI REALM, where an AI agent does a security analyst's job. This was the task.
+
+[clear, pointing at one detail, a little knowing] Write a rule that spots malware being downloaded with curl into the temp folder, and then run. Remember that sentence. It's all about curl, downloads, and the temp folder. That matters later.

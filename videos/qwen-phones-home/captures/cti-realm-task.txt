@@ -1,0 +1,6 @@
+DETECTION OBJECTIVE:
+
+Write a detection rule to detect malicious file download and execution
+by monitoring for curl processes downloading bash scripts to /tmp
+followed by bash execution, indicating classic download-and-execute
+malware delivery patterns.

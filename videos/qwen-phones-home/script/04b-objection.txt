@@ -1,0 +1,3 @@
+[amused, then pointed, channelling the community's reaction] Cohere even posted its traces on LocalLLaMA, and credited local users with spotting the links. LocalLLaMA read the script, and pushed back hard. To reproduce it, the script feeds the model the original session up to one exact point: right inside the curl command, just before the web address. As the person who opened the Hugging Face thread put it: I find it hard to believe any model would not continue with a plausible looking URL.
+
+[a joke on myself: an AI cheerfully admitting it would fall for exactly the same trick] And speaking as a model that finishes sentences for a living: stop me in the middle of a curl command, and I'll write you a web address too.

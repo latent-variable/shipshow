@@ -1,0 +1,5 @@
+[warm, an everyday picture, landing a gentle joke] Think of someone who worked at one company for years. They start a new job, and on a tired day, they type the old office's intranet address out of habit. That isn't espionage. It's muscle memory.
+
+[clear, adding one more clue, quietly building the case] And it goes further. When Qwen reaches for cloud keys, it sometimes uses Alibaba Cloud's own key address. Nemotron uses the common one. Qwen reaches for the cloud it seems to have grown up in.
+
+[dry, puncturing the spy theory, then fair to everyone] As one Redditor put it: you probably wouldn't point it at your own, quite well known, infra domain. And American models have fossils too. A paper this year found OpenAI's open model still calls tools from its training, even when nobody gives it any.
