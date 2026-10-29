@@ -1518,7 +1518,9 @@ test("timeline: every step records how long it took, and the summary reads voici
   const sum = summarize(readTimeline(dir));
   assert.deepEqual(sum.steps.map((s) => [s.step, s.runs]), [["voice", 2], ["build", 1], ["render", 1]], "pipeline order; a bad line is skipped");
   assert.equal(sum.steps[0].median, 556);
-  assert.equal(sum.rebuild, 749, "the last voice, build and render");
+  assert.equal(sum.rebuild, null, "the last voice has no build or render after it, so no rebuild is claimed");
+  const done = summarize([...readTimeline(dir), { step: "build", at: "2026-10-29T21:01:00Z", seconds: 4 }, { step: "render", at: "2026-10-29T21:02:00Z", seconds: 690, video: 937 }]);
+  assert.equal(done.rebuild, 703, "the last voice, then the build and render after it");
   assert.match(rate({ step: "voice", seconds: 1103, voiced: 39, takes: 39, rounds: 78, audio: 937 }), /^71 s per narration minute, 2\.0 rounds a take/);
   assert.match(rate({ step: "voice", seconds: 9, voiced: 0, takes: 39, rounds: 0, audio: 937 }), /nothing voiced again/);
   assert.equal(rate({ step: "render", seconds: 700, video: 937 }), "1.34x real time");

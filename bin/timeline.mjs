@@ -2,7 +2,7 @@
 //   node bin/timeline.mjs videos/<name> [--json]
 // For each step: how many times it ran, the last run and the median, and a rate that compares across videos: voicing in
 // seconds per minute of narration and hear-back rounds per take, rendering as a multiple of real time. Then what a rebuild
-// after a script change costs (the last voice, build and render together).
+// after a script change costs (the last voice, and the build and render after it).
 import { isEntry } from "./entry.mjs";
 import { readTimeline, videoDir } from "./lib.mjs";
 
@@ -24,7 +24,7 @@ export function rate(row) {
   return null;
 }
 
-/** Per step, in pipeline order: runs, the last row, the median seconds; and the last voice + build + render as one rebuild. */
+/** Per step, in pipeline order: runs, the last row, the median seconds; and one rebuild (below), or null. */
 export function summarize(rows) {
   const steps = [...new Set([...ORDER, ...rows.map((r) => r.step)])].filter((s) => rows.some((r) => r.step === s));
   const per = steps.map((step) => {
@@ -54,6 +54,6 @@ if (isEntry(import.meta.url)) {
       const r = rate(p.last);
       console.log(`${p.step.padEnd(13)} last ${clock(p.last.seconds).padStart(7)}  median ${clock(p.median).padStart(7)}  ${String(p.runs).padStart(3)} run(s)  ${p.last.at.slice(0, 16).replace("T", " ")}${r ? `  ${r}` : ""}`);
     }
-    if (sum.rebuild !== null) console.log(`a rebuild after a script change (the last voice + build + render): ${clock(sum.rebuild)}`);
+    if (sum.rebuild !== null) console.log(`a rebuild after a script change (the last voice, and the build and render after it):${clock(sum.rebuild)}`);
   }
 }
