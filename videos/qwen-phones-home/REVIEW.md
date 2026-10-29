@@ -148,3 +148,18 @@ objective major finding is left. The estimate before round 1: about 527k tokens 
 out); it now matches the post character for character, in `sources.md` too. One log entry, a Bash call that only wrote script
 files, is dropped: the capture is 39 tool calls, every one a search, fetch, browser visit, curl or gh call.
 **Accepted:** the sha256 sidecars (as before).
+
+## Revision 1: the owner's notes after watching (2026-10-29)
+
+- **"addre... ss" at 6:43, "key... s" at 6:49.** The breath between two sentences in a take went in at the dip where the last
+  word's "s" began, so the silence split the word. The rule in `bin/lib.mjs` (`breathe`, DESIGN D51) now cuts only inside 30 ms or
+  more of real silence, searched past the word's end far enough to clear a trailing sibilant. The narration was re-laid from the
+  cached takes, nothing re-voiced: 38 inserted gaps, none splitting a sound (a sibilant, a stop's burst, or speech on both sides) and every one just before a sentence; two run-together boundaries with no clear pause are left alone (before: the two he heard). The PR reviewer caught that "the quietest stretch" could be a comma pause inside the next sentence, and the first version's "first stretch" took the closure in "firs-t" and "ea-ch"; the rule now takes the first silence that voice follows.
+- **Memes "just as transition points", with no time to digest them.** Each of the nine now lands on the sentence that sets it up
+  and holds 5 to 12 s (Gandalf went from 2 s to about 10, Roll Safe from 3 to 6), with longer pauses where one closes a scene.
+- **Gandalf's text over his face.** One line, "I have no memory of this proxy", in the top box; his face is clear.
+- **"One Redditor" with no name.** The quote cards carry the usernames (u/PerfectOlive1324, u/BigWheelsStephen, u/mj1003,
+  u/the__storm, u/Dabalam) and the Hugging Face capture names hakanavgin; the narration is unchanged.
+- **Also found.** The round-3 pauses were set after that round's voice step and missed the first final render; this re-lay has them.
+- The meme timing, face and credit notes are now written into `explain-concept`, `critic-engagement`, `critic-visuals` and
+  `explainer-video`, so the critics hold the next video to them.

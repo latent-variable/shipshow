@@ -47,7 +47,9 @@ reason for pressing play, and watch it as them.
 - **major:** for any video made to explain (not a decision video mid-work), fewer than about one meme or GIF a minute, a whole
   act without one, or none that moves (`explain-concept`, *Memes and GIFs by default*). Count them in the packet's *Memes*.
   A meme that has nothing to do with what is being said at that moment is a finding too, and so is one the packet's *Memes*
-  table shows another of the person's videos already used (minor; major past two).
+  table shows another of the person's videos already used (minor; major past two). A meme up for less than about five seconds,
+  or one that arrives on a scene's last word as a transition instead of on the sentence that sets it up, is major: the viewer
+  has no time to take it in (the owner, 2026-10-29).
 - **major:** cringe: slang worn like a costume, a label telling the viewer how to feel, a metaphor before it is set up, a
   stake the viewer does not have (`narration-writing`, *Who is talking, and how it is funny*). For an explainer an AI
   narrates, a narrator with no point of view of its own is a minor.

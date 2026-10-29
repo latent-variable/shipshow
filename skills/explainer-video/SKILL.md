@@ -179,7 +179,8 @@ made for its subject, not stamped from a template.
   the viewer.
 - **Show the receipt.** When the video quotes a person, a rule or a comment, show the page it is on
   (`ss-shot`, `AGENTS.md` *Screenshots*), with the words marked, rather than a card that paraphrases it; a mock
-  comment reads as invented. Describe people by their record, not by one quote. Photos carry no credit on screen;
+  comment reads as invented. A quote card for a forum post or comment names its author as the site shows them (`u/name` on
+  Reddit), even when the narration says "one Redditor" (the owner, 2026-10-29). Describe people by their record, not by one quote. Photos carry no credit on screen;
   paste `review/credits.txt` into the video's description.
 - **A meme, rarely and at the right beat** (`AGENTS.md`, *Memes*; `npm run memes -- <words>` finds one). It lands a point
   already made, as the punchline after the explanation, never instead of it: if the video is not clear without the meme,

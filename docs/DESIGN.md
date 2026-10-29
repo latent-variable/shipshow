@@ -159,7 +159,7 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
 every turn (measured: 23 skills, 8,350 characters, about 2,088 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 238). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+and SKILL.md under 500 lines (longest 239). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -728,8 +728,17 @@ run swings on this machine were up to 8 s; the shipped fonts account for much of
 ### D51. A run gets a breath between sentences that ran together (2026-10-27)
 **Decision.** When `voice` lays out a run that Whisper timed, every boundary where sentence k's last word ends less than the
 video's `gap` (divided by speed) before sentence k+1's first word starts gets silence for the difference. It goes in at the
-quietest 10 ms window within 80 ms of the boundary, with a 5 ms fade out and in, and only if that window is under -40 dBFS (`BREATH_QUIET_DB`; speech sits around -23), so no word is cut: a boundary with no quiet point near it is left as it is; the sentences and words after
-it move by the same amount in `timing.json`. Nothing is voiced again and the take on disk is unchanged. **Why.** Round 2 of the
+middle of the first stretch of real silence that reaches past Whisper's end of sentence k and is followed by voice, searched from
+80 ms before that end to 300 ms past the start of k+1 (`BREATH_BEFORE`, `BREATH_AFTER`), with a 5 ms fade out and in. A stretch
+counts only when it is at least 30 ms long (`BREATH_RUN`), every 10 ms of it is under -50 dBFS (`BREATH_QUIET_DB`; speech sits
+around -23, a trailing "s" at -40 to -46), and 30 ms of voice (over -35 dBFS, `BREATH_VOICE_DB`) follow within 150 ms
+(`BREATH_ONSET`): a stop's closure inside the last word (the silence in "firs-t") is followed by a burst and quiet, not voice. The
+first such stretch, never a later one, because a comma pause inside sentence k+1 would put the breath mid-sentence and move words
+whose times do not move (the PR reviewer, #117). So no word is cut: a boundary with no such stretch near it is left as it is; the sentences and words after it move by the same amount in
+`timing.json`. **Changed 2026-10-29.** The first rule took the quietest single window within 80 ms under -40 dBFS. In
+qwen-phones-home that was the dip as "address" and "keys" began their final "s": the breath split the word, "addre... ss", and the
+owner heard it at 6:43 and 6:49. Whisper ends a word before its sibilant has, so the real pause lay past the old window, and the
+"s" itself, at about -42 dBFS, counted as quiet. Re-laid on that video's 39 runs from the cached takes; the measured gaps are in its REVIEW.md. Nothing is voiced again and the take on disk is unchanged. **Why.** Round 2 of the
 never-about-the-code critics measured gaps of 0 to 0.25 s inside runs (eight of them, four at 0 or 0.02 s) next to 3 s pauses
 between scenes, the rushed-then-stopped rhythm the owner had called choppy. Runs keep one prosody (D47); this keeps their sentences
 apart. **Measured (2026-10-27, the 12-scene video, speed 1.0, gap 0.35).** 5 breaths inserted across 23 runs; every one of 66
@@ -1154,7 +1163,9 @@ reads 0.38 unset and 0.62 set; with the old fixed value it fails.
 stops 180 px above the bottom (`kit/base.css`), so the stage was 670 px tall instead of about 830, and any scene taller than that
 centred itself by spilling over the top of the frame: a chart's title cut off, the 02b command block against the top edge. Two critic
 rounds called it "top-heavy" before the cause was found. **Decision.** A scene's layout box insets from `.inner`, not from the
-canvas: about 40 px at the top and 30 px at the bottom, as eth-is-false's `.stage` does. **Also learned.** A critic's suggested fix can
+canvas: about 40 px at the top and 30 px at the bottom, as eth-is-false's `.stage` does. **Also learned.** `pauses` are laid into the narration by `voice`, not by `build`: a `pauses` change made after the
+voice step is not in the render until `voice` runs again (it re-lays from cached takes in seconds); qwen-phones-home's round-3
+pauses missed its first final render that way. **And** a critic's suggested fix can
 be wrong: round 1's clarity critic proposed that curl's `-o` is followed by a web address, the builder took it, and round 2's accuracy
 critic caught it (`-o` takes a file name). Accuracy re-runs after every revision for this reason, and a fix is checked against the
 sources before it is applied, not only the finding.
