@@ -67,7 +67,8 @@ a failure, not a pass (the owner on qwen-phones-home, 2026-10-29, after three ro
   from the video's own hook, does not. Lay the words out with explicit line breaks and `white-space: nowrap`: a wrapped word
   ("25-" over "year") or a tag that runs into the picture is the first draft's other failure.
 - **A generated asset is not committed** (the repo is public): it sits in the video's `assets/thumbnail/`, and the prompt,
-  model and seed that made it are committed beside `thumbnail.html`, so anyone can make it again.
+  model and seed that made it are committed beside `thumbnail.html`, so anyone can make it again; `npm run package` stops
+  when a file the page draws is missing.
 
 ## Make the folder, then judge it
 

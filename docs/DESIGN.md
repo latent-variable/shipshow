@@ -1215,7 +1215,8 @@ laptop labelled "QWEN 3.8 / LOCAL AI" over the ocean to a Beijing pin, "WAIT... 
 whole thumbnail ("it's just gonna immediately scream AI generated"). The image model ignored where it was asked to put a subject
 in 4 of 4 tries, hence placing it in the layout. Separately, packaging from a fresh worktree wrote a description 560 characters
 short, with none of the five screenshot credits, and said nothing. **Costs.** More drafts per video (each local image about
-15 s); the generated asset is not in the repo, so a clone without it renders the thumbnail on black until it is made again.
+15 s); the generated asset is not in the repo, so a clone without it cannot package until it is made again: `npm run package`
+stops on any local file `thumbnail.html` draws that is missing (`missingThumbnailFiles`), rather than rendering it on black.
 
 ## Behaviour
 

@@ -1392,7 +1392,12 @@ test("package: chapters come from scene starts, and what YouTube would refuse or
 });
 
 test("package: a clone or invented voice must be named in sources.md, so credits never describe an earlier voice", async () => {
-  const { voiceCreditProblem, creditsProblem } = await import("../bin/package.mjs");
+  const { voiceCreditProblem, creditsProblem, missingThumbnailFiles } = await import("../bin/package.mjs");
+  const tdir = mkdtempSync(join(tmpdir(), "kx-thumb-"));
+  mkdirSync(join(tdir, "assets"));
+  writeFileSync(join(tdir, "assets", "here.png"), "");
+  assert.deepEqual(missingThumbnailFiles('<img src="assets/here.png"><img src="assets/gone.png"><div style="background: url(\'../x.woff2\')"></div><img src="https://a.test/b.png"><img src="data:image/png;base64,AA">', tdir),
+    ["assets/gone.png", "../x.woff2"], "local files only, each missing one named");
   // A video showing third-party pictures is not packaged without its credit lines (2026-10-29).
   assert.match(creditsProblem('<figure class="ss-shot" data-shot="https://x.test/a"></figure>', false), /npm run review first/);
   assert.match(creditsProblem('<figure class="ss-portrait" data-commons="File:A.jpg"></figure>', false), /npm run review first/);
