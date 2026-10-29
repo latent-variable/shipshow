@@ -159,7 +159,7 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
 every turn (measured: 23 skills, 8,350 characters, about 2,088 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 239). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+and SKILL.md under 500 lines (longest 248). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -1216,7 +1216,7 @@ whole thumbnail ("it's just gonna immediately scream AI generated"). The image m
 in 4 of 4 tries, hence placing it in the layout. Separately, packaging from a fresh worktree wrote a description 560 characters
 short, with none of the five screenshot credits, and said nothing. **Costs.** More drafts per video (each local image about
 15 s); the generated asset is not in the repo, so a clone without it cannot package until it is made again: `npm run package`
-stops on any local file `thumbnail.html` draws that is missing (`missingThumbnailFiles`), rather than rendering it on black.
+stops on any local file `thumbnail.html` draws that is missing (`missingLocalFiles`, D87), rather than rendering it on black.
 ### D85. Hear-back stops failing takes for how Whisper writes numbers and names (2026-10-29)
 
 **Decision.** `hearback.spoken_numbers` reads "a hundred" as "one hundred" and drops the "and" in "a hundred and seventy one", and
@@ -1243,6 +1243,18 @@ terminal logs and file times. Measured by hand on qwen-phones-home (15.6 min, 20
 of work per second of audio when no take is retaken; retakes were the rest), the second render 700 s (1.34x real time), build
 under a minute (3.7 s with music and moods, measured by this step), the overlap check 4.3 s. **Costs.** One `git rev-parse` per
 step; rounds are known only for Drama 3 takes (other engines count one a take).
+
+### D87. A scene may use a generated image, as an illustration with our own labels (2026-10-29; extends D84)
+
+**Decision.** When a picture proves a scene's point better than a diagram and the machine has an image or video generator, the
+scene gets a generated image (`explainer-video`, *Scenes*; `explain-concept`'s idea-to-picture table): an illustration, never
+evidence (no screenshot, chart, real person or recorded-looking event), with no words in it, every label drawn on top. It lives in
+the video's gitignored `assets/`, its prompt, model and seed committed beside `scenes.html` and named in `sources.md`. `build` now
+stops when `scenes.html` draws a local file that is not there (`missingLocalFiles` in `bin/lib.mjs`, shared with the thumbnail's
+check in `package`), since a missing generated image would otherwise render as an empty scene. **Why.** The owner, after the
+thumbnail's generated Earth worked: tap the generator for the video's own assets "to prove a point", worth the cost when it does.
+**Costs.** A generated image that looks like a photograph can be taken as one; the rule against evidence-looking images and the
+grounding critic are what hold that line. A video cloned without its generated images does not build until they are made again.
 
 ## Behaviour
 

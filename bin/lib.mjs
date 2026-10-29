@@ -793,3 +793,11 @@ export function readTimeline(dir) {
   if (!existsSync(f)) return [];
   return readFileSync(f, "utf8").split("\n").filter(Boolean).flatMap((l) => { try { return [JSON.parse(l)]; } catch { return []; } });
 }
+
+/** The local files a page draws (an img or video src, a CSS url()) that are not in `dir`: a generated image is gitignored
+ *  (D84, D87), so a clone without it would render a blank scene or a thumbnail on black and say nothing. Web addresses,
+ *  data: URIs and in-page #references are not checked. */
+export function missingLocalFiles(html, dir) {
+  const refs = [...html.matchAll(/\bsrc="([^"]+)"/g), ...html.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]);
+  return [...new Set(refs)].filter((r) => !/^(?:[a-z]+:|#)/i.test(r)).filter((r) => !existsSync(join(dir, r)));
+}

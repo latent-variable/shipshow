@@ -21,7 +21,7 @@ import { liftFrames } from "./frame.mjs";
 import { footageScene } from "./footage.mjs";
 import { portraitScene } from "./portrait.mjs";
 import { shotScene } from "./shot.mjs";
-import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir, recordStep } from "./lib.mjs";
+import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir, recordStep, missingLocalFiles } from "./lib.mjs";
 import { resolveMoods } from "./moods.mjs";
 import { sfxTrack } from "./sfx.mjs";
 
@@ -136,6 +136,10 @@ function captions() {
 
 // scenes.html: its styles, its script, and its sections.
 const src = readFileSync(join(dir, "scenes.html"), "utf8");
+{ // a picture a scene draws that is not here (a generated image is not committed, D87) would render as nothing
+  const missing = missingLocalFiles(src, dir);
+  if (missing.length) die(`scenes.html draws files that are not here (a generated image is not committed: make it again from its prompt):\n  ${missing.join("\n  ")}`);
+}
 const { moods, fonts: moodFonts, warnings: moodWarnings } = resolveMoods(cfg, timing, src, theme, dir);
 for (const w of moodWarnings) console.warn(w);
 const styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join("\n");

@@ -11,6 +11,7 @@ import { liftFrames } from "../bin/frame.mjs";
 function build(frame) {
   const dir = mkdtempSync(join(tmpdir(), "shipshow-frame-"));
   writeFileSync(join(dir, "video.json"), JSON.stringify({ title: "Frame test", sfx: false }));
+  writeFileSync(join(dir, "logo.png"), "");   // the picture the frame draws: build stops on a missing one (D87)
   writeFileSync(join(dir, "timing.json"), JSON.stringify({ total: 10, scenes: [
     { id: "01-a", start: 0, duration: 5, sentences: [{ text: "Hello.", start: 1, duration: 2 }] },
     { id: "02-x", start: 5, duration: 5, sentences: [{ text: "word word.", start: 6, duration: 2, words: [{ w: "word", at: 6 }, { w: "word.", at: 7 }] }] },
