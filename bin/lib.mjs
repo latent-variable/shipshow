@@ -529,16 +529,25 @@ export function reviewPlan(cfg, argv = process.argv, seconds = 70) {
   };
 }
 
+/** Where a music file named in video.json is: beside the video, then a "local/..." path in the person's local layer
+ *  (SHIPSHOW_LOCAL, D75), then the repo, then as given. undefined when none exists. A repo running this code with its own
+ *  layer, or a worktree, has no local/ of its own: without the second place a render there lost five of seven beds
+ *  (qwen-phones-home, 2026-10-29). */
+export function musicFile(dir, file) {
+  const local = /^local\//.test(file) ? join(localDir(), file.slice("local/".length)) : null;
+  return [join(dir, file), local, join(REPO, file), file].find((p) => p && existsSync(p));
+}
+
 /** video.json "music": {"file", "volume", "duck"}: a bed under the narration, lowered while
  *  the voice speaks. Writes <video>/assets/music.wav and returns true, or warns and returns
  *  false when the file is not there (music is often local: a teammate may not have it).
- *  "file" is relative to the video's folder, then the repo; "volume" is the bed's level in
+ *  "file" is relative to the video's folder, then the local layer for a "local/..." path, then the repo; "volume" is the bed's level in
  *  the gaps (0 to 1, default 0.22) and "duck" what it is multiplied by under speech (0.35). */
 export function musicBed(dir, music, timing, moods = []) {
   if (moods.length > 1) return moodMusicBed(dir, music, timing, moods);
   if (!music) return false;
   const spec = typeof music === "string" ? { file: music } : music;
-  const file = [join(dir, spec.file), join(REPO, spec.file), spec.file].find((p) => p && existsSync(p));
+  const file = musicFile(dir, spec.file);
   if (!file) {
     console.warn(`music: ${spec.file} is not on this machine; building without a music bed`);
     return false;
@@ -586,7 +595,7 @@ function moodMusicBed(dir, music, timing, moods) {
     const musicSpec = mood.name === null ? music : mood.music;
     if (!musicSpec) continue;
     const spec = typeof musicSpec === "string" ? { file: musicSpec } : musicSpec;
-    const file = [join(dir, spec.file), join(REPO, spec.file), spec.file].find((p) => existsSync(p));
+    const file = musicFile(dir, spec.file);
     if (!file) {
       console.warn(`music: ${spec.file} is not on this machine; mood ${mood.name ?? "base"} continues the previous bed`);
       continue;
