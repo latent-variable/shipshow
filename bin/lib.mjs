@@ -798,6 +798,7 @@ export function readTimeline(dir) {
  *  (D84, D87), so a clone without it would render a blank scene or a thumbnail on black and say nothing. Web addresses,
  *  data: URIs and in-page #references are not checked. */
 export function missingLocalFiles(html, dir) {
-  const refs = [...html.matchAll(/\bsrc="([^"]+)"/g), ...html.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]);
+  const refs = [...html.matchAll(/\bsrc\s*=\s*(["'])(.+?)\1/g)].map((m) => m[2])
+    .concat([...html.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]));
   return [...new Set(refs)].filter((r) => !/^(?:[a-z]+:|#)/i.test(r)).filter((r) => !existsSync(join(dir, r)));
 }

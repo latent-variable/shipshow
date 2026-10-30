@@ -1529,14 +1529,16 @@ test("timeline: every step records how long it took, and the summary reads voici
 
 test("build stops on a picture a scene draws that is not there, naming it (a generated image is not committed, D87)", () => {
   const dir = newVideo();
-  writeFileSync(join(dir, "scenes.html"), `<section data-scene="01-intro"><img src="assets/gen/earth.png" alt=""><svg><rect clip-path="url(#c)"/></svg><img src="https://a.test/x.png"></section>`);
+  writeFileSync(join(dir, "scenes.html"), `<section data-scene="01-intro"><img src="assets/gen/earth.png" alt=""><img src='assets/gen/fossil.png' alt=""><svg><rect clip-path="url(#c)"/></svg><img src="https://a.test/x.png"></section>`);
   writeFileSync(join(dir, "timing.json"), JSON.stringify({ total: 3, scenes: [{ id: "01-intro", start: 0, duration: 3, sentences: [{ text: "Hi.", start: 0.5, duration: 1 }] }] }));
   let r = spawnSync(process.execPath, [join(REPO, "bin", "build.mjs"), dir], { encoding: "utf8" });
   assert.notEqual(r.status, 0);
   assert.match(r.stderr, /draws files that are not here[\s\S]*assets\/gen\/earth\.png/);
+  assert.match(r.stderr, /assets\/gen\/fossil\.png/, "a single-quoted src is read too");
   assert.doesNotMatch(r.stderr, /#c|a\.test/, "in-page references and web addresses are not files");
   mkdirSync(join(dir, "assets", "gen"), { recursive: true });
   writeFileSync(join(dir, "assets", "gen", "earth.png"), "");
+  writeFileSync(join(dir, "assets", "gen", "fossil.png"), "");
   r = spawnSync(process.execPath, [join(REPO, "bin", "build.mjs"), dir], { encoding: "utf8" });
   assert.doesNotMatch(r.stderr, /draws files that are not here/, r.stderr);
 });
