@@ -1392,11 +1392,12 @@ test("package: chapters come from scene starts, and what YouTube would refuse or
 });
 
 test("package: a clone or invented voice must be named in sources.md, so credits never describe an earlier voice", async () => {
-  const { voiceCreditProblem, creditsProblem, missingThumbnailFiles } = await import("../bin/package.mjs");
+  const { voiceCreditProblem, creditsProblem } = await import("../bin/package.mjs");
+  const { missingLocalFiles } = await import("../bin/lib.mjs");
   const tdir = mkdtempSync(join(tmpdir(), "kx-thumb-"));
   mkdirSync(join(tdir, "assets"));
   writeFileSync(join(tdir, "assets", "here.png"), "");
-  assert.deepEqual(missingThumbnailFiles('<img src="assets/here.png"><img src="assets/gone.png"><div style="background: url(\'../x.woff2\')"></div><img src="https://a.test/b.png"><img src="data:image/png;base64,AA">', tdir),
+  assert.deepEqual(missingLocalFiles('<img src="assets/here.png"><img src="assets/gone.png"><div style="background: url(\'../x.woff2\')"></div><img src="https://a.test/b.png"><img src="data:image/png;base64,AA">', tdir),
     ["assets/gone.png", "../x.woff2"], "local files only, each missing one named");
   // A video showing third-party pictures is not packaged without its credit lines (2026-10-29).
   assert.match(creditsProblem('<figure class="ss-shot" data-shot="https://x.test/a"></figure>', false), /npm run review first/);
@@ -1524,4 +1525,20 @@ test("timeline: every step records how long it took, and the summary reads voici
   assert.match(rate({ step: "voice", seconds: 1103, voiced: 39, takes: 39, rounds: 78, audio: 937 }), /^71 s per narration minute, 2\.0 rounds a take/);
   assert.match(rate({ step: "voice", seconds: 9, voiced: 0, takes: 39, rounds: 0, audio: 937 }), /nothing voiced again/);
   assert.equal(rate({ step: "render", seconds: 700, video: 937 }), "1.34x real time");
+});
+
+test("build stops on a picture a scene draws that is not there, naming it (a generated image is not committed, D87)", () => {
+  const dir = newVideo();
+  writeFileSync(join(dir, "scenes.html"), `<section data-scene="01-intro"><img src="assets/gen/earth.png" alt=""><img src='assets/gen/fossil.png' alt=""><svg><rect clip-path="url(#c)"/></svg><img src="https://a.test/x.png"></section>`);
+  writeFileSync(join(dir, "timing.json"), JSON.stringify({ total: 3, scenes: [{ id: "01-intro", start: 0, duration: 3, sentences: [{ text: "Hi.", start: 0.5, duration: 1 }] }] }));
+  let r = spawnSync(process.execPath, [join(REPO, "bin", "build.mjs"), dir], { encoding: "utf8" });
+  assert.notEqual(r.status, 0);
+  assert.match(r.stderr, /draws files that are not here[\s\S]*assets\/gen\/earth\.png/);
+  assert.match(r.stderr, /assets\/gen\/fossil\.png/, "a single-quoted src is read too");
+  assert.doesNotMatch(r.stderr, /#c|a\.test/, "in-page references and web addresses are not files");
+  mkdirSync(join(dir, "assets", "gen"), { recursive: true });
+  writeFileSync(join(dir, "assets", "gen", "earth.png"), "");
+  writeFileSync(join(dir, "assets", "gen", "fossil.png"), "");
+  r = spawnSync(process.execPath, [join(REPO, "bin", "build.mjs"), dir], { encoding: "utf8" });
+  assert.doesNotMatch(r.stderr, /draws files that are not here/, r.stderr);
 });

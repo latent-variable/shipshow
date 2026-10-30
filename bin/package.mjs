@@ -15,7 +15,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileS
 import { basename, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { isEntry } from "./entry.mjs";
-import { REPO, config, die, flag, outDir, outName, videoDir, recordStep } from "./lib.mjs";
+import { REPO, config, die, flag, outDir, outName, videoDir, recordStep, missingLocalFiles } from "./lib.mjs";
 
 /** "m:ss" (or "h:mm:ss") for a time in seconds, as YouTube writes a chapter. */
 export function stamp(seconds) {
@@ -72,13 +72,6 @@ export function creditsProblem(scenesHtml, hasCreditsFile, olderThanScenes = fal
   return olderThanScenes ? "review/credits.txt is older than scenes.html, so a screenshot or portrait added since would go uncredited: npm run review first" : null;
 }
 
-/** The local files a thumbnail page draws (img src, url()) that are not there: a generated asset is gitignored (D84), so a clone
- *  without it would render the thumbnail on black and package it. Web addresses and data: URIs are not checked. */
-export function missingThumbnailFiles(html, dir) {
-  const refs = [...html.matchAll(/\bsrc="([^"]+)"/g), ...html.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]);
-  return [...new Set(refs)].filter((r) => !/^(?:[a-z]+:|#)/i.test(r)).filter((r) => !existsSync(join(dir, r)));
-}
-
 export function descriptionText(yt, ch, credits) {
   const parts = [[].concat(yt.description || []).join("\n\n")];
   if (ch.length) parts.push(ch.map((c) => `${stamp(c.at)} ${c.title}`).join("\n"));
@@ -117,7 +110,7 @@ if (isEntry(import.meta.url)) {
   if (voiceProblem) die(`not packaged: ${voiceProblem}`);
   const thumbHtml = join(dir, "thumbnail.html");
   if (!existsSync(thumbHtml)) die(`no thumbnail.html in ${dir}: a 1280 by 720 page (explainer-video, *Publish*)`);
-  const missing = missingThumbnailFiles(readFileSync(thumbHtml, "utf8"), dir);
+  const missing = missingLocalFiles(readFileSync(thumbHtml, "utf8"), dir);
   if (missing.length) die(`not packaged: thumbnail.html draws files that are not here (a generated asset is not committed: make it again, its prompt is beside the page):\n  ${missing.join("\n  ")}`);
 
   const to = resolve(flag("to") || join(outDir(), "publish", name));

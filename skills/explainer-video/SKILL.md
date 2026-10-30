@@ -197,6 +197,15 @@ made for its subject, not stamped from a template.
   what is being said, and say in the hand-back that nobody heard it.
 - **One memorable moment**: a picture that is the idea (a ship leaving a storm of pull
   requests), not a card that names it.
+- **A generated image, when a picture proves the point better than a diagram** (the owner, 2026-10-29: "if it's worth it to
+  generate an image to help convey something, to prove a point, then it's worth it"). Use whatever image or video generator
+  this machine has (its canon says which; a local still takes about 15 s) for a place, an object or a situation no box and
+  arrow can show: a sandbox's wall, Earth at night over the city a request was headed for. It is an illustration, never
+  evidence: never a screenshot, a chart, a real person or a real event made to look recorded, which come from captures. It
+  carries no words: every label, number and arrow is drawn on top in the scene, as the thumbnail's are (`publish`). Not
+  decoration: a scene that reads as well without it does not get one. The image goes in `assets/` (never committed, so
+  `build` stops when a picture a scene draws is missing); its prompt, model and seed are committed beside `scenes.html`
+  and named in `sources.md` as generated.
 
 ## 4. Make it, then the evidence
 
