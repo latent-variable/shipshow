@@ -1,4 +1,4 @@
-[curious, posing a riddle to the viewer] So, a riddle. A Kakeya set can have no area at all. Is it basically nothing, a scribble of thin lines? Or is it, in some deeper sense, as big as the whole table?
+[curious, posing a riddle to the viewer] So, a riddle. A Kakeya set can have no area at all. Is it basically nothing, a scribble of thin lines? Or is it, in some deeper sense, as solid as a filled square?
 
 [clear, explaining why area can't answer] Area can't tell us. A single needle has no width, so it has no area either. By area, one lonely needle and a needle in every direction look the same: zero. So give the needles some width back. Take a real brush, and paint over every needle in the shape. Now there's paint to measure.
 

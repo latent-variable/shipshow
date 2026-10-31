@@ -1,5 +1,5 @@
-[storyteller, with a smirk, setting up a surprise] Abram Besicovitch found the answer, and it's stranger than anyone expected. Take one of those pieces, a thin fan of needles. Call its area 100%. Cut it into two thinner fans, and slide them so they overlap. Sliding never changes a needle's angle, so every direction is still in there. 75%.
+[storyteller, with a smirk, setting up a surprise] Abram Besicovitch found the answer, and it's stranger than anyone expected. Take one of those pieces, a thin fan of needles, drawn here with a straight edge. Call its area 100%. Cut it into two thinner fans, and slide them so they overlap. Sliding never changes a needle's angle, so every direction is still in there. 75%.
 
-[curious, picking up speed] Cut every piece in two again, and slide again. 52%. Again: 42%. And there's no last round. Keep cutting and sliding: 35%, 31, 28, 25, and down. Every round keeps a needle in every direction, while the area drops below any number you could pick.
+[curious, picking up speed] Cut every piece in two again, and slide again. 52%. Again: 42%. It's starting to look like a spiky tree, so call it the tree. And there's no last round. Keep cutting and sliding: 35%, 31, 27, 25, and down. Every round keeps a needle in every direction, while the area drops below any number you could pick.
 
 [clear, then landing it] In 1920, Besicovitch found a careful way to finish the job. What's left: a needle in every direction, and exactly zero area. A Kakeya set can have no area at all.

@@ -6,4 +6,4 @@
 
 [clear, connecting dabs to paint] And paint is just dabs times the size of each dab. Halving the brush makes each dab a quarter the size. A line: twice the dabs, a quarter the size, so half the paint. A square: four times the dabs, a quarter the size, the same paint. The Sierpiński triangle: three times the dabs, a quarter the size, three quarters of the paint.
 
-[clear, the rule to remember] So a shape under two dimensions loses the same share of its paint every time the brush halves, forever. A line loses half. The Sierpiński triangle loses a quarter. Only a two dimensional shape keeps its paint.
+[clear, the rule to remember] So a shape under two dimensions loses a steady share of its paint every time the brush halves. A line loses half. The Sierpiński triangle loses a quarter. The closer to two, the smaller the share, but it never shrinks to nothing. A filled square loses nothing.

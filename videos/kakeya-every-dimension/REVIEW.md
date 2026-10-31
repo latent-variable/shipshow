@@ -286,3 +286,28 @@ about 15%, 13%, 11%, 9%; "about 29%" for a 1.5-dimensional shape; the billionth 
 
 Spend: about 0.9M critic tokens for cut 5 and cut 6 together. Check passes, overlaps none, a text-clipping scan over 339 cues
 none, every selector the timeline uses found, each changed scene looked at frame by frame. Nobody has listened to the new takes.
+
+## Cut 7: the fundamentals (2026-10-31)
+
+The owner, on cut 6: the turning detour felt like "breaking the rules of the game" ("I can fling my needle across the universe");
+"every direction" and "stranger" were said but never shown; the half brush was never shown; and the paint chart's "1.5
+dimensions" came from nowhere, as did the step from "a needle with no width" to "painting it". Parts one and two are rebuilt:
+the rules on a card, then pinned as a strip (pay for area only; reach is free); Pál's triangle (0.577) between the propeller
+and the deltoid; a second game (a needle in every direction) with a dial and examples that pass (the three shapes, a fan cut and
+scattered) and fail (a thin strip), then the name; the tree cut and slid as before; the turning detour checked against the rules
+aloud, a close-up on the wedge, and a near and a far version (tilt 11° against 1.1°, wedges 0.2 against 0.02); Cunningham's
+circle; four brushes, each half as wide; dimension from counting dabs (a line ×2, a square ×4, the Sierpiński triangle ×3, about
+2^1.58); paint as dabs times dab size; the googol chart replaced by the zeros written out. The fundamentals rule is in
+`explain-concept` and `critic-clarity` (DESIGN D92).
+
+**Round 1. Clarity (Opus): fail, 0 / 4 / 7. Accuracy (Opus): fail, 1 / 1 / 4.** Fixed: the paint test silently became building
+the tree; it now shows two needles a hair apart, one stroke with the wide brush and two with the half brush, and says the paint
+can't be less than the tightest way to slide those strokes, the tree being one tight way (accuracy: not "as much as you can").
+"Two dimensional" contradicted the rule just taught; the rule now says under two dimensions you lose a steady share, smaller the
+closer to two but never nothing, and a 1.8-dimension row (−13%) shows the Kakeya losses dropping below it. Blocking: "a smaller
+share every round" was false (25% then 31%); it is now "after a bumpy start", and Córdoba's 1977 lower bound (T, with its
+reference) is said before the conclusion, not after. The dab is now pressed by the brush on screen. The n-dimension part moved to
+its own scene with a cube of dabs (8 = 2^3). The tree's areas are now measured exactly by slices (`art/perron.py`): 27%, not 28%,
+and a last loss of 10%, not 9%. Also: the tree named in 02b; the next piece "starts at the same angle, just slid over", with a
+ghost needle; the dial's half circle explained aloud; "it's known no way of turning can avoid paying something" kept apart from
+this trick's wedges; the riddle asks "as solid as a filled square?"; the billion-zeros line cut.

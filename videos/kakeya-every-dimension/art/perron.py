@@ -1,5 +1,5 @@
 # The Besicovitch-Perron tree as in Tao's applet (teorth.github.io/tao-web/apps/kakeya.js, perronTree), for 02b and 03.
-# Part 1 measures each round's area (python3 art/perron.py areas); part 2 writes the slide positions and the Pál-join path the scenes use.
+# Part 1 measures each round's area exactly, by horizontal slices (python3 art/perron.py areas); part 2 writes the slide positions and the Pál-join path the scenes use.
 import sys
 if sys.argv[1:] == ['areas']:
     # Besicovitch-Perron tree as in Tao's applet (teorth.github.io/tao-web/apps/kakeya.js, perronTree): measured union areas.
@@ -13,18 +13,33 @@ if sys.argv[1:] == ['areas']:
                 xx += (aj/j2)*((m+1)//2); aj*=alpha; j2//=2; m//=2
             xx *= (alpha-1); xx += 1-alpha**p; xs.append(xx)
         return [[(xs[i],1.0),(xs[i]+i/N,0.0),(xs[i]+(i+1)/N,0.0)] for i in range(N)], alpha
-    def area(tris, W=6000):
-        xs=[x for t in tris for x,_ in t]; x0,x1=min(xs),max(xs)
-        sc=W/(x1-x0+1e-9); H=int(sc)+2
-        im=Image.new("1",(W+2,H+2),0); d=ImageDraw.Draw(im)
-        for t in tris: d.polygon([((x-x0)*sc,(1-y)*sc) for x,y in t],fill=1)
-        return sum(im.getdata())/(sc*sc)
-    out={}
-    for p in range(0,7):
-        t,a=tree(p); A=area(t)
-        xs=[x for tr in t for x,_ in tr]
-        out[p]={"alpha":a,"area":A,"share":A/0.5,"xmin":min(xs),"xmax":max(xs),"apex":[tr[0][0] for tr in t]}
-        print(p, 1<<p, "alpha", a and round(a,3), "area", round(A,4), "share of triangle", f"{A/0.5:.0%}", "x range", round(min(xs),3), round(max(xs),3))
+    def area(p, slices=20000):
+        # exact up to the slicing: at each height y the pieces are intervals; add the length of their union
+        N = 1 << p; X = [0.0] if p == 0 else None
+        if p:
+            a = (1/(2*p))**(1/(2*p-1)); X = []
+            for i in range(N):
+                xx=0; m=i; j2=N//2; aj=1
+                for j in range(p):
+                    xx += (aj/j2)*((m+1)//2); aj*=a; j2//=2; m//=2
+                X.append(xx*(a-1) + 1 - a**p)
+        tot = 0.0
+        for k in range(slices):
+            y = (k + 0.5) / slices
+            iv = sorted((X[i] + (1-y)*i/N, X[i] + (1-y)*(i+1)/N) for i in range(N))
+            L, cur = 0.0, None
+            for lo, hi in iv:
+                if cur is None or lo > cur[1]:
+                    if cur: L += cur[1]-cur[0]
+                    cur = [lo, hi]
+                else: cur[1] = max(cur[1], hi)
+            L += cur[1]-cur[0]; tot += L / slices
+        return tot
+    prev = None
+    for p in range(0, 8):
+        A = area(p); share = A / 0.5
+        print(p, 1 << p, "pieces: area", f"{share:.1%}", "of the fan" + (f", lost {1 - share/prev:.1%}" if prev else ""))
+        prev = share
     raise SystemExit
 # Data for kakeya-every-dimension 02b and 03: the Besicovitch-Perron tree of Tao's applet (perronTree), and a Pál join path.
 import json, math
@@ -71,7 +86,7 @@ for k in range(N):
     phase.append(("join",ph))
 frames=[f for _,ph in phase for f in ph]
 first_join_end=sum(len(ph) for _,ph in phase[:2])
-areas=[100,75,52,42,35,31]
+areas=[100,75,52,42,35,31,27,25]
 json.dump({"shifts":shifts,"tree3":X,"frames":frames,"firstJoinEnd":first_join_end,"strips":strips,"D":D,"areas":areas},open("/dev/stdout","w"))
 wedge=[0.5*abs(math.atan2(*(lambda a,b:(a[0]*b[1]-a[1]*b[0], a[0]*b[0]+a[1]*b[1]))((s[1][0]-s[0][0],s[1][1]-s[0][1]),(s[2][0]-s[0][0],s[2][1]-s[0][1])))) for s in strips]
 print("frames",len(frames),"first join ends at",first_join_end,"strip areas (unit^2)",[round(x,4) for x in wedge[:4]],"sum",round(sum(wedge),4))
