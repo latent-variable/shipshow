@@ -340,6 +340,6 @@ in it"; "a stroke half as wide holds half the paint, but there are twice as many
 paint). No further round ran: this is the plan's cap. I checked each round-4 fix frame by frame; the arithmetic (52.1 / 75.0 =
 0.695) is in `sources.md`. Accuracy passed in round 3 and round 4 changed only how two of its numbers are said.
 
-Spend: about 1.6M critic tokens for cut 7's four rounds (eight critics, all Opus, measured from their reports). Check passes,
+Spend: about 1.2M critic tokens for cut 7's four rounds (seven critics, all Opus, summed from their reports). Check passes,
 overlaps none, every changed scene looked at frame by frame, stills regenerated cleanly each round (#139). Nobody has listened to
 the new takes; hear-back passed every take, and Parakeet's two flags are its known false ones (#129).
