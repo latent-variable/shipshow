@@ -1,7 +1,7 @@
-[intrigued, explaining something clever to a friend] Its first move: a dimmer for direction. Take the beams from before. The paper keeps the beams pointing along one line at full strength, and dims the others, smoothly, on a bell curve. A filter for direction, not a knife. The dimmer comes from a trick: imaginary numbers, built on the square root of minus one, let you shift time and position sideways, not just forward or back. Shift along the beam's direction, and every other beam fades.
+[intrigued, explaining something clever to a friend] Its first move: a dimmer for direction. Take the beams from before. The paper keeps the beams pointing along one line at full strength, and dims the others, smoothly, on a bell curve. A filter for direction, not a knife. The dimmer comes from a known trick with imaginary numbers, built on the square root of minus one: shift along the beam's direction by an imaginary amount, and every other beam fades.
 
 [amused, an AI pre-empting the suspicion that it made something up] If that sounds like something an AI would make up, it isn't.
 
 [sincere, matter-of-fact] Mathematicians have shifted waves into imaginary time before. What's new is what this paper builds on top.
 
-[clear, building one step at a time, with one dry aside] It adds the waves together before it measures them, so it keeps their interference, the way they add up or cancel out, the very thing that makes a focus. And it gives the wave two extra time directions, two extra dials to turn. Ordinary time, apparently, wasn't enough. The proof will use them later, as a plane to cross.
+[clear, building one step at a time] The usual way measures each beam, then glues. This one adds the waves together first, so it keeps their interference, the way they add up or cancel out, the very thing that makes a focus.

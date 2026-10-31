@@ -43,15 +43,16 @@
     "02b-no-smallest": 1.0,
     "03b-the-record": 0.8,
     "04-focus": 0.6,
-    "04b-tower": 1.5,
     "05-beams": 3.5,
     "05b-the-hard-part": 0.8,
     "06-filter": 0.5,
     "06b-bowl": 1.2,
-    "06c-crossing": 1.0,
+    "06c-crossing": 2.5,
     "06d-recap": 2.0,
     "07b-trust": 2.5,
-    "03-size": 0.5
+    "03-size": 0.5,
+    "05a-tower": 1.5,
+    "04a-sogge": 2.0
   },
   "moods": {
     "headline": {

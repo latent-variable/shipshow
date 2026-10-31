@@ -1,7 +1,5 @@
 [clear, explaining, with quiet confidence, then a dry aside] In 1991, Christopher Sogge asked how bad a focus can get, on average. At its worst instant, a wave can be enormously concentrated. But a focus can't last. A wave, it turns out, can't hold a pose. Average over a stretch of time, and the wave is always tamer than its worst moment.
 
-[clear, careful, one idea at a time, continuing the thought] Sogge predicted exactly how much calmer that average gets. With one tiny allowance: a loss that may grow as ripples get finer, packed closer together, but slower than any root of that. Square root, cube root, hundredth root.
-
-[clear, naming it, then planting the key number] Averaging smooths the wave over a short stretch of time, so his guess is called the local smoothing conjecture. And one power p, set by the dimension, is the critical case: get that one, and the others follow. Four in two dimensions, three in three.
+[clear, careful, continuing the thought] Sogge predicted exactly how much calmer that average gets. Averaging smooths the wave over a short stretch of time, so his guess is called the local smoothing conjecture. And one power p, set by the dimension, is the critical case: get that one, and the others follow. Four in two dimensions, three in three.
 
 [quiet, pointed, planting it] Remember that number. It comes back.

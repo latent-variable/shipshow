@@ -1,5 +1,5 @@
 [playful, deadpan, setting up a question that sounds pointless on purpose] Here's a question that sounds completely useless. You have a needle lying on a table, and you want to turn it around so it points the other way. What's the smallest amount of table you need?
 
-[intrigued, teasing a strange answer, then raising the stakes] The answer is stranger than you'd think: almost none. And a set of needles pointing every way can take up no room at all, and still, in a deeper sense, be full size. That puzzle got tangled up with how waves pile up, in sound, in light, even in the prime numbers. On October twenty sixth, OpenAI posted a paper saying its AI had settled it in every dimension, by way of a bigger problem about waves. If it holds, a century old problem was finished by a machine.
+[intrigued, teasing a strange answer, then raising the stakes] The answer is stranger than you'd think: almost none. And a set of needles pointing every way can take up no room at all, and still, in a deeper sense, be full size. That puzzle got tangled up with how waves pile up, in sound, in light, even in the prime numbers. On October twenty sixth, OpenAI posted a paper saying its AI had settled that puzzle's big descendant, the Kakeya conjecture, in every dimension, by way of a bigger problem about waves. If it holds, a question that grew out of 1917 was finished by a machine.
 
-[measured, letting it land] Nobody independent has checked it yet.
+[measured, letting it land] As far as I can find, no independent check has been reported yet.
