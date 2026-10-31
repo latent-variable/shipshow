@@ -286,3 +286,60 @@ about 15%, 13%, 11%, 9%; "about 29%" for a 1.5-dimensional shape; the billionth 
 
 Spend: about 0.9M critic tokens for cut 5 and cut 6 together. Check passes, overlaps none, a text-clipping scan over 339 cues
 none, every selector the timeline uses found, each changed scene looked at frame by frame. Nobody has listened to the new takes.
+
+## Cut 7: the fundamentals (2026-10-31)
+
+The owner, on cut 6: the turning detour felt like "breaking the rules of the game" ("I can fling my needle across the universe");
+"every direction" and "stranger" were said but never shown; the half brush was never shown; and the paint chart's "1.5
+dimensions" came from nowhere, as did the step from "a needle with no width" to "painting it". Parts one and two are rebuilt:
+the rules on a card, then pinned as a strip (pay for area only; reach is free); Pál's triangle (0.577) between the propeller
+and the deltoid; a second game (a needle in every direction) with a dial and examples that pass (the three shapes, a fan cut and
+scattered) and fail (a thin strip), then the name; the tree cut and slid as before; the turning detour checked against the rules
+aloud, a close-up on the wedge, and a near and a far version (tilt 11° against 1.1°, wedges 0.2 against 0.02); Cunningham's
+circle; four brushes, each half as wide; dimension from counting dabs (a line ×2, a square ×4, the Sierpiński triangle ×3, about
+2^1.58); paint as dabs times dab size; the googol chart replaced by the zeros written out. The fundamentals rule is in
+`explain-concept` and `critic-clarity` (DESIGN D92).
+
+**Round 1. Clarity (Opus): fail, 0 / 4 / 7. Accuracy (Opus): fail, 1 / 1 / 4.** Fixed: the paint test silently became building
+the tree; it now shows two needles a hair apart, one stroke with the wide brush and two with the half brush, and says the paint
+can't be less than the tightest way to slide those strokes, the tree being one tight way (accuracy: not "as much as you can").
+"Two dimensional" contradicted the rule just taught; the rule now says under two dimensions you lose a steady share, smaller the
+closer to two but never nothing, and a 1.8-dimension row (−13%) shows the Kakeya losses dropping below it. Blocking: "a smaller
+share every round" was false (25% then 31%); it is now "after a bumpy start", and Córdoba's 1977 lower bound (T, with its
+reference) is said before the conclusion, not after. The dab is now pressed by the brush on screen. The n-dimension part moved to
+its own scene with a cube of dabs (8 = 2^3). The tree's areas are now measured exactly by slices (`art/perron.py`): 27%, not 28%,
+and a last loss of 10%, not 9%. Also: the tree named in 02b; the next piece "starts at the same angle, just slid over", with a
+ghost needle; the dial's half circle explained aloud; "it's known no way of turning can avoid paying something" kept apart from
+this trick's wedges; the riddle asks "as solid as a filled square?"; the billion-zeros line cut.
+
+**Round 2. Clarity (Opus): fail, 0 / 2 / 5. Accuracy (Opus): fail, 0 / 1 / 1.** Fixed: the step from strokes to the tree is now
+said and shown (one stroke with the first brush, two slid together with half, then four, eight; a stroke count beside the paint);
+the rule chips under the paint bars ran off the frame and now fit. Accuracy: "keeps roughly this much paint" tied Córdoba's
+theorem to the drawing's numbers; the line now says the rate ("no Kakeya set ... loses its paint much faster than this: give or
+take a fixed factor, just as slowly"), and the steady share is said of "a shape like these" and of "an ideal shape of 1.8
+dimensions". From the minors: "two dimensional doesn't mean losing nothing: it means losing less than any shape under two"; a
+1.8-dimension card on the googol screen (about one part in a one with twenty zeros); "do it to all four pieces of the fan";
+"on the table, a point needs two numbers"; 03b now says the stricter version has been known on a table since 1971, so Córdoba's
+1977 and Davies' 1971 no longer read as two dates for one result.
+
+**Round 3. Accuracy (Opus): pass, 0 / 0 / 1. Clarity (Opus): fail, 0 / 2 / 3.** Accuracy's minor: the drawing's own slow rate
+("than this") had no source; `sources.md` now gives the measured 1/area per round, marked inferred. Clarity: the stroke count was
+never tied to paint; the voice now says "twice as many, half as wide: that alone is the same paint, like the filled square ... Only
+overlap can lose paint", with a chip. The strokes-into-tree step was told over a still picture, then shown in five seconds; the
+tree now slides on the words "two", "four", "eight", runs on to 64 and 128 strokes (27%, 25%) so every loss cell has a round on
+screen, and the first brush is "as wide as the whole piece". From the minors: the 1.8-dimension working (about 3.5 times the
+dabs × ¼: 87% kept); Córdoba's line reordered ("loses its paint about this slowly, never much faster, give or take a fixed
+factor"); 03b says Davies settled the stricter version first, in 1971, before Córdoba's rate.
+
+**Round 4, the cap: clarity (Opus) on 03a-kakeya-paint alone: fail, 0 / 2 / 2.** Fixed: round 3 had put the tree on the words
+"two, four, eight" but left the paint on the spoken numbers, so two overlapping strokes still read 100%; each paint value is now
+said with its own round ("two strokes, slid together so they overlap: 75%. Four strokes: 52%. Eight: 42%"), and the counter and
+the stroke count change together. The losses are now said to be shares of what was left, worked once aloud and on a chip ("from
+75 to 52, it kept 52 of its 75, so it lost 31% of what it had"), with that cell lit. Minors fixed: "one stroke covers every needle
+in it"; "a stroke half as wide holds half the paint, but there are twice as many" (chip: ×2 strokes × ½ the paint = the same
+paint). No further round ran: this is the plan's cap. I checked each round-4 fix frame by frame; the arithmetic (52.1 / 75.0 =
+0.695) is in `sources.md`. Accuracy passed in round 3 and round 4 changed only how two of its numbers are said.
+
+Spend: about 1.2M critic tokens for cut 7's four rounds (seven critics, all Opus, summed from their reports). Check passes,
+overlaps none, every changed scene looked at frame by frame, stills regenerated cleanly each round (#139). Nobody has listened to
+the new takes; hear-back passed every take, and Parakeet's two flags are its known false ones (#129).

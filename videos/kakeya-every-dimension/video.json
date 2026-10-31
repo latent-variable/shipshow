@@ -21,7 +21,17 @@
     "2019": "twenty nineteen",
     "2025": "twenty twenty five",
     "0.79": "zero point seven nine",
-    "3.14": "three point one four"
+    "3.14": "three point one four",
+    "0.58": "zero point five eight",
+    "0.39": "zero point three nine",
+    "Sierpiński": "Sierpinski",
+    "Sierpiński's": "Sierpinski's",
+    "Gyula": "Dyula",
+    "Pál": "Pahl",
+    "1920": "nineteen twenty",
+    "1928": "nineteen twenty eight",
+    "Córdoba": "Cordoba",
+    "1977": "nineteen seventy seven"
   },
   "gap": 0.5,
   "beat": 0.9,
@@ -52,7 +62,10 @@
     "07b-trust": 2.5,
     "03-size": 0.5,
     "05a-tower": 1.5,
-    "04a-sogge": 2.0
+    "04a-sogge": 2.0,
+    "02a-every-direction": 0.6,
+    "02c-turning": 1.6,
+    "03a-dabs": 0.6
   },
   "moods": {
     "headline": {

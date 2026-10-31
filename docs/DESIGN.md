@@ -1299,6 +1299,19 @@ turning never reaches zero, and the paint test painted on a line, a square and t
 fifth cut: lost at "a Kakeya set has area zero", and at a paint test that was only described. **Costs.** Longer scenes (02b and
 03 grew by about 70 s together); numbers on screen must be measured from the drawing or sourced, which is work a sketch skips.
 
+### D92. Build the fundamentals before the result (2026-10-31; extends D91)
+**Decision.** `explain-concept` says a problem's rules go on screen before the first move and stay pinned, a move that looks
+like it bends a rule is checked against it aloud, a definition gets ordinary, strange and failing examples, a measuring
+procedure shows its instrument at each setting, an in-between number comes from an example the viewer can count, and a chart
+arrives only after each line was seen as a picture; `critic-clarity` makes each of these a major finding. kakeya-every-dimension's
+seventh cut is the first: the rules card and strip, Pál's triangle, a second game (a needle in every direction) with a dial and
+examples that pass and fail, the turning detour checked against "reach is free" with a near and a far version, four brushes
+each half as wide, dimension from counting dabs (2, 4, and 3 for the Sierpiński triangle), and the googol chart replaced by the
+zeros written out. **Why.** The owner, on the sixth cut: the detour felt like "breaking the rules of the game", "we didn't show
+what [every direction] meant", the half brush was never shown, and the chart's "1.5 dimensions" came from nowhere. **Costs.**
+Part one and part two grew by about four minutes; every added example is drawn from computed geometry
+(`videos/kakeya-every-dimension/art/fundamentals.py`), which is work a sketch skips.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

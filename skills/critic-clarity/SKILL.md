@@ -34,6 +34,10 @@ with no rewind; the frames for what they see alongside it.
   its verdict) and the step between is told, not shown. Name the two claims and what the viewer would need to see happen
   between them (the owner on kakeya-every-dimension, 2026-10-31: lost at the jump to "area zero", and at a paint test that was
   described but never painted).
+- **major:** a fundamental left unbuilt: a rule the viewer must hold that was never on screen, a move that seems to break a
+  rule with no check against it, a definition with no example (or a claim of "strange" never shown), a number like "1.5
+  dimensions" the viewer never saw produced, or a chart whose lines were never seen as pictures (the owner on
+  kakeya-every-dimension's sixth cut, 2026-10-31).
 - **major:** a scene that carries two ideas, or an order that makes the viewer hold
   something unexplained for more than a scene.
 - **major:** time spent on what this viewer does not need, while something they need is

@@ -1,0 +1,7 @@
+[clear, setting up a second, simpler game] Before the twist, a second game, even simpler. Forget turning. Just make sure your shape has a needle pointing in every direction. Every direction means every angle on this dial. Pick any angle, and somewhere in your shape, a whole needle has to lie at that angle. In this game, pointing left counts the same as pointing right, so half a dial covers every direction.
+
+[clear, walking through examples] Every shape from the first game passes, because a needle turning around passes through every angle: the disk, the triangle, the deltoid. But now the needles don't have to touch. Take a fan of needles, all starting from one point and covering every angle. Cut it into pieces, and scatter them across the table. Every angle is still in there somewhere. That passes too.
+
+[warm, a counterexample] What fails? A long thin strip. It holds a needle lying along it, but stand one up across it, and it sticks out. Most angles are missing.
+
+[clear, defining a term the video will keep using] Any shape with a needle pointing in every direction is called a Kakeya set. Set just means a collection of points: any shape you could draw, in one piece or scattered, however strange. The question is the same: how little area can a Kakeya set have?

@@ -1,3 +1,9 @@
-[warm, hands-on, thinking out loud with the viewer] Let's try. Spin the needle around its middle, like a propeller. It sweeps a disk: about 0.79 square units, if the needle is one unit long. Now spin it around one end instead. Worse. A disk four times bigger, about 3.14. So the middle wins? Can you beat it?
+[warm, hands-on, laying out the rules of a game] Let's play. Here are the rules. The needle is exactly one unit long, and in the math version it's a perfect line, with no width at all. You mark out any shape you like on the table, as long and spread out as you want. The needle has to stay inside your shape while it turns around to point the other way.
 
-[building to a small surprise, a little delighted] Try a three point turn, like turning a car around in a narrow street: forward, back, forward. The needle traces this curved triangle, called a deltoid, and it takes half the area of the propeller. That was Sōichi Kakeya's question, in 1917, and for a while this looked like the answer.
+[clear, landing the one rule that matters] And you pay for one thing only: area, how much table your shape covers. How far it reaches is free.
+
+[curious, trying things out] First try. Spin the needle around its middle, like a propeller. It sweeps a disk: about 0.79 square units. Spin it around one end instead. Worse. A disk four times bigger, about 3.14.
+
+[pleased, showing a cleverer move] Better: a triangle, exactly one needle tall. Pivot the needle on one corner. Slide it along the edge to the next corner, and pivot again. Then once more. Three pivots, and it points the other way. About 0.58. In 1920, Gyula Pál proved that no shape without dents does better.
+
+[building to a small surprise, a little delighted] Allow dents, and you can beat it. Try a three point turn, like turning a car around in a narrow street: forward, back, forward. The needle traces this curved triangle, called a deltoid: about 0.39, half the propeller. That was Sōichi Kakeya's question, in 1917, and for a while this looked like the answer.
