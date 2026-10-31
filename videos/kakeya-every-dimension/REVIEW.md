@@ -88,3 +88,41 @@ What changed (script revised, 22 takes voiced again; scenes rebuilt):
   templates no earlier video used; the open stretches got pictures and beats instead (the 07 fields, the 06 axes, the 03 callback).
 - **The second listen** flagged "Now a Kakeya set. Make its needles a googol times thinner." as not heard; Whisper hears both sentences
   in the take (score 1.0) and in the finished track at 207.3 s, so it is a miss by the second listener, not the voice.
+
+## Round 2: 3 blocking, 13 major; the six that failed, plus accuracy on the changed claims (Sonnet)
+
+| Critic | Verdict | Blocking / major / minor |
+|---|---|---|
+| accuracy (changed claims) | pass | 0 / 0 / 3 |
+| clarity | fail | 0 / 3 / 3 |
+| pacing | fail | 0 / 3 / 5 |
+| sync | fail | 0 / 1 / 3 |
+| visuals | fail | 3 / 5 / 2 |
+| consistency | fail | 0 / 2 / 3 |
+| engagement | fail | 0 / 1 / 3 |
+
+What changed (24 takes voiced again; scenes rebuilt):
+- **Clarity.** The critical power is concrete where it is planted and where it pays off: "four in two dimensions, three in three", and
+  06b says n is the dimension and that the energy is one number tracking the pile-up. 06c ties "later" to the focus and "earlier" to the
+  start, and says why the walker gives a log: from near the small circle, the chance of reaching the far one first is about one over the
+  logarithm of the distance, paid once out and once back. 06d says the log is smaller than any small loss the conjecture allows. The
+  recap and the Lean sentences are split; Lean is called "a proof checker" where it is named.
+- **Engagement.** Two plain jokes in the dry middle: "A wave, it turns out, can't hold a pose" (04a) and "Three decades of brilliant
+  people, and the hardest part was the glue" (05b). "Ridiculous" and "the clever bit" are gone. The recap meme builds pair by pair as
+  the voice says each move.
+- **Pacing and sync.** Beats before "It shrinks so slowly", "Remember that number" and the 06c conclusion, and after the 06 joke; the
+  googol meme holds until the chart returns; the 06d pause is 2 s. New pictures where the voice had none: "a Kakeya set: area 0" on
+  03's first lines, a log-against-small-loss chart for 06d's first sentence, the fan from 05b's first word, "should you believe it?"
+  in 07b, and 07c's "turning: almost none", "area: zero", "size: full" on their words. 01's Kakeya chip arrives on "settles"; the 07 map's
+  tiles arrive on the words that name them; sub-lines wait for their words (1/100, "a higher p").
+- **Visuals.** SVGs no longer clip their labels ("a shifted wave", "Kakeya set", the rotating beams, "10¹⁰⁰×"); the bowl's label sits
+  under the baseline, clear of the spike; the walker's small-circle label sits below the big circle; the "ruled out" stamp is sized to
+  its words; the chart's ticks are 34 px; sub-lines are 28 px; 04a's labels sit off their lines and the critical-power chip has room.
+- **Consistency.** OpenAI's claims are never green: the 07 map's tiles are violet like 03b's claim dots, and the 06d, 07b and 07c
+  claim chips are neutral; green is kept for what people proved. The deltoid is gold like the disk; the 03 line is grey; "worst instant"
+  and the light ray are white. "Top level" replaces the last "top block"; "two dimensions" replaces "the plane" for the dimension, so
+  "a plane" means only the extra-time plane. Stein's and Sogge's captions say what they are known for here.
+- **Declined: cutting the history in 03b and 05b (clarity C2-3).** The people are part of the owner's bar ("shows the people named for
+  what they did"), and the freed time went into the mechanism scenes anyway; 05b now carries a joke as well.
+- **Declined: opening on the question (engagement E3)**, optional and taste: the story order puts 1917 first on purpose.
+- **The second listen** again flagged a sentence ("Here's where the number comes from.") that Whisper hears in the finished track.

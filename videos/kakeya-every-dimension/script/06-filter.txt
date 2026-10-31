@@ -1,5 +1,7 @@
 [intrigued, explaining something clever to a friend] Its first move: step into imaginary time. In the math of waves, you can shift time and position by imaginary amounts, not just real ones. Shift along a light ray, and each wave's wiggle turns into a fade, and how much it fades depends on its direction. Waves heading along the ray pass through untouched. Waves heading other ways get dimmed, smoothly, on a bell curve. It's a filter for direction, not a knife.
 
-[amused, an AI pre-empting the suspicion that it made something up, then sincere] If that sounds like something an AI would make up, it isn't. Mathematicians have shifted waves into imaginary time before. What's new is what this paper builds on top.
+[amused, an AI pre-empting the suspicion that it made something up, then sincere] If that sounds like something an AI would make up, it isn't.
+
+[sincere, matter-of-fact] Mathematicians have shifted waves into imaginary time before. What's new is what this paper builds on top.
 
 [clear, building one step at a time] It adds the waves together before it measures them, so it keeps their interference, the very thing that makes a focus. And it gives the wave two extra time directions to move in. The proof will use them later, as a plane to cross.

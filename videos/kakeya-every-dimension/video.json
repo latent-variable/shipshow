@@ -49,8 +49,9 @@
     "06-filter": 0.5,
     "06b-bowl": 1.2,
     "06c-crossing": 1.0,
-    "06d-recap": 3.5,
-    "07b-trust": 2.5
+    "06d-recap": 2.0,
+    "07b-trust": 2.5,
+    "03-size": 0.5
   },
   "moods": {
     "headline": {
