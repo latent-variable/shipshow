@@ -179,6 +179,61 @@ powers; "always tamer" in 04a holds for the powers the video discusses (above 2)
 sources.md says so; "behaves like a random walker's odds" is a gloss of the paper's comparison, followed at once by "the paper compares
 the energy with a walker".
 
-**Status: done.** Accuracy and grounding pass, no blocking finding is open, and what remains is recorded above. The voice was checked
+**Status of the first cut: done.** Accuracy and grounding pass, no blocking finding is open, and what remains is recorded above. The voice was checked
 by hear-back and a second listener (two of its flags were false, confirmed by Whisper on the finished track); nobody has listened to
 it, the jokes' delivery, or the music beds by ear.
+
+## The owner's notes on the first cut (2026-10-30)
+
+He watched about four minutes and lost the thread around there. His notes, recorded in `critics.md` and folded into the shared skills
+(`explain-concept`, `narration-writing`, `critic-engagement`, `critic-clarity`; DESIGN D89): hook the viewer with the problem in the
+first fifteen to thirty seconds; walk the rotations by hand; never use a term (set, dimension, power) before it is explained; keep the AI
+disclosure out of the intro. More review spend is fine, within reason. The second cut rewrote the first act around the table and the
+needle and explained every term.
+
+## Cut 2: 1 blocking, 24 major; accuracy (Sonnet), visuals and sync (Sonnet), clarity and engagement (Opus)
+
+Accuracy passed (4 minors). Fixed in cut 3:
+- **Visuals.** The 06c chip column ran off the top (blocking); the formula card under the captions; an empty first frame; footnotes
+  under 28 px; content past the safe margins in 02b and 03. Sync: the three-point turn and the slivers now move on their words.
+- **Clarity.** One meaning for "dimension" (the number of coordinates, then the paint test's measure, named once as Hausdorff); the
+  "thickening test" called the paint test it was introduced as; the zero-area set and the paint test reconciled ("zero area, full size");
+  the tower's reason given before the tower; the walker's circles named as the voice names them.
+- **Engagement.** The first try at the puzzle comes before the OpenAI claim; the slivers slide by hand in 02b; "power" bridged with x100
+  and x1,000; two plain jokes and more memes (from 7 to 10).
+
+## Cut 3: 0 blocking, 13 major; accuracy (Sonnet), clarity and engagement (Opus)
+
+Fixed in cut 4:
+- **Accuracy (2 major).** The hook ran the needle-turning puzzle and the Kakeya conjecture together: it now calls the conjecture the
+  puzzle's "big descendant". "Nobody independent has checked it yet" became "As far as I can find, no independent check has been
+  reported yet", and the screen says "none found, as of October 30, 2026".
+- **Clarity (5 major).** The paint numbers said one way ("one part in a one with fifty zeros"); 04a down to Sogge's prediction in words,
+  without the paper's quantity; the tower moved after the beams, so the reason waves matter comes first; the extra time directions
+  introduced where they are used (06c); the focus and the start placed on the small circle before the walk.
+- **Engagement (6 major).** Memes held long enough to read (Member Berries moved to "conjecture", Success Kid to "squared"); a meme
+  (Pepperidge Farm) and a callback in 04a; the cousin-of-Riemann joke in 07.
+
+Accepted, with reasons:
+- **About 0.5 memes a minute against a bar of one, and only one moving (engagement).** An animated meme needs its crop measured; the
+  dense stretches now each carry a meme or a joke, and the owner's notes asked for clarity before gags.
+- **Stretches over 30 s with no gag in 07 (engagement).** It is the stakes and the check; jokes there would undercut the caveats.
+
+## Cut 4, the cap
+
+Layout found by looking at the frames and by a text-clipping scan the overlap check lacks (issue #128): the 05 row spilled off both
+edges, and a chip's text ran past the canvas; both fixed, and the scan is clean over 294 cues. The 06c line "a few hundred, squared"
+contradicted "a googol, a hundred" three sentences earlier: now "about a hundred", re-voiced. Check passes, no overlaps, hear-back
+0 of 50 runs under 97%, second listen 0 to listen to.
+
+## Floor check after the cap: accuracy on cut 4's changes (Sonnet): pass, 0 / 0 / 4
+
+Fixed: `sources.md` rows for "the usual way measures each beam, then glues" and "a known trick with imaginary numbers", and the 06d row
+now says "root" and "zeros" as the script does. Accepted as minors: "that puzzle" in the hook leans on the next words to name the
+conjecture; "about a hundred, squared" uses the video's own count-of-zeros logarithm where the paper's is natural (about 230), inside a
+bound that hides constants anyway; "a known trick" is the paper's "has also been used to study waves"; "I'm an AI too, Claude" is true of
+the model that wrote the script.
+
+**Status: done.** Accuracy and grounding pass and no blocking finding is open. The taste critics' last round was cut 3; cut 4 applied
+its majors and was checked by eye and by the scans, not by a fresh round. Spend: about 3.5M tokens for the first cut, and about 0.9M for
+cuts 2 to 4. The voice was checked by hear-back and Parakeet; nobody has listened to it, the jokes' delivery, or the music by ear.
