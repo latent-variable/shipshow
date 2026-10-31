@@ -1256,6 +1256,17 @@ thumbnail's generated Earth worked: tap the generator for the video's own assets
 **Costs.** A generated image that looks like a photograph can be taken as one; the rule against evidence-looking images and the
 grounding critic are what hold that line. A video cloned without its generated images does not build until they are made again.
 
+### D88. The ripple theme: a ripple tank for waves and geometry (2026-10-30)
+**Decision.** `themes/ripple` is a ripple tank at night: deep ink-blue water lit from below (`--sky`), pools of cyan and gold light
+drifting like caustics (`blobs`), grain and a vignette over the pictures, and `fade` between scenes like a surface settling. One
+meaning per colour, which the video's scenes follow: gold for a needle, cyan for a wave, violet for new machinery. Playfair Display
+for headlines and Fraunces (with its italic) for formulas, Inter for text, JetBrains Mono for labels, all SIL OFL and copied from the
+archive, chalk and signal themes. **Why.** `videos/kakeya-every-dimension` explains a result where waves prove something about
+needles, and the owner's canon gives every video a look built for its story; chalk is the ETH video's and signal Qwen's, so a third
+math-adjacent video in either would repeat a look. It is token-only, so no kit code changed. **Costs.** One more theme folder (about
+230 KB of fonts, duplicated so each theme stays self-contained). **Tested.** On the video: `npm run check` (HyperFrames' lint and caption
+contrast) and the review frames of all seven of its moods.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-10-29 (after scenes could use generated illustrations, and build began refusing a missing one).
+Last reviewed: 2026-10-30 (after the ripple theme and the kakeya-every-dimension video).
 
 ## Problem
 
@@ -90,7 +90,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F17 | Package as a Claude Code plugin: `.claude-plugin/plugin.json` and `marketplace.json`, all skills, a `critic` agent with Read, Grep, Glob, Bash and Skill that cannot Write or Edit (Bash still can: DESIGN D45); validates (one expected warning: no `version`, deliberate) | done. Standalone in any repo: `code-context`, `change-context`, `evidence-standard`. The rest produce an artifact only the pipeline consumes (a brief, a plan, a script, a hand-back) or judge one, and need this repo cloned (open question 3). Packaging limits in DESIGN D13 |
 | F18 | A sample application that makes the problem recognisable: `sample_application/`, a toy ad-spend pacer built by three agents in one day, each change correct for its task, with a bug only their interaction shows, a replayable git history and the hand-off notes a manager would have received | done |
 | F19 | Take multimodal inputs (images, audio, video, documents) as evidence for a video | **open**: nothing we can read says the company has multimodal data |
-| F23 | A video's look is a theme (`themes/shipshow`, `paper`, `launch`, `buildday`, `lofi`, `signal`, `chalk`, a client's in `local/themes/`) with motion and effects, made from a brand by the `theme` skill (main, #8) | done |
+| F23 | A video's look is a theme (`themes/shipshow`, `paper`, `launch`, `buildday`, `lofi`, `signal`, `chalk`, `archive`, `ripple`, a client's in `local/themes/`) with motion and effects, made from a brand by the `theme` skill (main, #8) | done |
 | F24 | How much critic review a video gets is a plan with presets and dials, set by the builder from the video's importance; a floor no dial lowers; `npm run critics` prints it (main, #9 and #10; this branch adds `critic-grounding` to the floor for a video that shows code) | done |
 | F25 | The pace is the person's choice: `speed` is a multiplier on a base of about 160 words a minute, 1.25 by default; `critic-pacing` judges against about 210 syllables a minute times it (`BASE_SPM`) (main, #7) | done |
 | F26 | A second voice engine, optional and Apple Silicon only: OmniVoice (MLX) for higher-quality and cloned voices, installed into the same `.venv` by `npm run setup:omnivoice`; Kokoro stays the default and runs anywhere (main, #11) | done |

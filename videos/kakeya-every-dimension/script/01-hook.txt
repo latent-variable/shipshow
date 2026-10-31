@@ -1,0 +1,5 @@
+[intrigued, telling a friend some genuinely surprising news] In 1917, a Japanese mathematician asked how little room you need to turn a needle around. On October twenty sixth, OpenAI posted a paper that, if it holds, settles the big question that puzzle grew into: the Kakeya conjecture, in every dimension. And, on the way, a famous conjecture about waves.
+
+[curious, raising the stakes] So did an AI just solve a century old problem? And why would anyone care about a needle?
+
+[measured, letting each fact land] No human authors. An unnamed internal OpenAI model wrote it, and OpenAI says a proof checker verified it the day after the model finished. As far as I can find, nobody independent has signed off yet.

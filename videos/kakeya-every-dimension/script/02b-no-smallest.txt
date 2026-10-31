@@ -1,0 +1,5 @@
+[storyteller, with a smirk, landing a punchline] Then Abram Besicovitch showed there is no smallest. You can turn the needle around in as little area as you like. A thousandth of a unit. A billionth. Pick any number above zero, and it fits.
+
+[clear, explaining, then dry] The trick is a tree of thin, overlapping spikes, and a needle that shuffles back and forth across them. For turning, zero exactly is the one thing you can't do. A billionth is fine.
+
+[clear, marking a contrast, defining a term the video will keep using] Now a different question. Forget the turning. Just lay down one copy of the needle in every direction, no motion needed. For that, the area can be exactly zero. Any set with a needle pointing in every direction is called a Kakeya set.

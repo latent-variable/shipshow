@@ -1,0 +1,5 @@
+[storyteller, measured, giving credit] So the whole game is proving local smoothing. The usual approach chops a wave into thinner and thinner beams by direction, controls each one, then fights to glue them back together. Thomas Wolff pushed that through in two dimensions in 2000, for large enough powers. In 2019, Larry Guth, Hong Wang and Ruixiang Zhang finished two dimensions. In three and up, the gluing got partway, and stuck.
+
+[dry, affectionate, an outsider marvelling at the field] Three decades of brilliant people, and the hardest part was the glue.
+
+[intrigued] The paper itself names the hard part: putting waves moving in different directions back together. Its answer is to barely take them apart.

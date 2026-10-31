@@ -1,0 +1,7 @@
+[curious, posing a riddle to the viewer] So here's the riddle. A Kakeya set can have no area at all. Is it basically nothing, a scribble of thin lines? Or is it, in some deeper sense, as big as the whole table?
+
+[clear, explaining a simple test, unhurried] Here's a test for size. Give every needle a little thickness, and watch how fast the area shrinks as the thickness does. A single line becomes a thin strip, and its area shrinks in step with the thickness: that's one dimensional. A filled square doesn't shrink at all: two dimensional. Shrink at a rate in between, and you're in between.
+
+[building, then letting a striking number land] Now a Kakeya set. Make its needles a googol times thinner. A plain line that thin would cover a googolth of a unit. The Kakeya set still covers about a hundredth.
+
+[letting a surprising fact sink in, then clear] It shrinks so slowly that, by this test, it's two dimensional: full size, in two dimensions. The Kakeya conjecture says the same in every dimension. A set with a needle in every direction is always full size.

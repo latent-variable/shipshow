@@ -1,0 +1,3 @@
+[warm, setting out a puzzle for a curious friend] A needle lies flat on a table. You want to turn it all the way around, sliding and spinning however you like. What's the smallest patch of table you need? That was Sōichi Kakeya's question, in 1917.
+
+[clear, unhurried, building to a small surprise] The obvious answer: spin it around its middle. That sweeps a disk: about 0.79 square units, if the needle is one unit long. Cleverer: a three point turn, like turning a car in a narrow street, inside a curved triangle called a deltoid. That takes half the area. And for a while, that looked like the best anyone could do.
