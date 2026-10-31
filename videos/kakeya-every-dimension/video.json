@@ -3,7 +3,7 @@
   "kind": "feature",
   "importance": "high",
   "importance_reason": "public: Lino's YouTube channel, in a narrator voice, explaining a harmonic-analysis result nobody independent has checked yet; a viewer may repeat any claim",
-  "audience": "A developer on YouTube who saw the headline that OpenAI's AI proved the Kakeya conjecture, and maybe our ETH video, but knows no harmonic analysis. After watching, they can say what the needle problem and the Kakeya conjecture are, what local smoothing says about waves, why waves imply needles, the core idea of the new proof in plain words, what it changes and does not, and how far to trust it today.",
+  "audience": "A curious viewer on YouTube: a smart high-schooler, or someone from another field, who saw the headline that OpenAI's AI proved the Kakeya conjecture and knows no harmonic analysis. After watching, they can say what the needle problem and the Kakeya conjecture are, what local smoothing says about waves, why waves imply needles, the core idea of the new proof in plain words, what it changes and does not, and how far to trust it today.",
   "theme": "ripple",
   "engine": "drama",
   "voice": "narrator-uk",
@@ -20,7 +20,8 @@
     "2000": "two thousand",
     "2019": "twenty nineteen",
     "2025": "twenty twenty five",
-    "0.79": "zero point seven nine"
+    "0.79": "zero point seven nine",
+    "3.14": "three point one four"
   },
   "gap": 0.5,
   "beat": 0.9,
@@ -39,19 +40,19 @@
   },
   "pauses": {
     "01-hook": 0.6,
-    "01b-disclosure": 0.4,
     "02b-no-smallest": 1.0,
     "03b-the-record": 0.8,
     "04-focus": 0.6,
-    "04b-tower": 1.2,
-    "05-beams": 2.5,
+    "05-beams": 3.5,
     "05b-the-hard-part": 0.8,
     "06-filter": 0.5,
     "06b-bowl": 1.2,
-    "06c-crossing": 1.0,
+    "06c-crossing": 2.5,
     "06d-recap": 2.0,
     "07b-trust": 2.5,
-    "03-size": 0.5
+    "03-size": 0.5,
+    "05a-tower": 1.5,
+    "04a-sogge": 2.0
   },
   "moods": {
     "headline": {

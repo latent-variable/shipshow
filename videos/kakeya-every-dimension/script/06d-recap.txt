@@ -1,3 +1,3 @@
-[building to the payoff, then settling] A logarithm is smaller than any small loss the conjecture allows, so it fits. That's local smoothing, Sogge's guess, in every dimension. And with it, Bochner Riesz, most of restriction, and Kakeya, down to the needle.
+[building to the payoff, then settling] One more piece. Sogge's guess comes with a tiny allowance: a loss that may creep up as the ripples get finer, packed closer together, but slower than any root of that fineness. Square root, cube root, hundredth root. Counting zeros grows slower than any root, so a logarithm fits. That's local smoothing, Sogge's guess, in every dimension. And with it, Bochner Riesz, most of restriction, and Kakeya, down to the needle.
 
 [wry, an AI summing up another AI's proof in one breath] Put together, three moves. Filter the wave by direction. Measure its pile up with a bowl. Trace that back across a plane, losing only a log squared. Simple, right?

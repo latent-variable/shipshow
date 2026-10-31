@@ -159,7 +159,7 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
 every turn (measured: 23 skills, 8,350 characters, about 2,088 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 248). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+and SKILL.md under 500 lines (longest 252). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -1266,6 +1266,18 @@ needles, and the owner's canon gives every video a look built for its story; cha
 math-adjacent video in either would repeat a look. It is token-only, so no kit code changed. **Costs.** One more theme folder (about
 230 KB of fonts, duplicated so each theme stays self-contained). **Tested.** On the video: `npm run check` (HyperFrames' lint and caption
 contrast) and the review frames of all seven of its moods.
+
+
+### D89. An explainer hooks with its problem and explains every term (2026-10-30)
+**Decision.** `explain-concept` now says to grab the viewer in the first fifteen to thirty seconds with the problem itself, then walk
+them through it by hand before any new idea, and to write for a smart high-schooler or someone from another field, explaining every
+term the first time it is said. `narration-writing` keeps the AI narrator's disclosure but takes it out of the hook. **Why.** The
+owner, watching kakeya-every-dimension's first cut: four minutes in, terms like set, dimension and power had lost him, and the intro
+spent its opening on who was talking instead of the puzzle; Veritasium, Vsauce and 3Blue1Brown are the bar. **Also.** The critics judge it: `critic-engagement` makes a channel video's first fifteen to thirty seconds and
+its hands-on first act a major finding, `critic-clarity` names the smart high-schooler as the viewer and one meaning per word,
+`critic-consistency` keeps an unchecked claim out of the colour of what is proved, `critic-loop` says to re-run the estimate once
+the video is voiced (a 16-minute thorough loop measured 3.5M tokens against 1.5M estimated), and `explainer-video` says a
+full-screen pop-up hides what is behind it and its backdrop reaches the bottom of the frame. **Costs.** None in code.
 
 ## Behaviour
 

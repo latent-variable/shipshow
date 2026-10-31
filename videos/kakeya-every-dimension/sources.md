@@ -46,14 +46,38 @@ the OpenAI post that videos/eth-is-false explained.
 
 | Scene | Claim | Source |
 |---|---|---|
-| 01 | In 1917 a Japanese mathematician (Sōichi Kakeya) asked how little room you need to turn a needle around | T section 1: "first posed by Soichi Kakeya [11] in 1917"; Q1: "In 1917, Sōichi Kakeya posed the problem" |
-| 01 | On October 26 OpenAI posted a paper that, if it holds, settles the Kakeya conjecture in every dimension, and on the way a famous conjecture about waves | B (dated 2026-10-26): "Our models produced a proof of the local smoothing conjecture in every dimension and therefore also resolve the Kakeya conjecture"; P abstract. "If it holds" is ours: S |
-| 01 | "The big question that puzzle grew into": the Kakeya conjecture | **opinion**, framing; T section 1 traces the needle problem to Conjecture 1.1 |
-| 01 | No human authors; an unnamed internal OpenAI model wrote it | P title page names only "OpenAI"; R README: "produced by an unnamed internal OpenAI model" |
-| 01 | OpenAI says a proof checker verified it the day after the model finished | B: "We obtained our AI output on October 18th, 2026, which was formalized in Lean the following day". Said as OpenAI's claim |
-| 01 | As far as I can find, nobody independent has signed off yet | S |
-| 01 | The other big paper from the same post is the Exponential Time Hypothesis one, which the channel explained | B section headings; videos/eth-is-false |
-| 01 | "I keep getting handed OpenAI's homework ... basically in their book club" | **opinion**, a joke; the ETH video is the earlier one |
+| 01 | A question that sounds useless: the smallest amount of table you need to turn a needle around | T section 1, Problem 1.1 (Kakeya's needle problem); "sounds useless" is **opinion**, after T section 2: "The Kakeya problem sounds like a pure curiosity" |
+| 01 | It is from 1917 | T section 1: "first posed by Soichi Kakeya [11] in 1917"; Q1 |
+| 01 | It turned out to be tangled up with how waves pile up, in sound, in light, even in the prime numbers | T section 2: the compressibility of tubes "is central to many problems in harmonic analysis, partial differential equations, and number theory, which all have the general flavor of trying to control the amount of 'constructive interference' ... in some superposition of oscillating waves"; the Montgomery and Lindelöf connection to primes. "Sound" and "light" are **ours**: the wave equation of P governs both, as standard physics |
+| 01 | On October 26 OpenAI posted a paper saying its AI settled the puzzle's big descendant, the Kakeya conjecture, in every dimension, by way of a bigger problem about waves; if it holds, a question that grew out of 1917 was finished by a machine (on screen: "a question from 1917") | B (2026-10-26): "Our models produced a proof of the local smoothing conjecture in every dimension and therefore also resolve the Kakeya conjecture"; P abstract; R README (an internal OpenAI model; on screen "no human authors": P's title page names only "OpenAI"). "If it holds" is ours: S |
+| 01 | The answer is stranger than you'd think: almost none; a set of needles pointing every way can take up no room at all and still, in a deeper sense, be full size | T section 1 (Besicovitch 1928; area-zero sets); full size is the conjecture the paper claims (P Corollary 9.1), said here as a tease the video then explains |
+| 01 | OpenAI's paper says its AI settled it in every dimension, by way of a bigger problem about waves | B: local smoothing "in every dimension and therefore also resolve the Kakeya conjecture"; P abstract |
+| 02b | The fan comes from spinning the needle a little around one end; the needle hops from sliver to sliver | T Figure 2 caption: four trees "together with some very small additional strips ... to enable the needle to move from one branch of the tree to the next"; the sliver as a small spin is **ours** |
+| 02b | Cross the needles at their middles, at one point, and they fill the propeller's disk again | **ours**, geometry: unit segments centred at one point in every direction fill the disk of radius one half, π/4 |
+| 03 | A shape one and a half dimensional, a googol times thinner, would be down to a one with fifty zeros; the most squeezed Kakeya set still needs about a hundredth; slower than any shape in between | **ours**, arithmetic: area about w^(2 − 1.5) = (10^-100)^0.5 = 10^-50; T section 1 for the hundredth, which is the best compression (Córdoba's bound, Keich's construction) |
+| 03 | In space a point needs three numbers, in four-dimensional space four; call that number n; the conjecture: in n-dimensional space a set with a needle every way has dimension n | **ours**, the meaning of n-dimensional space; W; L line 130 |
+| 04 | Squeeze a wave into a narrow beam, like a laser, and it lives in a long thin tube, a needle with some thickness, the shape from the paint test; so the paper studies how waves pile up | P 9.2 (a cap of directions gives a wave on a tube); the laser is **ours** |
+| 04 | Squared, a spike ten times taller counts a hundred times more; cubed, a thousand | **ours**, arithmetic |
+| 04a | The allowance is a loss that may grow as ripples get finer, packed closer together, but slower than any root of that: square, cube, hundredth root; one power p is the critical case: get that one and the others follow | P Theorem 1.1 (s₊(p) + ε for every ε > 0, a factor N^ε at frequency N, slower than any root); P 1.3: "The proof is built around a single estimate at p = pc"; "Interpolation and summation over annuli yield Theorem 1.1" |
+| 06 | The first move as a dimmer: keep the beams along one line at full strength, dim the others on a bell curve; it comes from shifting time and position sideways with imaginary numbers along the beam's direction | P 1.4: imaginary translation along a light ray weights each mode by a Gaussian in direction, factor 1 along the ray |
+| 06c | A logarithm is roughly a count of zeros: a thousand three, a million six, a googol a hundred | **ours**, base-ten logarithms of powers of ten |
+| 06c | Anything at least the average of its surroundings behaves like the walker's odds; so at least one over a log of the energy at the focus is still there at the start; turned around, the focus is at most a log times the start; out and back, twice; even for a googol that is about a hundred, squared | P section 6, Lemma 6.1 and Figure 2 (log 2 / log(1/b) per passage); the googol line is **ours**, arithmetic |
+| 06d | The allowance is slower than any root; counting zeros grows slower than any root, so a logarithm fits | log N grows slower than N^(1/k) for every k (standard); P 1.3 |
+| 07 | The Riemann hypothesis is the most famous open problem about how the primes are spread out | T section 2: "the distribution of the prime numbers was shown to be closely related to the distribution of the zeros of ζ(s)"; "the infamous Riemann hypothesis" |
+| 01 | As far as I can find, no independent check has been reported yet (on screen: "independent check reported: none found, as of October 30, 2026") | S; worded as the limit of a search, not a fact about the world |
+| 02 | Spinning the needle around one end sweeps a disk four times bigger, about 3.14 | **ours**, geometry: a disk of radius one has area π ≈ 3.14, four times π/4 |
+| 02 | A three-point turn: slide, turn, slide, turn; the needle traces a deltoid, half the area of the spin around the middle | T section 1 (the "three-point U-turn", deltoid π/8 against π/4) |
+| 02b | The trick: cut a fan of directions into thin slivers and slide them sideways so they pile on top of each other; every direction stays, the slivers share most of their room; again and again | T section 1 and Figure 2: the Besicovitch–Perron tree; "pairs of line segments making small, medium, or large angles to each other are all pushed together strategically to create a significant amount of overlap in area"; "a multi-scale structure". The animation is an illustration, labelled so |
+| 02b | A set is a collection of points: any shape you could draw | **ours**, the everyday meaning of a set of points in the plane |
+| 03 | The paint test: paint the shape with a brush made ever thinner; a line's paint shrinks in step (one dimension), a filled square's never goes down (two); a Kakeya set's, a googol times thinner, about a hundredth | **ours**, a picture of T's δ-neighbourhood (the paint is the area the thickened shape covers); the hundredth is T section 1 as below |
+| 03b | In three dimensions, needles pointing every way, like a pincushion | **ours**, an image |
+| 04 | To score how spiky a wave is, raise its height to a power p, like squaring or cubing it, then add it up | **ours**, a plain account of the L^p norm (P Theorem 1.1) |
+| 04a | Smoothness: how jagged the starting wave is allowed to be | **ours**, a plain gloss of "how many derivatives of the initial data are needed" (P section 1) |
+| 06 | Imaginary numbers, built on the square root of minus one, let you shift time and position sideways | **ours**, a gloss of P 1.4's imaginary translation; P 2.1: "i denotes the ordinary Fourier imaginary unit" |
+| 06 | Interference: the way waves add up or cancel out | **ours**, the standard meaning; P 1.4 |
+| 06d | Remember the allowance: a loss that grows slower than any root (square root, cube root, hundredth root); counting zeros grows slower than any root, so a logarithm fits | P Theorem 1.1 (every ε > 0) and 1.3, as in 04a and 06d below |
+| 07b | Full disclosure: the narrator is an AI too, Claude, made by Anthropic; one AI explaining another's homework, which is why the human check matters | true of this video; **opinion** on why the check matters |
+
 | 02 | Spinning the needle around its middle sweeps a disk of about 0.79 square units for a unit needle (on screen π/4 ≈ 0.785) | T section 1: "a disk of radius 1/2, which has area π/4 ≈ 0.785" |
 | 02 | A three-point turn, like a U-turn in a narrow street, inside a deltoid takes half the area (π/8 ≈ 0.393) | T section 1: "A 'three-point U-turn' can replace this disk by a smaller shape, known as a deltoid, which has area π/8 ≈ 0.393"; T: "perform a U-turn in a narrow street"; W caption: a unit needle "can perform a complete rotation within it" |
 | 02 | For a while people believed that was the best | T section 1: "For a while, it was believed that this was the most efficient solution" |
@@ -99,7 +123,8 @@ the OpenAI post that videos/eth-is-false explained.
 | 05b | The paper names the hard part: "putting waves moving in different directions back together" | P 1.2: "A persistent difficulty is to put waves moving in different directions back together" (shown on screen, page 3) |
 | 05b | Its answer is to barely take them apart | P 1.4: the construction works on "a finite sum of plane waves ... whose directions lie in one small cap" and ends by "summing a fixed number of caps" |
 | 06 | Shift time and position by imaginary amounts, along a light ray: each wave's wiggle turns into a fade that depends on its direction; waves heading that way pass untouched, others dimmed on a bell curve; a filter for direction, not a knife | P 1.4: "An imaginary translation along a light ray filters the sum by direction. Translation by −iℓ(1, ω) ... multiplies a mode of frequency ξ by exp[−ℓ|ξ| |ω − ξ/|ξ||²/2]" (factor 1 when ξ/|ξ| = ω) |
-| 06 | Mathematicians have shifted waves into imaginary time before; what's new is what the paper builds on it ("imaginary time" is our gloss of the paper's "imaginary spacetime direction") | P 1.4, Related constructions: "Analytic continuation in an imaginary spacetime direction has also been used to study waves [42]"; Kaiser's construction [41]; "Here the continued wave gives a positive symmetric tensor" |
+| 06 | The usual way measures each beam, then glues; this one adds the waves together first, keeping the interference that makes a focus | P 1.4 (summing the squares "would discard the interference"); P 1.2 and 05b's chop-and-glue (Wolff-style decoupling); "the usual way" is our plain summary |
+| 06 | A known trick with imaginary numbers: mathematicians have shifted waves into imaginary time before; what's new is what the paper builds on it ("imaginary time" is our gloss of the paper's "imaginary spacetime direction") | P 1.4, Related constructions: "Analytic continuation in an imaginary spacetime direction has also been used to study waves [42]"; Kaiser's construction [41]; "Here the continued wave gives a positive symmetric tensor" |
 | 06 | It adds the waves before measuring, keeping their interference, which makes a focus | P 1.4: "We need to take a square after summing these waves: summing the squares would discard the interference that produces a focus" |
 | 06 | Two extra time directions, which the proof uses later as a plane to cross | P 1.4: "the construction has two auxiliary time coordinates τ ∈ R²"; section 6 compares circles |τ| = const in that plane |
 | 06 | "Ordinary time, apparently, wasn't enough" | **opinion**, a joke |
@@ -174,9 +199,12 @@ The build checks each licence (`bin/portrait.mjs`); `npm run review` lists the a
 |---|---|---|
 | 02b | One Does Not Simply (memegen `mordor`): "one does not simply" / "turn a needle in zero area" | knowyourmeme, via memegen (MIT); third-party picture, fetched at build, never committed |
 | 03 | Vince McMahon Reaction (memegen `vince`): a line, a googol times thinner: a googolth / a Kakeya set, just as thin / still a hundredth | as above |
-| 04b | Scooby Doo Reveal (memegen `reveal`): "the needle problem" / "let's see who you really are" / (unmasked) / "a wave problem" | as above |
+| 05a | Scooby Doo Reveal (memegen `reveal`): "the needle problem" / "let's see who you really are" / (unmasked) / "a wave problem" | as above |
+| 04a | Pepperidge Farm Remembers (memegen `remembers`): "remember that number?" / "pepperidge farm remembers" | as above |
 | 05 | Epic Handshake (memegen `handshake`): "waves can't stay piled up" / "tubes can't be crammed" / "the same fact" | as above |
+| 06b | Member Berries (memegen `mb`): "member the critical power?" / "it falls out of the bowl" | as above |
 | 06b | Hide the Pain Harold (memegen `harold`): "the bowl is built from quaternions" / "in a paper about ripples" | as above |
+| 06c | Success Kid (memegen `success`): "the whole penalty" / "a logarithm squared" | as above |
 | 06d | Phoebe Teaching Joey (memegen `ptj`): the three moves, each said and repeated, then "now all together" / "simple, right?" | as above |
 | 07b | Khaby Lame Shrug (memegen `khaby-lame`): "how to check an AI's proof" / "organize your own" | as above |
 
@@ -185,7 +213,7 @@ The build checks each licence (`bin/portrait.mjs`); `npm run review` lists the a
 - **Voice:** the invented `narrator-uk` voice (`local/voices/narrator-uk.wav`, never committed), made with Fish Audio Drama 3
   (`mlx-community/fish-audio-drama-3-4bit`) from a description and a seed, no real person cloned (how it was invented:
   `videos/eth-is-false/sources.md`, *Voice*). Drama 3's output is used under the Fish Audio Community License. The narration says
-  it is an AI (01-hook).
+  it is an AI in 07b, never in the hook.
 - **Music:** seven act beds, one per mood in `video.json` `"moods"`, generated locally with ACE-Step 1.5 through
   `~/.agents/bin/localaudio` (instrumental; prompts and seeds in `local/music/kakeya/gen.log`, never committed); each was heard
   back with Whisper and none had words in it.

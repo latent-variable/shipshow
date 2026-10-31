@@ -1,3 +1,0 @@
-[clear, building a tower one level at a time] And it isn't a lonely conjecture. It sits at the top of a tower. Under it, the Bochner Riesz conjecture, about rebuilding a signal from its frequencies. Under that, Stein's restriction conjecture, about waves whose frequencies sit on a sphere. And at the very bottom, holding the whole thing up: Kakeya. Quanta called it a tower of conjectures that rests upon a needle.
-
-[clear, then dry, landing a small joke] Each level, give or take some edge cases, implies the one below it. So prove the top level, and the levels under it come with it, down to the needle. The needle problem was a wave problem all along.
