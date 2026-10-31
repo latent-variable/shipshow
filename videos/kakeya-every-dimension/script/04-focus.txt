@@ -1,3 +1,3 @@
-[calm, painting a picture, with a question underneath] Now, waves. Picture a ring of ripples on a pond, all moving inward. How tall can they get when they meet? For an instant, they pile up into one tall spike. Then they pass through each other and spread out again. That's a wave coming to a focus.
+[calm, painting a picture, with a question underneath] Picture a ring of ripples on a pond, all moving inward. How tall can they get when they meet? For an instant, they pile up into one tall spike. Then they pass through each other and spread out again. That's a wave coming to a focus.
 
 [clear, explaining] To measure a spike, mathematicians raise the wave to a power, p, before adding it up. The higher the power, the more a tall, narrow spike counts.
