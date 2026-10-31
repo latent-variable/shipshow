@@ -38,14 +38,19 @@
     "07-what-changes": 2.3
   },
   "pauses": {
-    "01-hook": 0.4,
+    "01-hook": 0.6,
+    "01b-disclosure": 0.4,
     "02b-no-smallest": 1.0,
     "03b-the-record": 0.8,
-    "04b-tower": 1.0,
+    "04-focus": 0.6,
+    "04b-tower": 1.2,
+    "05-beams": 2.5,
     "05b-the-hard-part": 0.8,
+    "06-filter": 0.5,
     "06b-bowl": 1.2,
-    "06c-crossing": 2.0,
-    "07b-trust": 1.2
+    "06c-crossing": 1.0,
+    "06d-recap": 3.5,
+    "07b-trust": 2.5
   },
   "moods": {
     "headline": {
@@ -56,7 +61,11 @@
         "--line": "#30465e",
         "--card": "rgba(14, 24, 38, 0.92)"
       },
-      "music": { "file": "local/music/kakeya/headline.wav", "volume": 0.17, "duck": 0.35 }
+      "music": {
+        "file": "local/music/kakeya/headline.wav",
+        "volume": 0.17,
+        "duck": 0.35
+      }
     },
     "needle": {
       "ambient": "grid vignette grain",
@@ -69,7 +78,11 @@
         "--line": "#4d473a",
         "--card": "rgba(36, 34, 28, 0.92)"
       },
-      "music": { "file": "local/music/kakeya/needle.wav", "volume": 0.15, "duck": 0.35 }
+      "music": {
+        "file": "local/music/kakeya/needle.wav",
+        "volume": 0.15,
+        "duck": 0.35
+      }
     },
     "dimension": {
       "ambient": "stars glow vignette grain",
@@ -79,7 +92,11 @@
         "--line": "#3f3360",
         "--card": "rgba(26, 18, 44, 0.92)"
       },
-      "music": { "file": "local/music/kakeya/dimension.wav", "volume": 0.16, "duck": 0.35 }
+      "music": {
+        "file": "local/music/kakeya/dimension.wav",
+        "volume": 0.16,
+        "duck": 0.35
+      }
     },
     "waves": {
       "look": {
@@ -91,7 +108,11 @@
         "--line": "#245266",
         "--card": "rgba(8, 32, 42, 0.92)"
       },
-      "music": { "file": "local/music/kakeya/waves.wav", "volume": 0.16, "duck": 0.35 }
+      "music": {
+        "file": "local/music/kakeya/waves.wav",
+        "volume": 0.16,
+        "duck": 0.35
+      }
     },
     "beams": {
       "look": {
@@ -101,7 +122,11 @@
         "--line": "#4c4a26",
         "--card": "rgba(32, 30, 14, 0.92)"
       },
-      "music": { "file": "local/music/kakeya/beams.wav", "volume": 0.16, "duck": 0.35 }
+      "music": {
+        "file": "local/music/kakeya/beams.wav",
+        "volume": 0.16,
+        "duck": 0.35
+      }
     },
     "method": {
       "ambient": "dots blobs vignette grain",
@@ -113,7 +138,11 @@
         "--line": "#3e3566",
         "--card": "rgba(24, 18, 50, 0.92)"
       },
-      "music": { "file": "local/music/kakeya/method.wav", "volume": 0.14, "duck": 0.35 }
+      "music": {
+        "file": "local/music/kakeya/method.wav",
+        "volume": 0.14,
+        "duck": 0.35
+      }
     },
     "verdict": {
       "look": {
@@ -123,7 +152,11 @@
         "--line": "#33475a",
         "--card": "rgba(18, 27, 36, 0.92)"
       },
-      "music": { "file": "local/music/kakeya/verdict.wav", "volume": 0.15, "duck": 0.35 }
+      "music": {
+        "file": "local/music/kakeya/verdict.wav",
+        "volume": 0.15,
+        "duck": 0.35
+      }
     }
   }
 }

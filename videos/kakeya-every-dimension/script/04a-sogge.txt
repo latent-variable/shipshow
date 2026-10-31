@@ -1,0 +1,3 @@
+[clear, explaining, with quiet confidence] In 1991, Christopher Sogge asked how bad a focus can get, on average. At its worst instant, a wave can be enormously concentrated. But a focus can't last. Average over a stretch of time, and the wave is always tamer than its worst moment.
+
+[clear, careful, planting a number for later] Sogge guessed exactly how much tamer, as a formula in p and the dimension, up to an arbitrarily small loss. Mathematicians count it in smoothness, so his guess is called the local smoothing conjecture. And one power, set by the dimension, is the critical case the whole problem turns on. Remember that number. It comes back.

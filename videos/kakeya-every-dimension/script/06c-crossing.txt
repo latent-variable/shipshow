@@ -1,7 +1,3 @@
-[clear, measured, one step at a time] Third move: trace that energy back to the start. In time and the two extra time directions, the paper shows the energy is nearly balanced: at any point, it's at least the average of the energy around it, give or take a tiny error. So a big energy later forces a big energy earlier.
+[clear, measured, one step at a time] Third move: trace that energy back to the start. In time and the two extra time directions, the energy is nearly balanced. At any point, it's at least the average of what's around it, give or take a tiny error. So a big energy later forces a big energy earlier.
 
-[clear, explaining with a picture] To carry it across, picture two circles in the plane of the extra times, and a random walker. The chance it reaches one circle before the other changes like the logarithm of distance: very slowly. The proof makes that crossing twice, and each crossing costs one logarithm. So the pile up later is at most the start, times a logarithm squared.
-
-[building to the payoff, then settling] A logarithm grows slower than any power, so that loss fits inside what the conjecture allows. That's Sogge's guess, in every dimension. And with it, Bochner Riesz, most of restriction, and Kakeya, down to the needle.
-
-[wry, an AI summing up another AI's proof in one breath] Put together, in one breath: filter the wave by direction, measure its pile up with a bowl, and trace that back across a plane, losing only a log squared. Simple, right?
+[clear, explaining with a picture] How much is lost on the way? The paper compares it with a random walker in the plane of the extra times, wandering between two circles. Its chance of reaching one circle before the other changes like the logarithm of distance: very slowly. The proof crosses out and back, and each crossing costs one logarithm. So the pile up later is at most the start, times a logarithm squared.
