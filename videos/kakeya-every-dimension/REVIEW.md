@@ -235,5 +235,5 @@ bound that hides constants anyway; "a known trick" is the paper's "has also been
 the model that wrote the script.
 
 **Status: done.** Accuracy and grounding pass and no blocking finding is open. The taste critics' last round was cut 3; cut 4 applied
-its majors and was checked by eye and by the scans, not by a fresh round. Spend: about 3.5M tokens for the first cut, and about 0.9M for
-cuts 2 to 4. The voice was checked by hear-back and Parakeet; nobody has listened to it, the jokes' delivery, or the music by ear.
+its majors and was checked by eye and by the scans, not by a fresh round. Spend: about 3.5M tokens for the first cut, and about 1.4M for
+cuts 2 to 4 (eight critics; `npm run usage`, cache reads not counted). The voice was checked by hear-back and Parakeet; nobody has listened to it, the jokes' delivery, or the music by ear.
