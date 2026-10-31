@@ -82,7 +82,7 @@
   .figbox { position: relative; width: 460px; height: 360px; flex: none; }
   .figbox img { position: absolute; inset: 0; width: 100%; height: 100%; }
   .figbox .cush { object-fit: contain; }
-  .figbox .scope { object-fit: cover; border-radius: 14px; border: 1.5px solid var(--line); }
+  .figbox .scope { object-fit: cover; object-position: 18% 72%; border-radius: 14px; border: 1.5px solid var(--line); }
   .brushstage { position: relative; width: 1400px; height: 520px; }
   .brushstage .stroke { position: absolute; left: 120px; height: 0; width: 0; border-radius: 999px; background: var(--accent); box-shadow: 0 0 18px rgba(255, 200, 87, 0.35); }
   .brushstage .brush { position: absolute; width: 760px; filter: drop-shadow(0 0 10px rgba(200, 220, 255, 0.35)) drop-shadow(0 6px 8px rgba(0, 0, 0, 0.6)); }
@@ -131,7 +131,7 @@
   .tower .blk small { display: block; font-family: var(--font-mono); font-size: 28px; font-weight: 400; color: var(--muted); margin-top: 4px; }
   .tower .blk.top { border-color: var(--accent-2); color: var(--accent-2); }
   .tower .blk.kak { border-color: var(--accent); color: var(--accent); width: 600px; }
-  .tower .pin { width: auto; height: 190px; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6)); }
+  .tower .pin { width: 12px; height: 200px; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6)); }
   /* 05 */
   .beams line { stroke-linecap: round; }
   .beams .b { stroke: var(--accent-2); stroke-width: 26; opacity: 0.4; }
@@ -293,7 +293,7 @@
   <div class="phase" id="p02bc">
     <div class="stage">
       <div class="row" style="gap: 80px">
-        <svg class="burst" width="520" height="520" viewBox="-260 -260 520 520" data-cue="copy" data-anim="stagger"><defs><clipPath id="c02bd"><circle cx="0" cy="0" r="200"/></clipPath></defs><image id="fill02b" href="assets/art/table.jpg" x="-260" y="-260" width="520" height="520" clip-path="url(#c02bd)" style="opacity: 0"/>
+        <svg class="burst" width="520" height="520" viewBox="-260 -260 520 520" data-cue="copy" data-anim="stagger"><defs><clipPath id="c02bd"><circle cx="0" cy="0" r="200"/></clipPath></defs><g><g id="fill02b" style="opacity: 0"><image href="assets/art/table.jpg" x="-260" y="-260" width="520" height="520" clip-path="url(#c02bd)"/></g></g>
           <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.0" y="-8.3" width="400.0" height="16.7" transform="rotate(0.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(22.60 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-199.4" y="-8.3" width="398.8" height="16.6" transform="rotate(45.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(67.40 0.0 0.0)"/></g>
           <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.0" y="-8.3" width="400.0" height="16.7" transform="rotate(90.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(112.60 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-199.4" y="-8.3" width="398.8" height="16.6" transform="rotate(135.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(157.40 0.0 0.0)"/></g>
           <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.1" y="-8.3" width="400.2" height="16.7" transform="rotate(10.07 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.3" y="-8.3" width="400.6" height="16.7" transform="rotate(35.04 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.3" y="-8.3" width="400.6" height="16.7" transform="rotate(54.96 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.1" y="-8.3" width="400.2" height="16.7" transform="rotate(79.93 0.0 0.0)"/></g>
@@ -334,21 +334,21 @@
   <div class="phase" id="p03b">
     <div class="stage" style="inset: 20px var(--pad) 10px">
       <div class="row" style="gap: 40px">
-        <svg class="chart" width="1080" height="640" viewBox="0 0 1080 640" data-cue="single" data-anim="fade">
+        <svg class="chart" width="1080" height="640" viewBox="0 0 1080 640" data-cue="halve" data-anim="fade">
           <line class="grid" x1="140" y1="40" x2="1040" y2="40"/><line class="grid" x1="140" y1="170" x2="1040" y2="170"/><line class="grid" x1="140" y1="300" x2="1040" y2="300"/><line class="grid" x1="140" y1="430" x2="1040" y2="430"/>
           <path class="ax" d="M140 30 V560 H1050"/>
           <text x="128" y="50" text-anchor="end">1</text><text x="150" y="292" text-anchor="start">1 in 10⁵⁰</text><text x="150" y="545" text-anchor="start">a googolth</text>
           <text x="140" y="600" text-anchor="middle">1×</text><text x="590" y="600" text-anchor="middle">10⁵⁰×</text><text x="1040" y="600" text-anchor="middle">10¹⁰⁰×</text>
           <text x="590" y="634" text-anchor="middle" class="lbl" style="font-size: 30px">how many times thinner the brush</text>
           <text x="150" y="8" class="lbl" style="font-size: 30px">paint needed</text>
-          <path class="c line" d="M140 40 L1040 560" data-cue="single" data-anim="draw"/>
+          <path class="c line" d="M140 40 L1040 560" data-cue="halve" data-anim="draw"/>
           <path class="c square" d="M140 34 L1040 34" style="stroke-dasharray: 18 12" data-cue="filled" data-anim="draw"/>
           <path class="c" d="M140 40 L1040 300" style="stroke: var(--accent-3); stroke-width: 5; stroke-dasharray: 14 10" data-cue="half#2" data-anim="draw"/>
           <path class="c kak" d="M140 40 C 190 52, 300 58, 1040 60" data-cue="Now" data-anim="draw"/>
           <circle cx="1040" cy="60" r="14" fill="var(--accent)" data-cue="hundredth" data-anim="pop"/><text x="1030" y="104" text-anchor="end" style="fill: var(--accent); font-weight: 700" data-cue="hundredth" data-anim="fade">≈ 1/100</text>
         </svg>
         <div class="legend">
-          <div class="chip" data-cue="single" data-anim="pop">a line: paint shrinks in step<small>one dimension</small></div>
+          <div class="chip" data-cue="halve" data-anim="pop">a line: paint shrinks in step<small>one dimension</small></div>
           <div class="chip" data-cue="filled" data-anim="pop">a filled square: never goes down<small>two dimensions</small></div>
           <div class="chip violet" data-cue="fractal" data-anim="pop">in between: a fractal<small data-cue="half#2" data-anim="fade">1.5 dimensions: 1 part in 10⁵⁰</small></div>
           <div class="chip gold" data-cue="squeezed" data-anim="pop">a Kakeya set: barely<small data-cue="hundredth" data-anim="fade">about 1/100 at 10¹⁰⁰× · Tao 2026</small></div>
@@ -356,7 +356,7 @@
           <div class="chip gold" data-cue="zero#3" data-anim="pop">zero area, full size</div>
         </div>
       </div>
-      <div class="src center" data-cue="single" data-anim="fade">log scales · the rate: Tao 2026</div>
+      <div class="src center" data-cue="halve" data-anim="fade">log scales · the rate: Tao 2026</div>
     </div>
   </div>
   <div class="meme-wrap pop" id="m03" data-cue="plain" data-anim="fade"><figure class="ss-meme" data-meme="vince" data-cue="plain" data-anim="pop"><span data-cue="plain" data-anim="fade">a line, a googol times thinner: a googolth</span><span data-cue="still" data-anim="fade">the most squeezed Kakeya set</span><span data-cue="hundredth" data-anim="fade">still about a hundredth</span></figure></div>
@@ -771,7 +771,7 @@ theorem kakeya :
   <div class="phase" id="p07cb">
     <div class="stage" style="align-items: center">
       <svg class="burst" id="burst07c" width="560" height="560" viewBox="-280 -280 560 560" data-cue="1917" data-anim="stagger">
-        <defs><clipPath id="c07c"><circle cx="0" cy="0" r="200"/></clipPath></defs><image id="full07c" href="assets/art/table.jpg" x="-280" y="-280" width="560" height="560" clip-path="url(#c07c)" style="opacity: 0"/>
+        <defs><clipPath id="c07c"><circle cx="0" cy="0" r="200"/></clipPath></defs><g><g id="full07c" style="opacity: 0"><image href="assets/art/table.jpg" x="-280" y="-280" width="560" height="560" clip-path="url(#c07c)"/></g></g>
         <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.0" y="-8.3" width="400.0" height="16.7" transform="rotate(0.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(22.60 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-199.4" y="-8.3" width="398.8" height="16.6" transform="rotate(45.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(67.40 0.0 0.0)"/></g>
         <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.0" y="-8.3" width="400.0" height="16.7" transform="rotate(90.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(112.60 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-199.4" y="-8.3" width="398.8" height="16.6" transform="rotate(135.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(157.40 0.0 0.0)"/></g>
       </svg>
@@ -849,14 +849,14 @@ theorem kakeya :
   swap("#p03a", "#p03ab", at("#p03ab .brushstage"));
   // The brush paints a stroke, then a thinner one, then thinner again: the width is the brush.
   // The brush paints a stroke, then a thinner one, then thinner again: each brush as wide as its stroke.
-  [["#st03a", 44, 110, 0], ["#st03b", 18, 270, 1.6], ["#st03c", 6, 410, 3.2]].forEach(([id, w, cy, dt]) => {
-    const t0 = at("#p03ab .brushstage") + 0.4 + dt, k = w / 37, bw = 760 * k;   // the tip's paint is about 37 px of a 760 px brush
+  [["#st03a", 44, 110, 0], ["#st03b", 18, 270, 1.15], ["#st03c", 6, 410, 2.3]].forEach(([id, w, cy, dt]) => {
+    const t0 = at("#p03ab .brushstage") + 0.4 + dt, k = Math.max(w / 37, 0.3), bw = 760 * k;   // the tip's paint is about 37 px of a 760 px brush
     tl.set("#br03", { width: bw, top: cy - 25 * k, left: 120 - bw, x: 0 }, t0);
     tl.set(id, { height: w, top: cy - w / 2 }, t0);
-    tl.fromTo(id, { width: 0 }, { width: 1160, duration: 1.3, ease: "power1.inOut" }, t0);
-    tl.to("#br03", { x: 1160, duration: 1.3, ease: "power1.inOut" }, t0);
+    tl.fromTo(id, { width: 0 }, { width: 1160, duration: 0.95, ease: "power1.inOut" }, t0);
+    tl.to("#br03", { x: 1160, duration: 0.95, ease: "power1.inOut" }, t0);
   });
-  tl.to("#br03", { opacity: 0, duration: 0.4 }, at("#p03ab .brushstage") + 5.0);
+  tl.to("#br03", { opacity: 0, duration: 0.3 }, at("#p03ab .brushstage") + 3.7);
   swap("#p03ab", "#p03b", at("#p03b svg.chart"));
   leave("#m03", at("#p03b [data-cue='barely']") - 0.35);
   tl.to("#p03b", { opacity: 1, duration: 0.35 }, at("#p03b [data-cue='barely']") - 0.3);
