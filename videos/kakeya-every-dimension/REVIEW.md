@@ -126,3 +126,59 @@ What changed (24 takes voiced again; scenes rebuilt):
   what they did"), and the freed time went into the mechanism scenes anyway; 05b now carries a joke as well.
 - **Declined: opening on the question (engagement E3)**, optional and taste: the story order puts 1917 first on purpose.
 - **The second listen** again flagged a sentence ("Here's where the number comes from.") that Whisper hears in the finished track.
+
+## Round 3, the cap: 0 blocking, 17 major; the six that failed (Opus for clarity, visuals and engagement) plus accuracy on the changed claims
+
+| Critic | Model | Verdict | Blocking / major / minor |
+|---|---|---|---|
+| accuracy (changed claims) | Sonnet | pass | 0 / 0 / 2 |
+| clarity | Opus | fail | 0 / 1 / 3 |
+| pacing | Sonnet | fail | 0 / 2 / 3 |
+| sync | Sonnet | fail | 0 / 1 / 4 |
+| visuals | Opus | fail | 0 / 4 / 6 |
+| consistency | Sonnet | fail | 0 / 1 / 4 |
+| engagement | Opus | fail | 0 / 7 / 1 |
+
+The cap was reached, so these were fixed without another full round; 8 takes voiced again, the packet regenerated (no overlaps, every
+scene changes within 12 s, `npm run check` passes), and accuracy checked the changed claims once more, because it is the floor.
+
+Fixed:
+- **"Loss" means one thing (clarity, major).** 04a says what is counted (how smooth the starting wave has to be), what slack the guess
+  allows (a loss that may grow as the wave gets finer, but slower than any power), and why it is called local smoothing (smoothness;
+  a short stretch of time). 06c calls the log "what the proof pays", says the small circle shrinks as the wave gets finer, and joins the
+  balance to the walker ("anything at least the average of its surroundings behaves like a random walker's odds"); "later" and
+  "earlier" are gone for "the focus" and "the start". 06d's chart has its axis, "how fine the wave is".
+- **The tube is the thickened needle (consistency, major).** 05 says "that tube is a thickened needle"; "beam" means the wave only.
+- **The payoff and the walker move (pacing, sync, engagement, majors).** 06b shows "n = 2: p = 4", "n = 3: p = 3" and the bowl on their
+  words; the walker wanders for as long as the voice explains its odds, and each circle lights as it is named.
+- **Engagement majors.** A needle turns beside the paper while the 1917 question is asked, and OpenAI's claim lands on "OpenAI"; the
+  Lean excerpt stays up through "the definitions behind it", with the check spelled out beside it; the Khaby meme holds 7 s; a dry aside
+  in 06 ("Ordinary time, apparently, wasn't enough") and the signpost "Here's where the number comes from" cut; the spike collapses on
+  "can't hold a pose" and the fan's pieces jostle on "the glue"; "Now, waves." cut.
+- **Visuals majors.** Every pop's dark backdrop now runs to the bottom of the frame (no seam behind the captions); the 05 chain stacks
+  with downward arrows; 04a's chart labels are 36 px, its two formulas sit on their own lines, and the scene drops the camera push so the
+  column fits; small labels raised to 28 px; the timeline's labels narrowed; the 02b ghost value at 0.45.
+- **Consistency minors.** The legend says violet is also OpenAI's claims; the hook's claim chip is violet; "explained" and "not your
+  phone" are neutral; the allowed-loss curve is grey; the 07 map follows the tower's order and drops the square-function tile the tower
+  never named; 03b no longer says "the needles become tubes".
+
+Accepted at the cap, with reasons:
+- **The Quanta capture shows a cut-off orange icon at its top right (visuals V3-2, major).** It is the page as captured; hiding it needs
+  a selector for Quanta's layout that was not verified, and the marked sentence reads clearly.
+- **People-row heights in 05b and the 03b timeline's spacing (visuals minors)**, the act-internal pauses of 2.3 to 2.8 s (pacing P3-5,
+  each held by a picture, as the owner prefers), the handshake meme repeating the chain rather than "waves in, needles out" (sync, minor,
+  subjective), and 04a's spoken "the case the whole problem turns on" against the chip's "critical power" (both now say "critical").
+- **Spend.** The plan estimated about 1.5M critic tokens; three full rounds on a 16-minute video plus round 0 used roughly 3.5M. The
+  owner was not asked before rounds 2 and 3, which the critic-loop skill says to do; noted in the hand-back.
+
+## Floor check after the cap: accuracy on round 3's changes (Sonnet): pass, 0 / 0 / 5
+
+Fixed: the 07 tile for restriction's edge says "not claimed by this paper" rather than "still open" (the paper proves only the interior;
+whether others have the edge is not in the sources). Accepted as minors: "focus" and "start" on the 06c card stand for the paper's p-th
+powers; "always tamer" in 04a holds for the powers the video discusses (above 2); the reading of the name "local smoothing" is ours and
+sources.md says so; "behaves like a random walker's odds" is a gloss of the paper's comparison, followed at once by "the paper compares
+the energy with a walker".
+
+**Status: done.** Accuracy and grounding pass, no blocking finding is open, and what remains is recorded above. The voice was checked
+by hear-back and a second listener (two of its flags were false, confirmed by Whisper on the finished track); nobody has listened to
+it, the jokes' delivery, or the music beds by ear.
