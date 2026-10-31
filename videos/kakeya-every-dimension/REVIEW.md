@@ -321,3 +321,12 @@ dimensions". From the minors: "two dimensional doesn't mean losing nothing: it m
 1.8-dimension card on the googol screen (about one part in a one with twenty zeros); "do it to all four pieces of the fan";
 "on the table, a point needs two numbers"; 03b now says the stricter version has been known on a table since 1971, so Córdoba's
 1977 and Davies' 1971 no longer read as two dates for one result.
+
+**Round 3. Accuracy (Opus): pass, 0 / 0 / 1. Clarity (Opus): fail, 0 / 2 / 3.** Accuracy's minor: the drawing's own slow rate
+("than this") had no source; `sources.md` now gives the measured 1/area per round, marked inferred. Clarity: the stroke count was
+never tied to paint; the voice now says "twice as many, half as wide: that alone is the same paint, like the filled square ... Only
+overlap can lose paint", with a chip. The strokes-into-tree step was told over a still picture, then shown in five seconds; the
+tree now slides on the words "two", "four", "eight", runs on to 64 and 128 strokes (27%, 25%) so every loss cell has a round on
+screen, and the first brush is "as wide as the whole piece". From the minors: the 1.8-dimension working (about 3.5 times the
+dabs × ¼: 87% kept); Córdoba's line reordered ("loses its paint about this slowly, never much faster, give or take a fixed
+factor"); 03b says Davies settled the stricter version first, in 1971, before Córdoba's rate.
