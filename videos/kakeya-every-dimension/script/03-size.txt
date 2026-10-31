@@ -4,9 +4,9 @@
 
 [building, then letting a surprise land] Now paint a Kakeya set. A thinner brush can tell apart directions that are closer together, so every time you halve the brush, there are twice as many strokes to paint, each half as wide. They're the slivers from before, and you slide them to overlap as much as you can. The line's paint halves every time. The Kakeya paint barely moves: 100, 75, 52, 42.
 
-[clear, landing why it counts as full size] Here's why that matters. Every time the brush halves, a line loses half its paint, and any shape in between loses the same share every time. The Kakeya paint loses less and less. So in the end, it holds on to more than any shape in between.
+[clear, landing why it counts as full size] Here's why that matters. Every time the brush halves, a line loses half its paint, and any shape in between loses the same share every time. After the first few rounds, the Kakeya paint loses less and less. So in the end, it holds on to more than any shape in between.
 
-[building, then letting a striking number land] Keep going, and make the brush a googol times thinner. That's a one with a hundred zeros. A plain line would be down to a googolth of the paint. A shape one and a half dimensional, to one part in a one with fifty zeros. The most squeezed Kakeya set still needs roughly a hundredth. So the billionth from before was for a needle with no thickness at all. With any thickness, getting down to a billionth takes a needle thinner than one part in a one with a billion zeros.
+[building, then letting a striking number land] Keep going, and make the brush a googol times thinner. That's a one with a hundred zeros. A plain line would be down to a googolth of the paint. A shape one and a half dimensional, to one part in a one with fifty zeros. The most squeezed Kakeya set still needs roughly a hundredth. So the billionth from before? That's for a needle with no width at all. With any width, you'd need a brush roughly a billion zeros thin.
 
 [letting a surprising fact sink in, then clear] The paint barely goes down at all, slower than any shape in between, so by this test it's as two dimensional as a filled square. Zero area, full size.
 
