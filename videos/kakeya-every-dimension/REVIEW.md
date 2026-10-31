@@ -330,3 +330,16 @@ tree now slides on the words "two", "four", "eight", runs on to 64 and 128 strok
 screen, and the first brush is "as wide as the whole piece". From the minors: the 1.8-dimension working (about 3.5 times the
 dabs × ¼: 87% kept); Córdoba's line reordered ("loses its paint about this slowly, never much faster, give or take a fixed
 factor"); 03b says Davies settled the stricter version first, in 1971, before Córdoba's rate.
+
+**Round 4, the cap: clarity (Opus) on 03a-kakeya-paint alone: fail, 0 / 2 / 2.** Fixed: round 3 had put the tree on the words
+"two, four, eight" but left the paint on the spoken numbers, so two overlapping strokes still read 100%; each paint value is now
+said with its own round ("two strokes, slid together so they overlap: 75%. Four strokes: 52%. Eight: 42%"), and the counter and
+the stroke count change together. The losses are now said to be shares of what was left, worked once aloud and on a chip ("from
+75 to 52, it kept 52 of its 75, so it lost 31% of what it had"), with that cell lit. Minors fixed: "one stroke covers every needle
+in it"; "a stroke half as wide holds half the paint, but there are twice as many" (chip: ×2 strokes × ½ the paint = the same
+paint). No further round ran: this is the plan's cap. I checked each round-4 fix frame by frame; the arithmetic (52.1 / 75.0 =
+0.695) is in `sources.md`. Accuracy passed in round 3 and round 4 changed only how two of its numbers are said.
+
+Spend: about 1.6M critic tokens for cut 7's four rounds (eight critics, all Opus, measured from their reports). Check passes,
+overlaps none, every changed scene looked at frame by frame, stills regenerated cleanly each round (#139). Nobody has listened to
+the new takes; hear-back passed every take, and Parakeet's two flags are its known false ones (#129).
