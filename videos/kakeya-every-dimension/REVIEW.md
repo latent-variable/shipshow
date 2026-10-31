@@ -237,3 +237,27 @@ the model that wrote the script.
 **Status: done.** Accuracy and grounding pass and no blocking finding is open. The taste critics' last round was cut 3; cut 4 applied
 its majors and was checked by eye and by the scans, not by a fresh round. Spend: about 3.5M tokens for the first cut, and about 1.4M for
 cuts 2 to 4 (eight critics; `npm run usage`, cache reads not counted). The voice was checked by hear-back and Parakeet; nobody has listened to it, the jokes' delivery, or the music by ear.
+
+## Cut 5: generated objects (2026-10-30)
+
+The owner, after cut 4: the needle was a yellow bar and the table an empty box; generated assets should show a real needle and a
+table growing and shrinking, wherever a picture conveys what is happening. Seven pictures were generated (sources.md, *Generated
+pictures*; DESIGN D90): a needle in 01, 02, 02b, 04, 05a and 07c; an oak table whose bright part is the table each turn needs; a brush
+laying three thinner strokes for the paint test; a pincushion and a telescope in 03b; a laser beam and a pond in 04. The narration was
+voiced again (the cached takes went to the Trash with the last worktree, issue #131): hear-back 0 of 50 runs under 97%; the second
+listen's one flag in 06c was false, confirmed by Whisper (issue #129).
+
+**Visuals (Sonnet): fail, 0 / 2 / 6.** Fixed: the 02 needles were too small and dim to read as needles (boxes 490 px, needles thicker
+and brighter); the 02b hopping needle covered the slivers (now thin, at the picture's own proportions, with a glow). Also fixed from the
+minors: the tower's needle brighter, the pond's edge feathered and fainter, the pincushion calmer, the telescope framed like the
+portraits. Accepted: the brush shrinks rather than thins (the voice says "making the brush thinner", and a smaller brush is the
+everyday picture); the 01 label repeating the caption (unchanged from cut 4); the lit table under 07c's "area: zero" chip arrives on
+"all of the size", with the "size: full" chip.
+
+**Grounding (Sonnet): pass, 0 / 0 / 4.** Every picture is recorded with its model, seed and prompt; none could pass for evidence; no
+text in any; the measured areas in 02 are unchanged (the bright wood is clipped to the drawn disk or deltoid). Fixed: an
+"illustration" tag on the laser and the telescope. Accepted: the needle drawn about 1.5 times thicker than the picture's own
+proportions in 01 and 02, so it reads at that size.
+
+Check passes, overlaps none, a text-clipping scan over 298 cues none, every changed scene looked at frame by frame. Nobody has
+listened to the new takes.
