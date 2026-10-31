@@ -4,4 +4,4 @@
 
 [building to the payoff, then settling] A logarithm grows slower than any power, so that loss fits inside what the conjecture allows. That's Sogge's guess, in every dimension. And with it, Bochner Riesz, most of restriction, and Kakeya, down to the needle.
 
-[wry, an AI summing up another AI's proof in one breath] So, the whole proof in one breath: filter the wave by direction, measure its pile up with a bowl, and trace that back across a plane, losing only a log squared. Simple, right?
+[wry, an AI summing up another AI's proof in one breath] Put together, in one breath: filter the wave by direction, measure its pile up with a bowl, and trace that back across a plane, losing only a log squared. Simple, right?
