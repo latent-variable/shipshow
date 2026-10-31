@@ -261,3 +261,28 @@ proportions in 01 and 02, so it reads at that size.
 
 Check passes, overlaps none, a text-clipping scan over 298 cues none, every changed scene looked at frame by frame. Nobody has
 listened to the new takes.
+
+## Cut 6: no leaps (2026-10-31)
+
+The owner, on cut 5: much better with real textures, but lost at "a Kakeya set has area zero", and at a paint test only described
+("how did we go from almost no area to ... absolutely zero area? ... some leaps"). 02b now cuts and slides the Besicovitch–Perron
+tree round by round, with slide positions from Tao's applet and areas measured on the drawing (100%, 75%, 52%, 42%, then 35%, 31%);
+shows the turning needle's detour strips between pieces (Pál's joins, a schematic) as the reason turning never reaches zero; and
+shows the rounds going on (31%, 28%, 25%) to Besicovitch's exactly zero, the needles staying while the area goes. 03 paints a line,
+a square and the tree side by side as the brush halves, each with its paint counter, and says why barely moving means two
+dimensional. More textures: laser-light beams in 05 that add where they cross, and a dimmer in 06. The no-leaps rule is in
+`explain-concept` and `critic-clarity` (DESIGN D91).
+
+**Round 1. Clarity (Opus): fail, 0 / 3 / 1. Accuracy (Sonnet): fail, 0 / 1 / 3.** Fixed: the zero step was shown on the crossed
+needles and read as "lines have no area"; it now runs on the tree. Why the Kakeya paint barely moves (each stroke half as wide; any
+shape in between loses the same share each halving, this one less and less) and the billionth against the googol's hundredth are
+now said. Accuracy: the zero was told as caused by needing no strips; it is now a contrast, as Tao's footnote 2 sets it, and the
+detour is labelled a schematic.
+
+**Round 2. Clarity (Opus): pass, 0 / 0 / 3. Accuracy (Sonnet): pass, 0 / 0 / 4.** Fixed from the minors: "carry that all the way
+to the end" (it clashed with "no last round") is now "a careful way to finish the job", with "not just these rounds" on screen;
+"less and less" is said after the first few rounds, whose losses (25%, 31%, 20%) do not shrink; the measured later losses shown as
+about 15%, 13%, 11%, 9%; "about 29%" for a 1.5-dimensional shape; the billionth line in the brush's terms, with "roughly".
+
+Spend: about 0.9M critic tokens for cut 5 and cut 6 together. Check passes, overlaps none, a text-clipping scan over 339 cues
+none, every selector the timeline uses found, each changed scene looked at frame by frame. Nobody has listened to the new takes.

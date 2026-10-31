@@ -84,6 +84,12 @@ omission from an oversight.
   the field follow anyway; the rest are lost from the first word they never got (the same note: "four minutes in ... we start
   throwing terms that we didn't really [explain]"). Think through each kind of viewer, and let their perspective choose the
   example.
+- **No leaps: every step is shown happening** (the owner, 2026-10-31, on kakeya-every-dimension's fifth cut: "you basically
+  lost me when a Kakeya set had area of zero ... how did we go from almost no area to ... absolutely zero area? ... some
+  leaps"). When the voice goes from one claim to a stronger one in a sentence (almost none, then exactly zero), the step between
+  gets its own beat: what changes, shown moving. A process the voice describes (cut and slide, again and again) is animated
+  round by round with its numbers; a test the viewer is asked to imagine (paint it with a thinner brush) is performed on screen,
+  with what it measures counting as it goes. The numbers on screen come from the drawing or the source, never invented to fit.
 - **A longer video is acts, and each act has its own feel.** Past about three minutes, group the scenes into acts (the
   setup, the history, the turn, the consequences) and give each a mood (`video.json` `moods`: its colours, background and
   music). Open each act on a hook, a question or a turn, never a signpost like "so how does it work". Show what failure
