@@ -1,5 +1,5 @@
 [playful, deadpan, setting up a question that sounds pointless on purpose] Here's a question that sounds completely useless. You have a needle lying on a table, and you want to turn it around so it points the other way. What's the smallest amount of table you need?
 
-[intrigued, raising the stakes, letting it build] It's from 1917, and it refused to stay small. It turned out to be tangled up with how waves pile up, in sound, in light, even in the prime numbers. And on October twenty sixth, OpenAI posted a paper saying its AI had settled the biggest version of it, in every dimension. If it holds, that's a century old problem, finished by a machine.
+[intrigued, teasing a strange answer, then raising the stakes] The answer is stranger than you'd think: almost none. And a set of needles pointing every way can take up no room at all, and still, in a deeper sense, be full size. That puzzle got tangled up with how waves pile up, in sound, in light, even in the prime numbers. On October twenty sixth, OpenAI posted a paper saying its AI had settled it in every dimension, by way of a bigger problem about waves. If it holds, a century old problem was finished by a machine.
 
-[measured, letting each fact land] Nobody independent has checked it yet. So let's do what a mathematician would: start with the needle.
+[measured, letting it land] Nobody independent has checked it yet.
