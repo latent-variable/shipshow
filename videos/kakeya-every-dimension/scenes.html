@@ -1,0 +1,822 @@
+<style>
+  /* Layout only: colour, type and motion come from the ripple theme's tokens and each act's mood. One meaning per colour:
+     gold (--accent) is a needle and the Kakeya side; cyan (--accent-2) is a wave; violet (--accent-3) is the paper's new
+     machinery; green (--good) still stands or is proved; coral (--bad) is ruled out or open. Math is set in Fraunces, italic for
+     variables. Every supporting line is at least 28 px. */
+  .stage { position: absolute; inset: 40px var(--pad) 30px; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
+  .row { display: flex; gap: 30px; align-items: center; justify-content: center; }
+  .col { display: flex; flex-direction: column; gap: 22px; }
+  .card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 26px 36px; }
+  .tag { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-2); }
+  .src { font-family: var(--font-mono); font-size: 28px; color: var(--muted); line-height: 1.3; }
+  .center { text-align: center; }
+  .big { font-family: var(--font-display); font-weight: 700; letter-spacing: var(--display-tracking); line-height: 1.08; }
+  .math { font-family: "Fraunces", var(--font-display); font-weight: 600; white-space: nowrap; }
+  .math i { font-style: italic; }
+  .math sup { font-size: 0.6em; vertical-align: 0.75em; line-height: 0; }
+  .math sub { font-size: 0.6em; vertical-align: -0.25em; line-height: 0; }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1.05; margin: 0 0.12em; }
+  .frac > span:first-child { border-bottom: 0.06em solid currentColor; padding: 0 0.15em; }
+  .chip { display: inline-block; padding: 16px 28px; background: var(--card); border: var(--border) solid var(--line); border-radius: 14px; font-size: 38px; font-weight: 700; white-space: nowrap; }
+  .chip small { display: block; font-family: var(--font-mono); font-size: 26px; font-weight: 400; color: var(--muted); margin-top: 6px; }
+  .chip.gold { border-color: var(--accent); color: var(--accent); }
+  .chip.cyan { border-color: var(--accent-2); color: var(--accent-2); }
+  .chip.violet { border-color: var(--accent-3); color: var(--accent-3); }
+  .chip.good { border-color: var(--good); color: var(--good); }
+  .chip.bad { border-color: var(--bad); color: var(--bad); }
+  .stamp { display: inline-block; padding: 8px 26px; border: 6px solid var(--bad); border-radius: 10px; color: var(--bad); font-family: var(--font-mono); font-weight: 700; font-size: 44px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; transform: rotate(-5deg); background: rgba(5, 10, 16, 0.85); }
+  .stamp.gold { border-color: var(--accent); color: var(--accent); }
+  .stamp.good { border-color: var(--good); color: var(--good); }
+  .stamp.cyan { border-color: var(--accent-2); color: var(--accent-2); }
+  .phase { position: absolute; inset: 0; }
+  .meme-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .meme-wrap.pop { z-index: 6; background: rgba(3, 8, 12, 0.84); }
+  .ss-meme { --meme-height: 780px; }
+  .stage { --portrait-height: 300px; }
+  .stage .ss-portrait { position: relative; inset: auto; margin: 0; max-width: none; flex: none; font-size: 32px; }
+  .stage .ss-portrait figcaption small { font-size: 28px; }
+  .namecard { width: 300px; height: 300px; border: 8px solid var(--frame); border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--card); padding: 22px 18px; flex: none; }
+  .namecard b { font-family: var(--font-display); font-size: 38px; line-height: 1.15; }
+  .namecard small { font-size: 28px; color: var(--muted); margin-top: 12px; line-height: 1.25; }
+  .people { display: flex; gap: 26px; align-items: flex-end; justify-content: center; }
+  .stage svg { flex: none; }
+  svg text { font-family: var(--font-mono); fill: var(--muted); }
+  svg .lbl { font-family: var(--font); font-weight: 800; fill: var(--ink); }
+  svg .ax { stroke: var(--ink); stroke-width: 3; fill: none; }
+  svg .grid { stroke: var(--line); stroke-width: 1.5; }
+  /* A new act opens on its own card while its music and look arrive alone (video.json leads). */
+  .chapter { position: absolute; inset: 0; z-index: 5; background: var(--sky, var(--bg)); -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%); mask-image: linear-gradient(to bottom, #000 72%, transparent 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; text-align: center; }
+  .chapter .kicker { font-family: var(--font-mono); font-size: 40px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); }
+  .chapter .title { font-family: var(--font-display); font-size: 150px; line-height: 1; color: var(--accent); }
+  .chapter .rule { width: 520px; height: 6px; border-radius: 3px; background: var(--accent-2); transform-origin: center; }
+
+  /* 01 */
+  .preprint { width: 1380px; margin: 0 auto; padding: 44px 64px 50px; background: #eef3f4; color: #102028; border-radius: 6px; box-shadow: 0 30px 70px rgba(1, 6, 10, 0.65); transform: rotate(-1deg); position: relative; }
+  .preprint .who { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.12em; color: #3f5560; }
+  .preprint .title { font-family: var(--font-display); font-size: 80px; line-height: 1.05; margin-top: 16px; }
+  .preprint .date { font-family: var(--font-mono); font-size: 30px; color: #3f5560; margin-top: 18px; }
+  .facts { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
+  .qs { display: flex; flex-direction: column; gap: 26px; align-items: center; }
+  .qs .chip { font-size: 52px; padding: 22px 40px; }
+  .twopapers { display: flex; gap: 50px; justify-content: center; align-items: center; }
+  .mini { width: 560px; padding: 30px 36px; background: #eef3f4; color: #102028; border-radius: 6px; box-shadow: 0 20px 50px rgba(1, 6, 10, 0.6); font-family: var(--font-display); font-size: 44px; line-height: 1.12; position: relative; }
+  .mini .who { display: block; font-family: var(--font-mono); font-size: 26px; color: #3f5560; margin-bottom: 10px; }
+  .mini .stamp { position: absolute; right: -20px; bottom: -34px; font-size: 32px; }
+  /* 02 */
+  .tables { display: flex; gap: 60px; justify-content: center; align-items: flex-end; }
+  .tablebox { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .tablebox svg { background: rgba(255, 255, 255, 0.03); border: 1.5px solid var(--line); border-radius: 14px; }
+  .area { font-family: "Fraunces", var(--font-display); font-weight: 600; font-size: 52px; }
+  .area small { font-family: var(--font-mono); font-size: 28px; color: var(--muted); font-weight: 400; margin-left: 10px; }
+  .needle { stroke: var(--accent); stroke-width: 9; stroke-linecap: round; }
+  .sweep { fill: rgba(255, 200, 87, 0.16); stroke: var(--accent); stroke-width: 3; }
+  .delt { fill: rgba(159, 216, 232, 0.14); stroke: var(--accent-2); stroke-width: 4; }
+  /* 02b */
+  .counter { font-family: "Fraunces", var(--font-display); font-weight: 600; font-size: 74px; color: var(--accent); }
+  .tree path { fill: rgba(255, 200, 87, 0.18); stroke: var(--accent); stroke-width: 2.5; }
+  .burst line { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
+  .defcard { font-size: 46px; font-weight: 800; text-align: center; line-height: 1.3; }
+  .defcard b { color: var(--accent); font-family: var(--font-display); font-size: 64px; display: block; }
+  /* 03 */
+  .choice { display: flex; gap: 70px; justify-content: center; align-items: center; }
+  .choice .card { width: 620px; text-align: center; font-size: 50px; font-weight: 800; line-height: 1.25; }
+  .choice .or { font-family: var(--font-display); font-size: 70px; color: var(--muted); }
+  .chart text { font-size: 28px; }
+  .chart .c { fill: none; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+  .c.line { stroke: var(--bad); } .c.square { stroke: var(--good); } .c.kak { stroke: var(--accent); stroke-width: 9; }
+  .legend { display: flex; flex-direction: column; gap: 20px; }
+  .legend .chip { font-size: 34px; }
+  /* 03b */
+  .tubes line { stroke: var(--accent); stroke-width: 22; stroke-linecap: round; opacity: 0.55; }
+  .timeline { display: flex; gap: 0; justify-content: center; align-items: flex-start; position: relative; }
+  .tl-item { width: 265px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; position: relative; }
+  .tl-item .dot { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 8px rgba(255, 200, 87, 0.18); }
+  .tl-item .dot.open { background: transparent; border: 5px solid var(--bad); box-shadow: none; }
+  .tl-item .dot.claim { background: var(--accent-3); box-shadow: 0 0 0 8px rgba(195, 166, 255, 0.2); }
+  .tl-item .yr { font-family: var(--font-mono); font-size: 40px; font-weight: 700; }
+  .tl-item .what { font-size: 36px; font-weight: 700; line-height: 1.25; }
+  .tl-item .who { font-size: 30px; color: var(--muted); }
+  .tl-rail { position: absolute; left: 132px; right: 132px; top: 15px; height: 4px; background: var(--line); }
+  /* 04 */
+  .pond circle.ring { fill: none; stroke: var(--accent-2); stroke-width: 6; }
+  .pond .spike { fill: rgba(111, 227, 255, 0.85); }
+  .peak .c { fill: none; stroke: var(--accent-2); stroke-width: 7; stroke-linejoin: round; }
+  .peak .avg { stroke: var(--accent); stroke-width: 5; stroke-dasharray: 16 10; }
+  .formula { font-size: 40px; line-height: 1.6; }
+  .formula .math { font-size: 46px; }
+  .formula .k { font-family: var(--font-mono); font-size: 28px; color: var(--muted); display: block; }
+  /* 04b */
+  .tower { display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; }
+  .tower .blk { width: 760px; padding: 22px 30px; border-radius: 10px; text-align: center; font-size: 42px; font-weight: 800; background: var(--card); border: 3px solid var(--line); }
+  .tower .blk small { display: block; font-family: var(--font-mono); font-size: 26px; font-weight: 400; color: var(--muted); margin-top: 4px; }
+  .tower .blk.top { border-color: var(--accent-2); color: var(--accent-2); }
+  .tower .blk.kak { border-color: var(--accent); color: var(--accent); width: 600px; }
+  .tower .pin { width: 10px; height: 120px; background: linear-gradient(var(--accent), rgba(255, 200, 87, 0.2)); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+  /* 05 */
+  .beams line { stroke-linecap: round; }
+  .beams .b { stroke: var(--accent-2); stroke-width: 26; opacity: 0.4; }
+  .beams .core { stroke: var(--accent); stroke-width: 6; }
+  .beams .hot { fill: rgba(255, 200, 87, 0.9); }
+  .sign { font-family: var(--font-mono); font-size: 40px; font-weight: 700; fill: var(--accent); }
+  .chain { display: flex; gap: 22px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .chain .arr { font-size: 52px; color: var(--muted); }
+  .chain .chip { font-size: 36px; }
+  /* 05b */
+  .fan path { stroke: var(--accent-2); stroke-width: 3; fill: rgba(111, 227, 255, 0.12); }
+  .quote { font-family: var(--font-display); font-size: 64px; line-height: 1.2; text-align: center; max-width: 1450px; margin: 0 auto; }
+  .quote small { display: block; font-family: var(--font-mono); font-size: 30px; color: var(--muted); margin-top: 24px; }
+  /* 06 */
+  .dirs line { stroke: var(--accent-2); stroke-width: 8; stroke-linecap: round; }
+  .dirs .ray { stroke: var(--accent); stroke-width: 10; }
+  .bell { fill: none; stroke: var(--accent-3); stroke-width: 7; }
+  .pipes path { fill: none; stroke: var(--line); stroke-width: 26; stroke-linecap: round; }
+  .pipes circle { fill: var(--accent-2); }
+  .axes3 line { stroke: var(--accent-3); stroke-width: 6; }
+  .axes3 text { font-family: "Fraunces", serif; font-style: italic; font-size: 44px; fill: var(--accent-3); }
+  /* 06b */
+  .bowlfig .dens { fill: rgba(111, 227, 255, 0.35); stroke: var(--accent-2); stroke-width: 5; }
+  .bowlfig .bowl { fill: rgba(195, 166, 255, 0.14); stroke: var(--accent-3); stroke-width: 7; }
+  .bowlfig .edge { stroke: var(--muted); stroke-width: 3; stroke-dasharray: 10 8; }
+  .pc { font-size: 150px; color: var(--accent-3); }
+  /* 06c */
+  .plane circle { fill: none; stroke-width: 5; }
+  .plane .inner { stroke: var(--accent-2); } .plane .outer { stroke: var(--accent-3); }
+  .plane .walk { fill: none; stroke: var(--accent); stroke-width: 3; opacity: 0.85; }
+  .logc .c { fill: none; stroke-width: 7; }
+  .logc .lg { stroke: var(--accent-3); } .logc .pw { stroke: var(--bad); }
+  .recap { display: flex; gap: 26px; justify-content: center; }
+  .recap .card { width: 500px; font-size: 38px; font-weight: 800; line-height: 1.3; text-align: center; }
+  .recap .card .n { font-family: var(--font-display); font-size: 70px; color: var(--accent-3); display: block; line-height: 1; margin-bottom: 8px; }
+  /* 07 */
+  .map { display: grid; grid-template-columns: repeat(3, 470px); gap: 22px; justify-content: center; }
+  .map .card { font-size: 36px; font-weight: 800; text-align: center; padding: 26px 20px; line-height: 1.25; }
+  .map .card small { display: block; font-family: var(--font-mono); font-size: 26px; font-weight: 400; color: var(--muted); margin-top: 8px; }
+  .map .card.ok { border-color: var(--good); }
+  .map .card.ok::before { content: "✓ "; color: var(--good); }
+  .mk { display: none; }
+  /* 07b */
+  .leanhead { font-size: 40px; font-weight: 800; text-align: center; }
+  .leanhead small { display: block; font-family: var(--font-mono); font-size: 26px; font-weight: 400; color: var(--muted); margin-top: 8px; }
+  .ss-code.lean { font-size: 38px; line-height: 1.5; padding: 30px 40px; width: fit-content; margin: 0 auto; }
+  .cautions { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .cautions .card { font-size: 36px; font-weight: 700; line-height: 1.3; }
+  .cautions .card small { display: block; font-family: var(--font-mono); font-size: 26px; font-weight: 400; color: var(--muted); margin-top: 8px; }
+</style>
+
+<section data-scene="01-hook" data-mood="headline">
+  <div class="phase" id="p01a">
+    <div class="stage">
+      <div class="preprint" data-cue="October" data-anim="up">
+        <div class="who">OPENAI · OCTOBER 25, 2026 · 59 PAGES</div>
+        <div class="title">Local smoothing for the Euclidean wave equation</div>
+        <div class="date">posted October 26 · github.com/openai/math</div>
+      </div>
+      <div class="facts">
+        <div class="chip gold" data-cue="1917" data-anim="pop">1917: a needle puzzle</div>
+        <div class="chip gold" data-cue="Kakeya" data-anim="pop">the Kakeya conjecture, every dimension</div>
+        <div class="chip cyan" data-cue="waves" data-anim="pop">a famous conjecture about waves</div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p01b">
+    <div class="stage">
+      <div class="qs">
+        <div class="chip" data-cue="century" data-anim="left">a century-old problem, solved by an AI?</div>
+        <div class="chip" data-cue="weeks" data-anim="right">in weeks, where people took decades?</div>
+        <div class="chip gold" data-cue="care" data-anim="pop">why care about a needle?</div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p01c">
+    <div class="stage">
+      <div class="qs">
+        <div class="chip" data-cue="human" data-anim="pop">no human authors<small>"an unnamed internal OpenAI model" · the repo's README</small></div>
+        <div class="chip violet" data-cue="checker" data-anim="pop">Lean proof checker: done October 19, says OpenAI<small>the model's output: October 18 · OpenAI's post</small></div>
+        <div class="chip bad" data-cue="independent" data-anim="pop">independent check: none found yet<small>as of October 30, 2026</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p01d">
+    <div class="stage">
+      <div class="twopapers">
+        <div class="mini" data-cue="Exponential" data-anim="left"><span class="who">OPENAI · SAME POST</span>The Exponential Time Hypothesis is False<span class="stamp good">explained</span></div>
+        <div class="mini" data-cue="book" data-anim="right"><span class="who">OPENAI · SAME POST</span>Local smoothing for the Euclidean wave equation<span class="stamp gold">today</span></div>
+      </div>
+      <div class="row"><div class="chip violet" data-cue="Claude" data-anim="pop">the narrator: Claude, an AI made by Anthropic</div></div>
+    </div>
+  </div>
+  <div class="phase" id="p01e">
+    <div class="stage" style="align-items: center">
+      <svg width="900" height="120" viewBox="-450 -60 900 120" data-cue="stranger" data-anim="fade"><line class="needle" id="needle01" x1="-300" y1="0" x2="300" y2="0"/></svg>
+    </div>
+  </div>
+</section>
+
+<section data-scene="02-needle" data-mood="needle">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part one</div><div class="title" data-cue="+0.4" data-anim="up">The needle</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="stage">
+    <div class="tables">
+      <figure class="ss-portrait" style="--portrait-height: 380px" data-commons="File:Sōichi Kakeya, circa 1937.jpg" data-cue="Kakeya's" data-anim="pop"><figcaption>Sōichi Kakeya<small>asked it in 1917</small></figcaption></figure>
+      <div class="tablebox" data-cue="needle" data-anim="fade">
+        <svg width="640" height="520" viewBox="-280 -230 560 460">
+          <circle class="sweep" id="disk02" cx="0" cy="0" r="150"/>
+          <line class="needle" id="spin02" x1="-150" y1="0" x2="150" y2="0"/>
+        </svg>
+        <div class="area" data-cue="0.79" data-anim="up">π/4 ≈ 0.785<small>spin it</small></div>
+      </div>
+      <div class="tablebox" data-cue="Cleverer" data-anim="fade">
+        <svg width="640" height="520" viewBox="-280 -230 560 460">
+          <path class="delt" id="delt02" d="M225.0 -0.0 L224.9 -0.0 L224.4 -0.0 L223.6 -0.0 L222.5 -0.1 L221.2 -0.2 L219.5 -0.3 L217.5 -0.5 L215.2 -0.7 L212.7 -1.0 L209.8 -1.3 L206.7 -1.7 L203.3 -2.3 L199.7 -2.9 L195.8 -3.6 L191.6 -4.4 L187.2 -5.3 L182.6 -6.3 L177.7 -7.4 L172.7 -8.7 L167.4 -10.1 L161.9 -11.6 L156.3 -13.2 L150.5 -14.9 L144.5 -16.8 L138.4 -18.9 L132.2 -21.0 L125.8 -23.3 L119.3 -25.8 L112.7 -28.4 L106.1 -31.1 L99.3 -33.9 L92.5 -36.9 L85.7 -40.0 L78.8 -43.2 L71.9 -46.6 L65.0 -50.0 L58.1 -53.6 L51.2 -57.3 L44.3 -61.1 L37.5 -65.0 L30.7 -68.9 L24.0 -73.0 L17.4 -77.1 L10.8 -81.3 L4.4 -85.6 L-2.0 -89.8 L-8.2 -94.2 L-14.3 -98.6 L-20.3 -103.0 L-26.1 -107.4 L-31.8 -111.8 L-37.3 -116.2 L-42.7 -120.6 L-47.9 -125.0 L-52.9 -129.3 L-57.7 -133.6 L-62.3 -137.8 L-66.8 -142.0 L-71.0 -146.0 L-75.0 -150.0 L-78.8 -153.9 L-82.4 -157.6 L-85.9 -161.3 L-89.0 -164.8 L-92.0 -168.1 L-94.8 -171.3 L-97.4 -174.4 L-99.7 -177.2 L-101.9 -179.9 L-103.8 -182.4 L-105.5 -184.7 L-107.0 -186.8 L-108.4 -188.6 L-109.5 -190.2 L-110.4 -191.6 L-111.2 -192.8 L-111.8 -193.7 L-112.2 -194.3 L-112.4 -194.7 L-112.5 -194.8 L-112.4 -194.7 L-112.2 -194.3 L-111.8 -193.6 L-111.3 -192.7 L-110.7 -191.5 L-110.0 -189.9 L-109.1 -188.1 L-108.2 -186.1 L-107.2 -183.7 L-106.1 -181.1 L-104.9 -178.1 L-103.6 -175.0 L-102.3 -171.5 L-101.0 -167.8 L-99.6 -163.8 L-98.2 -159.5 L-96.8 -155.0 L-95.3 -150.2 L-93.8 -145.2 L-92.4 -140.0 L-91.0 -134.5 L-89.6 -128.8 L-88.2 -122.8 L-86.8 -116.8 L-85.6 -110.4 L-84.3 -103.9 L-83.1 -97.3 L-82.0 -90.5 L-80.9 -83.5 L-80.0 -76.3 L-79.0 -69.1 L-78.2 -61.7 L-77.5 -54.2 L-76.8 -46.6 L-76.3 -39.0 L-75.8 -31.3 L-75.5 -23.5 L-75.2 -15.7 L-75.1 -7.9 L-75.0 -0.0 L-75.1 7.9 L-75.2 15.7 L-75.5 23.5 L-75.8 31.3 L-76.3 39.0 L-76.8 46.6 L-77.5 54.2 L-78.2 61.7 L-79.0 69.1 L-80.0 76.3 L-80.9 83.5 L-82.0 90.5 L-83.1 97.3 L-84.3 103.9 L-85.6 110.4 L-86.8 116.8 L-88.2 122.8 L-89.6 128.8 L-91.0 134.5 L-92.4 140.0 L-93.8 145.2 L-95.3 150.2 L-96.8 155.0 L-98.2 159.5 L-99.6 163.8 L-101.0 167.8 L-102.3 171.5 L-103.6 175.0 L-104.9 178.1 L-106.1 181.1 L-107.2 183.7 L-108.2 186.1 L-109.1 188.1 L-110.0 189.9 L-110.7 191.5 L-111.3 192.7 L-111.8 193.6 L-112.2 194.3 L-112.4 194.7 L-112.5 194.8 L-112.4 194.7 L-112.2 194.3 L-111.8 193.7 L-111.2 192.8 L-110.4 191.6 L-109.5 190.2 L-108.4 188.6 L-107.0 186.8 L-105.5 184.7 L-103.8 182.4 L-101.9 179.9 L-99.7 177.2 L-97.4 174.4 L-94.8 171.3 L-92.0 168.1 L-89.0 164.8 L-85.9 161.3 L-82.4 157.6 L-78.8 153.9 L-75.0 150.0 L-71.0 146.0 L-66.8 142.0 L-62.3 137.8 L-57.7 133.6 L-52.9 129.3 L-47.9 125.0 L-42.7 120.6 L-37.3 116.2 L-31.8 111.8 L-26.1 107.4 L-20.3 103.0 L-14.3 98.6 L-8.2 94.2 L-2.0 89.8 L4.4 85.6 L10.8 81.3 L17.4 77.1 L24.0 73.0 L30.7 68.9 L37.5 65.0 L44.3 61.1 L51.2 57.3 L58.1 53.6 L65.0 50.0 L71.9 46.6 L78.8 43.2 L85.7 40.0 L92.5 36.9 L99.3 33.9 L106.1 31.1 L112.7 28.4 L119.3 25.8 L125.8 23.3 L132.2 21.0 L138.4 18.9 L144.5 16.8 L150.5 14.9 L156.3 13.2 L161.9 11.6 L167.4 10.1 L172.7 8.7 L177.7 7.4 L182.6 6.3 L187.2 5.3 L191.6 4.4 L195.8 3.6 L199.7 2.9 L203.3 2.3 L206.7 1.7 L209.8 1.3 L212.7 1.0 L215.2 0.7 L217.5 0.5 L219.5 0.3 L221.2 0.2 L222.5 0.1 L223.6 0.0 L224.4 0.0 L224.9 0.0 L225.0 -0.0 Z"/>
+          <line class="needle" id="turn02" x1="-150" y1="0" x2="150" y2="0"/>
+        </svg>
+        <div class="area" data-cue="half" data-anim="up">π/8 ≈ 0.393<small>a three-point turn: half</small></div>
+      </div>
+    </div>
+    <i class="mk" id="mk02spin" data-cue="spin#2"></i><i class="mk" id="mk02delt" data-cue="deltoid"></i>
+    <div class="src center" data-cue="obvious" data-anim="fade">a needle one unit long · areas: Terence Tao, "Rotating needles in space", 2026</div>
+  </div>
+</section>
+
+<section data-scene="02b-no-smallest">
+  <div class="phase" id="p02ba">
+    <div class="stage">
+      <div class="row" style="gap: 70px">
+        <div class="namecard" data-cue="Besicovitch" data-anim="pop"><b>Abram Besicovitch</b><small>1928</small></div>
+        <div class="col" style="align-items: center">
+          <div class="stamp" data-cue="smallest" data-anim="slam">no smallest</div>
+          <div class="counter" data-cue="thousandth" data-anim="up">area 0.001</div>
+          <div class="counter" data-cue="billionth" data-anim="up">area 0.000000001</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p02bb">
+    <div class="stage">
+      <svg class="tree" width="900" height="400" viewBox="-360 -320 720 340" style="align-self: center" data-cue="tree" data-anim="draw"><path d="M-330.0 0 L-302.5 0 L-67.3 -300 Z"/><path d="M-302.5 0 L-275.0 0 L-53.5 -300 Z"/><path d="M-275.0 0 L-247.5 0 L-53.2 -300 Z"/><path d="M-247.5 0 L-220.0 0 L-41.4 -300 Z"/><path d="M-220.0 0 L-192.5 0 L-35.6 -300 Z"/><path d="M-192.5 0 L-165.0 0 L-46.1 -300 Z"/><path d="M-165.0 0 L-137.5 0 L-42.3 -300 Z"/><path d="M-137.5 0 L-110.0 0 L-14.0 -300 Z"/><path d="M-110.0 0 L-82.5 0 L-25.0 -300 Z"/><path d="M-82.5 0 L-55.0 0 L-20.5 -300 Z"/><path d="M-55.0 0 L-27.5 0 L6.1 -300 Z"/><path d="M-27.5 0 L0.0 0 L-3.4 -300 Z"/><path d="M0.0 0 L27.5 0 L12.0 -300 Z"/><path d="M27.5 0 L55.0 0 L7.2 -300 Z"/><path d="M55.0 0 L82.5 0 L16.9 -300 Z"/><path d="M82.5 0 L110.0 0 L8.5 -300 Z"/><path d="M110.0 0 L137.5 0 L27.3 -300 Z"/><path d="M137.5 0 L165.0 0 L39.0 -300 Z"/><path d="M165.0 0 L192.5 0 L34.6 -300 Z"/><path d="M192.5 0 L220.0 0 L45.9 -300 Z"/><path d="M220.0 0 L247.5 0 L49.1 -300 Z"/><path d="M247.5 0 L275.0 0 L37.4 -300 Z"/><path d="M275.0 0 L302.5 0 L62.0 -300 Z"/><path d="M302.5 0 L330.0 0 L62.6 -300 Z"/></svg>
+      <div class="src center" data-cue="tree" data-anim="fade">a Besicovitch–Perron tree, drawn as an idea, not to scale · Tao 2026, Figure 2</div>
+    </div>
+  </div>
+  <div class="meme-wrap pop" id="m02b" data-cue="exactly" data-anim="fade"><figure class="ss-meme" data-meme="mordor" data-cue="exactly" data-anim="pop"><span>one does not simply</span><span>turn a needle in zero area</span></figure></div>
+  <div class="phase" id="p02bc">
+    <div class="stage">
+      <div class="row" style="gap: 80px">
+        <svg class="burst" width="520" height="520" viewBox="-260 -260 520 520" data-cue="copy" data-anim="stagger">
+          <line x1="-200" y1="0" x2="200" y2="0"/><line x1="-185" y1="-77" x2="185" y2="77"/><line x1="-141" y1="-141" x2="141" y2="141"/><line x1="-77" y1="-185" x2="77" y2="185"/>
+          <line x1="0" y1="-200" x2="0" y2="200"/><line x1="77" y1="-185" x2="-77" y2="185"/><line x1="141" y1="-141" x2="-141" y2="141"/><line x1="185" y1="-77" x2="-185" y2="77"/>
+          <line x1="-197" y1="-35" x2="197" y2="35"/><line x1="-164" y1="-115" x2="164" y2="115"/><line x1="-115" y1="-164" x2="115" y2="164"/><line x1="-35" y1="-197" x2="35" y2="197"/>
+          <line x1="35" y1="-197" x2="-35" y2="197"/><line x1="115" y1="-164" x2="-115" y2="164"/><line x1="164" y1="-115" x2="-164" y2="115"/><line x1="197" y1="-35" x2="-197" y2="35"/>
+        </svg>
+        <div class="col" style="align-items: center">
+          <div class="chip" data-cue="Forget" data-anim="pop">no turning: one needle per direction</div>
+          <div class="chip good" data-cue="zero#3" data-anim="pop">area: exactly 0 is possible<small>Besicovitch, 1920</small></div>
+          <div class="card defcard" data-cue="Kakeya" data-anim="up"><b>a Kakeya set</b>a needle pointing in every direction</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="03-size" data-mood="dimension">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part two</div><div class="title" data-cue="+0.4" data-anim="up">Zero area, full size</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p03a">
+    <div class="stage">
+      <div class="choice">
+        <div class="card" data-cue="scribble" data-anim="left">basically nothing:<br>a scribble of lines?</div>
+        <div class="or" data-cue="deeper" data-anim="fade">or</div>
+        <div class="card" style="border-color: var(--accent)" data-cue="table" data-anim="right">as big as<br>the whole table?</div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p03b">
+    <div class="stage" style="inset: 20px var(--pad) 10px">
+      <div class="row" style="gap: 40px">
+        <svg class="chart" width="1080" height="640" viewBox="0 0 1080 640" data-cue="test" data-anim="fade">
+          <line class="grid" x1="140" y1="40" x2="1040" y2="40"/><line class="grid" x1="140" y1="170" x2="1040" y2="170"/><line class="grid" x1="140" y1="300" x2="1040" y2="300"/><line class="grid" x1="140" y1="430" x2="1040" y2="430"/>
+          <path class="ax" d="M140 30 V560 H1050"/>
+          <text x="128" y="50" text-anchor="end">1</text><text x="128" y="180" text-anchor="end">10⁻²⁵</text><text x="128" y="310" text-anchor="end">10⁻⁵⁰</text><text x="128" y="440" text-anchor="end">10⁻⁷⁵</text><text x="128" y="552" text-anchor="end">10⁻¹⁰⁰</text>
+          <text x="140" y="600" text-anchor="middle">1×</text><text x="365" y="600" text-anchor="middle">10²⁵×</text><text x="590" y="600" text-anchor="middle">10⁵⁰×</text><text x="815" y="600" text-anchor="middle">10⁷⁵×</text><text x="1040" y="600" text-anchor="middle">10¹⁰⁰×</text>
+          <text x="590" y="634" text-anchor="middle" class="lbl" style="font-size: 30px">how many times thinner</text>
+          <text x="20" y="20" class="lbl" style="font-size: 30px">area left</text>
+          <path class="c line" d="M140 40 L1040 560" data-cue="single" data-anim="draw"/>
+          <path class="c square" d="M140 40 L1040 40" data-cue="filled" data-anim="draw"/>
+          <path class="c kak" d="M140 40 C 200 48, 300 50, 1040 50.4" data-cue="Now" data-anim="draw"/>
+          <circle cx="1040" cy="50" r="12" fill="var(--accent)" data-cue="hundredth" data-anim="pop"/>
+        </svg>
+        <div class="legend">
+          <div class="chip bad" data-cue="single" data-anim="pop">a line: in step<small>one dimension</small></div>
+          <div class="chip good" data-cue="filled" data-anim="pop">a filled square: no change<small>two dimensions</small></div>
+          <div class="chip gold" data-cue="Now" data-anim="pop">a needle set: barely<small>about 1/100 at 10¹⁰⁰× · Tao 2026</small></div>
+        </div>
+      </div>
+      <div class="src center" data-cue="test" data-anim="fade">both axes on a log scale · the needle set's curve is about 1/log, an illustration of the rate (Córdoba 1977, Keich 1999)</div>
+    </div>
+  </div>
+  <div class="meme-wrap pop" id="m03" data-cue="plain" data-anim="fade"><figure class="ss-meme" data-meme="vince" data-cue="plain" data-anim="pop"><span data-cue="plain" data-anim="fade">a line, a googol times thinner: a googolth</span><span data-cue="still" data-anim="fade">a needle set, just as thin</span><span data-cue="hundredth" data-anim="fade">still about a hundredth</span></figure></div>
+  <div class="phase" id="p03c">
+    <div class="stage">
+      <div class="card defcard" data-cue="Kakeya#2" data-anim="up"><b>the Kakeya conjecture</b>a set with a needle in every direction is always full size: dimension <i style="font-family: Fraunces, serif">n</i>, in every dimension <i style="font-family: Fraunces, serif">n</i></div>
+      <div class="src center" data-cue="full" data-anim="fade">"full size" officially means Hausdorff dimension, a stricter test than thickening; the paper proves that one</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="03b-the-record">
+  <div class="phase" id="p03ba">
+    <div class="stage">
+      <div class="row" style="gap: 60px">
+        <svg class="tubes" width="560" height="520" viewBox="-280 -260 560 520" data-cue="tubes" data-anim="stagger">
+          <line x1="-200" y1="40" x2="190" y2="-30"/><line x1="-120" y1="-190" x2="140" y2="170"/><line x1="-30" y1="210" x2="40" y2="-200"/><line x1="-210" y1="-60" x2="200" y2="90"/><line x1="160" y1="-160" x2="-140" y2="150"/><line x1="-60" y1="-210" x2="80" y2="200"/>
+        </svg>
+        <div class="col">
+          <div class="people">
+            <figure class="ss-portrait" data-commons="File:Terence Tao.jpg" data-cue="Tao" data-anim="pop"><figcaption>Terence Tao<small>survey, August 2026</small></figcaption></figure>
+            <figure class="ss-portrait" data-commons="File:Hong Wang, 2025 (cropped).jpg" data-cue="Wang" data-anim="pop"><figcaption>Hong Wang<small>3D, 2025</small></figcaption></figure>
+            <div class="namecard" data-cue="Zahl" data-anim="pop"><b>Joshua Zahl</b><small>3D, 2025</small></div>
+          </div>
+          <div class="chip gold" data-cue="telescope" data-anim="pop">a telescope that must point at every star, in as little space as possible</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="meme-wrap pop" id="s03b" data-cue="Quanta" data-anim="fade"><figure class="ss-shot" data-shot="https://www.quantamagazine.org/once-in-a-century-proof-settles-maths-kakeya-conjecture-20250314/" data-find="once-in-a-century kind of result" data-lines="1" data-mark-cue="century" data-cue="Quanta" data-anim="up"></figure></div>
+  <div class="phase" id="p03bb">
+    <div class="stage">
+      <div class="timeline" data-cue="Four" data-anim="fade">
+        <div class="tl-rail"></div>
+        <div class="tl-item"><div class="dot"></div><div class="yr">1917</div><div class="what">the needle puzzle</div><div class="who">Kakeya</div></div>
+        <div class="tl-item"><div class="dot"></div><div class="yr">1971</div><div class="what">2 dimensions</div><div class="who">Davies</div></div>
+        <div class="tl-item"><div class="dot"></div><div class="yr">2025</div><div class="what">3 dimensions</div><div class="who">Wang, Zahl</div></div>
+        <div class="tl-item"><div class="dot open"></div><div class="yr">then</div><div class="what">4 and up: open</div><div class="who">Quanta, 2025</div></div>
+        <div class="tl-item" data-cue="September" data-anim="pop"><div class="dot claim"></div><div class="yr">Sep 2026</div><div class="what">4 dimensions</div><div class="who">OpenAI, a claim</div></div>
+        <div class="tl-item" data-cue="all" data-anim="pop"><div class="dot claim"></div><div class="yr">Oct 2026</div><div class="what">every dimension</div><div class="who">OpenAI, a claim</div></div>
+      </div>
+      <div class="row"><div class="stamp cyan" data-cue="waves" data-anim="slam">through waves</div></div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="04-focus" data-mood="waves">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part three</div><div class="title" data-cue="+0.4" data-anim="up">Waves</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p04a">
+    <div class="stage">
+      <div class="row" style="gap: 50px">
+        <svg class="pond" width="620" height="620" viewBox="-310 -310 620 620" data-cue="ripples" data-anim="fade">
+          <circle class="ring" id="r1" cx="0" cy="0" r="280"/><circle class="ring" id="r2" cx="0" cy="0" r="240"/><circle class="ring" id="r3" cx="0" cy="0" r="200"/>
+          <circle class="spike" id="spike04" cx="0" cy="0" r="0"/>
+        </svg>
+        <svg class="peak" width="760" height="460" viewBox="0 0 760 460" data-cue="tall" data-anim="fade">
+          <path class="ax" d="M40 20 V400 H740"/>
+          <text x="390" y="446" text-anchor="middle">time</text><text x="60" y="30">how piled up</text>
+          <path class="c" d="M40 380 C 200 378, 300 372, 340 330 C 360 300, 370 80, 390 60 C 410 80, 420 300, 440 330 C 480 372, 580 378, 740 380" data-cue="spike" data-anim="draw"/>
+          <text x="390" y="46" text-anchor="middle" style="fill: var(--accent-2); font-weight: 700" data-cue="focus" data-anim="fade">the focus</text>
+        </svg>
+      </div>
+      <div class="src center" data-cue="ripples" data-anim="fade">an illustration of a wave coming to a focus (the paper's Proposition 8.1 uses one)</div>
+    </div>
+  </div>
+  <div class="phase" id="p04b">
+    <div class="stage">
+      <div class="row" style="gap: 50px">
+        <div class="col" style="align-items: center">
+          <div class="namecard" data-cue="Sogge" data-anim="pop"><b>Christopher Sogge</b><small>1991</small></div>
+          <div class="stamp cyan" data-cue="local#2" data-anim="slam">local smoothing</div>
+        </div>
+        <div class="col">
+          <div class="chip cyan" data-cue="measure" data-anim="pop">size of a spike: the wave to a power <i style="font-family: Fraunces, serif">p</i><small>a higher p counts a tall, narrow spike more</small></div>
+          <svg class="peak" width="820" height="250" viewBox="0 0 760 300">
+            <path class="ax" d="M40 20 V280 H740"/>
+            <path class="c" d="M40 262 C 200 260, 300 255, 340 220 C 360 190, 370 40, 390 30 C 410 40, 420 190, 440 220 C 480 255, 580 260, 740 262"/>
+            <line class="avg" x1="40" y1="215" x2="740" y2="215" data-cue="average#2" data-anim="draw"/>
+            <text x="410" y="40" style="fill: var(--bad); font-weight: 700; font-size: 30px" data-cue="worst" data-anim="fade">worst instant</text>
+            <text x="500" y="200" style="fill: var(--accent); font-weight: 700; font-size: 30px" data-cue="average#2" data-anim="fade">averaged over time</text>
+          </svg>
+          <div class="card formula" style="font-size: 36px; padding: 20px 30px" data-cue="guessed" data-anim="up">
+            <span class="k">derivatives of the starting wave needed, for p ≥ 2n/(n−1)</span>
+            one instant: <span class="math" style="font-size: 40px">(<i>n</i>−1)(½ − 1/<i>p</i>)</span> · averaged: <span class="math" style="font-size: 40px">(<i>n</i>−1)/2 − <i>n</i>/<i>p</i></span><br>
+            <span style="color: var(--accent)">a saving of almost 1/<i style="font-family: Fraunces, serif">p</i>, up to any tiny loss</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="04b-tower">
+  <div class="stage">
+    <div class="row" style="gap: 60px">
+      <div class="tower">
+        <div class="blk top" data-cue="top" data-anim="pop">local smoothing<small>Sogge, 1991 · waves</small></div>
+        <div class="blk" data-cue="Bochner" data-anim="pop">Bochner–Riesz<small>rebuilding a signal from its frequencies</small></div>
+        <div class="blk" data-cue="Stein's" data-anim="pop">Stein's restriction<small>frequencies on a sphere</small></div>
+        <div class="blk kak" data-cue="bottom" data-anim="pop">Kakeya<small>the needle</small></div>
+        <div class="pin" data-cue="bottom" data-anim="grow"></div>
+      </div>
+      <div class="col" style="align-items: center">
+        <figure class="ss-portrait" data-commons="File:Elias Stein.jpeg" data-cue="Stein's" data-anim="pop"><figcaption>Elias Stein</figcaption></figure>
+        <div class="chip" data-cue="Quanta" data-anim="pop">"a tower of conjectures<br>that rests upon a needle"<small>Quanta, 2023</small></div>
+        <div class="chip" data-cue="level" data-anim="pop">each level ⇒ the one below<small>give or take edge cases</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="meme-wrap pop" id="m04b" data-cue="needle#3" data-anim="fade"><figure class="ss-meme" data-meme="reveal" data-cue="needle#3" data-anim="pop"><span>the needle problem</span><span>let's see who you really are</span><span>a wave problem</span><span>I knew it</span></figure></div>
+</section>
+
+<section data-scene="05-beams" data-mood="beams">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part four</div><div class="title" data-cue="+0.4" data-anim="up">Waves to needles</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p05a">
+    <div class="stage">
+      <svg class="beams" width="1500" height="480" viewBox="0 -240 1500 480" style="align-self: center">
+        <g data-cue="narrow" data-anim="fade"><path d="M60 0 L300 -90 L300 90 Z" fill="rgba(111, 227, 255, 0.2)" stroke="var(--accent-2)" stroke-width="3"/><text x="90" y="140" class="lbl" style="font-size: 32px">a narrow cone of directions</text></g>
+        <g data-cue="beam" data-anim="left"><line class="b" x1="360" y1="0" x2="1420" y2="0"/><line class="core" x1="360" y1="0" x2="1420" y2="0"/><text x="760" y="-50" class="lbl" style="font-size: 34px">a beam: strong inside a long thin tube</text></g>
+      </svg>
+      <div class="row"><div class="chip gold" data-cue="thickened" data-anim="pop">a beam is a thickened needle<small>the paper, section 9.2</small></div></div>
+    </div>
+  </div>
+  <div class="phase" id="p05b">
+    <div class="stage">
+      <div class="row" style="gap: 60px">
+        <svg class="beams" id="bundle05" width="760" height="600" viewBox="-380 -300 760 600">
+          <g class="bb"><line class="b" x1="-340" y1="0" x2="340" y2="0"/><text class="sign" x="300" y="-24">+</text></g>
+          <g class="bb"><line class="b" x1="-290" y1="-180" x2="290" y2="180"/><text class="sign" x="250" y="140">−</text></g>
+          <g class="bb"><line class="b" x1="-180" y1="-290" x2="180" y2="290"/><text class="sign" x="150" y="250">+</text></g>
+          <g class="bb"><line class="b" x1="0" y1="-340" x2="0" y2="340"/><text class="sign" x="20" y="300">−</text></g>
+          <g class="bb"><line class="b" x1="180" y1="-290" x2="-180" y2="290"/><text class="sign" x="-210" y="250">+</text></g>
+          <g class="bb"><line class="b" x1="290" y1="-180" x2="-290" y2="180"/><text class="sign" x="-300" y="140">+</text></g>
+          <circle class="hot" id="hot05" cx="0" cy="0" r="0"/>
+        </svg>
+        <div class="col">
+          <i class="mk" id="mk05aim" data-cue="aim"></i><i class="mk" id="mk05cram" data-cue="crammed"></i><i class="mk" id="mk05huge" data-cue="huge"></i>
+          <div class="chip" data-cue="overlap" data-anim="pop">where tubes overlap, strengths add</div>
+          <div class="stamp" data-cue="rules" data-anim="slam">ruled out</div>
+          <div class="chip" data-cue="flips" data-anim="pop">random ± signs, so they add on average<small>the paper, section 9.2</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p05c">
+    <div class="stage">
+      <div class="chain">
+        <div class="chip cyan" data-cue="piled#2" data-anim="pop">waves can't stay piled up</div><div class="arr" data-cue="crammed#3" data-anim="fade">→</div>
+        <div class="chip gold" data-cue="crammed#3" data-anim="pop">tubes can't be crammed by much</div><div class="arr" data-cue="full" data-anim="fade">→</div>
+        <div class="chip good" data-cue="full" data-anim="pop">a Kakeya set is full size</div>
+      </div>
+    </div>
+  </div>
+  <div class="meme-wrap pop" id="m05" data-cue="waves#3" data-anim="fade"><figure class="ss-meme" data-meme="handshake" data-cue="waves#3" data-anim="pop"><span>waves can't stay piled up</span><span>tubes can't be crammed</span><span>the same fact</span></figure></div>
+</section>
+
+<section data-scene="05b-the-hard-part">
+  <div class="phase" id="p05ba">
+    <div class="stage">
+      <div class="row" style="gap: 40px; --portrait-height: 250px">
+        <svg class="fan" width="380" height="310" viewBox="-20 -210 520 420" data-cue="chops" data-anim="fade">
+          <g id="fan2"><path d="M0 0 L480 -180 L480 0 Z"/><path d="M0 0 L480 0 L480 180 Z"/></g>
+          <g id="fan8" style="opacity: 0"><path d="M0 0 L480 -180 L480 -135 Z"/><path d="M0 0 L480 -135 L480 -90 Z"/><path d="M0 0 L480 -90 L480 -45 Z"/><path d="M0 0 L480 -45 L480 0 Z"/><path d="M0 0 L480 0 L480 45 Z"/><path d="M0 0 L480 45 L480 90 Z"/><path d="M0 0 L480 90 L480 135 Z"/><path d="M0 0 L480 135 L480 180 Z"/></g>
+        </svg>
+        <div class="col">
+          <div class="people">
+            <figure class="ss-portrait" data-commons="File:Thomas Wolff 1992 (re-scanned, as-is).jpg" data-cue="Wolff" data-anim="pop"><figcaption>Thomas Wolff<small>the plane, 2000, p &gt; 74</small></figcaption></figure>
+            <div class="namecard" style="width: 250px; height: 250px" data-cue="Guth" data-anim="pop"><b>Larry Guth</b><small>the plane, 2019</small></div>
+            <figure class="ss-portrait" data-commons="File:Hong Wang, 2025 (cropped).jpg" data-cue="Wang" data-anim="pop"><figcaption>Hong Wang</figcaption></figure>
+            <figure class="ss-portrait" data-commons="File:Ruixiang Zhang Oberwolfach 2017.jpg" data-cue="Zhang" data-anim="pop"><figcaption>Ruixiang Zhang</figcaption></figure>
+          </div>
+          <i class="mk" id="mk05bthin" data-cue="thinner"></i><i class="mk" id="mk05bglue" data-cue="glue"></i>
+          <div class="row"><div class="chip good" data-cue="finished" data-anim="pop">the plane: done, 2019</div><div class="chip bad" data-cue="partway" data-anim="pop">3 and up: partway</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p05bb">
+    <div class="stage">
+      <div class="quote" data-cue="names" data-anim="up">“A persistent difficulty is to put waves moving in different directions back together.”<small>the paper, section 1.2, page 3</small></div>
+      <div class="row"><div class="chip violet" data-cue="barely" data-anim="pop">its answer: barely take them apart</div></div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="06-filter" data-mood="method">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part five</div><div class="title" data-cue="+0.4" data-anim="up">The new idea</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p06a">
+    <div class="stage">
+      <div class="row" style="gap: 50px">
+        <svg class="dirs" width="640" height="560" viewBox="-60 -280 640 560" data-cue="light" data-anim="fade">
+          <line class="d" x1="0" y1="0" x2="520" y2="0" style="opacity: 1"/>
+          <line class="d d1" x1="0" y1="0" x2="502" y2="-135"/><line class="d d1" x1="0" y1="0" x2="502" y2="135"/>
+          <line class="d d2" x1="0" y1="0" x2="450" y2="-260"/><line class="d d2" x1="0" y1="0" x2="450" y2="260"/>
+          <line class="d d3" x1="0" y1="0" x2="368" y2="-368"/><line class="d d3" x1="0" y1="0" x2="368" y2="368"/>
+          <line class="ray" x1="0" y1="0" x2="540" y2="0" data-cue="untouched" data-anim="grow"/>
+          <text x="300" y="-14" style="fill: var(--accent); font-weight: 700" data-cue="untouched" data-anim="fade">along the light ray</text>
+        </svg>
+        <div class="col">
+          <svg width="640" height="300" viewBox="0 0 640 300" data-cue="bell" data-anim="fade">
+            <path class="ax" d="M20 270 H620"/>
+            <path class="bell" d="M20 268 C 160 266, 230 250, 270 160 C 295 90, 305 30, 320 30 C 335 30, 345 90, 370 160 C 410 250, 480 266, 620 268" data-cue="bell" data-anim="draw"/>
+            <text x="320" y="298" text-anchor="middle">direction</text><text x="330" y="22" style="fill: var(--accent)">untouched</text>
+          </svg>
+          <div class="card formula" data-cue="filter" data-anim="up"><span class="k">each wave is multiplied by</span><span class="math">e<sup>−ℓ|ξ| |ω − ξ/|ξ||² / 2</sup></span><span class="k">the paper, section 1.4</span></div>
+        </div>
+      </div>
+      <i class="mk" id="mk06dim" data-cue="dimmed"></i>
+      <div class="row"><div class="chip violet" data-cue="knife" data-anim="pop">a filter for direction, not a knife</div></div>
+    </div>
+  </div>
+  <div class="phase" id="p06b">
+    <div class="stage">
+      <div class="card formula center" data-cue="sounds" data-anim="up" style="max-width: 1300px; margin: 0 auto">“Analytic continuation in an imaginary spacetime direction has also been used to study waves.”<span class="k">the paper, section 1.4, related constructions</span></div>
+      <div class="row"><div class="chip violet" data-cue="new" data-anim="pop">new: what it builds on top</div></div>
+    </div>
+  </div>
+  <div class="phase" id="p06c">
+    <div class="stage">
+      <div class="row" style="gap: 70px">
+        <svg class="pipes" width="660" height="440" viewBox="0 0 660 440" data-cue="flow" data-anim="fade">
+          <path id="pipe06" d="M30 220 H630"/>
+          <circle class="dot06" r="12" cx="30" cy="220"/><circle class="dot06" r="12" cx="30" cy="220"/><circle class="dot06" r="12" cx="30" cy="220"/><circle class="dot06" r="12" cx="30" cy="220"/><circle class="dot06" r="12" cx="30" cy="220"/>
+        </svg>
+        <div class="col">
+          <div class="chip" data-cue="created" data-anim="pop">never created or destroyed<small>zero divergence · Lemma 2.1</small></div>
+          <div class="chip cyan" data-cue="adds" data-anim="pop">add the waves first, then measure<small>keeps the interference that makes a focus</small></div>
+          <svg class="axes3" width="520" height="220" viewBox="0 0 520 220" data-cue="extra" data-anim="draw">
+            <line x1="60" y1="180" x2="480" y2="180"/><line x1="60" y1="180" x2="60" y2="20"/><line x1="60" y1="180" x2="200" y2="70"/>
+            <text x="490" y="190">T</text><text x="70" y="30">τ₁</text><text x="210" y="70">τ₂</text>
+          </svg>
+          <div class="src" data-cue="extra" data-anim="fade">time T, plus two extra time directions τ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="06b-bowl">
+  <div class="phase" id="p06ba">
+    <div class="stage">
+      <div class="row" style="gap: 50px">
+        <svg class="bowlfig" width="900" height="560" viewBox="0 0 900 560" data-cue="bowl" data-anim="fade">
+          <path class="dens" id="dens06b" d="M40 220 C 200 220, 300 218, 380 214 C 420 212, 430 212, 450 212 C 470 212, 480 212, 520 214 C 600 218, 700 220, 860 220 Z"/>
+          <text x="40" y="200" style="fill: var(--accent-2); font-weight: 700">how much wave is there</text>
+          <line class="edge" x1="40" y1="300" x2="860" y2="300"/>
+          <path class="bowl" id="bowl06b" d="M40 300 C 250 340, 350 360, 450 360 C 550 360, 650 340, 860 300 Z"/>
+          <text x="600" y="470" style="fill: var(--accent-3); font-weight: 700" data-cue="bowl" data-anim="fade">the bowl</text>
+        </svg>
+        <div class="col">
+          <i class="mk" id="mk06bpile" data-cue="piles"></i>
+          <div class="chip violet" data-cue="auxiliary" data-anim="pop">a new auxiliary equation<small>"a novel auxiliary partial differential equation" · OpenAI's post</small></div>
+          <div class="card formula" data-cue="bend" data-anim="up"><span class="math">det H(λ|Φ|² + <i>u</i>) = λμ</span><span class="k">the bowl <i>u</i>, zero at the edge · the paper, (4.8)</span></div>
+          <div class="card formula" data-cue="energy" data-anim="up"><span class="k">the energy</span><span class="math">∫ (−<i>u</i>) μ</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p06bb">
+    <div class="stage" style="align-items: center">
+      <div class="chip" data-cue="dense" data-anim="pop">denser pile up → deeper dip → counted extra</div>
+      <div class="math pc" data-cue="power" data-anim="pulse"><i>p</i> = <span class="frac"><span>2<i>n</i></span><span><i>n</i> − 1</span></span></div>
+      <div class="src center" data-cue="power" data-anim="fade">"the resulting exponent is 2n/(n − 1)" · the paper, section 1.4</div>
+    </div>
+  </div>
+  <div class="meme-wrap pop" id="m06b" data-cue="quaternions" data-anim="fade"><figure class="ss-meme" data-meme="harold" data-cue="quaternions" data-anim="pop"><span>the bowl is built from quaternions</span><span data-cue="ripples" data-anim="fade">me, explaining ripples</span></figure></div>
+</section>
+
+<section data-scene="06c-crossing">
+  <div class="phase" id="p06ca">
+    <div class="stage">
+      <div class="row" style="gap: 60px">
+        <svg class="plane" width="640" height="640" viewBox="-320 -320 640 640" data-cue="circles" data-anim="fade">
+          <circle class="outer" cx="0" cy="0" r="250"/><circle class="inner" cx="0" cy="0" r="40"/>
+          <path class="walk" d="M0.0 0.0 L-8.6 2.7 L-17.0 -0.6 L-9.0 -4.8 L-17.8 -2.8 L-26.8 -3.3 L-34.4 -8.0 L-30.8 0.3 L-39.8 -0.4 L-46.0 -7.0 L-43.6 -15.6 L-36.1 -10.6 L-39.1 -2.1 L-31.5 2.7 L-28.2 -5.6 L-31.3 -14.1 L-22.6 -11.7 L-13.7 -12.7 L-4.9 -14.7 L-10.0 -22.1 L-16.8 -28.1 L-11.8 -20.6 L-2.9 -19.7 L-11.7 -21.3 L-3.3 -18.0 L-0.0 -9.7 L0.4 -0.7 L9.3 1.0 L0.5 3.0 L-7.9 6.3 L-2.9 -1.2 L-11.9 -2.3 L-17.6 -9.2 L-26.6 -9.2 L-31.3 -16.9 L-40.0 -14.5 L-41.6 -5.6 L-32.6 -5.8 L-23.6 -6.0 L-18.7 -13.6 L-21.1 -22.3 L-24.7 -14.0 L-23.5 -5.1 L-25.7 3.6 L-17.6 7.5 L-16.7 -1.5 L-24.0 3.8 L-18.8 -3.6 L-25.6 2.3 L-17.0 -0.1 L-11.8 -7.5 L-2.8 -7.4 L-0.5 1.3 L7.1 -3.5 L-1.8 -1.8 L7.2 -2.9 L-0.0 2.5 L8.0 6.5 L1.9 -0.1 L3.5 -8.9 L2.3 -0.0 L10.0 4.7 L5.6 12.5 L14.3 10.5 L14.8 1.5 L21.4 7.6 L21.6 16.6 L28.9 21.9 L37.2 25.2 L39.9 16.6 L43.8 24.7 L35.4 21.4 L26.9 24.3 L30.2 32.7 L29.2 23.8 L35.3 30.4 L29.7 23.3 L36.4 29.3 L28.5 33.6 L30.6 42.4 L29.5 51.3 L38.3 49.7 L41.3 41.2 L38.3 49.7 L45.0 43.7 L47.2 52.4 L40.1 58.0 L45.6 50.8 L40.0 43.8 L47.3 49.1 L56.2 48.5 L58.3 57.3 L57.8 66.3 L59.1 57.4 L54.8 65.3 L52.2 73.9 L60.3 77.9 L67.9 82.8 L60.1 78.3 L60.5 87.3 L53.2 81.9 L47.0 88.4 L38.4 91.0 L47.1 88.7 L38.1 89.7 L30.1 85.6 L36.1 78.9 L39.8 87.1 L44.9 94.5 L52.5 89.6 L56.2 81.4 L56.2 90.4 L59.5 98.8 L58.9 89.8 L67.3 86.5 L70.3 95.0 L78.8 92.2 L85.5 86.2 L78.3 80.7 L70.4 85.0 L77.5 90.5 L86.3 92.6 L95.0 90.5 L95.7 99.5 L93.2 90.9 L92.8 99.9 L96.8 91.8 L89.4 86.7 L87.0 95.4 L91.0 103.4 L89.4 94.5 L97.5 98.3 L98.8 107.2 L90.4 103.9 L95.8 96.7 L89.0 90.8 L87.3 99.7 L95.1 95.2 L97.7 103.8 L106.6 104.8 L105.5 113.7 L97.1 116.7 L105.4 120.0 L109.4 128.1 L103.3 134.7 L95.2 130.8 L101.3 137.4 L95.5 144.2 L102.5 138.5 L111.4 137.4 L106.4 129.9 L103.2 121.5 L95.4 117.0 L101.2 123.9 L109.9 125.9 L118.9 126.9 L126.5 122.1 L123.8 113.5 L132.5 111.4 L141.4 112.6 L135.5 105.8 L126.6 106.8 L125.5 97.9 L121.7 106.1 L130.7 106.0 L138.7 110.1 L130.1 107.6 L129.4 98.6 L136.6 93.3 L135.9 84.3 L133.3 75.7 L135.8 67.1 L143.5 62.5 L138.1 69.7 L134.6 61.4 L141.9 56.2 L148.1 49.7 L140.3 54.1 L142.5 45.4 L148.4 38.6 L140.3 34.6 L134.0 28.3 L127.3 34.3 L119.5 29.9 L112.5 24.2 L120.4 28.5 L114.7 21.6 L123.7 21.2 L130.2 15.1 L129.0 6.2 L122.1 12.0 L121.3 3.0 L113.4 -1.4 L105.0 1.9 L109.8 -5.7 L117.5 -1.2 L117.6 -10.2 L126.4 -8.5 L119.2 -13.9 L110.2 -12.8 L111.3 -3.9 L108.5 -12.4 L99.5 -12.3 L92.7 -18.2 L100.6 -22.5 L100.3 -13.5 L109.2 -12.9 L106.4 -4.3 L102.5 -12.4 L105.1 -3.8 L109.5 4.1 L116.9 -1.0 L112.1 -8.6 L103.7 -5.4 L110.7 -11.0 L106.5 -3.1 L102.0 -10.8 L104.8 -2.3 L96.7 1.5 L99.8 -7.0 L107.5 -11.6 L114.1 -17.7 L107.4 -11.7 L99.6 -16.2 L95.9 -8.0 L101.8 -1.2 L92.8 -1.0 L97.5 -8.7 L102.7 -16.0 L100.5 -24.8 L109.1 -27.5 L107.6 -18.7 L112.0 -10.8 L103.4 -8.1 L102.0 0.8 L104.0 9.6 L96.3 14.2 L90.0 7.8 L81.0 8.2 L77.4 16.4 L82.1 8.8 L91.1 7.8 L82.5 10.4 L90.5 14.5 L99.3 16.3 L105.6 9.8 L114.3 12.2 L112.0 3.5 L103.9 -0.4 L100.6 8.0 L102.9 -0.7 L111.9 0.4 L117.8 7.1 L109.1 9.7 L118.0 11.1 L122.3 3.2 L123.1 12.1 L128.8 19.1 L137.4 21.7 L131.2 15.2 L122.7 18.2 L116.5 11.6 L111.5 4.2 L114.6 -4.3 L123.3 -6.6 L119.7 -14.8 L122.5 -6.3 L113.7 -4.9 L117.6 3.2 L126.5 3.8 L117.7 5.4 L115.7 -3.4 L119.5 4.7 L118.3 13.7 L113.2 21.1 L110.3 12.6 L101.3 11.4 L94.6 5.5 L94.9 -3.5 L87.9 2.1 L90.2 -6.6 L97.7 -11.6 L105.4 -6.9 L113.6 -10.6 L112.0 -19.5 L118.2 -12.9 L109.6 -10.3 L103.2 -16.7 L110.8 -21.6 L104.4 -15.3 L96.2 -19.0 L102.7 -25.2 L105.3 -33.8 L113.8 -36.9 L105.0 -34.9 L99.8 -42.2 L102.3 -33.6 L100.7 -42.4 L104.5 -50.6 L98.8 -57.6 L97.0 -66.4 L99.1 -57.7 L106.3 -63.0 L115.3 -64.1 L124.2 -65.3 L115.4 -67.4 L117.7 -76.1 L113.9 -68.0 L121.5 -72.8 L127.0 -79.9 L121.8 -72.6 L129.6 -68.1 L121.2 -64.8 L112.7 -67.6 L113.7 -76.6 L104.7 -75.8 L113.6 -74.2 L116.8 -82.6 L125.1 -79.1 L127.9 -87.7 L132.1 -79.7 L127.5 -72.0 L129.6 -80.7 L135.3 -73.7 L140.7 -66.5 L131.7 -67.4 L130.3 -76.3 L135.1 -83.9 L131.7 -92.3 L140.2 -95.3 L131.2 -94.9 L139.8 -97.7 L147.5 -93.1 L149.1 -84.2 L140.2 -85.7 L138.0 -77.0 L136.8 -85.9 L131.0 -92.8 L122.1 -94.1 L127.1 -101.6 L118.7 -104.9 L115.3 -96.6 L108.7 -90.4 L113.8 -97.9 L121.1 -103.1 L123.4 -94.5 L128.7 -101.7 L137.5 -103.5 L128.7 -104.8 L120.6 -108.8 L123.3 -100.3 L114.5 -102.3 L105.5 -102.4 L98.4 -108.0 L107.3 -106.4 L116.1 -108.1 L107.2 -109.0 L99.9 -103.8 L102.7 -112.3 L94.4 -115.8 L85.4 -115.3 L82.2 -123.7 L90.4 -120.0 L81.7 -122.2 L74.0 -117.6 L82.6 -120.0 L90.6 -124.1 L89.5 -115.2 L80.7 -113.7 L86.9 -107.3 L78.7 -103.6 L82.3 -111.9 L89.6 -117.1 L80.7 -115.8 L77.0 -107.6 L80.3 -99.2 L73.6 -105.3 L81.6 -109.3 L87.8 -102.8 L89.5 -111.6 L98.4 -110.4 L101.5 -101.9 L102.8 -93.0 L99.3 -101.3 L95.4 -93.2 L89.8 -86.1 L83.3 -92.3 L90.4 -86.8 L89.3 -95.7 L95.7 -89.4 L86.8 -90.0 L86.7 -81.0 L89.6 -72.5 L80.8 -74.2 L72.5 -70.7 L66.1 -64.4 L58.4 -59.7 L49.6 -61.4 L54.4 -53.8 L56.9 -45.1 L50.8 -51.8 L45.0 -58.6 L36.2 -60.3 L41.5 -67.5 L34.7 -73.4 L40.3 -80.4 L41.2 -71.5 L40.7 -80.4 L44.1 -88.8 L51.4 -94.0 L47.8 -85.7 L44.2 -77.5 L52.2 -81.7 L54.0 -72.8 L63.0 -72.9 L69.8 -78.8 L75.8 -72.1 L76.4 -63.1 L75.1 -72.0 L74.6 -63.0 L81.9 -57.9 L86.4 -65.7 L78.5 -61.4 L80.7 -70.1 L87.0 -63.7 L79.6 -58.6 L76.1 -66.8 L85.0 -65.8 L87.8 -57.3 L84.0 -65.5 L91.7 -70.2 L100.5 -72.0 L107.2 -66.0 L98.3 -66.3 L98.7 -75.3 L89.7 -75.5 L86.2 -83.8 L89.5 -75.4 L97.7 -71.6 L104.7 -66.0 L113.5 -63.9 L105.0 -66.8 L96.0 -67.6 L87.8 -71.4 L93.3 -64.2 L96.9 -56.0 L99.4 -47.3 L104.3 -54.9 L113.3 -55.5 L121.3 -59.5 L128.8 -54.4 L137.1 -51.0 L145.7 -53.7 L136.9 -51.6 L137.8 -60.5 L133.6 -52.5 L124.8 -50.7 L115.8 -51.6 L107.7 -47.7 L100.4 -53.1 L109.4 -52.3 L106.7 -60.9 L111.7 -68.4 L115.5 -60.2 L106.8 -57.6 L106.2 -66.6 L98.8 -61.5 L101.8 -53.1 L106.4 -45.3 L97.4 -46.0 L106.4 -45.2 L113.4 -50.8 L116.3 -59.3 L113.8 -67.9 L119.5 -74.8 L113.4 -81.4 L105.9 -76.3 L98.6 -81.6 L89.6 -81.8 L98.6 -82.8 L101.6 -91.3 L101.2 -82.3 L108.8 -87.0 L108.5 -96.0 L110.1 -104.9 L113.6 -113.2 L106.1 -108.1 L113.3 -113.6 L119.9 -119.7 L116.8 -128.2 L117.8 -137.1 L118.6 -146.1 L111.2 -141.1 L109.6 -150.0 L117.8 -146.1 L112.9 -138.5 L104.0 -136.8 L113.0 -136.2 L107.5 -129.1 L101.7 -136.0 L95.3 -142.3 L96.3 -133.4 L104.7 -136.4 L100.2 -144.2 L95.5 -136.6 L90.7 -144.1 L82.5 -148.0 L73.7 -149.8 L66.8 -144.1 L75.8 -144.1 L70.1 -151.1 L67.4 -159.7 L68.1 -168.6 L77.0 -169.8 L85.9 -168.5 L79.2 -174.4 L78.6 -183.4 L78.2 -174.4 L70.9 -169.2 L79.4 -166.4 L82.4 -157.9 L76.0 -151.6 L83.4 -146.4 L83.3 -137.4 L90.8 -142.4 L82.2 -145.2 L73.2 -145.6 L82.0 -147.5 L73.9 -151.2 L82.9 -151.5 L77.0 -158.3 L80.3 -166.7 L88.3 -162.6 L80.9 -167.7 L81.5 -176.7 L90.1 -174.2 L98.3 -178.0 L103.1 -170.4 L94.2 -168.9 L98.6 -161.0 L89.6 -160.7 L82.7 -166.5 L91.1 -163.3 L99.6 -166.3 L91.7 -162.0 L82.8 -163.5 L75.5 -168.7 L69.5 -162.0 L67.5 -153.2 L62.4 -160.7 L54.1 -164.0 L52.2 -155.2 L50.3 -164.0 L47.7 -155.4 L56.7 -154.6 L57.0 -145.6 L65.7 -143.2 L70.6 -135.7 L70.9 -144.7 L64.0 -139.0 L71.2 -144.4 L71.1 -153.4 L79.6 -150.6 L88.6 -151.2 L97.1 -154.3 L105.1 -150.3 L112.6 -155.3 L104.5 -151.5 L95.5 -150.2 L104.4 -151.7 L104.8 -142.7 L95.9 -144.0 L104.2 -147.5 L102.6 -156.4 L93.8 -154.6 L102.7 -155.8 L106.4 -164.0 L99.3 -169.5 L106.0 -163.5 L99.6 -169.8 L91.0 -167.4 L93.5 -158.7 L102.1 -155.8 L93.2 -157.4 L99.6 -151.1 L91.2 -147.9 L86.7 -155.8 L78.1 -153.3 L77.4 -144.3 L69.6 -148.7 L61.7 -144.4 L63.3 -153.2 L54.4 -155.0 L63.4 -155.1 L72.0 -157.7 L71.1 -166.7 L71.8 -157.7 L78.6 -151.8 L85.6 -157.4 L87.5 -166.2 L81.2 -172.6 L75.5 -165.6 L74.3 -156.7 L70.7 -165.0 L62.4 -168.5 L54.9 -173.4 L48.9 -180.1 L49.0 -189.1 L52.4 -180.8 L52.4 -171.8 L61.4 -172.9 L69.1 -177.5 L75.6 -183.7 L84.4 -181.5 L92.7 -178.1 L91.5 -169.2 L83.5 -165.1 L77.1 -171.4 L84.3 -166.0 L75.6 -168.3 L83.7 -164.4 L91.4 -159.7 L87.3 -167.8 L78.8 -170.6 L72.7 -177.2 L66.4 -170.7 L57.5 -169.5 L59.7 -160.8 L54.7 -153.3 L54.4 -162.3 L59.1 -170.0 L67.2 -165.9 L73.7 -159.8 L77.0 -168.1 L70.6 -174.5 L71.7 -183.4 L73.7 -174.6 L65.7 -170.5 L65.3 -161.5 L68.6 -169.9 L62.5 -163.3 L57.3 -170.7 L66.3 -171.3 L62.2 -163.3 L53.6 -166.0 L53.4 -175.0 L61.3 -179.3 L53.2 -175.3 L47.1 -168.8 L54.5 -163.6 L60.8 -170.0 L68.8 -165.7 L76.6 -161.2 L68.3 -164.7 L59.3 -163.9 L55.8 -172.2 L53.1 -163.6 L54.5 -172.5 L62.5 -168.3 L64.5 -159.6 L59.8 -167.2 L67.7 -162.8 L64.7 -154.3 L63.3 -163.2 L60.2 -171.7 L58.3 -162.8 L63.9 -155.8 L58.3 -148.8 L56.9 -157.7 L50.9 -151.0 L57.6 -144.9 L55.3 -153.6 L47.1 -157.4 L55.0 -161.8 L63.4 -165.2 L71.1 -169.8 L62.7 -166.4 L65.7 -174.9 L62.6 -166.4 L58.9 -158.2 L51.7 -152.9 L59.9 -156.5 L67.0 -162.1 L67.1 -153.1 L61.3 -146.2 L55.3 -139.4 L49.4 -132.6 L42.3 -127.1 L35.5 -121.3 L38.5 -112.8 L30.2 -116.3 L32.9 -125.0 L24.1 -127.2 L28.8 -134.9 L20.5 -138.4 L24.5 -130.3 L25.0 -139.3 L31.6 -145.4 L29.8 -136.6 L38.7 -135.4 L29.8 -136.2 L21.1 -138.7 L12.9 -142.4 L21.7 -144.3 L16.5 -151.6 L19.5 -160.1 L27.8 -156.6 L19.2 -159.2 L21.3 -167.9 L29.1 -163.4 L36.9 -159.0 L36.2 -167.9 L43.4 -173.3 L51.2 -168.7 L45.2 -175.4 L50.8 -168.4 L50.5 -177.4 L45.2 -184.6 L45.5 -175.6 L47.1 -166.8 L48.0 -175.7 L39.1 -176.9 L39.9 -185.9 L32.8 -180.4 L28.1 -172.7 L36.9 -174.5 L32.7 -182.4 L23.7 -182.1 L14.9 -184.2 L13.3 -193.0 L11.0 -201.7 L18.7 -206.3 L11.1 -201.5 L15.2 -209.5 L10.7 -217.3 L16.2 -224.4 L19.3 -232.9 L23.8 -240.7 L30.7 -246.5 L39.4 -248.8" data-cue="walker" data-anim="draw"/>
+          <text x="0" y="-262" text-anchor="middle" style="fill: var(--accent-3)">outer circle</text><text x="0" y="74" text-anchor="middle" style="fill: var(--accent-2)">inner</text>
+        </svg>
+        <div class="col">
+          <div class="chip" data-cue="balanced" data-anim="pop">nearly balanced: at least the average around it<small>ΔF ≤ V·F, V tiny · the paper, (5.3)</small></div>
+          <svg class="logc" width="620" height="280" viewBox="0 0 620 280" data-cue="logarithm" data-anim="fade">
+            <path class="ax" d="M30 20 V250 H600"/><text x="320" y="276" text-anchor="middle">distance</text>
+            <path class="c lg" d="M30 250 C 60 150, 120 110, 200 90 C 320 66, 460 56, 600 50" data-cue="logarithm" data-anim="draw"/>
+            <text x="440" y="40" style="fill: var(--accent-3)">logarithm</text>
+          </svg>
+          <div class="row"><div class="chip violet" data-cue="twice" data-anim="pop">crossing 1: −1 log</div><div class="chip violet" data-cue="costs" data-anim="pop">crossing 2: −1 log</div></div>
+          <div class="card formula" data-cue="squared" data-anim="up"><span class="math">later ≤ C · [log(2/<i>h</i>)]² · start</span><span class="k">the paper, section 1.4</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p06cb">
+    <div class="stage">
+      <i class="mk" id="mk06cbr" data-cue="breath"></i>
+      <div class="recap">
+        <div class="card" data-cue="filter" data-anim="up"><span class="n">1</span>filter the wave by direction</div>
+        <div class="card" data-cue="bowl" data-anim="up"><span class="n">2</span>measure the pile up with a bowl</div>
+        <div class="card" data-cue="trace#2" data-anim="up"><span class="n">3</span>trace it back, losing only a log²</div>
+      </div>
+      <div class="row"><div class="chip good" data-cue="Sogge's" data-anim="pop">Sogge's guess, every dimension</div><div class="chip good" data-cue="Kakeya" data-anim="pop">Bochner–Riesz · most of restriction · Kakeya</div></div>
+    </div>
+  </div>
+  <div class="meme-wrap pop" id="m06c" data-cue="Simple" data-anim="fade"><figure class="ss-meme" style="--meme-height: 880px" data-meme="ptj" data-cue="Simple" data-anim="pop"><span>filter by direction</span><span>filter by direction</span><span>a bowl for the pile up</span><span>a bowl for the pile up</span><span>lose only a log squared</span><span>lose only a log squared</span><span>now all together</span><span>so Kakeya was solved with soup</span></figure></div>
+</section>
+
+<section data-scene="07-what-changes" data-mood="verdict">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part six</div><div class="title" data-cue="+0.4" data-anim="up">If it holds</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p07a">
+    <div class="stage">
+      <div class="row"><div class="chip bad" data-cue="phone" data-anim="pop">not your phone: pure math</div></div>
+      <div class="map" data-cue="map" data-anim="stagger">
+        <div class="card ok">local smoothing<small>every dimension</small></div>
+        <div class="card ok">Bochner–Riesz<small>the conjecture</small></div>
+        <div class="card ok">Stein's square function<small>sharp bounds</small></div>
+        <div class="card ok">Kakeya<small>maximal and dimension</small></div>
+        <div class="card ok">restriction<small>the interior of its range</small></div>
+        <div class="card" style="border-color: var(--bad)">restriction's edge<small>still open</small></div>
+      </div>
+      <div class="src center" data-cue="map" data-anim="fade">the paper's abstract · claims, if the proof holds</div>
+    </div>
+  </div>
+  <div class="phase" id="p07b">
+    <div class="stage">
+      <div class="row" style="gap: 50px">
+        <figure class="ss-portrait" data-commons="File:Terence Tao.jpg" data-cue="Tao" data-anim="pop"><figcaption>Terence Tao<small>survey, August 2026</small></figcaption></figure>
+        <div class="col">
+          <div class="card formula" data-cue="cramming" data-anim="up" style="max-width: 1000px">tubes being crammed together is central to problems about "constructive interference" in "oscillating waves"<span class="k">Tao, 2026, section 2</span></div>
+          <div class="row" style="justify-content: flex-start"><div class="chip cyan" data-cue="signals" data-anim="pop">signals</div><div class="chip cyan" data-cue="physics" data-anim="pop">physics</div><div class="chip gold" data-cue="prime" data-anim="pop">prime numbers</div></div>
+          <div class="chip" data-cue="Riemann" data-anim="pop">the Lindelöf hypothesis, implied by the Riemann hypothesis<small>Kakeya: a necessary first step on one road (Tao)</small></div>
+        </div>
+      </div>
+      <i class="mk" id="mk07mat" data-cue="matters"></i>
+      <div class="row"><div class="chip violet" data-cue="method" data-anim="pop">my opinion: the method may matter more</div></div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="07b-trust">
+  <div class="phase" id="p07ba">
+    <div class="stage" style="gap: 24px">
+      <div class="leanhead" data-cue="Lean" data-anim="up">The Kakeya statement OpenAI's Lean proof must match<small>github.com/openai/math @ 4eaee87 · the comparator challenge</small></div>
+      <pre class="ss-code lean" data-source="lean/ComparatorChallenges/LocalSmoothing.lean" data-ranges="65-66,129-130" data-cue="Lean" data-anim="fade">def IsKakeyaSet {n : ℕ} (F : Set (Space n)) : Prop :=
+  <span data-cue="needle" data-anim="highlight">∀ ω : Space n, ‖ω‖ = 1 → ∃ x, unitSegment ω x ⊆ F</span>
+…
+theorem kakeya :
+    ∀ n : ℕ, <span data-cue="least" data-anim="highlight">2 ≤ n</span> → ∀ F : Set (Space n), IsKakeyaSet F → <span data-cue="Hausdorff" data-anim="highlight">dimH F = n</span> := by</pre>
+      <div class="row"><div class="chip gold" data-cue="needle" data-anim="pop">a unit needle in every direction</div><div class="chip good" data-cue="Hausdorff" data-anim="pop">Hausdorff dimension n: full size</div></div>
+    </div>
+  </div>
+  <div class="phase" id="p07bb">
+    <div class="stage">
+      <i class="mk" id="mk07bcau" data-cue="caution"></i>
+      <div class="cautions">
+        <div class="card" data-cue="checker" data-anim="up">proves the statement as written<small>the definitions must mean what mathematicians mean</small></div>
+        <div class="card" data-cue="didn't" data-anim="up">this video did not run the check</div>
+        <div class="card" data-cue="withdrew" data-anim="up">October 7: three other papers withdrawn<small>a sign error · algebraic geometry, not this paper</small></div>
+        <div class="card" data-cue="team" data-anim="up">no checking team for this one<small>"release the AI output" · OpenAI's post</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="meme-wrap pop" id="m07b" data-cue="organize" data-anim="fade"><figure class="ss-meme" data-meme="khaby-lame" data-cue="organize" data-anim="pop"><span>how to check an AI's proof</span><span>read all 59 pages yourself</span></figure></div>
+  <div class="phase" id="p07bc">
+    <div class="stage">
+      <figure class="ss-shot in-flow" data-shot="https://www.aljazeera.com/economy/2026/10/27/ai-makes-discoveries-in-mathematics-computer-science-physics-openai-says" data-find="cracked" data-lines="1" data-mark-cue="cracked" data-cue="Iosevich" data-anim="up"></figure>
+      <div class="row"><div class="chip" data-cue="twinge" data-anim="pop">"I feel a twinge of sadness"<small>Alex Iosevich, to Al Jazeera, October 27</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="07c-close">
+  <div class="phase" id="p07ca">
+    <div class="stage">
+      <div class="qs">
+        <div class="chip" data-cue="experts" data-anim="left">do experts say the bowl argument works?</div>
+        <div class="chip" data-cue="page" data-anim="right">can someone explain it in a page?</div>
+        <div class="chip violet" data-cue="tames" data-anim="pop">does the trick tame other waves?</div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p07cb">
+    <div class="stage" style="align-items: center">
+      <svg class="burst" id="burst07c" width="560" height="560" viewBox="-280 -280 560 560" data-cue="1917" data-anim="stagger">
+        <circle id="full07c" cx="0" cy="0" r="230" fill="rgba(255, 200, 87, 0.0)"/>
+        <line x1="-200" y1="0" x2="200" y2="0"/><line x1="-185" y1="-77" x2="185" y2="77"/><line x1="-141" y1="-141" x2="141" y2="141"/><line x1="-77" y1="-185" x2="77" y2="185"/>
+        <line x1="0" y1="-200" x2="0" y2="200"/><line x1="77" y1="-185" x2="-77" y2="185"/><line x1="141" y1="-141" x2="-141" y2="141"/><line x1="185" y1="-77" x2="-185" y2="77"/>
+      </svg>
+      <div class="row"><div class="chip gold" data-cue="Besicovitch" data-anim="pop">area: almost none</div><div class="chip good" data-cue="somehow" data-anim="pop">size: all of it</div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Seconds of silence before an act card's scene starts speaking: video.json lead (0.5) plus its leads entry (2.3).
+  const LEAD_IN = 2.8;
+  const at = (sel) => cueAt(sel);
+  // One phase steps aside just before the next one's first cue.
+  const swap = (from, to, when) => {
+    tl.to(from, { opacity: 0, duration: 0.35 }, when - 0.4);
+    if (to) { tl.set(to, { opacity: 0 }, 0); tl.to(to, { opacity: 1, duration: 0.35 }, when - 0.4); }
+  };
+  const leave = (sel, when) => tl.to(sel, { opacity: 0, duration: 0.3 }, when);
+
+  // Each act card holds through its silent lead and leaves as the narrator begins.
+  document.querySelectorAll(".chapter").forEach((ch) => {
+    const id = ch.closest("section").dataset.scene;
+    tl.to(ch, { opacity: 0, duration: 0.45 }, sceneStart(id) + LEAD_IN - 0.35);
+  });
+  document.querySelectorAll(".mk").forEach((m) => { m.style.display = "none"; });
+
+  // 01: four phases, then a lone needle that starts to turn.
+  swap("#p01a", "#p01b", at("#p01b [data-cue='century']"));
+  swap("#p01b", "#p01c", at("#p01c [data-cue='human']"));
+  swap("#p01c", "#p01d", at("#p01d [data-cue='Exponential']") - 1.2);
+  swap("#p01d", "#p01e", at("#p01e svg"));
+  tl.to("#needle01", { rotation: 180, svgOrigin: "0 0", duration: 6, ease: "sine.inOut" }, at("#p01e svg") + 0.3);
+
+  // 02: spin around the middle sweeps the disk; then the three-point turn inside the deltoid, exact positions
+  // precomputed (a unit needle is 300 px; every chord is one unit long; the deltoid's area is π/8).
+  const NEEDLE = [[-75.1,-9.8,224.8,0.0],[-75.3,-17.6,224.2,0.0],[-75.5,-25.4,223.4,0.1],[-75.9,-33.2,222.2,0.1],[-76.4,-40.9,220.8,0.2],[-77.0,-48.5,219.0,0.3],[-77.6,-56.1,217.0,0.5],[-78.4,-63.5,214.6,0.8],[-79.3,-70.9,212.0,1.1],[-80.2,-78.1,209.1,1.4],[-81.2,-85.2,205.9,1.9],[-82.3,-92.2,202.4,2.4],[-83.4,-98.9,198.8,3.0],[-84.6,-105.6,194.8,3.8],[-85.9,-112.0,190.6,4.6],[-87.2,-118.3,186.1,5.5],[-88.5,-124.3,181.4,6.6],[-89.9,-130.2,176.5,7.7],[-91.3,-135.9,171.4,9.0],[-92.8,-141.3,166.1,10.4],[-94.2,-146.5,160.6,11.9],[-95.6,-151.4,154.9,13.6],[-97.1,-156.1,149.0,15.4],[-98.5,-160.6,143.0,17.3],[-99.9,-164.8,136.9,19.4],[-101.3,-168.7,130.6,21.6],[-102.7,-172.4,124.2,23.9],[-103.9,-175.8,117.7,26.4],[-105.2,-178.9,111.1,29.0],[-106.3,-181.7,104.4,31.8],[-107.4,-184.3,97.7,34.6],[-108.5,-186.6,90.8,37.6],[-109.4,-188.6,84.0,40.8],[-110.2,-190.3,77.1,44.0],[-110.9,-191.8,70.2,47.4],[-111.5,-193.0,63.3,50.9],[-111.9,-193.8,56.4,54.5],[-112.3,-194.4,49.5,58.2],[-112.5,-194.8,42.6,62.0],[-112.4,-194.6,29.0,69.9],[-112.1,-194.2,22.3,74.0],[-111.7,-193.5,15.8,78.2],[-111.0,-192.5,9.2,82.4],[-110.2,-191.3,2.8,86.6],[-109.2,-189.8,-3.5,90.9],[-108.1,-188.2,-9.8,95.3],[-106.7,-186.2,-15.8,99.7],[-105.1,-184.1,-21.8,104.1],[-103.3,-181.8,-27.5,108.5],[-101.3,-179.2,-33.2,112.9],[-99.2,-176.5,-38.7,117.3],[-96.8,-173.6,-44.0,121.7],[-94.1,-170.6,-49.1,126.1],[-91.3,-167.3,-54.1,130.4],[-88.3,-163.9,-58.9,134.6],[-85.0,-160.4,-63.4,138.8],[-81.6,-156.7,-67.8,143.0],[-77.9,-152.9,-72.0,147.0],[-74.0,-149.0,-76.0,151.0],[-69.9,-145.0,-79.7,154.8],[-65.7,-140.9,-83.3,158.5],[-61.2,-136.8,-86.7,162.2],[-56.5,-132.5,-89.8,165.6],[-51.6,-128.2,-92.7,168.9],[-46.6,-123.9,-95.5,172.1],[-41.4,-119.5,-98.0,175.1],[-36.0,-115.1,-100.3,177.9],[-30.4,-110.7,-102.3,180.5],[-24.7,-106.3,-104.2,183.0],[-18.8,-101.9,-105.9,185.2],[-12.8,-97.5,-107.4,187.2],[-6.7,-93.1,-108.7,189.0],[-0.4,-88.8,-109.7,190.6],[6.0,-84.5,-110.6,191.9],[12.5,-80.2,-111.4,193.0],[19.0,-76.1,-111.9,193.9],[25.7,-72.0,-112.3,194.5],[32.4,-67.9,-112.5,194.8],[46.0,-60.1,-112.4,194.6],[52.9,-56.4,-112.1,194.2],[59.8,-52.7,-111.7,193.4],[66.7,-49.1,-111.2,192.4],[73.6,-45.7,-110.5,191.1],[80.5,-42.4,-109.8,189.5],[87.4,-39.2,-108.9,187.6],[94.2,-36.1,-108.0,185.5],[101.0,-33.2,-106.9,183.1],[107.7,-30.4,-105.8,180.4],[114.4,-27.7,-104.6,177.4],[120.9,-25.2,-103.3,174.1],[127.4,-22.8,-102.0,170.6],[133.7,-20.5,-100.7,166.8],[140.0,-18.4,-99.2,162.7],[146.0,-16.4,-97.8,158.4],[151.9,-14.5,-96.4,153.8],[157.7,-12.8,-95.0,149.0],[163.3,-11.2,-93.5,143.9],[168.7,-9.7,-92.0,138.6],[173.9,-8.3,-90.6,133.1],[179.0,-7.1,-89.2,127.3],[183.8,-6.0,-87.8,121.4],[188.3,-5.0,-86.5,115.2],[192.7,-4.2,-85.2,108.8],[196.8,-3.4,-84.0,102.3],[200.6,-2.7,-82.8,95.6],[204.2,-2.1,-81.7,88.7],[207.5,-1.6,-80.7,81.7],[210.6,-1.2,-79.7,74.5],[213.3,-0.9,-78.8,67.3],[215.8,-0.6,-78.0,59.9],[218.0,-0.4,-77.3,52.3],[219.9,-0.2,-76.7,44.8],[221.5,-0.1,-76.1,37.1],[222.8,-0.1,-75.7,29.3],[223.8,-0.0,-75.4,21.6],[224.5,-0.0,-75.2,13.7],[224.9,-0.0,-75.0,5.9]];
+  tl.set("#disk02", { scale: 0, transformOrigin: "50% 50%" }, 0);
+  tl.to("#spin02", { rotation: 360, svgOrigin: "0 0", duration: 3.2, ease: "power1.inOut" }, at("#mk02spin"));
+  tl.to("#disk02", { scale: 1, duration: 3.2, ease: "power1.inOut" }, at("#mk02spin"));
+  const turn = { k: 0 };
+  const putNeedle = () => {
+    const i = Math.floor(turn.k) % NEEDLE.length, j = (i + 1) % NEEDLE.length, f = turn.k - Math.floor(turn.k);
+    const a = NEEDLE[i], b = NEEDLE[j], l = document.querySelector("#turn02");
+    ["x1", "y1", "x2", "y2"].forEach((key, n) => l.setAttribute(key, (a[n] + (b[n] - a[n]) * f).toFixed(1)));
+  };
+  putNeedle();
+  tl.to(turn, { k: NEEDLE.length * 2 - 1, duration: 9, ease: "none", onUpdate: putNeedle }, at("#mk02delt"));
+
+  // 02b: the counter, the tree, the meme, then a needle in every direction.
+  swap("#p02ba", "#p02bb", at("#p02bb svg"));
+  swap("#p02bb", "#p02bc", at("#p02bc [data-cue='Forget']"));
+  leave("#m02b", at("#p02bc [data-cue='Forget']") - 0.5);
+  tl.to("[data-scene='02b-no-smallest'] .counter:nth-of-type(2)", { opacity: 0.35, duration: 0.3 }, at("[data-scene='02b-no-smallest'] .counter:nth-of-type(3)"));
+
+  // 03: the riddle, the chart, the meme, the conjecture.
+  swap("#p03a", "#p03b", at("#p03b svg.chart"));
+  leave("#m03", at("#p03c .defcard") - 0.5);
+  swap("#p03b", "#p03c", at("#p03c .defcard"));
+
+  // 03b: tubes and people; Quanta's page; the timeline.
+  tl.to("#p03ba", { opacity: 0.08, duration: 0.3 }, at("#s03b") - 0.2);
+  leave("#s03b", at("#p03bb .timeline") - 0.5);
+  swap("#p03ba", "#p03bb", at("#p03bb .timeline"));
+
+  // 04: ripples close in to a spike, then spread out; then Sogge's question.
+  const R0 = { "#r1": 280, "#r2": 240, "#r3": 200 };
+  const spikeAt = at("#p04a .peak path.c");
+  Object.entries(R0).forEach(([id, r], i) => {
+    tl.fromTo(id, { attr: { r } }, { attr: { r: 0 }, duration: Math.max(1.2, spikeAt - at("#p04a .pond")) - i * 0.15, ease: "power1.in" }, at("#p04a .pond"));
+    tl.to(id, { attr: { r: r + 20 }, opacity: 0.25, duration: 3.5, ease: "power1.out" }, spikeAt + 1.2 + i * 0.15);
+  });
+  tl.to("#spike04", { attr: { r: 70 }, duration: 0.35, ease: "back.out(2)" }, spikeAt - 0.1);
+  tl.to("#spike04", { attr: { r: 0 }, duration: 0.8 }, spikeAt + 1.0);
+  swap("#p04a", "#p04b", at("#p04b [data-cue='measure']"));
+
+  // 04b: each level glows in turn, top to bottom, once "prove the top" is said.
+  tl.to(".tower .blk", { boxShadow: "0 0 0 6px rgba(111, 227, 255, 0.6)", duration: 0.25, stagger: 0.35 }, at("#m04b") - 3.4);
+
+  // 05: a beam forms; beams in every direction are crammed together and pile up; signs flip.
+  swap("#p05a", "#p05b", at("#mk05aim"));
+  const spread = [[0, -160], [120, -150], [150, -60], [-150, 30], [-120, 140], [60, 170]];
+  document.querySelectorAll("#bundle05 .bb").forEach((g, i) => {
+    tl.set(g, { x: spread[i][0], y: spread[i][1], opacity: 0 }, 0);
+    tl.to(g, { opacity: 1, duration: 0.3 }, at("#mk05aim") + i * 0.15);
+    tl.to(g, { x: 0, y: 0, duration: 1.4, ease: "power2.inOut" }, at("#mk05cram"));
+  });
+  tl.to("#hot05", { attr: { r: 70 }, duration: 0.6, ease: "back.out(2)" }, at("#mk05huge"));
+  tl.to("#bundle05 .sign", { rotation: 360, transformOrigin: "50% 50%", duration: 0.5, stagger: 0.12 }, at("#p05b [data-cue='flips']"));
+  swap("#p05b", "#p05c", at("#p05c .chip"));
+
+  // 05b: the fan is cut thinner; then the paper's own words.
+  tl.to("#fan2", { opacity: 0, duration: 0.4 }, at("#mk05bthin"));
+  tl.to("#fan8", { opacity: 1, duration: 0.4 }, at("#mk05bthin"));
+  tl.to("#fan8 path", { x: -60, duration: 0.8, ease: "power2.inOut", stagger: 0.05 }, at("#mk05bglue"));
+  swap("#p05ba", "#p05bb", at("#p05bb .quote"));
+
+  // 06: waves off the ray dim on a bell curve; imaginary time has been used before; a flow that is conserved.
+  tl.to("#p06a .d1", { opacity: 0.55, duration: 0.6 }, at("#mk06dim"));
+  tl.to("#p06a .d2", { opacity: 0.22, duration: 0.6 }, at("#mk06dim") + 0.15);
+  tl.to("#p06a .d3", { opacity: 0.07, duration: 0.6 }, at("#mk06dim") + 0.3);
+  swap("#p06a", "#p06b", at("#p06b .formula"));
+  swap("#p06b", "#p06c", at("#p06c svg.pipes"));
+  document.querySelectorAll("#p06c .dot06").forEach((d, i) => {
+    tl.fromTo(d, { attr: { cx: 30 } }, { attr: { cx: 630 }, duration: 2.5, ease: "none", repeat: 5 }, at("#p06c svg.pipes") + i * 0.5);
+  });
+
+  // 06b: where the wave piles up, the bowl dips deep; then the power falls out.
+  const DENS_UP = "M40 220 C 200 220, 300 218, 380 200 C 420 120, 430 40, 450 40 C 470 40, 480 120, 520 200 C 600 218, 700 220, 860 220 Z";
+  const BOWL_DOWN = "M40 300 C 250 330, 350 380, 450 500 C 550 380, 650 330, 860 300 Z";
+  tl.to("#dens06b", { attr: { d: DENS_UP }, duration: 1.4, ease: "power2.inOut" }, at("#mk06bpile"));
+  tl.to("#bowl06b", { attr: { d: BOWL_DOWN }, duration: 1.4, ease: "power2.inOut" }, at("#mk06bpile") + 0.4);
+  swap("#p06ba", "#p06bb", at("#p06bb .chip"));
+
+  // 06c: the walker; the two crossings; the recap; the meme holds to the end.
+  swap("#p06ca", "#p06cb", at("#mk06cbr"));
+
+  // 07: the map, then why it matters.
+  swap("#p07a", "#p07b", at("#mk07mat"));
+
+  // 07b: the Lean statement; the cautions; the meme; Al Jazeera.
+  tl.to("#p07ba pre", { opacity: 0.35, duration: 0.4 }, at("#mk07bcau") - 0.6);
+  swap("#p07ba", "#p07bb", at("#mk07bcau"));
+  leave("#m07b", at("#p07bc .ss-shot") - 0.5);
+  swap("#p07bb", "#p07bc", at("#p07bc .ss-shot"));
+
+  // 07c: what I'm watching; the needle set fills to full size on the last line.
+  swap("#p07ca", "#p07cb", at("#burst07c"));
+  tl.to("#full07c", { attr: { fill: "rgba(255, 200, 87, 0.28)" }, duration: 1.6, ease: "power1.inOut" }, at("#p07cb [data-cue='somehow']"));
+</script>

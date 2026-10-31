@@ -1,0 +1,129 @@
+{
+  "title": "An AI Says It Solved Kakeya, in Every Dimension",
+  "kind": "feature",
+  "importance": "high",
+  "importance_reason": "public: Lino's YouTube channel, in a narrator voice, explaining a harmonic-analysis result nobody independent has checked yet; a viewer may repeat any claim",
+  "audience": "A developer on YouTube who saw the headline that OpenAI's AI proved the Kakeya conjecture, and maybe our ETH video, but knows no harmonic analysis. After watching, they can say what the needle problem and the Kakeya conjecture are, what local smoothing says about waves, why waves imply needles, the core idea of the new proof in plain words, what it changes and does not, and how far to trust it today.",
+  "theme": "ripple",
+  "engine": "drama",
+  "voice": "narrator-uk",
+  "speed": 1.0,
+  "say": {
+    "OpenAI": "Open A I",
+    "OpenAI's": "Open A I's",
+    "Sōichi": "Soichi",
+    "Bochner": "Bokner",
+    "Riesz": "Reese",
+    "1917": "nineteen seventeen",
+    "1971": "nineteen seventy one",
+    "1991": "nineteen ninety one",
+    "2000": "two thousand",
+    "2019": "twenty nineteen",
+    "2025": "twenty twenty five",
+    "0.79": "zero point seven nine"
+  },
+  "gap": 0.5,
+  "beat": 0.9,
+  "hold": 6,
+  "tail": 1.2,
+  "flair": {
+    "ambient": "blobs vignette grain"
+  },
+  "leads": {
+    "02-needle": 2.3,
+    "03-size": 2.3,
+    "04-focus": 2.3,
+    "05-beams": 2.3,
+    "06-filter": 2.3,
+    "07-what-changes": 2.3
+  },
+  "pauses": {
+    "01-hook": 0.4,
+    "02b-no-smallest": 1.0,
+    "03b-the-record": 0.8,
+    "04b-tower": 1.0,
+    "05b-the-hard-part": 0.8,
+    "06b-bowl": 1.2,
+    "06c-crossing": 2.0,
+    "07b-trust": 1.2
+  },
+  "moods": {
+    "headline": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 85% 70% at 50% 40%, #1e2f45 0%, #121d2c 55%, #070b12 100%)",
+        "--blob-1": "#6fe3ff",
+        "--blob-2": "#ffc857",
+        "--line": "#30465e",
+        "--card": "rgba(14, 24, 38, 0.92)"
+      },
+      "music": { "file": "local/music/kakeya/headline.wav", "volume": 0.17, "duck": 0.35 }
+    },
+    "needle": {
+      "ambient": "grid vignette grain",
+      "look": {
+        "--sky": "radial-gradient(ellipse 85% 70% at 50% 42%, #2b2a24 0%, #1d1c18 55%, #0d0c0a 100%)",
+        "--ink": "#f4efe2",
+        "--muted": "#c8bfa8",
+        "--accent": "#ffc857",
+        "--accent-2": "#9fd8e8",
+        "--line": "#4d473a",
+        "--card": "rgba(36, 34, 28, 0.92)"
+      },
+      "music": { "file": "local/music/kakeya/needle.wav", "volume": 0.15, "duck": 0.35 }
+    },
+    "dimension": {
+      "ambient": "stars glow vignette grain",
+      "look": {
+        "--sky": "radial-gradient(ellipse 85% 70% at 50% 42%, #24193d 0%, #160f28 55%, #090612 100%)",
+        "--accent-3": "#c3a6ff",
+        "--line": "#3f3360",
+        "--card": "rgba(26, 18, 44, 0.92)"
+      },
+      "music": { "file": "local/music/kakeya/dimension.wav", "volume": 0.16, "duck": 0.35 }
+    },
+    "waves": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 90% 75% at 50% 38%, #0f3a48 0%, #0a2633 52%, #04121a 100%)",
+        "--blob-1": "#6fe3ff",
+        "--blob-2": "#1f7a8c",
+        "--blob-3": "#bff4ff",
+        "--blob-strength": "0.2",
+        "--line": "#245266",
+        "--card": "rgba(8, 32, 42, 0.92)"
+      },
+      "music": { "file": "local/music/kakeya/waves.wav", "volume": 0.16, "duck": 0.35 }
+    },
+    "beams": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 85% 70% at 50% 42%, #2a2a14 0%, #1a1a0c 55%, #0b0b05 100%)",
+        "--blob-1": "#ffc857",
+        "--blob-2": "#6fe3ff",
+        "--line": "#4c4a26",
+        "--card": "rgba(32, 30, 14, 0.92)"
+      },
+      "music": { "file": "local/music/kakeya/beams.wav", "volume": 0.16, "duck": 0.35 }
+    },
+    "method": {
+      "ambient": "dots blobs vignette grain",
+      "look": {
+        "--sky": "radial-gradient(ellipse 85% 70% at 50% 42%, #221a44 0%, #15102d 55%, #080614 100%)",
+        "--accent-3": "#c3a6ff",
+        "--blob-1": "#c3a6ff",
+        "--blob-2": "#6fe3ff",
+        "--line": "#3e3566",
+        "--card": "rgba(24, 18, 50, 0.92)"
+      },
+      "music": { "file": "local/music/kakeya/method.wav", "volume": 0.14, "duck": 0.35 }
+    },
+    "verdict": {
+      "look": {
+        "--sky": "radial-gradient(ellipse 85% 70% at 50% 42%, #1b2733 0%, #111a22 55%, #070b0f 100%)",
+        "--blob-1": "#9fc7dd",
+        "--blob-2": "#ffc857",
+        "--line": "#33475a",
+        "--card": "rgba(18, 27, 36, 0.92)"
+      },
+      "music": { "file": "local/music/kakeya/verdict.wav", "volume": 0.15, "duck": 0.35 }
+    }
+  }
+}

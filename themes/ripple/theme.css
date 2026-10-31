@@ -1,0 +1,91 @@
+/* Ripple: a ripple tank at night, where waves focus and needles turn. Deep ink-blue water lit from below, pools of
+   cyan light drifting like caustics, a little grain and a vignette over the pictures (never over the captions), and
+   a fade between scenes like a surface settling. One meaning per colour: gold is a needle and the Kakeya side, cyan
+   is a wave, violet is new machinery, green still stands, coral rules something out. Playfair Display for headlines,
+   Fraunces for formulas (italic variables), Inter for text, JetBrains Mono for labels (all SIL Open Font License, in
+   fonts/). Made for a harmonic-analysis explainer (videos/kakeya-every-dimension). */
+@font-face { font-family: "Playfair Display"; font-weight: 700; font-style: normal; src: url("fonts/playfair-display-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-weight: 600; font-style: normal; src: url("fonts/fraunces-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-weight: 600; font-style: italic; src: url("fonts/fraunces-latin-600-italic.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 800; src: url("fonts/inter-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; src: url("fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url("fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2"); }
+
+:root {
+  /* colour */
+  --bg: #08131c;
+  --sky: radial-gradient(ellipse 90% 75% at 50% 38%, #12304a 0%, #0b1d2c 52%, #050c13 100%);
+  --ink: #eef5f8;             /* moonlight on water */
+  --muted: #a9bfcb;
+  --accent: #ffc857;          /* the needle: gold */
+  --accent-2: #6fe3ff;        /* the wave: cyan */
+  --accent-3: #c3a6ff;        /* new machinery: violet */
+  --card: rgba(9, 24, 36, 0.9);
+  --line: #2b4a60;
+  --code-bg: #050e15;
+  --code-ink: #e6f1f5;
+  --good: #8ee6a8;
+  --bad: #ff8a7a;
+
+  /* type */
+  --font: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Playfair Display", "Iowan Old Style", Georgia, serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --display-weight: 700;
+  --display-tracking: -0.01em;
+
+  /* layout and shape */
+  --pad: 150px;
+  --heading-top: 104px;
+  --heading-size: 80px;
+  --heading-align: left;
+  --meme-height: 760px;
+  --radius: 16px;
+  --border: 1.5px;
+  --shadow: 0 26px 60px rgba(1, 6, 10, 0.6), 0 0 0 1px rgba(111, 227, 255, 0.06);
+  --code-shadow: inset 0 0 0 1px rgba(255, 200, 87, 0.08), 0 20px 50px rgba(1, 6, 10, 0.55);
+
+  /* photos and memes: a print held up to the light */
+  --frame: #e8f0f2;
+  --frame-width: 12px;
+  --photo-filter: saturate(0.92) contrast(1.04);
+  --meme-border: var(--frame-width) solid var(--frame);
+  --meme-radius: 8px;
+  --meme-shadow: 0 30px 70px rgba(1, 6, 10, 0.7);
+  --portrait-radius: 8px;
+  --portrait-frame-width: 8px;
+  --portrait-shadow: 0 30px 70px rgba(1, 6, 10, 0.7);
+
+  /* captions: over the grain and the vignette, never under them */
+  --cap-bg: rgba(4, 11, 17, 0.9);
+  --cap-ink: #f6fbfd;
+  --cap-size: 44px;
+  --cap-radius: 16px;
+  --cap-style: plain;
+  --cap-words: 12;
+  --cap-font: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --cap-weight: 700;
+  --cap-hot: #ffe08f;
+  --cap-border: 1.5px solid rgba(111, 227, 255, 0.2);
+  --cap-shadow: 0 12px 34px rgba(1, 6, 10, 0.55);
+
+  /* motion: light pooling under water, a surface settling between scenes */
+  --transition: fade;
+  --entrance: up;
+  --camera: push;
+  --ambient: blobs vignette grain;
+  --ambient-strength: 0.3;
+  --blob-1: #6fe3ff;          /* caustic light */
+  --blob-2: #1d5a7a;
+  --blob-3: #ffc857;
+  --blob-strength: 0.14;
+  --grain-strength: 0.22;
+  --grain-fps: 12;
+  --grain-blend: overlay;
+  --vignette-strength: 0.55;
+  --vignette-color: #02070b;
+  --progress: on;
+  --progress-fill: linear-gradient(90deg, #6fe3ff, #eef5f8, #ffc857);
+}

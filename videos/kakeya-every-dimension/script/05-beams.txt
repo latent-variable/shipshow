@@ -1,0 +1,5 @@
+[curious, then explaining carefully, one step at a time] Why would waves care about needles? Take a wave whose directions are all squeezed into a narrow cone. It doesn't spread out. It travels as a beam: strong inside a long thin tube, and weak outside it. A beam is a thickened needle.
+
+[building, then landing the logic] Now aim beams in every direction, and suppose their tubes could be crammed into a tiny space, the way a Kakeya set crams its needles. Where tubes overlap, their strengths add, so a crammed bundle means a huge pile up that stays piled up. That's exactly the kind of lasting pile up the paper's wave estimate rules out. With one technicality: beams can cancel, so the proof flips their signs at random, and on average they add.
+
+[clear, concluding with quiet satisfaction] Remember the thickening test. A small Kakeya set would be one whose thickened needles cram into almost no area. So if waves can't stay piled up, tubes in every direction can't be crammed together by much, and a Kakeya set has to be full size. Waves in, needles out.

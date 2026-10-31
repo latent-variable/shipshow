@@ -167,7 +167,7 @@ made for its subject, not stamped from a template.
 
 - **Theme** for the client or audience (`skills/theme`); the shipped ones are `shipshow`, `paper`,
   `launch`, `buildday` (karaoke captions), `lofi` (a late-night study room), `signal` (near-black, a highlighter
-  yellow, big type: for a video that argues a point with evidence), `chalk` (a blackboard, for theory) and `archive`
+  yellow, big type: for a video that argues a point with evidence), `chalk` (a blackboard, for theory), `ripple` (a ripple tank at night, for waves and geometry) and `archive`
   (a 1950s file drawer: sepia paper and typewriter, for history, often as one section's mood).
 - **Flair** in `video.json` for this video's own motion: `"flair": {"transition": "wipe",
   "camera": "push", "ambient": "grid"}`. A section's `data-transition` changes one scene;
