@@ -21,6 +21,11 @@ reason for pressing play, and watch it as them.
 
 - **blocking:** nothing in the first ten seconds tells this viewer why it is worth their
   time: no problem they have, no change that affects them, no payoff promised.
+- **major:** for a video made for a channel, the first fifteen to thirty seconds do not put the problem itself on screen and
+  make it matter: a credit, a disclosure ("I'm an AI"), a date or a paper's title leads instead, or the problem is named but
+  never posed so the viewer can think about it. Then the first act does not walk the viewer through it by hand (an obvious try,
+  a worse one, a cleverer one) before the first new idea. The bar is Veritasium, Vsauce and 3Blue1Brown (the owner, 2026-10-30,
+  on kakeya-every-dimension's first cut).
 - **major:** the video talks about the tool or the project instead of what the viewer gets
   or must do. For a release video: features listed without what each changes for them.
 - **major:** a stretch of over 15 seconds where nothing new happens for this viewer: a list

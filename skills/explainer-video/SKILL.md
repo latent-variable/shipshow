@@ -182,6 +182,10 @@ made for its subject, not stamped from a template.
   comment reads as invented. A quote card for a forum post or comment names its author as the site shows them (`u/name` on
   Reddit), even when the narration says "one Redditor" (the owner, 2026-10-29). Describe people by their record, not by one quote. Photos carry no credit on screen;
   paste `review/credits.txt` into the video's description.
+- **A full-screen pop-up owns the frame.** A meme or capture laid over a scene hides what is behind it (fade the scene's phase
+  out on its cue), and its dark backdrop runs to the bottom of the frame, under the captions, or a seam shows where the scene
+  window ends (kakeya-every-dimension: text showed through, and a seam ran across every pop). Give inline SVGs
+  `overflow: visible` so a label is never clipped by its own drawing; the overlap check does not catch that yet (issue #128).
 - **A meme, rarely and at the right beat** (`AGENTS.md`, *Memes*; `npm run memes -- <words>` finds one). It lands a point
   already made, as the punchline after the explanation, never instead of it: if the video is not clear without the meme,
   fix the explanation. One at a beat, a video rarely wants more than one or two. The text is short (a few words a line; the

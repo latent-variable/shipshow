@@ -77,6 +77,10 @@ adds `critic-decision`.
 
 ### Spend is part of the plan
 
+Run `npm run critics` again once the video is voiced: before then it guesses from a 70 second video. Measured
+2026-10-30: kakeya-every-dimension (16 minutes, thorough, round 0 plus three rounds of up to eight critics, Opus in the last)
+used about 3.5M critic tokens against a pre-voice estimate of 1.5M.
+
 Critics run on the person's usage, so the loop is sized before it starts, not discovered after (the owner,
 2026-10-27, after a second cut of eth-is-false ran 22 critics and about 2.8M tokens on top of its first cut's
 four rounds):

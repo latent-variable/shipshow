@@ -21,7 +21,9 @@ description: >
 - **major:** a product, project or version written differently in different places
   (capitalisation, spacing, punctuation).
 - **major:** the same kind of element styled differently from scene to scene: titles in
-  different places or sizes, code in different fonts, accent colours meaning different things.
+  different places or sizes, code in different fonts, accent colours meaning different things. In a video about a claim
+  nobody has checked, the claim never wears the colour of what is proved (kakeya-every-dimension's first cut showed OpenAI's
+  claims in the same green as results people had proved).
 - **major:** a numbering or structure the video sets up and then breaks ("1. The voice",
   "2. The pictures", then an unnumbered third).
 - **minor:** entrances, spacing or margins that change from scene to scene for no reason.

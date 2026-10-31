@@ -1273,8 +1273,11 @@ contrast) and the review frames of all seven of its moods.
 them through it by hand before any new idea, and to write for a smart high-schooler or someone from another field, explaining every
 term the first time it is said. `narration-writing` keeps the AI narrator's disclosure but takes it out of the hook. **Why.** The
 owner, watching kakeya-every-dimension's first cut: four minutes in, terms like set, dimension and power had lost him, and the intro
-spent its opening on who was talking instead of the puzzle; Veritasium, Vsauce and 3Blue1Brown are the bar. **Costs.** None in code;
-critics already judge hooks and clarity against these skills.
+spent its opening on who was talking instead of the puzzle; Veritasium, Vsauce and 3Blue1Brown are the bar. **Also.** The critics judge it: `critic-engagement` makes a channel video's first fifteen to thirty seconds and
+its hands-on first act a major finding, `critic-clarity` names the smart high-schooler as the viewer and one meaning per word,
+`critic-consistency` keeps an unchecked claim out of the colour of what is proved, `critic-loop` says to re-run the estimate once
+the video is voiced (a 16-minute thorough loop measured 3.5M tokens against 1.5M estimated), and `explainer-video` says a
+full-screen pop-up hides what is behind it and its backdrop reaches the bottom of the frame. **Costs.** None in code.
 
 ## Behaviour
 
