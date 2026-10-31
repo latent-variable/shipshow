@@ -1,0 +1,9 @@
+[clear, returning to the first game] Now back to turning. In 1928, Besicovitch showed the turning game has no smallest answer either. A thousandth of a unit. A billionth. Pick any number above zero, and it fits. Turn the needle through the tree: it pivots across one piece, and then it has to get to the next piece over.
+
+[candid, naming the viewer's suspicion] Here's the move that looks like cheating. The needle slides out along its own line, far across the table, steps across, and slides back in. Is that allowed? Check the rules. A needle sliding along its own line only ever covers that line, and a line has no area. So the trip out costs nothing. How far you reach is free.
+
+[clear, explaining on the picture] What costs something is the step across. The needle tilts a tiny bit, and sweeps a thin wedge. The farther out it goes, the smaller the tilt it needs to reach the next piece, so the thinner the wedge. Go ten times farther, and the wedge is ten times thinner.
+
+[dry, then reassuring] Still feels like a trick? In 1971, a mathematician named Cunningham showed the whole turn can be done in as little area as you like without leaving a circle two needles across. Going far is just the easiest version to see.
+
+[clear, landing the contrast] But every step across still sweeps a wedge, however thin. So for turning: almost none, as little as you like. Never exactly zero. Exactly zero takes needles that never move.

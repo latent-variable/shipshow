@@ -90,6 +90,13 @@ omission from an oversight.
   gets its own beat: what changes, shown moving. A process the voice describes (cut and slide, again and again) is animated
   round by round with its numbers; a test the viewer is asked to imagine (paint it with a thinner brush) is performed on screen,
   with what it measures counting as it goes. The numbers on screen come from the drawing or the source, never invented to fit.
+- **Build the fundamentals before the result** (the owner, 2026-10-31, on the sixth cut: "if I don't understand the fundamentals
+  ... I can't follow along"). A game or problem states its rules on screen before the first move and keeps them pinned; a move
+  that looks like it bends one (a needle flung far away) is checked against the rule aloud. A definition gets examples: the
+  ordinary ones, the strange ones it allows (if the voice says "strange", show one), and one that fails. A measuring procedure
+  shows its instrument at each setting (the brush at full, half, quarter width). A number between two familiar ones (a dimension
+  of 1.58) comes from an example the viewer can count, never a label. A chart arrives only after each of its lines was seen as a
+  picture, and a log scale is replaced by something countable (the zeros written out) for a general viewer.
 - **A longer video is acts, and each act has its own feel.** Past about three minutes, group the scenes into acts (the
   setup, the history, the turn, the consequences) and give each a mood (`video.json` `moods`: its colours, background and
   music). Open each act on a hook, a question or a turn, never a signpost like "so how does it work". Show what failure

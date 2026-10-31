@@ -1,0 +1,11 @@
+[building, then letting a surprise land] Now paint a Kakeya set. A thinner brush can tell apart directions that are closer together, so every time you halve the brush, there are twice as many needles to paint, each stroke half as wide. Slide them to overlap as much as you can: the tree from before. The paint: 100, 75, 52, 42, 35, 31.
+
+[clear, reading the losses off the picture] Look at what each round loses. 25%, then 31. Then 20, 16, 13, 11, 9. Less and less. A shape under two dimensions loses the same share every time, forever. The Kakeya paint loses a smaller share every round. So whatever dimension under two you guess, the Kakeya set ends up holding more paint than that shape. It has to be two dimensional.
+
+[building, then letting a striking number land] That's one drawing, but every Kakeya set on a table behaves like this. Push it to the extreme: halve the brush 332 times, and it's about a googol times thinner. That's a one with a hundred zeros. A line's paint is down to a googolth. The Sierpiński triangle's, to under one part in a one with forty one zeros. The most squeezed Kakeya set possible still needs about a hundredth.
+
+[clear, squaring two numbers] So how does it ever reach zero area? Only with no width at all. The paint does shrink, just absurdly slowly: to need only a billionth of the paint, the brush would have to be roughly a billion zeros thin.
+
+[letting a surprising fact sink in, then clear] So by the paint test, a Kakeya set on a table is as two dimensional as a filled square. Zero area, full size.
+
+[clear, opening up a bigger space] And math doesn't stop at a flat table. In space, a point needs three numbers to say where it is. In four dimensional space, it needs four, even though nobody can picture it. Call that number n. The Kakeya conjecture says that in n dimensional space, a set with a needle pointing every way is always full size: its paint barely shrinks, like a solid block filling that space. Dimension n. The official version of the paint test is called Hausdorff dimension: same idea, stricter.

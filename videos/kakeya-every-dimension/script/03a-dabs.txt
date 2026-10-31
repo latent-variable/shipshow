@@ -1,0 +1,9 @@
+[clear, counting on the picture] To see why, count dabs. A dab is one press of the brush: a little square, as wide as the brush. Cover a line with dabs. Halve the brush, and you need twice as many. Now cover a filled square. Halve the brush, and you need four times as many: twice as many across, and twice as many down.
+
+[clear, landing a definition] Two is two to the power one. Four is two to the power two. That power is the dimension. A line is one dimensional, a filled square two.
+
+[intrigued, a shape in between] Now a shape in between. This triangle full of holes is called the Sierpiński triangle, and it's made of three half size copies of itself. So halve the brush, and you need three times as many dabs. More than a line, fewer than a square. Two to what power makes three? About 1.58. So this shape is 1.58 dimensional.
+
+[clear, connecting dabs to paint] And paint is just dabs times the size of each dab. Halving the brush makes each dab a quarter the size. A line: twice the dabs, a quarter the size, so half the paint. A square: four times the dabs, a quarter the size, the same paint. The Sierpiński triangle: three times the dabs, a quarter the size, three quarters of the paint.
+
+[clear, the rule to remember] So a shape under two dimensions loses the same share of its paint every time the brush halves, forever. A line loses half. The Sierpiński triangle loses a quarter. Only a two dimensional shape keeps its paint.
