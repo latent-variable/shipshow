@@ -30,3 +30,17 @@ which carry over here as findings when missed.
   step's LISTEN lines and the packet's *Second listen*.
 - **Memes land a point already made**, are readable in the time they are up, and use templates our earlier videos have not.
 - **No overlaps**: no text over other text or over a picture unless a scene means it.
+
+## The owner's notes on the first cut (2026-10-30), each now a finding when missed
+
+He watched about four minutes: much of it he could follow, some of it lost him.
+
+- **Grab the viewer in the first fifteen to thirty seconds**, the way Veritasium, Vsauce and 3Blue1Brown do. The problem itself is the
+  hook: it sounds ridiculous ("who cares if you can rotate it"), and that is the way in. The AI disclosure is not a hook and does not
+  belong in the intro; the title already says who explains it.
+- **Walk the viewer through it by hand.** Spin it this way, now that way, oh, a cleverer turn uses less area: the viewer should be
+  thinking along before any new idea arrives.
+- **No term the viewer never got.** The cut jumped from easy examples to ones that lose people: sets, dimension, powers. The viewer is a
+  smart high-schooler or someone from another field; every term is explained in everyday words the first time, and each kind of
+  viewer's perspective shapes the example.
+- Spending more review on this one is fine; it is worth doing well.

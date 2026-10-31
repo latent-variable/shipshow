@@ -68,8 +68,10 @@ can be hard to hear. Write for the ear, then check it against the clock.
 ## Who is talking, and how it is funny
 
 **A narrator that is an AI says so, and is funny from there.** When a synthetic voice explains someone else's work (an
-explainer, not an essay in a person's own voice), the narrator is the AI that made the video: it says what it is, once, early
-("I'm an AI too. Claude, made by Anthropic"), and its humor comes from that vantage when it is natural: an AI explaining
+explainer, not an essay in a person's own voice), the narrator is the AI that made the video: it says what it is, once
+("I'm an AI too. Claude, made by Anthropic"), never in the hook: the first thirty seconds belong to the problem, and the title
+already says who explains it (the owner, kakeya-every-dimension, 2026-10-30: "we don't need to make it the punchline of every
+intro"). Say it where it adds something, beside the question of whom to trust. Its humor comes from that vantage when it is natural: an AI explaining
 another AI's work, the competition, the humans watching ("trust the checkers, not the AIs. Either of us"). Never an empty
 voice that only wants to please (the owner, eth-is-false, 2026-10-28: "be self-aware ... own it").
 

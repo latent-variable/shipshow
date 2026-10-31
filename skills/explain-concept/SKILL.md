@@ -74,6 +74,16 @@ omission from an oversight.
   `critic-pacing` holds the limit.
 - A newcomer's order often runs: the problem, the idea, one worked example, how it goes
   wrong or what it costs, then what to do.
+- **Grab them in the first fifteen to thirty seconds with the problem itself** (the owner, 2026-10-30, after watching
+  kakeya-every-dimension's first cut, with Veritasium, Vsauce and 3Blue1Brown as the bar). A question that sounds ridiculous
+  works: put it on screen, then say why it is not, in one breath. Then walk the viewer through it by hand, the obvious try, a
+  worse one, a cleverer one, so they are thinking along before the first new idea arrives. A credit, a disclosure or a date is
+  not a hook.
+- **Write for the smart kid with high-school math, or someone from another field.** Every term is explained the first time it
+  is said, in everyday words, before it is used: a set, a dimension, a power, a logarithm, an imaginary number. People who know
+  the field follow anyway; the rest are lost from the first word they never got (the same note: "four minutes in ... we start
+  throwing terms that we didn't really [explain]"). Think through each kind of viewer, and let their perspective choose the
+  example.
 - **A longer video is acts, and each act has its own feel.** Past about three minutes, group the scenes into acts (the
   setup, the history, the turn, the consequences) and give each a mood (`video.json` `moods`: its colours, background and
   music). Open each act on a hook, a question or a turn, never a signpost like "so how does it work". Show what failure

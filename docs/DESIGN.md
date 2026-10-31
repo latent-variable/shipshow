@@ -1267,6 +1267,15 @@ math-adjacent video in either would repeat a look. It is token-only, so no kit c
 230 KB of fonts, duplicated so each theme stays self-contained). **Tested.** On the video: `npm run check` (HyperFrames' lint and caption
 contrast) and the review frames of all seven of its moods.
 
+
+### D89. An explainer hooks with its problem and explains every term (2026-10-30)
+**Decision.** `explain-concept` now says to grab the viewer in the first fifteen to thirty seconds with the problem itself, then walk
+them through it by hand before any new idea, and to write for a smart high-schooler or someone from another field, explaining every
+term the first time it is said. `narration-writing` keeps the AI narrator's disclosure but takes it out of the hook. **Why.** The
+owner, watching kakeya-every-dimension's first cut: four minutes in, terms like set, dimension and power had lost him, and the intro
+spent its opening on who was talking instead of the puzzle; Veritasium, Vsauce and 3Blue1Brown are the bar. **Costs.** None in code;
+critics already judge hooks and clarity against these skills.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

@@ -46,14 +46,25 @@ the OpenAI post that videos/eth-is-false explained.
 
 | Scene | Claim | Source |
 |---|---|---|
-| 01 | In 1917 a Japanese mathematician (Sōichi Kakeya) asked how little room you need to turn a needle around | T section 1: "first posed by Soichi Kakeya [11] in 1917"; Q1: "In 1917, Sōichi Kakeya posed the problem" |
-| 01 | On October 26 OpenAI posted a paper that, if it holds, settles the Kakeya conjecture in every dimension, and on the way a famous conjecture about waves | B (dated 2026-10-26): "Our models produced a proof of the local smoothing conjecture in every dimension and therefore also resolve the Kakeya conjecture"; P abstract. "If it holds" is ours: S |
-| 01 | "The big question that puzzle grew into": the Kakeya conjecture | **opinion**, framing; T section 1 traces the needle problem to Conjecture 1.1 |
-| 01 | No human authors; an unnamed internal OpenAI model wrote it | P title page names only "OpenAI"; R README: "produced by an unnamed internal OpenAI model" |
-| 01 | OpenAI says a proof checker verified it the day after the model finished | B: "We obtained our AI output on October 18th, 2026, which was formalized in Lean the following day". Said as OpenAI's claim |
-| 01 | As far as I can find, nobody independent has signed off yet | S |
-| 01 | The other big paper from the same post is the Exponential Time Hypothesis one, which the channel explained | B section headings; videos/eth-is-false |
-| 01 | "I keep getting handed OpenAI's homework ... basically in their book club" | **opinion**, a joke; the ETH video is the earlier one |
+| 01 | A question that sounds useless: the smallest amount of table you need to turn a needle around | T section 1, Problem 1.1 (Kakeya's needle problem); "sounds useless" is **opinion**, after T section 2: "The Kakeya problem sounds like a pure curiosity" |
+| 01 | It is from 1917 | T section 1: "first posed by Soichi Kakeya [11] in 1917"; Q1 |
+| 01 | It turned out to be tangled up with how waves pile up, in sound, in light, even in the prime numbers | T section 2: the compressibility of tubes "is central to many problems in harmonic analysis, partial differential equations, and number theory, which all have the general flavor of trying to control the amount of 'constructive interference' ... in some superposition of oscillating waves"; the Montgomery and Lindelöf connection to primes. "Sound" and "light" are **ours**: the wave equation of P governs both, as standard physics |
+| 01 | On October 26 OpenAI posted a paper saying its AI settled the biggest version, in every dimension; if it holds, a century-old problem finished by a machine | B (2026-10-26): "Our models produced a proof of the local smoothing conjecture in every dimension and therefore also resolve the Kakeya conjecture"; P abstract; R README (an internal OpenAI model; on screen "no human authors": P's title page names only "OpenAI"). "If it holds" is ours: S |
+| 01 | Nobody independent has checked it yet | S |
+| 02 | Spinning the needle around one end sweeps a disk four times bigger, about 3.14 | **ours**, geometry: a disk of radius one has area π ≈ 3.14, four times π/4 |
+| 02 | A three-point turn: slide, turn, slide, turn; the needle traces a deltoid, half the area of the spin around the middle | T section 1 (the "three-point U-turn", deltoid π/8 against π/4) |
+| 02b | The trick: cut a fan of directions into thin slivers and slide them sideways so they pile on top of each other; every direction stays, the slivers share most of their room; again and again | T section 1 and Figure 2: the Besicovitch–Perron tree; "pairs of line segments making small, medium, or large angles to each other are all pushed together strategically to create a significant amount of overlap in area"; "a multi-scale structure". The animation is an illustration, labelled so |
+| 02b | A set is a collection of points: any shape you could draw | **ours**, the everyday meaning of a set of points in the plane |
+| 03 | The paint test: paint the shape with a brush made ever thinner; a line's paint shrinks in step (one dimension), a filled square's never goes down (two); a Kakeya set's, a googol times thinner, about a hundredth | **ours**, a picture of T's δ-neighbourhood (the paint is the area the thickened shape covers); the hundredth is T section 1 as below |
+| 03b | In three dimensions, needles pointing every way, like a pincushion | **ours**, an image |
+| 04 | To score how spiky a wave is, raise its height to a power p, like squaring or cubing it, then add it up | **ours**, a plain account of the L^p norm (P Theorem 1.1) |
+| 04a | Smoothness: how jagged the starting wave is allowed to be | **ours**, a plain gloss of "how many derivatives of the initial data are needed" (P section 1) |
+| 06 | Imaginary numbers, built on the square root of minus one, let you shift time and position sideways | **ours**, a gloss of P 1.4's imaginary translation; P 2.1: "i denotes the ordinary Fourier imaginary unit" |
+| 06 | Interference: the way waves add up or cancel out | **ours**, the standard meaning; P 1.4 |
+| 06c | A logarithm is roughly a count of digits: a thousand has a logarithm of three, a million six; it grows very slowly | **ours**, base-ten logarithms; the base changes only a constant factor |
+| 06d | Remember the slack: a loss that grows slower than any power; counting digits grows slower than any power, so a logarithm fits | P Theorem 1.1 (every ε > 0) and 1.3, as in 04a and 06d below |
+| 07b | Full disclosure: the narrator is an AI too, Claude, made by Anthropic; one AI explaining another's homework, which is why the human check matters | true of this video; **opinion** on why the check matters |
+
 | 02 | Spinning the needle around its middle sweeps a disk of about 0.79 square units for a unit needle (on screen π/4 ≈ 0.785) | T section 1: "a disk of radius 1/2, which has area π/4 ≈ 0.785" |
 | 02 | A three-point turn, like a U-turn in a narrow street, inside a deltoid takes half the area (π/8 ≈ 0.393) | T section 1: "A 'three-point U-turn' can replace this disk by a smaller shape, known as a deltoid, which has area π/8 ≈ 0.393"; T: "perform a U-turn in a narrow street"; W caption: a unit needle "can perform a complete rotation within it" |
 | 02 | For a while people believed that was the best | T section 1: "For a while, it was believed that this was the most efficient solution" |
