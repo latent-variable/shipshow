@@ -193,6 +193,25 @@ the OpenAI post that videos/eth-is-false explained.
 The build checks each licence (`bin/portrait.mjs`); `npm run review` lists the authors and licences under *Portraits*, and
 `review/credits.txt` carries them to the description.
 
+### Generated pictures
+
+Illustrations, never evidence: made for this video on the GPU box with MOSS-Image SFT (`moss-t2i`, Apache-2.0), 30 steps, CFG 5; the
+cutouts by Qwen-Image 2.1's background removal (`qwen-remove-bg`; its output usable by the owner's decision, 2026-10-27). Each prompt is
+committed in `art/<name>.txt`; the pictures sit in `assets/art/` (never committed). No words in any of them; every label is drawn on top.
+
+| Picture | Where | Size, seed | Cutout seed |
+|---|---|---|---|
+| `art/needle.txt`: a steel sewing needle | 01, 02, 02b, 04 (on the beam), 05a (the tower's pin, turned upright), 07c | 1792x1024, 916325138727 | 518894603719 |
+| `art/table.txt`: an oak tabletop from above | 01, 02 (the table each turn needs, bright; the rest dim), 02b (the crossed needles' disk), 03 ("the whole table" card), 07c | 1456x1456, 769992188250 | |
+| `art/brush.txt`: an artist's brush with yellow paint | 03, the paint test: three strokes, each brush as wide as its stroke | 1792x1024, 1004129244501 | 976086149624 |
+| `art/pincushion.txt`: a tomato pincushion bristling with needles | 03b, "like a pincushion" | 1456x1456, 614055267580 | 7221526233 |
+| `art/telescope.txt`: a small telescope under a starry sky | 03b, Tao's telescope that must point at every star | 1792x1024, 932660692360 | |
+| `art/laser.txt`: a cyan laser beam in haze | 04, "a narrow beam, like a laser" | 1792x1024, 386508071557 | |
+| `art/pond.txt`: ripple rings on a dark pond, from above | 04, "a ring of ripples on a pond", behind the drawn rings | 1456x1456, 86360637229 | |
+
+The 02 areas are still measured, not pictured: the bright wood in each box is clipped to the drawn disk or deltoid, whose areas are the
+sourced ones (T section 1).
+
 ### Memes
 
 | Scene | Template | Source |

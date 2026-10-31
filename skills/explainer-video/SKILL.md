@@ -210,6 +210,13 @@ made for its subject, not stamped from a template.
   decoration: a scene that reads as well without it does not get one. The image goes in `assets/` (never committed, so
   `build` stops when a picture a scene draws is missing); its prompt, model and seed are committed beside `scenes.html`
   and named in `sources.md` as generated.
+- **The thing the voice asks the viewer to picture is drawn as that thing** (the owner, 2026-10-30, on kakeya-every-dimension:
+  "we could have generated assets for needles ... not just a yellow bar, table textures ... to represent a table growing and
+  shrinking"). When the narration names a physical object or place and the scene animates it (a needle turning on a table, a brush
+  painting, ripples on a pond), generate the object once and animate the picture, not a coloured bar standing in for it. A cutout
+  of the object (on a transparent background) moves like the shape it replaces: an SVG `<image>` keeps the line's ids and the
+  timeline's tweens. A surface (a table, water) is a texture, clipped to the shape the scene measures, so the amount of table is
+  the amount shown. Diagrams stay diagrams: a chart, a graph or an idea with no body is drawn, never generated.
 
 ## 4. Make it, then the evidence
 

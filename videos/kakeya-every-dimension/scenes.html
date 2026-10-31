@@ -77,13 +77,24 @@
   .area { font-family: "Fraunces", var(--font-display); font-weight: 600; font-size: 52px; }
   .area { text-align: center; }
   .area small { display: block; font-family: var(--font-mono); font-size: 28px; color: var(--muted); font-weight: 400; margin-top: 6px; }
-  .needle { stroke: var(--accent); stroke-width: 9; stroke-linecap: round; }
-  .sweep { fill: rgba(255, 200, 87, 0.16); stroke: var(--accent); stroke-width: 3; }
-  .delt { fill: rgba(255, 200, 87, 0.12); stroke: var(--accent); stroke-width: 4; }
+  .needle image { filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.55)); }
+  .wood-dim { opacity: 0.22; }
+  .figbox { position: relative; width: 460px; height: 360px; flex: none; }
+  .figbox img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .figbox .cush { object-fit: contain; }
+  .figbox .scope { object-fit: cover; border-radius: 14px; border: 1.5px solid var(--line); }
+  .brushstage { position: relative; width: 1400px; height: 520px; }
+  .brushstage .stroke { position: absolute; left: 120px; height: 0; width: 0; border-radius: 999px; background: var(--accent); box-shadow: 0 0 18px rgba(255, 200, 87, 0.35); }
+  .brushstage .brush { position: absolute; width: 760px; filter: drop-shadow(0 0 10px rgba(200, 220, 255, 0.35)) drop-shadow(0 6px 8px rgba(0, 0, 0, 0.6)); }
+  .laser { position: relative; width: 1300px; height: 400px; border-radius: 16px; overflow: hidden; border: 1.5px solid var(--line); }
+  .laser > img.photo { width: 100%; height: 100%; object-fit: cover; }
+  .laser > img.over { position: absolute; left: 150px; top: calc(47% - 15px); width: 1000px; height: 30px; filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.8)); }
+  .sweep { fill: none; stroke: var(--accent); stroke-width: 3; }
+  .delt { fill: none; stroke: var(--accent); stroke-width: 4; }
   /* 02b */
   .counter { font-family: "Fraunces", var(--font-display); font-weight: 600; font-size: 74px; color: var(--accent); }
   .tree path { fill: rgba(255, 200, 87, 0.18); stroke: var(--accent); stroke-width: 2.5; }
-  .burst line { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
+
   .defcard { font-size: 46px; font-weight: 800; text-align: center; line-height: 1.3; }
   .defcard b { color: var(--accent); font-family: var(--font-display); font-size: 64px; display: block; }
   /* 03 */
@@ -120,7 +131,7 @@
   .tower .blk small { display: block; font-family: var(--font-mono); font-size: 28px; font-weight: 400; color: var(--muted); margin-top: 4px; }
   .tower .blk.top { border-color: var(--accent-2); color: var(--accent-2); }
   .tower .blk.kak { border-color: var(--accent); color: var(--accent); width: 600px; }
-  .tower .pin { width: 10px; height: 120px; background: linear-gradient(var(--accent), rgba(255, 200, 87, 0.2)); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+  .tower .pin { width: auto; height: 190px; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6)); }
   /* 05 */
   .beams line { stroke-linecap: round; }
   .beams .b { stroke: var(--accent-2); stroke-width: 26; opacity: 0.4; }
@@ -183,10 +194,13 @@
   <div class="phase" id="p01a">
     <div class="stage" style="align-items: center">
       <svg class="table01" width="1100" height="520" viewBox="-550 -260 1100 520" data-cue="+0.0" data-anim="fade">
-        <circle id="ghost01" cx="0" cy="0" r="200" fill="rgba(255, 200, 87, 0.06)" stroke="var(--accent)" stroke-width="3" stroke-dasharray="12 12" style="opacity: 0"/>
-        <line class="needle" id="needle01a" x1="-200" y1="0" x2="200" y2="0"/>
+        <defs><clipPath id="tbl01"><rect x="-550" y="-260" width="1100" height="520" rx="18"/></clipPath><clipPath id="need01"><circle id="needc01" cx="0" cy="0" r="200"/></clipPath></defs>
+        <image class="wood-dim" href="assets/art/table.jpg" x="-550" y="-550" width="1100" height="1100" clip-path="url(#tbl01)"/>
+        <image id="wood01" href="assets/art/table.jpg" x="-550" y="-550" width="1100" height="1100" clip-path="url(#need01)" style="opacity: 0"/>
+        <circle id="ghost01" cx="0" cy="0" r="200" fill="none" stroke="var(--accent)" stroke-width="3" stroke-dasharray="12 12" style="opacity: 0"/>
+        <g class="needle" id="needle01a"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.0" y="-8.3" width="400.0" height="16.7" transform="rotate(0.00 0.0 0.0)"/></g>
         <text x="330" y="-120" text-anchor="middle" style="font-size: 120px; fill: var(--accent); font-family: Fraunces, serif" data-cue="smallest" data-anim="pop">?</text>
-        <text x="0" y="245" text-anchor="middle" class="lbl" style="font-size: 40px" data-cue="smallest" data-anim="fade">the smallest amount of table?</text>
+        <text x="0" y="245" text-anchor="middle" class="lbl" style="font-size: 40px; paint-order: stroke; stroke: rgba(10, 16, 24, 0.85); stroke-width: 8px" data-cue="smallest" data-anim="fade">the smallest amount of table?</text>
       </svg>
       <div class="row"><div class="chip gold" data-cue="none" data-anim="pop">almost none</div><div class="chip violet" data-cue="room" data-anim="pop">no room at all, yet full size</div></div>
     </div>
@@ -226,21 +240,24 @@
     <div class="tables" style="gap: 34px; align-items: flex-start">
       <div class="tablebox" data-cue="try" data-anim="fade">
         <svg width="420" height="420" viewBox="-200 -200 400 400">
+          <defs><clipPath id="c02a"><circle id="cc02a" cx="0" cy="0" r="0"/></clipPath></defs><image class="wood-dim" href="assets/art/table.jpg" x="-200" y="-200" width="400" height="400"/><image href="assets/art/table.jpg" x="-200" y="-200" width="400" height="400" clip-path="url(#c02a)"/>
           <circle class="sweep" id="disk02" cx="0" cy="0" r="75"/>
-          <line class="needle" id="spin02" x1="-75" y1="0" x2="75" y2="0"/>
+          <g class="needle" id="spin02"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-75.0" y="-3.1" width="150.0" height="6.2" transform="rotate(0.00 0.0 0.0)"/></g>
         </svg>
         <div class="area" data-cue="0.79" data-anim="up">π/4 ≈ 0.785<small>around the middle</small></div>
       </div>
       <div class="tablebox" data-cue="end" data-anim="fade">
         <svg width="420" height="420" viewBox="-200 -200 400 400">
-          <circle class="sweep" id="disk02e" cx="0" cy="0" r="150" style="fill: rgba(255, 138, 122, 0.12); stroke: var(--bad)"/>
-          <line class="needle" id="spin02e" x1="0" y1="0" x2="150" y2="0"/>
+          <defs><clipPath id="c02b"><circle id="cc02b" cx="0" cy="0" r="0"/></clipPath></defs><image class="wood-dim" href="assets/art/table.jpg" x="-200" y="-200" width="400" height="400"/><image href="assets/art/table.jpg" x="-200" y="-200" width="400" height="400" clip-path="url(#c02b)"/>
+          <circle class="sweep" id="disk02e" cx="0" cy="0" r="150" style="stroke: var(--bad)"/>
+          <g class="needle" id="spin02e"><image href="assets/art/needle.png" preserveAspectRatio="none" x="0.0" y="-3.1" width="150.0" height="6.2" transform="rotate(0.00 75.0 0.0)"/></g>
         </svg>
         <div class="area" data-cue="3.14" data-anim="up">π ≈ 3.14<small>around one end: worse</small></div>
       </div>
       <div class="tablebox" data-cue="three" data-anim="fade">
         <svg width="420" height="420" viewBox="-200 -200 400 400">
-          <g transform="scale(0.5)"><path class="delt" id="delt02" data-cue="forward" data-anim="draw" d="M225.0 -0.0 L224.9 -0.0 L224.4 -0.0 L223.6 -0.0 L222.5 -0.1 L221.2 -0.2 L219.5 -0.3 L217.5 -0.5 L215.2 -0.7 L212.7 -1.0 L209.8 -1.3 L206.7 -1.7 L203.3 -2.3 L199.7 -2.9 L195.8 -3.6 L191.6 -4.4 L187.2 -5.3 L182.6 -6.3 L177.7 -7.4 L172.7 -8.7 L167.4 -10.1 L161.9 -11.6 L156.3 -13.2 L150.5 -14.9 L144.5 -16.8 L138.4 -18.9 L132.2 -21.0 L125.8 -23.3 L119.3 -25.8 L112.7 -28.4 L106.1 -31.1 L99.3 -33.9 L92.5 -36.9 L85.7 -40.0 L78.8 -43.2 L71.9 -46.6 L65.0 -50.0 L58.1 -53.6 L51.2 -57.3 L44.3 -61.1 L37.5 -65.0 L30.7 -68.9 L24.0 -73.0 L17.4 -77.1 L10.8 -81.3 L4.4 -85.6 L-2.0 -89.8 L-8.2 -94.2 L-14.3 -98.6 L-20.3 -103.0 L-26.1 -107.4 L-31.8 -111.8 L-37.3 -116.2 L-42.7 -120.6 L-47.9 -125.0 L-52.9 -129.3 L-57.7 -133.6 L-62.3 -137.8 L-66.8 -142.0 L-71.0 -146.0 L-75.0 -150.0 L-78.8 -153.9 L-82.4 -157.6 L-85.9 -161.3 L-89.0 -164.8 L-92.0 -168.1 L-94.8 -171.3 L-97.4 -174.4 L-99.7 -177.2 L-101.9 -179.9 L-103.8 -182.4 L-105.5 -184.7 L-107.0 -186.8 L-108.4 -188.6 L-109.5 -190.2 L-110.4 -191.6 L-111.2 -192.8 L-111.8 -193.7 L-112.2 -194.3 L-112.4 -194.7 L-112.5 -194.8 L-112.4 -194.7 L-112.2 -194.3 L-111.8 -193.6 L-111.3 -192.7 L-110.7 -191.5 L-110.0 -189.9 L-109.1 -188.1 L-108.2 -186.1 L-107.2 -183.7 L-106.1 -181.1 L-104.9 -178.1 L-103.6 -175.0 L-102.3 -171.5 L-101.0 -167.8 L-99.6 -163.8 L-98.2 -159.5 L-96.8 -155.0 L-95.3 -150.2 L-93.8 -145.2 L-92.4 -140.0 L-91.0 -134.5 L-89.6 -128.8 L-88.2 -122.8 L-86.8 -116.8 L-85.6 -110.4 L-84.3 -103.9 L-83.1 -97.3 L-82.0 -90.5 L-80.9 -83.5 L-80.0 -76.3 L-79.0 -69.1 L-78.2 -61.7 L-77.5 -54.2 L-76.8 -46.6 L-76.3 -39.0 L-75.8 -31.3 L-75.5 -23.5 L-75.2 -15.7 L-75.1 -7.9 L-75.0 -0.0 L-75.1 7.9 L-75.2 15.7 L-75.5 23.5 L-75.8 31.3 L-76.3 39.0 L-76.8 46.6 L-77.5 54.2 L-78.2 61.7 L-79.0 69.1 L-80.0 76.3 L-80.9 83.5 L-82.0 90.5 L-83.1 97.3 L-84.3 103.9 L-85.6 110.4 L-86.8 116.8 L-88.2 122.8 L-89.6 128.8 L-91.0 134.5 L-92.4 140.0 L-93.8 145.2 L-95.3 150.2 L-96.8 155.0 L-98.2 159.5 L-99.6 163.8 L-101.0 167.8 L-102.3 171.5 L-103.6 175.0 L-104.9 178.1 L-106.1 181.1 L-107.2 183.7 L-108.2 186.1 L-109.1 188.1 L-110.0 189.9 L-110.7 191.5 L-111.3 192.7 L-111.8 193.6 L-112.2 194.3 L-112.4 194.7 L-112.5 194.8 L-112.4 194.7 L-112.2 194.3 L-111.8 193.7 L-111.2 192.8 L-110.4 191.6 L-109.5 190.2 L-108.4 188.6 L-107.0 186.8 L-105.5 184.7 L-103.8 182.4 L-101.9 179.9 L-99.7 177.2 L-97.4 174.4 L-94.8 171.3 L-92.0 168.1 L-89.0 164.8 L-85.9 161.3 L-82.4 157.6 L-78.8 153.9 L-75.0 150.0 L-71.0 146.0 L-66.8 142.0 L-62.3 137.8 L-57.7 133.6 L-52.9 129.3 L-47.9 125.0 L-42.7 120.6 L-37.3 116.2 L-31.8 111.8 L-26.1 107.4 L-20.3 103.0 L-14.3 98.6 L-8.2 94.2 L-2.0 89.8 L4.4 85.6 L10.8 81.3 L17.4 77.1 L24.0 73.0 L30.7 68.9 L37.5 65.0 L44.3 61.1 L51.2 57.3 L58.1 53.6 L65.0 50.0 L71.9 46.6 L78.8 43.2 L85.7 40.0 L92.5 36.9 L99.3 33.9 L106.1 31.1 L112.7 28.4 L119.3 25.8 L125.8 23.3 L132.2 21.0 L138.4 18.9 L144.5 16.8 L150.5 14.9 L156.3 13.2 L161.9 11.6 L167.4 10.1 L172.7 8.7 L177.7 7.4 L182.6 6.3 L187.2 5.3 L191.6 4.4 L195.8 3.6 L199.7 2.9 L203.3 2.3 L206.7 1.7 L209.8 1.3 L212.7 1.0 L215.2 0.7 L217.5 0.5 L219.5 0.3 L221.2 0.2 L222.5 0.1 L223.6 0.0 L224.4 0.0 L224.9 0.0 L225.0 -0.0 Z"/><line class="needle" id="turn02" style="stroke-width: 18px" x1="-150" y1="0" x2="150" y2="0"/></g>
+          <defs><clipPath id="c02c"><path transform="scale(0.5)" d="M225.0 -0.0 L224.9 -0.0 L224.4 -0.0 L223.6 -0.0 L222.5 -0.1 L221.2 -0.2 L219.5 -0.3 L217.5 -0.5 L215.2 -0.7 L212.7 -1.0 L209.8 -1.3 L206.7 -1.7 L203.3 -2.3 L199.7 -2.9 L195.8 -3.6 L191.6 -4.4 L187.2 -5.3 L182.6 -6.3 L177.7 -7.4 L172.7 -8.7 L167.4 -10.1 L161.9 -11.6 L156.3 -13.2 L150.5 -14.9 L144.5 -16.8 L138.4 -18.9 L132.2 -21.0 L125.8 -23.3 L119.3 -25.8 L112.7 -28.4 L106.1 -31.1 L99.3 -33.9 L92.5 -36.9 L85.7 -40.0 L78.8 -43.2 L71.9 -46.6 L65.0 -50.0 L58.1 -53.6 L51.2 -57.3 L44.3 -61.1 L37.5 -65.0 L30.7 -68.9 L24.0 -73.0 L17.4 -77.1 L10.8 -81.3 L4.4 -85.6 L-2.0 -89.8 L-8.2 -94.2 L-14.3 -98.6 L-20.3 -103.0 L-26.1 -107.4 L-31.8 -111.8 L-37.3 -116.2 L-42.7 -120.6 L-47.9 -125.0 L-52.9 -129.3 L-57.7 -133.6 L-62.3 -137.8 L-66.8 -142.0 L-71.0 -146.0 L-75.0 -150.0 L-78.8 -153.9 L-82.4 -157.6 L-85.9 -161.3 L-89.0 -164.8 L-92.0 -168.1 L-94.8 -171.3 L-97.4 -174.4 L-99.7 -177.2 L-101.9 -179.9 L-103.8 -182.4 L-105.5 -184.7 L-107.0 -186.8 L-108.4 -188.6 L-109.5 -190.2 L-110.4 -191.6 L-111.2 -192.8 L-111.8 -193.7 L-112.2 -194.3 L-112.4 -194.7 L-112.5 -194.8 L-112.4 -194.7 L-112.2 -194.3 L-111.8 -193.6 L-111.3 -192.7 L-110.7 -191.5 L-110.0 -189.9 L-109.1 -188.1 L-108.2 -186.1 L-107.2 -183.7 L-106.1 -181.1 L-104.9 -178.1 L-103.6 -175.0 L-102.3 -171.5 L-101.0 -167.8 L-99.6 -163.8 L-98.2 -159.5 L-96.8 -155.0 L-95.3 -150.2 L-93.8 -145.2 L-92.4 -140.0 L-91.0 -134.5 L-89.6 -128.8 L-88.2 -122.8 L-86.8 -116.8 L-85.6 -110.4 L-84.3 -103.9 L-83.1 -97.3 L-82.0 -90.5 L-80.9 -83.5 L-80.0 -76.3 L-79.0 -69.1 L-78.2 -61.7 L-77.5 -54.2 L-76.8 -46.6 L-76.3 -39.0 L-75.8 -31.3 L-75.5 -23.5 L-75.2 -15.7 L-75.1 -7.9 L-75.0 -0.0 L-75.1 7.9 L-75.2 15.7 L-75.5 23.5 L-75.8 31.3 L-76.3 39.0 L-76.8 46.6 L-77.5 54.2 L-78.2 61.7 L-79.0 69.1 L-80.0 76.3 L-80.9 83.5 L-82.0 90.5 L-83.1 97.3 L-84.3 103.9 L-85.6 110.4 L-86.8 116.8 L-88.2 122.8 L-89.6 128.8 L-91.0 134.5 L-92.4 140.0 L-93.8 145.2 L-95.3 150.2 L-96.8 155.0 L-98.2 159.5 L-99.6 163.8 L-101.0 167.8 L-102.3 171.5 L-103.6 175.0 L-104.9 178.1 L-106.1 181.1 L-107.2 183.7 L-108.2 186.1 L-109.1 188.1 L-110.0 189.9 L-110.7 191.5 L-111.3 192.7 L-111.8 193.6 L-112.2 194.3 L-112.4 194.7 L-112.5 194.8 L-112.4 194.7 L-112.2 194.3 L-111.8 193.7 L-111.2 192.8 L-110.4 191.6 L-109.5 190.2 L-108.4 188.6 L-107.0 186.8 L-105.5 184.7 L-103.8 182.4 L-101.9 179.9 L-99.7 177.2 L-97.4 174.4 L-94.8 171.3 L-92.0 168.1 L-89.0 164.8 L-85.9 161.3 L-82.4 157.6 L-78.8 153.9 L-75.0 150.0 L-71.0 146.0 L-66.8 142.0 L-62.3 137.8 L-57.7 133.6 L-52.9 129.3 L-47.9 125.0 L-42.7 120.6 L-37.3 116.2 L-31.8 111.8 L-26.1 107.4 L-20.3 103.0 L-14.3 98.6 L-8.2 94.2 L-2.0 89.8 L4.4 85.6 L10.8 81.3 L17.4 77.1 L24.0 73.0 L30.7 68.9 L37.5 65.0 L44.3 61.1 L51.2 57.3 L58.1 53.6 L65.0 50.0 L71.9 46.6 L78.8 43.2 L85.7 40.0 L92.5 36.9 L99.3 33.9 L106.1 31.1 L112.7 28.4 L119.3 25.8 L125.8 23.3 L132.2 21.0 L138.4 18.9 L144.5 16.8 L150.5 14.9 L156.3 13.2 L161.9 11.6 L167.4 10.1 L172.7 8.7 L177.7 7.4 L182.6 6.3 L187.2 5.3 L191.6 4.4 L195.8 3.6 L199.7 2.9 L203.3 2.3 L206.7 1.7 L209.8 1.3 L212.7 1.0 L215.2 0.7 L217.5 0.5 L219.5 0.3 L221.2 0.2 L222.5 0.1 L223.6 0.0 L224.4 0.0 L224.9 0.0 L225.0 -0.0 Z"/></clipPath></defs><image class="wood-dim" href="assets/art/table.jpg" x="-200" y="-200" width="400" height="400"/><image id="wood02c" href="assets/art/table.jpg" x="-200" y="-200" width="400" height="400" clip-path="url(#c02c)" style="opacity: 0"/>
+          <g transform="scale(0.5)"><path class="delt" id="delt02" data-cue="forward" data-anim="draw" d="M225.0 -0.0 L224.9 -0.0 L224.4 -0.0 L223.6 -0.0 L222.5 -0.1 L221.2 -0.2 L219.5 -0.3 L217.5 -0.5 L215.2 -0.7 L212.7 -1.0 L209.8 -1.3 L206.7 -1.7 L203.3 -2.3 L199.7 -2.9 L195.8 -3.6 L191.6 -4.4 L187.2 -5.3 L182.6 -6.3 L177.7 -7.4 L172.7 -8.7 L167.4 -10.1 L161.9 -11.6 L156.3 -13.2 L150.5 -14.9 L144.5 -16.8 L138.4 -18.9 L132.2 -21.0 L125.8 -23.3 L119.3 -25.8 L112.7 -28.4 L106.1 -31.1 L99.3 -33.9 L92.5 -36.9 L85.7 -40.0 L78.8 -43.2 L71.9 -46.6 L65.0 -50.0 L58.1 -53.6 L51.2 -57.3 L44.3 -61.1 L37.5 -65.0 L30.7 -68.9 L24.0 -73.0 L17.4 -77.1 L10.8 -81.3 L4.4 -85.6 L-2.0 -89.8 L-8.2 -94.2 L-14.3 -98.6 L-20.3 -103.0 L-26.1 -107.4 L-31.8 -111.8 L-37.3 -116.2 L-42.7 -120.6 L-47.9 -125.0 L-52.9 -129.3 L-57.7 -133.6 L-62.3 -137.8 L-66.8 -142.0 L-71.0 -146.0 L-75.0 -150.0 L-78.8 -153.9 L-82.4 -157.6 L-85.9 -161.3 L-89.0 -164.8 L-92.0 -168.1 L-94.8 -171.3 L-97.4 -174.4 L-99.7 -177.2 L-101.9 -179.9 L-103.8 -182.4 L-105.5 -184.7 L-107.0 -186.8 L-108.4 -188.6 L-109.5 -190.2 L-110.4 -191.6 L-111.2 -192.8 L-111.8 -193.7 L-112.2 -194.3 L-112.4 -194.7 L-112.5 -194.8 L-112.4 -194.7 L-112.2 -194.3 L-111.8 -193.6 L-111.3 -192.7 L-110.7 -191.5 L-110.0 -189.9 L-109.1 -188.1 L-108.2 -186.1 L-107.2 -183.7 L-106.1 -181.1 L-104.9 -178.1 L-103.6 -175.0 L-102.3 -171.5 L-101.0 -167.8 L-99.6 -163.8 L-98.2 -159.5 L-96.8 -155.0 L-95.3 -150.2 L-93.8 -145.2 L-92.4 -140.0 L-91.0 -134.5 L-89.6 -128.8 L-88.2 -122.8 L-86.8 -116.8 L-85.6 -110.4 L-84.3 -103.9 L-83.1 -97.3 L-82.0 -90.5 L-80.9 -83.5 L-80.0 -76.3 L-79.0 -69.1 L-78.2 -61.7 L-77.5 -54.2 L-76.8 -46.6 L-76.3 -39.0 L-75.8 -31.3 L-75.5 -23.5 L-75.2 -15.7 L-75.1 -7.9 L-75.0 -0.0 L-75.1 7.9 L-75.2 15.7 L-75.5 23.5 L-75.8 31.3 L-76.3 39.0 L-76.8 46.6 L-77.5 54.2 L-78.2 61.7 L-79.0 69.1 L-80.0 76.3 L-80.9 83.5 L-82.0 90.5 L-83.1 97.3 L-84.3 103.9 L-85.6 110.4 L-86.8 116.8 L-88.2 122.8 L-89.6 128.8 L-91.0 134.5 L-92.4 140.0 L-93.8 145.2 L-95.3 150.2 L-96.8 155.0 L-98.2 159.5 L-99.6 163.8 L-101.0 167.8 L-102.3 171.5 L-103.6 175.0 L-104.9 178.1 L-106.1 181.1 L-107.2 183.7 L-108.2 186.1 L-109.1 188.1 L-110.0 189.9 L-110.7 191.5 L-111.3 192.7 L-111.8 193.6 L-112.2 194.3 L-112.4 194.7 L-112.5 194.8 L-112.4 194.7 L-112.2 194.3 L-111.8 193.7 L-111.2 192.8 L-110.4 191.6 L-109.5 190.2 L-108.4 188.6 L-107.0 186.8 L-105.5 184.7 L-103.8 182.4 L-101.9 179.9 L-99.7 177.2 L-97.4 174.4 L-94.8 171.3 L-92.0 168.1 L-89.0 164.8 L-85.9 161.3 L-82.4 157.6 L-78.8 153.9 L-75.0 150.0 L-71.0 146.0 L-66.8 142.0 L-62.3 137.8 L-57.7 133.6 L-52.9 129.3 L-47.9 125.0 L-42.7 120.6 L-37.3 116.2 L-31.8 111.8 L-26.1 107.4 L-20.3 103.0 L-14.3 98.6 L-8.2 94.2 L-2.0 89.8 L4.4 85.6 L10.8 81.3 L17.4 77.1 L24.0 73.0 L30.7 68.9 L37.5 65.0 L44.3 61.1 L51.2 57.3 L58.1 53.6 L65.0 50.0 L71.9 46.6 L78.8 43.2 L85.7 40.0 L92.5 36.9 L99.3 33.9 L106.1 31.1 L112.7 28.4 L119.3 25.8 L125.8 23.3 L132.2 21.0 L138.4 18.9 L144.5 16.8 L150.5 14.9 L156.3 13.2 L161.9 11.6 L167.4 10.1 L172.7 8.7 L177.7 7.4 L182.6 6.3 L187.2 5.3 L191.6 4.4 L195.8 3.6 L199.7 2.9 L203.3 2.3 L206.7 1.7 L209.8 1.3 L212.7 1.0 L215.2 0.7 L217.5 0.5 L219.5 0.3 L221.2 0.2 L222.5 0.1 L223.6 0.0 L224.4 0.0 L224.9 0.0 L225.0 -0.0 Z"/><g class="needle" id="turn02"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-150.0" y="-6.2" width="300.0" height="12.5" transform="rotate(0.00 0.0 0.0)"/></g></g>
         </svg>
         <div class="area" data-cue="half" data-anim="up">π/8 ≈ 0.393<small>a three-point turn: half</small></div>
       </div>
@@ -267,7 +284,7 @@
   </div>
   <div class="phase" id="p02bb">
     <div class="stage">
-      <svg class="tree" id="tree02b" width="900" height="420" viewBox="-360 -320 720 340" style="align-self: center" data-cue="sliver" data-anim="fade"><line class="needle" id="hop02b" x1="0" y1="-300" x2="-140" y2="0" style="opacity: 0"/><path class="sl" d="M-330.0 0 L-275.0 0 L0 -300 Z"/><path class="sl" d="M-275.0 0 L-220.0 0 L0 -300 Z"/><path class="sl" d="M-220.0 0 L-165.0 0 L0 -300 Z"/><path class="sl" d="M-165.0 0 L-110.0 0 L0 -300 Z"/><path class="sl" d="M-110.0 0 L-55.0 0 L0 -300 Z"/><path class="sl" d="M-55.0 0 L0.0 0 L0 -300 Z"/><path class="sl" d="M0.0 0 L55.0 0 L0 -300 Z"/><path class="sl" d="M55.0 0 L110.0 0 L0 -300 Z"/><path class="sl" d="M110.0 0 L165.0 0 L0 -300 Z"/><path class="sl" d="M165.0 0 L220.0 0 L0 -300 Z"/><path class="sl" d="M220.0 0 L275.0 0 L0 -300 Z"/><path class="sl" d="M275.0 0 L330.0 0 L0 -300 Z"/></svg>
+      <svg class="tree" id="tree02b" width="900" height="420" viewBox="-360 -320 720 340" style="align-self: center" data-cue="sliver" data-anim="fade"><g class="needle" id="hop02b" style="opacity: 0"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-235.5" y="-156.9" width="331.1" height="13.8" transform="rotate(115.02 -70.0 -150.0)"/></g><path class="sl" d="M-330.0 0 L-275.0 0 L0 -300 Z"/><path class="sl" d="M-275.0 0 L-220.0 0 L0 -300 Z"/><path class="sl" d="M-220.0 0 L-165.0 0 L0 -300 Z"/><path class="sl" d="M-165.0 0 L-110.0 0 L0 -300 Z"/><path class="sl" d="M-110.0 0 L-55.0 0 L0 -300 Z"/><path class="sl" d="M-55.0 0 L0.0 0 L0 -300 Z"/><path class="sl" d="M0.0 0 L55.0 0 L0 -300 Z"/><path class="sl" d="M55.0 0 L110.0 0 L0 -300 Z"/><path class="sl" d="M110.0 0 L165.0 0 L0 -300 Z"/><path class="sl" d="M165.0 0 L220.0 0 L0 -300 Z"/><path class="sl" d="M220.0 0 L275.0 0 L0 -300 Z"/><path class="sl" d="M275.0 0 L330.0 0 L0 -300 Z"/></svg>
       <div class="row" style="flex-wrap: wrap; max-width: 1500px; margin: 0 auto"><div class="chip" data-cue="slide" data-anim="pop">slide the slivers so they overlap</div><div class="chip gold" data-cue="Every" data-anim="pop">every direction still there</div><div class="chip" data-cue="again" data-anim="pop">again and again: almost no area</div></div>
       <div class="src center" data-cue="sliver" data-anim="fade">the idea, drawn to explain it · Tao 2026, Figure 2</div>
     </div>
@@ -276,11 +293,11 @@
   <div class="phase" id="p02bc">
     <div class="stage">
       <div class="row" style="gap: 80px">
-        <svg class="burst" width="520" height="520" viewBox="-260 -260 520 520" data-cue="copy" data-anim="stagger"><circle id="fill02b" cx="0" cy="0" r="200" fill="rgba(255, 200, 87, 0.28)" style="opacity: 0"/>
-          <line x1="-200" y1="0" x2="200" y2="0"/><line x1="-185" y1="-77" x2="185" y2="77"/><line x1="-141" y1="-141" x2="141" y2="141"/><line x1="-77" y1="-185" x2="77" y2="185"/>
-          <line x1="0" y1="-200" x2="0" y2="200"/><line x1="77" y1="-185" x2="-77" y2="185"/><line x1="141" y1="-141" x2="-141" y2="141"/><line x1="185" y1="-77" x2="-185" y2="77"/>
-          <line x1="-197" y1="-35" x2="197" y2="35"/><line x1="-164" y1="-115" x2="164" y2="115"/><line x1="-115" y1="-164" x2="115" y2="164"/><line x1="-35" y1="-197" x2="35" y2="197"/>
-          <line x1="35" y1="-197" x2="-35" y2="197"/><line x1="115" y1="-164" x2="-115" y2="164"/><line x1="164" y1="-115" x2="-164" y2="115"/><line x1="197" y1="-35" x2="-197" y2="35"/>
+        <svg class="burst" width="520" height="520" viewBox="-260 -260 520 520" data-cue="copy" data-anim="stagger"><defs><clipPath id="c02bd"><circle cx="0" cy="0" r="200"/></clipPath></defs><image id="fill02b" href="assets/art/table.jpg" x="-260" y="-260" width="520" height="520" clip-path="url(#c02bd)" style="opacity: 0"/>
+          <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.0" y="-8.3" width="400.0" height="16.7" transform="rotate(0.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(22.60 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-199.4" y="-8.3" width="398.8" height="16.6" transform="rotate(45.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(67.40 0.0 0.0)"/></g>
+          <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.0" y="-8.3" width="400.0" height="16.7" transform="rotate(90.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(112.60 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-199.4" y="-8.3" width="398.8" height="16.6" transform="rotate(135.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(157.40 0.0 0.0)"/></g>
+          <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.1" y="-8.3" width="400.2" height="16.7" transform="rotate(10.07 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.3" y="-8.3" width="400.6" height="16.7" transform="rotate(35.04 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.3" y="-8.3" width="400.6" height="16.7" transform="rotate(54.96 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.1" y="-8.3" width="400.2" height="16.7" transform="rotate(79.93 0.0 0.0)"/></g>
+          <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.1" y="-8.3" width="400.2" height="16.7" transform="rotate(100.07 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.3" y="-8.3" width="400.6" height="16.7" transform="rotate(125.04 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.3" y="-8.3" width="400.6" height="16.7" transform="rotate(144.96 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.1" y="-8.3" width="400.2" height="16.7" transform="rotate(169.93 0.0 0.0)"/></g>
         </svg>
         <div class="col" style="align-items: center">
           <div class="chip" data-cue="Forget" data-anim="pop">no turning: one needle per direction</div>
@@ -301,14 +318,23 @@
       <div class="choice">
         <div class="card" data-cue="scribble" data-anim="left">basically nothing:<br>a scribble of lines?</div>
         <div class="or" data-cue="deeper" data-anim="fade">or</div>
-        <div class="card" style="border-color: var(--accent)" data-cue="table" data-anim="right">as big as<br>the whole table?</div>
+        <div class="card" style="border-color: var(--accent); background: linear-gradient(rgba(8, 12, 18, 0.5), rgba(8, 12, 18, 0.5)), url(assets/art/table.jpg) center / cover; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8)" data-cue="table" data-anim="right">as big as<br>the whole table?</div>
       </div>
+    </div>
+  </div>
+  <div class="phase" id="p03ab">
+    <div class="stage" style="align-items: center">
+      <div class="brushstage" data-cue="Paint" data-anim="fade">
+        <div class="stroke" id="st03a"></div><div class="stroke" id="st03b"></div><div class="stroke" id="st03c"></div>
+        <img class="brush" id="br03" src="assets/art/brush.png" alt="">
+      </div>
+      <div class="row"><div class="chip" data-cue="Paint" data-anim="pop">the paint test: paint it, then use a thinner brush, and again</div></div>
     </div>
   </div>
   <div class="phase" id="p03b">
     <div class="stage" style="inset: 20px var(--pad) 10px">
       <div class="row" style="gap: 40px">
-        <svg class="chart" width="1080" height="640" viewBox="0 0 1080 640" data-cue="Paint" data-anim="fade">
+        <svg class="chart" width="1080" height="640" viewBox="0 0 1080 640" data-cue="single" data-anim="fade">
           <line class="grid" x1="140" y1="40" x2="1040" y2="40"/><line class="grid" x1="140" y1="170" x2="1040" y2="170"/><line class="grid" x1="140" y1="300" x2="1040" y2="300"/><line class="grid" x1="140" y1="430" x2="1040" y2="430"/>
           <path class="ax" d="M140 30 V560 H1050"/>
           <text x="128" y="50" text-anchor="end">1</text><text x="150" y="292" text-anchor="start">1 in 10⁵⁰</text><text x="150" y="545" text-anchor="start">a googolth</text>
@@ -330,7 +356,7 @@
           <div class="chip gold" data-cue="zero#3" data-anim="pop">zero area, full size</div>
         </div>
       </div>
-      <div class="src center" data-cue="Paint" data-anim="fade">log scales · the rate: Tao 2026</div>
+      <div class="src center" data-cue="single" data-anim="fade">log scales · the rate: Tao 2026</div>
     </div>
   </div>
   <div class="meme-wrap pop" id="m03" data-cue="plain" data-anim="fade"><figure class="ss-meme" data-meme="vince" data-cue="plain" data-anim="pop"><span data-cue="plain" data-anim="fade">a line, a googol times thinner: a googolth</span><span data-cue="still" data-anim="fade">the most squeezed Kakeya set</span><span data-cue="hundredth" data-anim="fade">still about a hundredth</span></figure></div>
@@ -356,9 +382,7 @@
         <div class="tl-item" data-cue="all" data-anim="pop"><div class="dot claim"></div><div class="yr">Oct 2026</div><div class="what">every dimension</div><div class="who">OpenAI, a claim</div></div>
       </div>
       <div class="row" style="gap: 50px" id="row03b">
-        <svg class="tubes" width="320" height="300" viewBox="-280 -260 560 520" data-cue="telescope" data-anim="stagger">
-          <line x1="-200" y1="40" x2="190" y2="-30"/><line x1="-120" y1="-190" x2="140" y2="170"/><line x1="-30" y1="210" x2="40" y2="-200"/><line x1="-210" y1="-60" x2="200" y2="90"/><line x1="160" y1="-160" x2="-140" y2="150"/><line x1="-60" y1="-210" x2="80" y2="200"/>
-        </svg>
+        <div class="figbox"><img class="cush" id="cush03b" src="assets/art/pincushion.png" alt="" data-cue="pincushion" data-anim="pop"><img class="scope" id="scope03b" src="assets/art/telescope.jpg" alt="" data-cue="telescope" data-anim="fade"></div>
         <div class="col" style="align-items: center">
           <div class="people">
             <figure class="ss-portrait sm" data-commons="File:Terence Tao.jpg" data-cue="Tao" data-anim="pop"><figcaption>Terence Tao<small>survey, August 2026</small></figcaption></figure>
@@ -378,7 +402,7 @@
   <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part three</div><div class="title" data-cue="+0.4" data-anim="up">Waves</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
   <div class="phase" id="p04z">
     <div class="stage" style="align-items: center">
-      <svg width="1300" height="260" viewBox="0 -130 1300 260" data-cue="beam" data-anim="left"><line x1="40" y1="0" x2="1260" y2="0" stroke="var(--accent-2)" stroke-width="60" stroke-linecap="round" opacity="0.35"/><line x1="40" y1="0" x2="1260" y2="0" stroke="var(--accent)" stroke-width="8" stroke-linecap="round"/></svg>
+      <div class="laser" data-cue="beam" data-anim="fade"><img class="photo" src="assets/art/laser.jpg" alt=""><img class="over" src="assets/art/needle.png" alt="" data-cue="thickness" data-anim="fade"></div>
       <div class="row"><div class="chip cyan" data-cue="beam" data-anim="pop">a beam of waves lives in a tube</div><div class="chip gold" data-cue="thickness" data-anim="pop">a tube is a needle with some thickness</div></div>
     </div>
   </div>
@@ -386,6 +410,7 @@
     <div class="stage">
       <div class="row" style="gap: 50px">
         <svg class="pond" width="620" height="620" viewBox="-310 -310 620 620" data-cue="ripples" data-anim="fade">
+          <defs><clipPath id="c04p"><circle cx="0" cy="0" r="300"/></clipPath></defs><image href="assets/art/pond.jpg" x="-310" y="-310" width="620" height="620" clip-path="url(#c04p)" style="opacity: 0.85"/>
           <circle class="ring" id="r1" cx="0" cy="0" r="280"/><circle class="ring" id="r2" cx="0" cy="0" r="240"/><circle class="ring" id="r3" cx="0" cy="0" r="200"/>
           <circle class="spike" id="spike04" cx="0" cy="0" r="0"/>
         </svg>
@@ -484,7 +509,7 @@
         <div class="blk" data-cue="Bochner" data-anim="pop">Bochner–Riesz<small>rebuilding a sound from its notes</small></div>
         <div class="blk" data-cue="Stein's" data-anim="pop">Stein's restriction<small>single-pitch waves from every direction</small></div>
         <div class="blk kak" data-cue="bottom" data-anim="pop">Kakeya<small>the needle</small></div>
-        <div class="pin" data-cue="bottom" data-anim="grow"></div>
+        <img class="pin" src="assets/art/needle-v.png" alt="" data-cue="bottom" data-anim="up">
       </div>
       <div class="col" style="align-items: center">
         <figure class="ss-portrait" data-commons="File:Elias Stein.jpeg" data-cue="Stein's" data-anim="pop"><figcaption>Elias Stein<small>the restriction conjecture</small></figcaption></figure>
@@ -746,9 +771,9 @@ theorem kakeya :
   <div class="phase" id="p07cb">
     <div class="stage" style="align-items: center">
       <svg class="burst" id="burst07c" width="560" height="560" viewBox="-280 -280 560 560" data-cue="1917" data-anim="stagger">
-        <circle id="full07c" cx="0" cy="0" r="230" fill="rgba(255, 200, 87, 0.0)"/>
-        <line x1="-200" y1="0" x2="200" y2="0"/><line x1="-185" y1="-77" x2="185" y2="77"/><line x1="-141" y1="-141" x2="141" y2="141"/><line x1="-77" y1="-185" x2="77" y2="185"/>
-        <line x1="0" y1="-200" x2="0" y2="200"/><line x1="77" y1="-185" x2="-77" y2="185"/><line x1="141" y1="-141" x2="-141" y2="141"/><line x1="185" y1="-77" x2="-185" y2="77"/>
+        <defs><clipPath id="c07c"><circle cx="0" cy="0" r="200"/></clipPath></defs><image id="full07c" href="assets/art/table.jpg" x="-280" y="-280" width="560" height="560" clip-path="url(#c07c)" style="opacity: 0"/>
+        <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.0" y="-8.3" width="400.0" height="16.7" transform="rotate(0.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(22.60 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-199.4" y="-8.3" width="398.8" height="16.6" transform="rotate(45.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(67.40 0.0 0.0)"/></g>
+        <g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.0" y="-8.3" width="400.0" height="16.7" transform="rotate(90.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(112.60 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-199.4" y="-8.3" width="398.8" height="16.6" transform="rotate(135.00 0.0 0.0)"/></g><g class="needle"><image href="assets/art/needle.png" preserveAspectRatio="none" x="-200.4" y="-8.3" width="400.8" height="16.7" transform="rotate(157.40 0.0 0.0)"/></g>
       </svg>
       <div class="row"><div class="chip" data-cue="almost" data-anim="pop">turning: almost none</div><div class="chip gold" data-cue="none#2" data-anim="pop">area: zero</div><div class="chip" data-cue="somehow" data-anim="pop">size: full</div></div>
     </div>
@@ -784,14 +809,21 @@ theorem kakeya :
   tl.set("#disk02", { scale: 0, transformOrigin: "50% 50%" }, 0);
   tl.to("#spin02", { rotation: 360, svgOrigin: "0 0", duration: 3.2, ease: "power1.inOut" }, at("#mk02spin"));
   tl.to("#disk02", { scale: 1, duration: 3.2, ease: "power1.inOut" }, at("#mk02spin"));
+  tl.to("#cc02a", { attr: { r: 75 }, duration: 3.2, ease: "power1.inOut" }, at("#mk02spin"));
   tl.set("#disk02e", { scale: 0, transformOrigin: "50% 50%" }, 0);
   tl.to("#spin02e", { rotation: 360, svgOrigin: "0 0", duration: 3.2, ease: "power1.inOut" }, at("#mk02end") + 0.3);
   tl.to("#disk02e", { scale: 1, duration: 3.2, ease: "power1.inOut" }, at("#mk02end") + 0.3);
+  tl.to("#cc02b", { attr: { r: 150 }, duration: 3.2, ease: "power1.inOut" }, at("#mk02end") + 0.3);
+  tl.to("#wood02c", { opacity: 1, duration: 1.2 }, at("#mk02delt") + 2);
   const turn = { k: 0 };
   const putNeedle = () => {
     const i = Math.floor(turn.k) % NEEDLE.length, j = (i + 1) % NEEDLE.length, f = turn.k - Math.floor(turn.k);
-    const a = NEEDLE[i], b = NEEDLE[j], l = document.querySelector("#turn02");
-    ["x1", "y1", "x2", "y2"].forEach((key, n) => l.setAttribute(key, (a[n] + (b[n] - a[n]) * f).toFixed(1)));
+    const a = NEEDLE[i], b = NEEDLE[j], img = document.querySelector("#turn02 image");
+    const [x1, y1, x2, y2] = a.map((v, n) => v + (b[n] - v) * f);
+    const L = Math.hypot(x2 - x1, y2 - y1), th = L / 24, cx = (x1 + x2) / 2, cy = (y1 + y2) / 2;
+    img.setAttribute("x", (cx - L / 2).toFixed(1)); img.setAttribute("y", (cy - th / 2).toFixed(1));
+    img.setAttribute("width", L.toFixed(1)); img.setAttribute("height", th.toFixed(1));
+    img.setAttribute("transform", `rotate(${(Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI).toFixed(2)} ${cx.toFixed(1)} ${cy.toFixed(1)})`);
   };
   putNeedle();
   tl.to(turn, { k: NEEDLE.length * 2 - 1, duration: 9, ease: "none", onUpdate: putNeedle }, at("#mk02delt"));
@@ -814,13 +846,25 @@ theorem kakeya :
   tl.to("[data-scene='02b-no-smallest'] .counter:nth-of-type(2)", { opacity: 0.45, duration: 0.3 }, at("[data-scene='02b-no-smallest'] .counter:nth-of-type(3)"));
 
   // 03: the riddle, the chart, the meme, the conjecture.
-  swap("#p03a", "#p03b", at("#p03b svg.chart"));
+  swap("#p03a", "#p03ab", at("#p03ab .brushstage"));
+  // The brush paints a stroke, then a thinner one, then thinner again: the width is the brush.
+  // The brush paints a stroke, then a thinner one, then thinner again: each brush as wide as its stroke.
+  [["#st03a", 44, 110, 0], ["#st03b", 18, 270, 1.6], ["#st03c", 6, 410, 3.2]].forEach(([id, w, cy, dt]) => {
+    const t0 = at("#p03ab .brushstage") + 0.4 + dt, k = w / 37, bw = 760 * k;   // the tip's paint is about 37 px of a 760 px brush
+    tl.set("#br03", { width: bw, top: cy - 25 * k, left: 120 - bw, x: 0 }, t0);
+    tl.set(id, { height: w, top: cy - w / 2 }, t0);
+    tl.fromTo(id, { width: 0 }, { width: 1160, duration: 1.3, ease: "power1.inOut" }, t0);
+    tl.to("#br03", { x: 1160, duration: 1.3, ease: "power1.inOut" }, t0);
+  });
+  tl.to("#br03", { opacity: 0, duration: 0.4 }, at("#p03ab .brushstage") + 5.0);
+  swap("#p03ab", "#p03b", at("#p03b svg.chart"));
   leave("#m03", at("#p03b [data-cue='barely']") - 0.35);
   tl.to("#p03b", { opacity: 1, duration: 0.35 }, at("#p03b [data-cue='barely']") - 0.3);
   swap("#p03b", "#p03c", at("#p03c .defcard"));
 
   // 03b: tubes and people; Quanta's page; the timeline.
   leave("#s03b", at("#p03ba [data-cue='Four']") - 0.6);
+  tl.to("#cush03b", { opacity: 0, duration: 0.5 }, at("#scope03b"));
   tl.to("#row03b", { opacity: 0, duration: 0.3 }, at("#p03ba .stamp") - 0.35);
   tl.to("#p03ba", { opacity: 1, duration: 0.35 }, at("#p03ba [data-cue='Four']") - 0.5);
 
@@ -889,7 +933,7 @@ theorem kakeya :
 
   // 07c: what I'm watching; the needle set fills to full size on the last line.
   swap("#p07ca", "#p07cb", at("#burst07c"));
-  tl.to("#full07c", { attr: { fill: "rgba(255, 200, 87, 0.28)" }, duration: 1.6, ease: "power1.inOut" }, at("#p07cb [data-cue='somehow']"));
+  tl.to("#full07c", { opacity: 1, duration: 1.6, ease: "power1.inOut" }, at("#p07cb [data-cue='somehow']"));
 
   // A pop-up meme or capture owns the frame: whatever is behind it fades out, so no text shows through its backdrop.
   document.querySelectorAll(".meme-wrap.pop").forEach((m) => {
@@ -901,8 +945,8 @@ theorem kakeya :
   // 01: the needle turns while the 1917 question is asked.
   // 01: the needle tries to turn, and the room it would need shows up as a ghost.
   tl.to("#needle01a", { rotation: 180, svgOrigin: "0 0", duration: 4, ease: "sine.inOut" }, 3.0);
-  tl.to("#ghost01", { opacity: 1, duration: 1 }, 3.5);
-  tl.to("#ghost01", { attr: { r: 30 }, duration: 1.2, ease: "power2.inOut" }, at("#p01a [data-cue='none']"));
+  tl.to(["#ghost01", "#wood01"], { opacity: 1, duration: 1 }, 3.5);
+  tl.to(["#ghost01", "#needc01"], { attr: { r: 30 }, duration: 1.2, ease: "power2.inOut" }, at("#p01a [data-cue='none']"));
   // 04a: the spike collapses on "can't hold a pose".
   tl.to("#p04b .peak path.c", { opacity: 0.3, duration: 0.6 }, at("#mk04apose"));
   tl.to("#p04b .peak path.c", { opacity: 1, duration: 0.6 }, at("#mk04apose") + 2.4);

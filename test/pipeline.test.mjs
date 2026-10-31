@@ -1399,6 +1399,8 @@ test("package: a clone or invented voice must be named in sources.md, so credits
   writeFileSync(join(tdir, "assets", "here.png"), "");
   assert.deepEqual(missingLocalFiles('<img src="assets/here.png"><img src="assets/gone.png"><div style="background: url(\'../x.woff2\')"></div><img src="https://a.test/b.png"><img src="data:image/png;base64,AA">', tdir),
     ["assets/gone.png", "../x.woff2"], "local files only, each missing one named");
+  assert.deepEqual(missingLocalFiles('<svg><image href="assets/here.png"/><image x="0" xlink:href="assets/svg-gone.png"/><use href="#n"/></svg><a href="notes.html">x</a>', tdir),
+    ["assets/svg-gone.png"], "an SVG image's href is a file the scene draws; a link or a use is not");
   // A video showing third-party pictures is not packaged without its credit lines (2026-10-29).
   assert.match(creditsProblem('<figure class="ss-shot" data-shot="https://x.test/a"></figure>', false), /npm run review first/);
   assert.match(creditsProblem('<figure class="ss-portrait" data-commons="File:A.jpg"></figure>', false), /npm run review first/);
