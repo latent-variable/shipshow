@@ -2,4 +2,4 @@
 
 [curious, picking up speed] Cut every piece in two again, and slide again. 52%. Again: 42%. It's starting to look like a spiky tree, so call it the tree. And there's no last round. Keep cutting and sliding: 35%, 31, 27, 25, and down. Every round keeps a needle in every direction, while the area drops below any number you could pick.
 
-[clear, then landing it] In 1920, Besicovitch found a careful way to finish the job. What's left: a needle in every direction, and exactly zero area. A Kakeya set can have no area at all.
+[clear, then landing it] In 1920, Besicovitch found a careful way to finish the job. Do it to all four pieces of the fan, and what's left: a needle in every direction, and exactly zero area. A Kakeya set can have no area at all.

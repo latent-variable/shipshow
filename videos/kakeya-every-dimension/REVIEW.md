@@ -311,3 +311,13 @@ its own scene with a cube of dabs (8 = 2^3). The tree's areas are now measured e
 and a last loss of 10%, not 9%. Also: the tree named in 02b; the next piece "starts at the same angle, just slid over", with a
 ghost needle; the dial's half circle explained aloud; "it's known no way of turning can avoid paying something" kept apart from
 this trick's wedges; the riddle asks "as solid as a filled square?"; the billion-zeros line cut.
+
+**Round 2. Clarity (Opus): fail, 0 / 2 / 5. Accuracy (Opus): fail, 0 / 1 / 1.** Fixed: the step from strokes to the tree is now
+said and shown (one stroke with the first brush, two slid together with half, then four, eight; a stroke count beside the paint);
+the rule chips under the paint bars ran off the frame and now fit. Accuracy: "keeps roughly this much paint" tied Córdoba's
+theorem to the drawing's numbers; the line now says the rate ("no Kakeya set ... loses its paint much faster than this: give or
+take a fixed factor, just as slowly"), and the steady share is said of "a shape like these" and of "an ideal shape of 1.8
+dimensions". From the minors: "two dimensional doesn't mean losing nothing: it means losing less than any shape under two"; a
+1.8-dimension card on the googol screen (about one part in a one with twenty zeros); "do it to all four pieces of the fan";
+"on the table, a point needs two numbers"; 03b now says the stricter version has been known on a table since 1971, so Córdoba's
+1977 and Davies' 1971 no longer read as two dates for one result.

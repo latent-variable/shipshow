@@ -274,7 +274,7 @@
   .lrow .lc.dim { opacity: 0.45; }
   .lrow.d18 .lc { color: var(--accent-2); border-color: var(--accent-2); }
   .zcard { display: flex; gap: 24px; align-items: center; padding: 14px 26px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--card); max-width: 1640px; margin: 0 auto; }
-  .zcard .zl { width: 200px; flex: none; font-size: 34px; font-weight: 800; }
+  .zcard .zl { width: 250px; flex: none; font-size: 34px; font-weight: 800; }
   .zcard .zn { font-family: var(--font-mono); font-size: 30px; line-height: 1.35; word-break: break-all; color: var(--muted); }
   .zcard.kak { border-color: var(--accent); } .zcard.kak .zn { color: var(--accent); font-size: 52px; font-weight: 700; }
 </style>
@@ -518,7 +518,8 @@
         </svg>
         <div class="col" style="align-items: flex-start; width: 760px; flex: none">
           <div class="areabig" id="area02z" style="font-size: 64px">area <b class="ctr" data-overlap="ok"><span data-overlap="ok" style="opacity: 1">31%</span><span data-overlap="ok" style="opacity: 0">27%</span><span data-overlap="ok" style="opacity: 0">25%</span><span data-overlap="ok" style="opacity: 0">0</span></b></div>
-          <div class="zchips" id="zch02">          <div class="chip gold" data-cue="Every#3" data-anim="pop">every round: still a needle in every direction</div>
+          <div class="zchips" id="zch02">          <div class="chip" data-cue="four" data-anim="pop">done to all four pieces of the fan<small>so every direction on the dial</small></div>
+          <div class="chip gold" data-cue="Every#3" data-anim="pop">every round: still a needle in every direction</div>
           <div class="chip good" data-cue="zero" data-anim="pop">finished carefully: exactly 0<small>Besicovitch, 1920 · not just these rounds</small></div></div>
           <div class="chip gold kz" data-cue="Kakeya" data-anim="pop">a Kakeya set can have no area at all</div>
           <i class="mk" id="mk02z28" data-cue="27"></i><i class="mk" id="mk02z25" data-cue="25"></i><i class="mk" id="mk02zdown" data-cue="finish"></i>
@@ -672,10 +673,10 @@
         <div class="pcol" data-cue="square#4" data-anim="fade"><div class="ptitle">a filled square</div><div class="peq">×4 dabs × ¼ = <b>the same paint</b></div><div class="bars" id="bq" data-cue="square#4" data-anim="stagger"><div class="pbar"><span class="fill" style="width: 420px"></span><span class="pv">100%</span></div><div class="pbar"><span class="fill" style="width: 420px"></span><span class="pv">100%</span></div><div class="pbar"><span class="fill" style="width: 420px"></span><span class="pv">100%</span></div><div class="pbar"><span class="fill" style="width: 420px"></span><span class="pv">100%</span></div></div></div>
         <div class="pcol" data-cue="Sierpiński#2" data-anim="fade"><div class="ptitle">the Sierpiński triangle</div><div class="peq">×3 dabs × ¼ = <b>¾ the paint</b></div><div class="bars" id="bt" data-cue="Sierpiński#2" data-anim="stagger"><div class="pbar"><span class="fill" style="width: 420px"></span><span class="pv">100%</span></div><div class="pbar"><span class="fill" style="width: 315px"></span><span class="pv">75%</span></div><div class="pbar"><span class="fill" style="width: 235px"></span><span class="pv">56%</span></div><div class="pbar"><span class="fill" style="width: 176px"></span><span class="pv">42%</span></div></div></div>
       </div>
-      <div class="row" style="gap: 30px">
-        <div class="chip" data-cue="steady" data-anim="pop">under two dimensions: a steady share lost each time</div>
-        <div class="chip" data-cue="closer" data-anim="pop">closer to two: a smaller share, never zero</div>
-        <div class="chip good" data-cue="nothing" data-anim="pop">a filled square: loses nothing</div>
+      <div class="row" style="gap: 24px; flex-wrap: wrap; max-width: 1700px; margin: 0 auto">
+        <div class="chip" data-cue="steady" data-anim="pop">under 2: a steady share lost</div>
+        <div class="chip" data-cue="closer" data-anim="pop">closer to 2: smaller, never zero</div>
+        <div class="chip good" data-cue="nothing" data-anim="pop">filled square: loses nothing</div>
       </div>
       <div class="src center" data-cue="paint" data-anim="fade">brush 1, ½, ¼, ⅛ · paint as a share of the first</div>
     </div>
@@ -701,17 +702,17 @@
   <div class="phase" id="p03k">
     <div class="stage">
       <div class="row" style="gap: 50px; align-items: center">
-        <div class="panel" data-cue="tightest" data-anim="fade"><div class="ptitle">the tree: one tight way to slide them</div>
+        <div class="panel" data-cue="tightest" data-anim="fade"><div class="ptitle">the strokes slid together: the tree</div>
           <svg width="620" height="500" style="height: 500px" viewBox="-40 -30 420 340"><defs><pattern id="pkk" patternUnits="userSpaceOnUse" width="300" height="300"><image href="assets/art/paint.jpg" width="300" height="300"/></pattern></defs><image class="wood-dim" href="assets/art/table.jpg" x="-60" y="-60" width="600" height="600"/><g id="kak03"><polygon class="kp" data-i="0" points="0,0 0.00,300 9.38,300" fill="url(#pkk)"/><polygon class="kp" data-i="1" points="0,0 9.38,300 18.75,300" fill="url(#pkk)"/><polygon class="kp" data-i="2" points="0,0 18.75,300 28.12,300" fill="url(#pkk)"/><polygon class="kp" data-i="3" points="0,0 28.12,300 37.50,300" fill="url(#pkk)"/><polygon class="kp" data-i="4" points="0,0 37.50,300 46.88,300" fill="url(#pkk)"/><polygon class="kp" data-i="5" points="0,0 46.88,300 56.25,300" fill="url(#pkk)"/><polygon class="kp" data-i="6" points="0,0 56.25,300 65.62,300" fill="url(#pkk)"/><polygon class="kp" data-i="7" points="0,0 65.62,300 75.00,300" fill="url(#pkk)"/><polygon class="kp" data-i="8" points="0,0 75.00,300 84.38,300" fill="url(#pkk)"/><polygon class="kp" data-i="9" points="0,0 84.38,300 93.75,300" fill="url(#pkk)"/><polygon class="kp" data-i="10" points="0,0 93.75,300 103.12,300" fill="url(#pkk)"/><polygon class="kp" data-i="11" points="0,0 103.12,300 112.50,300" fill="url(#pkk)"/><polygon class="kp" data-i="12" points="0,0 112.50,300 121.88,300" fill="url(#pkk)"/><polygon class="kp" data-i="13" points="0,0 121.88,300 131.25,300" fill="url(#pkk)"/><polygon class="kp" data-i="14" points="0,0 131.25,300 140.62,300" fill="url(#pkk)"/><polygon class="kp" data-i="15" points="0,0 140.62,300 150.00,300" fill="url(#pkk)"/><polygon class="kp" data-i="16" points="0,0 150.00,300 159.38,300" fill="url(#pkk)"/><polygon class="kp" data-i="17" points="0,0 159.38,300 168.75,300" fill="url(#pkk)"/><polygon class="kp" data-i="18" points="0,0 168.75,300 178.12,300" fill="url(#pkk)"/><polygon class="kp" data-i="19" points="0,0 178.12,300 187.50,300" fill="url(#pkk)"/><polygon class="kp" data-i="20" points="0,0 187.50,300 196.88,300" fill="url(#pkk)"/><polygon class="kp" data-i="21" points="0,0 196.88,300 206.25,300" fill="url(#pkk)"/><polygon class="kp" data-i="22" points="0,0 206.25,300 215.62,300" fill="url(#pkk)"/><polygon class="kp" data-i="23" points="0,0 215.62,300 225.00,300" fill="url(#pkk)"/><polygon class="kp" data-i="24" points="0,0 225.00,300 234.38,300" fill="url(#pkk)"/><polygon class="kp" data-i="25" points="0,0 234.38,300 243.75,300" fill="url(#pkk)"/><polygon class="kp" data-i="26" points="0,0 243.75,300 253.12,300" fill="url(#pkk)"/><polygon class="kp" data-i="27" points="0,0 253.12,300 262.50,300" fill="url(#pkk)"/><polygon class="kp" data-i="28" points="0,0 262.50,300 271.88,300" fill="url(#pkk)"/><polygon class="kp" data-i="29" points="0,0 271.88,300 281.25,300" fill="url(#pkk)"/><polygon class="kp" data-i="30" points="0,0 281.25,300 290.62,300" fill="url(#pkk)"/><polygon class="kp" data-i="31" points="0,0 290.62,300 300.00,300" fill="url(#pkk)"/></g></svg>
-          <div class="pctr">paint <b class="ctr" data-overlap="ok" id="kc"><span data-overlap="ok" style="opacity: 1">100%</span><span data-overlap="ok" style="opacity: 0">75%</span><span data-overlap="ok" style="opacity: 0">52%</span><span data-overlap="ok" style="opacity: 0">42%</span><span data-overlap="ok" style="opacity: 0">35%</span><span data-overlap="ok" style="opacity: 0">31%</span></b></div></div>
+          <div class="pctr">paint <b class="ctr" data-overlap="ok" id="kc"><span data-overlap="ok" style="opacity: 1">100%</span><span data-overlap="ok" style="opacity: 0">75%</span><span data-overlap="ok" style="opacity: 0">52%</span><span data-overlap="ok" style="opacity: 0">42%</span><span data-overlap="ok" style="opacity: 0">35%</span><span data-overlap="ok" style="opacity: 0">31%</span></b><small class="ctr" id="ksc" data-overlap="ok" style="display: inline-grid; margin-left: 18px"><span data-overlap="ok" style="grid-area: 1 / 1; opacity: 1">1 stroke</span><span data-overlap="ok" style="grid-area: 1 / 1; opacity: 0">2 strokes</span><span data-overlap="ok" style="grid-area: 1 / 1; opacity: 0">4 strokes</span><span data-overlap="ok" style="grid-area: 1 / 1; opacity: 0">8 strokes</span><span data-overlap="ok" style="grid-area: 1 / 1; opacity: 0">16 strokes</span><span data-overlap="ok" style="grid-area: 1 / 1; opacity: 0">32 strokes</span></small></div></div>
         <div class="col" style="width: 1000px; flex: none; gap: 18px">
           <div class="ptitle" data-cue="Look#2" data-anim="fade">what each halving of the brush loses</div>
           <div data-cue="Look#2" data-anim="fade"><div class="lrow "><span class="ln">a line</span><span class="lc">−50%</span><span class="lc">−50%</span><span class="lc">−50%</span><span class="lc">−50%</span><span class="lc">−50%</span><span class="lc">−50%</span><span class="lc">−50%</span></div><div class="lrow "><span class="ln">Sierpiński</span><span class="lc">−25%</span><span class="lc">−25%</span><span class="lc">−25%</span><span class="lc">−25%</span><span class="lc">−25%</span><span class="lc">−25%</span><span class="lc">−25%</span></div></div>
           <div class="lrow kak" data-cue="Look#2" data-anim="fade"><span class="ln">Kakeya</span><span class="lc dim">−25%</span><span class="lc dim">−31%</span><span class="lc" data-cue="20" data-anim="pop">−20%</span><span class="lc" data-cue="16" data-anim="pop">−16%</span><span class="lc" data-cue="13" data-anim="pop">−13%</span><span class="lc" data-cue="11" data-anim="pop">−11%</span><span class="lc" data-cue="10#2" data-anim="pop">−10%</span></div>
           <div class="lrow d18" data-cue="1.8" data-anim="fade"><span class="ln">1.8 dimensions</span><span class="lc">−13%</span><span class="lc">−13%</span><span class="lc">−13%</span><span class="lc">−13%</span><span class="lc">−13%</span><span class="lc">−13%</span><span class="lc">−13%</span></div>
           <div class="chip" data-cue="less#2" data-anim="pop">less and less</div>
-          <div class="chip cyan" data-cue="drop" data-anim="pop">the Kakeya losses drop below any steady share</div>
-          <div class="chip" data-cue="Córdoba" data-anim="pop">not just this drawing<small>Córdoba, 1977: true of every Kakeya set on a table</small></div>
+          <div class="chip cyan" data-cue="drop" data-anim="pop">the Kakeya losses keep shrinking: no steady share</div>
+          <div class="chip" style="white-space: normal; max-width: 1000px" data-cue="Córdoba" data-anim="pop">not just this drawing<small>Córdoba, 1977: no Kakeya set loses paint much faster (up to a fixed factor)</small></div>
           <div class="chip good" data-cue="two#4" data-anim="pop">so: dimension 2</div>
         </div>
       </div>
@@ -723,6 +724,7 @@
       <div class="row" style="gap: 30px"><div class="chip gold" data-cue="googol" data-anim="pop">a brush a googol times thinner<small>332 halvings</small></div></div>
       <div class="zcard" data-cue="googolth" data-anim="up"><span class="zl">a line</span><span class="zn">0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001</span></div>
       <div class="zcard" data-cue="Sierpiński" data-anim="up"><span class="zl">Sierpiński</span><span class="zn">under 0.00000000000000000000000000000000000000001</span></div>
+      <div class="zcard" data-cue="1.8#2" data-anim="up"><span class="zl">1.8 dimensions</span><span class="zn">about 0.00000000000000000001</span></div>
       <div class="zcard kak" data-cue="hundredth" data-anim="up"><span class="zl">Kakeya</span><span class="zn">about 0.01</span></div>
       <div class="src center" data-cue="googol" data-anim="fade">paint left, as a share of the first · the Kakeya rate: Tao 2026</div>
     </div>
@@ -730,7 +732,8 @@
   <div class="phase" id="p03z">
     <div class="stage" style="align-items: center">
       <div class="chip" data-cue="run" data-anim="pop">its paint does run out<small>only at no width at all, and absurdly slowly</small></div>
-      <div class="chip good" data-cue="square" data-anim="pop">by the paint test: two dimensional, like a filled square</div>
+      <div class="chip" data-cue="losing" data-anim="pop">two dimensional: losing less than any shape under two</div>
+      <div class="chip good" data-cue="square" data-anim="pop">by the paint test: as two dimensional as a filled square</div>
       <div class="stamp gold" data-cue="full" data-anim="slam">zero area, full size</div>
     </div>
   </div>
@@ -1341,7 +1344,8 @@ theorem kakeya :
   const kak03 = [...document.querySelectorAll("#kak03 [data-i]")];
   ["#mk03k75", "#mk03k52", "#mk03k42", "#mk03k35", "#mk03k31"].forEach((m, r) => kak03.forEach((e) => tl.to(e, { x: KD.shifts[r + 1][+e.dataset.i] * 300, duration: 0.55, ease: "power2.inOut" }, at(m) - 0.6)));
   const kc = document.querySelectorAll("#kc span");
-  ["#mk03k75", "#mk03k52", "#mk03k42", "#mk03k35", "#mk03k31"].forEach((m, r) => { tl.to(kc[r], { opacity: 0, duration: 0.2 }, at(m)); tl.to(kc[r + 1], { opacity: 1, duration: 0.2 }, at(m)); });
+  const ksc = document.querySelectorAll("#ksc span");
+  ["#mk03k75", "#mk03k52", "#mk03k42", "#mk03k35", "#mk03k31"].forEach((m, r) => { [kc, ksc].forEach((c) => { tl.to(c[r], { opacity: 0, duration: 0.2 }, at(m)); tl.to(c[r + 1], { opacity: 1, duration: 0.2 }, at(m)); }); });
   swap("#p03k", "#p03g", at("#p03g [data-cue='googol']"));
   swap("#p03g", "#p03z", at("#p03z [data-cue='run']"));
   // 03a-n-dimensions: halve the brush on a solid block: 8 dabs become 64.
