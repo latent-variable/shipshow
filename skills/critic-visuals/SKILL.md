@@ -31,6 +31,9 @@ full frames). They are 1920 by 1080; judge them as a viewer on a laptop would se
   being explained is not the most prominent thing.
 - **major:** half the frame empty while the rest is crowded, or a frame that looks
   unfinished (placeholder, stray element, misaligned edge).
+- **major:** an abstract stand-in (a bar, a dot, a plain shape) for a physical object or place the voice asks the viewer to picture
+  and that the scene animates: a "needle" that is a yellow line, a "table" that is an empty box. The owner's note on
+  kakeya-every-dimension (2026-10-30). Diagrams, charts and ideas with no body are exempt.
 - **minor:** alignment, spacing and balance that is off but does not hurt reading.
 
 Name the frame file for every finding.

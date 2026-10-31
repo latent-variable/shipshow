@@ -799,6 +799,8 @@ export function readTimeline(dir) {
  *  data: URIs and in-page #references are not checked. */
 export function missingLocalFiles(html, dir) {
   const refs = [...html.matchAll(/\bsrc\s*=\s*(["'])(.+?)\1/g)].map((m) => m[2])
-    .concat([...html.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]));
+    .concat([...html.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]))
+    // An SVG picture draws its file through href, not src (kakeya-every-dimension's needle and table, 2026-10-30).
+    .concat([...html.matchAll(/<image\b[^>]*?\s(?:xlink:)?href\s*=\s*(["'])(.+?)\1/g)].map((m) => m[2]));
   return [...new Set(refs)].filter((r) => !/^(?:[a-z]+:|#)/i.test(r)).filter((r) => !existsSync(join(dir, r)));
 }

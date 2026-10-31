@@ -159,7 +159,7 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
 every turn (measured: 23 skills, 8,350 characters, about 2,088 tokens), so descriptions stay short
-and SKILL.md under 500 lines (longest 252). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
+and SKILL.md under 500 lines (longest 259). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
 a plugin root is not loaded as context. A plugin runs with the user's privileges.
@@ -1278,6 +1278,17 @@ its hands-on first act a major finding, `critic-clarity` names the smart high-sc
 `critic-consistency` keeps an unchecked claim out of the colour of what is proved, `critic-loop` says to re-run the estimate once
 the video is voiced (a 16-minute thorough loop measured 3.5M tokens against 1.5M estimated), and `explainer-video` says a
 full-screen pop-up hides what is behind it and its backdrop reaches the bottom of the frame. **Costs.** None in code.
+
+### D90. The object the voice names is drawn as that object, generated and animated (2026-10-30; extends D87)
+**Decision.** When the narration asks the viewer to picture a physical thing the scene animates, the scene draws that thing: a
+generated cutout moved like the shape it replaces (an SVG `<image>` keeps the ids the timeline turns), or a generated texture
+clipped to the shape being measured. kakeya-every-dimension is the first: a steel needle, an oak table whose bright part is the table
+the turn needs, a brush laying thinner strokes, a pincushion, a telescope, a laser beam and a pond (MOSS-Image on the GPU box,
+cutouts by Qwen-Image's background removal; prompts in the video's `art/`). `explainer-video`, `explain-concept` and `critic-visuals`
+say so. `missingLocalFiles` now reads an SVG `<image>`'s `href` as well as `src` and `url()`, so a scene drawing a generated file
+through SVG still stops the build when it is missing. **Why.** The owner, watching the second cut: the needle was a yellow bar and the
+table an empty box, where generated assets could show a real needle and a table growing and shrinking. **Costs.** About 10 GPU
+minutes for the video's seven pictures; a video cloned without them does not build until they are made again (D87).
 
 ## Behaviour
 

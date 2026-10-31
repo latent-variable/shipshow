@@ -130,6 +130,7 @@ picture by what the idea *is*, not by what is easy to draw:
 | A number or comparison | The number large, one comparison, nothing else on screen |
 | Something abstract | One concrete example before the general statement |
 | A place, an object or a situation no diagram shows | A generated image, our own labels on top, when it proves the point (`explainer-video`, *Scenes*) |
+| A physical thing the viewer is asked to picture and watch move (a needle, a table, a brush) | That thing, generated once and animated, never a bar standing in for it (`explainer-video`, *Scenes*) |
 
 Real code, commands and output beat a paraphrase of them, but only the lines being named:
 narrow shown code to them, as whole contiguous lines with a `…` line for each gap and the file and line
