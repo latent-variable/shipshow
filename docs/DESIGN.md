@@ -1290,6 +1290,15 @@ through SVG still stops the build when it is missing. **Why.** The owner, watchi
 table an empty box, where generated assets could show a real needle and a table growing and shrinking. **Costs.** About 10 GPU
 minutes for the video's seven pictures; a video cloned without them does not build until they are made again (D87).
 
+### D91. No leaps: a step the voice takes is shown happening (2026-10-31; extends D89)
+**Decision.** `explain-concept` says a step from one claim to a stronger one gets its own animated beat, a process is animated
+round by round with its numbers, and a test the viewer is asked to imagine is performed on screen; `critic-clarity` makes an
+untold-but-unshown step a major finding. kakeya-every-dimension is the first: the Besicovitch–Perron tree cut and slid round by
+round from Tao's applet with its measured area (100%, 75%, 52%, 42%), the turning needle's detours (Pál's joins) as the reason
+turning never reaches zero, and the paint test painted on a line, a square and the tree side by side. **Why.** The owner, on the
+fifth cut: lost at "a Kakeya set has area zero", and at a paint test that was only described. **Costs.** Longer scenes (02b and
+03 grew by about 70 s together); numbers on screen must be measured from the drawing or sourced, which is work a sketch skips.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

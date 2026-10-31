@@ -30,6 +30,10 @@ with no rewind; the frames for what they see alongside it.
   from another field: a set, a dimension, a power, a logarithm, an imaginary number, a derivative each need everyday words the
   first time they are said, and one word keeps one meaning (kakeya-every-dimension used "loss" for two things, and the step that
   rested on it could not be followed). The owner stopped four minutes into its first cut, lost at the first such words.
+- **major:** a leap: the voice goes from one claim to a stronger one (almost none, then exactly zero; a test described, then
+  its verdict) and the step between is told, not shown. Name the two claims and what the viewer would need to see happen
+  between them (the owner on kakeya-every-dimension, 2026-10-31: lost at the jump to "area zero", and at a paint test that was
+  described but never painted).
 - **major:** a scene that carries two ideas, or an order that makes the viewer hold
   something unexplained for more than a scene.
 - **major:** time spent on what this viewer does not need, while something they need is

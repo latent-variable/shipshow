@@ -1,8 +1,10 @@
 [curious, posing a riddle to the viewer] So, a riddle. A Kakeya set can have no area at all. Is it basically nothing, a scribble of thin lines? Or is it, in some deeper sense, as big as the whole table?
 
-[clear, explaining a simple test, unhurried] One way to measure size ignores area. Paint the shape with a brush, and keep making the brush thinner. For a single line, halve the brush, and you need half the paint: the paint shrinks in step. That's what one dimensional means. For a filled square, the paint never goes down, however thin the brush. That's two dimensional. A shape in between, a fractal, drops at a speed in between.
+[clear, explaining a simple test, unhurried] One way to measure size ignores area. Paint the shape with a brush, and keep making the brush thinner. Paint a line: halve the brush, and you need half the paint. 100%, then 50, then 25. The paint shrinks in step with the brush. That's what one dimensional means. Now paint a filled square. However thin the brush, you still have to cover the whole square, so the paint never goes down. That's two dimensional. A shape in between, a fractal, drops at a speed in between.
 
-[building, then letting a striking number land] Now a Kakeya set. Make the brush a googol times thinner. That's a one with a hundred zeros. A plain line would be down to a googolth of the paint. A shape one and a half dimensional, to one part in a one with fifty zeros. The most squeezed Kakeya set still needs roughly a hundredth.
+[building, then letting a surprise land] Now paint a Kakeya set. A thinner brush can tell apart directions that are closer together, so every time you halve the brush, there are twice as many strokes to paint. They're the slivers from before, and you slide them to overlap as much as you can. The line's paint halves every time. The Kakeya paint barely moves: 100, 75, 52, 42.
+
+[building, then letting a striking number land] Keep going, and make the brush a googol times thinner. That's a one with a hundred zeros. A plain line would be down to a googolth of the paint. A shape one and a half dimensional, to one part in a one with fifty zeros. The most squeezed Kakeya set still needs roughly a hundredth.
 
 [letting a surprising fact sink in, then clear] The paint barely goes down at all, slower than any shape in between, so by this test it's as two dimensional as a filled square. Zero area, full size.
 
