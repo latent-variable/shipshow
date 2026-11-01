@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>kakeya-every-dimension thumbnail</title>
+<style>
+  /* The YouTube thumbnail, 1280 by 720 (bin/package.mjs renders it). Two pictures, both the video's own: the oak table
+     (assets/art/table.jpg, MOSS-Image from art/table.txt, as in sources.md *Generated pictures*) and the needle tree as the video
+     draws it in 02b (assets/thumbnail/tree.png, cut from the render by art/thumbnail_tree.py; the command is in that file). The
+     words are the video's last line asked as a question: a set of needles pointing every way can have zero area (Besicovitch,
+     02b) and still be full size (Davies on a table, 03b; the paper's claim in every dimension). The title carries the topic and
+     who claims it; the thumbnail carries the paradox. Chosen over "Turn it in almost no room?!" (the needle and a turning arc)
+     and "Finished by an AI?!" (a starburst of needles), compared at 320 by 180 on 2026-11-01. */
+  @font-face { font-family: "Anton"; src: url("../../kit/fonts/anton-latin-400-normal.woff2") format("woff2"); }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; background: #120d08; position: relative; }
+  .table { position: absolute; inset: -100px; background: url("assets/art/table.jpg") center / cover; filter: brightness(0.55) saturate(1.1); }
+  .vig { position: absolute; inset: 0; background: radial-gradient(110% 100% at 35% 50%, transparent 40%, rgba(0, 0, 0, 0.8) 100%); }
+  .tree { position: absolute; left: 10px; top: 20px; height: 690px; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.7)); }
+  .w { position: absolute; right: 60px; text-align: right; font-family: "Anton", sans-serif; text-transform: uppercase; color: #fff;
+    white-space: nowrap; line-height: 0.92; text-shadow: 0 0 2px #000, 0 6px 0 rgba(0, 0, 0, 0.55), 0 10px 40px rgba(0, 0, 0, 0.85); }
+  .hi { color: #ffc857; }
+</style>
+</head>
+<body>
+  <div class="table"></div>
+  <div class="vig"></div>
+  <img class="tree" src="assets/thumbnail/tree.png" alt="">
+  <div class="w" style="top: 60px; font-size: 200px">Zero<br>area</div>
+  <div class="w hi" style="top: 440px; font-size: 150px">Full size?!</div>
+</body>
+</html>
