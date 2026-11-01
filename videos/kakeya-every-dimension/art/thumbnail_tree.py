@@ -3,6 +3,7 @@
 # are bright and the paint strokes saturated gold, so brightness and saturation make the cut.
 #   ffmpeg -ss 315 -i "$SHIPSHOW_OUT/kakeya-every-dimension.mp4" -frames:v 1 /tmp/f315.png
 #   python3 art/thumbnail_tree.py /tmp/f315.png assets/thumbnail/tree.png
+import os
 import sys
 import numpy as np
 from PIL import Image
@@ -13,4 +14,5 @@ lum = 0.3 * c[..., 0] + 0.59 * c[..., 1] + 0.11 * c[..., 2]
 sat = c.max(-1) - c.min(-1)
 a = np.clip((lum - 62) / 50, 0, 1)
 a = np.maximum(a, np.clip((c[..., 1] - 85) / 50, 0, 1) * (sat > 90))
+os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
 Image.fromarray(np.dstack([c, a * 255]).astype(np.uint8)).save(out)
