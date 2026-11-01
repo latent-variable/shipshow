@@ -173,5 +173,76 @@
         "duck": 0.35
       }
     }
+  },
+  "youtube": {
+    "title": "OpenAI Says Its AI Solved the Kakeya Conjecture in Every Dimension (Opus 5.5 Explains)",
+    "alternatives": [
+      "How Little Room Does a Needle Need? OpenAI Says Its AI Finished Kakeya (Opus 5.5 Explains)",
+      "Zero Area, Full Size: the Kakeya Conjecture and OpenAI's Claimed Proof, Explained"
+    ],
+    "description": [
+      "On October 26, OpenAI posted a paper saying its AI had proved the local smoothing conjecture for the wave equation in every dimension, and with it the Kakeya conjecture. Kakeya started in 1917 with a question: how little room do you need to turn a needle around? The answer turned out to be almost none, and the question grew into a conjecture about how big a set with a needle pointing in every direction has to be.",
+      "I had Opus 5.5 explain it from the ground up, for anyone who knows no harmonic analysis: the needle puzzle, why a set with a needle in every direction can have zero area, how size is measured by painting a shape with smaller and smaller brushes, why waves lead back to needles, the idea behind the new proof, and how far to trust it. As far as I could find, as of October 30, 2026, no independent check had been reported.",
+      "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
+    ],
+    "chapters": {
+      "01-hook": "The needle question",
+      "02-needle": "Rules of the needle game",
+      "02a-every-direction": "Needles in every direction",
+      "02b-no-smallest": "Zero area",
+      "02c-turning": "Turning in almost no room",
+      "03-size": "Measuring size with paint",
+      "03a-kakeya-paint": "Painting a Kakeya set",
+      "03a-n-dimensions": "The Kakeya conjecture",
+      "04-focus": "Waves pile up",
+      "05-beams": "From waves to needles",
+      "06-filter": "How the proof works",
+      "07-what-changes": "What it changes",
+      "07b-trust": "Should you believe it?"
+    },
+    "sources": [
+      "OpenAI, \"Local smoothing for the Euclidean wave equation\", preprint, October 2026: https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/preprints/Local-smoothing-for-the-Euclidean-wave-equation-October-25-2026/paper.pdf",
+      "OpenAI, \"Working with academic communities to build scientific understanding\", October 26, 2026: https://openai.com/index/building-scientific-understanding-with-academic-communities/",
+      "OpenAI's math repository, README and history: https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/README.md",
+      "OpenAI's Lean statement of the result: https://github.com/openai/math/blob/4eaee87548250b2682affda7d05d947c05554bae/lean/ComparatorChallenges/LocalSmoothing.lean",
+      "Terence Tao, \"Rotating needles in space: the road to the Kakeya conjecture, and why it matters\", arXiv:2608.22209, 2026: https://arxiv.org/abs/2608.22209",
+      "Terence Tao, \"The Kakeya needle\" interactive applet (the video's tree follows its Besicovitch-Perron construction): https://teorth.github.io/tao-web/apps/kakeya.html",
+      "Joseph Howlett, \"'Once in a Century' Proof Settles Math's Kakeya Conjecture\", Quanta Magazine, March 14, 2025: https://www.quantamagazine.org/once-in-a-century-proof-settles-maths-kakeya-conjecture-20250314/",
+      "Jordana Cepelewicz, \"A Tower of Conjectures That Rests Upon a Needle\", Quanta Magazine, September 12, 2023: https://www.quantamagazine.org/a-tower-of-conjectures-that-rests-upon-a-needle-20230912/",
+      "John Power, \"AI makes discoveries in mathematics, computer science, physics, OpenAI says\", Al Jazeera, October 27, 2026: https://www.aljazeera.com/economy/2026/10/27/ai-makes-discoveries-in-mathematics-computer-science-physics-openai-says",
+      "Wikipedia, \"Kakeya set\": https://en.wikipedia.org/wiki/Kakeya_set",
+      "Wikipedia, \"Sierpiński triangle\": https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle"
+    ],
+    "credits": [
+      "Narration: an invented voice, not a real person, made with Fish Audio Drama 3 (built with Fish Audio). Researched and written by Claude Opus 5.5.",
+      "Music: machine-generated with ACE-Step 1.5.",
+      "Pictures of the needle, table, brushes, paint, pond and other objects: generated with MOSS-Image; cutouts with Qwen-Image 2.1.",
+      "Memes: templates from memegen (https://github.com/jacebrowning/memegen): One Does Not Simply; Scooby Doo Reveal; Pepperidge Farm Remembers; Epic Handshake; Member Berries; Hide the Pain Harold; Success Kid; Phoebe Teaching Joey; Khaby Lame Shrug.",
+      "Made with ShipShow and HyperFrames."
+    ],
+    "tags": [
+      "Kakeya conjecture",
+      "Kakeya needle problem",
+      "Besicovitch set",
+      "local smoothing",
+      "wave equation",
+      "harmonic analysis",
+      "Hausdorff dimension",
+      "fractal dimension",
+      "Terence Tao",
+      "OpenAI",
+      "AI math",
+      "math explained",
+      "Claude",
+      "Opus 5.5"
+    ],
+    "studio": {
+      "Audience": "No, it's not made for kids",
+      "Paid promotion": "No",
+      "Altered or synthetic content": "Recommended No, the owner's call: the narrator is an invented AI voice that imitates no real person, and it says out loud that it is an AI",
+      "Category": "Science & Technology",
+      "Language": "English",
+      "Visibility": "Public"
+    }
   }
 }

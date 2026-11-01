@@ -236,6 +236,10 @@ committed in `art/<name>.txt`; the pictures sit in `assets/art/` (never committe
 | `art/dimmer.txt`: a brass dimmer knob | 06, "a dimmer for direction" | 1456x1456, 2685806352 | 433068945199 |
 | the laser photo's beam, cut into a strip (`art/beam.py`) | 05, every beam, blended so overlapping light adds | from `art/laser.txt` | |
 
+The thumbnail (`thumbnail.html`) uses two of the video's own pictures: the table above, and the 02b needle tree cut from the render's
+frame at 5:15 (`art/thumbnail_tree.py`). Its words, "Zero area / Full size?!", are the video's last line asked as a question: zero area
+is Besicovitch's (02b, T), full size on a table is Davies's (03b, W and P section 9), and in every dimension it is the paper's claim (P, B).
+
 The 02 areas are still measured, not pictured: the bright wood in each box is clipped to the drawn disk or deltoid, whose areas are the
 sourced ones (T section 1).
 

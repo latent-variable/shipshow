@@ -343,3 +343,14 @@ paint). No further round ran: this is the plan's cap. I checked each round-4 fix
 Spend: about 1.2M critic tokens for cut 7's four rounds (seven critics, all Opus, summed from their reports). Check passes,
 overlaps none, every changed scene looked at frame by frame, stills regenerated cleanly each round (#139). Nobody has listened to
 the new takes; hear-back passed every take, and Parakeet's two flags are its known false ones (#129).
+
+## Publish package (2026-11-01)
+
+The owner asked to publish cut 7. `npm run package` wrote `~/Movies/Explainers/shipshow/youtube/to-upload/kakeya-every-dimension/`.
+Three thumbnails were drawn and compared at 320 by 180: "Zero area / Full size?!" over the 02b needle tree (chosen), "Turn it in almost
+no room?!" and "Finished by an AI?!"; the two others sit in the folder as `alternative-thumbnail-*.png` for the owner to swap in.
+
+One fresh critic (Sonnet) judged the folder: PASS, no blocking or major. Its three minor findings were fixed: the "no independent check"
+line now says it is the limit of a search ("as far as I could find"), as scene 01 does; chapter 0:56 is "Rules of the needle game" and a
+5:32 chapter, "Turning in almost no room", marks 02c; the Cepelewicz source has its Quanta link. To fit YouTube's 5000 characters, the
+Cunningham source line (covered by the Wikipedia "Kakeya set" link) and one sentence of the picture credit were cut.
