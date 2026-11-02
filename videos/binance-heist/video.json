@@ -1,0 +1,157 @@
+{
+  "title": "How Someone Stole $6.3 Billion from Binance in 20 Minutes",
+  "kind": "feature",
+  "importance": "high",
+  "importance_reason": "public: Lino's YouTube channel, about a theft four days old that is still being investigated, with named companies, a named state and named people; a viewer may repeat any number, and a claim stronger than the sources is unfair to Binance, to the firms that traced it, or to the viewer",
+  "audience": "A curious viewer on YouTube, a developer or someone who has never held crypto, who saw the headline that Binance lost $6 billion. After watching, they can say where the money was (hot wallets), how the attackers got Binance's own system to sign (a laptop, a service container, fifty pre-signed notes), why about half was frozen and the rest could not be (stablecoins have an issuer with an off switch, bitcoin and ether do not), who is blamed, what is known and not known about AI's part, and who is paying.",
+  "theme": "vault",
+  "engine": "drama",
+  "voice": "narrator-uk",
+  "speed": 1.0,
+  "say": {
+    "DevOps": "Dev Ops",
+    "CZ": "C Z",
+    "Yi He": "Yee Huh",
+    "Aave": "Ahvay",
+    "TraderTraitor": "Trader Traitor",
+    "Bitget": "Bit get",
+    "Chainalysis": "Chain Analysis",
+    "overcollateralized": "over collateralized"
+  },
+  "gap": 0.5,
+  "beat": 0.9,
+  "hold": 8,
+  "tail": 1.2,
+  "leads": {
+    "02-the-till": 2.3,
+    "03-the-way-in": 2.3,
+    "04-the-freeze": 2.3,
+    "05-the-getaway": 2.3,
+    "06-the-ai-question": 2.3,
+    "07-who-pays": 2.3,
+    "07c-unknowns": 2.3
+  },
+  "pauses": {
+    "01-hook": 0.6,
+    "01b-questions": 1.0,
+    "02-the-till": 0.8,
+    "02b-signature": 1.6,
+    "03-the-way-in": 0.8,
+    "03b-rehearsal": 0.8,
+    "03c-fifty-notes": 1.0,
+    "03d-the-drain": 1.0,
+    "04-the-freeze": 1.6,
+    "04b-the-race": 2.0,
+    "04c-the-split": 1.2,
+    "05-the-getaway": 1.6,
+    "05b-who": 1.0,
+    "06-the-ai-question": 1.6,
+    "06b-front-door": 1.2,
+    "07-who-pays": 1.0,
+    "07b-reopening": 1.0
+  },
+  "moods": {
+    "heist": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #2b1214 0%, #170b0d 55%, #0a0506 100%)",
+        "--line": "#4a2a2d",
+        "--card": "#1c1114"
+      },
+      "music": {
+        "file": "local/music/binance/heist.wav",
+        "volume": 0.17,
+        "duck": 0.35
+      }
+    },
+    "vault": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #182433 0%, #0e1621 55%, #070b10 100%)",
+        "--line": "#2c3d52",
+        "--card": "#121c28"
+      },
+      "music": {
+        "file": "local/music/binance/vault.wav",
+        "volume": 0.16,
+        "duck": 0.35
+      }
+    },
+    "breakin": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #10241d 0%, #0a1712 55%, #050c09 100%)",
+        "--accent-2": "#7ee0b0",
+        "--line": "#24433a",
+        "--card": "#0f1d18",
+        "--code-bg": "#07110d"
+      },
+      "music": {
+        "file": "local/music/binance/breakin.wav",
+        "volume": 0.16,
+        "duck": 0.35
+      }
+    },
+    "freeze": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #15293a 0%, #0c1a27 55%, #060d14 100%)",
+        "--accent-2": "#8fe3ff",
+        "--line": "#2d4a60",
+        "--card": "#10202e"
+      },
+      "music": {
+        "file": "local/music/binance/freeze.wav",
+        "volume": 0.16,
+        "duck": 0.35
+      }
+    },
+    "getaway": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #2c2110 0%, #1a1309 55%, #0c0905 100%)",
+        "--accent-2": "#ffb45c",
+        "--line": "#4d3c22",
+        "--card": "#1f170d"
+      },
+      "music": {
+        "file": "local/music/binance/getaway.wav",
+        "volume": 0.16,
+        "duck": 0.35
+      }
+    },
+    "ai": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #201a36 0%, #130f22 55%, #08070f 100%)",
+        "--accent-2": "#b9a3ff",
+        "--line": "#3a3358",
+        "--card": "#171428"
+      },
+      "music": {
+        "file": "local/music/binance/ai.wav",
+        "volume": 0.15,
+        "duck": 0.35
+      }
+    },
+    "bill": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #2a2614 0%, #19160b 55%, #0c0b05 100%)",
+        "--line": "#4a4326",
+        "--card": "#1e1b0e"
+      },
+      "music": {
+        "file": "local/music/binance/bill.wav",
+        "volume": 0.15,
+        "duck": 0.35
+      }
+    },
+    "verdict": {
+      "look": {
+        "--sky": "radial-gradient(120% 90% at 50% 0%, #1d2b3c 0%, #121b28 55%, #080c13 100%)",
+        "--accent-2": "#8fd3ff",
+        "--line": "#33445a",
+        "--card": "#141d29"
+      },
+      "music": {
+        "file": "local/music/binance/verdict.wav",
+        "volume": 0.15,
+        "duck": 0.35
+      }
+    }
+  }
+}

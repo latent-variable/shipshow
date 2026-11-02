@@ -1,0 +1,3 @@
+[amused, impressed by the nerve, then pointed] And the hackers knew it was coming. Over about twenty minutes, they swapped three hundred and twenty five million in stablecoins for ether, and got two hundred and eighty five million back. Speed over price. Then a cheekier move. They put sixty million stolen digital dollars into Aave, a lending app, and borrowed forty four million in ether against it. Ether can't be frozen. So if the deposit gets frozen, the lender is left holding it.
+
+[deadpan, quoting a line that is funny because it is true] As one Aave contributor put it: the position is criminal, but overcollateralized in the eyes of the protocol.

@@ -1,0 +1,3 @@
+[clear, explaining the one rule that matters, plainly] Here's the one rule you need. On a blockchain, nobody checks who you are. A wallet is controlled by a secret number, its private key, and that key makes signatures. Any instruction with a valid signature, the network just does. No phone call. No, are you sure.
+
+[intrigued, setting up a puzzle, then wry as it resolves] So did the thieves steal Binance's keys? Binance says it found no evidence of any private key leak. But the instructions were signed by Binance's own hot wallets. Maybe both are true. You don't need to steal the stamp if you can get into the room where it's used, and have the machine stamp for you. That fits what Binance has said. It hasn't confirmed it.

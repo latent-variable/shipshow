@@ -1,0 +1,87 @@
+/* Vault: a heist told from the security room. Gunmetal steel at night, an alarm red for what was taken, a coin gold
+   for money, an ice blue for what was frozen, green for what held. Anton for headlines (tall, condensed, a heist
+   poster), Inter for text, JetBrains Mono for wallet addresses and logs (all SIL Open Font License, in fonts/).
+   Over the pictures sit faint scanlines, a vignette and grain, the feel of a camera feed; behind them, a slow dot
+   grid like a vault's steel plate. Made for a true-crime explainer about money moving. */
+@font-face { font-family: "Anton"; font-weight: 400; src: url("fonts/anton-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 800; src: url("fonts/inter-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; src: url("fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url("fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2"); }
+
+:root {
+  /* colour */
+  --bg: #090c11;
+  --sky: radial-gradient(120% 90% at 50% 0%, #19202b 0%, #0e131a 55%, #07090d 100%);
+  --ink: #f1f3f6;
+  --muted: #a4adbb;
+  --accent: #ff4a3d;          /* the alarm: what was taken */
+  --accent-2: #63d2ff;        /* ice: what was frozen, and a source label */
+  --accent-3: #f5c542;        /* coin gold: money, and the thing to look at */
+  --card: #131922;
+  --line: #2a3442;
+  --code-bg: #0c1117;
+  --code-ink: #d8dee8;
+  --good: #52e08c;            /* what held */
+  --bad: #ff4a3d;
+
+  /* type */
+  --font: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Anton", "Inter", Impact, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --display-weight: 400;
+  --display-tracking: 0.01em;
+
+  /* layout and shape */
+  --pad: 130px;
+  --heading-top: 96px;
+  --heading-size: 104px;
+  --heading-align: left;
+  --meme-height: 760px;
+  --radius: 10px;
+  --border: 2px;
+  --shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  --code-shadow: 0 0 0 1px #222b37, 0 24px 60px rgba(0, 0, 0, 0.55);
+
+  /* photos, memes and screenshots: bolted to the steel, a hairline edge */
+  --frame: #36414f;
+  --frame-width: 2px;
+  --meme-border: 2px solid #36414f;
+  --meme-radius: 10px;
+  --meme-shadow: 0 34px 90px rgba(0, 0, 0, 0.75);
+  --portrait-radius: 10px;
+  --portrait-frame-width: 2px;
+  --portrait-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+  --shot-mark: #f5c542;
+  --shot-bar: #18202a;
+  --shot-shadow: 0 40px 100px rgba(0, 0, 0, 0.75);
+
+  /* captions: karaoke, the spoken word lit in gold */
+  --cap-bg: rgba(7, 9, 13, 0.88);
+  --cap-ink: #ffffff;
+  --cap-size: 44px;
+  --cap-radius: 10px;
+  --cap-style: karaoke;
+  --cap-words: 10;
+  --cap-font: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --cap-weight: 700;
+  --cap-hot: #f5c542;
+  --cap-border: 1px solid #2a3442;
+
+  /* motion: a camera feed, quick cuts */
+  --transition: wipe;
+  --entrance: up;
+  --camera: push;
+  --ambient: dots scanlines vignette grain;
+  --ambient-strength: 0.09;
+  --scanline-strength: 0.07;
+  --scanline-gap: 4px;
+  --grain-strength: 0.14;
+  --grain-fps: 12;
+  --grain-blend: overlay;
+  --vignette-strength: 0.6;
+  --vignette-color: #000000;
+  --progress: on;
+  --progress-fill: #f5c542;
+}
