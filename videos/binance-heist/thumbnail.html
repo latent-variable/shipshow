@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>binance-heist thumbnail</title>
+<style>
+  /* The YouTube thumbnail, 1280 by 720 (bin/package.mjs renders it). The picture is a generated asset only: an empty vault
+     lit red, frost creeping over half its rim (assets/thumbnail/vault-image.png, gitignored: MOSS-Image SFT on the GPU box,
+     seed 77, 1792x1024, from thumbnail-vault.txt; regenerate with ~/.agents/bin/gpubox run moss-t2i -p prompt=@thumbnail-vault.txt
+     -p width=1792 -p height=1024 -p seed=77 --name vault --out assets/thumbnail). Every word is drawn here. It says the two facts
+     nobody disputes, the ones the video opens on: most of $6.3 billion left in about twenty minutes (TRM Labs, Binance), and then
+     part of it froze. "Frozen?!" asks; the video answers how and why only half. */
+  @font-face { font-family: "Anton"; src: url("../../kit/fonts/anton-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url("../../themes/vault/fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2"); }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; background: #000; position: relative; }
+  .pic { position: absolute; right: -60px; top: 0; height: 720px; width: auto; }
+  .fade { position: absolute; inset: 0; background: linear-gradient(90deg, #000 0%, rgba(0,0,0,0.92) 30%, rgba(0,0,0,0.35) 52%, transparent 70%); }
+  .words { position: absolute; left: 46px; top: 40px; font-family: "Anton", sans-serif; text-transform: uppercase; color: #fff; white-space: nowrap;
+    text-shadow: 0 0 2px #000, 0 6px 0 rgba(0, 0, 0, 0.55), 0 10px 40px rgba(0, 0, 0, 0.8); line-height: 0.95; }
+  .amt { font-size: 210px; color: #f5c542; }
+  .gone { font-size: 112px; }
+  .gone .r { color: #ff4a3d; }
+  .frozen { position: absolute; left: 520px; top: 560px; font-family: "Anton", sans-serif; font-size: 92px; text-transform: uppercase; color: #bdf0ff;
+    white-space: nowrap; transform: rotate(-4deg); text-shadow: 0 0 18px rgba(99, 210, 255, 0.9), 0 4px 0 rgba(0, 0, 0, 0.6); }
+</style>
+</head>
+<body>
+  <img class="pic" src="assets/thumbnail/vault-image.png" alt="">
+  <div class="fade"></div>
+  <div class="words"><div class="amt">$6.3B</div><div class="gone">gone in<br><span class="r">20 minutes</span></div></div>
+  <div class="frozen">...then frozen?!</div>
+</body>
+</html>

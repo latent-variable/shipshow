@@ -32,6 +32,8 @@ video says so aloud where it uses one.
 | AN | Anthropic, "Detecting and countering misuse of AI: August 2025", 2025-08-27, anthropic.com/news/detecting-countering-misuse-aug-2025 | page via fetch |
 | REG | The Register, "North Korea stole $2B in crypto in 2025", 2025-12-18 (Chainalysis figures) | page via fetch |
 | TB | The Block, "Trump looking into Binance hack; calls grow for crypto rules", 2026-10-30, theblock.co/news/regulation/2026-10-30-trump-looking-into-binance-hack-calls-grow-for-crypto-rules-432236 | agent's fetch, quoted |
+| TT | Richard Teng (Binance CEO), X post, 2026-10-30, x.com/_RichardTeng/status/2116072080525656150: "Our initial investigation suggests this security incident may have started with a compromised DevOps engineer's laptop." Captured through X's embed (platform.twitter.com/embed/Tweet.html?id=2116072080525656150), which shows it as 12:37 AM · Oct 30, 2026 in the capturing machine's time zone (US Pacific, so 07:37 UTC) | embed capture, 2026-11-02 |
+| BC | BleepingComputer, "Binance links $6.3 billion crypto theft to compromised DevOps laptop", 2026-10-30, quoting Binance: "To be clear: the attacker did not simply use one engineer's permissions, and this was not a single 'one-click' action"; Binance had "uncovered additional points of breach" | research agent's fetch, quoted |
 | IC3 | FBI IC3 PSA I-022625-PSA, 2025-02-26, ic3.gov/PSA/2025/PSA250226: TraderTraitor named for the Bybit theft | listed in search, cited by CBS and TRM |
 
 ## Terms (one name each, in narration, captions and on screen)
@@ -64,7 +66,7 @@ video says so aloud where it uses one.
 | The largest crypto theft on record | CD headline; CH: "the largest theft in crypto history"; TRM title |
 | About four times the previous record, Bybit's $1.5B in February 2025, which the FBI blamed on the same group | TRM: "roughly four times the Bybit hack"; "The FBI named the same group as responsible for the USD 1.5 billion Bybit hack in February 2025" |
 | Binance is the world's biggest crypto exchange | CD, CBS |
-| Within about an hour, the first freezes; about $3B frozen by Binance's count | TRM: Tether froze at 21:01 UTC; BA: "roughly $3B frozen" |
+| Within the hour, the first freezes (Tether 21:01, Circle 21:04 UTC, 56 and 59 minutes after 20:05); within hours about half: $2.7B by 00:30 UTC (TRM), about $3B by Binance's count | TRM; BA: "roughly $3B frozen" |
 | The ten chains: Ethereum, Bitcoin, Tron, the XRP Ledger, Solana, Arbitrum, Avalanche, Optimism, Base and Polygon | TRM |
 
 ### 01b The case board (the questions; answered in 07d)
@@ -78,6 +80,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | Most customer assets sit in cold wallets, and move to a hot wallet when someone withdraws | DE: "Most user assets are reportedly held in cold wallets and moved to a hot wallet only when a user withdraws" |
 | The hack hit Binance's hot wallets | TRM ("Binance hot wallets"), CH ("funds began leaving Binance hot wallets"), DE (Teng: the hack hit Binance's own hot wallet) |
 | Teng: "We never use any customer funds, so they are not impacted." | DE |
+| "An exchange usually keeps most of its customers' coins offline" | DE: "reportedly"; said as "usually" |
 | Binance held $171 billion in total assets on 2026-10-28, by its proof of reserves | CN3 |
 | $6.3B is about 3.7% of $171B | **ours**: 6.3 / 171 = 0.0368 |
 
@@ -94,9 +97,9 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 
 | Claim | Source |
 |---|---|
-| Binance's initial investigation: may involve a compromised DevOps engineer's laptop, which allowed an attacker to reach a service container and submit unauthorized withdrawal transactions | BA (shown) |
+| Binance's initial investigation: may involve a compromised DevOps engineer's laptop, which allowed an attacker to reach a service container and submit unauthorized withdrawal transactions; every later mention keeps the hedge ("if Binance's early read is right", "may have started", "Binance's early read") | BA; TT (shown) |
 | A DevOps engineer keeps the company's servers and software running; a container is a sealed box of software doing one job | general definitions |
-| A later update: "the attacker did not simply use one engineer's permissions, and this was not a single 'one-click' action"; other points of breach found, not named | BleepingComputer 2026-10-30 quoting Binance; DE: Teng said it "was not carried out by one person" and more points of breach were found |
+| Hours later (both 2026-10-30): "the attacker did not simply use one engineer's permissions, and this was not a single 'one-click' action"; other points of breach found, not named | BC; DE: Teng said it "was not carried out by one person" and more points of breach were found |
 | How the laptop was compromised has not been disclosed | BA, DE, TRM (none says) |
 | A common tactic: approaching exchange engineers through fake job interviews and persuading them to "install malicious code" | TNW, quoting Federico Charosky of Quorum Cyber to Bloomberg; said as the playbook, not as what happened here |
 | Teng said the attacker used a "self-destruct mechanism" that destroyed tooling and traces | DE |
@@ -122,6 +125,8 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | At 20:20 UTC the operator submitted a single transaction containing 50 authorizations | TRM |
 | "That single transaction moved 167,464 ETH and 63 tokens, including 1.615 billion USDT" | TRM |
 | Teng: "That delegation did not pass through our normal approval controls." | DE |
+| The note was signed by Binance's own hot wallet | TRM: the authorizations were "each signed by the hot wallet" |
+| Ether is the coin of the Ethereum network | general |
 | The deli-ticket comparison | **ours**, an analogy for the nonce |
 
 ### 03d The drain
@@ -150,10 +155,14 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 
 | Claim | Source |
 |---|---|
+| "The attackers knew that route would be closed to them and so got out ahead of that." Said aloud as "as one lawyer put it, the hackers knew it was coming" | CN1 (Joe Hancock, Mishcon de Reya) |
+| They got $40M less back than they put in | **ours**: 325 - 285 = 40 |
 | Chainalysis: "Over nearly 20 minutes it swapped $325 million in stablecoins into $285 million in ETH", "to stay ahead of freezes" | CH |
 | The attackers sold USDT to market makers and borrowed ether against the stablecoin; ether is harder to freeze, so the lender is left holding the stolen stablecoin | CN1 (TRM's account) |
 | Between 20:58 and 21:01 UTC an attacker-linked wallet deposited $60 million in USDT into Aave and borrowed $44.6 million in WETH | CT (LlamaRisk) |
 | Aave is a lending app that runs on Ethereum: deposit something, borrow against it | general |
+| The pawned-watch comparison | **ours**, an analogy for borrowing against an asset that is about to be frozen |
+| Ether has "no issuer that can directly freeze" it | CN2 (said as "no issuer to freeze it"; on Arbitrum the Security Council did force ETH out of one wallet, TRM, which the freeze scene names) |
 | Marc Zeller (Aave Chan Initiative): "USDT is real money backed by dollars, and the position is criminal but overcollateralized in the eyes of the protocol." | CT |
 | Joe Hancock (Mishcon de Reya): "The attackers knew that route would be closed to them and so got out ahead of that." | CN1 |
 
@@ -164,17 +173,17 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | The attacker still controls more than 420,000 ETH and 18,270 BTC, "about USD 2.4 billion in assets beyond any issuer's reach" | TRM |
 | Frozen: about $2.7B (TRM, 00:30 UTC) to about $3B (Binance) | TRM, BA |
 | The frozen half is mostly stablecoins; the half that got away is mostly bitcoin and ether, which no company can freeze | TRM (both figures and what each is made of); CN2 |
-| The two figures do not add to $6.36B because they were taken at different times and prices | **inferred**; the sources' totals vary ($6.3B BA, $6.36B TRM, $6.4B CH) and none reconciles them. On screen as "about" |
+| The two figures do not add to $6.36B because they were taken at different times and prices; said aloud as "these counts were taken at different moments, so they don't add up" | **inferred**; the sources' totals vary ($6.3B BA, $6.36B TRM, $6.4B CH) and none reconciles them. On screen as "about" |
 | "A freeze stops the money from moving, and recovery follows through legal process." (Redbord) | CN2 |
 | "A technical freeze may happen quickly, while returning funds can take months or years." (Eric Jardine, Chainalysis) | CN2 |
-| Frozen tokens can be burned and reissued, held by a government entity and returned to Binance | CN1 |
+| Frozen tokens can be burned and reissued, held by a government entity and returned to Binance, through legal process (court order or seizure warrant) | CN1, CN2 |
 
 ### 05 The getaway
 
 | Claim | Source |
 |---|---|
 | "Thousands of transactions in a short period suggest that the attackers are using automation to obscure the trail of funds" | CH |
-| Many addresses "receive exactly 1 TRX, then receive additional funds, then forward funds to other addresses"; "This repeated sequence suggests a programmatic process" | CH |
+| Many addresses "receive exactly 1 TRX, then receive additional funds, then forward funds to other addresses", "often sending funds back to addresses involved earlier in the sequence"; "This repeated sequence suggests a programmatic process" | CH |
 | "we are observing laundering patterns we have not seen before" | CH |
 | No mixers seen in the laundering so far; large sums moved to Tron addresses | CN1 (Jonathan Levin, Chainalysis CEO) |
 | The goal is to turn it into ordinary money: "Ultimately, they're trying to off-ramp it to fiat." (Redbord) | CN1 |
@@ -186,6 +195,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 
 | Claim | Source |
 |---|---|
+| Chainalysis assesses the hack as "the work of North Korean cybercrime group TraderTraitor" | CH |
 | TRM: "TRM attributes this attack to TraderTraitor, North Korea's premier hacking unit", "with high confidence" | TRM |
 | Chainalysis saw Binance funds "commingling with funds stolen in last month's Bitget exploit", attributed to North Korean actors | CH |
 | On Saturday 2026-10-31 the FBI said TraderTraitor was responsible | CBS, NBC, IJ |
@@ -198,11 +208,12 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 
 | Claim | Source |
 |---|---|
-| TNW's headline: "North Korean hackers used AI in crypto heists record $6bn Binance theft" | TNW (shown) |
+| TNW's headline: "North Korean hackers used AI in crypto heists record $6bn Binance theft" (read aloud verbatim) | TNW (shown) |
 | TNW's own text: "The use of AI has not been confirmed, and Bloomberg presents it as the experts' assessment rather than an established fact." | TNW (shown) |
 | Experts told Bloomberg the hackers may use AI to research targets, find weaknesses and deceive employees into granting access | TNW |
 | TRM's and Chainalysis' write-ups never mention AI in the attack; "automation" and "programmatic" there describe scripts, and neither calls it AI | TRM, CH (read in full; research notes 2026-11-02) |
-| The speed came from preparation: signatures made in advance as a batch, a rehearsal, pre-funded wallets | TRM, CN1 |
+| The preparation: signatures made in advance as a batch, a rehearsal, a wallet funded the day before | TRM, CN1 |
+| The speed needed no AI; "twenty minutes is what preparation looks like" | **opinion**, said as "my read" (06), and "the rehearsal helps explain why" (07d) |
 | Nobody with evidence has said AI was used in this hack, or that it was not | absent: TRM, CH, BA, DE, CN1-3, TNW; said as "nobody has said" |
 
 ### 06b Where AI does show up
@@ -213,6 +224,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | Mandiant, February 2026: UNC1069, a group "suspected with high confidence to have a North Korea nexus", uses tools like Gemini "to develop tooling, conduct operational research, and assist during the reconnaissance stages"; a victim was shown a video of a crypto CEO "that appeared to be a deepfake", and Mandiant "was unable to recover forensic evidence to independently verify the use of AI models in this specific instance" | GM |
 | GM does not name TraderTraitor or Binance; UNC1069 is not shown to be this attacker | GM |
 | Would AI have made it worse: the drain was already about 20 minutes and the first freeze came 37 minutes after the main sweep, so the part AI could scale is the way in (more convincing fake recruiters, more engineers approached at once), the part a person is fooled in | **opinion**, built on TRM's timings and AN, GM, TNW; said as "my read" |
+| "I'm rooting for a no" | a joke at the narrator's own expense (an AI hoping AI was not used), not a claim |
 | The narrator is an AI too (Claude) | the channel's practice (videos/qwen-phones-home); said once, as a joke, never as an introduction |
 
 ### 07 Who pays
@@ -225,6 +237,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | SAFU, Binance's Secure Asset Fund for Users, set up in 2018, is generally kept at about $1 billion | IJ, CD ("roughly $1 billion in bitcoin") |
 | Yi He: "We are allocating 50% of the funds from Binance's SAFU fund address to cover this loss, while keeping the remaining half in the fund." | her X post 2116599626300350586, via the research agent's search snippet; **not shown**, said as "half of its emergency fund" only if the capture confirms it (see Shown assets) |
 | 90% replenished by 2026-10-31, about 95% by 2026-11-01, bought with Binance's money, not recovered from the attacker: "This does not mean 90% of funds were recovered from the attacker." | BU, CN3, CN5 |
+| "Replaced, with its own money. Not recovered from the thieves." | CN5: "This does not mean 90% of funds were recovered from the attacker." |
 | Yi He: "We should have invested more in security earlier, and set stricter standards." (translated from Mandarin, video on X, 2026-10-30) | IJ |
 | Yi He said this year's revenue would fully cover the loss | IJ |
 
@@ -236,7 +249,6 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | 06:00 to 15:30 UTC: $4.65 billion withdrawn, $1.01 billion deposited, $3.64 billion net out, 2.1% of $171 billion | CN3 (Binance's figures) |
 | CZ: "98% choose to stay!" | CN3 |
 | Friday 2026-10-30: bitcoin fell 4.1% to $77,445.96, ether 4.4%, BNB 6% | CN4 |
-| CFTC Chair Michael Selig: "The real issue here is that these are unregulated offshore exchanges." | TB |
 
 ### 07c What we still don't know
 
@@ -249,13 +261,13 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 
 ### 07d Close
 
-Answers to the case board, each from the lines above.
+Answers to the case file, each from the lines above. The last line is said as "the likeliest reading", and the screen adds "not yet confirmed" (02b's **inferred** row).
 
 ## Shown assets
 
 | Asset | Where it came from |
 |---|---|
-| Binance announcement capture | ss-shot of BA, words marked: "compromised DevOps engineer's laptop" |
+| Teng's X post | ss-shot of TT through X's embed, words marked: "compromised DevOps engineer". Binance's support page (BA) refuses a headless browser (HTTP 405), so the CEO's post with the same words is shown |
 | TRM capture | ss-shot of TRM, words marked: "preparing signatures for 50 consecutive counts" |
 | Chainalysis capture | ss-shot of CH, words marked: "laundering patterns we have not seen before" |
 | TNW capture | ss-shot of TNW: headline, and "The use of AI has not been confirmed" |
@@ -280,7 +292,7 @@ Answers to the case board, each from the lines above.
 - **Yi He's claim that Ripple helped stop about $200M**: TRM confirms only 40.5M RLUSD.
 - **The "self-destruct mechanism" in detail**: Teng's phrase is reported (DE), never described.
 - **Polymarket's same-day $3M breach**: unrelated.
-- **Trump's and Senator Lummis' comments**: one regulator's line (Selig) shows the political reaction; more would be a politics segment.
+- **The political reaction** (Trump, Senator Lummis, CFTC Chair Selig's "unregulated offshore exchanges", TB): cut in round 1 as a stray line with no setup (clarity); a politics segment is another video.
 - **Anthropic's smart-contract exploitation research (2025-12)**: a different kind of attack (bugs in contract code); this theft was a signing compromise.
 - **What users should do** (Forbes, 2026-11-02): the article could not be read (403), so nothing from it is said.
 - **"Trading accounts of investors"** (the owner heard it, attributed to PBS/NPR): no source fetched says any user account was accessed; BA and DE say customer funds were not touched. Not said.

@@ -7,7 +7,7 @@
   .col { display: flex; flex-direction: column; gap: 22px; }
   .card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 38px; }
   .tag { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-2); }
-  .src { font-family: var(--font-mono); font-size: 30px; color: #c3c9d4; line-height: 1.3; }
+  .src { font-family: var(--font-mono); font-size: 32px; color: #d3d9e2; line-height: 1.3; }
   .center { text-align: center; }
   .mono { font-family: var(--font-mono); }
   .big { font-family: var(--font-display); font-weight: 400; letter-spacing: var(--display-tracking); line-height: 1.2; text-transform: uppercase; }
@@ -28,7 +28,7 @@
   /* A light page captured with a see-through background (Chainalysis) gets its white back, so its ink and marker read. */
   .ss-shot-light .ss-shot-photo { background: #fff; }
   .quote { font-size: 54px; font-weight: 800; line-height: 1.28; }
-  .quote .who { display: block; margin-top: 18px; font-family: var(--font-mono); font-size: 30px; font-weight: 500; color: #c3c9d4; }
+  .quote .who { display: block; margin-top: 18px; font-family: var(--font-mono); font-size: 32px; font-weight: 500; color: #d3d9e2; }
   .photo { border-radius: var(--radius); border: var(--frame-width) solid var(--frame); box-shadow: var(--shadow); object-fit: cover; display: block; }
   .mk { position: absolute; width: 0; height: 0; overflow: hidden; }
 
@@ -65,7 +65,7 @@
   .board .q:nth-child(even) { transform: rotate(1.2deg); }
   .board .q::before { content: ""; position: absolute; top: -14px; left: 50%; margin-left: -14px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
   .board .q .n { display: block; font-family: var(--font-mono); font-size: 28px; color: #6b6f7a; margin-bottom: 12px; }
-  .board .q .a { display: block; margin-top: 16px; padding-top: 14px; border-top: 3px solid #c9c4b6; font-size: 31px; font-weight: 700; color: #1d5c3a; line-height: 1.2; }
+  .board .q .a { display: block; margin-top: 16px; padding-top: 14px; border-top: 3px solid #c9c4b6; font-size: 34px; font-weight: 700; color: #1d5c3a; line-height: 1.2; }
   .boardtitle { font-family: var(--font-display); font-size: 96px; text-transform: uppercase; text-align: center; letter-spacing: 0.04em; }
 
   /* 02 the till */
@@ -73,7 +73,7 @@
   .pair figure { margin: 0; width: 640px; position: relative; }
   .pair .photo { width: 640px; height: 470px; }
   .pair figcaption { margin-top: 18px; font-size: 44px; font-weight: 800; }
-  .pair figcaption small { display: block; font-size: 32px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+  .pair figcaption small { display: block; font-size: 34px; color: var(--muted); font-weight: 600; margin-top: 4px; }
   .pair .hit { position: absolute; top: 34px; right: -26px; }
   .waffle { display: grid; grid-template-columns: repeat(19, 54px); gap: 8px; justify-content: center; }
   .waffle i { width: 54px; height: 54px; border-radius: 6px; background: #26303d; display: block; }
@@ -87,7 +87,7 @@
   /* 02b the signature */
   .flow { display: flex; align-items: center; justify-content: center; gap: 20px; }
   .flow .card { text-align: center; font-size: 42px; font-weight: 800; padding: 28px 30px; width: 360px; }
-  .flow .card small { display: block; font-size: 30px; color: var(--muted); font-weight: 600; margin-top: 8px; }
+  .flow .card small { display: block; font-size: 32px; color: var(--muted); font-weight: 600; margin-top: 8px; }
   .arrow { width: 70px; height: 8px; background: var(--muted); position: relative; border-radius: 4px; flex: none; }
   .arrow::after { content: ""; position: absolute; right: -10px; top: -13px; border: 17px solid transparent; border-left: 24px solid var(--muted); border-right: 0; }
   .arrow.hot { background: var(--accent); } .arrow.hot::after { border-left-color: var(--accent); }
@@ -170,7 +170,7 @@
   .ftl .t { font-family: var(--font-mono); font-size: 42px; font-weight: 700; color: var(--accent-2); }
   .ftl .w { font-size: 40px; font-weight: 800; }
   .ftl .amt { font-family: var(--font-mono); font-size: 38px; font-weight: 700; color: var(--accent-2); text-align: right; }
-  .ftl .tot { font-size: 46px; font-weight: 800; text-align: center; margin-top: 10px; }
+  .ftl .tot { font-size: 58px; font-weight: 800; text-align: center; margin-top: 14px; }
   .ftl .tot b { color: var(--accent-2); }
 
   /* 04b the race */
@@ -227,6 +227,7 @@
   .eq b { color: var(--accent-3); font-weight: 400; }
   .reports { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; width: 1640px; margin: 0 auto; }
   .reports .card { font-size: 38px; font-weight: 700; line-height: 1.3; }
+  .reports .card .bits { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
   .reports .card .tag { display: block; margin-bottom: 12px; }
   .reports .card q { font-weight: 800; color: var(--ink); }
   .attack { display: flex; align-items: stretch; justify-content: center; gap: 22px; }
@@ -294,10 +295,11 @@
   <div class="phase" id="p01c">
     <div class="stage">
       <div class="clampwrap">
-        <img class="photo" src="assets/gen/clamp-image.png" alt="" style="width: 900px; height: 514px" data-cue="Stuck" data-anim="fade">
+        <img class="photo" src="assets/gen/clamp-image.png" alt="" style="width: 900px; height: 514px" data-cue="clamp" data-anim="fade">
         <div class="col" style="align-items: center">
-          <div class="big" style="font-size: 120px; color: var(--accent-2)" data-cue="frozen." data-anim="pop">≈ half<br>frozen</div>
-          <div class="src center" data-cue="frozen." data-anim="fade">within the hour<br>about $3B, by Binance's count</div>
+          <div class="src center" data-cue="froze." data-anim="fade">first freezes: within the hour</div>
+          <div class="big" style="font-size: 120px; color: var(--accent-2)" data-cue="half" data-anim="pop">≈ half<br>frozen</div>
+          <div class="src center" data-cue="half" data-anim="fade">within hours · about $3B,<br>by Binance's count</div>
         </div>
       </div>
     </div>
@@ -320,7 +322,7 @@
 
 <!-- ============ THE VAULT ============ -->
 <section data-scene="02-the-till" data-mood="vault">
-  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part one</div><div class="title" data-cue="+0.4" data-anim="up">The vault</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part one</div><div class="title" data-cue="+0.4" data-anim="up">The till</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
   <div class="phase" id="p02a">
     <div class="stage">
       <div class="pair">
@@ -344,7 +346,7 @@
 <section data-scene="02b-signature">
   <div class="phase" id="p02ba">
     <div class="stage">
-      <div class="row"><div class="chip ice" data-cue="nobody" data-anim="pop">no ID check</div></div>
+      <div class="row"><div class="chip" data-cue="ledger," data-anim="pop">a blockchain: a public ledger of who owns what</div><div class="chip ice" data-cue="nobody" data-anim="pop">no ID check</div></div>
       <div class="flow">
         <div class="card" data-cue="private" data-anim="up">private key<small>a secret number</small></div>
         <div class="arrow" data-cue="signatures." data-anim="grow"></div>
@@ -378,7 +380,7 @@
       <div class="src center" data-cue="fits" data-anim="fade">a reading that fits Binance's account · not confirmed</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m02b" data-cue="hasn't" data-anim="pop"><figure class="ss-meme" data-meme="both"><span>no key leaked, or signed by Binance's wallets?</span><span>why not both?</span></figure></div>
+  <div class="meme-wrap" id="m02b" data-cue="Maybe" data-anim="pop"><figure class="ss-meme" data-meme="both"><span>no key leaked, or signed by Binance's wallets?</span><span>why not both?</span></figure></div>
 </section>
 
 <!-- ============ THE WAY IN ============ -->
@@ -438,7 +440,7 @@
   <div class="phase" id="p03bb">
     <div class="stage">
       <figure class="ss-shot flow" data-shot="https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history"
-        data-find="The signatures were produced in advance as a batch" data-mark-cue="advance," data-scheme="light" data-width="680" data-lines="1" data-cue="TRM" data-anim="up"></figure>
+        data-find="The signatures were produced in advance as a batch" data-mark-cue="advance," data-scheme="light" data-width="680" data-source="trmlabs.com · TRM Labs, Oct 29" data-lines="1" data-cue="TRM" data-anim="up"></figure>
     </div>
   </div>
 </section>
@@ -446,7 +448,7 @@
 <section data-scene="03c-fifty-notes">
   <div class="phase" id="p03ca">
     <div class="stage">
-      <div class="note" data-cue="note" data-anim="up"><span class="tag">a signed note · EIP-7702, since Ethereum's May 2025 upgrade</span>"Let this program act for me."<span class="sig" data-cue="sweeper" data-anim="fade">→ the sweeper: takes orders only from the attacker</span></div>
+      <div class="note" data-cue="note" data-anim="up"><span class="tag">a signed note · EIP-7702, since Ethereum's May 2025 upgrade</span>"Let this program act for me."<span class="sig" data-cue="sweeper" data-anim="fade">→ the sweeper: takes orders only from the attacker</span><span class="sig" data-cue="signed" data-anim="fade" style="color: #1d5c3a">signed: Binance's own hot wallet (the stamp)</span></div>
       <div class="countrow">
         <div class="counter" data-cue="count" data-anim="up"><small>the wallet's running count</small><span class="v" id="ctr">n</span></div>
         <div class="src" data-cue="busy" data-anim="fade" style="width: 520px">each real withdrawal moves it on by one<br><span style="font-size: 26px">(in small type: the nonce)</span></div>
@@ -462,13 +464,14 @@
       <div class="src center" data-cue="numbers" data-anim="fade">your ticket works only when your number is called</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m03c" data-cue="signed" data-anim="pop"><figure class="ss-meme" data-meme="oprah"><span>you get a signature!</span><span data-cue="next" data-anim="fade">you get a signature!</span></figure></div>
+  <div class="meme-wrap" id="m03c" data-cue="signed#2" data-anim="pop"><figure class="ss-meme" data-meme="oprah"><span>you get a signature!</span><span data-cue="next" data-anim="fade">you get a signature!</span></figure></div>
   <div class="phase" id="p03cc">
     <div class="stage">
       <div class="fifty" id="f50" data-cue="carried" data-anim="stagger"></div>
       <div class="haul">
         <div class="card" id="haul1" data-cue="moved" data-anim="up">167,464 ETH<small>one transaction · 20:20 UTC</small></div>
-        <div class="card" data-cue="billion" data-anim="up">1.615B USDT<small>among 63 tokens</small></div>
+        <span class="mk" id="mk03m" data-cue="matched" data-anim="fade"></span>
+        <div class="card" data-cue="moved" data-anim="up">+ 1.615B USDT<small>among 63 tokens</small></div>
       </div>
       <div class="card quote center" data-cue="chief" data-anim="up" style="width: 1500px; margin: 0 auto; font-size: 44px">"That delegation did not pass through our normal approval controls."<span class="who">Richard Teng, Binance CEO, Oct 30 (via Decrypt)</span></div>
     </div>
@@ -479,7 +482,7 @@
   <div class="stage">
     <div class="drain">
       <div class="r" data-cue="Five" data-anim="left"><div class="t">20:05</div><div class="w">XRP Ledger<small>five Binance wallets</small></div><div class="amt">233.46M XRP</div></div>
-      <div class="r" data-cue="Twenty" data-anim="left"><div class="t">20:20</div><div class="w">Bitcoin<small>one hot wallet</small></div><div class="amt">18,270 BTC</div></div>
+      <div class="r" data-cue="bitcoin," data-anim="left"><div class="t">20:20</div><div class="w">Bitcoin<small>one hot wallet</small></div><div class="amt">18,270 BTC</div></div>
       <div class="r" data-cue="Twenty" data-anim="left"><div class="t">20:20</div><div class="w">Ethereum<small>the fifty notes</small></div><div class="amt">167,464 ETH + 1.615B USDT</div></div>
       <div class="r" data-cue="Two#2" data-anim="left"><div class="t">20:22</div><div class="w">Tron<small>one hot wallet</small></div><div class="amt">612.7M USDT</div></div>
       <div class="r" data-cue="stragglers" data-anim="left" style="opacity: 0.85"><div class="t" style="color: var(--muted)">→ 23:56</div><div class="w">more sweeps<small>Avalanche, Polygon and the rest</small></div><div class="amt" style="color: var(--muted)">the stragglers</div></div>
@@ -493,13 +496,13 @@
   <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part three</div><div class="title" data-cue="+0.4" data-anim="up">The freeze</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
   <div class="phase" id="p04a">
     <div class="stage">
-      <div class="def" data-cue="stablecoins:" data-anim="up">a stablecoin: a token meant to be worth <b>exactly $1</b>, issued by a company</div>
+      <div class="def" data-cue="stablecoins," data-anim="up">a stablecoin: a token meant to be worth <b>exactly $1</b>, issued by a company</div>
       <div class="tokens">
         <div class="card token" data-cue="Tether" data-anim="up"><div class="coin">USDT</div><div class="nm">Tether</div><div class="by">runs the token</div><div class="sw" id="sw1"><b></b></div><div class="swl">off switch</div></div>
         <div class="card token" data-cue="Circle" data-anim="up"><div class="coin">USDC</div><div class="nm">Circle</div><div class="by">runs the token</div><div class="sw" id="sw2"><b></b></div><div class="swl">off switch</div></div>
         <div class="card token" data-cue="bitcoin." data-anim="up"><div class="coin" style="border-color: var(--muted); color: var(--muted)">BTC</div><div class="nm">bitcoin, ether</div><div class="by">nobody runs them</div><div class="sw none"></div><div class="swl">no switch</div></div>
       </div>
-      <span class="mk" id="mk04s" data-cue="switch," data-anim="fade"></span>
+      <span class="mk" id="mk04s" data-cue="freeze" data-anim="fade"></span>
     </div>
   </div>
   <div class="phase" id="p04b">
@@ -514,7 +517,7 @@
       </div>
     </div>
   </div>
-  <div class="meme-wrap" id="m04" data-cue="three#3" data-anim="pop"><figure class="ss-meme" data-meme="soup-nazi"><span>your stolen USDT?</span><span>no USDT for you!</span></figure></div>
+  <div class="meme-wrap" id="m04" data-cue="Flip" data-anim="pop"><figure class="ss-meme" data-meme="soup-nazi"><span>your stolen USDT?</span><span>no USDT for you!</span></figure></div>
 </section>
 
 <section data-scene="04b-the-race">
@@ -525,20 +528,22 @@
         <div class="arrow gold" data-cue="swapped" data-anim="grow" style="width: 120px"></div>
         <div class="card" data-cue="back." data-anim="up"><span class="v">$285M</span>ether out</div>
       </div>
-      <div class="row"><div class="chip gold" data-cue="Speed" data-anim="pop">speed over price</div><div class="src" data-cue="Speed" data-anim="fade">over nearly 20 minutes · Chainalysis</div></div>
+      <div class="row"><div class="chip gold" data-cue="Speed" data-anim="pop">−$40M: speed over price</div><div class="src" data-cue="Speed" data-anim="fade">over nearly 20 minutes · Chainalysis</div></div>
+      <div class="card quote center" data-cue="lawyer" data-anim="up" style="width: 1400px; margin: 0 auto; font-size: 42px">"The attackers knew that route would be closed to them and so got out ahead of that."<span class="who">Joe Hancock, Mishcon de Reya (to CNBC)</span></div>
     </div>
   </div>
   <div class="phase" id="p04bb">
     <div class="stage">
+      <div class="row"><div class="chip" data-cue="pawning" data-anim="pop">like pawning a watch that's about to be reported stolen</div></div>
       <div class="aave">
         <div class="card" data-cue="sixty" data-anim="up" style="border-color: var(--accent-2)">$60M stolen USDT<small>deposited</small></div>
         <div class="arrow" data-cue="Aave," data-anim="grow"></div>
         <div class="card" data-cue="Aave," data-anim="up">Aave<small>a lending app</small></div>
-        <div class="arrow gold" data-cue="borrowed" data-anim="grow"></div>
-        <div class="card" data-cue="borrowed" data-anim="up" style="border-color: var(--accent-3)">$44.6M ether<small>borrowed · can't be frozen</small></div>
+        <div class="arrow gold" data-cue="walked" data-anim="grow"></div>
+        <div class="card" data-cue="walked" data-anim="up" style="border-color: var(--accent-3)">$44.6M ether<small>borrowed · no issuer to freeze it</small></div>
       </div>
       <div class="row"><div class="chip ice" data-cue="lender" data-anim="pop">deposit frozen → the lender holds it</div></div>
-      <div class="card quote center" data-cue="contributor" data-anim="up" style="width: 1500px; margin: 0 auto; font-size: 46px">"The position is criminal but overcollateralized in the eyes of the protocol."<span class="who">Marc Zeller, Aave Chan Initiative (via Cointelegraph)</span></div>
+      <div class="card quote center" data-cue="contributor" data-anim="up" style="width: 1500px; margin: 0 auto; font-size: 46px">"... the position is criminal but overcollateralized in the eyes of the protocol."<span class="who">Marc Zeller, Aave Chan Initiative (via Cointelegraph) · overcollateralized: the deposit is worth more than the loan</span></div>
     </div>
   </div>
   <div class="meme-wrap" id="m04b" data-cue="protocol." data-anim="pop"><figure class="ss-meme" data-meme="older"><span>it's stolen USDT, sir</span><span>but it checks out</span></figure></div>
@@ -552,7 +557,7 @@
         <div class="sbar">
           <div class="fr" data-cue="frozen" data-anim="fade"><b>$2.7–3B</b><span>frozen · mostly stablecoins</span></div>
           <div class="aw" data-cue="away" data-anim="fade"><b>≈ $2.4B</b><span>beyond reach · ETH, BTC</span></div>
-          <div class="gr" data-cue="away" data-anim="fade"><span>counted at other times and prices</span></div>
+          <div class="gr" data-cue="moments," data-anim="fade"><span>counted at other moments and prices</span></div>
         </div>
         <div class="under">
           <div data-cue="company" data-anim="fade" style="color: var(--accent-2)">a company can say stop</div>
@@ -569,7 +574,7 @@
   <div class="phase" id="p04cb">
     <div class="stage">
       <div class="big center" style="font-size: 130px" data-cue="returned." data-anim="slam">frozen <span style="color: var(--accent)">≠</span> returned</div>
-      <div class="row"><div class="chip" data-cue="courts" data-anim="pop">courts</div><div class="chip" data-cue="law" data-anim="pop">law enforcement</div><div class="chip ice" data-cue="courts" data-anim="pop">burn, reissue, return</div></div>
+      <div class="row"><div class="chip ice" data-cue="burn" data-anim="pop">burn, reissue, return</div><div class="chip" data-cue="courts" data-anim="pop">courts</div><div class="chip" data-cue="law" data-anim="pop">law enforcement</div></div>
       <div class="card quote center" data-cue="Chainalysis," data-anim="up" style="width: 1400px; margin: 0 auto; font-size: 46px">"A technical freeze may happen quickly, while returning funds can take months or years."<span class="who">Eric Jardine, Chainalysis (to CNBC)</span></div>
     </div>
   </div>
@@ -578,17 +583,16 @@
 <!-- ============ THE GETAWAY ============ -->
 <section data-scene="05-the-getaway" data-mood="getaway">
   <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part four</div><div class="title" data-cue="+0.4" data-anim="up">The getaway</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
-  <div class="meme-wrap" id="m05" data-cue="thousands" data-anim="pop"><figure class="ss-meme" data-meme="buzz"><span>wallets</span><span>wallets everywhere</span></figure></div>
   <div class="phase" id="p05a">
     <div class="stage">
-      <div class="web" id="web" data-cue="exactly" data-anim="fade"><svg id="websvg" viewBox="0 0 1560 470"></svg></div>
-      <div class="row"><div class="chip gold" data-cue="exactly" data-anim="pop">first: exactly 1 TRX</div><div class="chip" data-cue="bigger" data-anim="pop">then more</div><div class="chip" data-cue="pass" data-anim="pop">then pass it on</div><div class="chip hot" data-cue="back" data-anim="pop">often back again</div></div>
+      <div class="web" id="web" data-cue="thousands" data-anim="fade"><svg id="websvg" viewBox="0 0 1560 470"></svg></div>
+      <div class="row"><div class="chip gold" data-cue="hopping" data-anim="pop">new wallets, each first sent exactly 1 TRX</div><div class="chip hot" data-cue="earlier" data-anim="pop">doubling back</div></div>
     </div>
   </div>
   <div class="phase" id="p05b">
     <div class="stage">
       <figure class="ss-shot flow" data-shot="https://www.chainalysis.com/blog/binance-exploit-latest-findings-and-response/"
-        data-find="laundering patterns we have not seen before" data-mark-cue="seen" data-scheme="light" data-width="680" data-lines="1" data-cue="pattern," data-anim="up"></figure>
+        data-find="laundering patterns we have not seen before" data-mark-cue="seen" data-scheme="light" data-width="680" data-source="chainalysis.com · Chainalysis, Oct 30" data-lines="1" data-cue="pattern," data-anim="up"></figure>
       <div class="row"><div class="chip gold" data-cue="automated." data-anim="pop">"suggests a programmatic process"</div></div>
     </div>
   </div>
@@ -613,7 +617,7 @@
       <div class="tt" data-cue="TraderTraitor," data-anim="slam"><div class="name">TraderTraitor</div><div class="sub">North Korea's top hacking unit</div></div>
       <div class="row">
         <div class="chip ice sm" data-cue="TRM" data-anim="pop">TRM Labs · "high confidence"</div>
-        <div class="chip ice sm" data-cue="Chainalysis" data-anim="pop">Chainalysis · mixing with Bitget's stolen coins</div>
+        <div class="chip ice sm" data-cue="Chainalysis" data-anim="pop">Chainalysis · TraderTraitor</div>
         <div class="chip hot sm" data-cue="FBI" data-anim="pop">FBI · Saturday, Oct 31</div>
       </div>
       <div class="row"><div class="chip" data-cue="foreign" data-anim="pop">foreign cash</div><div class="chip hot" data-cue="nuclear" data-anim="pop">the nuclear program</div></div>
@@ -635,9 +639,9 @@
   <div class="phase" id="p06a">
     <div class="stage">
       <figure class="ss-shot flow" data-shot="https://thenextweb.com/news/north-korean-hackers-ai-crypto-heists-binance"
-        data-hide=".cky-consent-container, .cky-overlay, .cky-modal, .cky-btn-revisit-wrapper, nav" data-select="h1.c-header__heading" data-width="1100" data-pad="16" data-cue="headline" data-anim="up"></figure>
+        data-hide=".cky-consent-container, .cky-overlay, .cky-modal, .cky-btn-revisit-wrapper, nav" data-select="h1.c-header__heading" data-width="1100" data-pad="16" data-source="thenextweb.com · The Next Web, Nov 2" data-cue="headline" data-anim="up"></figure>
       <figure class="ss-shot flow" data-shot="https://thenextweb.com/news/north-korean-hackers-ai-crypto-heists-binance"
-        data-hide=".cky-consent-container, .cky-overlay, .cky-modal, .cky-btn-revisit-wrapper" data-find="The use of AI has not been confirmed" data-mark-cue="confirmed." data-width="1100" data-lines="1" data-cue="paragraphs" data-anim="up"></figure>
+        data-hide=".cky-consent-container, .cky-overlay, .cky-modal, .cky-btn-revisit-wrapper" data-find="The use of AI has not been confirmed" data-mark-cue="confirmed." data-width="1000" data-source="thenextweb.com · The Next Web, Nov 2" data-cue="paragraphs" data-anim="up"></figure>
     </div>
   </div>
   <div class="phase" id="p06b">
@@ -652,6 +656,7 @@
         <div class="chip" data-cue="funded" data-anim="pop">a wallet funded the day before</div>
       </div>
       <div class="eq" data-cue="Twenty" data-anim="up"><b>20 minutes</b> = preparation</div>
+      <div class="src center" data-cue="read" data-anim="fade">my read</div>
     </div>
   </div>
   <div class="meme-wrap" id="m06" data-cue="preparation" data-anim="pop"><figure class="ss-meme" data-meme="db"><span>"AI did it"</span><span>the headlines</span><span>boring preparation</span></figure></div>
@@ -661,10 +666,12 @@
   <div class="phase" id="p06ba">
     <div class="stage">
       <div class="reports">
-        <div class="card" data-cue="Anthropic," data-anim="up"><span class="tag">Anthropic · August 2025</span>North Korean operatives used Claude to <q>create elaborate false identities with convincing professional backgrounds</q>, pass coding tests, keep remote jobs</div>
-        <div class="card" data-cue="Mandiant" data-anim="up"><span class="tag">Google Mandiant · February 2026</span>a North Korea linked group used Gemini for research; a victim saw a video of a CEO <q>that appeared to be a deepfake</q> (Mandiant could not verify)</div>
+        <div class="card" data-cue="Anthropic," data-anim="up"><span class="tag">Anthropic · August 2025</span>North Korean operatives used Claude to <q>create elaborate false identities with convincing professional backgrounds</q>
+          <div class="bits"><span class="chip sm" data-cue="identities," data-anim="pop">fake identities</span><span class="chip sm" data-cue="coding" data-anim="pop">coding tests</span><span class="chip sm" data-cue="jobs." data-anim="pop">remote jobs</span></div></div>
+        <div class="card" data-cue="Mandiant" data-anim="up"><span class="tag">Google Mandiant · February 2026</span>a group it suspects is North Korean used Gemini for research; a victim saw a video of a crypto CEO <q>that appeared to be a deepfake</q>
+          <div class="bits"><span class="chip sm hot" data-cue="verify" data-anim="pop">Mandiant could not verify the AI part</span></div></div>
       </div>
-      <div class="row"><div class="stamp gold" data-cue="Neither" data-anim="slam">neither is about this hack</div></div>
+      <div class="row"><div class="stamp gold" data-cue="neither" data-anim="slam">neither report is about this hack</div></div>
     </div>
   </div>
   <div class="phase" id="p06bb">
@@ -700,9 +707,10 @@
       <span class="mk" id="mk07f" data-cue="five." data-anim="fade"></span>
     </div>
   </div>
+  <div class="meme-wrap" id="m07" data-cue="thieves." data-anim="pop"><figure class="ss-meme" data-meme="money"><span>Binance, buying back the stolen coins</span><span>shut up and take my money</span></figure></div>
   <div class="phase" id="p07b">
     <div class="stage">
-      <div class="card quote center" data-cue="Yi" data-anim="up" style="width: 1500px; margin: 0 auto">"We should have invested more in security earlier, and set stricter standards."<span class="who">Yi He, Binance co-CEO, video on X, Oct 30 (translated; via Bloomberg)</span></div>
+      <div class="card quote center" data-cue="rarely" data-anim="up" style="width: 1500px; margin: 0 auto">"We should have invested more in security earlier, and set stricter standards."<span class="who">Yi He, Binance co-CEO, video on X, Oct 30 (translated; via Bloomberg)</span></div>
     </div>
   </div>
 </section>
@@ -720,12 +728,11 @@
   </div>
   <div class="phase" id="p07bb">
     <div class="stage">
-      <div class="waffle sm" id="w07" data-cue="Both" data-anim="fade"></div>
+      <div class="waffle" id="w07" data-cue="Both" data-anim="fade"></div>
       <div class="wlegend">
         <span data-cue="stayed," data-anim="fade"><span class="sw" style="background: #26303d"></span>$1B each · $171B held on Oct 28</span>
-        <span data-cue="left." data-anim="pop" style="color: var(--accent-3)"><span class="sw" style="background: var(--accent-3)"></span>$3.64B net out · 2.1%</span>
+        <span data-cue="left." data-anim="pop" style="color: var(--accent)"><span class="sw" style="background: var(--accent)"></span>$3.64B net out · 2.1%</span>
       </div>
-      <div class="card quote center" data-cue="chair" data-anim="up" style="width: 1400px; margin: 0 auto; font-size: 42px">"The real issue here is that these are unregulated offshore exchanges."<span class="who">Michael Selig, CFTC chair, Oct 30 (via The Block)</span></div>
     </div>
   </div>
 </section>
@@ -741,28 +748,30 @@
       <div class="r" data-cue="frozen" data-anim="left"><b>?</b>whether the frozen $3B comes back</div>
       <div class="r" data-cue="where" data-anim="left"><b>?</b>where the $2.4B ends up</div>
     </div>
-    <div class="row"><div class="chip gold" data-cue="promised" data-anim="pop">Binance's full post-mortem: promised, not out yet</div></div>
+    <div class="row"><div class="chip gold" data-cue="promised" data-anim="pop">Binance's technical post-mortem: promised, not out yet</div></div>
   </div>
+  <div class="meme-wrap" id="m07c" data-cue="isn't" data-anim="pop"><figure class="ss-meme" data-meme="afraid"><span>four days in, still no post-mortem</span><span>and at this point I'm afraid to ask</span></figure></div>
 </section>
 
 <section data-scene="07d-close">
   <div class="phase" id="p07da">
     <div class="stage">
       <div class="board">
-        <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">01</span>How do you steal $6B in 20 minutes?<span class="a" data-cue="rehearsed," data-anim="fade">rehearse it, and sign fifty notes so one fits</span></div>
+        <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">01</span>How do you steal $6B in 20 minutes?<span class="a" data-cue="rehearsal" data-anim="fade">rehearse it, and sign fifty notes so one fits</span></div>
         <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">02</span>How do you freeze stolen money?<span class="a" data-cue="Half" data-anim="fade">be the company that runs the coin</span></div>
         <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">03</span>Why only half?<span class="a" data-cue="switch" data-anim="fade">only half had an off switch</span></div>
         <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">04</span>Did they use AI?<span class="a" data-cue="AI:" data-anim="fade">no evidence either way</span></div>
         <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">05</span>Who's paying?<span class="a" data-cue="paying," data-anim="fade">Binance, out of its own pocket</span></div>
       </div>
-      <div class="src center" data-cue="laptop," data-anim="fade">the way in: an engineer's laptop, and other doors not yet named</div>
+      <div class="src center" data-cue="laptop," data-anim="fade">the way in, by Binance's early read: an engineer's laptop, and other doors not yet named</div>
     </div>
   </div>
   <div class="phase" id="p07db">
     <div class="stage">
       <div class="last" data-cue="Nobody" data-anim="up">Nobody broke the blockchain.
         <span class="s" data-cue="obey" data-anim="fade">It obeyed a valid signature.</span>
-        <span class="s y" data-cue="heist" data-anim="fade">The heist was getting Binance's own system to sign.</span></div>
+        <span class="s y" data-cue="likeliest" data-anim="fade">The likeliest reading: the heist was getting Binance's own system to sign.</span>
+        <span class="s" data-cue="check." data-anim="fade" style="font-size: 40px; color: var(--muted)">not yet confirmed · check it against Binance's post-mortem</span></div>
     </div>
   </div>
 </section>
@@ -791,7 +800,9 @@
   const away = (meme, sel) => tl.to(meme, { opacity: 0, duration: 0.3 }, cueAt(sel) - 0.5);
   away("#m01", "#p01b .record");
   away("#m03c", "#f50");
-  away("#m05", "#web");
+    away("#m02b", "#p02bc .arrow");
+  away("#m04", "#p04b .ftl .r");
+  away("#m07", "#p07b .quote");
 
   // Waffles: one square per billion dollars Binance held ($171B), the share named lit.
   const waffle = (id, lit, cls) => {
@@ -806,8 +817,8 @@
   tl.to(w02[6], { background: "linear-gradient(90deg, #ff4a3d 0 30%, #26303d 30% 100%)", duration: 0.2 }, cueAt("#p02b .wlegend span:nth-child(2)") + 0.8);
   // $3.64B net out on Sunday, in gold on the same 171.
   const w07 = [...document.querySelectorAll("#w07 i")];
-  w07.slice(0, 3).forEach((s, i) => tl.to(s, { backgroundColor: "#f5c542", duration: 0.2 }, cueAt("#p07bb .wlegend span:nth-child(2)") + i * 0.12));
-  tl.to(w07[3], { background: "linear-gradient(90deg, #f5c542 0 64%, #26303d 64% 100%)", duration: 0.2 }, cueAt("#p07bb .wlegend span:nth-child(2)") + 0.4);
+  w07.slice(0, 3).forEach((s, i) => tl.to(s, { backgroundColor: "#ff4a3d", duration: 0.2 }, cueAt("#p07bb .wlegend span:nth-child(2)") + i * 0.12));
+  tl.to(w07[3], { background: "linear-gradient(90deg, #ff4a3d 0 64%, #26303d 64% 100%)", duration: 0.2 }, cueAt("#p07bb .wlegend span:nth-child(2)") + 0.4);
 
   // The wallet's running count ticks on while it pays out real withdrawals; then the deli display does the same.
   const tick = (el, from, start, steps) => {
@@ -819,8 +830,8 @@
   // Fifty notes, one for each of the next fifty counts; one of them fits.
   const f50 = document.getElementById("f50");
   for (let i = 0; i < 50; i++) { const t = document.createElement("i"); t.textContent = i === 0 ? "n" : `n+${i}`; if (i === 17) t.id = "win"; f50.appendChild(t); }
-  tl.to("#win", { backgroundColor: "#52e08c", color: "#0b0d11", scale: 1.18, duration: 0.3 }, cueAt("#haul1") - 1.2);
-  sfx("ding", cueAt("#haul1") - 1.2);
+  tl.to("#win", { backgroundColor: "#52e08c", color: "#0b0d11", scale: 1.18, duration: 0.3 }, cueAt("#mk03m"));
+  sfx("ding", cueAt("#mk03m") + 0.2);
 
   // The switch flips off: the knob slides left, the switch goes ice.
   tl.to(["#sw1 b", "#sw2 b"], { left: 8, duration: 0.3 }, cueAt("#mk04s"));

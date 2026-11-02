@@ -25,9 +25,14 @@ for (const f of ["timing.json", "index.html"]) if (!existsSync(join(dir, f))) di
 const timing = JSON.parse(readFileSync(join(dir, "timing.json"), "utf8"));
 const html = readFileSync(join(dir, "index.html"), "utf8");
 
+const VOID = /^(area|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
+
 /** The text inside the element whose opening tag starts at `i`, nested tags of its kind included, and where it ends. */
 function element(i) {
   const tag = html.slice(i + 1).match(/^\w+/)[0];
+  // A void element (a cued <img>) has no closing tag and no text: without this the search ran on to the
+  // end of the page and gave the picture the whole video's text to read (binance-heist, 2026-11-02).
+  if (VOID.test(tag)) { const end = html.indexOf(">", i) + 1; return { end, text: "" }; }
   const re = new RegExp(`<(/?)${tag}\\b[^>]*>`, "g");
   re.lastIndex = i;
   let depth = 0, m;

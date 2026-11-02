@@ -1312,6 +1312,23 @@ what [every direction] meant", the half brush was never shown, and the chart's "
 Part one and part two grew by about four minutes; every added example is drawn from computed geometry
 (`videos/kakeya-every-dimension/art/fundamentals.py`), which is work a sketch skips.
 
+### D93. The vault theme: a heist told from the security room (2026-11-02)
+**Decision.** `themes/vault` is gunmetal steel at night with a camera feed's scanlines, vignette and grain over the pictures and a
+slow dot grid behind them, `wipe` between scenes. One meaning per colour: alarm red for what was taken, coin gold for money, ice blue
+for what was frozen, green for what held. Anton for headlines (tall and condensed, a heist poster; already in `kit/fonts` for memes),
+Inter for text, JetBrains Mono for wallet addresses and logs, all SIL OFL and copied into the theme. **Why.** `videos/binance-heist`
+explains a theft where the money's colour carries the story (taken, frozen, got away), and signal, chalk and ripple are the last three
+channel videos' looks. It is token-only, so no kit code changed. **Costs.** One more theme folder (about 200 KB of fonts). **Tested.**
+On the video: `npm run overlaps` (0) and the review frames of all eight of its moods; one trap found, that Anton's glyphs overflow a
+line height of 1 (an overlap the check measures), so its display lines set 1.2 or more.
+
+### D94. A cued picture has no text to read (2026-11-02)
+**Decision.** `bin/review.mjs` reads a cued void element (`<img>`, and the rest of HTML's void tags) as an element with no text,
+ending at its own tag. **Why.** It searched for a closing `</img>` that never comes, so a cued generated picture got the rest of the
+page as its text and the packet asked for 6,000 seconds of reading (binance-heist round 1: three false "short, late" rows that a
+pacing critic had to argue away). **Costs.** None measured. **Tested.** binance-heist's packet after the fix: the three picture cues
+show no reading time.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

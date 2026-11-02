@@ -20,7 +20,7 @@
   },
   "gap": 0.5,
   "beat": 0.9,
-  "hold": 8,
+  "hold": 5,
   "tail": 1.2,
   "leads": {
     "02-the-till": 2.3,
@@ -40,15 +40,16 @@
     "03b-rehearsal": 0.8,
     "03c-fifty-notes": 1.0,
     "03d-the-drain": 1.0,
-    "04-the-freeze": 1.6,
-    "04b-the-race": 2.0,
+    "04-the-freeze": 1.2,
+    "04b-the-race": 2.8,
     "04c-the-split": 1.2,
     "05-the-getaway": 1.6,
     "05b-who": 1.0,
-    "06-the-ai-question": 1.6,
+    "06-the-ai-question": 3.0,
     "06b-front-door": 1.2,
     "07-who-pays": 1.0,
-    "07b-reopening": 1.0
+    "07b-reopening": 1.0,
+    "07c-unknowns": 2.8
   },
   "moods": {
     "heist": {
