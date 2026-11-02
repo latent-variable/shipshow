@@ -36,20 +36,20 @@
     "01b-questions": 1.0,
     "02-the-till": 0.2,
     "02b-signature": 1.0,
-    "03-the-way-in": 0.4,
+    "03-the-way-in": 1.8,
     "03b-rehearsal": 0.2,
     "03c-fifty-notes": 0.4,
     "03d-the-drain": 1.0,
     "04-the-freeze": 0.6,
-    "04b-the-race": 1.2,
+    "04b-the-race": 0.4,
     "04c-the-split": 1.2,
     "05-the-getaway": 0.6,
     "05b-who": 1.0,
-    "06-the-ai-question": 1.2,
+    "06-the-ai-question": 1.8,
     "06b-front-door": 1.2,
-    "07-who-pays": 0.6,
+    "07-who-pays": 1.6,
     "07b-reopening": 1.0,
-    "07c-unknowns": 1.2
+    "07c-unknowns": 0.4
   },
   "moods": {
     "heist": {
@@ -154,11 +154,11 @@
     "title": "How Hackers Stole $6.3 Billion from Binance, and Why Half Got Frozen",
     "alternatives": [
       "The Biggest Crypto Heist Ever: How Binance Lost $6.3 Billion in 20 Minutes",
-      "Fifty Signatures and a Laptop: The $6.3 Billion Binance Hack, Explained"
+      "Fifty Signatures: The $6.3 Billion Binance Hack, Explained"
     ],
     "description": [
       "On October 29, about $6.3 billion left Binance's hot wallets on ten blockchains, most of it in about 20 minutes. Within hours, about half of it was frozen. The FBI says North Korea's TraderTraitor unit did it.",
-      "I had Opus 5.5 explain how it worked: where the money sat, how the attacker got Binance's own hot wallet to sign fifty notes ahead of time so one would fit, why the stablecoins could be frozen and the bitcoin and ether couldn't, what is known and not known about AI's part, and who is paying. Status as of November 2, 2026. Binance's technical post-mortem was not out yet, so a few answers are still open, and the video says which.",
+      "I had Opus 5.5 explain how it worked: where the money sat, how fifty notes signed by Binance's own hot wallet were prepared ahead of time so one would fit, why the stablecoins could be frozen and the bitcoin and ether couldn't, what is known and not known about AI's part, and who is paying. Status as of November 2, 2026. Binance's technical post-mortem was not out yet, so a few answers are still open, and the video says which.",
       "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
     ],
     "chapters": {
@@ -193,7 +193,7 @@
       "Narration: an invented voice, not a real person, made with Fish Audio Drama 3 (built with Fish Audio). Researched and written by Claude Opus 5.5.",
       "Music: machine-generated with ACE-Step 1.5.",
       "Pictures of the vault, the till, the laptop, the ticket roll and the wheel clamp: generated with MOSS-Image, illustrations only.",
-      "Memes: templates from memegen (https://github.com/jacebrowning/memegen): And It's Gone; Why Not Both?; Oprah You Get a Car; It's A Trap!; No Soup for You; An Older Code Sir, But It Checks Out; X, X Everywhere; Distracted Boyfriend; Good Guy Greg; Afraid to Ask Andy.",
+      "Memes: templates from memegen (https://github.com/jacebrowning/memegen): And It's Gone; Why Not Both?; We Don't Do That Here; Oprah You Get a Car; It's A Trap!; No Soup for You; An Older Code Sir, But It Checks Out; X, X Everywhere; Distracted Boyfriend; Good Guy Greg; Afraid to Ask Andy.",
       "Made with ShipShow and HyperFrames."
     ],
     "tags": [

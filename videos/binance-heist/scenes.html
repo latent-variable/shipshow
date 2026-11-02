@@ -1,7 +1,7 @@
 <style>
   /* Layout only: colour and type come from the vault theme's tokens, retinted per act (video.json moods).
      One meaning per colour, in every act (moods retint the sky and cards, never these): red (--accent) is what was taken; ice (--accent-2) is only what was frozen; steel (#a9bfd6) is a source label;
-     gold (--accent-3) is money and the thing to look at; green (--good) is what held. Every supporting line is 30 px or more. */
+     gold (--accent-3) is money and the thing to look at; green (--good) is what works as designed (the network obeying, a switch that still works, an answer). Every supporting line is 30 px or more. */
   .stage { position: absolute; inset: 40px var(--pad) 30px; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
   .row { display: flex; gap: 30px; align-items: center; justify-content: center; flex-wrap: wrap; }
   .col { display: flex; flex-direction: column; gap: 22px; }
@@ -356,9 +356,10 @@
         <div class="arrow" data-cue="does." data-anim="grow"></div>
         <div class="card" data-cue="does." data-anim="up" style="border-color: var(--good); color: var(--good)">done<small>the network obeys</small></div>
       </div>
-      <div class="row"><div class="chip" data-cue="phone" data-anim="pop">no phone call</div><div class="chip" data-cue="sure." data-anim="pop">no "are you sure?"</div></div>
+      <div class="row"><div class="chip" data-cue="does." data-anim="pop">no phone call</div><div class="chip" data-cue="does." data-anim="pop">no "are you sure?"</div></div>
     </div>
   </div>
+  <div class="meme-wrap" id="m02b0" data-cue="phone" data-anim="pop"><figure class="ss-meme" data-meme="wddth"><span>asking "are you sure?"</span><span>we don't do that here</span></figure></div>
   <div class="phase" id="p02bb">
     <div class="stage">
       <div class="two">
@@ -432,9 +433,9 @@
       <div class="tline">
         <div class="axis"></div>
         <div class="ev up" style="left: 0" data-cue="October" data-anim="up"><div class="when">Oct 28, morning</div><div class="what">starting cash from Tornado Cash<small data-cue="mixer" data-anim="fade">a mixer: pools coins, hides whose came out</small></div><div class="dot"></div></div>
-        <div class="ev dn" style="left: 430px" data-cue="tested" data-anim="up"><div class="dot"></div><div class="when">Oct 29, early</div><div class="what">code tested on 2 wallets</div></div>
+        <div class="ev dn" style="left: 430px" data-cue="tested" data-anim="up"><div class="dot"></div><div class="when">Oct 29, early</div><div class="what">program tested on 2 wallets</div></div>
         <div class="ev up" style="left: 860px" data-cue="rehearsal" data-anim="up"><div class="when">later that day</div><div class="what">dress rehearsal on a 3rd<small>test money sent back to itself</small></div><div class="dot"></div></div>
-        <div class="ev dn hot" style="left: 1280px" data-cue="hours" data-anim="up"><div class="dot"></div><div class="when">about 4 h later</div><div class="what" style="color: var(--accent)">the same code on a Binance hot wallet</div></div>
+        <div class="ev dn hot" style="left: 1280px" data-cue="hours" data-anim="up"><div class="dot"></div><div class="when">about 4 h later</div><div class="what" style="color: var(--accent)">the same program on a Binance hot wallet</div></div>
       </div>
     </div>
   </div>
@@ -449,10 +450,10 @@
 <section data-scene="03c-fifty-notes">
   <div class="phase" id="p03ca">
     <div class="stage">
-      <div class="note" data-cue="note" data-anim="up"><span class="tag">a signed note · EIP-7702, since Ethereum's May 2025 upgrade</span>"Let this program act for me."<span class="sig" data-cue="sweeper" data-anim="fade">→ the sweeper: takes orders only from the attacker</span><span class="sig" data-cue="signed" data-anim="fade" style="color: #1d5c3a">signed: Binance's own hot wallet (the stamp)</span></div>
+      <div class="note" data-cue="note" data-anim="up"><span class="tag">a signed note · EIP-7702, since Ethereum's May 2025 upgrade</span>"Let this program act for me."<span class="sig" data-cue="sweeper" data-anim="fade">→ the sweeper: takes orders only from the attacker</span><span class="sig" data-cue="signed" data-anim="fade" style="color: #8a6a10">signed: Binance's own hot wallet (the stamp)</span></div>
       <div class="countrow">
         <div class="counter" data-cue="count" data-anim="up"><small>the wallet's running count</small><span class="v" id="ctr">n</span></div>
-        <div class="src" data-cue="busy" data-anim="fade" style="width: 520px">each real withdrawal moves it on by one<br><span style="font-size: 26px">(in small type: the nonce)</span></div>
+        <div class="src" data-cue="number" data-anim="fade" style="width: 520px"><b data-cue="number" data-anim="pop" style="color: var(--accent-3); display: block; font-size: 40px; margin-bottom: 10px">one note = one number</b>each real withdrawal moves it on by one<br><span style="font-size: 26px">(in small type: the nonce)</span></div>
       </div>
     </div>
   </div>
@@ -537,7 +538,7 @@
     <div class="stage">
       <div class="row"><div class="chip" data-cue="pawning" data-anim="pop">like pawning a watch that's about to be reported stolen</div></div>
       <div class="aave">
-        <div class="card" data-cue="sixty" data-anim="up" style="border-color: var(--accent-2)">$60M stolen USDT<small>deposited</small></div>
+        <div class="card" data-cue="sixty" data-anim="up">$60M stolen USDT<small>deposited</small></div>
         <div class="arrow" data-cue="Aave," data-anim="grow"></div>
         <div class="card" data-cue="Aave," data-anim="up">Aave<small>a lending app</small></div>
         <div class="arrow gold" data-cue="walked" data-anim="grow"></div>
@@ -639,6 +640,7 @@
   <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part five</div><div class="title" data-cue="+0.4" data-anim="up">The AI question</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
   <div class="phase" id="p06a">
     <div class="stage">
+      <div class="row"><div class="stamp gold" data-cue="rooting" data-anim="slam">narrator: an AI · not neutral</div></div>
       <figure class="ss-shot flow" data-shot="https://thenextweb.com/news/north-korean-hackers-ai-crypto-heists-binance"
         data-hide=".cky-consent-container, .cky-overlay, .cky-modal, .cky-btn-revisit-wrapper, nav" data-select="h1.c-header__heading" data-width="1100" data-pad="16" data-source="thenextweb.com · The Next Web, Nov 2" data-cue="headline" data-anim="up"></figure>
       <figure class="ss-shot flow" data-shot="https://thenextweb.com/news/north-korean-hackers-ai-crypto-heists-binance"
@@ -666,10 +668,10 @@
   <div class="phase" id="p06ba">
     <div class="stage">
       <div class="reports">
-        <div class="card" data-cue="Anthropic," data-anim="up"><span class="tag">Anthropic · August 2025</span>North Korean operatives used Claude to <q>create elaborate false identities with convincing professional backgrounds</q>
+        <div class="card" data-cue="Anthropic," data-anim="up"><span class="tag">Anthropic · Aug 2025</span>North Korean operatives used Claude to <q>create elaborate false identities with convincing professional backgrounds</q>
           <div class="bits"><span class="chip sm" data-cue="identities," data-anim="pop">fake identities</span><span class="chip sm" data-cue="coding" data-anim="pop">coding tests</span><span class="chip sm" data-cue="jobs." data-anim="pop">remote jobs</span></div></div>
-        <div class="card" data-cue="Mandiant" data-anim="up"><span class="tag">Google Mandiant · February 2026</span>a group it suspects is North Korean used Gemini for research; a victim saw a video of a crypto CEO <q>that appeared to be a deepfake</q>
-          <div class="bits"><span class="chip sm" data-cue="Gemini" data-anim="pop">Gemini, for research</span><span class="chip sm" data-cue="deepfaked" data-anim="pop">a deepfaked crypto boss?</span><span class="chip sm hot" data-cue="verify" data-anim="pop">not verified</span></div></div>
+        <div class="card" data-cue="Mandiant" data-anim="up"><span class="tag">Google Mandiant · Feb 2026</span>a group it suspects is North Korean used Gemini for research; a victim saw a video of a crypto CEO <q>that appeared to be a deepfake</q>
+          <div class="bits"><span class="chip sm" data-cue="Gemini" data-anim="pop">Gemini, for research</span><span class="chip sm" data-cue="deepfaked" data-anim="pop">a deepfaked crypto boss?</span><span class="chip sm" data-cue="verify" data-anim="pop" style="border-color: var(--accent-3); color: var(--accent-3)">not verified</span></div></div>
       </div>
       <div class="row"><div class="stamp gold" data-cue="neither" data-anim="slam">neither report is about this hack</div></div>
     </div>
@@ -681,7 +683,7 @@
         <div class="arrow" data-cue="front" data-anim="grow" style="align-self: center"></div>
         <div class="card" data-cue="twenty" data-anim="up">the drain<small>a script · about 20 minutes</small></div>
         <div class="arrow" data-cue="freeze." data-anim="grow" style="align-self: center"></div>
-        <div class="card" data-cue="freeze." data-anim="up">the freeze<small>37 minutes later</small></div>
+        <div class="card" data-cue="freeze." data-anim="up">the freeze<small>first ones within the hour</small></div>
       </div>
       <div class="row"><div class="chip gold" data-cue="recruiter," data-anim="pop">AI makes the fake recruiter cheap, × many engineers</div></div>
       <div class="src center" data-cue="read:" data-anim="fade">my read · built on the timings above and the two reports</div>
@@ -710,7 +712,7 @@
   <div class="meme-wrap" id="m07" data-cue="thieves." data-anim="pop"><figure class="ss-meme" data-meme="ggg"><span>gets hacked for $6.3 billion</span><span>replaces everyone's coins with its own money</span></figure></div>
   <div class="phase" id="p07b">
     <div class="stage">
-      <div class="card quote center" data-cue="rarely" data-anim="up" style="width: 1500px; margin: 0 auto">"We should have invested more in security earlier, and set stricter standards."<span class="who">Yi He, Binance co-CEO, video on X, Oct 30 (translated; via Bloomberg)</span></div>
+      <div class="card quote center" data-cue="We#2" data-anim="up" style="width: 1500px; margin: 0 auto">"We should have invested more in security earlier, and set stricter standards."<span class="who">Yi He, Binance co-CEO, video on X, Oct 30 (translated; via Bloomberg)</span></div>
     </div>
   </div>
 </section>
@@ -800,6 +802,7 @@
   away("#m01", "#p01b .record");
   away("#m03c", "#f50");
     away("#m02b", "#p02bc .arrow");
+  away("#m02b0", "#p02bb .two .card");
   away("#m04", "#p04b .ftl .r");
   away("#m05", "#p05c .route .card");
   away("#m07", "#p07b .quote");

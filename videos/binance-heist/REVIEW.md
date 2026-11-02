@@ -113,3 +113,45 @@ findings: 0 blocking, 7 major, 21 minor. About 760k tokens.
   channel videos use; accepted as minor.
 - engagement-7, visuals-1, -2, pacing-3: subjective or already accepted in round 1 (act treatments; the captures' strip shape; the
   small Distracted Boyfriend labels; the voice's own pace, which the owner chose).
+
+## Round 3 (2026-11-02, third cut, 858 s): the plan's last round
+
+The four critics that failed round 2 re-ran; engagement, the taste critic still failing, on Opus as the plan says. Accuracy passed.
+About 450k tokens. 20 findings: 0 blocking, 6 major, 14 minor.
+
+| Critic | Model | Verdict | Findings |
+|---|---|---|---|
+| critic-accuracy | sonnet | pass | 4 minor |
+| critic-pacing | sonnet | fail | 2 major, 3 minor |
+| critic-consistency | sonnet | fail | 1 major, 5 minor |
+| critic-engagement | opus | fail | 3 major, 2 minor |
+
+**Fixed after the round** (the cap is reached, so these were checked by the builder on the rebuilt frames, not by a fourth round)
+
+- accuracy minors: "thirty seven minutes after the money landed in the attacker's main wallet" (a viewer doing 20:20 to 21:01 got
+  41; TRM and Cointelegraph count from the main wallet); the sweeper "moves the wallet's funds out"; Mandiant's victim was "shown a
+  video", not on a call; the YouTube description no longer states the signing reading as fact, and the alternative title drops the
+  laptop.
+- pacing-1, engagement-4: the It's A Trap! meme gets 1.8 s after its scene. pacing-3: the three 3 s within-act silences are about 2 s.
+  The Yi He quote gets 1.6 s to be read.
+- consistency-1: the 03b timeline says "program", as the voice does; "code" is left for the fake interview's install request.
+  consistency-2: "the stamp" and "the room" are in the Terms table. consistency-3: caveats ("not verified", "neither report") are gold.
+  consistency-4: Binance's signing line on the note is in the gold role, and green is defined as what works as designed.
+  consistency-5: the stolen deposit has a plain border until it is frozen. consistency-6: months are abbreviated everywhere.
+- engagement-1: an eleventh meme, We Don't Do That Here on "No phone call. No, are you sure", closes the two-minute gap after the hook.
+  engagement-2: the AI joke gets its picture, a stamp "narrator: an AI · not neutral". engagement-3: the Distracted Boyfriend holds
+  about 6 s. engagement-5: "one note = one number" lands on its word; the Yi He quote arrives with her words.
+
+**Accepted, with the reason**
+
+- pacing-2 (most scenes 15 to 34% over 210 syllables a minute while speaking): this is the invented narrator's own pace at speed 1.0,
+  which the owner chose for his channel videos (local/preferences.md: narrator-uk at 1.0). Trimming words changes how much is said, not
+  how fast the voice says it; the pauses already bring the whole video to about 128 words a minute. Major, accepted; the owner's ear is
+  the judge.
+- pacing-4 (03c holds two ideas over 55 s), pacing-5 (three stretches of 10 to 11 s still, under the 12 s line), consistency-6's
+  "post mortem" in the script against "post-mortem" on screen (the caption spelling follows the voice): minor, accepted.
+
+## Status
+
+Ships with no open blocking finding and no open finding from critic-accuracy. One major accepted (pacing-2, the narrator's pace).
+Critic spend: about 2.3M tokens over three rounds (7 + 7 + 4 critics).

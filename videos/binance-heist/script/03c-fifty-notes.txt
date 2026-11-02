@@ -1,4 +1,4 @@
-[delighted, explaining a clever trick step by step, like a magician showing how a card trick works] Since an Ethereum upgrade last year, a wallet can sign a note that says: let this program act for me. The attacker's program was a sweeper: it sends everything in the wallet to the attacker, and takes orders only from them. And the note was signed by Binance's own hot wallet. That's the stamp.
+[delighted, explaining a clever trick step by step, like a magician showing how a card trick works] Since an Ethereum upgrade last year, a wallet can sign a note that says: let this program act for me. The attacker's program was a sweeper: it moves the wallet's funds out, and takes orders only from them. And the note was signed by Binance's own hot wallet. That's the stamp.
 
 [patient, setting up the catch with a picture everyone knows] But each note works for just one number, the wallet's running count of its transactions. And Binance's hot wallet was busy paying out real withdrawals, so the count kept ticking up. Like a deli ticket that only works when your number is called, while the numbers keep moving.
 

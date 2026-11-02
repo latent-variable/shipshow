@@ -42,6 +42,8 @@ video says so aloud where it uses one.
 |---|---|---|
 | digital dollars | the hook's and 03d's word for stablecoins, tied to it aloud in 04 ("stablecoins, the digital dollars from the start") | |
 | ETH, BTC | the tickers shown for ether and bitcoin | |
+| the stamp | the signature a key, or the signing system holding it, puts on an instruction (spoken; "(the stamp)" on screen in 03c) | |
+| the room | Binance's signing system, where the key is used (spoken in 02b) | |
 | SAFU | Binance's Secure Asset Fund for Users, said as "its emergency fund for users"; on screen "the emergency fund (SAFU)" | |
 | Binance | the world's largest crypto exchange (CD, CBS) | |
 | the exchange | Binance | |
@@ -123,7 +125,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | Claim | Source |
 |---|---|
 | EIP-7702 "allows an ordinary wallet to hand control of its behavior to a smart contract by signing an authorization"; it came with Ethereum's Pectra upgrade in May 2025 | TRM |
-| Each note "pointed it to a sweeper contract that accepts instructions only from the operator" | TRM |
+| Each note "pointed it to a sweeper contract that accepts instructions only from the operator"; said as "it moves the wallet's funds out", which is what a sweep is and what the transaction did (167,464 ETH and 63 tokens) | TRM |
 | A note is only good for one value of the wallet's running transaction count (nonce); the hot wallet kept processing withdrawals, so the count kept moving | TRM |
 | "By preparing signatures for 50 consecutive counts, the attacker guaranteed that one would still be valid when the transaction executed." | TRM (shown) |
 | At 20:20 UTC the operator submitted a single transaction containing 50 authorizations | TRM |
@@ -148,7 +150,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 |---|---|
 | Tether (USDT) and Circle (USDC) "can freeze, burn and reissue" because the issuer controls the token contract; "Stablecoins are the most recoverable asset class in crypto because the issuer controls the token contract" (Ari Redbord, TRM) | CN2 |
 | Bitcoin and ether "have no issuer that can directly freeze the assets"; said as "no company runs bitcoin or ether, so no company can say stop" | CN2 |
-| Tether froze 971.1 million USDT in the main receiving wallet at 21:01 UTC, 37 minutes after the main sweep | TRM |
+| Tether froze 971.1 million USDT in the main receiving wallet at 21:01 UTC, 37 minutes after the main sweep; said as "thirty seven minutes after the money landed in the attacker's main wallet" (CT: "37 minutes after the stolen funds reached the attacker's main Ethereum wallet"), since the sweep that landed it was not the 20:20 transaction | TRM, CT |
 | Circle froze 823 million USDC at 21:04 UTC, working with law enforcement | TRM |
 | Ripple and World Liberty froze their own stablecoins (RLUSD, USD1); Arbitrum's council forced ether out. Ripple froze the stolen RLUSD wallet at 22:01 UTC with 40.5 million left; World Liberty Financial froze 27.8 million USD1 at 22:10; the Arbitrum Security Council forced 8,426 ETH and 74.6 million ARB out of the attacker's wallet | TRM |
 | About $2.7 billion frozen as of 00:30 UTC | TRM |
