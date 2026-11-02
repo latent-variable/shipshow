@@ -40,6 +40,9 @@ video says so aloud where it uses one.
 
 | Term | Means | Not |
 |---|---|---|
+| digital dollars | the hook's and 03d's word for stablecoins, tied to it aloud in 04 ("stablecoins, the digital dollars from the start") | |
+| ETH, BTC | the tickers shown for ether and bitcoin | |
+| SAFU | Binance's Secure Asset Fund for Users, said as "its emergency fund for users"; on screen "the emergency fund (SAFU)" | |
 | Binance | the world's largest crypto exchange (CD, CBS) | |
 | the exchange | Binance | |
 | hot wallet | a wallet kept online so withdrawals go out at once; the till | not "the vault" |
@@ -101,7 +104,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | A DevOps engineer keeps the company's servers and software running; a container is a sealed box of software doing one job | general definitions |
 | Hours later (both 2026-10-30): "the attacker did not simply use one engineer's permissions, and this was not a single 'one-click' action"; other points of breach found, not named | BC; DE: Teng said it "was not carried out by one person" and more points of breach were found |
 | How the laptop was compromised has not been disclosed | BA, DE, TRM (none says) |
-| A common tactic: approaching exchange engineers through fake job interviews and persuading them to "install malicious code" | TNW, quoting Federico Charosky of Quorum Cyber to Bloomberg; said as the playbook, not as what happened here |
+| A common tactic: approaching exchange engineers through fake job interviews and persuading them to "install malicious code"; said as "a known playbook against exchange engineers", never as what happened here or as this group's | TNW, quoting Federico Charosky of Quorum Cyber to Bloomberg |
 | Teng said the attacker used a "self-destruct mechanism" that destroyed tooling and traces | DE |
 
 ### 03b The rehearsal
@@ -110,6 +113,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 |---|---|
 | From the morning of 2026-10-28, the attacker's operator wallet received three small withdrawals from Tornado Cash | TRM |
 | Tornado Cash is a mixer: a service that pools coins so it is hard to tell whose came out | general; CH calls the operational wallet "funded through Tornado Cash" |
+| "That's more testing than most of us do before a release" | a joke, not a claim |
 | Early on 2026-10-29 it tested the code on two wallets, later rehearsed the final version on a third and routed the test funds back to itself; about four hours later the same code was installed on a Binance hot wallet | TRM |
 | "The signatures were produced in advance as a batch." | TRM |
 | Preparations began at least 36 hours earlier | CN1 |
@@ -143,10 +147,10 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | Claim | Source |
 |---|---|
 | Tether (USDT) and Circle (USDC) "can freeze, burn and reissue" because the issuer controls the token contract; "Stablecoins are the most recoverable asset class in crypto because the issuer controls the token contract" (Ari Redbord, TRM) | CN2 |
-| Bitcoin and ether "have no issuer that can directly freeze the assets" | CN2 |
+| Bitcoin and ether "have no issuer that can directly freeze the assets"; said as "no company runs bitcoin or ether, so no company can say stop" | CN2 |
 | Tether froze 971.1 million USDT in the main receiving wallet at 21:01 UTC, 37 minutes after the main sweep | TRM |
 | Circle froze 823 million USDC at 21:04 UTC, working with law enforcement | TRM |
-| Ripple froze the stolen RLUSD wallet at 22:01 UTC with 40.5 million left; World Liberty Financial froze 27.8 million USD1 at 22:10; the Arbitrum Security Council forced 8,426 ETH and 74.6 million ARB out of the attacker's wallet | TRM |
+| Ripple and World Liberty froze their own stablecoins (RLUSD, USD1); Arbitrum's council forced ether out. Ripple froze the stolen RLUSD wallet at 22:01 UTC with 40.5 million left; World Liberty Financial froze 27.8 million USD1 at 22:10; the Arbitrum Security Council forced 8,426 ETH and 74.6 million ARB out of the attacker's wallet | TRM |
 | About $2.7 billion frozen as of 00:30 UTC | TRM |
 | Later: Tether over $1.57 billion (Paolo Ardoino); Circle more than $1.1 billion (a Circle spokesperson, 2026-11-01) | CD (Ardoino); CN3 (Circle) |
 | Binance: about $3 billion frozen | BA, CN2 |
@@ -160,7 +164,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | Chainalysis: "Over nearly 20 minutes it swapped $325 million in stablecoins into $285 million in ETH", "to stay ahead of freezes" | CH |
 | The attackers sold USDT to market makers and borrowed ether against the stablecoin; ether is harder to freeze, so the lender is left holding the stolen stablecoin | CN1 (TRM's account) |
 | Between 20:58 and 21:01 UTC an attacker-linked wallet deposited $60 million in USDT into Aave and borrowed $44.6 million in WETH | CT (LlamaRisk) |
-| Aave is a lending app that runs on Ethereum: deposit something, borrow against it | general |
+| Aave is a lending app that runs on Ethereum: deposit something, borrow against it; "overcollateralized" means the deposit is worth more than the loan, said as "the deposit covers the loan" | general |
 | The pawned-watch comparison | **ours**, an analogy for borrowing against an asset that is about to be frozen |
 | Ether has "no issuer that can directly freeze" it | CN2 (said as "no issuer to freeze it"; on Arbitrum the Security Council did force ETH out of one wallet, TRM, which the freeze scene names) |
 | Marc Zeller (Aave Chan Initiative): "USDT is real money backed by dollars, and the position is criminal but overcollateralized in the eyes of the protocol." | CT |
@@ -183,6 +187,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | Claim | Source |
 |---|---|
 | "Thousands of transactions in a short period suggest that the attackers are using automation to obscure the trail of funds" | CH |
+| "Every hop makes the trail harder to follow": CH, "automation to obscure the trail of funds"; the chip says "many wallets", never "each" or "new" | CH |
 | Many addresses "receive exactly 1 TRX, then receive additional funds, then forward funds to other addresses", "often sending funds back to addresses involved earlier in the sequence"; "This repeated sequence suggests a programmatic process" | CH |
 | "we are observing laundering patterns we have not seen before" | CH |
 | No mixers seen in the laundering so far; large sums moved to Tron addresses | CN1 (Jonathan Levin, Chainalysis CEO) |
@@ -248,6 +253,7 @@ The five questions are the owner's own (his request, 2026-11-02): how did they g
 | Withdrawals restarted in phases at 06:00 UTC on Sunday 2026-11-01; all 15 initial networks by 12:36 UTC | CN3 |
 | 06:00 to 15:30 UTC: $4.65 billion withdrawn, $1.01 billion deposited, $3.64 billion net out, 2.1% of $171 billion | CN3 (Binance's figures) |
 | CZ: "98% choose to stay!" | CN3 |
+| Two percent of it is about three and a half billion | **ours**: 2% of $171B is $3.4B; the measured net outflow was 2.1%, $3.64B (CN3) |
 | Friday 2026-10-30: bitcoin fell 4.1% to $77,445.96, ether 4.4%, BNB 6% | CN4 |
 
 ### 07c What we still don't know

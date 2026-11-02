@@ -1,12 +1,12 @@
 <style>
   /* Layout only: colour and type come from the vault theme's tokens, retinted per act (video.json moods).
-     One meaning per colour: red (--accent) is what was taken; ice (--accent-2) is what was frozen and a source label;
+     One meaning per colour, in every act (moods retint the sky and cards, never these): red (--accent) is what was taken; ice (--accent-2) is only what was frozen; steel (#a9bfd6) is a source label;
      gold (--accent-3) is money and the thing to look at; green (--good) is what held. Every supporting line is 30 px or more. */
   .stage { position: absolute; inset: 40px var(--pad) 30px; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
   .row { display: flex; gap: 30px; align-items: center; justify-content: center; flex-wrap: wrap; }
   .col { display: flex; flex-direction: column; gap: 22px; }
   .card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 38px; }
-  .tag { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-2); }
+  .tag { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.08em; text-transform: uppercase; color: #a9bfd6; }
   .src { font-family: var(--font-mono); font-size: 32px; color: #d3d9e2; line-height: 1.3; }
   .center { text-align: center; }
   .mono { font-family: var(--font-mono); }
@@ -96,8 +96,8 @@
   .two .card { font-size: 46px; font-weight: 800; line-height: 1.25; }
   .two .card .tag { display: block; margin-bottom: 14px; }
   .room { display: flex; align-items: center; justify-content: center; gap: 60px; }
-  .roombox { width: 760px; height: 420px; border: 6px solid var(--accent-2); border-radius: 22px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; }
-  .roombox .lbl { position: absolute; top: -28px; left: 30px; padding: 0 16px; background: #0e1621; font-family: var(--font-mono); font-size: 32px; color: var(--accent-2); letter-spacing: 0.08em; text-transform: uppercase; }
+  .roombox { width: 760px; height: 420px; border: 6px solid var(--accent-3); border-radius: 22px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; }
+  .roombox .lbl { position: absolute; top: -28px; left: 30px; padding: 0 16px; background: #0e1621; font-family: var(--font-mono); font-size: 32px; color: var(--accent-3); letter-spacing: 0.08em; text-transform: uppercase; }
   .roombox .keychip { font-size: 40px; font-weight: 800; }
   .thief { font-size: 44px; font-weight: 800; color: var(--accent); text-align: center; width: 360px; }
   .thief small { display: block; font-size: 30px; color: var(--muted); font-weight: 600; }
@@ -105,11 +105,11 @@
   /* 03 the way in */
   .chain3 { display: flex; align-items: center; justify-content: center; gap: 26px; }
   .chain3 .photo { width: 560px; height: 320px; }
-  .chain3 .box { width: 360px; height: 260px; border: 5px dashed var(--accent-2); border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-size: 42px; font-weight: 800; padding: 20px; }
+  .chain3 .box { width: 360px; height: 260px; border: 5px dashed #a9bfd6; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-size: 42px; font-weight: 800; padding: 20px; }
   .chain3 .box small { font-size: 28px; color: var(--muted); font-weight: 600; margin-top: 8px; }
   .chain3 .out { font-size: 42px; font-weight: 800; color: var(--accent); text-align: center; width: 300px; }
   .who { font-size: 40px; font-weight: 700; text-align: center; }
-  .who b { color: var(--accent-2); }
+  .who b { color: var(--accent-3); }
   .notes3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; width: 1660px; margin: 0 auto; }
   .notes3 .card { font-size: 40px; font-weight: 800; line-height: 1.22; }
   .notes3 .card .tag { display: block; margin-bottom: 12px; }
@@ -121,7 +121,7 @@
   .tline { position: relative; width: 1660px; margin: 0 auto; height: 470px; }
   .tline .axis { position: absolute; left: 0; right: 0; top: 230px; height: 6px; background: var(--line); border-radius: 3px; }
   .tline .ev { position: absolute; width: 380px; text-align: center; }
-  .tline .ev .when { font-family: var(--font-mono); font-size: 30px; color: var(--accent-2); letter-spacing: 0.06em; }
+  .tline .ev .when { font-family: var(--font-mono); font-size: 30px; color: #a9bfd6; letter-spacing: 0.06em; }
   .tline .ev .what { font-size: 38px; font-weight: 800; line-height: 1.18; margin-top: 8px; }
   .tline .ev .what small { display: block; font-size: 28px; color: var(--muted); font-weight: 600; margin-top: 6px; }
   .tline .ev .dot { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-3); margin: 0 auto; }
@@ -220,7 +220,7 @@
   .board6 { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; width: 1600px; margin: 0 auto; }
   .board6 .card { font-size: 42px; font-weight: 800; line-height: 1.25; }
   .board6 .card .tag { display: block; margin-bottom: 12px; }
-  .board6 .card b { color: var(--accent-2); }
+  .board6 .card b { color: var(--accent-3); }
   .prep { display: flex; gap: 24px; justify-content: center; }
   .prep .chip { font-size: 38px; }
   .eq { font-family: var(--font-display); font-size: 110px; text-align: center; text-transform: uppercase; }
@@ -233,7 +233,7 @@
   .attack { display: flex; align-items: stretch; justify-content: center; gap: 22px; }
   .attack .card { width: 470px; text-align: center; font-size: 42px; font-weight: 800; }
   .attack .card small { display: block; font-size: 30px; color: var(--muted); font-weight: 600; margin-top: 8px; }
-  .attack .card.door { border-color: var(--accent-2); border-width: 4px; }
+  .attack .card.door { border-color: var(--accent-3); border-width: 4px; }
 
   /* 07 the bill */
   .ledger { width: 1560px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
@@ -265,7 +265,7 @@
   <div class="phase" id="p01a">
     <div class="stage">
       <div class="clockrow">
-        <div class="date" data-cue="Thursday," data-anim="up">Thu 29 Oct 2026<small>a Thursday evening</small></div>
+        <div class="date" data-cue="Thursday," data-anim="up">Thu Oct 29, 2026<small>a Thursday evening</small></div>
         <div class="clock" data-cue="eight" data-anim="type">20:05<small>UTC</small></div>
         <div class="ex" data-cue="Binance," data-anim="up">Binance<small>the world's biggest crypto exchange</small></div>
       </div>
@@ -297,7 +297,7 @@
       <div class="clampwrap">
         <img class="photo" src="assets/gen/clamp-image.png" alt="" style="width: 900px; height: 514px" data-cue="clamp" data-anim="fade">
         <div class="col" style="align-items: center">
-          <div class="src center" data-cue="froze." data-anim="fade">first freezes: within the hour</div>
+          <div class="src center" data-cue="hour," data-anim="fade">first freezes: within the hour</div>
           <div class="big" style="font-size: 120px; color: var(--accent-2)" data-cue="half" data-anim="pop">≈ half<br>frozen</div>
           <div class="src center" data-cue="half" data-anim="fade">within hours · about $3B,<br>by Binance's count</div>
         </div>
@@ -316,7 +316,7 @@
       <div class="q" data-cue="AI?" data-anim="pop"><span class="n">04</span>Did they use AI?</div>
       <div class="q" data-cue="paying" data-anim="pop"><span class="n">05</span>Who's paying?</div>
     </div>
-    <div class="src center" data-cue="Four" data-anim="fade">as of November 2, 2026 · four days in</div>
+    <div class="src center" data-cue="Four" data-anim="fade">as of Nov 2, 2026 · four days in</div>
   </div>
 </section>
 
@@ -346,7 +346,7 @@
 <section data-scene="02b-signature">
   <div class="phase" id="p02ba">
     <div class="stage">
-      <div class="row"><div class="chip" data-cue="ledger," data-anim="pop">a blockchain: a public ledger of who owns what</div><div class="chip ice" data-cue="nobody" data-anim="pop">no ID check</div></div>
+      <div class="row"><div class="chip" data-cue="ledger," data-anim="pop">a blockchain: a public ledger of who owns what</div><div class="chip" data-cue="nobody" data-anim="pop">no ID check</div></div>
       <div class="flow">
         <div class="card" data-cue="private" data-anim="up">private key<small>a secret number</small></div>
         <div class="arrow" data-cue="signatures." data-anim="grow"></div>
@@ -413,16 +413,17 @@
         <div class="card" data-cue="breach," data-anim="up"><span class="tag">other points of breach</span>not named</div>
         <div class="card" data-cue="hacked" data-anim="up"><span class="tag">how the laptop was hacked</span>not disclosed</div>
       </div>
-      <div class="card playbook" data-cue="playbook." data-anim="up"><span class="tag">the known playbook · not confirmed for this hack</span>
+      <div class="card playbook" data-cue="playbook" data-anim="up"><span class="tag">the known playbook · not confirmed for this hack</span>
         <div class="steps">
-          <div class="chip" data-cue="interview" data-anim="pop">a fake job interview</div><div class="arrow"></div>
-          <div class="chip hot" data-cue="install" data-anim="pop">"just install this"</div><div class="arrow"></div>
-          <div class="chip" data-cue="code." data-anim="pop">a way into the laptop</div>
+          <div class="chip">a fake job interview</div><div class="arrow"></div>
+          <div class="chip hot">"just install this"</div><div class="arrow"></div>
+          <div class="chip">a way into the laptop</div>
         </div>
-        <div class="src" style="margin-top: 16px" data-cue="interview" data-anim="fade">Federico Charosky, Quorum Cyber, to Bloomberg</div>
+        <div class="src" style="margin-top: 16px">Federico Charosky, Quorum Cyber, to Bloomberg</div>
       </div>
     </div>
   </div>
+  <div class="meme-wrap" id="m03" data-cue="fake" data-anim="pop"><figure class="ss-meme" data-meme="ackbar"><span>a dream job at a crypto company</span><span>it's a trap!</span></figure></div>
 </section>
 
 <section data-scene="03b-rehearsal">
@@ -430,7 +431,7 @@
     <div class="stage">
       <div class="tline">
         <div class="axis"></div>
-        <div class="ev up" style="left: 0" data-cue="October" data-anim="up"><div class="when">Oct 28, morning</div><div class="what">starting cash from Tornado Cash<small>a mixer: pools coins, hides whose came out</small></div><div class="dot"></div></div>
+        <div class="ev up" style="left: 0" data-cue="October" data-anim="up"><div class="when">Oct 28, morning</div><div class="what">starting cash from Tornado Cash<small data-cue="mixer" data-anim="fade">a mixer: pools coins, hides whose came out</small></div><div class="dot"></div></div>
         <div class="ev dn" style="left: 430px" data-cue="tested" data-anim="up"><div class="dot"></div><div class="when">Oct 29, early</div><div class="what">code tested on 2 wallets</div></div>
         <div class="ev up" style="left: 860px" data-cue="rehearsal" data-anim="up"><div class="when">later that day</div><div class="what">dress rehearsal on a 3rd<small>test money sent back to itself</small></div><div class="dot"></div></div>
         <div class="ev dn hot" style="left: 1280px" data-cue="hours" data-anim="up"><div class="dot"></div><div class="when">about 4 h later</div><div class="what" style="color: var(--accent)">the same code on a Binance hot wallet</div></div>
@@ -510,9 +511,9 @@
       <div class="ftl">
         <div class="r" data-cue="Thirty" data-anim="left"><div class="t">21:01</div><div class="w">Tether</div><div class="amt">971.1M USDT</div></div>
         <div class="r" data-cue="Three" data-anim="left"><div class="t">21:04</div><div class="w">Circle</div><div class="amt">823M USDC</div></div>
-        <div class="r" data-cue="Ripple," data-anim="left"><div class="t">22:01</div><div class="w">Ripple</div><div class="amt">40.5M RLUSD</div></div>
+        <div class="r" data-cue="Ripple" data-anim="left"><div class="t">22:01</div><div class="w">Ripple</div><div class="amt">40.5M RLUSD</div></div>
         <div class="r" data-cue="World" data-anim="left"><div class="t">22:10</div><div class="w">World Liberty</div><div class="amt">27.8M USD1</div></div>
-        <div class="r" data-cue="Arbitrum's" data-anim="left"><div class="t">later</div><div class="w">Arbitrum's security council</div><div class="amt">8,426 ETH + 74.6M ARB</div></div>
+        <div class="r" data-cue="Arbitrum's" data-anim="left"><div class="t">later</div><div class="w">Arbitrum's security council<small style="font-size: 28px; color: var(--muted); margin-left: 10px">forced out</small></div><div class="amt">8,426 ETH + 74.6M ARB</div></div>
         <div class="tot" data-cue="midnight," data-anim="pop">00:30 UTC: about <b>$2.7B</b> frozen <span class="src">(TRM Labs)</span> · <span data-cue="says" data-anim="fade">Binance now: about <b>$3B</b></span></div>
       </div>
     </div>
@@ -543,10 +544,10 @@
         <div class="card" data-cue="walked" data-anim="up" style="border-color: var(--accent-3)">$44.6M ether<small>borrowed · no issuer to freeze it</small></div>
       </div>
       <div class="row"><div class="chip ice" data-cue="lender" data-anim="pop">deposit frozen → the lender holds it</div></div>
-      <div class="card quote center" data-cue="contributor" data-anim="up" style="width: 1500px; margin: 0 auto; font-size: 46px">"... the position is criminal but overcollateralized in the eyes of the protocol."<span class="who">Marc Zeller, Aave Chan Initiative (via Cointelegraph) · overcollateralized: the deposit is worth more than the loan</span></div>
+      <div class="src center" data-cue="contributor" data-anim="fade">"... the position is criminal but overcollateralized in the eyes of the protocol." · Marc Zeller, Aave Chan Initiative</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m04b" data-cue="protocol." data-anim="pop"><figure class="ss-meme" data-meme="older"><span>it's stolen USDT, sir</span><span>but it checks out</span></figure></div>
+  <div class="meme-wrap" id="m04b" data-cue="criminal," data-anim="pop"><figure class="ss-meme" data-meme="older"><span>it's stolen USDT, sir</span><span>but it checks out</span></figure></div>
 </section>
 
 <section data-scene="04c-the-split">
@@ -566,7 +567,7 @@
         </div>
       </div>
       <div class="offsw">
-        <div class="chip hot" data-cue="Nobody" data-anim="pop">no owner, no off switch</div>
+        <div class="chip hot" data-cue="runs" data-anim="pop">no company runs them: no off switch</div>
         <div class="chip ice" data-cue="switch." data-anim="pop">frozen = the half with an off switch</div>
       </div>
     </div>
@@ -586,14 +587,13 @@
   <div class="phase" id="p05a">
     <div class="stage">
       <div class="web" id="web" data-cue="thousands" data-anim="fade"><svg id="websvg" viewBox="0 0 1560 470"></svg></div>
-      <div class="row"><div class="chip gold" data-cue="hopping" data-anim="pop">new wallets, each first sent exactly 1 TRX</div><div class="chip hot" data-cue="earlier" data-anim="pop">doubling back</div></div>
+      <div class="row"><div class="chip gold" data-cue="hopping" data-anim="pop">many wallets first sent exactly 1 TRX</div><div class="chip hot" data-cue="earlier" data-anim="pop">doubling back</div></div>
     </div>
   </div>
   <div class="phase" id="p05b">
     <div class="stage">
       <figure class="ss-shot flow" data-shot="https://www.chainalysis.com/blog/binance-exploit-latest-findings-and-response/"
         data-find="laundering patterns we have not seen before" data-mark-cue="seen" data-scheme="light" data-width="680" data-source="chainalysis.com · Chainalysis, Oct 30" data-lines="1" data-cue="pattern," data-anim="up"></figure>
-      <div class="row"><div class="chip gold" data-cue="automated." data-anim="pop">"suggests a programmatic process"</div></div>
     </div>
   </div>
   <div class="phase" id="p05c">
@@ -609,6 +609,7 @@
       <div class="src center" data-cue="further" data-anim="fade">Jonathan Levin, Chainalysis, and Ari Redbord, TRM Labs, to CNBC</div>
     </div>
   </div>
+  <div class="meme-wrap" id="m05" data-cue="automated." data-anim="pop"><figure class="ss-meme" data-meme="buzz"><span>hops</span><span>hops everywhere</span></figure></div>
 </section>
 
 <section data-scene="05b-who">
@@ -616,8 +617,8 @@
     <div class="stage">
       <div class="tt" data-cue="TraderTraitor," data-anim="slam"><div class="name">TraderTraitor</div><div class="sub">North Korea's top hacking unit</div></div>
       <div class="row">
-        <div class="chip ice sm" data-cue="TRM" data-anim="pop">TRM Labs · "high confidence"</div>
-        <div class="chip ice sm" data-cue="Chainalysis" data-anim="pop">Chainalysis · TraderTraitor</div>
+        <div class="chip sm" data-cue="TRM" data-anim="pop">TRM Labs · "high confidence"</div>
+        <div class="chip sm" data-cue="Chainalysis" data-anim="pop">Chainalysis · TraderTraitor</div>
         <div class="chip hot sm" data-cue="FBI" data-anim="pop">FBI · Saturday, Oct 31</div>
       </div>
       <div class="row"><div class="chip" data-cue="foreign" data-anim="pop">foreign cash</div><div class="chip hot" data-cue="nuclear" data-anim="pop">the nuclear program</div></div>
@@ -655,11 +656,10 @@
         <div class="chip" data-cue="dress" data-anim="pop">a dress rehearsal</div>
         <div class="chip" data-cue="funded" data-anim="pop">a wallet funded the day before</div>
       </div>
-      <div class="eq" data-cue="Twenty" data-anim="up"><b>20 minutes</b> = preparation</div>
       <div class="src center" data-cue="read" data-anim="fade">my read</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m06" data-cue="preparation" data-anim="pop"><figure class="ss-meme" data-meme="db"><span>"AI did it"</span><span>the headlines</span><span>boring preparation</span></figure></div>
+  <div class="meme-wrap" id="m06" data-cue="Twenty" data-anim="pop"><figure class="ss-meme" data-meme="db"><span>"AI did it"</span><span>the headlines</span><span>boring preparation</span></figure></div>
 </section>
 
 <section data-scene="06b-front-door">
@@ -669,7 +669,7 @@
         <div class="card" data-cue="Anthropic," data-anim="up"><span class="tag">Anthropic · August 2025</span>North Korean operatives used Claude to <q>create elaborate false identities with convincing professional backgrounds</q>
           <div class="bits"><span class="chip sm" data-cue="identities," data-anim="pop">fake identities</span><span class="chip sm" data-cue="coding" data-anim="pop">coding tests</span><span class="chip sm" data-cue="jobs." data-anim="pop">remote jobs</span></div></div>
         <div class="card" data-cue="Mandiant" data-anim="up"><span class="tag">Google Mandiant · February 2026</span>a group it suspects is North Korean used Gemini for research; a victim saw a video of a crypto CEO <q>that appeared to be a deepfake</q>
-          <div class="bits"><span class="chip sm hot" data-cue="verify" data-anim="pop">Mandiant could not verify the AI part</span></div></div>
+          <div class="bits"><span class="chip sm" data-cue="Gemini" data-anim="pop">Gemini, for research</span><span class="chip sm" data-cue="deepfaked" data-anim="pop">a deepfaked crypto boss?</span><span class="chip sm hot" data-cue="verify" data-anim="pop">not verified</span></div></div>
       </div>
       <div class="row"><div class="stamp gold" data-cue="neither" data-anim="slam">neither report is about this hack</div></div>
     </div>
@@ -683,7 +683,7 @@
         <div class="arrow" data-cue="freeze." data-anim="grow" style="align-self: center"></div>
         <div class="card" data-cue="freeze." data-anim="up">the freeze<small>37 minutes later</small></div>
       </div>
-      <div class="row"><div class="chip ice" data-cue="recruiter," data-anim="pop">AI makes the fake recruiter cheap, × a thousand engineers</div></div>
+      <div class="row"><div class="chip gold" data-cue="recruiter," data-anim="pop">AI makes the fake recruiter cheap, × many engineers</div></div>
       <div class="src center" data-cue="read:" data-anim="fade">my read · built on the timings above and the two reports</div>
     </div>
   </div>
@@ -698,16 +698,16 @@
       <div class="ledger">
         <div class="top">
           <div class="card" data-cue="aside" data-anim="up"><span class="v">$6.34B</span>set aside</div>
-          <div class="card" data-cue="emergency" data-anim="up"><span class="v">≈ $1B</span>SAFU, the emergency fund</div>
+          <div class="card" data-cue="emergency" data-anim="up"><span class="v">≈ $1B</span>the emergency fund (SAFU)</div>
           <div class="card" data-cue="company" data-anim="up"><span class="v">+</span>company funds</div>
         </div>
         <div class="pbar" data-cue="ninety" data-anim="fade"><i id="pb07"></i><span class="lab" id="pb07l">replaced: 90% · Oct 31</span></div>
-        <div class="row"><div class="stamp gold" data-cue="Replaced,#2" data-anim="slam">bought, not recovered</div></div>
+        <div class="row"><div class="stamp gold" data-cue="Replaced,#2" data-anim="slam">replaced, not recovered</div></div>
       </div>
       <span class="mk" id="mk07f" data-cue="five." data-anim="fade"></span>
     </div>
   </div>
-  <div class="meme-wrap" id="m07" data-cue="thieves." data-anim="pop"><figure class="ss-meme" data-meme="money"><span>Binance, buying back the stolen coins</span><span>shut up and take my money</span></figure></div>
+  <div class="meme-wrap" id="m07" data-cue="thieves." data-anim="pop"><figure class="ss-meme" data-meme="ggg"><span>gets hacked for $6.3 billion</span><span>replaces everyone's coins with its own money</span></figure></div>
   <div class="phase" id="p07b">
     <div class="stage">
       <div class="card quote center" data-cue="rarely" data-anim="up" style="width: 1500px; margin: 0 auto">"We should have invested more in security earlier, and set stricter standards."<span class="who">Yi He, Binance co-CEO, video on X, Oct 30 (translated; via Bloomberg)</span></div>
@@ -748,9 +748,8 @@
       <div class="r" data-cue="frozen" data-anim="left"><b>?</b>whether the frozen $3B comes back</div>
       <div class="r" data-cue="where" data-anim="left"><b>?</b>where the $2.4B ends up</div>
     </div>
-    <div class="row"><div class="chip gold" data-cue="promised" data-anim="pop">Binance's technical post-mortem: promised, not out yet</div></div>
   </div>
-  <div class="meme-wrap" id="m07c" data-cue="isn't" data-anim="pop"><figure class="ss-meme" data-meme="afraid"><span>four days in, still no post-mortem</span><span>and at this point I'm afraid to ask</span></figure></div>
+  <div class="meme-wrap" id="m07c" data-cue="promised" data-anim="pop"><figure class="ss-meme" data-meme="afraid"><span>four days in, still no post-mortem</span><span>and at this point I'm afraid to ask</span></figure></div>
 </section>
 
 <section data-scene="07d-close">
@@ -758,7 +757,7 @@
     <div class="stage">
       <div class="board">
         <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">01</span>How do you steal $6B in 20 minutes?<span class="a" data-cue="rehearsal" data-anim="fade">rehearse it, and sign fifty notes so one fits</span></div>
-        <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">02</span>How do you freeze stolen money?<span class="a" data-cue="Half" data-anim="fade">be the company that runs the coin</span></div>
+        <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">02</span>How do you freeze stolen money?<span class="a" data-cue="company" data-anim="fade">be the company that runs the coin</span></div>
         <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">03</span>Why only half?<span class="a" data-cue="switch" data-anim="fade">only half had an off switch</span></div>
         <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">04</span>Did they use AI?<span class="a" data-cue="AI:" data-anim="fade">no evidence either way</span></div>
         <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">05</span>Who's paying?<span class="a" data-cue="paying," data-anim="fade">Binance, out of its own pocket</span></div>
@@ -802,6 +801,7 @@
   away("#m03c", "#f50");
     away("#m02b", "#p02bc .arrow");
   away("#m04", "#p04b .ftl .r");
+  away("#m05", "#p05c .route .card");
   away("#m07", "#p07b .quote");
 
   // Waffles: one square per billion dollars Binance held ($171B), the share named lit.
@@ -830,7 +830,7 @@
   // Fifty notes, one for each of the next fifty counts; one of them fits.
   const f50 = document.getElementById("f50");
   for (let i = 0; i < 50; i++) { const t = document.createElement("i"); t.textContent = i === 0 ? "n" : `n+${i}`; if (i === 17) t.id = "win"; f50.appendChild(t); }
-  tl.to("#win", { backgroundColor: "#52e08c", color: "#0b0d11", scale: 1.18, duration: 0.3 }, cueAt("#mk03m"));
+  tl.to("#win", { backgroundColor: "#f5c542", color: "#0b0d11", scale: 1.18, duration: 0.3 }, cueAt("#mk03m"));
   sfx("ding", cueAt("#mk03m") + 0.2);
 
   // The switch flips off: the knob slides left, the switch goes ice.

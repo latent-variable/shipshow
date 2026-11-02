@@ -67,3 +67,49 @@ Every critic failed, which is the first cut's usual result. 47 findings: 1 block
   treatment for the bill act would be a second theme inside the video. Declined.
 - pacing-5, -7 (stretches near the stillness line, within-act silences): within the limits; the owner asked for breathing room.
   Accepted.
+
+## Round 2 (2026-11-02, second cut, 852 s)
+
+Every critic re-ran, each pointed at round 1's record and asked to check its fixes and find what they broke. Three passed. 28
+findings: 0 blocking, 7 major, 21 minor. About 760k tokens.
+
+| Critic | Verdict | Findings |
+|---|---|---|
+| critic-accuracy | fail | 2 major, 3 minor |
+| critic-clarity | pass | 1 major (subjective), 5 minor |
+| critic-pacing | fail | 2 major, 5 minor |
+| critic-sync | pass | 3 minor |
+| critic-visuals | pass | 2 minor |
+| critic-consistency | fail | 1 major, 3 minor |
+| critic-engagement | fail | 3 major, 4 minor |
+
+**Fixed**
+
+- accuracy-1: the "take my money" meme said Binance bought back the stolen coins; it replaced balances with its own money. The meme
+  is now Good Guy Greg ("gets hacked for $6.3 billion / replaces everyone's coins with its own money") and the stamp says "replaced,
+  not recovered" (also consistency-3, engagement-5). accuracy-2: "many wallets first sent exactly 1 TRX", never "each" or "new".
+  accuracy-3: "a known playbook against exchange engineers", not "this group's". accuracy-4: "no company runs bitcoin or ether".
+  accuracy-5: "many engineers", not a thousand.
+- clarity-1: the freeze list says Ripple and World Liberty froze their own stablecoins and Arbitrum's council forced ether out.
+  clarity-2: "two percent of it is about three and a half billion". clarity-3: the sweeper "sends everything in the wallet to the
+  attacker". clarity-5: "overcollateralized" is glossed aloud ("the deposit covers the loan"). clarity-6: "every hop makes the trail
+  harder to follow".
+- pacing-1, -2: memes land on their own line (the Aave meme on "criminal", the AI meme on "Twenty minutes", the post-mortem meme on
+  "promised"), so the silences after their scenes are cut from 4.6 to 4.8 s to under 3 s, and the within-act pauses trimmed. The Aave
+  quote card is now a source line under the diagram. pacing-4: beats after "rooting for a no", "That's the stamp" and "It's the front
+  door". pacing-5: 03b re-voiced as two lines. pacing-6, engagement-3: 03b reveals the mixer on its word, 06b reveals Gemini and the
+  deepfake on theirs. pacing-7: the 02b pause is 1.0 s.
+- consistency-1: one meaning per colour in every act. Moods no longer retint the ice colour; source labels are a neutral steel; the
+  matched note is gold; the signing system and the AI chip are gold. consistency-2: digital dollars, ETH, BTC and SAFU are in the Terms
+  table. consistency-4: dates are month first everywhere.
+- engagement-1, -2: two memes added (It's A Trap! on the fake job interview; X, X Everywhere on the hops), ten in all, one every 85 s;
+  a developer joke in 03b ("more testing than most of us do before a release"). engagement-6: "Now the twist" and "Here's the clever
+  part" are cut.
+- sync-1: the "first freezes" card lands on "hour". sync-3: the 07d answer lands on "company".
+
+**Declined or accepted**
+
+- engagement-4 (open on the problem, not the date): the money line is at 2.5 s and the date is the heist film's cold open the owner's
+  channel videos use; accepted as minor.
+- engagement-7, visuals-1, -2, pacing-3: subjective or already accepted in round 1 (act treatments; the captures' strip shape; the
+  small Distracted Boyfriend labels; the voice's own pace, which the owner chose).

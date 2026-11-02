@@ -1,5 +1,5 @@
 {
-  "title": "How Someone Stole $6.3 Billion from Binance in 20 Minutes",
+  "title": "How Hackers Stole $6.3 Billion from Binance, and Why Half Got Frozen",
   "kind": "feature",
   "importance": "high",
   "importance_reason": "public: Lino's YouTube channel, about a theft four days old that is still being investigated, with named companies, a named state and named people; a viewer may repeat any number, and a claim stronger than the sources is unfair to Binance, to the firms that traced it, or to the viewer",
@@ -34,22 +34,22 @@
   "pauses": {
     "01-hook": 0.6,
     "01b-questions": 1.0,
-    "02-the-till": 0.8,
-    "02b-signature": 1.6,
-    "03-the-way-in": 0.8,
-    "03b-rehearsal": 0.8,
-    "03c-fifty-notes": 1.0,
+    "02-the-till": 0.2,
+    "02b-signature": 1.0,
+    "03-the-way-in": 0.4,
+    "03b-rehearsal": 0.2,
+    "03c-fifty-notes": 0.4,
     "03d-the-drain": 1.0,
-    "04-the-freeze": 1.2,
-    "04b-the-race": 2.8,
+    "04-the-freeze": 0.6,
+    "04b-the-race": 1.2,
     "04c-the-split": 1.2,
-    "05-the-getaway": 1.6,
+    "05-the-getaway": 0.6,
     "05b-who": 1.0,
-    "06-the-ai-question": 3.0,
+    "06-the-ai-question": 1.2,
     "06b-front-door": 1.2,
-    "07-who-pays": 1.0,
+    "07-who-pays": 0.6,
     "07b-reopening": 1.0,
-    "07c-unknowns": 2.8
+    "07c-unknowns": 1.2
   },
   "moods": {
     "heist": {
@@ -79,7 +79,6 @@
     "breakin": {
       "look": {
         "--sky": "radial-gradient(120% 90% at 50% 0%, #10241d 0%, #0a1712 55%, #050c09 100%)",
-        "--accent-2": "#7ee0b0",
         "--line": "#24433a",
         "--card": "#0f1d18",
         "--code-bg": "#07110d"
@@ -93,7 +92,6 @@
     "freeze": {
       "look": {
         "--sky": "radial-gradient(120% 90% at 50% 0%, #15293a 0%, #0c1a27 55%, #060d14 100%)",
-        "--accent-2": "#8fe3ff",
         "--line": "#2d4a60",
         "--card": "#10202e"
       },
@@ -106,7 +104,6 @@
     "getaway": {
       "look": {
         "--sky": "radial-gradient(120% 90% at 50% 0%, #2c2110 0%, #1a1309 55%, #0c0905 100%)",
-        "--accent-2": "#ffb45c",
         "--line": "#4d3c22",
         "--card": "#1f170d"
       },
@@ -119,7 +116,6 @@
     "ai": {
       "look": {
         "--sky": "radial-gradient(120% 90% at 50% 0%, #201a36 0%, #130f22 55%, #08070f 100%)",
-        "--accent-2": "#b9a3ff",
         "--line": "#3a3358",
         "--card": "#171428"
       },
@@ -144,7 +140,6 @@
     "verdict": {
       "look": {
         "--sky": "radial-gradient(120% 90% at 50% 0%, #1d2b3c 0%, #121b28 55%, #080c13 100%)",
-        "--accent-2": "#8fd3ff",
         "--line": "#33445a",
         "--card": "#141d29"
       },
@@ -153,6 +148,79 @@
         "volume": 0.15,
         "duck": 0.35
       }
+    }
+  },
+  "youtube": {
+    "title": "How Hackers Stole $6.3 Billion from Binance, and Why Half Got Frozen",
+    "alternatives": [
+      "The Biggest Crypto Heist Ever: How Binance Lost $6.3 Billion in 20 Minutes",
+      "Fifty Signatures and a Laptop: The $6.3 Billion Binance Hack, Explained"
+    ],
+    "description": [
+      "On October 29, about $6.3 billion left Binance's hot wallets on ten blockchains, most of it in about 20 minutes. Within hours, about half of it was frozen. The FBI says North Korea's TraderTraitor unit did it.",
+      "I had Opus 5.5 explain how it worked: where the money sat, how the attacker got Binance's own hot wallet to sign fifty notes ahead of time so one would fit, why the stablecoins could be frozen and the bitcoin and ether couldn't, what is known and not known about AI's part, and who is paying. Status as of November 2, 2026. Binance's technical post-mortem was not out yet, so a few answers are still open, and the video says which.",
+      "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
+    ],
+    "chapters": {
+      "01-hook": "The heist",
+      "02-the-till": "The till",
+      "03-the-way-in": "The way in",
+      "04-the-freeze": "The freeze",
+      "05-the-getaway": "The getaway",
+      "06-the-ai-question": "Did they use AI?",
+      "07-who-pays": "Who pays",
+      "07c-unknowns": "Still open"
+    },
+    "sources": [
+      "Binance, \"Security Incident Update\", October 30, 2026: https://www.binance.com/en/support/announcement/detail/c5a8729a97ac486d963784d96c5642d7",
+      "Richard Teng on X, October 30, 2026: https://x.com/_RichardTeng/status/2116072080525656150",
+      "TRM Labs, \"North Korea steals USD 6.36 billion from Binance in the largest hack in history\": https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history",
+      "Chainalysis, \"Binance exploit: latest findings and response\", October 30, 2026: https://www.chainalysis.com/blog/binance-exploit-latest-findings-and-response/",
+      "CoinDesk, \"Binance loses over $6 billion in the largest crypto hack to date\", October 29, 2026: https://www.coindesk.com/business/2026/10/29/potential-multi-billion-binance-hack-hitting-crypto-markets",
+      "CNBC, \"Binance hack: Investigators in a 'cat and mouse game' to recover $6.3 billion in stolen funds\", October 30, 2026: https://www.cnbc.com/2026/10/30/binance-hack-stolen-crypto-recovery.html",
+      "CNBC, \"Billions in crypto frozen in Binance hack: here's what happens next\": https://www.cnbc.com/2026/10/30/billions-in-crypto-frozen-in-binance-hack-heres-what-happens-next-.html",
+      "CNBC, Binance outflows after withdrawals resumed, November 1, 2026: https://www.cnbc.com/2026/11/02/binance-outflow-hack-bitcoin.html",
+      "Decrypt, \"Binance sets aside $6.34B to cover hack losses\", October 30, 2026: https://decrypt.co/382237",
+      "Cointelegraph Magazine, \"Binance hackers raced to move billions before it could be frozen\", October 30, 2026",
+      "CBS News (AP), FBI attribution, October 31, 2026: https://www.cbsnews.com/news/binance-hack-north-korea/",
+      "Insurance Journal (Bloomberg), November 1, 2026: https://www.insurancejournal.com/news/international/2026/11/01/891003.htm",
+      "The Next Web, November 2, 2026: https://thenextweb.com/news/north-korean-hackers-ai-crypto-heists-binance",
+      "Anthropic, \"Detecting and countering misuse of AI: August 2025\": https://www.anthropic.com/news/detecting-countering-misuse-aug-2025",
+      "Google Mandiant, UNC1069, February 9, 2026: https://cloud.google.com/blog/topics/threat-intelligence/unc1069-targets-cryptocurrency-ai-social-engineering",
+      "The Register (Chainalysis figures), December 18, 2025: https://www.theregister.com/2025/12/18/north_korea_stole_2b_crypto_2025/"
+    ],
+    "credits": [
+      "Narration: an invented voice, not a real person, made with Fish Audio Drama 3 (built with Fish Audio). Researched and written by Claude Opus 5.5.",
+      "Music: machine-generated with ACE-Step 1.5.",
+      "Pictures of the vault, the till, the laptop, the ticket roll and the wheel clamp: generated with MOSS-Image, illustrations only.",
+      "Memes: templates from memegen (https://github.com/jacebrowning/memegen): And It's Gone; Why Not Both?; Oprah You Get a Car; It's A Trap!; No Soup for You; An Older Code Sir, But It Checks Out; X, X Everywhere; Distracted Boyfriend; Good Guy Greg; Afraid to Ask Andy.",
+      "Made with ShipShow and HyperFrames."
+    ],
+    "tags": [
+      "Binance",
+      "Binance hack",
+      "crypto hack",
+      "TraderTraitor",
+      "North Korea",
+      "Lazarus",
+      "stablecoin",
+      "Tether",
+      "Circle",
+      "USDT",
+      "hot wallet",
+      "EIP-7702",
+      "crypto security",
+      "AI security",
+      "Claude",
+      "Opus 5.5"
+    ],
+    "studio": {
+      "Audience": "No, it's not made for kids",
+      "Paid promotion": "No",
+      "Altered or synthetic content": "Recommended No, the owner's call: the narrator is an invented AI voice that imitates no real person, and it says out loud that it is an AI; the generated pictures are illustrations of objects, not of real people or events",
+      "Category": "Science & Technology",
+      "Language": "English",
+      "Visibility": "Public"
     }
   }
 }
