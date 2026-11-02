@@ -1,5 +1,6 @@
 {
   "title": "Did Qwen Phone Home to Beijing?",
+  "builtBy": "Opus 5.5",
   "kind": "feature",
   "importance": "high",
   "importance_reason": "public: Lino's YouTube channel, about a security claim against a named company that is still being argued; a viewer may repeat any claim, and getting one wrong is unfair to Alibaba or to Cohere",

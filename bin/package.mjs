@@ -30,14 +30,18 @@ export function chapters(timing, byScene = {}) {
   return Object.entries(byScene).map(([id, title]) => ({ at: starts[id], title })).sort((a, b) => a.at - b.at);
 }
 
-/** The words a person's titles always carry, such as "(Explained by Opus 5.5)": video.json youtube.titleTag, else
- *  local/config.json youtube.titleTag for any video that is not an essay (an essay is the author's own argument).
- *  false turns it off for one video. Returns the problem, or null. */
-export function titleTagProblem(title, own, local, kind) {
+/** The words a person's titles always carry: video.json youtube.titleTag, else local/config.json youtube.titleTag for any
+ *  video that is not an essay (an essay is the author's own argument); false turns it off for one video. "{model}" in the
+ *  tag is video.json builtBy, the model that built the video as its builder recorded it ("(Explained by {model})"), so a
+ *  title never names a model that did not make it. Returns the problem, or null. */
+export function titleTagProblem(title, own, local, kind, builtBy) {
   const tag = own !== undefined ? own : kind === "essay" ? false : local;
   if (!tag) return null;
-  return (title || "").includes(tag) ? null
-    : `the title lacks "${tag}" (local/config.json youtube.titleTag; video.json youtube.titleTag false opts one video out)`;
+  if (tag.includes("{model}") && !(builtBy || "").trim())
+    return `video.json has no "builtBy": the builder names the model that built it ("Opus 5.5"), never one it is not`;
+  const want = tag.replaceAll("{model}", (builtBy || "").trim());
+  return (title || "").includes(want) ? null
+    : `the title lacks "${want}" (local/config.json youtube.titleTag; video.json youtube.titleTag false opts one video out)`;
 }
 
 /** What YouTube would refuse or ignore: a title over 100 characters or with < or >, a description over 5000, and
@@ -115,7 +119,7 @@ if (isEntry(import.meta.url)) {
   const description = descriptionText(yt, ch, credits);
   const problems = youtubeProblems({ title: yt.title, description, chapters: ch, total: timing.total });
   if (problems.length) die(`not packaged, YouTube would refuse or ignore it:\n  ${problems.join("\n  ")}`);
-  const tagProblem = titleTagProblem(yt.title, yt.titleTag, localConfig().youtube?.titleTag, cfg.kind);
+  const tagProblem = titleTagProblem(yt.title, yt.titleTag, localConfig().youtube?.titleTag, cfg.kind, cfg.builtBy);
   if (tagProblem) die(`not packaged: ${tagProblem}`);
   const builtIn = JSON.parse(readFileSync(join(REPO, "bin", "omnivoice-voices.json"), "utf8")).builtIn;
   const voiceProblem = voiceCreditProblem(cfg, existsSync(join(dir, "sources.md")) ? readFileSync(join(dir, "sources.md"), "utf8") : "", builtIn);
