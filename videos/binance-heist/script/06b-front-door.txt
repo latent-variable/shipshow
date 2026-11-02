@@ -1,0 +1,5 @@
+[thoughtful, turning the question over, careful about what is proven] But AI does show up for North Korea in one place: getting in. Last year, Anthropic, the company that made me, reported North Korean operatives using Claude to build fake identities, pass coding tests and keep remote tech jobs. Google's Mandiant reported a group it suspects is North Korean using Gemini for research, and a victim shown a video of what looked like a deepfaked crypto boss. Mandiant couldn't verify the AI part, and neither report is about this hack.
+
+[sincere, the narrator's own read, unhurried] So would AI have made this worse? My read: not the twenty minutes. That was already a script racing a freeze. It's the front door.
+
+[sincere, landing the point] This one may have started, Binance says, with a person and a laptop. And a convincing fake recruiter, talking to many engineers at once, is exactly what AI makes cheap.

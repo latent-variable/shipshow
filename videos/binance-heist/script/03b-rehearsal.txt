@@ -1,0 +1,3 @@
+[cool, admiring the planning despite yourself] And this was no smash and grab. It was rehearsed. On October twenty eighth, the attacker's wallet got its starting cash from Tornado Cash, a mixer that pools coins so nobody can tell whose came out.
+
+[dry, a developer's joke at our own expense, then back to the story] The next morning, they tested a small program on two wallets, then ran a full dress rehearsal on a third. That's more testing than most of us do before a release. About four hours later, the same program went onto a Binance hot wallet. As the tracing firm TRM Labs puts it: the signatures were produced in advance, as a batch.

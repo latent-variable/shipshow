@@ -1,0 +1,883 @@
+<style>
+  /* Layout only: colour and type come from the vault theme's tokens, retinted per act (video.json moods).
+     One meaning per colour, in every act (moods retint the sky and cards, never these): red (--accent) is what was taken; ice (--accent-2) is only what was frozen; steel (#a9bfd6) is a source label;
+     gold (--accent-3) is money and the thing to look at; green (--good) is what works as designed (the network obeying, a switch that still works, an answer). Every supporting line is 30 px or more. */
+  .stage { position: absolute; inset: 40px var(--pad) 30px; display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+  .row { display: flex; gap: 30px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .col { display: flex; flex-direction: column; gap: 22px; }
+  .card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 38px; }
+  .tag { font-family: var(--font-mono); font-size: 30px; letter-spacing: 0.08em; text-transform: uppercase; color: #a9bfd6; }
+  .src { font-family: var(--font-mono); font-size: 32px; color: #d3d9e2; line-height: 1.3; }
+  .center { text-align: center; }
+  .mono { font-family: var(--font-mono); }
+  .big { font-family: var(--font-display); font-weight: 400; letter-spacing: var(--display-tracking); line-height: 1.2; text-transform: uppercase; }
+  .chip { display: inline-block; padding: 16px 28px; background: var(--card); border: var(--border) solid var(--line); border-radius: 12px; font-size: 42px; font-weight: 700; white-space: nowrap; }
+  .chip.hot { border-color: var(--accent); color: var(--accent); }
+  .chip.ice { border-color: var(--accent-2); color: var(--accent-2); }
+  .chip.gold { border-color: var(--accent-3); color: var(--accent-3); }
+  .chip.good { border-color: var(--good); color: var(--good); }
+  .chip.sm { font-size: 34px; padding: 12px 22px; }
+  .stamp { display: inline-block; padding: 10px 28px; border: 6px solid var(--accent); border-radius: 10px; color: var(--accent); font-family: var(--font-mono); font-weight: 700; font-size: 48px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; transform: rotate(-4deg); background: rgba(10, 10, 12, 0.9); }
+  .stamp.ice { border-color: var(--accent-2); color: var(--accent-2); }
+  .stamp.gold { border-color: var(--accent-3); color: var(--accent-3); }
+  .phase { position: absolute; inset: 0; }
+  .meme-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 6; background: rgb(7, 9, 13); }
+  .meme-wrap::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 200px; background: rgb(7, 9, 13); }
+  .ss-meme { --meme-height: 780px; }
+  .ss-shot.flow { position: relative; inset: auto; margin: 0 auto; }
+  /* A light page captured with a see-through background (Chainalysis) gets its white back, so its ink and marker read. */
+  .ss-shot-light .ss-shot-photo { background: #fff; }
+  .quote { font-size: 54px; font-weight: 800; line-height: 1.28; }
+  .quote .who { display: block; margin-top: 18px; font-family: var(--font-mono); font-size: 32px; font-weight: 500; color: #d3d9e2; }
+  .photo { border-radius: var(--radius); border: var(--frame-width) solid var(--frame); box-shadow: var(--shadow); object-fit: cover; display: block; }
+  .mk { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  /* A new act opens on its own card while its music and look arrive (video.json leads). */
+  .chapter { position: absolute; inset: 0; z-index: 7; background: var(--sky, var(--bg)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; text-align: center; }
+  .chapter .kicker { font-family: var(--font-mono); font-size: 40px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); }
+  .chapter .title { font-family: var(--font-display); font-size: 190px; line-height: 1.22; color: var(--ink); letter-spacing: 0.02em; text-transform: uppercase; }
+  .chapter .rule { width: 560px; height: 8px; border-radius: 4px; background: var(--accent-3); }
+
+  /* 01 the hook */
+  .clockrow { display: flex; align-items: center; justify-content: center; gap: 50px; }
+  .clock { font-family: var(--font-mono); font-weight: 700; font-size: 120px; color: var(--accent); letter-spacing: 0.02em; }
+  .clock small { display: block; font-size: 32px; color: var(--muted); letter-spacing: 0.2em; text-align: center; }
+  .date { font-family: var(--font-display); font-size: 92px; text-transform: uppercase; line-height: 1.2; }
+  .date small { display: block; font-family: var(--font-mono); font-size: 32px; color: var(--muted); margin-top: 10px; letter-spacing: 0.12em; }
+  .ex { font-size: 50px; font-weight: 800; }
+  .ex small { display: block; font-size: 32px; color: var(--muted); font-weight: 600; }
+  .chains { display: grid; grid-template-columns: repeat(5, auto); gap: 16px 18px; justify-content: center; }
+  .chains .chip { font-size: 32px; padding: 10px 20px; }
+  .tally { display: flex; align-items: baseline; justify-content: center; gap: 34px; }
+  .tally .n { font-family: var(--font-display); font-size: 210px; color: var(--accent-3); line-height: 1.2; }
+  .tally .u { font-size: 44px; font-weight: 800; color: var(--muted); }
+  .record { font-size: 150px; text-align: center; color: var(--ink); }
+  .vs { width: 1500px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+  .vs .r { display: grid; grid-template-columns: 380px 1fr; align-items: center; gap: 24px; font-size: 38px; font-weight: 700; }
+  .vs .r small { display: block; font-size: 28px; color: var(--muted); font-family: var(--font-mono); font-weight: 500; }
+  .vs .bar { height: 70px; border-radius: 8px; display: flex; align-items: center; padding-left: 22px; font-family: var(--font-mono); font-weight: 700; font-size: 36px; color: #0b0d11; }
+  .clampwrap { display: flex; align-items: center; justify-content: center; gap: 50px; }
+
+  /* 01b, 07d the case file */
+  .board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; width: 1680px; margin: 0 auto; }
+  .board .q { position: relative; background: #f2efe6; color: #15171c; border-radius: 6px; padding: 30px 24px 26px; min-height: 300px; font-size: 40px; font-weight: 800; line-height: 1.15; box-shadow: 0 20px 50px rgba(0,0,0,0.55); }
+  .board .q:nth-child(odd) { transform: rotate(-1.5deg); }
+  .board .q:nth-child(even) { transform: rotate(1.2deg); }
+  .board .q::before { content: ""; position: absolute; top: -14px; left: 50%; margin-left: -14px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+  .board .q .n { display: block; font-family: var(--font-mono); font-size: 28px; color: #6b6f7a; margin-bottom: 12px; }
+  .board .q .a { display: block; margin-top: 16px; padding-top: 14px; border-top: 3px solid #c9c4b6; font-size: 34px; font-weight: 700; color: #1d5c3a; line-height: 1.2; }
+  .boardtitle { font-family: var(--font-display); font-size: 96px; text-transform: uppercase; text-align: center; letter-spacing: 0.04em; }
+
+  /* 02 the till */
+  .pair { display: flex; gap: 70px; justify-content: center; align-items: flex-start; }
+  .pair figure { margin: 0; width: 640px; position: relative; }
+  .pair .photo { width: 640px; height: 470px; }
+  .pair figcaption { margin-top: 18px; font-size: 44px; font-weight: 800; }
+  .pair figcaption small { display: block; font-size: 34px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+  .pair .hit { position: absolute; top: 34px; right: -26px; }
+  .waffle { display: grid; grid-template-columns: repeat(19, 54px); gap: 8px; justify-content: center; }
+  .waffle i { width: 54px; height: 54px; border-radius: 6px; background: #26303d; display: block; }
+  .waffle i.r { background: var(--accent); }
+  .waffle i.g { background: var(--accent-3); }
+  .waffle.sm { grid-template-columns: repeat(19, 36px); gap: 6px; }
+  .waffle.sm i { width: 36px; height: 36px; border-radius: 4px; }
+  .wlegend { display: flex; justify-content: center; gap: 60px; font-size: 40px; font-weight: 800; align-items: center; }
+  .wlegend .sw { display: inline-block; width: 40px; height: 40px; border-radius: 6px; vertical-align: -6px; margin-right: 14px; }
+
+  /* 02b the signature */
+  .flow { display: flex; align-items: center; justify-content: center; gap: 20px; }
+  .flow .card { text-align: center; font-size: 42px; font-weight: 800; padding: 28px 30px; width: 360px; }
+  .flow .card small { display: block; font-size: 32px; color: var(--muted); font-weight: 600; margin-top: 8px; }
+  .arrow { width: 70px; height: 8px; background: var(--muted); position: relative; border-radius: 4px; flex: none; }
+  .arrow::after { content: ""; position: absolute; right: -10px; top: -13px; border: 17px solid transparent; border-left: 24px solid var(--muted); border-right: 0; }
+  .arrow.hot { background: var(--accent); } .arrow.hot::after { border-left-color: var(--accent); }
+  .arrow.gold { background: var(--accent-3); } .arrow.gold::after { border-left-color: var(--accent-3); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 1600px; margin: 0 auto; }
+  .two .card { font-size: 46px; font-weight: 800; line-height: 1.25; }
+  .two .card .tag { display: block; margin-bottom: 14px; }
+  .room { display: flex; align-items: center; justify-content: center; gap: 60px; }
+  .roombox { width: 760px; height: 420px; border: 6px solid var(--accent-3); border-radius: 22px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; }
+  .roombox .lbl { position: absolute; top: -28px; left: 30px; padding: 0 16px; background: #0e1621; font-family: var(--font-mono); font-size: 32px; color: var(--accent-3); letter-spacing: 0.08em; text-transform: uppercase; }
+  .roombox .keychip { font-size: 40px; font-weight: 800; }
+  .thief { font-size: 44px; font-weight: 800; color: var(--accent); text-align: center; width: 360px; }
+  .thief small { display: block; font-size: 30px; color: var(--muted); font-weight: 600; }
+
+  /* 03 the way in */
+  .chain3 { display: flex; align-items: center; justify-content: center; gap: 26px; }
+  .chain3 .photo { width: 560px; height: 320px; }
+  .chain3 .box { width: 360px; height: 260px; border: 5px dashed #a9bfd6; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-size: 42px; font-weight: 800; padding: 20px; }
+  .chain3 .box small { font-size: 28px; color: var(--muted); font-weight: 600; margin-top: 8px; }
+  .chain3 .out { font-size: 42px; font-weight: 800; color: var(--accent); text-align: center; width: 300px; }
+  .who { font-size: 40px; font-weight: 700; text-align: center; }
+  .who b { color: var(--accent-3); }
+  .notes3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; width: 1660px; margin: 0 auto; }
+  .notes3 .card { font-size: 40px; font-weight: 800; line-height: 1.22; }
+  .notes3 .card .tag { display: block; margin-bottom: 12px; }
+  .playbook { width: 1500px; margin: 0 auto; }
+  .playbook .steps { display: flex; align-items: center; gap: 22px; justify-content: center; margin-top: 18px; }
+  .playbook .steps .chip { font-size: 38px; }
+
+  /* 03b the rehearsal */
+  .tline { position: relative; width: 1660px; margin: 0 auto; height: 470px; }
+  .tline .axis { position: absolute; left: 0; right: 0; top: 230px; height: 6px; background: var(--line); border-radius: 3px; }
+  .tline .ev { position: absolute; width: 380px; text-align: center; }
+  .tline .ev .when { font-family: var(--font-mono); font-size: 30px; color: #a9bfd6; letter-spacing: 0.06em; }
+  .tline .ev .what { font-size: 38px; font-weight: 800; line-height: 1.18; margin-top: 8px; }
+  .tline .ev .what small { display: block; font-size: 28px; color: var(--muted); font-weight: 600; margin-top: 6px; }
+  .tline .ev .dot { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-3); margin: 0 auto; }
+  .tline .ev.up { top: 0; } .tline .ev.up .dot { margin-top: 18px; }
+  .tline .ev.dn { top: 230px; } .tline .ev.dn .dot { margin-top: -12px; margin-bottom: 18px; }
+  .tline .ev.hot .dot { background: var(--accent); }
+
+  /* 03c fifty notes */
+  .note { width: 1000px; margin: 0 auto; background: #f4f1e8; color: #15171c; border-radius: 8px; padding: 34px 44px; box-shadow: var(--shadow); transform: rotate(-1deg); font-size: 46px; font-weight: 800; line-height: 1.25; }
+  .note .tag { color: #4a6b7a; display: block; margin-bottom: 10px; }
+  .note .sig { display: block; margin-top: 14px; font-family: var(--font-mono); font-size: 32px; color: #8a2a22; font-weight: 700; }
+  .countrow { display: flex; align-items: center; justify-content: center; gap: 60px; }
+  .counter { font-family: var(--font-mono); font-size: 60px; font-weight: 700; text-align: center; }
+  .counter small { display: block; font-size: 30px; color: var(--muted); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+  .counter .v { display: inline-block; min-width: 330px; padding: 10px 24px; border: 3px solid var(--accent-3); border-radius: 12px; color: var(--accent-3); margin-top: 8px; }
+  .deli { width: 560px; height: 400px; }
+  .fifty { display: grid; grid-template-columns: repeat(10, 120px); gap: 10px; justify-content: center; }
+  .fifty i { font-style: normal; display: block; height: 54px; border-radius: 6px; background: #efece2; color: #3a3d45; font-family: var(--font-mono); font-size: 26px; font-weight: 700; display: flex; align-items: center; justify-content: center; transform: rotate(-1deg); }
+  .fifty i.win { background: var(--good); color: #0b0d11; }
+  .haul { display: flex; gap: 30px; justify-content: center; }
+  .haul .card { text-align: center; padding: 18px 34px; font-size: 58px; font-weight: 800; font-family: var(--font-display); color: var(--accent-3); }
+  .haul .card small { display: block; font-family: var(--font); font-size: 32px; color: var(--muted); font-weight: 600; }
+
+  /* 03d the drain */
+  .drain { width: 1640px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  .drain .r { display: grid; grid-template-columns: 200px 1fr 660px; align-items: center; gap: 24px; padding: 16px 26px; border-radius: 10px; background: var(--card); border: var(--border) solid var(--line); }
+  .drain .t { font-family: var(--font-mono); font-size: 44px; font-weight: 700; color: var(--accent); }
+  .drain .w { font-size: 40px; font-weight: 800; }
+  .drain .w small { font-size: 30px; color: var(--muted); font-weight: 600; margin-left: 10px; }
+  .drain .amt { font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: var(--accent-3); text-align: right; }
+
+  /* 04 the freeze */
+  .tokens { display: flex; gap: 40px; justify-content: center; }
+  .token { width: 470px; text-align: center; padding: 30px; }
+  .token .coin { width: 170px; height: 170px; border-radius: 50%; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 40px; font-weight: 700; border: 6px solid var(--accent-3); color: var(--accent-3); }
+  .token .nm { font-size: 46px; font-weight: 800; }
+  .token .by { font-size: 32px; color: var(--muted); font-weight: 600; margin-top: 6px; }
+  .token .sw { margin: 22px auto 0; width: 150px; height: 64px; border-radius: 32px; background: var(--good); position: relative; }
+  .token .sw b { position: absolute; top: 7px; left: 92px; width: 50px; height: 50px; border-radius: 50%; background: #fff; }
+  .token .sw.none { background: transparent; border: 3px dashed var(--muted); }
+  .token .swl { font-family: var(--font-mono); font-size: 28px; color: var(--muted); margin-top: 10px; }
+  .def { width: 1400px; margin: 0 auto; font-size: 44px; font-weight: 800; text-align: center; }
+  .def b { color: var(--accent-3); }
+  .ftl { width: 1640px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+  .ftl .r { display: grid; grid-template-columns: 210px 1fr 560px; align-items: center; gap: 24px; padding: 14px 26px; border-radius: 10px; background: var(--card); border: var(--border) solid var(--line); }
+  .ftl .t { font-family: var(--font-mono); font-size: 42px; font-weight: 700; color: var(--accent-2); }
+  .ftl .w { font-size: 40px; font-weight: 800; }
+  .ftl .amt { font-family: var(--font-mono); font-size: 38px; font-weight: 700; color: var(--accent-2); text-align: right; }
+  .ftl .tot { font-size: 58px; font-weight: 800; text-align: center; margin-top: 14px; }
+  .ftl .tot b { color: var(--accent-2); }
+
+  /* 04b the race */
+  .swap { display: flex; align-items: center; justify-content: center; gap: 30px; }
+  .swap .card { text-align: center; width: 520px; font-size: 40px; font-weight: 800; }
+  .swap .card .v { display: block; font-family: var(--font-display); font-size: 110px; color: var(--accent-3); line-height: 1.05; }
+  .aave { display: flex; align-items: center; justify-content: center; gap: 24px; }
+  .aave .card { text-align: center; width: 430px; font-size: 40px; font-weight: 800; }
+  .aave .card small { display: block; font-size: 30px; color: var(--muted); font-weight: 600; margin-top: 8px; }
+
+  /* 04c the split (comes back in 07d) */
+  .split { width: 1640px; margin: 0 auto; }
+  .split .sbar { display: flex; height: 170px; border-radius: 12px; overflow: hidden; border: 2px solid var(--line); }
+  .split .sbar > div { display: flex; flex-direction: column; justify-content: center; padding: 0 28px; font-weight: 800; color: #0b0d11; }
+  .split .sbar .fr { background: var(--accent-2); width: 44%; }
+  .split .sbar .aw { background: var(--accent); width: 38%; }
+  .split .sbar .gr { background: #3a4554; width: 18%; color: #d9dee6; }
+  .split .sbar b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 66px; line-height: 1.3; margin-bottom: 4px; }
+  .split .sbar span { font-size: 30px; }
+  .split .under { display: grid; grid-template-columns: 44% 38% 18%; margin-top: 18px; font-size: 34px; font-weight: 700; }
+  .split .under div { padding-right: 20px; }
+  .split .scale { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 28px; color: var(--muted); margin-bottom: 10px; }
+  .offsw { display: flex; justify-content: center; gap: 40px; }
+
+  /* 05 the getaway */
+  .web { position: relative; width: 1560px; height: 470px; margin: 0 auto; }
+  .web svg { position: absolute; inset: 0; overflow: visible; }
+  .web .lbl { position: absolute; font-family: var(--font-mono); font-size: 30px; font-weight: 700; color: var(--accent-3); }
+  .route { display: flex; align-items: center; justify-content: center; gap: 22px; }
+  .route .card { text-align: center; width: 400px; font-size: 40px; font-weight: 800; }
+  .route .card small { display: block; font-size: 30px; color: var(--muted); font-weight: 600; margin-top: 8px; }
+  .seize { width: 1300px; margin: 0 auto; }
+  .seize .lab { font-size: 36px; font-weight: 700; margin-bottom: 10px; }
+  .seize .track { height: 44px; border-radius: 8px; background: #2a3442; overflow: hidden; }
+  .seize .track i { display: block; height: 100%; width: 100%; background: var(--good); }
+
+  /* 05b who */
+  .tt { text-align: center; }
+  .tt .name { font-family: var(--font-display); font-size: 150px; text-transform: uppercase; line-height: 1.2; color: var(--accent); }
+  .tt .sub { font-size: 44px; font-weight: 800; margin-top: 24px; }
+  .scalebars { width: 1500px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+  .scalebars .r { display: grid; grid-template-columns: 520px 1fr; align-items: center; gap: 24px; font-size: 36px; font-weight: 700; }
+  .scalebars .r small { display: block; font-size: 28px; color: var(--muted); font-family: var(--font-mono); font-weight: 500; }
+  .scalebars .bar { height: 76px; border-radius: 8px; display: flex; align-items: center; padding-left: 22px; font-family: var(--font-mono); font-weight: 700; font-size: 36px; color: #0b0d11; }
+
+  /* 06 the AI question */
+  .board6 { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; width: 1600px; margin: 0 auto; }
+  .board6 .card { font-size: 42px; font-weight: 800; line-height: 1.25; }
+  .board6 .card .tag { display: block; margin-bottom: 12px; }
+  .board6 .card b { color: var(--accent-3); }
+  .prep { display: flex; gap: 24px; justify-content: center; }
+  .prep .chip { font-size: 38px; }
+  .eq { font-family: var(--font-display); font-size: 110px; text-align: center; text-transform: uppercase; }
+  .eq b { color: var(--accent-3); font-weight: 400; }
+  .reports { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; width: 1640px; margin: 0 auto; }
+  .reports .card { font-size: 38px; font-weight: 700; line-height: 1.3; }
+  .reports .card .bits { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
+  .reports .card .tag { display: block; margin-bottom: 12px; }
+  .reports .card q { font-weight: 800; color: var(--ink); }
+  .attack { display: flex; align-items: stretch; justify-content: center; gap: 22px; }
+  .attack .card { width: 470px; text-align: center; font-size: 42px; font-weight: 800; }
+  .attack .card small { display: block; font-size: 30px; color: var(--muted); font-weight: 600; margin-top: 8px; }
+  .attack .card.door { border-color: var(--accent-3); border-width: 4px; }
+
+  /* 07 the bill */
+  .ledger { width: 1560px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+  .ledger .top { display: flex; gap: 30px; justify-content: center; align-items: stretch; }
+  .ledger .top .card { text-align: center; font-size: 38px; font-weight: 800; width: 460px; }
+  .ledger .top .card .v { display: block; font-family: var(--font-display); font-size: 100px; color: var(--accent-3); line-height: 1.05; }
+  .pbar { position: relative; height: 70px; border-radius: 10px; background: #2a2a1e; overflow: hidden; }
+  .pbar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--good); display: block; }
+  .pbar .lab { position: absolute; left: 24px; top: 12px; font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: #0b0d11; }
+  .flows { display: flex; gap: 30px; justify-content: center; }
+  .flows .card { text-align: center; width: 420px; font-size: 38px; font-weight: 800; }
+  .flows .card .v { display: block; font-family: var(--font-display); font-size: 104px; line-height: 1.05; }
+  .post { width: 900px; margin: 0 auto; }
+  .post .h { font-size: 32px; color: var(--muted); font-weight: 700; }
+  .post .h b { color: var(--ink); }
+  .post .t { font-size: 56px; font-weight: 800; margin-top: 10px; }
+
+  /* 07c, 07d */
+  .open { width: 1500px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+  .open .r { display: flex; align-items: center; gap: 28px; font-size: 44px; font-weight: 800; padding: 16px 28px; border-radius: 10px; background: var(--card); border: var(--border) solid var(--line); }
+  .open .r b { font-family: var(--font-display); font-weight: 400; font-size: 60px; color: var(--accent-3); width: 50px; text-align: center; }
+  .last { text-align: center; font-family: var(--font-display); font-size: 120px; line-height: 1.12; text-transform: uppercase; }
+  .last .s { display: block; font-family: var(--font); font-size: 56px; font-weight: 800; text-transform: none; margin-top: 26px; }
+  .last .y { color: var(--accent-3); }
+</style>
+
+<!-- ============ THE HEIST ============ -->
+<section data-scene="01-hook" data-mood="heist">
+  <div class="phase" id="p01a">
+    <div class="stage">
+      <div class="clockrow">
+        <div class="date" data-cue="Thursday," data-anim="up">Thu Oct 29, 2026<small>a Thursday evening</small></div>
+        <div class="clock" data-cue="eight" data-anim="type">20:05<small>UTC</small></div>
+        <div class="ex" data-cue="Binance," data-anim="up">Binance<small>the world's biggest crypto exchange</small></div>
+      </div>
+      <div class="row" style="gap: 22px">
+        <div class="chip gold" data-cue="Bitcoin," data-anim="pop">bitcoin</div>
+        <div class="chip gold" data-cue="ether," data-anim="pop">ether</div>
+        <div class="chip gold" data-cue="digital" data-anim="pop">digital dollars · USDT · USDC</div>
+      </div>
+      <div class="chains" data-cue="ten" data-anim="stagger">
+        <div class="chip">Ethereum</div><div class="chip">Bitcoin</div><div class="chip">Tron</div><div class="chip">XRP Ledger</div><div class="chip">Solana</div>
+        <div class="chip">Arbitrum</div><div class="chip">Avalanche</div><div class="chip">Optimism</div><div class="chip">Base</div><div class="chip">Polygon</div>
+      </div>
+      <div class="tally"><span class="n" data-cue="six" data-anim="count">$6.3</span><span class="u" data-cue="six" data-anim="fade">billion · most of it in about 20 minutes<br><span class="src">Binance's estimate · TRM Labs counts $6.36B</span></span></div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m01" data-cue="most" data-anim="pop"><figure class="ss-meme" data-meme="gone"><span>most of $6.3 billion</span><span data-cue="gone." data-anim="fade">aaaand it's gone</span></figure></div>
+  <div class="phase" id="p01b">
+    <div class="stage">
+      <div class="record big" data-cue="biggest#2" data-anim="slam">Largest crypto theft ever</div>
+      <div class="vs">
+        <div class="r" data-cue="Roughly" data-anim="up"><div>Bybit<small>Feb 2025 · the old record</small></div><div class="bar" style="width: 23.6%; background: var(--muted)">$1.5B</div></div>
+        <div class="r" data-cue="Roughly" data-anim="up"><div>Binance<small>Oct 2026</small></div><div class="bar" style="width: 100%; background: var(--accent)">$6.36B · about 4×</div></div>
+      </div>
+      <div class="row"><div class="stamp" data-cue="FBI" data-anim="slam" data-sfx="thump" data-sfx-offset="0.5">FBI: North Korea</div></div>
+    </div>
+  </div>
+  <div class="phase" id="p01c">
+    <div class="stage">
+      <div class="clampwrap">
+        <img class="photo" src="assets/gen/clamp-image.png" alt="" style="width: 900px; height: 514px" data-cue="clamp" data-anim="fade">
+        <div class="col" style="align-items: center">
+          <div class="src center" data-cue="hour," data-anim="fade">first freezes: within the hour</div>
+          <div class="big" style="font-size: 120px; color: var(--accent-2)" data-cue="half" data-anim="pop">≈ half<br>frozen</div>
+          <div class="src center" data-cue="half" data-anim="fade">within hours · about $3B,<br>by Binance's count</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="01b-questions">
+  <div class="stage">
+    <div class="boardtitle" data-cue="+0.1" data-anim="fade">The case file</div>
+    <div class="board">
+      <div class="q" data-cue="steal" data-anim="pop"><span class="n">01</span>How do you steal $6B in 20 minutes?</div>
+      <div class="q" data-cue="freeze" data-anim="pop"><span class="n">02</span>How do you freeze stolen money?</div>
+      <div class="q" data-cue="half?" data-anim="pop"><span class="n">03</span>Why only half?</div>
+      <div class="q" data-cue="AI?" data-anim="pop"><span class="n">04</span>Did they use AI?</div>
+      <div class="q" data-cue="paying" data-anim="pop"><span class="n">05</span>Who's paying?</div>
+    </div>
+    <div class="src center" data-cue="Four" data-anim="fade">as of Nov 2, 2026 · four days in</div>
+  </div>
+</section>
+
+<!-- ============ THE VAULT ============ -->
+<section data-scene="02-the-till" data-mood="vault">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part one</div><div class="title" data-cue="+0.4" data-anim="up">The till</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p02a">
+    <div class="stage">
+      <div class="pair">
+        <figure data-cue="cold" data-anim="up"><img class="photo" src="assets/gen/vault-image.png" alt=""><figcaption>Cold storage<small>offline · most of the coins</small></figcaption></figure>
+        <figure data-cue="hot" data-anim="up"><img class="photo" src="assets/gen/till-image.png" alt=""><figcaption>Hot wallet<small>online · pays out withdrawals now</small></figcaption>
+          <div class="hit" data-cue="thieves" data-anim="slam"><span class="stamp">hit</span></div></figure>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p02b">
+    <div class="stage">
+      <div class="waffle" id="w02" data-cue="Six" data-anim="fade"></div>
+      <div class="wlegend">
+        <span data-cue="hundred" data-anim="fade"><span class="sw" style="background: #26303d"></span>$1B each · $171B held · Binance proof of reserves, Oct 28</span>
+        <span data-cue="under" data-anim="pop" style="color: var(--accent)"><span class="sw" style="background: var(--accent)"></span>$6.3B taken · under 4%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="02b-signature">
+  <div class="phase" id="p02ba">
+    <div class="stage">
+      <div class="row"><div class="chip" data-cue="ledger," data-anim="pop">a blockchain: a public ledger of who owns what</div><div class="chip" data-cue="nobody" data-anim="pop">no ID check</div></div>
+      <div class="flow">
+        <div class="card" data-cue="private" data-anim="up">private key<small>a secret number</small></div>
+        <div class="arrow" data-cue="signatures." data-anim="grow"></div>
+        <div class="card" data-cue="signatures." data-anim="up" style="border-color: var(--accent-3)">signature<small>made by the key</small></div>
+        <div class="arrow" data-cue="instruction" data-anim="grow"></div>
+        <div class="card" data-cue="instruction" data-anim="up">instruction<small>send these coins there</small></div>
+        <div class="arrow" data-cue="does." data-anim="grow"></div>
+        <div class="card" data-cue="does." data-anim="up" style="border-color: var(--good); color: var(--good)">done<small>the network obeys</small></div>
+      </div>
+      <div class="row"><div class="chip" data-cue="does." data-anim="pop">no phone call</div><div class="chip" data-cue="does." data-anim="pop">no "are you sure?"</div></div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m02b0" data-cue="phone" data-anim="pop"><figure class="ss-meme" data-meme="wddth"><span>asking "are you sure?"</span><span>we don't do that here</span></figure></div>
+  <div class="phase" id="p02bb">
+    <div class="stage">
+      <div class="two">
+        <div class="card" data-cue="evidence" data-anim="up"><span class="tag">Binance, Oct 30</span>"We have found no evidence of any wallet private key leak."</div>
+        <div class="card" data-cue="signed" data-anim="up"><span class="tag">TRM Labs, on-chain</span>The authorizations were "each signed by the hot wallet".</div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p02bc">
+    <div class="stage">
+      <div class="room">
+        <div class="thief" data-cue="steal#2" data-anim="left">the attacker<small>never takes the key</small></div>
+        <div class="arrow hot" data-cue="room" data-anim="grow" style="width: 140px"></div>
+        <div class="roombox" data-cue="stamp" data-anim="fade"><div class="lbl">Binance's signing system</div>
+          <div class="chip gold keychip">the key stays inside</div>
+          <div class="chip hot" data-cue="machine" data-anim="pop">"sign this" ✓</div>
+        </div>
+      </div>
+      <div class="src center" data-cue="fits" data-anim="fade">a reading that fits Binance's account · not confirmed</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m02b" data-cue="Maybe" data-anim="pop"><figure class="ss-meme" data-meme="both"><span>no key leaked, or signed by Binance's wallets?</span><span>why not both?</span></figure></div>
+</section>
+
+<!-- ============ THE WAY IN ============ -->
+<section data-scene="03-the-way-in" data-mood="breakin">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part two</div><div class="title" data-cue="+0.4" data-anim="up">The way in</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p03a">
+    <div class="stage">
+      <figure class="ss-shot flow" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2116072080525656150&amp;theme=dark"
+        data-select="article" data-width="620" data-pad="0" data-source="x.com/_RichardTeng/status/2116072080525656150"
+        data-find="compromised DevOps engineer" data-mark-cue="compromised" data-cue="account," data-anim="up" style="--shot-width: 1100px"></figure>
+      <div class="src center" data-cue="account," data-anim="fade">Richard Teng, Binance CEO, on X</div>
+    </div>
+  </div>
+  <div class="phase" id="p03b">
+    <div class="stage">
+      <div class="who" data-cue="people" data-anim="fade">a <b>DevOps engineer</b>: one of the people who keep the servers running</div>
+      <div class="chain3">
+        <img class="photo" src="assets/gen/laptop-image.png" alt="" data-cue="From" data-anim="fade">
+        <div class="arrow hot" data-cue="reached" data-anim="grow"></div>
+        <div class="box" data-cue="service" data-anim="pop">service container<small>a sealed box of software doing one job</small></div>
+        <div class="arrow hot" data-cue="submitted" data-anim="grow"></div>
+        <div class="out" data-cue="submitted" data-anim="pop">withdrawals</div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p03c">
+    <div class="stage">
+      <div class="notes3">
+        <div class="card" data-cue="wasn't" data-anim="up"><span class="tag">Binance, hours later</span>not one engineer's access, not one click</div>
+        <div class="card" data-cue="breach," data-anim="up"><span class="tag">other points of breach</span>not named</div>
+        <div class="card" data-cue="hacked" data-anim="up"><span class="tag">how the laptop was hacked</span>not disclosed</div>
+      </div>
+      <div class="card playbook" data-cue="playbook" data-anim="up"><span class="tag">the known playbook · not confirmed for this hack</span>
+        <div class="steps">
+          <div class="chip">a fake job interview</div><div class="arrow"></div>
+          <div class="chip hot">"just install this"</div><div class="arrow"></div>
+          <div class="chip">a way into the laptop</div>
+        </div>
+        <div class="src" style="margin-top: 16px">Federico Charosky, Quorum Cyber, to Bloomberg</div>
+      </div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m03" data-cue="fake" data-anim="pop"><figure class="ss-meme" data-meme="ackbar"><span>a dream job at a crypto company</span><span>it's a trap!</span></figure></div>
+</section>
+
+<section data-scene="03b-rehearsal">
+  <div class="phase" id="p03ba">
+    <div class="stage">
+      <div class="tline">
+        <div class="axis"></div>
+        <div class="ev up" style="left: 0" data-cue="October" data-anim="up"><div class="when">Oct 28, morning</div><div class="what">starting cash from Tornado Cash<small data-cue="mixer" data-anim="fade">a mixer: pools coins, hides whose came out</small></div><div class="dot"></div></div>
+        <div class="ev dn" style="left: 430px" data-cue="tested" data-anim="up"><div class="dot"></div><div class="when">Oct 29, early</div><div class="what">program tested on 2 wallets</div></div>
+        <div class="ev up" style="left: 860px" data-cue="rehearsal" data-anim="up"><div class="when">later that day</div><div class="what">dress rehearsal on a 3rd<small>test money sent back to itself</small></div><div class="dot"></div></div>
+        <div class="ev dn hot" style="left: 1280px" data-cue="hours" data-anim="up"><div class="dot"></div><div class="when">about 4 h later</div><div class="what" style="color: var(--accent)">the same program on a Binance hot wallet</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p03bb">
+    <div class="stage">
+      <figure class="ss-shot flow" data-shot="https://www.trmlabs.com/resources/blog/north-korea-steals-usd-6-36-billion-from-binance-in-the-largest-hack-in-history"
+        data-find="The signatures were produced in advance as a batch" data-mark-cue="advance," data-scheme="light" data-width="680" data-source="trmlabs.com · TRM Labs, Oct 29" data-lines="1" data-cue="TRM" data-anim="up"></figure>
+    </div>
+  </div>
+</section>
+
+<section data-scene="03c-fifty-notes">
+  <div class="phase" id="p03ca">
+    <div class="stage">
+      <div class="note" data-cue="note" data-anim="up"><span class="tag">a signed note · EIP-7702, since Ethereum's May 2025 upgrade</span>"Let this program act for me."<span class="sig" data-cue="sweeper" data-anim="fade">→ the sweeper: takes orders only from the attacker</span><span class="sig" data-cue="signed" data-anim="fade" style="color: #8a6a10">signed: Binance's own hot wallet (the stamp)</span></div>
+      <div class="countrow">
+        <div class="counter" data-cue="count" data-anim="up"><small>the wallet's running count</small><span class="v" id="ctr">n</span></div>
+        <div class="src" data-cue="number" data-anim="fade" style="width: 520px"><b data-cue="number" data-anim="pop" style="color: var(--accent-3); display: block; font-size: 40px; margin-bottom: 10px">one note = one number</b>each real withdrawal moves it on by one<br><span style="font-size: 26px">(in small type: the nonce)</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p03cb">
+    <div class="stage">
+      <div class="countrow">
+        <img class="photo deli" src="assets/gen/deli-image.png" alt="" data-cue="deli" data-anim="pop">
+        <div class="counter"><small>now serving</small><span class="v" id="ctr2">n + 3</span></div>
+      </div>
+      <div class="src center" data-cue="numbers" data-anim="fade">your ticket works only when your number is called</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m03c" data-cue="signed#2" data-anim="pop"><figure class="ss-meme" data-meme="oprah"><span>you get a signature!</span><span data-cue="next" data-anim="fade">you get a signature!</span></figure></div>
+  <div class="phase" id="p03cc">
+    <div class="stage">
+      <div class="fifty" id="f50" data-cue="carried" data-anim="stagger"></div>
+      <div class="haul">
+        <div class="card" id="haul1" data-cue="moved" data-anim="up">167,464 ETH<small>one transaction · 20:20 UTC</small></div>
+        <span class="mk" id="mk03m" data-cue="matched" data-anim="fade"></span>
+        <div class="card" data-cue="moved" data-anim="up">+ 1.615B USDT<small>among 63 tokens</small></div>
+      </div>
+      <div class="card quote center" data-cue="chief" data-anim="up" style="width: 1500px; margin: 0 auto; font-size: 44px">"That delegation did not pass through our normal approval controls."<span class="who">Richard Teng, Binance CEO, Oct 30 (via Decrypt)</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="03d-the-drain">
+  <div class="stage">
+    <div class="drain">
+      <div class="r" data-cue="Five" data-anim="left"><div class="t">20:05</div><div class="w">XRP Ledger<small>five Binance wallets</small></div><div class="amt">233.46M XRP</div></div>
+      <div class="r" data-cue="bitcoin," data-anim="left"><div class="t">20:20</div><div class="w">Bitcoin<small>one hot wallet</small></div><div class="amt">18,270 BTC</div></div>
+      <div class="r" data-cue="Twenty" data-anim="left"><div class="t">20:20</div><div class="w">Ethereum<small>the fifty notes</small></div><div class="amt">167,464 ETH + 1.615B USDT</div></div>
+      <div class="r" data-cue="Two#2" data-anim="left"><div class="t">20:22</div><div class="w">Tron<small>one hot wallet</small></div><div class="amt">612.7M USDT</div></div>
+      <div class="r" data-cue="stragglers" data-anim="left" style="opacity: 0.85"><div class="t" style="color: var(--muted)">→ 23:56</div><div class="w">more sweeps<small>Avalanche, Polygon and the rest</small></div><div class="amt" style="color: var(--muted)">the stragglers</div></div>
+    </div>
+    <div class="row"><div class="chip hot" data-cue="Most" data-anim="pop">most of it in about 20 minutes</div><div class="src" data-cue="Most" data-anim="fade">times UTC · TRM Labs</div></div>
+  </div>
+</section>
+
+<!-- ============ THE FREEZE ============ -->
+<section data-scene="04-the-freeze" data-mood="freeze">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part three</div><div class="title" data-cue="+0.4" data-anim="up">The freeze</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p04a">
+    <div class="stage">
+      <div class="def" data-cue="stablecoins," data-anim="up">a stablecoin: a token meant to be worth <b>exactly $1</b>, issued by a company</div>
+      <div class="tokens">
+        <div class="card token" data-cue="Tether" data-anim="up"><div class="coin">USDT</div><div class="nm">Tether</div><div class="by">runs the token</div><div class="sw" id="sw1"><b></b></div><div class="swl">off switch</div></div>
+        <div class="card token" data-cue="Circle" data-anim="up"><div class="coin">USDC</div><div class="nm">Circle</div><div class="by">runs the token</div><div class="sw" id="sw2"><b></b></div><div class="swl">off switch</div></div>
+        <div class="card token" data-cue="bitcoin." data-anim="up"><div class="coin" style="border-color: var(--muted); color: var(--muted)">BTC</div><div class="nm">bitcoin, ether</div><div class="by">nobody runs them</div><div class="sw none"></div><div class="swl">no switch</div></div>
+      </div>
+      <span class="mk" id="mk04s" data-cue="freeze" data-anim="fade"></span>
+    </div>
+  </div>
+  <div class="phase" id="p04b">
+    <div class="stage">
+      <div class="ftl">
+        <div class="r" data-cue="Thirty" data-anim="left"><div class="t">21:01</div><div class="w">Tether</div><div class="amt">971.1M USDT</div></div>
+        <div class="r" data-cue="Three" data-anim="left"><div class="t">21:04</div><div class="w">Circle</div><div class="amt">823M USDC</div></div>
+        <div class="r" data-cue="Ripple" data-anim="left"><div class="t">22:01</div><div class="w">Ripple</div><div class="amt">40.5M RLUSD</div></div>
+        <div class="r" data-cue="World" data-anim="left"><div class="t">22:10</div><div class="w">World Liberty</div><div class="amt">27.8M USD1</div></div>
+        <div class="r" data-cue="Arbitrum's" data-anim="left"><div class="t">later</div><div class="w">Arbitrum's security council<small style="font-size: 28px; color: var(--muted); margin-left: 10px">forced out</small></div><div class="amt">8,426 ETH + 74.6M ARB</div></div>
+        <div class="tot" data-cue="midnight," data-anim="pop">00:30 UTC: about <b>$2.7B</b> frozen <span class="src">(TRM Labs)</span> · <span data-cue="says" data-anim="fade">Binance now: about <b>$3B</b></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m04" data-cue="Flip" data-anim="pop"><figure class="ss-meme" data-meme="soup-nazi"><span>your stolen USDT?</span><span>no USDT for you!</span></figure></div>
+</section>
+
+<section data-scene="04b-the-race">
+  <div class="phase" id="p04ba">
+    <div class="stage">
+      <div class="swap">
+        <div class="card" data-cue="swapped" data-anim="up"><span class="v">$325M</span>stablecoins in</div>
+        <div class="arrow gold" data-cue="swapped" data-anim="grow" style="width: 120px"></div>
+        <div class="card" data-cue="back." data-anim="up"><span class="v">$285M</span>ether out</div>
+      </div>
+      <div class="row"><div class="chip gold" data-cue="Speed" data-anim="pop">−$40M: speed over price</div><div class="src" data-cue="Speed" data-anim="fade">over nearly 20 minutes · Chainalysis</div></div>
+      <div class="card quote center" data-cue="lawyer" data-anim="up" style="width: 1400px; margin: 0 auto; font-size: 42px">"The attackers knew that route would be closed to them and so got out ahead of that."<span class="who">Joe Hancock, Mishcon de Reya (to CNBC)</span></div>
+    </div>
+  </div>
+  <div class="phase" id="p04bb">
+    <div class="stage">
+      <div class="row"><div class="chip" data-cue="pawning" data-anim="pop">like pawning a watch that's about to be reported stolen</div></div>
+      <div class="aave">
+        <div class="card" data-cue="sixty" data-anim="up">$60M stolen USDT<small>deposited</small></div>
+        <div class="arrow" data-cue="Aave," data-anim="grow"></div>
+        <div class="card" data-cue="Aave," data-anim="up">Aave<small>a lending app</small></div>
+        <div class="arrow gold" data-cue="walked" data-anim="grow"></div>
+        <div class="card" data-cue="walked" data-anim="up" style="border-color: var(--accent-3)">$44.6M ether<small>borrowed · no issuer to freeze it</small></div>
+      </div>
+      <div class="row"><div class="chip ice" data-cue="lender" data-anim="pop">deposit frozen → the lender holds it</div></div>
+      <div class="src center" data-cue="contributor" data-anim="fade">"... the position is criminal but overcollateralized in the eyes of the protocol." · Marc Zeller, Aave Chan Initiative</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m04b" data-cue="criminal," data-anim="pop"><figure class="ss-meme" data-meme="older"><span>it's stolen USDT, sir</span><span>but it checks out</span></figure></div>
+</section>
+
+<section data-scene="04c-the-split">
+  <div class="phase" id="p04ca">
+    <div class="stage">
+      <div class="split" data-cue="bar." data-anim="fade">
+        <div class="scale"><span>the haul: about $6.3B</span><span>by TRM Labs' and Binance's counts</span></div>
+        <div class="sbar">
+          <div class="fr" data-cue="frozen" data-anim="fade"><b>$2.7–3B</b><span>frozen · mostly stablecoins</span></div>
+          <div class="aw" data-cue="away" data-anim="fade"><b>≈ $2.4B</b><span>beyond reach · ETH, BTC</span></div>
+          <div class="gr" data-cue="moments," data-anim="fade"><span>counted at other moments and prices</span></div>
+        </div>
+        <div class="under">
+          <div data-cue="company" data-anim="fade" style="color: var(--accent-2)">a company can say stop</div>
+          <div data-cue="four" data-anim="fade" style="color: var(--accent)">420,000+ ETH · 18,270 BTC</div>
+          <div></div>
+        </div>
+      </div>
+      <div class="offsw">
+        <div class="chip hot" data-cue="runs" data-anim="pop">no company runs them: no off switch</div>
+        <div class="chip ice" data-cue="switch." data-anim="pop">frozen = the half with an off switch</div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p04cb">
+    <div class="stage">
+      <div class="big center" style="font-size: 130px" data-cue="returned." data-anim="slam">frozen <span style="color: var(--accent)">≠</span> returned</div>
+      <div class="row"><div class="chip ice" data-cue="burn" data-anim="pop">burn, reissue, return</div><div class="chip" data-cue="courts" data-anim="pop">courts</div><div class="chip" data-cue="law" data-anim="pop">law enforcement</div></div>
+      <div class="card quote center" data-cue="Chainalysis," data-anim="up" style="width: 1400px; margin: 0 auto; font-size: 46px">"A technical freeze may happen quickly, while returning funds can take months or years."<span class="who">Eric Jardine, Chainalysis (to CNBC)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE GETAWAY ============ -->
+<section data-scene="05-the-getaway" data-mood="getaway">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part four</div><div class="title" data-cue="+0.4" data-anim="up">The getaway</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p05a">
+    <div class="stage">
+      <div class="web" id="web" data-cue="thousands" data-anim="fade"><svg id="websvg" viewBox="0 0 1560 470"></svg></div>
+      <div class="row"><div class="chip gold" data-cue="hopping" data-anim="pop">many wallets first sent exactly 1 TRX</div><div class="chip hot" data-cue="earlier" data-anim="pop">doubling back</div></div>
+    </div>
+  </div>
+  <div class="phase" id="p05b">
+    <div class="stage">
+      <figure class="ss-shot flow" data-shot="https://www.chainalysis.com/blog/binance-exploit-latest-findings-and-response/"
+        data-find="laundering patterns we have not seen before" data-mark-cue="seen" data-scheme="light" data-width="680" data-source="chainalysis.com · Chainalysis, Oct 30" data-lines="1" data-cue="pattern," data-anim="up"></figure>
+    </div>
+  </div>
+  <div class="phase" id="p05c">
+    <div class="stage">
+      <div class="route">
+        <div class="card" data-cue="cash," data-anim="up" style="border-color: var(--accent)">stolen crypto</div>
+        <div class="arrow gold" data-cue="networks" data-anim="grow"></div>
+        <div class="card" data-cue="networks" data-anim="up">over-the-counter buyers<small>laundering networks in China</small></div>
+        <div class="arrow gold" data-cue="fee." data-anim="grow"></div>
+        <div class="card" data-cue="fee." data-anim="up" style="border-color: var(--accent-3)">cash<small>minus a fat fee</small></div>
+      </div>
+      <div class="seize" data-cue="further" data-anim="fade"><div class="lab">chances to seize it</div><div class="track"><i id="seize"></i></div></div>
+      <div class="src center" data-cue="further" data-anim="fade">Jonathan Levin, Chainalysis, and Ari Redbord, TRM Labs, to CNBC</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m05" data-cue="automated." data-anim="pop"><figure class="ss-meme" data-meme="buzz"><span>hops</span><span>hops everywhere</span></figure></div>
+</section>
+
+<section data-scene="05b-who">
+  <div class="phase" id="p05ba">
+    <div class="stage">
+      <div class="tt" data-cue="TraderTraitor," data-anim="slam"><div class="name">TraderTraitor</div><div class="sub">North Korea's top hacking unit</div></div>
+      <div class="row">
+        <div class="chip sm" data-cue="TRM" data-anim="pop">TRM Labs · "high confidence"</div>
+        <div class="chip sm" data-cue="Chainalysis" data-anim="pop">Chainalysis · TraderTraitor</div>
+        <div class="chip hot sm" data-cue="FBI" data-anim="pop">FBI · Saturday, Oct 31</div>
+      </div>
+      <div class="row"><div class="chip" data-cue="foreign" data-anim="pop">foreign cash</div><div class="chip hot" data-cue="nuclear" data-anim="pop">the nuclear program</div></div>
+    </div>
+  </div>
+  <div class="phase" id="p05bb">
+    <div class="stage">
+      <div class="scalebars">
+        <div class="r" data-cue="tracking" data-anim="up"><div>North Korea, all tracked thefts<small>Chainalysis, through 2025</small></div><div class="bar" style="width: 100%; background: var(--muted)">$6.75B</div></div>
+        <div class="r" data-cue="night" data-anim="up"><div>Binance, one night<small>TRM Labs</small></div><div class="bar" style="width: 94.2%; background: var(--accent)">$6.36B</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE AI QUESTION ============ -->
+<section data-scene="06-the-ai-question" data-mood="ai">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part five</div><div class="title" data-cue="+0.4" data-anim="up">The AI question</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p06a">
+    <div class="stage">
+      <div class="row"><div class="stamp gold" data-cue="rooting" data-anim="slam">narrator: an AI · not neutral</div></div>
+      <figure class="ss-shot flow" data-shot="https://thenextweb.com/news/north-korean-hackers-ai-crypto-heists-binance"
+        data-hide=".cky-consent-container, .cky-overlay, .cky-modal, .cky-btn-revisit-wrapper, nav" data-select="h1.c-header__heading" data-width="1100" data-pad="16" data-source="thenextweb.com · The Next Web, Nov 2" data-cue="headline" data-anim="up"></figure>
+      <figure class="ss-shot flow" data-shot="https://thenextweb.com/news/north-korean-hackers-ai-crypto-heists-binance"
+        data-hide=".cky-consent-container, .cky-overlay, .cky-modal, .cky-btn-revisit-wrapper" data-find="The use of AI has not been confirmed" data-mark-cue="confirmed." data-width="1000" data-source="thenextweb.com · The Next Web, Nov 2" data-cue="paragraphs" data-anim="up"></figure>
+    </div>
+  </div>
+  <div class="phase" id="p06b">
+    <div class="stage">
+      <div class="board6">
+        <div class="card" data-cue="firms" data-anim="up"><span class="tag">TRM Labs and Chainalysis write-ups</span>AI: <b>never mentioned</b></div>
+        <div class="card" data-cue="automation:" data-anim="up"><span class="tag">what they do say</span>"automation" · "a programmatic process"</div>
+      </div>
+      <div class="prep">
+        <div class="chip" data-cue="Signatures" data-anim="pop">signatures made in advance</div>
+        <div class="chip" data-cue="dress" data-anim="pop">a dress rehearsal</div>
+        <div class="chip" data-cue="funded" data-anim="pop">a wallet funded the day before</div>
+      </div>
+      <div class="src center" data-cue="read" data-anim="fade">my read</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m06" data-cue="Twenty" data-anim="pop"><figure class="ss-meme" data-meme="db"><span>"AI did it"</span><span>the headlines</span><span>boring preparation</span></figure></div>
+</section>
+
+<section data-scene="06b-front-door">
+  <div class="phase" id="p06ba">
+    <div class="stage">
+      <div class="reports">
+        <div class="card" data-cue="Anthropic," data-anim="up"><span class="tag">Anthropic · Aug 2025</span>North Korean operatives used Claude to <q>create elaborate false identities with convincing professional backgrounds</q>
+          <div class="bits"><span class="chip sm" data-cue="identities," data-anim="pop">fake identities</span><span class="chip sm" data-cue="coding" data-anim="pop">coding tests</span><span class="chip sm" data-cue="jobs." data-anim="pop">remote jobs</span></div></div>
+        <div class="card" data-cue="Mandiant" data-anim="up"><span class="tag">Google Mandiant · Feb 2026</span>a group it suspects is North Korean used Gemini for research; a victim saw a video of a crypto CEO <q>that appeared to be a deepfake</q>
+          <div class="bits"><span class="chip sm" data-cue="Gemini" data-anim="pop">Gemini, for research</span><span class="chip sm" data-cue="deepfaked" data-anim="pop">a deepfaked crypto boss?</span><span class="chip sm" data-cue="verify" data-anim="pop" style="border-color: var(--accent-3); color: var(--accent-3)">not verified</span></div></div>
+      </div>
+      <div class="row"><div class="stamp gold" data-cue="neither" data-anim="slam">neither report is about this hack</div></div>
+    </div>
+  </div>
+  <div class="phase" id="p06bb">
+    <div class="stage">
+      <div class="attack">
+        <div class="card door" data-cue="front" data-anim="up">the front door<small>a person and a laptop</small></div>
+        <div class="arrow" data-cue="front" data-anim="grow" style="align-self: center"></div>
+        <div class="card" data-cue="twenty" data-anim="up">the drain<small>a script · about 20 minutes</small></div>
+        <div class="arrow" data-cue="freeze." data-anim="grow" style="align-self: center"></div>
+        <div class="card" data-cue="freeze." data-anim="up">the freeze<small>first ones within the hour</small></div>
+      </div>
+      <div class="row"><div class="chip gold" data-cue="recruiter," data-anim="pop">AI makes the fake recruiter cheap, × many engineers</div></div>
+      <div class="src center" data-cue="read:" data-anim="fade">my read · built on the timings above and the two reports</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE BILL ============ -->
+<section data-scene="07-who-pays" data-mood="bill">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part six</div><div class="title" data-cue="+0.4" data-anim="up">The bill</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="phase" id="p07a">
+    <div class="stage">
+      <div class="card quote center" data-cue="we" data-anim="up" style="width: 1500px; margin: 0 auto; font-size: 46px">"Binance will absorb the financial impact of these stolen funds, not our users."<span class="who">Binance, to CNBC, Oct 31</span></div>
+      <div class="ledger">
+        <div class="top">
+          <div class="card" data-cue="aside" data-anim="up"><span class="v">$6.34B</span>set aside</div>
+          <div class="card" data-cue="emergency" data-anim="up"><span class="v">≈ $1B</span>the emergency fund (SAFU)</div>
+          <div class="card" data-cue="company" data-anim="up"><span class="v">+</span>company funds</div>
+        </div>
+        <div class="pbar" data-cue="ninety" data-anim="fade"><i id="pb07"></i><span class="lab" id="pb07l">replaced: 90% · Oct 31</span></div>
+        <div class="row"><div class="stamp gold" data-cue="Replaced,#2" data-anim="slam">replaced, not recovered</div></div>
+      </div>
+      <span class="mk" id="mk07f" data-cue="five." data-anim="fade"></span>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m07" data-cue="thieves." data-anim="pop"><figure class="ss-meme" data-meme="ggg"><span>gets hacked for $6.3 billion</span><span>replaces everyone's coins with its own money</span></figure></div>
+  <div class="phase" id="p07b">
+    <div class="stage">
+      <div class="card quote center" data-cue="We#2" data-anim="up" style="width: 1500px; margin: 0 auto">"We should have invested more in security earlier, and set stricter standards."<span class="who">Yi He, Binance co-CEO, video on X, Oct 30 (translated; via Bloomberg)</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="07b-reopening">
+  <div class="phase" id="p07ba">
+    <div class="stage">
+      <div class="flows">
+        <div class="card" data-cue="four" data-anim="up"><span class="v" style="color: var(--accent)">$4.65B</span>out</div>
+        <div class="card" data-cue="one" data-anim="up"><span class="v" style="color: var(--good)">$1.01B</span>in</div>
+      </div>
+      <div class="card post" data-cue="posted:" data-anim="up"><div class="h"><b>CZ</b>, Binance's founder · on X</div><div class="t">"98% choose to stay!"</div></div>
+      <div class="src center" data-cue="four" data-anim="fade">Sunday Nov 1, 06:00–15:30 UTC · Binance's figures, via CNBC</div>
+    </div>
+  </div>
+  <div class="phase" id="p07bb">
+    <div class="stage">
+      <div class="waffle" id="w07" data-cue="Both" data-anim="fade"></div>
+      <div class="wlegend">
+        <span data-cue="stayed," data-anim="fade"><span class="sw" style="background: #26303d"></span>$1B each · $171B held on Oct 28</span>
+        <span data-cue="left." data-anim="pop" style="color: var(--accent)"><span class="sw" style="background: var(--accent)"></span>$3.64B net out · 2.1%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE VERDICT ============ -->
+<section data-scene="07c-unknowns" data-mood="verdict">
+  <div class="chapter" data-cue="+0.0" data-anim="fade"><div class="kicker" data-cue="+0.2" data-anim="fade">part seven</div><div class="title" data-cue="+0.4" data-anim="up">Still open</div><div class="rule" data-cue="+0.8" data-anim="grow"></div></div>
+  <div class="stage">
+    <div class="open">
+      <div class="r" data-cue="laptop" data-anim="left"><b>?</b>how the laptop was hacked</div>
+      <div class="r" data-cue="breach" data-anim="left"><b>?</b>the other points of breach</div>
+      <div class="r" data-cue="signing" data-anim="left"><b>?</b>how the signing system signed for an attacker</div>
+      <div class="r" data-cue="frozen" data-anim="left"><b>?</b>whether the frozen $3B comes back</div>
+      <div class="r" data-cue="where" data-anim="left"><b>?</b>where the $2.4B ends up</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m07c" data-cue="promised" data-anim="pop"><figure class="ss-meme" data-meme="afraid"><span>four days in, still no post-mortem</span><span>and at this point I'm afraid to ask</span></figure></div>
+</section>
+
+<section data-scene="07d-close">
+  <div class="phase" id="p07da">
+    <div class="stage">
+      <div class="board">
+        <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">01</span>How do you steal $6B in 20 minutes?<span class="a" data-cue="rehearsal" data-anim="fade">rehearse it, and sign fifty notes so one fits</span></div>
+        <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">02</span>How do you freeze stolen money?<span class="a" data-cue="company" data-anim="fade">be the company that runs the coin</span></div>
+        <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">03</span>Why only half?<span class="a" data-cue="switch" data-anim="fade">only half had an off switch</span></div>
+        <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">04</span>Did they use AI?<span class="a" data-cue="AI:" data-anim="fade">no evidence either way</span></div>
+        <div class="q" data-cue="+0.1" data-anim="fade"><span class="n">05</span>Who's paying?<span class="a" data-cue="paying," data-anim="fade">Binance, out of its own pocket</span></div>
+      </div>
+      <div class="src center" data-cue="laptop," data-anim="fade">the way in, by Binance's early read: an engineer's laptop, and other doors not yet named</div>
+    </div>
+  </div>
+  <div class="phase" id="p07db">
+    <div class="stage">
+      <div class="last" data-cue="Nobody" data-anim="up">Nobody broke the blockchain.
+        <span class="s" data-cue="obey" data-anim="fade">It obeyed a valid signature.</span>
+        <span class="s y" data-cue="likeliest" data-anim="fade">The likeliest reading: the heist was getting Binance's own system to sign.</span>
+        <span class="s" data-cue="check." data-anim="fade" style="font-size: 40px; color: var(--muted)">not yet confirmed · check it against Binance's post-mortem</span></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // seconds of silence before each act card's scene begins speaking: video.json lead (0.5 at speed 1) plus its leads entry
+  const LEAD_IN = 2.8;
+  document.querySelectorAll(".chapter").forEach((ch) => {
+    const id = ch.closest("section").dataset.scene;
+    tl.to(ch, { opacity: 0, duration: 0.45 }, sceneStart(id) + LEAD_IN - 0.35);
+  });
+  // Scenes in phases: each phase steps aside just before the next one's first arrival.
+  document.querySelectorAll("section[data-scene]").forEach((sec) => {
+    const ps = [...sec.querySelectorAll(".phase")].filter((p) => !p.parentElement.closest(".phase"));
+    ps.forEach((p, i) => {
+      if (i === 0) return;
+      const ats = [...p.querySelectorAll("[data-at]")].map((e) => +e.dataset.at).filter((t) => !isNaN(t));
+      if (!ats.length) return;
+      const t = Math.min(...ats) - 0.4;
+      tl.set(p, { opacity: 0 }, 0);
+      tl.to(ps[i - 1], { opacity: 0, duration: 0.35 }, t);
+      tl.to(p, { opacity: 1, duration: 0.35 }, t);
+    });
+  });
+  // A meme owns the frame while it is up, and leaves just before the next picture arrives.
+  const away = (meme, sel) => tl.to(meme, { opacity: 0, duration: 0.3 }, cueAt(sel) - 0.5);
+  away("#m01", "#p01b .record");
+  away("#m03c", "#f50");
+    away("#m02b", "#p02bc .arrow");
+  away("#m02b0", "#p02bb .two .card");
+  away("#m04", "#p04b .ftl .r");
+  away("#m05", "#p05c .route .card");
+  away("#m07", "#p07b .quote");
+
+  // Waffles: one square per billion dollars Binance held ($171B), the share named lit.
+  const waffle = (id, lit, cls) => {
+    const w = document.getElementById(id);
+    for (let i = 0; i < 171; i++) { const s = document.createElement("i"); if (i < lit) s.className = cls; w.appendChild(s); }
+  };
+  waffle("w02", 0, "r");
+  waffle("w07", 0, "g");
+  // $6.3B taken: six squares and a third, lit in turn on "under".
+  const w02 = [...document.querySelectorAll("#w02 i")];
+  w02.slice(0, 6).forEach((s, i) => tl.to(s, { backgroundColor: "#ff4a3d", duration: 0.2 }, cueAt("#p02b .wlegend span:nth-child(2)") + i * 0.12));
+  tl.to(w02[6], { background: "linear-gradient(90deg, #ff4a3d 0 30%, #26303d 30% 100%)", duration: 0.2 }, cueAt("#p02b .wlegend span:nth-child(2)") + 0.8);
+  // $3.64B net out on Sunday, in gold on the same 171.
+  const w07 = [...document.querySelectorAll("#w07 i")];
+  w07.slice(0, 3).forEach((s, i) => tl.to(s, { backgroundColor: "#ff4a3d", duration: 0.2 }, cueAt("#p07bb .wlegend span:nth-child(2)") + i * 0.12));
+  tl.to(w07[3], { background: "linear-gradient(90deg, #ff4a3d 0 64%, #26303d 64% 100%)", duration: 0.2 }, cueAt("#p07bb .wlegend span:nth-child(2)") + 0.4);
+
+  // The wallet's running count ticks on while it pays out real withdrawals; then the deli display does the same.
+  const tick = (el, from, start, steps) => {
+    for (let k = 1; k <= steps; k++) tl.set(el, { textContent: k === 0 ? "n" : `n + ${from + k}` }, start + k * 0.9);
+  };
+  tick("#ctr", 0, cueAt("#p03ca .counter"), 6);
+  tick("#ctr2", 3, cueAt("#p03cb .deli"), 5);
+
+  // Fifty notes, one for each of the next fifty counts; one of them fits.
+  const f50 = document.getElementById("f50");
+  for (let i = 0; i < 50; i++) { const t = document.createElement("i"); t.textContent = i === 0 ? "n" : `n+${i}`; if (i === 17) t.id = "win"; f50.appendChild(t); }
+  tl.to("#win", { backgroundColor: "#f5c542", color: "#0b0d11", scale: 1.18, duration: 0.3 }, cueAt("#mk03m"));
+  sfx("ding", cueAt("#mk03m") + 0.2);
+
+  // The switch flips off: the knob slides left, the switch goes ice.
+  tl.to(["#sw1 b", "#sw2 b"], { left: 8, duration: 0.3 }, cueAt("#mk04s"));
+  tl.to(["#sw1", "#sw2"], { backgroundColor: "#63d2ff", duration: 0.3 }, cueAt("#mk04s"));
+
+  // The laundering web: wallets appear in a chain, money hopping on, some hops looping back.
+  const svg = document.getElementById("websvg");
+  const NS = "http://www.w3.org/2000/svg";
+  const nodes = [[80,235],[260,110],[260,360],[450,60],[450,220],[450,400],[650,140],[650,320],[840,80],[840,240],[840,410],[1030,160],[1030,330],[1220,90],[1220,250],[1220,410],[1410,180],[1410,340]];
+  const edges = [[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,6],[4,6],[4,7],[5,7],[6,8],[6,9],[7,9],[7,10],[8,11],[9,11],[9,12],[10,12],[11,13],[11,14],[12,14],[12,15],[13,16],[14,16],[14,17],[15,17]];
+  const backs = [[9,4],[14,7],[16,9]];
+  const t0 = cueAt("#web");
+  edges.forEach(([a, b], i) => {
+    const l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", nodes[a][0]); l.setAttribute("y1", nodes[a][1]); l.setAttribute("x2", nodes[b][0]); l.setAttribute("y2", nodes[b][1]);
+    l.setAttribute("stroke", "#ffb45c"); l.setAttribute("stroke-width", "4"); l.setAttribute("opacity", "0.7");
+    svg.appendChild(l);
+    tl.from(l, { opacity: 0, duration: 0.25 }, t0 + 0.3 + i * 0.16);
+  });
+  const tBack = cueAt("#p05a .chip.hot");
+  backs.forEach(([a, b], i) => {
+    const p = document.createElementNS(NS, "path");
+    const [x1, y1] = nodes[a], [x2, y2] = nodes[b];
+    p.setAttribute("d", `M${x1},${y1} Q${(x1 + x2) / 2},${Math.min(y1, y2) - 140} ${x2},${y2}`);
+    p.setAttribute("fill", "none"); p.setAttribute("stroke", "#ff4a3d"); p.setAttribute("stroke-width", "5"); p.setAttribute("stroke-dasharray", "12 10");
+    svg.appendChild(p);
+    tl.from(p, { opacity: 0, duration: 0.3 }, tBack + i * 0.25);
+  });
+  nodes.forEach(([x, y], i) => {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", "20"); c.setAttribute("fill", "#1f170d"); c.setAttribute("stroke", "#f5c542"); c.setAttribute("stroke-width", "4");
+    svg.appendChild(c);
+    tl.from(c, { opacity: 0, scale: 0.4, transformOrigin: `${x}px ${y}px`, duration: 0.25 }, t0 + i * 0.16);
+  });
+  // Chances to seize it shrink the further the money travels.
+  tl.to("#seize", { width: "12%", duration: 3, ease: "power1.in" }, cueAt("#p05c .seize") + 0.3);
+
+  // Bars grow from the left when their chart arrives.
+  tl.from("#p01b .vs .bar", { scaleX: 0, transformOrigin: "left center", duration: 0.7, ease: "power2.out", stagger: 0.25 }, cueAt("#p01b .vs .r") + 0.1);
+  tl.from("#p05bb .scalebars .r:nth-child(1) .bar", { scaleX: 0, transformOrigin: "left center", duration: 0.8, ease: "power2.out" }, cueAt("#p05bb .scalebars .r"));
+  tl.from("#p05bb .scalebars .r:nth-child(2) .bar", { scaleX: 0, transformOrigin: "left center", duration: 0.8, ease: "power2.out" }, cueAt("#p05bb .scalebars .r:nth-child(2)"));
+  // Replaced: 90% by Oct 31, then 95% by Nov 1.
+  tl.fromTo("#pb07", { width: "0%" }, { width: "90%", duration: 0.9, ease: "power2.out" }, cueAt("#p07a .pbar"));
+  tl.to("#pb07", { width: "95%", duration: 0.5 }, cueAt("#mk07f"));
+  tl.set("#pb07l", { textContent: "replaced: 95% · Nov 1" }, cueAt("#mk07f"));
+</script>
