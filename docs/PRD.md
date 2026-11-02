@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-10-31 (after the fundamentals rule, D92).
+Last reviewed: 2026-11-02 (after the vault theme, D93).
 
 ## Problem
 

@@ -153,7 +153,7 @@
   "youtube": {
     "title": "How Hackers Stole $6.3 Billion from Binance, and Why Half Got Frozen",
     "alternatives": [
-      "The Biggest Crypto Heist Ever: How Binance Lost $6.3 Billion in 20 Minutes",
+      "The Biggest Crypto Heist Ever: How Binance Lost $6.3 Billion",
       "Fifty Signatures: The $6.3 Billion Binance Hack, Explained"
     ],
     "description": [
@@ -181,7 +181,7 @@
       "CNBC, \"Billions in crypto frozen in Binance hack: here's what happens next\": https://www.cnbc.com/2026/10/30/billions-in-crypto-frozen-in-binance-hack-heres-what-happens-next-.html",
       "CNBC, Binance outflows after withdrawals resumed, November 1, 2026: https://www.cnbc.com/2026/11/02/binance-outflow-hack-bitcoin.html",
       "Decrypt, \"Binance sets aside $6.34B to cover hack losses\", October 30, 2026: https://decrypt.co/382237",
-      "Cointelegraph Magazine, \"Binance hackers raced to move billions before it could be frozen\", October 30, 2026",
+      "Cointelegraph Magazine, \"Binance hackers raced to move billions before it could be frozen\", October 30, 2026: https://cointelegraph.com/magazine/binance-hackers-raced-to-move-billions-before-could-be-frozen",
       "CBS News (AP), FBI attribution, October 31, 2026: https://www.cbsnews.com/news/binance-hack-north-korea/",
       "Insurance Journal (Bloomberg), November 1, 2026: https://www.insurancejournal.com/news/international/2026/11/01/891003.htm",
       "The Next Web, November 2, 2026: https://thenextweb.com/news/north-korean-hackers-ai-crypto-heists-binance",
@@ -202,7 +202,6 @@
       "crypto hack",
       "TraderTraitor",
       "North Korea",
-      "Lazarus",
       "stablecoin",
       "Tether",
       "Circle",

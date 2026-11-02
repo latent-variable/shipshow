@@ -155,3 +155,10 @@ About 450k tokens. 20 findings: 0 blocking, 6 major, 14 minor.
 
 Ships with no open blocking finding and no open finding from critic-accuracy. One major accepted (pacing-2, the narrator's pace).
 Critic spend: about 2.3M tokens over three rounds (7 + 7 + 4 critics).
+
+## The package (2026-11-02)
+
+A fresh critic judged the upload folder (publish skill). It failed it on two majors, both fixed: the thumbnail said "$6.3B gone in 20
+minutes" when only most of it went that fast, and it repeated the title's number. The thumbnail now says "Biggest crypto heist ever"
+and asks "Wait, crypto freezes?!", leaving the $6.3 billion and the half to the title; the first alternative title drops "in 20
+Minutes". Minors fixed: the Cointelegraph source has its link, and the "Lazarus" tag is gone (the video says TraderTraitor).
