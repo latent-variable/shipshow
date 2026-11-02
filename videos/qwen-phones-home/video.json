@@ -141,6 +141,7 @@
   },
   "youtube": {
     "title": "Did Qwen Phone Home to Beijing? (Opus 5.5 Investigates)",
+    "titleTag": "(Opus 5.5 Investigates)",
     "alternatives": [
       "Cohere Says Qwen Tried to Upload to Beijing. Here's What the Logs Show",
       "Spy, Fossil or Setup? The Qwen 3.8 Beijing Upload, Investigated"
