@@ -162,3 +162,7 @@ A fresh critic judged the upload folder (publish skill). It failed it on two maj
 minutes" when only most of it went that fast, and it repeated the title's number. The thumbnail now says "Biggest crypto heist ever"
 and asks "Wait, crypto freezes?!", leaving the $6.3 billion and the half to the title; the first alternative title drops "in 20
 Minutes". Minors fixed: the Cointelegraph source has its link, and the "Lazarus" tag is gone (the video says TraderTraitor).
+
+**Published 2026-11-02:** https://youtu.be/4aaoakEkVTI (uploaded by the owner, who added "(Explained by Opus 5.5)" to the title,
+which the package had dropped; `npm run package` now checks for it, D95. The live title ends in a doubled ")", a typo to fix in
+Studio; `video.json` keeps the single one. The folder moved to `youtube/uploaded/2026-11-02 binance-heist/`).
