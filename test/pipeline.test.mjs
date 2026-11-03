@@ -1400,7 +1400,8 @@ test("package: a title carries the person's tag, naming the model that built the
   assert.match(titleTagProblem("How It Broke (Explained by Opus 5.5)", undefined, tag, "feature", undefined), /no "builtBy"/, "no recorded builder, no guess");
   assert.equal(titleTagProblem("My Own Argument", undefined, tag, "essay", undefined), null, "an essay is the author's own");
   assert.equal(titleTagProblem("How It Broke", false, tag, "feature", "Opus 5.5"), null, "false opts one video out");
-  assert.match(titleTagProblem("How It Broke", "(Opus 5.5 Investigates)", tag, "feature", "Opus 5.5"), /Investigates/, "the video's own tag wins");
+  assert.match(titleTagProblem("How It Broke", "({model} Investigates)", tag, "feature", "Opus 5.5"), /Opus 5\.5 Investigates/, "the video's own tag wins");
+  assert.match(titleTagProblem("Did It? (Opus 5.5 Investigates)", "({model} Investigates)", tag, "feature", "Fable 5.5"), /Fable 5\.5 Investigates/, "a video's own tag names its builder too");
   assert.equal(titleTagProblem("How It Broke", undefined, undefined, "feature", undefined), null, "no tag set, nothing checked");
 });
 

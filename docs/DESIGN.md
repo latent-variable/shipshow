@@ -1334,7 +1334,7 @@ show no reading time.
 videos carries, with `{model}` filled from `video.json` `builtBy`, the model that built the video as its builder records it ("Opus
 5.5"); `npm run package` stops on a title without the filled tag, and on a tag with `{model}` when `builtBy` is empty
 (`titleTagProblem` in `bin/package.mjs`). An essay is skipped, being the author's own argument; `video.json` `youtube.titleTag` names
-another tag for one video (the published "(Opus 5.5 Explains)" titles) or `false` for none. **Why.** binance-heist's package critic
+another tag for one video (the published "({model} Explains)" titles), filled the same way, or `false` for none. **Why.** binance-heist's package critic
 rewrote the title and the "(Opus 5.5 Explains)" every earlier channel title carried went with it; Lino added it back by hand and asked
 for it on every title. A fixed "Opus 5.5" in the config was the first cut, and Lino caught that it would let a video built by another
 model (Fable, Astra) claim Opus: the tag names whoever built it, never a model it is not. **Costs.** The builder has to set

@@ -200,7 +200,7 @@
   },
   "youtube": {
     "title": "OpenAI Says the Exponential Time Hypothesis Is False (Opus 5.5 Explains)",
-    "titleTag": "(Opus 5.5 Explains)",
+    "titleTag": "({model} Explains)",
     "alternatives": [
       "Opus 5.5 Explains OpenAI's \"The Exponential Time Hypothesis Is False\"",
       "Did an AI Just Refute the Exponential Time Hypothesis? Opus 5.5 Explains"
