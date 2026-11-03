@@ -156,10 +156,10 @@ round here is about 520k tokens by our own estimate.
 
 ## Order I would do it in
 
-Done: 0.1, 2.0 to 2.3, and the permission-deny part of 2.7. Remaining order:
+Done: 0.1, 2.0 to 2.3, 3.2, and the permission-deny part of 2.7. Remaining order:
 
 1. 0.2, finish 2.7, then 2.4 and 2.5.
-2. 3.1, 3.2, 1.3, 1.6 (the critic becomes read-only in fact; descriptions trigger-first).
+2. 3.1, 1.3, 1.6 (the critic becomes read-only in fact; descriptions trigger-first).
 3. 2.6, 5.1 (cases from the red-team findings), then 5.2 (is each skill earning its tokens).
 4. 1.1, 1.2 (the AGENTS.md diet, once the Stop hook protects the docs rule).
 5. 4.1 to 4.3 (clean-machine install), then 6.1.
