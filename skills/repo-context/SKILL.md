@@ -25,16 +25,16 @@ You know your own way of reading a repo; these are the sources worth reaching fo
 - `.agents/memory/MEMORY.md` when it exists (gitignored project memory).
 - `git log --oneline -15`: what changed lately and why. Commit subjects here are
   `type: summary (#PR)`.
-- The files you will touch and their neighbours. `bin/` is about 1,200 lines in total:
+- The files you will touch and their neighbours. `bin/` is about 5,700 lines of JavaScript
+  and Python in total:
   the step you change and the ones around it are what matter.
 
 ## The shape
 
-The pipeline is text in, MP4 out: `voice` (Kokoro, one sentence at a time, writes
-`timing.json`) then `build` (`scenes.html` plus `kit/` into `index.html`) then `lint` then
-`render`; `review` writes the critics' evidence. `bin/make.mjs` chains the first four, so
-read it first to see the order. `bin/lib.mjs` holds the shared paths and the Kokoro
-environment.
+The pipeline is text in, MP4 out: `voice` (writes `timing.json`) then `build` (`scenes.html`
+plus `kit/` into `index.html`) then `lint` then `render`; `review` writes the critics'
+evidence. `bin/make.mjs` chains the first four, so read it first to see the order.
+`bin/lib.mjs` holds the shared paths and the Kokoro environment.
 
 Skills live in `skills/<name>/SKILL.md` and are linked into `.claude/skills/` by
 `npm run skills`. `local/` is per person, gitignored, and never committed.
@@ -67,7 +67,9 @@ implying it passed.
 - The scripts never delete files. Do not add deletion.
 - The name is ShipShow (`AGENTS.md`, traps). Use it in new files; the old name `kokoro-explainers` only survives in history.
 - A video about another code base goes in `local/videos/`: this repo is public.
-- Do not add speech recognition to fix a cue's timing (`AGENTS.md`, traps).
+- Whisper word times are used for OmniVoice runs with hear-back and Drama 3 runs when
+  hear-back is available; Kokoro sentence takes and runs without word times use letter-share
+  timing (`AGENTS.md`, *Runs of sentences* and traps).
 - If a trap you hit is not in `AGENTS.md`, add it there in the same change, with the date
   and how you measured it.
 
