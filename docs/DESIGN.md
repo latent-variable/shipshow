@@ -1376,7 +1376,9 @@ x 1,350 px and blur 28.6 px, settled by 125.8 s; the bed measured RMS 0.0 throug
 
 ### D97. A scene's tags must balance, and the build says which scene does not (2026-11-03)
 **Decision.** `build` counts each scene's opening and closing `div`, `figure`, `section`, `svg`, `pre`, `table`, `span` and `p`
-tags (comments skipped) and stops naming the scene and the tag when they differ (`unbalancedTags` in `bin/lib.mjs`). **Why.**
+tags in order (comments and self-closing tags such as `<svg/>` skipped) and stops naming the scene and the tag when the counts
+differ or a tag is closed before it was opened, which ends an ancestor even when the totals match (`unbalancedTags` in
+`bin/lib.mjs`; PR #155's review). **Why.**
 Splitting two weight-space scenes by hand moved one closing `div` into the wrong scene. The browser closed `#root` early, the
 captions and later scenes fell outside it, the kit threw `insertBefore` before it made a timeline, and `overlaps` and the
 frames showed a broken page with no pointer to the cause. **Costs.** A tag left open on purpose (none in any video) would need

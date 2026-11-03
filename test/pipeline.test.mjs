@@ -1419,9 +1419,11 @@ test("devices: a page's editing moves are counted, each act's opening is named, 
 
 test("build: a scene whose tags do not balance is named, before an extra closing div ends the page early", async () => {
   const { unbalancedTags } = await import("../bin/lib.mjs");
-  assert.deepEqual(unbalancedTags('<div id="s06"><div class="phase">a</div></div></div>'), [{ tag: "div", opened: 2, closed: 3 }], "the weight-space split: one close too many");
+  assert.deepEqual(unbalancedTags('<div id="s06"><div class="phase">a</div></div></div>'), [{ tag: "div", opened: 2, closed: 3, early: true }], "the weight-space split: one close too many");
   assert.deepEqual(unbalancedTags('<div><figure class="ss-meme"><span>x</span></figure>'), [{ tag: "div", opened: 1, closed: 0 }]);
   assert.deepEqual(unbalancedTags('<div><svg viewBox="0 0 2 2"><path d="M0 0"/><polygon points="0,0"/></svg><p>t</p><pre>x</pre><!-- </div> --></div>'), [], "path, polygon and a comment are not counted");
+  assert.deepEqual(unbalancedTags("<div></div></div><div>"), [{ tag: "div", opened: 2, closed: 2, early: true }], "a close before its open is caught though the totals match");
+  assert.deepEqual(unbalancedTags('<div><svg viewBox="0 0 1 1"/></div>'), [], "a self-closing svg opens nothing");
 });
 
 test("music drop: the bed cuts to silence on its cue for its seconds and comes back over half a second; a drop needs a cue", async () => {

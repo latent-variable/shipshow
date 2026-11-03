@@ -588,11 +588,18 @@ export function musicBed(dir, music, timing, moods = [], drops = []) {
  *  fails before it makes a timeline (weight-space, 2026-11-03, after a scene was split by hand). Comments are skipped. */
 export function unbalancedTags(html) {
   const body = html.replace(/<!--[\s\S]*?-->/g, "");
-  return ["div", "figure", "section", "svg", "pre", "table", "span", "p"].map((tag) => ({
-    tag,
-    opened: (body.match(new RegExp(`<${tag}(?=[\\s>/])`, "gi")) || []).length,
-    closed: (body.match(new RegExp(`</${tag}\\s*>`, "gi")) || []).length,
-  })).filter((t) => t.opened !== t.closed);
+  const tags = ["div", "figure", "section", "svg", "pre", "table", "span", "p"];
+  const out = [];
+  for (const tag of tags) {
+    // In order, not by totals: a close that comes before its open ends an ancestor even if a later open evens the count.
+    let depth = 0, opened = 0, closed = 0, early = false;
+    for (const m of body.matchAll(new RegExp(`<(/?)${tag}(?=[\\s>/])[^>]*>`, "gi"))) {
+      if (m[1]) { closed++; depth--; if (depth < 0) early = true; }
+      else if (!m[0].endsWith("/>")) { opened++; depth++; }   // a self-closing <svg/> opens nothing
+    }
+    if (opened !== closed || early) out.push({ tag, opened, closed, ...(early ? { early: true } : {}) });
+  }
+  return out;
 }
 
 /** A music drop (D96): `data-drop="<seconds>"` on a cued element cuts the bed to silence on its cue, for that long, so a
