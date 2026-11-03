@@ -1,5 +1,6 @@
 {
   "title": "Did Qwen Phone Home to Beijing?",
+  "builtBy": "Opus 5.5",
   "kind": "feature",
   "importance": "high",
   "importance_reason": "public: Lino's YouTube channel, about a security claim against a named company that is still being argued; a viewer may repeat any claim, and getting one wrong is unfair to Alibaba or to Cohere",
@@ -141,7 +142,7 @@
   },
   "youtube": {
     "title": "Did Qwen Phone Home to Beijing? (Opus 5.5 Investigates)",
-    "titleTag": "(Opus 5.5 Investigates)",
+    "titleTag": "({model} Investigates)",
     "alternatives": [
       "Cohere Says Qwen Tried to Upload to Beijing. Here's What the Logs Show",
       "Spy, Fossil or Setup? The Qwen 3.8 Beijing Upload, Investigated"

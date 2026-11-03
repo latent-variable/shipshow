@@ -1,6 +1,7 @@
 {
   "title": "My explainer",
   "kind": "feature",
+  "builtBy": "",
   "voice": "af_heart",
   "audience": "Who watches, what they already know, and what they can do after: one or two sentences.",
   "say": {}

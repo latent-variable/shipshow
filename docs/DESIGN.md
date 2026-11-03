@@ -1329,14 +1329,17 @@ page as its text and the packet asked for 6,000 seconds of reading (binance-heis
 pacing critic had to argue away). **Costs.** None measured. **Tested.** binance-heist's packet after the fix: the three picture cues
 show no reading time.
 
-### D95. A person's titles carry their tag, and packaging checks it (2026-11-02)
-**Decision.** `local/config.json` `youtube.titleTag` (Lino's: "(Explained by Opus 5.5)") is words every title of that person's
-videos carries; `npm run package` stops on a title without it (`titleTagProblem` in `bin/package.mjs`). An essay is skipped, being
-the author's own argument; `video.json` `youtube.titleTag` names another tag for one video (the published "(Opus 5.5 Explains)"
-titles) or `false` for none. **Why.** binance-heist's package critic rewrote the title and the "(Opus 5.5 Explains)" every earlier
-channel title carried went with it; Lino added it back by hand on upload and asked for it on every title from now on. A rule only in
-prose was what got lost. **Costs.** A new model means editing the tag in `local/config.json`. **Tested.** `test/pipeline.test.mjs`
-(missing, present, essay, opt-out, a video's own tag, none set).
+### D95. A person's titles carry their tag, naming the model that built the video (2026-11-02)
+**Decision.** `local/config.json` `youtube.titleTag` (Lino's: "(Explained by {model})") is words every title of that person's
+videos carries, with `{model}` filled from `video.json` `builtBy`, the model that built the video as its builder records it ("Opus
+5.5"); `npm run package` stops on a title without the filled tag, and on a tag with `{model}` when `builtBy` is empty
+(`titleTagProblem` in `bin/package.mjs`). An essay is skipped, being the author's own argument; `video.json` `youtube.titleTag` names
+another tag for one video (the published "({model} Explains)" titles), filled the same way, or `false` for none. **Why.** binance-heist's package critic
+rewrote the title and the "(Opus 5.5 Explains)" every earlier channel title carried went with it; Lino added it back by hand and asked
+for it on every title. A fixed "Opus 5.5" in the config was the first cut, and Lino caught that it would let a video built by another
+model (Fable, Astra) claim Opus: the tag names whoever built it, never a model it is not. **Costs.** The builder has to set
+`builtBy`; nothing checks it against the model that actually ran. **Tested.** `test/pipeline.test.mjs` (missing, present, another
+model's name, no `builtBy`, essay, opt-out, a video's own tag, none set).
 
 ## Behaviour
 

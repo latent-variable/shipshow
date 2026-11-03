@@ -1,5 +1,6 @@
 {
   "title": "An AI Says It Solved Kakeya, in Every Dimension",
+  "builtBy": "Opus 5.5",
   "kind": "feature",
   "importance": "high",
   "importance_reason": "public: Lino's YouTube channel, in a narrator voice, explaining a harmonic-analysis result nobody independent has checked yet; a viewer may repeat any claim",
@@ -176,7 +177,7 @@
   },
   "youtube": {
     "title": "OpenAI Says Its AI Solved the Kakeya Conjecture in Every Dimension (Opus 5.5 Explains)",
-    "titleTag": "(Opus 5.5 Explains)",
+    "titleTag": "({model} Explains)",
     "alternatives": [
       "How Little Room Does a Needle Need? OpenAI Says Its AI Finished Kakeya (Opus 5.5 Explains)",
       "Zero Area, Full Size: the Kakeya Conjecture and OpenAI's Claimed Proof, Explained"

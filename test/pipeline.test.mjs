@@ -1391,15 +1391,18 @@ test("package: chapters come from scene starts, and what YouTube would refuse or
   assert.ok(bad.some((p) => /0:00/.test(p)) && bad.some((p) => /three or more/.test(p)) && bad.some((p) => /lasts 5\.9 s/.test(p)), "first at 0:00, at least three, each ten seconds");
 });
 
-test("package: a title missing the person's tag is refused, an essay and an opted-out video are not", async () => {
+test("package: a title carries the person's tag, naming the model that built the video; an essay and an opted-out video do not", async () => {
   const { titleTagProblem } = await import("../bin/package.mjs");
-  const tag = "(Explained by Opus 5.5)";
-  assert.match(titleTagProblem("How It Broke", undefined, tag, "feature"), /lacks "\(Explained by Opus 5\.5\)"/);
-  assert.equal(titleTagProblem(`How It Broke ${tag}`, undefined, tag, "feature"), null);
-  assert.equal(titleTagProblem("My Own Argument", undefined, tag, "essay"), null, "an essay is the author's own");
-  assert.equal(titleTagProblem("How It Broke", false, tag, "feature"), null, "false opts one video out");
-  assert.match(titleTagProblem("How It Broke", "(Opus 5.5 Investigates)", tag, "feature"), /Investigates/, "the video's own tag wins");
-  assert.equal(titleTagProblem("How It Broke", undefined, undefined, "feature"), null, "no tag set, nothing checked");
+  const tag = "(Explained by {model})";
+  assert.match(titleTagProblem("How It Broke", undefined, tag, "feature", "Fable 5.5"), /lacks "\(Explained by Fable 5\.5\)"/);
+  assert.equal(titleTagProblem("How It Broke (Explained by Fable 5.5)", undefined, tag, "feature", "Fable 5.5"), null);
+  assert.match(titleTagProblem("How It Broke (Explained by Opus 5.5)", undefined, tag, "feature", "Fable 5.5"), /lacks/, "another model's name is refused");
+  assert.match(titleTagProblem("How It Broke (Explained by Opus 5.5)", undefined, tag, "feature", undefined), /no "builtBy"/, "no recorded builder, no guess");
+  assert.equal(titleTagProblem("My Own Argument", undefined, tag, "essay", undefined), null, "an essay is the author's own");
+  assert.equal(titleTagProblem("How It Broke", false, tag, "feature", "Opus 5.5"), null, "false opts one video out");
+  assert.match(titleTagProblem("How It Broke", "({model} Investigates)", tag, "feature", "Opus 5.5"), /Opus 5\.5 Investigates/, "the video's own tag wins");
+  assert.match(titleTagProblem("Did It? (Opus 5.5 Investigates)", "({model} Investigates)", tag, "feature", "Fable 5.5"), /Fable 5\.5 Investigates/, "a video's own tag names its builder too");
+  assert.equal(titleTagProblem("How It Broke", undefined, undefined, "feature", undefined), null, "no tag set, nothing checked");
 });
 
 test("package: a clone or invented voice must be named in sources.md, so credits never describe an earlier voice", async () => {
