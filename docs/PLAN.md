@@ -92,13 +92,13 @@ docs-stay-current rule remains prose plus CI, and the sandbox and reporting hook
 
 ## Phase 3: harden the critic agent
 
-3.1 **Make "told not to write" true.** In `agents/critic.md`: `disallowedTools: Write, Edit, NotebookEdit` and a
-    frontmatter `hooks` PreToolUse on Bash that denies redirects and `tee`, `mv`, `cp`, `git` writes outside a scratch
-    directory. (Frontmatter hooks run only while that agent is active, and project agent hooks only after the folder is
-    trusted: **plugin-shipped agent hooks are unconfirmed; test before relying on them.**) *Done when:* a test spawns the
-    critic with a prompt to write a file and the file does not appear.
-3.2 **`maxTurns`** (a runaway critic burns a round's tokens) and an explicit `model: sonnet` instead of `inherit`, so the
-    workspace's Sonnet-only limit is visible and a parent on another model cannot silently change the judge.
+3.1 **Bash-write hook for the critic.** In `agents/critic.md`, add a frontmatter `hooks` PreToolUse on Bash that denies
+    redirects and `tee`, `mv`, `cp`, `git` writes outside a scratch directory. (Frontmatter hooks run only while that
+    agent is active, and project agent hooks only after the folder is trusted: **plugin-shipped agent hooks are
+    unconfirmed; test before relying on them.**) *Done when:* a test spawns the critic with a prompt to write a file and
+    the file does not appear.
+3.2 **Done: set critic limits.** `agents/critic.md` enforces `disallowedTools`, `maxTurns: 40` and `model: sonnet`; see
+    DESIGN D45. The loop's model dial can still override the agent's model.
 3.3 **Hand the critic only the packet and the criteria** (already the design); add a test that the prompt the loop builds
     contains no builder transcript. Writer/Reviewer is Anthropic's own pattern (best-practices).
 3.4 **Structured output.** Each critic returns findings as JSON (severity, evidence path, quote), validated by a script,
@@ -156,10 +156,10 @@ round here is about 520k tokens by our own estimate.
 
 ## Order I would do it in
 
-Done: 0.1, 2.0 to 2.3, and the permission-deny part of 2.7. Remaining order:
+Done: 0.1, 2.0 to 2.3, 3.2, and the permission-deny part of 2.7. Remaining order:
 
 1. 0.2, finish 2.7, then 2.4 and 2.5.
-2. 3.1, 3.2, 1.3, 1.6 (the critic becomes read-only in fact; descriptions trigger-first).
+2. 3.1, 1.3, 1.6 (the critic becomes read-only in fact; descriptions trigger-first).
 3. 2.6, 5.1 (cases from the red-team findings), then 5.2 (is each skill earning its tokens).
 4. 1.1, 1.2 (the AGENTS.md diet, once the Stop hook protects the docs rule).
 5. 4.1 to 4.3 (clean-machine install), then 6.1.
