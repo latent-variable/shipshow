@@ -1328,7 +1328,8 @@ line height of 1 (an overlap the check measures), so its display lines set 1.2 o
 ending at its own tag. **Why.** It searched for a closing `</img>` that never comes, so a cued generated picture got the rest of the
 page as its text and the packet asked for 6,000 seconds of reading (binance-heist round 1: three false "short, late" rows that a
 pacing critic had to argue away). **Costs.** None measured. **Tested.** binance-heist's packet after the fix: the three picture cues
-show no reading time.
+show no reading time. A self-closing tag (a cued SVG `<line/>` or `<polygon/>`) is read the same way (weight-space round 1: its
+loop arrow was given 8,867 s to read, flagged late, and a sync critic took it at its word).
 
 ### D95. A person's titles carry their tag, naming the model that built the video (2026-11-02)
 **Decision.** `local/config.json` `youtube.titleTag` (Lino's: "(Explained by {model})") is words every title of that person's

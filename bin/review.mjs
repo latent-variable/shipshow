@@ -33,11 +33,14 @@ function element(i) {
   const tag = html.slice(i + 1).match(/^\w+/)[0];
   // A void element (a cued <img>) has no closing tag and no text: without this the search ran on to the
   // end of the page and gave the picture the whole video's text to read (binance-heist, 2026-11-02).
-  if (VOID.test(tag)) { const end = html.indexOf(">", i) + 1; return { end, text: "" }; }
+  // So has a self-closing one (a cued SVG <line/> or <polygon/>): weight-space's arrow was given 8,800 s to read (D94).
+  const open = html.slice(i, html.indexOf(">", i) + 1);
+  if (VOID.test(tag) || open.endsWith("/>")) { const end = html.indexOf(">", i) + 1; return { end, text: "" }; }
   const re = new RegExp(`<(/?)${tag}\\b[^>]*>`, "g");
   re.lastIndex = i;
   let depth = 0, m;
   while ((m = re.exec(html))) {
+    if (m[0].endsWith("/>")) continue;   // a self-closing one inside opens nothing
     depth += m[1] ? -1 : 1;
     if (!depth) break;
   }

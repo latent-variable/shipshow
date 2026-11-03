@@ -2,4 +2,4 @@
 
 [delighted, revealing the clue] It named all three, and drew what it saw. A hollow square. The real network draws them filled.
 
-[thoughtful, explaining why the mistake matters] The authors point to that mistake as the tell. Simulating the network would give a filled square. Astra drew the edges, because the edges are what the weights spell out.
+[thoughtful, explaining why the mistake matters] The authors point to that mistake as the tell. Simulating the network would give a filled square. Astra read the last layer, where each unit's weights draw one piece of the edge, and drew just those pieces.

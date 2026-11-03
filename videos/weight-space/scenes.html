@@ -69,13 +69,13 @@
 
   /* ---- arcade (03, 03a, 03b) ---- */
   .px { font-family: "Press Start 2P", monospace; }
-  .cabs { position: absolute; left: 0; right: 0; top: 210px; display: flex; justify-content: center; gap: 56px; }
+  .cabs { position: absolute; left: 0; right: 0; top: 230px; display: flex; justify-content: center; gap: 56px; }
   .cab { width: 330px; text-align: center; }
   .cab .scr { width: 330px; height: 330px; background: #06050f; border: 6px solid var(--line); border-radius: 12px; display: grid; grid-template-columns: repeat(10, 1fr); padding: 6px; gap: 2px; box-shadow: 0 0 40px rgba(61, 245, 255, 0.15); }
   .cab .scr i { border-radius: 2px; }
   .cab .lab { margin-top: 22px; font: 400 30px "Press Start 2P", monospace; color: var(--accent-3); }
   .cab .name { margin-top: 14px; font: 400 22px "Press Start 2P", monospace; color: var(--accent-2); min-height: 30px; }
-  #s03 .h, #s03a .h { left: 0; right: 0; top: 70px; text-align: center; font-size: 46px; color: var(--accent-3); }
+  #s03 .h, #s03a .h { left: 0; right: 0; top: 96px; text-align: center; font-size: 46px; color: var(--accent-3); }
   #s03 .legend { position: absolute; left: 0; right: 0; top: 700px; text-align: center; font: 500 30px var(--font); color: var(--muted); }
   #s03 .tick { position: absolute; right: 120px; top: 50px; font: 400 80px "Press Start 2P", monospace; color: var(--accent); }
   .rowmark { position: absolute; border: 4px solid var(--accent-3); border-radius: 4px; box-shadow: 0 0 20px var(--accent-3); }
@@ -85,12 +85,12 @@
   #s03b .gens { position: absolute; left: 140px; top: 120px; display: flex; gap: 30px; }
   #s03b .gens .chip { font-size: 34px; }
   #s03b .rule { position: absolute; left: 140px; top: 220px; }
-  #s03b .ascii { position: absolute; left: 140px; top: 300px; margin: 0; font: 400 34px/36px var(--font-mono); color: var(--accent-2); background: #06050f; border: 4px solid var(--line); padding: 22px 30px; border-radius: 10px; }
-  #s03b .pic { position: absolute; top: 300px; height: 470px; border: 4px solid var(--line); border-radius: 10px; image-rendering: pixelated; }
+  #s03b .ascii { position: absolute; left: 140px; top: 312px; margin: 0; font: 400 34px/36px var(--font-mono); color: var(--accent-2); background: #06050f; border: 4px solid var(--line); padding: 22px 30px; border-radius: 10px; }
+  #s03b .pic { position: absolute; top: 360px; height: 470px; border: 4px solid var(--line); border-radius: 10px; image-rendering: pixelated; }
   #s03b .pic.drawn { left: 560px; }
-  #s03b .pic.gen { left: 900px; }
-  #s03b .cap1, #s03b .cap2 { position: absolute; top: 792px; font: 400 18px "Press Start 2P", monospace; color: var(--accent-3); }
-  #s03b .cap1 { left: 520px; } #s03b .cap2 { left: 900px; }
+  #s03b .pic.gen { left: 960px; }
+  #s03b .cap1, #s03b .cap2 { position: absolute; top: 312px; font: 400 26px "Press Start 2P", monospace; color: var(--accent-3); }
+  #s03b .cap1 { left: 520px; } #s03b .cap2 { left: 960px; }
 
   /* ---- garage (04) ---- */
   #s04 .scene { position: absolute; left: 110px; top: 110px; width: 1700px; border-radius: 12px; background: #0b2440; border: 3px solid var(--line); }
@@ -112,7 +112,7 @@
   #s05 .bar { display: grid; grid-template-columns: 720px 1fr 180px; align-items: center; gap: 24px; margin: 30px 0; font: 400 40px var(--font-mono); }
   #s05 .bar .fill { height: 70px; background: var(--muted); border-radius: 4px; transform-origin: left center; }
   #s05 .bar.me .fill { background: var(--accent-2); }
-  #s05 .bar .v { font-weight: 600; }
+  #s05 .bar .v { font-weight: 600; position: relative; z-index: 2; background: #050806; padding: 4px 12px; border-radius: 6px; }
   #s05 .tbl { position: absolute; left: 150px; top: 440px; font: 400 44px/1.6 var(--font-mono); border-collapse: collapse; }
   #s05 .tbl td, #s05 .tbl th { padding: 4px 34px 4px 0; text-align: left; }
   #s05 .tbl th { color: var(--muted); font-weight: 400; }
@@ -129,7 +129,7 @@
   .chart b { font: 700 24px var(--font-mono); color: var(--accent-2); letter-spacing: 0.1em; display: block; }
   #s06 .loopbox { position: absolute; left: 130px; top: 120px; width: 1000px; height: 640px; overflow: hidden; background: #fff; border: 2px solid var(--line); border-radius: 12px; font: 400 34px/1.5 var(--font-mono); color: var(--ink); padding: 0 34px; }
   #s06 .loopbox pre { margin: 0; font: inherit; white-space: pre; }
-  #s06 .waits { position: absolute; left: 1220px; top: 180px; text-align: center; }
+  #s06 .waits { position: absolute; left: 1200px; top: 110px; text-align: center; width: 360px; }
   #s06 .waits .big { color: var(--accent); font-size: 170px; }
   #s06 .waits small { display: block; font: 600 42px var(--font); color: var(--muted); margin-top: 48px; }
   #s06 .ran { position: absolute; left: 1220px; top: 520px; font: 700 200px var(--font-display); color: var(--accent); }
@@ -142,10 +142,10 @@
   #s06b .space { position: absolute; left: 1130px; top: 90px; width: 640px; height: 640px; }
   #s06b .pair { position: absolute; left: 130px; top: 230px; width: 960px; }
   #s06b .pair .sn { background: #fff; border: 2px solid var(--line); border-left: 10px solid var(--good); border-radius: 8px; padding: 22px 28px; margin-bottom: 26px; font: 500 40px/1.35 var(--font); }
-  #s06b .pair .sn.bad { border-left-color: var(--accent); font: 400 34px/1.4 var(--font-mono); height: 250px; overflow: hidden; }
+  #s06b .pair .sn.bad { border-left-color: var(--accent); font: 400 34px/1.4 var(--font-mono); height: 250px; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 96%); mask-image: linear-gradient(180deg, #000 55%, transparent 96%); }
   #s06b .minus { position: absolute; left: 130px; top: 690px; font: 700 54px var(--font); color: var(--accent); }
   #s06b .layersbar { position: absolute; left: 130px; right: 130px; top: 180px; display: flex; gap: 10px; }
-  #s06b .layersbar i { flex: 1; height: 170px; background: #fff; border: 2px solid var(--line); border-radius: 6px; font: 600 24px var(--font-mono); color: var(--muted); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; font-style: normal; }
+  #s06b .layersbar i { flex: 1; height: 170px; background: #fff; border: 2px solid var(--line); border-radius: 6px; font: 600 32px var(--font-mono); color: var(--muted); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; font-style: normal; }
   #s06b .layersbar i.hot { background: var(--accent); color: #fff; border-color: var(--accent); }
   #s06b .edit { position: absolute; left: 130px; top: 420px; width: 1040px; font: 500 46px/1.55 var(--font); }
   #s06b .edit code { display: block; font: 600 44px var(--font-mono); color: var(--accent-2); margin-top: 10px; }
@@ -188,7 +188,7 @@
   #s07c .tbl td { padding: 0 70px 0 0; }
   #s07c .tbl td.n { font: 700 60px var(--font-mono); text-align: right; }
   #s07c .tbl .src { position: static; display: block; font-size: 26px; }
-  #s07c .stamp { left: 1160px; top: 640px; }
+  #s07c .stamp { left: 1000px; top: 640px; }
   #s08 .doc { position: absolute; left: 150px; top: 150px; width: 1560px; font: 600 58px/1.35 var(--font); }
   #s08 .doc div { margin-bottom: 44px; display: flex; gap: 26px; }
   #s08 .doc em { font-style: normal; font: 700 58px var(--font-mono); width: 60px; flex: none; }
@@ -202,7 +202,7 @@
 <!-- ============ 01: a wall of numbers (file) ============ -->
 <section data-scene="01-numbers" data-mood="file">
   <div id="s01">
-    <div class="tab"><span>breakout_or_something.txt</span><span class="off">17,253 weights</span></div>
+    <div class="tab"><span>a9f535cc_actor.txt</span><span class="off">17,253 weights</span></div>
     <div class="page" data-overlap="ok"><pre class="gutter">1
 2
 3
@@ -300,7 +300,7 @@
 <section data-scene="01b-headline">
   <div id="s01b">
     <div class="phase" id="p01ba">
-      <div class="tab"><span>breakout_or_something.txt</span><span class="off">17,253 weights</span></div>
+      <div class="tab"><span>a9f535cc_actor.txt</span><span class="off">17,253 weights</span></div>
       <div class="page" data-overlap="ok"><pre class="gutter">1
 2
 3
@@ -464,7 +464,7 @@
     <div class="cabs">
       <div class="cab"><div class="scr" id="rA"></div><div class="lab">A</div><div class="name" data-cue="Pong's" data-anim="type">PONG</div></div>
       <div class="cab"><div class="scr" id="rB"></div><div class="lab">B</div><div class="name" data-cue="Freeway's" data-anim="type" id="nB">FREEWAY</div></div>
-      <div class="cab" id="cabC"><div class="scr" id="rC"></div><div class="lab">C</div><div class="name" data-cue="This" data-anim="type" data-punch="1.14" data-punch-out="3.4">BREAKOUT</div></div>
+      <div class="cab" id="cabC"><div class="scr" id="rC"></div><div class="lab">C</div><div class="name" data-cue="This" data-anim="type" data-punch="1.08" data-punch-out="3.4">BREAKOUT</div></div>
       <div class="cab"><div class="scr" id="rD"></div><div class="lab">D</div><div class="name" data-cue="all" data-anim="type">PAC-MAN</div></div>
     </div>
     <div class="rowmark" id="markC" data-cue="Fifty" data-anim="grow"></div>
@@ -497,6 +497,7 @@
     <div class="cap1" data-cue="drew" data-anim="fade">ASTRA'S DRAWINGS</div>
     <img class="pic gen" src="assets/post/shapes-generated.png" data-cue="filled." data-anim="left">
     <div class="cap2" data-cue="filled." data-anim="fade">WHAT THE NETWORKS DRAW</div>
+    <div class="chip vi abs" style="left:140px; top:840px; font-size:30px" data-cue="piece" data-anim="pop">last layer: one unit draws one piece of the edge</div>
     <div class="meme-wrap" data-overlap="ok" id="m03b" data-cue="tell." data-anim="pop"><figure class="ss-meme" data-meme="dbg"><span>simulating the network: ■</span><span>reading the weights: □</span></figure></div>
   </div>
 </section>
@@ -516,7 +517,10 @@
       <div class="note" data-cue="diagnosis:" data-anim="up"><b>DIAGNOSIS · GPT-6 ASTRA</b><span data-cue="reverse" data-anim="type">"Reverse is effectively never sampled."</span></div>
     </div>
     <div class="phase" id="p04d">
-      <svg class="layers" viewBox="0 0 1640 680" data-cue="detour." data-anim="fade"><circle cx="150" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="150" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="150" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="150" cy="602" r="11" fill="#ff6b3d"/><path d="M150 572 L370 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="370" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="370" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="370" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="370" cy="602" r="11" fill="#ff6b3d"/><path d="M370 572 L590 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="590" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="590" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="590" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="590" cy="602" r="11" fill="#ff6b3d"/><path d="M590 572 L810 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="810" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="810" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="810" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="810" cy="602" r="11" fill="#ff6b3d"/><path d="M810 572 L1030 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="1030" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="1030" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="1030" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="1030" cy="602" r="11" fill="#ff6b3d"/><path d="M1030 572 L1250 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="1250" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="1250" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="1250" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="1250" cy="602" r="11" fill="#ff6b3d"/><path d="M1250 572 L1470 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="1470" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="1470" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="1470" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="1470" cy="602" r="11" fill="#ff6b3d"/><text x="150" y="50" font-family="Space Grotesk" font-weight="700" font-size="34" fill="#eef6ff">the trained network: 171,664 weights</text><text x="150" y="660" font-family="Space Grotesk" font-weight="700" font-size="34" fill="#ff6b3d">detour: position · speed · green wheel → back up, then floor it → off past the red strip</text></svg>
+      <svg class="layers" viewBox="0 0 1640 680" data-cue="detour." data-anim="fade" id="detour"><circle cx="150" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="150" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="150" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="150" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="150" cy="602" r="11" fill="#ff6b3d"/><path d="M150 572 L370 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="370" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="370" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="370" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="370" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="370" cy="602" r="11" fill="#ff6b3d"/><path d="M370 572 L590 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="590" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="590" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="590" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="590" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="590" cy="602" r="11" fill="#ff6b3d"/><path d="M590 572 L810 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="810" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="810" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="810" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="810" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="810" cy="602" r="11" fill="#ff6b3d"/><path d="M810 572 L1030 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="1030" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1030" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="1030" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="1030" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="1030" cy="602" r="11" fill="#ff6b3d"/><path d="M1030 572 L1250 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="1250" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1250" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="1250" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="1250" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="1250" cy="602" r="11" fill="#ff6b3d"/><path d="M1250 572 L1470 572" stroke="#ff6b3d" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="1470" cy="90" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="138" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="186" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="234" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="282" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="330" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="378" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="426" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle cx="1470" cy="474" r="13" fill="#123659" stroke="#9fc0e0" stroke-width="3"/><circle class="spare" cx="1470" cy="542" r="11" fill="#ff6b3d"/><circle class="spare" cx="1470" cy="572" r="11" fill="#ff6b3d"/><circle class="spare" cx="1470" cy="602" r="11" fill="#ff6b3d"/><text x="150" y="50" font-family="Space Grotesk" font-weight="700" font-size="34" fill="#eef6ff">the trained network: 171,664 weights</text></svg>
+      <div class="chip am abs" style="left:150px; top:700px; font-size:34px" data-cue="Three" data-anim="pop">in: position · speed · green wheel</div>
+      <div class="chip rd abs" style="left:780px; top:700px; font-size:34px" data-cue="back#2" data-anim="pop">back up, then floor it</div>
+      <div class="chip gn abs" style="left:1250px; top:700px; font-size:34px" data-cue="switches" data-anim="pop">off past the red strip</div>
     </div>
     <div class="phase" id="p04e">
       <svg class="scene" id="carsvg2" viewBox="0 0 934 259" data-cue="floor" data-anim="fade"><rect width="934" height="259" fill="#0b2440"/><g transform="translate(17 305) scale(180 -180)"><rect x="0" y="0.1" width="5" height="0.3" fill="#9fc0e0"/><rect x="-1" y="0.3" width="1" height="2.35" fill="#9fc0e0"/><rect x="5" y="0.3" width="1" height="2.35" fill="#9fc0e0"/><polygon points="1.98,0.8175 2.5535,0.4074 2.475,0.2975 1.9015,0.7076" fill="#9fc0e0"/><polygon points="2.065,0.4525 2.065,0.3525 1.18,0.3525 1.18,0.4525" fill="#ff5a4a"/><g id="c2-solid-0" transform="translate(0.233 0.762) rotate(0.0)"><polygon points="0.2075,0.3825 0.2075,-0.3825 -0.2075,-0.3825 -0.2075,0.3825" fill="#3d8bff" stroke="#eef6ff" stroke-width="0.012"/></g><g id="c2-solid-1" transform="translate(2.8 0.725) rotate(0.0)"><rect x="-0.3325" y="-0.11" width="0.665" height="0.22" fill="#ffd23d" stroke="#0b2440" stroke-width="0.012"/></g><g id="c2-solid-2" transform="translate(3.107 0.75) rotate(0.0)"><circle r="0.2285" fill="#eef6ff" stroke="#0b2440" stroke-width="0.012"/><line x1="0" y1="0" x2="0.2" y2="0" stroke="#0b2440" stroke-width="0.02"/></g><g id="c2-solid-3" transform="translate(2.538 0.735) rotate(0.0)"><circle r="0.22" fill="#33d16a" stroke="#0b2440" stroke-width="0.012"/><line x1="0" y1="0" x2="0.2" y2="0" stroke="#0b2440" stroke-width="0.02"/></g></g><text x="24" y="40" font-family="Space Grotesk" font-weight="700" font-size="22" fill="#eef6ff">Astra's repair: back up, then floor it</text><text x="910" y="244" text-anchor="end" font-family="IBM Plex Mono" font-size="12" fill="#9fc0e0">runs replayed from the post's recording · Kinetix car-on-ramp</text></svg>
@@ -534,7 +538,7 @@
 <section data-scene="05-zero" data-mood="terminal">
   <div id="s05">
     <div class="phase" id="p05a">
-      <div class="term"><div><span class="pr">$</span> <span data-cue="+0" data-anim="type">weights = zeros()   # 600 → 32 → 32 → 6</span></div><div class="zeros" data-cue="zero:" data-anim="fade">0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+      <div class="term"><div><span class="pr">$</span> <span data-cue="+0" data-anim="type">weights = zeros()   # 600 → 32 → 32 → 6</span> <span style="color:var(--muted); font-size:26px">(illustration)</span></div><div class="zeros" data-cue="zero:" data-anim="fade">0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
@@ -552,7 +556,7 @@
       <div class="chip rd abs" style="left:860px; top:740px; font-size:40px" data-cue="data," data-anim="pop">no data · no practice games</div>
     </div>
     <div class="phase" id="p05b">
-      <div class="term"><div><span class="pr">#</span> Astra's Breakout program, written as weights</div></div>
+      <div class="term"><div><span class="pr">#</span> Astra's Breakout program, written as weights <span style="color:var(--muted); font-size:26px">(illustration)</span></div></div>
       <div class="prog"><div data-cue="first" data-anim="type"><span class="pr">layer 1:</span> where will the ball land?</div><div data-cue="second" data-anim="type"><span class="pr">layer 2:</span> move the paddle there.</div></div>
       <div class="mini" id="mini" data-cue="first" data-anim="fade"></div>
     </div>
@@ -579,7 +583,7 @@
       <div class="steps">
         <div data-cue="first" data-anim="left"><b>first layers</b> mark each stone and the empty points beside it</div>
         <div data-cue="middle" data-anim="left"><b>middle layers</b> follow chains of stones: groups in danger</div>
-        <div data-cue="last" data-anim="left"><b>last layer</b> scores each move: capture, rescue, <span class="del" data-cue="eyes." data-anim="fade">fill your own eyes</span></div>
+        <div data-cue="last" data-anim="left"><b>last layer</b> scores each move: capture, rescue, <span class="del" data-cue="alive." data-anim="fade">fill your own safe spots</span></div>
       </div>
       <div class="res">
         <div data-cue="half#2" data-anim="fade">0 practice games → won <b>54–55%</b> vs small trained networks</div>
@@ -600,6 +604,7 @@
       <figure class="ss-shot in" style="left:120px; top:80px; --shot-width:1680px" data-shot="https://huggingface.co/Qwen/Qwen3.5-0.8B" data-find="more prone to entering thinking loops" data-mark-cue="loops." data-lines="1" data-width="1300" data-scheme="light" data-cue="card" data-anim="up"></figure>
     </div>
     <div class="phase" id="p06c">
+      <svg class="abs" id="wheel" style="left:1230px; top:440px; width:300px; height:300px" viewBox="0 0 300 300" data-cue="zero" data-anim="fade"><circle cx="150" cy="150" r="120" fill="#fff" stroke="#10302c" stroke-width="5"/><line x1="30" y1="150" x2="270" y2="150" stroke="#b5d3cd" stroke-width="3"/><line x1="150" y1="30" x2="150" y2="270" stroke="#b5d3cd" stroke-width="3"/><text x="215" y="95" font-family="IBM Plex Mono" font-size="30" fill="#4f6f6a">Q1</text><text x="60" y="95" font-family="IBM Plex Mono" font-size="30" fill="#4f6f6a">Q2</text><text x="60" y="225" font-family="IBM Plex Mono" font-size="30" fill="#4f6f6a">Q3</text><text x="215" y="225" font-family="IBM Plex Mono" font-size="30" fill="#4f6f6a">Q4</text><circle id="wdot" cx="250" cy="150" r="16" fill="#e0413a"/></svg>
       <div class="loopbox" data-cue="Here's" data-anim="fade"><pre id="looptext">Wait, 0° is Q1.
 90° is Q2.
 Wait, 180° is Q2.
@@ -679,7 +684,7 @@ Wait, 270° is Q4.
 Wait, 360° is Q1.
 Wait, 0° is Q1.
 Wait, 90°</pre></div>
-      <div class="waits"><div class="big" data-cue="fourteen" data-anim="count">1,466</div><small>times it says "Wait,"<br>in one answer</small></div>
+      <span class="abs" id="mkn" data-cue="ninety#2" data-anim="fade"></span><span class="abs" id="mkh" data-cue="hundred" data-anim="fade"></span><div class="waits"><div class="big" data-cue="fourteen" data-anim="count">1,466</div><small>times it says "Wait,"<br>in one answer</small></div>
     </div>
     <div class="meme-wrap" data-overlap="ok" id="m06" data-cue="finishes." data-anim="pop"><figure class="ss-meme" data-meme="stop-it"><span>Wait, 0° is Q1. Wait, 90° is Q2. Wait...</span><span>stop it. get some help.</span></figure></div>
   </div>
@@ -705,29 +710,27 @@ Wait, 90°</pre></div>
 <section data-scene="06b-direction">
   <div id="s06b">
     <div class="phase" id="p06ba">
-      <div class="vec" data-cue="list" data-anim="left">thought = [ 0.12, −0.83, 1.41, … ]<br><b>1,024 numbers</b></div>
-      <svg class="space" viewBox="0 0 640 640" data-cue="point" data-anim="draw">
-        <g stroke="#4f6f6a" stroke-width="3" fill="none"><line x1="320" y1="320" x2="320" y2="40"/><line x1="320" y1="320" x2="600" y2="420"/><line x1="320" y1="320" x2="60" y2="460"/></g>
-        <text x="320" y="24" text-anchor="middle" font-family="IBM Plex Mono" font-size="32" fill="#4f6f6a">× 1,024 directions</text>
-        <circle id="pt" cx="420" cy="230" r="16" fill="#0f8f7f"/>
-      </svg>
+      <div class="vec" data-cue="token," data-anim="left">thought = [ 0.12, −0.83, 1.41, … ]<br><b>1,024 numbers</b></div>
+<svg class="space" viewBox="0 0 640 640" data-cue="readings," data-anim="fade"><g transform="translate(60 70)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-28)"/></g><g transform="translate(164 70)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-72)"/></g><g transform="translate(268 70)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-9)"/></g><g transform="translate(372 70)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(56)"/></g><g transform="translate(476 70)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-98)"/></g><g transform="translate(580 70)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-92)"/></g><g transform="translate(60 190)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(100)"/></g><g transform="translate(164 190)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(27)"/></g><g transform="translate(268 190)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-86)"/></g><g transform="translate(372 190)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-17)"/></g><g transform="translate(476 190)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(39)"/></g><g transform="translate(580 190)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-96)"/></g><g transform="translate(60 310)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(19)"/></g><g transform="translate(164 310)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-56)"/></g><g transform="translate(268 310)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-101)"/></g><g transform="translate(372 310)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-88)"/></g><g transform="translate(476 310)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(1)"/></g><g transform="translate(580 310)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-3)"/></g><g transform="translate(60 430)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-93)"/></g><g transform="translate(164 430)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-49)"/></g><g transform="translate(268 430)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-87)"/></g><g transform="translate(372 430)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(31)"/></g><g transform="translate(476 430)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-2)"/></g><g transform="translate(580 430)"><circle r="38" fill="#ffffff" stroke="#10302c" stroke-width="4"/><line class="kn" x1="0" y1="0" x2="0" y2="-30" stroke="#10302c" stroke-width="6" stroke-linecap="round" transform="rotate(-95)"/></g><text x="320" y="630" text-anchor="middle" font-family="IBM Plex Mono" font-size="30" fill="#4f6f6a">24 of 1,024 readings (not weights)</text></svg>
+      <span class="abs" id="mkpat" data-cue="pattern" data-anim="fade"></span>
       <div class="pair">
         <div class="sn" data-cue="progress," data-anim="left">snippet A: the reasoning moves on to the next step ✓</div>
         <div class="sn bad" data-cue="circles:" data-anim="left">But is 20 the total? No, it is the remaining time. But is 20 the total? No, it is the remaining time. But is 20 the total? No, it is the remaining time. But is 20 the total? No, it is the remaining time.</div>
       </div>
-      <div class="minus" data-cue="subtracted" data-anim="type">looping − progressing = the loop arrow →</div>
-      <svg class="abs" style="left:1130px; top:90px; width:640px; height:640px" viewBox="0 0 640 640"><line id="arrow" x1="420" y1="230" x2="560" y2="110" stroke="#e0413a" stroke-width="10" stroke-linecap="round" data-cue="arrow:" data-anim="draw"/><polygon points="560,110 528,118 548,140" fill="#e0413a" data-cue="arrow:" data-anim="fade"/></svg>
+      <div class="minus" data-cue="subtracted" data-anim="type">looping − progressing = the loop arrow</div>
+      <div class="chip rd abs" style="left:1130px; top:760px; font-size:38px" data-cue="pattern#2" data-anim="pop">the loop pattern: some needles up, some down</div>
     </div>
     <div class="phase" id="p06bb">
-      <div class="chip vi abs" style="left:130px; top:100px" data-cue="neurons" data-anim="pop">which neurons push along the arrow hardest?</div>
+      <div class="chip vi abs" style="left:130px; top:100px; font-size:34px" data-cue="neurons," data-anim="pop">which neurons (small calculators in each layer) push the readings along the arrow?</div>
       <div class="layersbar" data-cue="neurons" data-anim="fade"><i id="L0">0</i><i id="L1">1</i><i id="L2">2</i><i id="L3">3</i><i id="L4">4</i><i id="L5">5</i><i id="L6">6</i><i id="L7">7</i><i id="L8">8</i><i id="L9">9</i><i id="L10">10</i><i id="L11">11</i><i id="L12">12</i><i id="L13">13</i><i id="L14">14</i><i id="L15">15</i><i id="L16">16</i><i id="L17">17</i><i id="L18">18</i><i id="L19">19</i><i id="L20">20</i><i id="L21">21</i><i id="L22">22</i><i id="L23">23</i><span id="mk15" data-cue="fifteen" data-anim="fade"></span></div>
       <div class="edit">
         <div data-cue="64" data-anim="left">in layers 15 and 19: the <b>64</b> neurons pushing hardest</div>
-        <div data-cue="strip" data-anim="left"><span class="del">the loop arrow</span> stripped out of what they write</div>
+        <div data-cue="change" data-anim="left">their weights changed: <span class="del">the loop arrow</span> stripped out of what they write</div>
         <div data-cue="six" data-anim="left"><span class="ins">then pushed 6× the other way</span>  <code>W′ = W − 6·u(uᵀW)</code></div>
+        <div data-cue="nudging" data-anim="left" style="margin-top:14px"><span class="chip rd" style="font-size:36px">before: into the loop →</span> <span class="chip gn" style="font-size:36px">after: ← out of it</span></div>
       </div>
-      <div class="ratio" data-cue="131,072" data-anim="count">131,072 / 800,000,000</div>
-      <div class="speck" data-cue="131,072" data-anim="fade" data-punch="1.35" data-punch-out="2.2"><i></i></div>
+      <div class="ratio" data-cue="131,072" data-anim="fade">131,072 / 800,000,000</div>
+      <div class="speck" data-cue="131,072" data-anim="zoom"><i></i></div>
     </div>
     <div class="phase" id="p06bc">
       <figure class="ss-shot in" style="left:120px; top:70px; --shot-width:1300px" data-shot="https://arxiv.org/abs/2406.11717" data-select="h1.title" data-width="1100" data-scheme="light" data-cue="2024," data-anim="up"></figure>
@@ -744,7 +747,7 @@ Wait, 90°</pre></div>
     <div class="phase" id="p06ca">
       <h2 class="h" style="left:130px; top:20px; font-size:76px" data-cue="test" data-anim="type">test problems it had never seen</h2>
       <div class="rows">
-        <div class="r" style="margin-top:90px"><div class="lab">MATH-500<small>competition math</small></div><div class="track"><div class="b0" id="m0" data-cue="before:" data-anim="grow"></div><div class="b1" id="m1"></div></div><div class="v" data-cue="After:" data-anim="slam" data-drop="1.4" data-punch="1.1" data-punch-out="1.5">48.1</div></div>
+        <div class="r" style="margin-top:90px"><div class="lab">MATH-500<small>competition math</small></div><div class="track"><div class="b0" id="m0" data-cue="before:" data-anim="grow"></div><div class="b1" id="m1"></div></div><div class="v" data-cue="After:" data-anim="slam" data-drop="1.4">48.1</div></div>
         <div class="r"><div class="lab">GSM8K<small>grade-school word problems</small></div><div class="track"><div class="b0" id="g0"></div><div class="b1" id="g1"></div></div><div class="v" data-cue="Grade-school" data-anim="pop">67.1</div></div>
         <div class="r"><div class="lab">IFEval<small>following instructions</small></div><div class="track"><div class="b0" id="i0"></div><div class="b1" id="i1"></div></div><div class="v" data-cue="instruction" data-anim="pop">62.3</div></div>
       </div>
@@ -785,11 +788,13 @@ Wait, 90°</pre></div>
   <div id="s07b">
     <div class="phase" id="p07ba">
       <h2 class="h" data-cue="Except" data-anim="slam" data-drop="1.8">Except.</h2>
+      <div class="chip vi abs" style="left:1240px; top:120px; font-size:34px" data-cue="Same" data-anim="pop">same job: better math, by editing weights</div>
       <div class="loopbars" data-cue="Gemma" data-anim="fade">
         <div class="lb"><span>Gemma 3, Google</span><div class="f" id="lg"></div><span>8.5%</span></div>
         <div class="lb"><span>Qwen 3.5</span><div class="f" id="lq"></div><span>93%</span></div>
         <div style="font:500 28px var(--font); color:var(--muted)">answers that ran out of room</div>
       </div>
+      <span class="abs" id="mk85" data-cue="8.5" data-anim="fade"></span><span class="abs" id="mk93" data-cue="93" data-anim="fade"></span>
       <svg class="flat" viewBox="0 -20 1100 360" data-cue="four" data-anim="draw"><g font-family="IBM Plex Mono" font-size="30" fill="#6f6a60"><text x="80" y="325" text-anchor="middle">base</text><circle cx="80" cy="255" r="9" fill="#d6403a"/><text x="80" y="237" text-anchor="middle" fill="#d6403a">6.8</text><text x="320" y="325" text-anchor="middle">5</text><circle cx="320" cy="254" r="9" fill="#d6403a"/><text x="320" y="236" text-anchor="middle" fill="#d6403a">7.0</text><text x="560" y="325" text-anchor="middle">10</text><circle cx="560" cy="250" r="9" fill="#d6403a"/><text x="560" y="232" text-anchor="middle" fill="#d6403a">7.6</text><text x="800" y="325" text-anchor="middle">25</text><circle cx="800" cy="250" r="9" fill="#d6403a"/><text x="800" y="232" text-anchor="middle" fill="#d6403a">7.7</text><text x="1040" y="325" text-anchor="middle">50</text><circle cx="1040" cy="254" r="9" fill="#d6403a"/><text x="1040" y="236" text-anchor="middle" fill="#d6403a">7.0</text></g><polyline points="80,255 320,254 560,250 800,250 1040,254" fill="none" stroke="#d6403a" stroke-width="4"/><line x1="40" y1="40" x2="1060" y2="40" stroke="#23894a" stroke-width="3" stroke-dasharray="10 8"/><text x="1060" y="28" text-anchor="end" font-family="Space Grotesk" font-weight="700" font-size="26" fill="#23894a">Qwen after its edit: 48.1</text><text x="40" y="20" font-family="Space Grotesk" font-weight="700" font-size="26" fill="#1f1d1a">Gemma, MATH-500 % by forward-pass budget</text></svg>
       <div class="cmt v" data-cue="verdict:" data-anim="right"><div class="who"><i></i>GPT-6 Astra, on Gemma</div><q data-cue="statistically" data-anim="type">not a statistically established improvement</q></div>
     </div>
@@ -829,12 +834,12 @@ Wait, 90°</pre></div>
       </div>
     </div>
     <div class="phase" id="p08b">
-      <figure class="ss-shot in" style="left:110px; top:60px; --shot-width:820px" data-shot="https://rikiyat.github.io/blog/weight-space-programming/" data-find="surprisingly good at natively reading and writing" data-lines="1" data-width="900" data-scheme="light" data-cue="Sparks," data-anim="up"></figure>
-      <figure class="ss-shot in" style="left:990px; top:60px; --shot-width:820px" data-shot="https://github.com/RikiyaT/lm_understand-logs" data-find="everything we sent the model" data-select="article ul" data-width="900" data-cue="released" data-anim="up"></figure>
-      <figure class="ss-shot in" style="left:110px; top:470px; --shot-width:820px" data-shot="https://huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming" data-select="h1" data-width="1000" data-scheme="light" data-cue="Hugging" data-anim="up"></figure>
+      <figure class="ss-shot in" style="left:110px; top:40px; --shot-width:1200px" data-shot="https://rikiyat.github.io/blog/weight-space-programming/" data-find="surprisingly good at natively reading and writing" data-lines="1" data-width="560" data-scheme="light" data-cue="Sparks," data-anim="up"></figure>
+      <figure class="ss-shot in" style="left:110px; top:420px; --shot-width:900px" data-shot="https://github.com/RikiyaT/lm_understand-logs" data-find="Logs: LLMs can understand and write neural network weights" data-width="1000" data-cue="released" data-anim="up"></figure>
+      <figure class="ss-shot in" style="left:1060px; top:420px; --shot-width:760px" data-shot="https://huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming" data-select="h1" data-width="1000" data-scheme="light" data-cue="Hugging" data-anim="up"></figure>
     </div>
     <div class="phase" id="p08c">
-      <div class="tab"><span>breakout_or_something.txt</span><span class="off">17,253 weights</span></div>
+      <div class="tab"><span>a9f535cc_actor.txt</span><span class="off">17,253 weights</span></div>
       <div class="page" data-overlap="ok"><pre class="gutter">1
 2
 3
@@ -1008,8 +1013,8 @@ Wait, 90°</pre></div>
 
   // Gemma against Qwen: how often each ran out of room.
   gsap.set(["#lg", "#lq"], { scaleX: 0 });
-  tl.to("#lg", { scaleX: 0.085, duration: 0.6 }, cueAt("#p07ba .loopbars") + 0.2);
-  tl.to("#lq", { scaleX: 0.93, duration: 0.8 }, cueAt("#p07ba .loopbars") + 0.5);
+  tl.to("#lg", { scaleX: 0.085, duration: 0.6 }, cueAt("#mk85"));
+  tl.to("#lq", { scaleX: 0.93, duration: 0.8 }, cueAt("#mk93"));
 
   // The closing cursor blinks to the end.
   for (let k = 0; k < 12; k++) tl.set("#cur", { opacity: k % 2 ? 1 : 0 }, cueAt("#p08d .final span:nth-child(4)") + 1 + k * 0.5);
@@ -1032,4 +1037,15 @@ Wait, 90°</pre></div>
   gsap.set("#libs", { opacity: 0 });
   tl.to("#libs", { opacity: 1, duration: 0.3 }, cueAt("#p05bb .steps div:nth-child(1)"));
   tl.to("#danger", { opacity: 1, duration: 0.3 }, cueAt("#p05bb .steps div:nth-child(2)"));
+  // The model's loop, as a dot on the quadrants: Q1, Q2, then back to Q2 on "a hundred and eighty" (its own mistake),
+  // then round and round while the count of "Wait" climbs.
+  const Q = { 1: [235, 65], 2: [65, 65], 3: [65, 235], 4: [235, 235] };
+  const dot = (q, at) => tl.set("#wdot", { attr: { cx: Q[q][0], cy: Q[q][1] } }, at);
+  dot(1, cueAt("#wheel")); dot(2, cueAt("#mkn")); dot(2, cueAt("#mkh") + 0.4);
+  const spin = cueAt("#s06 .waits .big");
+  [3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2].forEach((q, k) => dot(q, spin + 0.2 + k * (0.42 - k * 0.018)));
+  // The loop pattern: some knobs turn up, some down, together.
+  [...document.querySelectorAll("#s06b .kn")].forEach((k, i) => tl.to(k, { rotation: i % 3 === 0 ? 100 : i % 3 === 1 ? -100 : 0, svgOrigin: "0 0", duration: 0.6, ease: "power2.inOut" }, cueAt("#s06b .chip.rd.abs") + (i % 6) * 0.03));
+  // Before "the loop pattern", one demonstration: a few knobs turn together, then settle.
+  [...document.querySelectorAll("#s06b .kn")].slice(0, 12).forEach((k, i) => { tl.to(k, { rotation: i % 2 ? "+=50" : "-=50", svgOrigin: "0 0", duration: 0.5, yoyo: true, repeat: 1 }, cueAt("#mkpat") + 0.1); });
 </script>

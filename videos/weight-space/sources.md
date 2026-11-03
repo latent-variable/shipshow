@@ -8,8 +8,8 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 
 | Key | Source |
 |---|---|
-| POST | Rikiya Takehi, Jayden Teoh, Alex Zhang, Omar Khattab (MIT CSAIL), "Sparks of Weight-Space Programming: LLMs can natively read & write neural network weights", blog post, 2 November 2026. https://rikiyat.github.io/blog/weight-space-programming/ |
-| LOGS | The same team's released logs, CC BY 4.0: https://github.com/RikiyaT/lm_understand-logs (paths below are inside it) |
+| POST | (read 2026-11-03; its two assets fetched from the URLs in `data/prepare.py` the same day) Rikiya Takehi, Jayden Teoh, Alex Zhang, Omar Khattab (MIT CSAIL), "Sparks of Weight-Space Programming: LLMs can natively read & write neural network weights", blog post, 2 November 2026. https://rikiyat.github.io/blog/weight-space-programming/ |
+| LOGS | The same team's released logs, CC BY 4.0: https://github.com/RikiyaT/lm_understand-logs, read at commit 4d09ba6d6a7e891dd8063974dfe81b3d78e3494f (paths below are inside it) |
 | CARD | Qwen3.5-0.8B model card, Hugging Face: https://huggingface.co/Qwen/Qwen3.5-0.8B (the loop warning at README line 856; the benchmark table; "operates in non-thinking mode by default", line 585) |
 | CONFIG | Qwen3.5-0.8B config.json: hidden_size 1024, 24 layers. https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/main/config.json |
 | ARDITI | Andy Arditi et al., "Refusal in Language Models Is Mediated by a Single Direction", 2024. https://arxiv.org/abs/2406.11717 |
@@ -31,8 +31,8 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 ## Claims, scene by scene
 
 **01-numbers**
-- The file is the Breakout network's weights: 17,253 numbers. LOGS `exp1_which_game/networks/a9f535cc_actor.txt` (the first 44 rows of W1 are shown, verbatim, rounded to 3 decimals as in the file); `exp1_which_game/eval/answer_key.json` (a9f535cc = breakout); `networks/description.txt` ("17,253 parameters in total").
-- The tab name "breakout_or_something.txt" is ours (a joke label); the real file name is in the bullet above.
+- The file is the Breakout network's weights: 17,253 numbers (spoken "seventeen thousand"; the exact count is on screen). LOGS `exp1_which_game/networks/a9f535cc_actor.txt` (the first 44 rows of W1 are shown, verbatim, rounded to 3 decimals as in the file); `exp1_which_game/eval/answer_key.json` (a9f535cc = breakout); `networks/description.txt` ("17,253 parameters in total").
+- The tab shows the real file name, a9f535cc_actor.txt.
 
 **01b-headline**
 - Astra read it with no tools and answered Breakout at 99%, correctly. LOGS `exp1_which_game/README.md` (no tools); `runs/breakout/answer.md` ("**99%**"); `eval/scores.json`.
@@ -60,6 +60,7 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 - Three image generators, one each for circles, squares and triangles; told not to run them. POST Experiment 2 ("We do not allow tool use or forward passes"); LOGS `exp2_diffusion/README.md`.
 - Named all three. LOGS `exp2_diffusion/eval/scores.json` (3/3).
 - The hollow square, verbatim: LOGS `exp2_diffusion/runs/square/answer.md`. Astra's drawings and the generated samples: LOGS `exp2_diffusion/eval/samples.png`, cropped (ours: four generated samples per shape, and the "GPT's drawing" column).
+- Astra read the last (output) layer, where each unit's weights draw one piece of the edge, and drew just those pieces. POST ("It finds the shape in the output layer, where each hidden unit's weights draw one piece of the shape's edge, and it draws just those edges").
 - The real networks draw them filled; the authors point to the mistake as evidence it reads structure rather than simulating. POST ("it draws every shape as an outline, ignoring that the actual models generate filled shapes. This mistake kind of shows it does not rely on calculating the forward pass").
 
 **04-car**
@@ -78,28 +79,32 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 - PPO 100M: 15.8; 500M: 25.3; Astra: 517.4. Asterix 25.8 / 55.2 / 53.2; Seaquest 5.6 / 88.9 / 53.1. POST table; LOGS `exp5_write_from_scratch/eval/minatar_eval.json`.
 - "About sixty percent" (53.1 / 88.9 = 0.60) and "came close" (53.2 vs 55.2): POST ("reach 60% of its score in Seaquest", "come close in Asterix").
 - PPO described as "a standard training method": ours.
+- The terminal text (`weights = zeros()`, "Astra's Breakout program, written as weights", the two layer lines) is ours, an illustration of the post's description, labelled on screen; not captured code.
 
 **05b-go**
 - Go, 9 x 9; 1,480,274 weights; a Python sandbox to write them. POST Experiment 6 and setup.
-- The layers: stones and the empty points beside them (liberties); chains of stones, groups in danger; the last layer scores each move: capture, rescue, avoid filling its own eyes. POST ("The first layers mark each side's stones and the empty points next to them (liberties), the middle layers carry these a few steps along chains of connected stones to find groups in danger, and the last layer turns it all into a score for each move: capture, save its own group, avoid putting itself in atari or filling its own eyes").
+- The layers: stones and the empty points beside them (liberties); chains of stones, groups in danger; the last layer scores each move: capture, rescue, avoid filling its own eyes (spoken as "don't fill the empty spots that keep your own group alive": an eye, in plain words). POST ("The first layers mark each side's stones and the empty points next to them (liberties), the middle layers carry these a few steps along chains of connected stones to find groups in danger, and the last layer turns it all into a score for each move: capture, save its own group, avoid putting itself in atari or filling its own eyes").
 - The board is our illustration, labelled as one.
+- "With no practice games at all": budget 0 means no forward passes, so no practice games before scoring (POST setup: "0 forward passes: one Python run, then the answer").
 - 0 practice games: won 54.1% and 54.9% against the two small PPO networks. LOGS `exp6_go_from_scratch/README.md`.
 - 50 rounds: beat the same-size PPO network trained on 20 million games, 74.2%, 70.0%, 78.5% (shown as 70-78%; spoken "about three games in four"). LOGS same README and `eval/ppo_same_size/...`; POST ("20,000 iterations of 1,024 games"; "beats the equal-sized PPO network that was trained on 20 million games").
 
 **06-patient**
 - Qwen 3.5, 0.8 billion weights, thinks out loud (thinking mode on in the study). POST Experiment 8 setup ("thinking on (24 layers, 0.8 billion weights)").
 - The model card's warning: "more prone to entering thinking loops". CARD line 856 (screenshot).
+- The quadrant wheel: ours, an illustration of the answer's own steps (Q1, Q2, then "180° is Q2" again, as in the record).
 - The rotation answer: verbatim from LOGS `exp8_math/eval/unedited/parts/math500_s8of10/math500_first_samples.jsonl.gz`, record `test/precalculus/779.json` (LaTeX degrees shown as °, list bullets removed). "Wait," appears 1,466 times in that answer (ours: counted in the record's text, 70,825 characters).
 - It never finishes: the answer has no boxed answer and runs to the limit (ours, read in the record).
 - 85 of 96 ran out of room: LOGS `exp8_math/runs/p50c/requests/fwd_1.done.json`; POST ("85 of its first 96 practice answers ran to the 32,768-token limit"). Spoken "about thirty three thousand tokens of thinking".
 - Tools: a Python notebook (kernel) over the weights, CPU, no GPU; no training, no gradients, no optimizer, no loss fitting, no internet; 50 forward passes; a pass = up to 512 answers or up to 1,024 texts with internal states returned. LOGS `exp8_math/runs/p50c/turns/t001/prompt.txt`; POST setup ("a Python kernel over the weights (no GPU)", "a forward pass: the model answers up to 512 problems, or reads up to 1,024 texts").
 
 **06b-direction**
-- The model's state at each token is 1,024 numbers. CONFIG (hidden_size 1024). "Point in a space with 1,024 directions": our picture.
+- The model's state at each token is 1,024 numbers. CONFIG (hidden_size 1024). A token is "a word or a piece of one" (ours, standard). The 1,024 numbers as readings (needles on gauges), kept apart from the weights, and a direction as a pattern across them (some up, some down): our picture; the drawing shows 24 and is an illustration. A neuron as "a small calculator inside each layer": ours (one MLP unit; its weights are the ones edited, LOGS formula).
 - Four pairs of snippets, one productive and one repetitive; the repetitive branch "But is 20 the total? No, it is the remaining time." repeated. LOGS `exp8_math/runs/p50c/turns/t010/answer.md`; `requests/fwd_19.json.claimed`, `fwd_22.json.claimed` (the repeated sentence, verbatim). The snippets were written by Astra (LOGS), not generated by the model.
 - Fed both through the model, subtracted, averaged: the repetition direction. LOGS `runs/p50c/turns/t010/answer.md` (average the final token states, repetitive minus productive within each pair, average the four differences, normalise).
 - The neurons that write along it hardest; layers 15 and 19 stood out. LOGS same, and `tool_calls.jsonl`; POST ("one direction written by the MLPs of layers 15 and 19").
 - 64 neurons per layer; strip the direction; then six times the other way: `W = W0 - 6 * outer(u, mask64 * (u @ W0))`. LOGS `runs/p50c/work_notes/experiment_history.md` line 145; `final_report.md`. Shown as W′ = W − 6·u(uᵀW) on 64 columns. Each layer has its own direction (LOGS final_report); the video says "the arrow" for both (simplification, noted here).
+- "The neurons that kept nudging the model into a loop now nudge it out of one": our plain reading of the formula (the 64 columns' component along the repetition direction is reversed and amplified, strength 6; LOGS final_report.md), supported by the result (MATH-500 cutoffs 93% to 33%).
 - 131,072 of about 800 million weights, 0.016%. POST. (130,188 differ after bfloat16 rounding: LOGS `exp8_math/README.md`; not said.)
 - Deleting one direction is a known trick; in 2024 researchers used it to switch off refusals. ARDITI (screenshot of its title).
 - Astra never names that work; it calls its edit "rank-one removal". LOGS `runs/p50c/explanations.md`, `turns/t029/answer.md` (inferred from absence across the released explanations).
@@ -108,7 +113,7 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 **06c-results**
 - Test problems it never saw. POST ("Evaluation: MATH-500, GSM8K and six other benchmarks ... Astra never sees them").
 - MATH-500 7.9 → 48.1; GSM8K (grade-school word problems) 13.8 → 67.1; IFEval (instruction following) 21.0 → 62.3. POST table (50 forward passes).
-- "The loops were hurting everything": POST ("The loops are not special to math, so performance beyond math improved as well").
+- "The loops weren't only hurting math, so removing them helped the other tests too": POST ("The loops are not special to math, so performance beyond math improved as well").
 - The rotation question after the edit, boxed −2 + 7i: LOGS `exp8_math/eval/p50c/parts/math500_s8of10/math500_first_samples.jsonl.gz`, same record (matches the reference).
 - Separate tries with 10 and 25 passes found weaker fixes: 10 → broad edits across 30 matrices, 12.3; 25 → disable layer 15 attention head 7, 14.1; 50 → two MLPs, 64 columns, 48.1. LOGS `exp8_math/README.md`; `runs/p10c/final_answer.md`; `runs/p25c/final_answer.md`. These were three independent conversations (LOGS README). "A search, not a recipe": our wording (inferred).
 
@@ -126,7 +131,7 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 **07c-fair**
 - Qwen's own IFEval for Qwen3.5-0.8B: 44.0 in thinking mode, 52.1 in non-thinking mode. CARD benchmark table. Non-thinking is its default: CARD line 585.
 - The study's untouched model: 21.0; after the edit: 62.3. POST table.
-- "Its setup looped more than Qwen's own did": inferred from 21.0 vs 44.0 under thinking mode; the study used presence penalty 1.5, temperature 0.6, top-p 0.95, top-k 20, 32,768 tokens (POST setup); Qwen recommends 81,920 tokens for hard math (CARD line 942); Qwen's own evaluation settings are not stated next to its table.
+- "Well below both, and the setups differ, so we can't say exactly why": 21.0 against 44.0 and 52.1; possible reasons include the study used presence penalty 1.5, temperature 0.6, top-p 0.95, top-k 20, 32,768 tokens (POST setup); Qwen recommends 81,920 tokens for hard math (CARD line 942); Qwen's own evaluation settings are not stated next to its table.
 - "A hint, not a verdict": different test setups (opinion, ours).
 
 **08-meaning**

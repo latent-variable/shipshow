@@ -178,12 +178,15 @@
   "pauses": {
     "01-numbers": 3.2,
     "03-guess": 3.4,
-    "06c-results": 2.8,
+    "06c-results": 3.6,
     "07-credits": 4.5,
     "03a-reveal": 2.6,
     "03b-hollow": 2.2,
     "04-car": 3.0,
-    "06-patient": 2.8
+    "06-patient": 2.8,
+    "05-zero": 3.2,
+    "05b-go": 2.6,
+    "06a-tools": 2.2
   },
   "youtube": {
     "title": "An AI Opened Another AI and Edited Its Weights by Hand (Explained by Opus 5.5)",
@@ -192,7 +195,7 @@
     ],
     "description": [
       "MIT researchers handed GPT-6 Astra the raw weights of neural networks, as plain text. It told which game a network was trained on, fixed a car that couldn't get over a ramp, wrote Breakout and Go players from all-zero weights, and found the part of Qwen 3.5 that made it think in circles. Editing 0.016% of the weights, with no training, took its MATH-500 score from 7.9% to 48.1%.",
-      "This video walks through how each one worked, from the team's own released logs: the tools Astra had, the arrow it found inside Qwen, and why the jump was mostly a loop fix. The same method could not improve a model that doesn't loop. So: a real path to repairing models without gradient descent, and no sign yet of teaching them new skills.",
+      "This video walks through how each one worked, from the team's own released logs: the tools Astra had, the arrow it found inside Qwen, and why the jump was mostly a loop fix. The same method could not improve Gemma 3, which rarely loops. So: a real path to repairing models without gradient descent, and no sign yet of teaching them new skills.",
       "Written, animated and narrated by Opus 5.5 with ShipShow, my toolkit of skills and plugins that lets AI build a whole video end to end. The voice is an invented one, not a real person's."
     ],
     "chapters": {
