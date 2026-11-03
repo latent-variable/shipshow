@@ -14,6 +14,7 @@ import { creditLines, portraitsIn } from "./portrait.mjs";
 import { footageIn } from "./footage.mjs";
 import { shotsIn } from "./shot.mjs";
 import { overlaps } from "./overlap.mjs";
+import { actOpenings, changeRhythm, channelDevices, devicesIn } from "./devices.mjs";
 import { listenSection, voiceCheckSection } from "./hearback.mjs";
 import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
 
@@ -172,6 +173,28 @@ out.push(md(timing.scenes.map((sc) => {
   const st = stillStretches(sc, cues.filter((c) => c.scene === sc.id).map((c) => c.at));
   return [sc.id, round(st.seconds), `${round(st.from)} s to ${round(st.to)} s`];
 }), ["scene", "longest still stretch (s)", "between"]), "");
+// Devices (bin/devices.mjs, D96): what editing moves this video makes, and which the person's other videos already made.
+{
+  const source = readFileSync(join(dir, "scenes.html"), "utf8");   // the same file the other videos are read from
+  const mine = devicesIn(source), channel = channelDevices(), me = basename(dir);
+  const others = [...channel.entries()].filter(([v]) => v !== me);
+  const usedBy = (d) => others.filter(([, set]) => set.has(d)).length;
+  out.push("## Devices", "", `The editing moves this video makes, read from \`scenes.html\`, and how many of the person's ${others.length} other ${others.length === 1 ? "video uses" : "videos use"} each. A move every other video also makes is a staple a returning viewer already expects; one no other video made is new to the channel. \`critic-novelty\` judges whether the video surprises within itself and against the channel.`, "");
+  const rows = [...mine.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  // A piece drawn once that no other video has is this subject's own drawing, not an editing move: counted, not listed.
+  const oneOff = rows.filter(([d, n]) => d.startsWith("piece: ") && n === 1 && usedBy(d) === 0);
+  out.push(md(rows.filter((r) => !oneOff.includes(r)).map(([d, n]) => { const k = usedBy(d); return [d, n, `${k} of ${others.length}`, others.length && k === others.length ? "staple" : k === 0 ? "new to the channel" : ""]; }), ["device", "times here", "other videos using it", ""]), "");
+  if (oneOff.length) out.push(`And ${oneOff.length} pieces drawn once for this subject alone (${oneOff.map(([d]) => d.slice(7)).join(", ")}).`, "");
+  const ents = rows.filter(([d]) => d.startsWith("entrance: ")), entTotal = ents.reduce((a, [, n]) => a + n, 0);
+  if (entTotal) out.push(`Entrances: the three most used are ${ents.slice(0, 3).map(([d, n]) => `${d.slice(10)} (${Math.round((100 * n) / entTotal)}%)`).join(", ")} of ${entTotal}.`, "");
+  const acts = actOpenings(source);
+  if (acts.length > 1) {
+    out.push("How each act opens: its first scene's first cued piece and entrance, and the beat before its first word (`leads`).", "");
+    out.push(md(acts.map((a) => [a.scene, a.mood || "(the video's own)", a.piece || "(none)", a.entrance || "(none)", cfg.leads?.[a.scene] !== undefined ? `${cfg.leads[a.scene]} s` : ""]), ["scene", "mood", "first piece", "entrance", "lead"]), "");
+  }
+  const beat = changeRhythm(cues.map((c) => c.at));
+  if (beat) out.push(`Rhythm: ${beat.changes} changes on screen, a median of ${round(beat.median)} s apart; ${Math.round(beat.regular * 100)}% of the gaps fall within a quarter of that median (the higher, the more metronomic).`, "");
+}
 // Sound effects: bin/sfx.mjs wrote assets/sfx.json when it built the page.
 const sfxRecord = existsSync(join(dir, "assets", "sfx.json")) ? JSON.parse(readFileSync(join(dir, "assets", "sfx.json"), "utf8")) : { events: [] };
 out.push("## Sound effects", "");

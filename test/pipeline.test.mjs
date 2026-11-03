@@ -1376,6 +1376,65 @@ test("leads add a beat before one scene: it starts where it did, its first word 
   assert.match(bad.r.stderr, /leads\[".*"\] is -1; it takes 0 to 10 seconds/);
 });
 
+test("devices: a page's editing moves are counted, each act's opening is named, and the beat between changes is measured", async () => {
+  const { devicesIn, actOpenings, changeRhythm, channelDevices } = await import("../bin/devices.mjs");
+  const page = `<style>.card{}</style>
+<section data-scene="01-a" data-mood="one" data-transition="wipe"><h2 class="chapter" data-cue="+0" data-anim="fade">One</h2>
+  <div class="card big" data-cue="word" data-anim="slam" data-sfx="boom">x</div><figure class="ss-meme" data-meme="buzz" data-cue="w"></figure></section>
+<section data-scene="01b-a"><div class="card" data-cue="w">y</div></section>
+<section data-scene="02-b" data-mood="two"><h2 class="chapter" data-cue="+0" data-anim="fade">Two</h2><figure class="ss-shot" data-shot="u"></figure></section>
+<script>sfx("ding", cueAt("#x"));</script>`;
+  const d = devicesIn(page);
+  assert.equal(d.get("entrance: fade"), 2);
+  assert.equal(d.get("entrance: the theme's"), 2, "a cue with no data-anim takes the theme's entrance");
+  assert.equal(d.get("piece: card"), 2);
+  assert.equal(d.get("piece: chapter"), 2);
+  assert.equal(d.get("meme"), 1);
+  assert.equal(d.get("screenshot"), 1);
+  assert.equal(d.get("sound: boom"), 1);
+  assert.equal(d.get("sound: ding"), 1, "an sfx() call in the script counts");
+  assert.equal(d.get("transition: wipe"), 1);
+  assert.ok(![...d.keys()].some((k) => k.includes(".card")), "styles are not read as pieces");
+  assert.deepEqual(actOpenings(page).map((a) => [a.scene, a.mood, a.piece, a.entrance]), [["01-a", "one", "chapter", "fade"], ["02-b", "two", "chapter", "fade"]],
+    "a scene that keeps its mood is not a new act");
+  const metronome = changeRhythm([0, 4, 8, 12, 16, 16.1]);
+  assert.equal(metronome.changes, 5, "cues 0.1 s apart are one change");
+  assert.equal(metronome.median, 4);
+  assert.equal(metronome.regular, 1);
+  assert.ok(changeRhythm([0, 1, 7, 8.5, 20]).regular < 0.5, "an uneven beat reads as uneven");
+  assert.equal(changeRhythm([3]), null);
+  const root = mkdtempSync(join(tmpdir(), "kx-devices-"));
+  for (const [name, yt] of [["pub", true], ["draft", false]]) {
+    mkdirSync(join(root, "videos", name), { recursive: true });
+    writeFileSync(join(root, "videos", name, "scenes.html"), page);
+    writeFileSync(join(root, "videos", name, "video.json"), JSON.stringify(yt ? { youtube: { title: "t" } } : {}));
+  }
+  const prevLocal = process.env.SHIPSHOW_LOCAL, prevVideos = process.env.SHIPSHOW_VIDEOS;
+  process.env.SHIPSHOW_LOCAL = join(root, "local"); delete process.env.SHIPSHOW_VIDEOS;
+  try { assert.deepEqual([...channelDevices(root).keys()], ["pub"], "only videos made for YouTube count when there are any"); }
+  finally { if (prevLocal === undefined) delete process.env.SHIPSHOW_LOCAL; else process.env.SHIPSHOW_LOCAL = prevLocal; if (prevVideos !== undefined) process.env.SHIPSHOW_VIDEOS = prevVideos; }
+});
+
+test("music drop: the bed cuts to silence on its cue for its seconds and comes back over half a second; a drop needs a cue", async () => {
+  const { dropGain, dropsIn, DROP_IN } = await import("../bin/lib.mjs");
+  const drops = [{ at: 10, seconds: 1.5 }];
+  assert.equal(dropGain(9, drops), 1, "before the drop the bed plays");
+  assert.ok(dropGain(9.98, drops) < 1, "it is cut in the last few hundredths before the word");
+  assert.equal(dropGain(10.7, drops), 0, "silent through the drop");
+  assert.ok(Math.abs(dropGain(11.5 + DROP_IN / 2, drops) - 0.5) < 1e-9, "half back halfway through the return");
+  assert.equal(dropGain(12.5, drops), 1);
+  assert.deepEqual(dropsIn([{ id: "03", body: '<div class="x" data-cue="gone" data-at="42.1" data-drop="1.2">x</div><p data-cue="a" data-at="3">y</p>' }]), [{ at: 42.1, seconds: 1.2 }]);
+  const stop = (body) => { try { dropsIn([{ id: "03", body }]); return ""; } catch (e) { return e.message; } };
+  const prevExit = process.exit; process.exit = (c) => { throw new Error(`exit ${c}`); };
+  const prevErr = console.error, said = []; console.error = (m) => said.push(String(m));
+  try {
+    stop('<div data-drop="1">x</div>');
+    stop('<div data-cue="a" data-at="3" data-drop="9">x</div>');
+  } finally { process.exit = prevExit; console.error = prevErr; }
+  assert.match(said.join("\n"), /data-drop needs a data-cue/);
+  assert.match(said.join("\n"), /data-drop is "9"; it takes 0\.3 to 6 seconds/);
+});
+
 test("package: chapters come from scene starts, and what YouTube would refuse or ignore is named before anything is written", async () => {
   const { chapters, descriptionText, stamp, youtubeProblems } = await import("../bin/package.mjs");
   const timing = { total: 425.66, scenes: [{ id: "01", start: 0 }, { id: "02", start: 25.8 }, { id: "03", start: 59.1 }, { id: "04", start: 3725.2 }] };

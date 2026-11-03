@@ -153,11 +153,12 @@ function howItWorks() {
 
 // ---- the critics ----
 function critics() {
-  const W = 1280, H = 666;
+  const W = 1280, H = 812;
   const list = [
     ["Accuracy", "Is every claim true?"], ["Clarity", "Will they follow it?"], ["Pacing", "Can they keep up?"],
     ["Sync", "Is it shown when it’s said?"], ["Visuals", "Is every frame readable?"], ["Consistency", "One name for one thing?"],
-    ["Engagement", "Would they keep watching?"], ["Decision", "Can they make the call?"], ["Grounding", "Is the evidence real?"],
+    ["Engagement", "Would they keep watching?"], ["Novelty", "Could they predict it?"], ["Decision", "Can they make the call?"],
+    ["Grounding", "Is the evidence real?"],
   ];
   const cw = 386, chh = 128, gx = 21, gy = 18, x0 = 40, y0 = 196;
   const cards = list.map(([name, q], i) => {
@@ -175,7 +176,7 @@ function critics() {
   <text x="40" y="118" class="sg" font-size="36" font-weight="700" letter-spacing="-1" fill="${C.ink}">FRESH AGENTS, ONE QUESTION EACH.</text>
   <text x="40" y="160" class="sg" font-size="26" font-weight="500" fill="#d6e0ee">The agent that made the video never judges it.</text>
   ${cards}`;
-  return page(W, H, "The critics", "Nine critics, each a fresh agent with one question: Accuracy, is every claim true? Clarity, will they follow it? Pacing, can they keep up? Sync, is it shown when it is said? Visuals, is every frame readable? Consistency, one name for one thing? Engagement, would they keep watching? Decision, can they make the call? Grounding, is the evidence real? The agent that made the video never judges it.", body, { horizon: false });
+  return page(W, H, "The critics", "Ten critics, each a fresh agent with one question: Accuracy, is every claim true? Clarity, will they follow it? Pacing, can they keep up? Sync, is it shown when it is said? Visuals, is every frame readable? Consistency, one name for one thing? Engagement, would they keep watching? Novelty, could they predict it? Decision, can they make the call? Grounding, is the evidence real? The agent that made the video never judges it.", body, { horizon: false });
 }
 
 for (const [name, svg] of [["hero.svg", hero()], ["how-it-works.svg", howItWorks()], ["critics.svg", critics()]]) {

@@ -95,7 +95,7 @@ export function themeCss(name, videoFolder, namespace = "") {
 }
 
 /** video.json "flair": a video's own motion, over its theme's. */
-const FLAIR = { transition: ["none", "fade", "rise", "slide", "zoom", "wipe", "flash"], entrance: null, camera: ["none", "push"], ambient: ["none", "glow", "grid", "dots", "stars", "horizon", "blobs", "dust", "skyline", "grain", "scanlines", "vignette"], "ambient-strength": null, progress: ["on", "off"] };
+const FLAIR = { transition: ["none", "fade", "rise", "slide", "zoom", "wipe", "flash", "whip"], entrance: null, camera: ["none", "push"], ambient: ["none", "glow", "grid", "dots", "stars", "horizon", "blobs", "dust", "skyline", "grain", "scanlines", "vignette"], "ambient-strength": null, progress: ["on", "off"] };
 export function flairCss(flair = {}) {
   const lines = Object.entries(flair).map(([k, v]) => {
     if (!(k in FLAIR)) die(`video.json flair has "${k}"; it takes ${Object.keys(FLAIR).join(", ")}`);
@@ -442,8 +442,8 @@ export function outName(dir) {
 // The critic loop's dials (skills/critic-loop). A preset sets them all; anything set more
 // specifically wins: a flag on bin/critics.mjs, then video.json "review", then the person's
 // local/config.json "review", then the preset (a decision video's default is quick).
-const BASE_CRITICS = ["critic-accuracy", "critic-clarity", "critic-pacing", "critic-sync", "critic-visuals", "critic-consistency", "critic-engagement"];
-const TASTE_CRITICS = ["critic-clarity", "critic-visuals", "critic-engagement"];
+const BASE_CRITICS = ["critic-accuracy", "critic-clarity", "critic-pacing", "critic-sync", "critic-visuals", "critic-consistency", "critic-engagement", "critic-novelty"];
+const TASTE_CRITICS = ["critic-clarity", "critic-visuals", "critic-engagement", "critic-novelty"];
 // The builder judges how much a video matters and records it in video.json "importance"
 // (skills/critic-loop, *How much review*); each level picks a preset.
 export const IMPORTANCE = { low: "quick", normal: "standard", high: "thorough" };
@@ -543,8 +543,8 @@ export function musicFile(dir, file) {
  *  false when the file is not there (music is often local: a teammate may not have it).
  *  "file" is relative to the video's folder, then the local layer for a "local/..." path, then the repo; "volume" is the bed's level in
  *  the gaps (0 to 1, default 0.22) and "duck" what it is multiplied by under speech (0.35). */
-export function musicBed(dir, music, timing, moods = []) {
-  if (moods.length > 1) return moodMusicBed(dir, music, timing, moods);
+export function musicBed(dir, music, timing, moods = [], drops = []) {
+  if (moods.length > 1) return moodMusicBed(dir, music, timing, moods, drops);
   if (!music) return false;
   const spec = typeof music === "string" ? { file: music } : music;
   const file = musicFile(dir, spec.file);
@@ -574,6 +574,7 @@ export function musicBed(dir, music, timing, moods = []) {
     }
     let gain = volume * (1 - speech * (1 - duck));
     gain *= Math.min(1, t / 0.8, (timing.total - t) / 2.5);   // fade in, and out over the end
+    if (drops.length) gain *= dropGain(t, drops);
     const s = (f % srcFrames) * 2;                                 // loop a shorter track
     out[f * 2] = Math.round(src[s] * gain);
     out[f * 2 + 1] = Math.round(src[s + 1] * gain);
@@ -582,13 +583,37 @@ export function musicBed(dir, music, timing, moods = []) {
   return true;
 }
 
+/** A music drop (D96): `data-drop="<seconds>"` on a cued element cuts the bed to silence on its cue, for that long, so a
+ *  reveal lands in a hush the viewer did not expect. Out in DROP_OUT (a cut, not a fade), back in over DROP_IN. */
+export const DROP_OUT = 0.04, DROP_IN = 0.5;
+export function dropGain(t, drops) {
+  let g = 1;
+  for (const { at, seconds } of drops) {
+    if (t < at - DROP_OUT || t > at + seconds + DROP_IN) continue;
+    g = Math.min(g, t < at ? (at - t) / DROP_OUT : t <= at + seconds ? 0 : (t - at - seconds) / DROP_IN);
+  }
+  return g;
+}
+
+/** The drops a built page asks for: each element with data-drop and the data-at its cue resolved to. */
+export function dropsIn(bodies) {
+  const out = [];
+  for (const { id, body } of bodies) for (const m of body.matchAll(/<[a-zA-Z][^>]*\sdata-drop="([^"]*)"[^>]*>/g)) {
+    const seconds = Number(m[1]), at = Number(m[0].match(/\sdata-at="([^"]+)"/)?.[1]);
+    if (!Number.isFinite(at)) die(`scene ${id}: data-drop needs a data-cue, so the drop lands on a word`);
+    if (!(seconds >= 0.3 && seconds <= 6)) die(`scene ${id}: data-drop is "${m[1]}"; it takes 0.3 to 6 seconds`);
+    out.push({ at, seconds });
+  }
+  return out;
+}
+
 /** A music handoff at a mood change (D71), in seconds: the old bed starts fading at the act's last word, but no earlier
  *  than MUSIC_OUT_MAX and no later than MUSIC_OUT_MIN before the boundary, and is gone MUSIC_OUT_PAST after it; the new
  *  bed swells in over MUSIC_IN from the boundary. */
 export const MUSIC_OUT_MAX = 4, MUSIC_OUT_MIN = 1, MUSIC_OUT_PAST = 0.5, MUSIC_IN = 2;
 
 /** Mix only explicit music changes; absent or missing tracks keep the previous playhead. */
-function moodMusicBed(dir, music, timing, moods) {
+function moodMusicBed(dir, music, timing, moods, drops = []) {
   const rate = 48000, tracks = [];
   mkdirSync(join(dir, "assets"), { recursive: true });
   for (const mood of moods) {
@@ -640,6 +665,7 @@ function moodMusicBed(dir, music, timing, moods) {
       const leave = leaving ? Math.cos((Math.PI / 2) * clamp((t - track.outFrom) / (track.outTo - track.outFrom))) : 1;
       let gain = enter * leave * track.volume * (1 - (leaving ? 1 : speech) * (1 - track.duck));
       gain *= Math.min(1, t / 0.8, (timing.total - t) / 2.5);
+      if (drops.length) gain *= dropGain(t, drops);
       if (!gain) continue;
       const n = track.samples.length / 2;
       // A track plays from its own opening at its boundary, never its looped-round end.

@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-11-02 (after the title tag names the builder, D95).
+Last reviewed: 2026-11-03 (after critic-novelty and the pattern breaks, D96).
 
 ## Problem
 
@@ -72,7 +72,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | ID | Requirement | Status |
 |---|---|---|
 | F11 | Fresh critic agents judge a video; the builder never judges (`critic-loop`) | done |
-| F12 | Nine critics, one skill each: `critic-accuracy`, `critic-clarity`, `critic-pacing`, `critic-sync`, `critic-visuals`, `critic-consistency`, `critic-engagement`, `critic-decision`, `critic-grounding` | done |
+| F12 | Ten critics, one skill each: `critic-accuracy`, `critic-clarity`, `critic-pacing`, `critic-sync`, `critic-visuals`, `critic-consistency`, `critic-engagement`, `critic-novelty`, `critic-decision`, `critic-grounding` | done |
 | F13 | A critic can verify that shown code and output match the source: a scripted excerpt check, capture files with a recomputable hash, a visible source file and range label, and a per-asset table (`critic-grounding`) | done, being hardened |
 | F14 | A review packet gives critics measurements and frames (`npm run review`) | done |
 
@@ -134,6 +134,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F64 | Another repo builds on ShipShow: it pins a commit and runs it with its own layer (`SHIPSHOW_LOCAL`), venvs (`SHIPSHOW_VENVS`), render folder (`SHIPSHOW_OUT`) and video folders (`SHIPSHOW_VIDEOS`), so its videos, theme, rules and voices stay its own (DESIGN D75) | done; tests; first used by DAIS product-videos |
 | F65 | Footage of the video's own app: local MP4, WebM or GIF figures start at their cue, optionally from an offset, play once at 1x and hold the final frame to the scene's end; independent frame tokens and packet measurements, outside memes and third-party credits (DESIGN D77) | done; tests; first used by DAIS product-videos |
 | F66 | A series frame stays still across scenes: top-level ss-frame blocks share a persistent layer over scenes, below overlay and captions; scene-qualified arrival cues and optional fade-out cues use the shared timeline (DESIGN D78) | done; tests; first used by DAIS product-videos |
+| F67 | A video stays unpredictable, within itself and against the person's other videos: the packet's *Devices* section counts every editing move (entrances, pieces, memes, screenshots, sounds, transitions, punch-ins, music drops) beside how many of the person's YouTube videos made it, how each act opens, and the rhythm of change (`bin/devices.mjs`); `critic-novelty` judges it in the standard and thorough plans; `explain-concept` *Break the formula* and its `references/pattern-breaks.md` hold the research, our measured formula and the moves; the kit adds a punch-in (`data-punch`), a whip transition and a music drop (`data-drop`) (DESIGN D96) | done; tests; the moves checked on a copy of qwen-phones-home, frames and the music measured |
 | F20 | Per-person preferences and private videos stay local (`tailor`, `local/`) | done in this repo; elsewhere a skill checks `local/` is ignored and uses `.git/info/exclude` |
 | F21 | Run code to verify a claim without harm: a sandbox script, a faithful scratch copy, no network, writes confined (`evidence-standard`) | done on macOS; Linux untested |
 | F22 | Scaffold and diagnose: `npm run new` from `template/`, `npm run setup` (picks a Python in 3.10 to 3.13, the range the pinned Kokoro supports, and upgrades the new venv's pip before installing), `npm run doctor` for what the machine lacks, a draft render mode | done |
@@ -147,10 +148,10 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | N3 | **Independence.** The builder never judges its own video; critics are fresh agents | `critic-loop` | done |
 | N4 | **Public-safe.** A private code base's details never reach this public repo | `local/` is gitignored; `evidence-standard`, *Where the result goes* | done |
 | N5 | **Safe to run.** Reading a code base does not change it, spend money or send data out | `evidence-standard`, `scripts/sandbox-run.sh` (DESIGN D9) | done on macOS, tested; refuses elsewhere; reads are not confined and it is not a defence against hostile code |
-| N6 | **Cheap to carry.** Each skill's name and description count toward context on every turn once installed, so descriptions stay short and bodies stay under 500 lines | Measured 2026-10-27: 23 skills, 8,350 characters (about 2,088 tokens) of names and descriptions; longest SKILL.md 259 lines (a test checks these figures against the tree) | done |
+| N6 | **Cheap to carry.** Each skill's name and description count toward context on every turn once installed, so descriptions stay short and bodies stay under 500 lines | Measured 2026-11-03: 24 skills, 8,752 characters (about 2,188 tokens) of names and descriptions; longest SKILL.md 259 lines (a test checks these figures against the tree) | done |
 | N7 | **Reproducible.** A voice take is cached by text, voice and speed; generated files are gitignored | `assets/voice/*.key` | done |
 | N8 | **Observable.** Token and context use is readable per agent | `npm run usage` | done |
-| N9 | **Tested without Kokoro.** `npm test` runs with no voice model; it is the only thing CI runs | `test/` (67 tests in `pipeline.test.mjs`, plus the voice-check and run tests in `voicecheck.test.mjs` and `runs.test.mjs`; the sandbox and capture tests run on macOS only, the CI docs check only on a pull request) | done; 7 tests need `npm install` (the cue-and-caption timing test, the caption function-word test, the bare-cue warning test, the flair test, both OmniVoice tests and the `hold` test) |
+| N9 | **Tested without Kokoro.** `npm test` runs with no voice model; it is the only thing CI runs | `test/` (69 tests in `pipeline.test.mjs`, plus the voice-check and run tests in `voicecheck.test.mjs` and `runs.test.mjs`; the sandbox and capture tests run on macOS only, the CI docs check only on a pull request) | done; 7 tests need `npm install` (the cue-and-caption timing test, the caption function-word test, the bare-cue warning test, the flair test, both OmniVoice tests and the `hold` test) |
 | N10 | **Portable.** The pipeline is tested on macOS; CI runs the unit tests on Linux (`ubuntu-latest`) | `README.md`, `.github/workflows/ci.yml` | open: pipeline on Linux untried |
 | N13 | **Third-party pictures stay out of the repo.** Memegen's code and configs are MIT; its template images are third-party pictures, fetched at build into `~/.cache/shipshow/memes` and the video's `assets/memes/` (gitignored: `videos/*/assets/` covers it), never committed. The meme fonts (Titillium Web, Anton) are SIL OFL, shipped with their licences in `kit/fonts/` | `bin/meme.mjs`, `.gitignore`, `kit/fonts/` | done |
 | N11 | **Attribution.** The sample is original (its `SOURCE.md` says what it is and is not based on); Kokoro-82M and HyperFrames are Apache 2.0; GSAP is under its standard licence | `sample_application/SOURCE.md`, `README.md` | done |

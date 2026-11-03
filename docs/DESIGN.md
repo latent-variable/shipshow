@@ -41,7 +41,7 @@ The rule itself is in `AGENTS.md`; the detail that does not need to be in every 
 
 Three layers: **understand** (the context skills and `evidence-standard`), **make** (`bin/`,
 `kit/`, `explainer-video`, `explain-concept`, `narration-writing`, `glossary`), **judge**
-(`critic-loop` and nine critics). `explain-handoff` closes it. `npm run usage` watches the cost.
+(`critic-loop` and ten critics). `explain-handoff` closes it. `npm run usage` watches the cost.
 
 ## Decision log
 
@@ -158,7 +158,7 @@ pins users to it until someone bumps it, so it is omitted and the commit SHA ver
 **Facts from the docs that shaped it.** Only `name` is required, in kebab-case, and may not start
 with `claude-`, `anthropic-`, `anthropics-` or `cc-plugin-`, or equal a reserved name. Skills load
 namespaced as `/<plugin>:<skill>`. An enabled plugin's skill names and descriptions sit in context
-every turn (measured: 23 skills, 8,350 characters, about 2,088 tokens), so descriptions stay short
+every turn (measured: 24 skills, 8,752 characters, about 2,188 tokens), so descriptions stay short
 and SKILL.md under 500 lines (longest 259). A bundled script is found with `${CLAUDE_SKILL_DIR}`, so
 the scripts live inside their skills, not in `bin/`. `${CLAUDE_PLUGIN_ROOT}` is substituted in skill
 and agent bodies, hooks and MCP configs, but is not exported to Bash-tool commands. A `CLAUDE.md` at
@@ -1341,6 +1341,37 @@ for it on every title. A fixed "Opus 5.5" in the config was the first cut, and L
 model (Fable, Astra) claim Opus: the tag names whoever built it, never a model it is not. **Costs.** The builder has to set
 `builtBy`; nothing checks it against the model that actually ran. **Tested.** `test/pipeline.test.mjs` (missing, present, another
 model's name, no `builtBy`, essay, opt-out, a video's own tag, none set).
+
+### D96. Unpredictable on purpose: a novelty critic, the devices measured, and three moves (2026-11-03)
+**Decision.** The review packet gains *Devices* (`bin/devices.mjs`): every editing move `scenes.html` makes, counted, beside
+how many of the person's other YouTube videos (a `video.json` `"youtube"`, across `videos/`, `local/videos/` and
+`SHIPSHOW_VIDEOS`) made it, marked *staple* when all did and *new to the channel* when none did; how each act opens (its
+first cued piece and entrance, and its lead); the share of the three most used entrances; and the rhythm of change (the
+median gap between cues and the share within a quarter of it). A piece drawn once that no other video has is counted, not
+listed, since it is the subject's own drawing rather than a move. `critic-novelty` judges predictability against it and
+joins the standard and thorough plans as a taste critic (Opus in a thorough plan's last round). `explain-concept` gains
+*Break the formula*, `narration-writing` *No house sentence shapes*, and `explain-concept/references/pattern-breaks.md` the
+research, our measured formula and a catalogue of moves. The kit gains three moves the catalogue needed and lacked: a
+punch-in (`data-punch="1.1".."2"` on a cued element scales the scene's `.inner` toward the element's centre in 0.22 s and
+holds to the scene's next punch or `data-punch-out` seconds; `.inner`, because `.cam` carries the push and the transition is
+done with `.inner` by then; the origin is read when the tween first renders, when the scene is laid out), a `whip`
+transition (1,700 px with a 36 px blur, settling in 0.3 s on `expo.out`), and a music drop (`data-drop="0.3".."6"` on a
+cued element: the bed is cut in 0.04 s on the cue and comes back over 0.5 s; `dropGain` in `bin/lib.mjs`, for both the
+single bed and the mood mix). **Why.** The owner, 2026-11-03: "I'm starting to see the patterns and it's becoming
+repetitive, and that repetition and predictability don't help with engagement." A Codex audit of the five channel videos
+found the same structure in all five (a startling question, a roadmap, carded acts, a "should you believe it" act, a
+callback close) and pop, fade and up as about three quarters of the entrances; *Devices* on binance-heist showed all seven
+acts opening on a chapter card that fades in. The research is two-sided: a predictable beat loses attention (habituation,
+Lang's limited-capacity work on cuts), and an interesting detail beside the point lowers understanding (the
+seductive-details effect, Harp and Mayer 1998; Sundararajan and Adesope 2020), so the critic asks for surprise that carries
+the point, never decoration. **Costs.** One more critic per round (about 60k plus 5k a minute of video on Sonnet, from the
+estimate's constants). Class names are each video's own, so a piece shared across videos under different names reads as
+new; the critic reads the other videos' scripts and scenes itself. Most creator sources are leads, not verified; no
+retention data yet. **Tested.** `test/pipeline.test.mjs` (devices, act openings, rhythm, the channel's YouTube videos only;
+the drop's curve and its refusals). On a copy of qwen-phones-home: *Devices* rendered in the packet; a whip, a punch-in and
+a drop added and built; headless Chrome at the punch showed `.inner` at scale 1.27 then 1.3 with its origin on the cued
+chip, captions unscaled, and 1.3 cropping the next card (so the docs say 1.1 to 1.25); the whip at 125.36 s read
+x 1,350 px and blur 28.6 px, settled by 125.8 s; the bed measured RMS 0.0 through the drop and back to 605 after it.
 
 ## Behaviour
 

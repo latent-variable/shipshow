@@ -21,7 +21,7 @@ import { liftFrames } from "./frame.mjs";
 import { footageScene } from "./footage.mjs";
 import { portraitScene } from "./portrait.mjs";
 import { shotScene } from "./shot.mjs";
-import { REPO, config, die, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir, recordStep, missingLocalFiles } from "./lib.mjs";
+import { REPO, config, die, dropsIn, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir, recordStep, missingLocalFiles } from "./lib.mjs";
 import { resolveMoods } from "./moods.mjs";
 import { sfxTrack } from "./sfx.mjs";
 
@@ -179,7 +179,7 @@ if (missing.length) die(`scenes.html has no <section data-scene> for: ${missing.
 // kit/base.css names the meme fonts on every page, so every page declares and ships them, meme or not: a page that
 // named them undeclared failed hyperframes lint on a video with no meme (#103).
 cpSync(join(REPO, "kit", "fonts"), join(dir, "assets", "memes", "fonts"), { recursive: true });
-const music = musicBed(dir, cfg.music, timing, moods);
+const music = musicBed(dir, cfg.music, timing, moods, dropsIn(bodies));
 let sfx = null;
 try { sfx = sfxTrack({ dir, cfg, timing, sections: bodies, script }); } catch (e) { die(`sound effects: ${e.message}`); }
 const html = readFileSync(join(REPO, "kit", "shell.html"), "utf8")

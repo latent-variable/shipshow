@@ -85,6 +85,13 @@ voice that only wants to please (the owner, eth-is-false, 2026-10-28: "be self-a
 - a stake nobody watching has: "does your SAT solver get faster?" Ask what the viewer feels (is encryption broken?), even
   if the answer is no, and answer it straight.
 
+**No house sentence shapes.** A shape that worked once becomes a tic by the third video: "Think of a ...", a rhetorical
+question answered in the same breath ("So, case closed? Not quite."), a short dry fragment after every long sentence, a
+close that calls back to the opening. Use any of them at most twice in a video, and read the last two videos' scripts
+before writing so this one does not lean on theirs (measured across five videos, 2026-11-03: `explain-concept`,
+*Break the formula*). Vary how jokes are built too: not every one an understatement or the narrator's aside. An open
+question held a while pulls harder than one answered at once.
+
 ## For the ear
 
 - Short sentences, subject first, none that needs a second hearing. A sentence that holds a

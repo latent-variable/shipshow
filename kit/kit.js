@@ -288,6 +288,7 @@
         zoom: { opacity: 0, scale: 0.94 },
         wipe: { clipPath: "inset(0% 100% 0% 0%)" },
         flash: { opacity: 0, scale: 1.06, filter: "brightness(2.4)" },
+        whip: { x: 1700, filter: "blur(36px) brightness(1)" },   // a fast pan with motion blur (D96): once a video, not per scene
       };
       const SETTLED = { opacity: 1, x: 0, y: 0, scale: 1, clipPath: "inset(0% 0% 0% 0%)", filter: "brightness(1)" };
       // The last scene is the one that ends last on the timeline, whatever its place in the page.
@@ -302,8 +303,9 @@
         tl.set(inner, { opacity: 1 }, start);
         const from = TRANSITIONS[kind];
         if (from) {
-          const settled = Object.fromEntries(Object.keys(from).map((k) => [k, SETTLED[k]]));
-          tl.fromTo(inner, { ...from }, { ...settled, duration: Math.min(0.55, dur * 0.12), ease: "power3.out", immediateRender: false }, start);
+          const whip = kind === "whip";
+          const settled = Object.fromEntries(Object.keys(from).map((k) => [k, whip && k === "filter" ? "blur(0px) brightness(1)" : SETTLED[k]]));
+          tl.fromTo(inner, { ...from }, { ...settled, duration: whip ? Math.min(0.3, dur * 0.1) : Math.min(0.55, dur * 0.12), ease: whip ? "expo.out" : "power3.out", immediateRender: false }, start);
           // fromTo, not to: parallel render workers seek to any time first, so the start is stated.
           // The last scene never fades: the video ends on its finished frame, which is what a
           // paused or ended player shows while people talk about it.
@@ -483,6 +485,38 @@
         if (!a) throw new Error(`unknown data-anim ${name}: one of ${ANIMS.join(", ")}`);
         gsap.set(el, a[0]);
         tl.to(el, a[1], at);
+      });
+
+      // Punch-in (D96): data-punch="1.2" on a cued element snaps the scene's view toward it on its word, and holds until
+      // the scene's next punch, or data-punch-out seconds later. It scales .inner, which the scene's transition is done with
+      // by then, so the camera push on .cam keeps drifting underneath. The origin is read when the tween first renders,
+      // when the scene is on screen and laid out.
+      const punches = new Map();
+      document.querySelectorAll("section.scene [data-punch][data-at]").forEach((el) => {
+        const sec = el.closest("section.scene");
+        if (!punches.has(sec)) punches.set(sec, []);
+        punches.get(sec).push(el);
+      });
+      punches.forEach((els, sec) => {
+        const inner = sec.querySelector(":scope > .inner");
+        let scale = 1;
+        els.sort((a, b) => +a.dataset.at - +b.dataset.at).forEach((el) => {
+          const to = parseFloat(el.dataset.punch), at = +el.dataset.at;
+          if (!(to >= 1 && to <= 2)) throw new Error(`data-punch is ${el.dataset.punch}: it takes 1 to 2`);
+          const origin = () => {
+            const box = inner.getBoundingClientRect(), r = el.getBoundingClientRect();
+            if (!box.width || !box.height) return "50% 50%";
+            return `${(((r.left + r.width / 2 - box.left) / box.width) * 100).toFixed(1)}% ${(((r.top + r.height / 2 - box.top) / box.height) * 100).toFixed(1)}%`;
+          };
+          tl.set(inner, { transformOrigin: origin }, at);
+          tl.fromTo(inner, { scale }, { scale: to, duration: 0.22, ease: "power4.out", immediateRender: false }, at);
+          scale = to;
+          const out = parseFloat(el.dataset.punchOut);
+          if (out > 0) {
+            tl.fromTo(inner, { scale }, { scale: 1, duration: 0.4, ease: "power2.inOut", immediateRender: false }, at + out);
+            scale = 1;
+          }
+        });
       });
 
       // Frame exits share the seekable timeline; scene visibility and camera never target this layer.

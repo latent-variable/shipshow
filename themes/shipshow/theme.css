@@ -44,7 +44,7 @@
      --cap-weight (500), --cap-tracking (normal), --cap-case (none, or uppercase). */
 
   /* motion: the defaults a video's flair can override (video.json "flair") */
-  --transition: rise;         /* none | fade | rise | slide | zoom | wipe | flash */
+  --transition: rise;         /* none | fade | rise | slide | zoom | wipe | flash | whip */
   --entrance: up;             /* the data-anim an element gets when it names none */
   --camera: push;             /* none | push: a slow push-in over each scene */
   --ambient: glow;            /* none | glow | grid | dots | stars | horizon | blobs | dust | skyline, and over the
