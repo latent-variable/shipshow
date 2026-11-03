@@ -1404,8 +1404,12 @@ about three a second, a beat; under that or more than about double is a finding.
 the celebration GIF "loops, and so then it's like confusing because ... it goes back and people look worried again"; the
 progress bar "defeats the purpose" when the player already shows time; the Frogger seal sat "probably double what it needed",
 because the five-second floor plus a scene's closing pause set its time, not its content. **Costs.** A loop that was the joke
-now needs `data-loop`; no earlier video's meme relied on looping. **Tested.** `test/meme.test.mjs` (a built meme carries
-`data-once`; inside its first loop the lines take turns as before; after it the last line stays and nothing flips back).
+now needs `data-loop`; no earlier video's meme relied on looping. A clip starts on its figure's own cue, or else on the cue
+of the nearest element around it (`cueOf` in `bin/meme.mjs`, for memes and footage): the first play-once cut of weight-space
+started its celebration GIF at the scene's start because the cue was on the `meme-wrap`, so the clip had played out unseen and
+the owner saw it "completely broken, just frozen" (looping had hidden the wrong start). **Tested.** `test/meme.test.mjs` (a
+built meme carries `data-once`; inside its first loop the lines take turns as before; after it the last line stays; a meme in
+a cued wrap starts its clip and its caption clock on the wrap's cue, and that test fails with `cueOf` removed).
 
 ## Behaviour
 

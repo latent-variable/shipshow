@@ -366,6 +366,24 @@ test("memesUsed says which videos already use a template or a clip, across video
   } finally { if (prev !== undefined) process.env.SHIPSHOW_LOCAL = prev; }
 });
 
+test("a moving meme inside a cued wrap starts its clip on the wrap's cue, not its scene's start (D99)", async () => {
+  const { cueOf } = await import("../bin/meme.mjs");
+  assert.equal(cueOf('<div data-cue="a"><figure x>', 21, ' x'), "a", "the enclosing element's cue");
+  assert.equal(cueOf('<div data-cue="a"></div><p><figure x>', 27, ' x'), undefined, "a closed sibling's cue is not the figure's");
+  assert.equal(cueOf('<div data-cue="a"><span data-cue="b"><img src="q"><figure x>', 50, ' data-cue="c"'), "c", "its own cue wins");
+  assert.equal(cueOf('<div data-cue="a"><span data-cue="b"><img src="q"><figure x>', 50, ' x'), "b", "the nearest one, past a void tag");
+  // Built: weight-space's celebration GIF sat in a cued meme-wrap and played out, unseen, from the scene's start.
+  const dir = demo(`<div class="meme-wrap" data-cue="never" data-anim="pop"><figure class="ss-meme" data-meme="relay"><span>First</span><span>Second</span><span>Always</span></figure></div>`);
+  const r = build(dir, env());
+  assert.equal(r.status, 0, r.stderr);
+  const html = readFileSync(join(dir, "index.html"), "utf8");
+  const wrapAt = +attr(html.match(/<div class="meme-wrap"[^>]*>/)[0], "data-at");
+  const fig = html.match(/<figure[^>]*data-meme="relay"[^>]*>/)[0];
+  assert.ok(wrapAt > 0, "the wrap is cued after the scene's start");
+  assert.equal(+attr(fig, "data-loop-start"), wrapAt, "the caption clock starts on the wrap's cue");
+  assert.equal(+attr(videoTag(html), "data-start"), wrapAt, "and so does the clip");
+});
+
 test("an animated template's box shows only in its part of every loop, from the figure's cue (#68)", async () => {
   // memegen's start and stop: crowd shows its first line from 0 to 0.54 of the loop and its second from 0.61 to 0.75, in the same corner
   assert.deepEqual(boxSpan({ start: 0, stop: 0.54 }), [0, 0.54]);
@@ -413,4 +431,5 @@ test("an animated template's box shows only in its part of every loop, from the 
   runInNewContext(kit, { TOTAL: 6, SEED: 1, gsap, document, window: {}, getComputedStyle: () => ({ getPropertyValue: () => "" }), console });
   assert.deepEqual([opacity(timed[0], cycle(0, 0.1)), opacity(timed[1], cycle(0, 0.6))], [1, 1], "the first loop plays as before");
   assert.deepEqual([opacity(timed[0], cycle(2, 0.1)), opacity(timed[1], cycle(2, 0.1))], [0, 1], "after it, the last line to appear stays up: the payoff holds, nothing flips back");
+  assert.deepEqual([opacity(timed[0], cycle(0, 0.9)), opacity(timed[1], cycle(0, 0.9))], [0, 1], "and from the moment it appears: it never blinks off before the clip ends");
 });
