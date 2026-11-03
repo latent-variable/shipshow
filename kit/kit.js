@@ -500,7 +500,7 @@
       punches.forEach((els, sec) => {
         const inner = sec.querySelector(":scope > .inner");
         let scale = 1;
-        els.sort((a, b) => +a.dataset.at - +b.dataset.at).forEach((el) => {
+        els.sort((a, b) => +a.dataset.at - +b.dataset.at).forEach((el, i) => {
           const to = parseFloat(el.dataset.punch), at = +el.dataset.at;
           if (!(to >= 1 && to <= 2)) throw new Error(`data-punch is ${el.dataset.punch}: it takes 1 to 2`);
           const origin = () => {
@@ -511,8 +511,9 @@
           tl.set(inner, { transformOrigin: origin }, at);
           tl.fromTo(inner, { scale }, { scale: to, duration: 0.22, ease: "power4.out", immediateRender: false }, at);
           scale = to;
-          const out = parseFloat(el.dataset.punchOut);
-          if (out > 0) {
+          // A release that would land after the next punch is dropped: the next punch takes over from here.
+          const out = parseFloat(el.dataset.punchOut), next = els[i + 1] ? +els[i + 1].dataset.at : Infinity;
+          if (out > 0 && at + out < next) {
             tl.fromTo(inner, { scale }, { scale: 1, duration: 0.4, ease: "power2.inOut", immediateRender: false }, at + out);
             scale = 1;
           }

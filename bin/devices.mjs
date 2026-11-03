@@ -56,7 +56,9 @@ export function devicesIn(html) {
   return count;
 }
 
-/** How each act opens: the first cued element of every scene whose mood differs from the scene before it. */
+/** How each act opens: the first cued element of every scene that starts an act, which is a scene whose mood differs
+ *  from the one before it, or a numbered scene with no letter after its number ("03-the-way-in", not "03b-rehearsal"),
+ *  the convention a video without moods still follows. */
 export function actOpenings(html) {
   const firsts = new Map(), moods = new Map(), order = [];
   for (const el of elements(html)) {
@@ -66,7 +68,7 @@ export function actOpenings(html) {
   }
   const out = [];
   order.forEach((scene, i) => {
-    if (i > 0 && moods.get(scene) === moods.get(order[i - 1])) return;
+    if (i > 0 && moods.get(scene) === moods.get(order[i - 1]) && !/^\d+-/.test(scene)) return;
     const el = firsts.get(scene);
     out.push({ scene, mood: moods.get(scene) || null, piece: el?.classes.find((c) => !c.startsWith("ss-")) || el?.classes[0] || null, entrance: el ? attr(el.attrs, "data-anim") || "the theme's" : null });
   });

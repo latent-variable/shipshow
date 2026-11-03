@@ -1397,6 +1397,8 @@ test("devices: a page's editing moves are counted, each act's opening is named, 
   assert.ok(![...d.keys()].some((k) => k.includes(".card")), "styles are not read as pieces");
   assert.deepEqual(actOpenings(page).map((a) => [a.scene, a.mood, a.piece, a.entrance]), [["01-a", "one", "chapter", "fade"], ["02-b", "two", "chapter", "fade"]],
     "a scene that keeps its mood is not a new act");
+  assert.deepEqual(actOpenings('<section data-scene="01-a"><p class="t" data-cue="+0">a</p></section><section data-scene="01b-a"><p class="u" data-cue="+0">b</p></section><section data-scene="02-b"><p class="t" data-cue="+0">c</p></section>').map((a) => a.scene),
+    ["01-a", "02-b"], "without moods, a numbered scene with no letter starts an act");
   const metronome = changeRhythm([0, 4, 8, 12, 16, 16.1]);
   assert.equal(metronome.changes, 5, "cues 0.1 s apart are one change");
   assert.equal(metronome.median, 4);
