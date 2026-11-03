@@ -152,10 +152,35 @@ be in `sources.md`, copied from the pin it names, never retyped (`explainer-vide
 checks it with a script).
 
 **What the kit renders natively:** entrances on a cue (`up`, `fade`, `pop`, `left`, `right`, `grow`, `zoom`,
-`blur`, `type`, `draw`, `count`, `highlight`, `stagger`, `pulse`, `scramble`, `glitch`, `slam`; `AGENTS.md`). An exit, a swap and a connector
-between two boxes need a custom `<script>` in `scenes.html`; choose a picture the kit can make or plan the script.
+`blur`, `type`, `draw`, `count`, `highlight`, `stagger`, `pulse`, `scramble`, `glitch`, `slam`; `AGENTS.md`), a punch-in
+on a word (`data-punch`), a whip into a scene (`data-transition="whip"`) and the music cut to silence on a word
+(`data-drop`). An exit, a swap and a connector between two boxes need a custom `<script>` in `scenes.html`; choose a
+picture the kit can make or plan the script.
 
-## 4. Fit it to the format
+## 4. Break the formula
+
+A viewer who can predict the next beat stops attending to it, and a viewer who has seen three of our videos can (the
+owner, 2026-11-03: "I'm starting to see the patterns"). Before the script, read the packet's *Devices* section of the
+last video, or the last two videos' scripts, and plan this one against them:
+
+- **Keep the constant, rotate the variable.** The narrator, the honesty and the sourcing stay. The structure, the act
+  openings, the moves and the sentence shapes change from video to video.
+- **Break one structural habit on purpose,** chosen for this subject: open from the middle, give the answer first, tell
+  an act as a game or a conversation, fake an ending. Our measured formula (a startling question, a roadmap, carded acts,
+  a "should you believe it" act, a callback close) is in `references/pattern-breaks.md`.
+- **Add one move the channel has not made,** because the content asks for it.
+- **A pattern break at least every minute or so:** a moment the viewer could not predict from the one before. Plan where
+  each one lands and what point it carries; put a re-hook (a new open question) where attention dips, around the third
+  and sixth minute of a long video.
+- **Wacky is welcome; random is not.** Every surprise is about what is being said at that moment: a detail that is
+  interesting but beside the point lowers what people understand (the seductive-details research). Never on the sentence
+  that introduces a new idea; on the line after it, or on the turn.
+- **Scarce moves land.** One whip a video, a few punch-ins or music drops, not one per scene.
+
+The catalogue of moves, each with how the kit makes it, and the research behind this section:
+`references/pattern-breaks.md`. `critic-novelty` judges it.
+
+## 5. Fit it to the format
 
 The numbers (reading speed, scene length, text size, caption area) live in the critics that
 judge them: `critic-pacing`, `critic-visuals`. Plan to them; do not copy them here. A quick
@@ -170,6 +195,7 @@ Outcome: <what they can do afterwards>
 Scenes:
   01-<name>  idea: <one sentence>   show: <picture>   evidence: <sources.md line>
   02-...
+Breaks: <the structural habit broken, the move new to the channel, and each pattern break with its time and the point it carries>
 Left out: <claim> because <reason>
 ```
 

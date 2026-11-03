@@ -50,7 +50,7 @@ The skills in `skills/` are the team's baseline. Each person tailors on top of t
 | `publish` | Put a finished video on YouTube: title, thumbnail, description, the upload folder, then the link recorded |
 | `tailor` | Record how one person wants their explainers, in `local/` |
 | `theme` | Make a theme, usually from a client's brand |
-| `critic-accuracy`, `critic-clarity`, `critic-pacing`, `critic-sync`, `critic-visuals`, `critic-consistency`, `critic-engagement`, `critic-decision`, `critic-grounding` | Be one critic, when the loop assigns you |
+| `critic-accuracy`, `critic-clarity`, `critic-pacing`, `critic-sync`, `critic-visuals`, `critic-consistency`, `critic-engagement`, `critic-novelty`, `critic-decision`, `critic-grounding` | Be one critic, when the loop assigns you |
 
 ## What is expected
 
@@ -123,7 +123,7 @@ checks it and voices one word; `-- --hearback` checks the hear-back and hears on
 | `npm run preview -- <folder>` | The HyperFrames studio, to scrub through it |
 | `npm run render -- <folder>` | `out/<name>.mp4`, the name taken from the folder's path (`--draft` for a fast pass), its audio mastered to `video.json` `loudness` (-14 LUFS by default, YouTube's; one gain and a look-ahead limiter capped at 3 dB, never compression; `false` for none; D52) |
 | `npm run make -- <folder>` | Voice, build, lint and render (`--speed 1.5` to try a pace without editing `video.json`) |
-| `npm run review -- <folder>` | The critics' evidence: `review/packet.md` and `review/frames/` (`--frames scenes` for fewer stills); its *Overlaps* section is `overlaps`' |
+| `npm run review -- <folder>` | The critics' evidence: `review/packet.md` and `review/frames/` (`--frames scenes` for fewer stills); its *Overlaps* section is `overlaps`', and its *Devices* section counts every editing move beside how many of the person's YouTube videos made it, how each act opens and the rhythm of change (`bin/devices.mjs`, D96) |
 | `npm run overlaps -- <folder>` | Text over other text or over a picture, measured 0.8 s after every cue and before every scene end in headless Chrome (`bin/overlap.mjs`, D72): one OVERLAP line each and `review/overlaps.json`. `data-overlap="ok"` on an element says the scene means it |
 | `npm run package -- <folder>` | The upload folder, `out/publish/<name>/` (`--to <dir>` elsewhere): the render, `thumbnail.html` set at 1280 by 720, and `<name>-youtube.txt` with the title, the description with chapters (from the scene starts), sources and credits (`review/credits.txt` and `youtube.credits`), tags and Studio's answers, all from `video.json` `"youtube"`; it stops on anything YouTube would refuse or ignore (a title over 100 characters, a description over 5000, `<` or `>`, chapters not from 0:00, fewer than three or one under ten seconds); it also stops when `sources.md` never names a clone or invented voice the video uses (D74), when the video shows screenshots or portraits but `review/credits.txt` (from `npm run review`) is missing (D84), and when the title lacks the person's `local/config.json` `youtube.titleTag`, its `{model}` filled from `video.json` `builtBy` (an essay is skipped; `video.json` `youtube.titleTag` names another or `false`, D95) |
 | `npm run critics -- <folder>` | The video's critic plan: critics, models, rounds, severity, and a rough time and token estimate (`--preset`, `--rounds`, `--until`, `--model`, `--final`, `--frames`, `--rerun`, `--critics`, `--json`) |
@@ -246,7 +246,7 @@ starts from its own opening at the boundary and swells in over 2 s under the act
 **Frame.** Top-level `.ss-frame` blocks outside the sections in `scenes.html` are lifted, in source order, into one full-canvas `#frame` layer. It sits over the scenes and under both `#overlay` and captions, inherits the mood's tokens, and stays present from zero to the end without scene transitions or camera pushes. Uncued elements show from the first frame. An arrival uses a scene-qualified cue, such as `data-cue="02-start:Paste"`, `data-cue="02-start:word#2"` or `data-cue="02-start:+0.3"`, resolved exactly like that scene's own cues with the usual `data-anim`. Unqualified cues and unknown scene ids stop the build naming the element. Optional `data-leave="02-start:+3"` starts a 0.4-second fade at that time. The overlap check includes frame text against scene text (DESIGN D78).
 
 **Motion.** Theme tokens `--transition` (`none`, `fade`, `rise`, `slide`, `zoom`, `wipe`,
-`flash`), `--camera` (`none`, `push`: a slow push-in per scene), `--ambient` (`none`, `glow`,
+`flash`, `whip`: a fast blurred pan, once a video), `--camera` (`none`, `push`: a slow push-in per scene), `--ambient` (`none`, `glow`,
 `grid`, `dots`, `stars`, `horizon` (a lit planet rim low in the frame), `blobs` (soft pools of light that drift and breathe;
 `--blob-1..3`, `--blob-strength`), `dust` (motes rising in lamplight; `--dust-color`), `skyline` (a night city along the bottom,
 two rows drifting apart, a few windows going on and off; `--skyline-far`, `--skyline-near`, `--window-color`), and three that
@@ -254,7 +254,9 @@ lie over the pictures but under the captions, in `#overlay`: `grain` (`--grain-s
 `scanlines` (`--scanline-strength`, `--scanline-gap`) and `vignette` (`--vignette-strength`, `--vignette-color`); or several:
 `stars glow`), `--ambient-strength`, `--progress` (`on`, `off`) and `--entrance`. `video.json`
 `"flair"` overrides them for one video; a section's `data-transition` or `data-camera` for
-one scene. Ambient motion is seeded from the video's name (`"seed"` to change it), so a
+one scene. A cued element's `data-punch="1.15"` snaps the scene's view toward it on its word (1 to 2; 1.1 to 1.25 keeps the
+neighbours in frame), holding to the scene's next punch or `data-punch-out` seconds; `data-drop="1.5"` cuts the music bed to
+silence on its cue for that many seconds (0.3 to 6), back over half a second (D96). Rare moves land: `explain-concept`, *Break the formula*. Ambient motion is seeded from the video's name (`"seed"` to change it), so a
 render is repeatable and each video moves its own way. Motion that sways, wraps or jumps is a pure function of the time,
 driven through GSAP modifiers on one linear tween (`kit/kit.js`, `driveBy`), so a worker that seeks anywhere draws that
 time's frame; a test runs the kit in a sandbox and checks it (DESIGN D50).
@@ -377,7 +379,7 @@ HyperFrames renders the page frame by frame in headless Chrome and muxes in the 
 ## Layout
 
 ```
-bin/        sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, timeline (how long each step took), overlap (text on text, measured), critics, memes, footage.mjs (local recordings, played once and held), new, doctor, setup, link-skills, usage; lib.mjs is shared, entry.mjs says whether a file is the script node runs (D79), measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
+bin/        devices (the editing moves a video makes, against the person's other videos), sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, timeline (how long each step took), overlap (text on text, measured), critics, memes, footage.mjs (local recordings, played once and held), new, doctor, setup, link-skills, usage; lib.mjs is shared, entry.mjs says whether a file is the script node runs (D79), measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
 kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
 themes/     shipshow, paper, launch, buildday, lofi, signal, chalk, archive, ripple and vault; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono, Bricolage Grotesque, Inter, Playfair Display, Courier Prime: SIL OFL)
 skills/     the explainer and development skills, critic-loop, publish, tailor, theme and the nine critics

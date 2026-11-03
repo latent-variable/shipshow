@@ -136,6 +136,7 @@ finding first, then fix.
 | `critic-visuals` | Legibility, contrast, layout, composition, every frame finished |
 | `critic-consistency` | Same terms, names, look and conventions from start to end |
 | `critic-engagement` | Whether the intended viewer would keep watching; design made for that persona |
+| `critic-novelty` | Whether a returning viewer could predict it: the same moves at every beat, the channel's formula again; and that every surprise carries the point |
 | `critic-grounding` | For a video that shows code, output or captures: each is genuine, from the named commit |
 | `critic-decision` | For a decision video: the call is stated, options priced, one recommended with why |
 
