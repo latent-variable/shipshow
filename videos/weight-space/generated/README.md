@@ -10,6 +10,8 @@ images land in `assets/gen/ws-<name>-image.png` (never committed); the prompts a
 | car | 04-car | the little car and its ramp, opening the fix act |
 | go | 05b-go | the Go act |
 | theatre | 06-patient | Qwen as the patient on the table |
+| cpu | 06a-tools | the CPU Astra's notebook ran on (no GPU) |
+| xray | 06a-tools | a forward pass that reads texts and returns the model's insides |
 
 Remake one: `~/.agents/bin/gpubox run moss-t2i -p prompt=@<name>.txt -p width=1792 -p height=1024 -p seed=4242 --name ws-<name> --out ../assets/gen`
 

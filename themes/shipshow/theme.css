@@ -50,7 +50,7 @@
   --ambient: glow;            /* none | glow | grid | dots | stars | horizon | blobs | dust | skyline, and over the
                                  pictures grain | scanlines | vignette; or several: "stars glow" */
   --ambient-strength: 0.18;
-  --progress: on;             /* on | off: a thin bar across the top */
+  --progress: off;            /* on | off: a thin bar across the top. Off: the player already shows time (the owner, 2026-11-03) */
   --progress-fill: var(--accent);
 
   /* Read when set, and unset here (themes/lofi sets them all): --sky (the canvas, --bg when unset);

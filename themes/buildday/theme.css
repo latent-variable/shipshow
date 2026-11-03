@@ -50,6 +50,6 @@
   --camera: push;
   --ambient: stars horizon;
   --ambient-strength: 0.22;
-  --progress: on;
+  --progress: off;
   --progress-fill: linear-gradient(90deg, #ff7a3d, #ffc49e, #8ec8ff, #8f86ff);
 }

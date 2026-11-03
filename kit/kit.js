@@ -346,10 +346,13 @@
       // that seeks anywhere draws the right box. The box's opacity is free: an entrance animates the line inside it.
       document.querySelectorAll(".ss-meme-box[data-show]").forEach((box) => {
         const fig = box.closest("[data-loop]");
-        const loop = fig ? +fig.dataset.loop : 0, from = fig ? +fig.dataset.loopStart : 0;
+        const loop = fig ? +fig.dataset.loop : 0, from = fig ? +fig.dataset.loopStart : 0, once = fig ? fig.dataset.once !== undefined : false;
         const [show, hide] = box.dataset.show.split(" ").map(Number);
         if (!(loop > 0)) return;
-        driveBy(box, { opacity: (t) => { const p = ((((t - from) / loop) % 1) + 1) % 1; return p >= show && p < hide ? 1 : 0; } });
+        // A clip that plays once (D99) stops on its last frame; its last line to appear stays up, so the payoff holds.
+        const shows = fig ? [...fig.querySelectorAll(".ss-meme-box[data-show]")].map((b) => +b.dataset.show.split(" ")[0]) : [show];
+        const last = show === Math.max(...shows);
+        driveBy(box, { opacity: (t) => { if (once && t - from >= loop) return last ? 1 : 0; const p = ((((t - from) / loop) % 1) + 1) % 1; return p >= show && p < hide ? 1 : 0; } });
       });
 
       // Each element with a cue arrives when the voice reaches its word. data-anim picks how;

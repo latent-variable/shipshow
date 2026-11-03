@@ -252,7 +252,7 @@ starts from its own opening at the boundary and swells in over 2 s under the act
 two rows drifting apart, a few windows going on and off; `--skyline-far`, `--skyline-near`, `--window-color`), and three that
 lie over the pictures but under the captions, in `#overlay`: `grain` (`--grain-strength`, `--grain-fps`, `--grain-blend`),
 `scanlines` (`--scanline-strength`, `--scanline-gap`) and `vignette` (`--vignette-strength`, `--vignette-color`); or several:
-`stars glow`), `--ambient-strength`, `--progress` (`on`, `off`) and `--entrance`. `video.json`
+`stars glow`), `--ambient-strength`, `--progress` (`on`, `off`; off in every shared theme, D99) and `--entrance`. `video.json`
 `"flair"` overrides them for one video; a section's `data-transition` or `data-camera` for
 one scene. A cued element's `data-punch="1.15"` snaps the scene's view toward it on its word (1 to 2; 1.1 to 1.25 keeps the
 neighbours in frame), holding to the scene's next punch or `data-punch-out` seconds; `data-drop="1.5"` cuts the music bed to

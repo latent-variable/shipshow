@@ -77,9 +77,9 @@ Each is worth one use where the content calls for it, not one per scene. The kit
 | The metaphor happens | The analogy stops being words and acts on screen (the vault door actually swings) | A generated object, animated (`explainer-video`, *Scenes*) |
 | Callback, changed | A picture or meme from early returns late, altered by what we now know | The same piece re-cued in a late scene, restyled |
 | Broken three | Two examples set a pattern, the third breaks it | Script; three cards, the third a different piece |
-| Fake ending | "And that's how it ended." It is not | A closing card and a hold, then a hard cut to the twist |
+| Fake ending | "And that's how it ended." It is not | A closing card and a hold, then a hard cut to the twist. It lands when the celebration visibly stops: the roll freezes, a scratch, the music cut to silence, then the twist. Its music stays at the bed's level: weight-space's first cut played a fanfare at twice the bed and the owner found it "really loud ... obnoxious" and the joke missed (2026-11-03) |
 | Fourth wall | The narrator speaks to the viewer about the video itself, once | A line; a typed comment appearing on screen |
-| Game | The viewer is asked to guess before the answer | A question card, a count-down, `pauses` before the reveal |
+| Game | The viewer is asked to guess before the answer | The options on screen (A, B, C, D, named), a count-down, `pauses` before the reveal; a question with no visible options is not a game (the owner, 2026-11-03) |
 | Running gag | A small joke that returns and pays off at the end | Script; the same piece three times, the last one different |
 
 **Not a gimmick when:** the move carries a piece of the argument (the match cut works because the object IS the point);

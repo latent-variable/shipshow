@@ -295,10 +295,10 @@ export function localClipFile(src, videoDir) {
 }
 
 /** Turn a GIF, MP4 or WebM into assets/memes/clips/<key>.mp4: cropped, 30 fps, no sound, looped to
- *  `window` seconds. The key names the source bytes and every parameter, so a changed clip, crop or window
+ *  `window` seconds (a meme with `data-loop`; one without plays once and holds its last frame: `hold` with the memes folder). The key names the source bytes and every parameter, so a changed clip, crop or window
  *  is a new file and an unchanged one is not encoded again. Footage uses `hold` and `from` instead:
  *  play once from the offset and pad the final frame, in assets/footage/. Returns {file, w, h}. */
-export function encodeClip(input, crop, window, videoDir, { hold = false, from = 0 } = {}) {
+export function encodeClip(input, crop, window, videoDir, { hold = false, from = 0, folder = null } = {}) {
   const bytes = readFileSync(input);
   const src = ffprobeSize(input);
   const rect = cropRect(crop, src.w, src.h);
@@ -306,7 +306,7 @@ export function encodeClip(input, crop, window, videoDir, { hold = false, from =
   const out = k < 1 ? { w: Math.max(2, 2 * Math.round((rect.w * k) / 2)), h: Math.max(2, 2 * Math.round((rect.h * k) / 2)) } : { w: rect.w, h: rect.h };
   const length = Math.ceil(window * FPS) / FPS;   // whole frames
   const key = createHash("sha256").update(`${hold ? `footage1|${from}` : "clip2"}|${FPS}|${rect.x},${rect.y},${rect.w},${rect.h}|${out.w}x${out.h}|${length}|`).update(bytes).digest("hex").slice(0, 16);
-  const folder = hold ? join("assets", "footage") : join("assets", "memes", "clips");
+  folder ||= hold ? join("assets", "footage") : join("assets", "memes", "clips");
   const rel = join(folder, `${key}.mp4`), file = join(videoDir, rel);
   if (existsSync(file) && statSync(file).size > 0) return { file: rel, ...out };
   mkdirSync(join(videoDir, folder), { recursive: true });
@@ -357,6 +357,11 @@ function clipLines(inner, where) {
  *  animated one's video to assets/memes/clips/, and the fonts to assets/memes/fonts/. `ctx` gives the scene's
  *  `start` and `end` and `at(cue)`, so a video starts at its figure's cue and runs to the end of the scene.
  *  Stops with the scene's name on an unknown template, a fetch failure, a bad crop or too many spans. */
+/** A moving meme plays once and holds its last frame (the owner, 2026-11-03: a celebration that loops back to worried
+ *  faces reads as the opposite); `data-loop` on the figure loops it to its scene's end instead (D99). */
+const loops = (attrs) => /(?:^|\s)data-loop(?:[\s=]|$)/.test(attrs);
+const once = (attrs) => (loops(attrs) ? {} : { hold: true, folder: join("assets", "memes", "clips") });
+
 export async function memeScene(html, dir, sceneId, ctx = { start: 0, end: 10, at: () => 0 }) {
   const figs = [...html.matchAll(/<figure([^>]*\b(?:data-meme|data-clip)="([^"]*)"[^>]*)>([\s\S]*?)<\/figure>/g)];
   if (!figs.length) return html;
@@ -374,7 +379,7 @@ export async function memeScene(html, dir, sceneId, ctx = { start: 0, end: 10, a
       try {
         file = await clipFile(clip, dir);
         const crop = attrOf(attrs, "data-crop");
-        video = encodeClip(file, crop === undefined ? null : parseCrop(crop), window, dir);
+        video = encodeClip(file, crop === undefined ? null : parseCrop(crop), window, dir, once(attrs));
         band = clipLines(inner, where);
       } catch (e) { die(`${where}: ${e.message}`); }
       const tpl = { id: "clip", name: attrOf(attrs, "data-name") || basename(clip.split(/[?#]/)[0]), source: attrOf(attrs, "data-credit") || clip, boxes: band.bands.map((b) => BANDS[b]) };
@@ -390,8 +395,8 @@ export async function memeScene(html, dir, sceneId, ctx = { start: 0, end: 10, a
       // the video starts (kit.js); a template with none is drawn as before.
       const timed = tpl.boxes.slice(0, lines.length).some((b) => boxSpan(b));
       let video, loop;
-      try { video = encodeClip(tpl.image, null, window, dir); if (timed) loop = clipSeconds(tpl.image); } catch (e) { die(`${where}: ${e.message}`); }
-      const clock = timed ? ` data-loop="${round(loop)}" data-loop-start="${round(start)}"` : "";
+      try { video = encodeClip(tpl.image, null, window, dir, once(attrs)); if (timed) loop = clipSeconds(tpl.image); } catch (e) { die(`${where}: ${e.message}`); }
+      const clock = timed ? ` data-loop="${round(loop)}" data-loop-start="${round(start)}"${loops(attrs) ? "" : " data-once"}` : "";
       out = out.replace(whole, () => figureHtml(attrs, tpl, video, lines, where, { media: videoHtml(video.file, start, window), extra: ` data-meme-clip="${esc(`${files()}/templates/${id}/default.gif`)}"${clock}`, timed }));
       continue;
     }

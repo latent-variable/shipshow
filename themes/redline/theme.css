@@ -69,6 +69,6 @@
   --grain-strength: 0.05;
   --grain-fps: 8;
   --grain-blend: multiply;
-  --progress: on;
+  --progress: off;
   --progress-fill: #6d4cff;
 }

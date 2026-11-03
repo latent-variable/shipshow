@@ -87,6 +87,6 @@
   --grain-blend: overlay;
   --vignette-strength: 0.55;
   --vignette-color: #060b09;
-  --progress: on;
+  --progress: off;
   --progress-fill: linear-gradient(90deg, #ffd66b, #f2f0e6, #8fd3f4);
 }
