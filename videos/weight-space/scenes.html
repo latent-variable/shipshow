@@ -36,7 +36,7 @@
 
   /* ---- 01: the wall ---- */
   #s01 .count { position: absolute; right: 120px; top: 40px; font: 700 30px var(--font-mono); color: var(--accent-2); background: var(--card); border: 2px solid var(--accent-2); padding: 8px 18px; border-radius: 8px; }
-  #s01 .game { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; background: rgba(255, 253, 247, 0.94); border: 3px dashed var(--accent-3); padding: 40px 70px; border-radius: 14px; }
+  #s01 .game { position: absolute; left: 0; right: 0; margin: 0 auto; width: fit-content; top: 170px; text-align: center; background: rgba(255, 253, 247, 0.94); border: 3px dashed var(--accent-3); padding: 40px 70px; border-radius: 14px; }
   #s01 .game .big { color: var(--ink); font-size: 140px; }
   #s01 .tick { font: 700 120px var(--font-mono); color: var(--accent-3); display: block; margin-top: 10px; }
   #s01 .gamehint { position: absolute; left: 140px; bottom: 60px; }
@@ -140,9 +140,9 @@
   #s06 .tool.no { color: var(--accent); }
   #s06b .vec { position: absolute; left: 130px; top: 90px; font: 400 40px var(--font-mono); color: var(--ink); background: #fff; border: 2px solid var(--line); padding: 20px 26px; border-radius: 10px; }
   #s06b .space { position: absolute; left: 1130px; top: 90px; width: 640px; height: 640px; }
-  #s06b .pair { position: absolute; left: 130px; top: 230px; width: 960px; }
+  #s06b .pair { position: absolute; left: 130px; top: 210px; width: 960px; }
   #s06b .pair .sn { background: #fff; border: 2px solid var(--line); border-left: 10px solid var(--good); border-radius: 8px; padding: 22px 28px; margin-bottom: 26px; font: 500 40px/1.35 var(--font); }
-  #s06b .pair .sn.bad { border-left-color: var(--accent); font: 400 34px/1.4 var(--font-mono); height: 250px; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 96%); mask-image: linear-gradient(180deg, #000 55%, transparent 96%); }
+  #s06b .pair .sn.bad { border-left-color: var(--accent); font: 400 34px/1.4 var(--font-mono); height: 190px; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 96%); mask-image: linear-gradient(180deg, #000 55%, transparent 96%); }
   #s06b .minus { position: absolute; left: 130px; top: 690px; font: 700 54px var(--font); color: var(--accent); }
   #s06b .layersbar { position: absolute; left: 130px; right: 130px; top: 180px; display: flex; gap: 10px; }
   #s06b .layersbar i { flex: 1; height: 170px; background: #fff; border: 2px solid var(--line); border-radius: 6px; font: 600 32px var(--font-mono); color: var(--muted); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; font-style: normal; }
@@ -197,6 +197,63 @@
   #s08 .final { position: absolute; left: 0; right: 0; top: 340px; text-align: center; }
   #s08 .final > span:not(.cursor) { display: inline-block; font: 700 84px var(--font-display); margin: 0 24px; }
   #s08 .cursor { display: inline-block; width: 6px; height: 70px; background: var(--accent-2); vertical-align: middle; }
+  /* ---- 3D stacks: a network built layer by layer ---- */
+  .s3d { position: absolute; perspective: 2600px; }
+  .s3d .stage { position: absolute; left: 50%; top: 58%; width: 0; height: 0; transform-style: preserve-3d; }
+  .pl { position: absolute; transform-style: preserve-3d; border-radius: 10px; border: 3px solid #2c6b3e; background: rgba(6, 16, 9, 0.86); }
+  .pl i { position: absolute; inset: 12px; border-radius: 6px; font-style: normal; }
+  .pl .d { background-image: radial-gradient(circle, #22472c 30%, transparent 34%); background-size: var(--c) var(--c); }
+  .pl .l { background-image: radial-gradient(circle, #6dffaa 34%, transparent 38%); background-size: var(--c) var(--c); filter: drop-shadow(0 0 6px #5dffa0); }
+  .pl.board { background: #d8b46a; border-color: #8a6a2a; }
+  .pl.board .d { background-image: linear-gradient(#3a2a10 2px, transparent 2px), linear-gradient(90deg, #3a2a10 2px, transparent 2px); background-size: var(--c) var(--c); }
+  .legend3d { position: absolute; left: 1160px; top: 70px; width: 700px; font: 500 36px/1.3 var(--font-mono); }
+  .legend3d div { margin-bottom: 24px; color: #3f7a50; }
+  .legend3d b { color: var(--accent-2); font-weight: 600; display: block; font-size: 30px; letter-spacing: 0.04em; }
+  /* ---- 05: the comparison, said plainly ---- */
+  #s05 .chart5 { position: absolute; left: 140px; top: 90px; right: 140px; }
+  #s05 .chart5 h3 { margin: 0 0 10px; font: 600 54px var(--font-mono); color: var(--ink); }
+  #s05 .chart5 .better { display: inline-block; margin: 0 0 40px; padding: 8px 18px; border: 2px solid var(--good); border-radius: 999px; color: var(--good); font: 600 32px var(--font-mono); }
+  #s05 .row5 { display: grid; grid-template-columns: 820px 170px 1fr; align-items: center; gap: 26px; margin: 34px 0; font: 400 34px var(--font-mono); white-space: nowrap; }
+  #s05 .row5 .v { font: 700 54px var(--font-mono); color: var(--ink); text-align: right; }
+  #s05 .row5 .track { position: relative; height: 66px; }
+  #s05 .row5 .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #5f9a6e; border-radius: 4px; transform-origin: left center; }
+  #s05 .row5.me .fill { background: var(--accent-2); }
+  #s05 .row5.me .v { color: var(--accent-2); }
+  #s05 .x20 { position: absolute; right: 150px; top: 640px; font: 700 96px var(--font-mono); color: var(--accent-2); }
+  #s05 .verdicts { position: absolute; left: 140px; right: 140px; top: 110px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+  #s05 .vc { border: 2px solid var(--line); border-radius: 12px; padding: 30px; background: rgba(8, 19, 11, 0.9); font: 400 32px/1.4 var(--font-mono); }
+  #s05 .vc h4 { margin: 0 0 20px; font: 700 48px var(--font-mono); color: var(--ink); }
+  #s05 .vc .vb { display: grid; grid-template-columns: 170px 1fr 120px; align-items: center; gap: 14px; margin: 16px 0; }
+  #s05 .vc .vb i { height: 34px; background: #5f9a6e; border-radius: 3px; display: block; }
+  #s05 .vc .vb.me i { background: var(--accent-2); }
+  #s05 .vc .say { margin-top: 24px; font: 700 44px var(--font-mono); color: var(--accent-3); }
+  #s05 .foot5 { position: absolute; left: 140px; top: 690px; font: 500 38px var(--font-mono); color: var(--muted); }
+  /* ---- 06a: the tools, as objects ---- */
+  #s06 .objs { position: absolute; left: 110px; right: 110px; top: 60px; bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 30px; }
+  #s06 .ob { position: relative; border-radius: 14px; overflow: hidden; background: #fff; border: 2px solid var(--line); box-shadow: var(--shadow); }
+  #s06 .ob .olab { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 24px; background: rgba(16, 48, 44, 0.9); color: #fff; font: 700 34px var(--font); }
+  #s06 .ob .olab small { font: 500 26px var(--font); color: #bfe3dc; margin-left: 10px; }
+  #s06 .nb { position: absolute; inset: 0 0 64px 0; background: #0f1b1a; color: #d6f3ec; font: 400 20px/1.45 var(--font-mono); padding: 16px 20px; white-space: pre; overflow: hidden; }
+  #s06 .nb .t { color: #7fb8ad; font-size: 18px; display: block; margin-bottom: 8px; }
+  #s06 .nb .c { color: #8fd18f; }
+  #s06 .ob .pic { position: absolute; inset: 0 0 64px 0; background-size: cover; background-position: center; }
+  #s06 .coins { position: absolute; left: 30px; top: 30px; display: grid; grid-template-columns: repeat(10, 54px); gap: 10px; }
+  #s06 .coins i { width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ffe28a, #d08a00); box-shadow: inset 0 0 0 3px #a86f00; }
+  #s06 .sheets { position: absolute; left: 0; top: 0; width: 100%; height: 300px; }
+  /* ---- 06b: Astra's own code ---- */
+  #s06b .code6 { position: absolute; left: 130px; top: 600px; width: 980px; background: #0f1b1a; color: #d6f3ec; border-radius: 10px; padding: 16px 22px; font: 400 21px/1.45 var(--font-mono); white-space: pre; overflow: hidden; }
+  #s06b .code6 .t, #s06b .sweep .t { color: #7fb8ad; font-size: 18px; display: block; margin-bottom: 6px; }
+  #s06b .code6 .c, #s06b .sweep .c { color: #8fd18f; }
+  #s06b .sweep { position: absolute; left: 1150px; top: 380px; width: 660px; background: #0f1b1a; color: #d6f3ec; border-radius: 10px; padding: 18px 22px; font: 400 21px/1.4 var(--font-mono); }
+  #s06b .sweep div { margin-bottom: 12px; white-space: normal; }
+  #s06b .sweep b { color: #ffd75d; font-weight: 600; }
+  /* ---- 01: the options ---- */
+  #s01 .opts { display: flex; gap: 18px; justify-content: center; margin-top: 18px; }
+  #s01 .opts span { padding: 10px 20px; border: 3px solid var(--ink); border-radius: 10px; font: 700 34px var(--font); background: #fff; white-space: nowrap; }
+  #s01 .opts b { color: var(--accent-2); margin-right: 8px; }
+  /* ---- 07: THE END ---- */
+  #s07 .roll .end { margin-top: 140px; font: 700 190px var(--font-display); color: var(--accent-3); position: relative; display: inline-block; }
+  #s07 .roll .end s { position: absolute; left: -2%; right: -2%; top: 50%; height: 16px; background: #e0413a; transform-origin: left center; text-decoration: none; }
 </style>
 
 <!-- ============ 01: a wall of numbers (file) ============ -->
@@ -292,7 +349,7 @@
 0.152 0.151 0.035 -0.057 -0.004 -0.149 -0.286 0.146 -0.010 -0.079 0.104 0.056 0.182 0.113 0.150 0.142 0.008 -0.037 -0.125 0.018 0.130 0.029 0.105 -0.027 0.060 0.005 -0.158 -0.166 -0.015 -0.065 -0.014 -0.029</pre></div>
     <div class="count" data-cue="seventeen" data-anim="count">17,253 numbers</div>
     <div class="gamehint chip am" data-cue="game." data-anim="type">1 video game, somewhere in here</div>
-    <div class="game" data-cue="Which" data-anim="slam" data-drop="3.2"><div class="big">Which game?</div><span class="tick" id="tick01">3</span></div>
+    <div class="game" data-cue="Which" data-anim="slam" data-drop="3.2"><div class="big">Which game?</div><div class="opts"><span><b>A</b>Breakout</span><span><b>B</b>Pong</span><span><b>C</b>Pac-Man</span><span><b>D</b>Freeway</span></div><span class="tick" id="tick01">3</span></div>
   </div>
 </section>
 
@@ -389,7 +446,7 @@
 0.010 0.005 -0.070 0.022 0.016 -0.147 0.128 0.046 -0.058 -0.004 -0.013 -0.005 0.027 0.009 0.009 -0.085 -0.056 -0.094 -0.027 0.036 -0.015 -0.023 -0.011 -0.006 0.080 0.172 0.011 -0.019 0.004 -0.033 0.058 -0.035
 0.152 0.151 0.035 -0.057 -0.004 -0.149 -0.286 0.146 -0.010 -0.079 0.104 0.056 0.182 0.113 0.150 0.142 0.008 -0.037 -0.125 0.018 0.130 0.029 0.105 -0.027 0.060 0.005 -0.158 -0.166 -0.015 -0.065 -0.014 -0.029</pre></div>
       <div class="cmt a" data-cue="AI" data-anim="right"><div class="who"><i></i>GPT-6 Astra · no tools</div><span data-cue="Breakout." data-anim="type">Breakout.</span> <b data-cue="Ninety" data-anim="pop">99% confident.</b></div>
-      <div class="stamp" data-cue="right." data-anim="slam" data-sfx="thump" data-sfx-offset="-0.45">CORRECT</div>
+      <div class="stamp" data-cue="right." data-anim="slam" data-sfx="thump" data-sfx-offset="-0.5">CORRECT</div>
     </div>
     <div class="phase" id="p01bb">
       <figure class="ss-shot in" style="left:120px; top:60px; --shot-width:1000px" data-shot="https://rikiyat.github.io/blog/weight-space-programming/" data-select="h1" data-width="1000" data-scheme="light" data-cue="MIT." data-anim="up"></figure>
@@ -538,35 +595,36 @@
 <section data-scene="05-zero" data-mood="terminal">
   <div id="s05">
     <div class="phase" id="p05a">
-      <div class="term"><div><span class="pr">$</span> <span data-cue="+0" data-anim="type">weights = zeros()   # 600 → 32 → 32 → 6</span> <span style="color:var(--muted); font-size:26px">(illustration)</span></div><div class="zeros" data-cue="zero:" data-anim="fade">0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
-0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</div></div>
-      <div class="chip gn abs" style="left:150px; top:740px; font-size:40px" data-cue="rules" data-anim="pop">the game's rules + source code</div>
-      <div class="chip rd abs" style="left:860px; top:740px; font-size:40px" data-cue="data," data-anim="pop">no data · no practice games</div>
-    </div>
-    <div class="phase" id="p05b">
-      <div class="term"><div><span class="pr">#</span> Astra's Breakout program, written as weights <span style="color:var(--muted); font-size:26px">(illustration)</span></div></div>
-      <div class="prog"><div data-cue="first" data-anim="type"><span class="pr">layer 1:</span> where will the ball land?</div><div data-cue="second" data-anim="type"><span class="pr">layer 2:</span> move the paddle there.</div></div>
-      <div class="mini" id="mini" data-cue="first" data-anim="fade"></div>
+      <div class="s3d" style="left:60px; top:60px; width:1080px; height:820px" data-cue="+0" data-anim="fade"><div class="stage" id="bkstage"><div class="pl " id="bkin" style="width:420px; height:420px; left:-210px; top:-210px; transform: translateZ(0px); --c:40px"><i class="d"></i><i class="l"></i><b style="position:absolute; left:132px; top:352px; width:160px; height:28px; background:#ff9d3d; border-radius:4px"></b><b style="position:absolute; left:212px; top:132px; width:30px; height:30px; background:#ffd75d; border-radius:50%"></b></div><div class="pl " id="bkl1" style="width:420px; height:210px; left:-210px; top:-105px; transform: translateZ(170px); --c:52px"><i class="d"></i><i class="l"></i></div><div class="pl " id="bkl2" style="width:420px; height:210px; left:-210px; top:-105px; transform: translateZ(330px); --c:52px"><i class="d"></i><i class="l"></i></div><div class="pl " id="bkout" style="width:330px; height:70px; left:-165px; top:-35px; transform: translateZ(470px); --c:55px"><i class="d"></i><i class="l"></i></div></div></div>
+      <div class="legend3d">
+        <div data-cue="zero:" data-anim="left"><b>EVERY WEIGHT</b>set to 0.000</div>
+        <div data-cue="rules" data-anim="left"><b>GIVEN</b>the rules + source code</div>
+        <div data-cue="data," data-anim="left" style="color:var(--accent)"><b style="color:var(--accent)">NOT GIVEN</b>data, practice games</div>
+      </div>
+      <div class="legend3d" style="top:520px">
+        <div id="lg1" data-cue="first" data-anim="left"><b>LAYER 1, WRITTEN</b>where will the ball land?</div>
+        <div id="lg2" data-cue="second" data-anim="left"><b>LAYER 2, WRITTEN</b>move the paddle there</div>
+      </div>
+      <span class="abs" id="mkprog" data-cue="program" data-anim="fade"></span>
+      <div class="chip am abs" style="left:150px; top:820px; font-size:28px">illustration of the post's description · one reply, no tools</div>
     </div>
     <div class="phase" id="p05c">
-      <div class="bars">
-        <div class="bar" data-cue="hundred" data-anim="fade"><span>PPO · 100,000,000 steps</span><div class="fill" id="b1"></div><span class="v">15.8</span></div>
-        <div class="bar" data-cue="Five" data-anim="fade"><span>PPO · 500,000,000 steps</span><div class="fill" id="b2"></div><span class="v">25.3</span></div>
-        <div class="bar me" data-cue="517." data-anim="fade"><span>Astra · one reply</span><div class="fill" id="b3"></div><span class="v">517.4</span></div>
+      <div class="chart5">
+        <h3 data-cue="Meanwhile," data-anim="type">Breakout · average points per game</h3>
+        <div class="better" data-cue="Meanwhile," data-anim="pop">higher is better</div>
+        <div class="row5" data-cue="hundred" data-anim="fade"><span>PPO · 100 million steps of practice</span><span class="v">15.8</span><div class="track"><div class="fill" id="b1"></div></div></div>
+        <div class="row5" data-cue="Five" data-anim="fade"><span>PPO · 500 million steps of practice</span><span class="v">25.3</span><div class="track"><div class="fill" id="b2"></div></div></div>
+        <div class="row5 me" data-cue="517." data-anim="fade"><span>Astra · one reply, no practice</span><span class="v">517.4</span><div class="track"><div class="fill" id="b3"></div></div></div>
       </div>
-      <table class="tbl" data-cue="sweep." data-anim="fade"><tr><th>game</th><th>PPO 100M</th><th>PPO 500M</th><th>Astra, one reply</th></tr><tr><td>Breakout</td><td>15.8</td><td>25.3</td><td style="color:var(--accent-2)">517.4</td></tr><tr><td>Asterix</td><td>25.8</td><td>55.2</td><td style="color:var(--accent-3)">53.2</td></tr><tr><td>Seaquest</td><td>5.6</td><td>88.9</td><td style="color:var(--accent-3)">53.1</td></tr></table>
+      <div class="x20" data-cue="twenty" data-anim="slam">20×</div>
+    </div>
+    <div class="phase" id="p05d">
+      <div class="verdicts">
+        <div class="vc" data-cue="sweep." data-anim="up"><h4>Breakout</h4><div class="vb"><span>PPO 500M</span><i style="width:5%"></i><span>25.3</span></div><div class="vb me"><span>Astra</span><i style="width:100%"></i><span>517.4</span></div><div class="say">20× higher</div></div>
+        <div class="vc" data-cue="Asterix" data-anim="up"><h4>Asterix</h4><div class="vb"><span>PPO 500M</span><i style="width:100%"></i><span>55.2</span></div><div class="vb me"><span>Astra</span><i style="width:96%"></i><span>53.2</span></div><div class="say">close</div></div>
+        <div class="vc" data-cue="Seaquest" data-anim="up"><h4>Seaquest</h4><div class="vb"><span>PPO 500M</span><i style="width:100%"></i><span>88.9</span></div><div class="vb me"><span>Astra</span><i style="width:60%"></i><span>53.1</span></div><div class="say">about 60%</div></div>
+      </div>
+      <div class="foot5" data-cue="all" data-anim="fade">points per game, higher is better · the 100-million-step PPO lost in all three</div>
     </div>
   </div>
 </section>
@@ -579,15 +637,15 @@
       <div class="chip am abs" style="left:140px; top:730px; font-size:40px" data-cue="Python" data-anim="pop">so: a Python sandbox to write them with</div>
     </div>
     <div class="phase" id="p05bb">
-      <svg class="board" viewBox="0 0 760 760" data-cue="program," data-anim="fade"><rect width="760" height="760" rx="14" fill="#d8b46a"/><line x1="60" y1="60" x2="700" y2="60" stroke="#3a2a10" stroke-width="2"/><line x1="60" y1="60" x2="60" y2="700" stroke="#3a2a10" stroke-width="2"/><line x1="60" y1="140" x2="700" y2="140" stroke="#3a2a10" stroke-width="2"/><line x1="140" y1="60" x2="140" y2="700" stroke="#3a2a10" stroke-width="2"/><line x1="60" y1="220" x2="700" y2="220" stroke="#3a2a10" stroke-width="2"/><line x1="220" y1="60" x2="220" y2="700" stroke="#3a2a10" stroke-width="2"/><line x1="60" y1="300" x2="700" y2="300" stroke="#3a2a10" stroke-width="2"/><line x1="300" y1="60" x2="300" y2="700" stroke="#3a2a10" stroke-width="2"/><line x1="60" y1="380" x2="700" y2="380" stroke="#3a2a10" stroke-width="2"/><line x1="380" y1="60" x2="380" y2="700" stroke="#3a2a10" stroke-width="2"/><line x1="60" y1="460" x2="700" y2="460" stroke="#3a2a10" stroke-width="2"/><line x1="460" y1="60" x2="460" y2="700" stroke="#3a2a10" stroke-width="2"/><line x1="60" y1="540" x2="700" y2="540" stroke="#3a2a10" stroke-width="2"/><line x1="540" y1="60" x2="540" y2="700" stroke="#3a2a10" stroke-width="2"/><line x1="60" y1="620" x2="700" y2="620" stroke="#3a2a10" stroke-width="2"/><line x1="620" y1="60" x2="620" y2="700" stroke="#3a2a10" stroke-width="2"/><line x1="60" y1="700" x2="700" y2="700" stroke="#3a2a10" stroke-width="2"/><line x1="700" y1="60" x2="700" y2="700" stroke="#3a2a10" stroke-width="2"/><circle cx="220" cy="220" r="34" fill="#111"/><circle cx="300" cy="220" r="34" fill="#111"/><circle cx="300" cy="300" r="34" fill="#111"/><circle cx="540" cy="460" r="34" fill="#111"/><circle cx="460" cy="540" r="34" fill="#111"/><circle cx="380" cy="220" r="34" fill="#f4f4f0" stroke="#111" stroke-width="2"/><circle cx="380" cy="300" r="34" fill="#f4f4f0" stroke="#111" stroke-width="2"/><circle cx="220" cy="300" r="34" fill="#f4f4f0" stroke="#111" stroke-width="2"/><circle cx="300" cy="380" r="34" fill="#f4f4f0" stroke="#111" stroke-width="2"/><circle cx="540" cy="540" r="34" fill="#f4f4f0" stroke="#111" stroke-width="2"/><g id="libs"><circle cx="220" cy="140" r="10" fill="#5dffa0"/><circle cx="300" cy="140" r="10" fill="#5dffa0"/><circle cx="140" cy="220" r="10" fill="#5dffa0"/></g><rect id="danger" x="122" y="122" width="196" height="276" rx="40" fill="none" stroke="#ff5d5d" stroke-width="6" stroke-dasharray="14 10" opacity="0"/><text x="380" y="748" text-anchor="middle" font-family="IBM Plex Mono" font-size="20" fill="#3a2a10">illustration</text></svg>
-      <div class="steps">
-        <div data-cue="first" data-anim="left"><b>first layers</b> mark each stone and the empty points beside it</div>
-        <div data-cue="middle" data-anim="left"><b>middle layers</b> follow chains of stones: groups in danger</div>
-        <div data-cue="last" data-anim="left"><b>last layer</b> scores each move: capture, rescue, <span class="del" data-cue="alive." data-anim="fade">fill your own safe spots</span></div>
+      <div class="s3d" style="left:120px; top:200px; width:1000px; height:700px" data-cue="program" data-anim="fade"><div class="stage" id="gostage"><div class="pl board" id="goin" style="width:430px; height:430px; left:-215px; top:-215px; transform: translateZ(0px); --c:45px"><i class="d"></i><i class="l"></i><svg style="position:absolute; inset:12px" viewBox="0 0 405 405"><circle cx="112" cy="112" r="18" fill="#111"/><circle cx="157" cy="112" r="18" fill="#111"/><circle cx="157" cy="157" r="18" fill="#111"/><circle cx="292" cy="247" r="18" fill="#111"/><circle cx="247" cy="292" r="18" fill="#111"/><circle cx="202" cy="112" r="18" fill="#f4f4f0"/><circle cx="202" cy="157" r="18" fill="#f4f4f0"/><circle cx="112" cy="157" r="18" fill="#f4f4f0"/><circle cx="157" cy="202" r="18" fill="#f4f4f0"/><circle cx="292" cy="292" r="18" fill="#f4f4f0"/></svg></div><div class="pl " id="goh0" style="width:480px; height:240px; left:-240px; top:-120px; transform: translateZ(110px); --c:15px"><i class="d"></i><i class="l"></i></div><div class="pl " id="goh1" style="width:480px; height:240px; left:-240px; top:-120px; transform: translateZ(182px); --c:15px"><i class="d"></i><i class="l"></i></div><div class="pl " id="goh2" style="width:480px; height:240px; left:-240px; top:-120px; transform: translateZ(254px); --c:15px"><i class="d"></i><i class="l"></i></div><div class="pl " id="goh3" style="width:480px; height:240px; left:-240px; top:-120px; transform: translateZ(326px); --c:15px"><i class="d"></i><i class="l"></i></div><div class="pl " id="goh4" style="width:480px; height:240px; left:-240px; top:-120px; transform: translateZ(398px); --c:15px"><i class="d"></i><i class="l"></i></div><div class="pl " id="goh5" style="width:480px; height:240px; left:-240px; top:-120px; transform: translateZ(470px); --c:15px"><i class="d"></i><i class="l"></i></div><div class="pl " id="goout" style="width:300px; height:300px; left:-150px; top:-150px; transform: translateZ(582px); --c:33px"><i class="d"></i><i class="l"></i></div></div></div>
+      <div class="legend3d">
+        <div id="gl1" data-cue="first" data-anim="left"><b>FIRST LAYERS</b>each stone, and the empty points beside it</div>
+        <div id="gl2" data-cue="middle" data-anim="left"><b>MIDDLE LAYERS</b>chains of stones: groups in danger</div>
+        <div id="gl3" data-cue="last" data-anim="left"><b>LAST LAYER</b>a score for every move: capture, rescue, keep your safe spots</div>
       </div>
-      <div class="res">
-        <div data-cue="half#2" data-anim="fade">0 practice games → won <b>54–55%</b> vs small trained networks</div>
-        <div data-cue="three" data-anim="fade" style="color:var(--accent-2)">50 rounds of practice → beat a same-size network trained on 20 million games, <b>70–78%</b></div>
+      <div class="legend3d" style="top:640px; font-size:32px">
+        <div data-cue="half#2" data-anim="fade" style="color:var(--ink)">0 practice games → won <b style="display:inline; font-size:34px">54–55%</b> vs small trained networks</div>
+        <div data-cue="three" data-anim="fade" style="color:var(--ink)">50 rounds of practice → beat a same-size network trained on 20 million games, <b style="display:inline; font-size:34px">70–78%</b></div>
       </div>
     </div>
   </div>
@@ -696,14 +754,22 @@ Wait, 90°</pre></div>
       <div class="ran" data-cue="85" data-anim="pop" style="left:0; right:0; top:200px; text-align:center">85 / 96<small>answers ran out of room before answering</small></div>
     </div>
     <div class="phase" id="p06d">
-      <div class="tray">
-        <div class="tool" data-cue="tools:" data-anim="up">a Python notebook<small>holding all 0.8 billion weights, on a CPU</small></div>
-        <div class="tool no" data-cue="training" data-anim="up">no training · no gradients<small>no optimizer, no loss fitting, no internet</small></div>
-        <div class="tool" data-cue="fifty" data-anim="up">50 forward passes<small>the whole budget</small></div>
-        <div class="tool" data-cue="512" data-anim="up">one pass = <span data-cue="512" data-anim="fade">512 answers</span><small data-cue="1,024" data-anim="fade">or read 1,024 texts and watch the insides</small></div>
+      <div class="objs">
+        <div class="ob" data-cue="tools:" data-anim="up"><div class="nb"><span class="t">Astra's notebook · exp8_math/runs/p50c/tool_calls.jsonl, line 13 (line breaks in the comment ours)</span><span class="c"># Hypothesis: neuron 19:11 is one contributor to a distributed
+#   loop-writing direction; removing that direction from layer 19&#x27;s
+#   MLP should outperform one-neuron ablation.</span>
+…
+        d=d/d.norm()
+        w=downweights[l]
+        new=w-strength*torch.outer(d,d@w)
+        name=f&quot;model.language_model.layers.{l}.mlp.down_proj.weight&quot;
+        save_edit(name,new)</div><div class="olab">a Python notebook <small>holding all 0.8 billion weights</small></div></div>
+        <div class="ob" data-cue="CPU." data-anim="up"><div class="pic" style="background-image:url(assets/gen/ws-cpu-image.png)"></div><div class="olab">on a CPU <small>no GPU</small></div></div>
+        <div class="ob" data-cue="training" data-anim="up"><svg class="pic" viewBox="0 0 800 300" style="background:#fff"><text x="40" y="50" font-family="Space Grotesk" font-size="26" fill="#4f6f6a">training loss</text><path d="M60 80 C 200 90, 260 200, 420 220 S 680 250, 760 255" fill="none" stroke="#0f8f7f" stroke-width="8"/><line id="slash" x1="80" y1="270" x2="740" y2="40" stroke="#e0413a" stroke-width="22" stroke-linecap="round"/></svg><div class="olab">no training <small>no gradients, no optimizer</small></div></div>
+        <div class="ob" data-cue="fifty" data-anim="up"><div class="coins" id="coins"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><svg class="sheets" id="sheets" viewBox="0 0 800 300"></svg><div class="pic" id="xray" style="background-image:url(assets/gen/ws-xray-image.png); opacity:0"></div><div class="olab" id="cap4">50 forward passes <small>the whole budget</small></div></div>
       </div>
+      <span class="abs" id="mk512" data-cue="512" data-anim="fade"></span><span class="abs" id="mk1024" data-cue="1,024" data-anim="fade"></span>
     </div>
-  
   </div>
 </section>
 
@@ -717,7 +783,10 @@ Wait, 90°</pre></div>
         <div class="sn" data-cue="progress," data-anim="left">snippet A: the reasoning moves on to the next step ✓</div>
         <div class="sn bad" data-cue="circles:" data-anim="left">But is 20 the total? No, it is the remaining time. But is 20 the total? No, it is the remaining time. But is 20 the total? No, it is the remaining time. But is 20 the total? No, it is the remaining time.</div>
       </div>
-      <div class="minus" data-cue="subtracted" data-anim="type">looping − progressing = the loop arrow</div>
+      <div class="code6" data-cue="subtracted" data-anim="up"><span class="t">Astra's notebook · tool_calls.jsonl, line 10 · repetitive minus productive, then a unit arrow</span>diffH={l:(a[1::2]-a[::2]).mean(0) for l,a in meansH.items()}
+…
+    d=torch.from_numpy(diffH[min(l+1,23)]);d=d/d.norm()
+    writes=(d@downweights[l]).numpy()</div>
       <div class="chip rd abs" style="left:1130px; top:760px; font-size:38px" data-cue="pattern#2" data-anim="pop">the loop pattern: some needles up, some down</div>
     </div>
     <div class="phase" id="p06bb">
@@ -729,6 +798,12 @@ Wait, 90°</pre></div>
         <div data-cue="six" data-anim="left"><span class="ins">then pushed 6× the other way</span>  <code>W′ = W − 6·u(uᵀW)</code></div>
         <div data-cue="nudging" data-anim="left" style="margin-top:14px"><span class="chip rd" style="font-size:36px">before: into the loop →</span> <span class="chip gn" style="font-size:36px">after: ← out of it</span></div>
       </div>
+      <div class="sweep" id="sweep" data-cue="further," data-anim="right"><span class="t">Astra's notebook · its hypotheses as it turned the strength up (tool_calls.jsonl lines 42, 45, 70, 98)</span>
+          <div><b>×2</b> <span class="c"># Hypothesis: stronger correction of the same two repetition directions reduces persistent loops without suppressing useful reasoning.</span></div>
+          <div><b>×3</b> <span class="c"># Hypothesis: strength three may release additional repetitive failures, but excessive correction will increase reasoning errors.</span></div>
+          <div><b>×4</b> <span class="c"># Hypothesis: alpha4 may further interrupt repetitive loops, while the accuracy/error tradeoff will reveal overcorrection.</span></div>
+          <div><b>×6</b> <span class="c"># Hypothesis: increasing only the selected repetition-writer columns yields a better benefit/side-effect tradeoff.</span></div>
+        </div>
       <div class="ratio" data-cue="131,072" data-anim="fade">131,072 / 800,000,000</div>
       <div class="speck" data-cue="131,072" data-anim="zoom"><i></i></div>
     </div>
@@ -778,7 +853,7 @@ Wait, 90°</pre></div>
       <div class="c"><small>gradients used</small><span>0</span></div>
       <div class="c"><small>PPO</small><span>still training</span></div>
       <div class="c"><small>weights edited</small><span>131,072 of 800 million</span></div>
-      <div class="c"><small>the end</small><span>?</span></div>
+      <div class="end">THE END<s id="endstrike"></s></div>
     </div>
   </div>
 </section>
@@ -981,19 +1056,10 @@ Wait, 90°</pre></div>
   { const c = document.getElementById("rC").getBoundingClientRect(), s = document.getElementById("s03a").getBoundingClientRect();
     Object.assign(document.getElementById("pctC").style, { left: `${c.left - s.left + 230}px`, top: `${c.top - s.top - 44}px` }); }
 
-  // Breakout from zero: a ball falls, the paddle meets it where layer 1 says it lands.
-  const mini = document.getElementById("mini");
-  for (let i = 0; i < 100; i++) { const c = document.createElement("i"); c.id = `mc${i}`; mini.appendChild(c); }
-  const t05 = cueAt("#p05b .prog div:nth-child(2)");
-  const path = [[2, 1], [3, 2], [4, 3], [5, 4], [6, 5], [7, 6], [6, 7], [5, 8]];
-  path.forEach(([x, y], k) => { tl.set(`#mc${y * 10 + x}`, { backgroundColor: "#ffd75d" }, t05 + k * 0.35); tl.set(`#mc${y * 10 + x}`, { backgroundColor: "transparent" }, t05 + k * 0.35 + 0.34); });
-  [1, 2, 3, 4].forEach((x, k) => tl.set(`#mc${90 + x}`, { backgroundColor: "#5dffa0" }, 0));
-  [5, 6, 7].forEach((x, k) => { tl.set(`#mc${90 + x}`, { backgroundColor: "#5dffa0" }, t05 + 0.6 + k * 0.4); tl.set(`#mc${90 + x - 3}`, { backgroundColor: "transparent" }, t05 + 0.6 + k * 0.4); });
-
   // PPO and Astra's bars: one scale, 517.4 runs off the chart.
-  [["#b1", 15.8, "hundred"], ["#b2", 25.3, "Five"], ["#b3", 517.4, "517."]].forEach(([id, v]) => {
-    const bar = document.querySelector(id).closest(".bar");
-    tl.fromTo(id, { scaleX: 0 }, { scaleX: Math.min(v / 60, 2.2), duration: v > 100 ? 0.9 : 0.6, ease: v > 100 ? "power4.in" : "power2.out", immediateRender: false }, +bar.dataset.at + 0.2);
+  [["#b1", 15.8], ["#b2", 25.3], ["#b3", 517.4]].forEach(([id, v]) => {
+    const row = document.querySelector(id).closest(".row5");
+    tl.fromTo(id, { scaleX: 0 }, { scaleX: Math.min(v / 60, 1.08), duration: v > 100 ? 0.9 : 0.6, ease: v > 100 ? "power4.in" : "power2.out", immediateRender: false }, +row.dataset.at + 0.2);
   });
   gsap.set(["#b1", "#b2", "#b3"], { scaleX: 0 });
 
@@ -1008,8 +1074,12 @@ Wait, 90°</pre></div>
   grow("#i0", 21.0, cueAt("#p06ca .r:nth-child(3) .v") - 0.3); grow("#i1", 62.3, cueAt("#p06ca .r:nth-child(3) .v"));
 
   // The credits roll up through the pause after the line.
-  tl.fromTo("#roll", { y: 920 }, { y: -1150, duration: sceneEnd("07-credits") - sceneStart("07-credits") - 0.3, ease: "none", immediateRender: false }, sceneStart("07-credits") + 0.2);
-  sfx("scratch", sceneStart("07b-gemma") + 0.12, { gain: -2 });
+  tl.fromTo("#roll", { y: 920 }, { y: () => -(document.getElementById("roll").offsetHeight - 560), duration: sceneEnd("07-credits") - sceneStart("07-credits") - 2.2, ease: "power1.out", immediateRender: false }, sceneStart("07-credits") + 0.2);
+  // THE END holds, then the celebration visibly stops: the frame goes grey and THE END is struck through, as the scratch hits.
+  gsap.set("#endstrike", { scaleX: 0 });
+  tl.to("#endstrike", { scaleX: 1, duration: 0.18, ease: "power4.out" }, sceneEnd("07-credits") - 0.35);
+  tl.to("#s07", { filter: "grayscale(1) brightness(0.7)", duration: 0.12 }, sceneEnd("07-credits") - 0.35);
+  sfx("scratch", sceneEnd("07-credits") - 0.4, { gain: -4 });
 
   // Gemma against Qwen: how often each ran out of room.
   gsap.set(["#lg", "#lq"], { scaleX: 0 });
@@ -1033,10 +1103,6 @@ Wait, 90°</pre></div>
   drive("c2", "solid", cueAt("#carsvg2") + 0.2, 5.2);
   // Layers 15 and 19 light up when the voice names them.
   tl.to(["#L15", "#L19"], { backgroundColor: "#e0413a", borderColor: "#e0413a", color: "#ffffff", duration: 0.3 }, cueAt("#mk15"));
-  // The Go board's layers: liberties first, then a group in danger.
-  gsap.set("#libs", { opacity: 0 });
-  tl.to("#libs", { opacity: 1, duration: 0.3 }, cueAt("#p05bb .steps div:nth-child(1)"));
-  tl.to("#danger", { opacity: 1, duration: 0.3 }, cueAt("#p05bb .steps div:nth-child(2)"));
   // The model's loop, as a dot on the quadrants: Q1, Q2, then back to Q2 on "a hundred and eighty" (its own mistake),
   // then round and round while the count of "Wait" climbs.
   const Q = { 1: [235, 65], 2: [65, 65], 3: [65, 235], 4: [235, 235] };
@@ -1048,4 +1114,38 @@ Wait, 90°</pre></div>
   [...document.querySelectorAll("#s06b .kn")].forEach((k, i) => tl.to(k, { rotation: i % 3 === 0 ? 100 : i % 3 === 1 ? -100 : 0, svgOrigin: "0 0", duration: 0.6, ease: "power2.inOut" }, cueAt("#s06b .chip.rd.abs") + (i % 6) * 0.03));
   // Before "the loop pattern", one demonstration: a few knobs turn together, then settle.
   [...document.querySelectorAll("#s06b .kn")].slice(0, 12).forEach((k, i) => { tl.to(k, { rotation: i % 2 ? "+=50" : "-=50", svgOrigin: "0 0", duration: 0.5, yoyo: true, repeat: 1 }, cueAt("#mkpat") + 0.1); });
+  // 3D stacks: a network written layer by layer. A layer lights as a sweep across it, the stage slowly orbits.
+  const write = (sel, at, dur = 1.1) => { gsap.set(`${sel} .l`, { clipPath: "inset(0% 100% 0% 0%)" }); tl.to(`${sel} .l`, { clipPath: "inset(0% 0% 0% 0%)", duration: dur, ease: "none" }, at); tl.to(sel, { borderColor: "#5dffa0", duration: 0.3 }, at); };
+  const orbit = (sel, scene) => { gsap.set(sel, { rotationX: 62, rotationZ: -42, scale: 1.0 }); tl.fromTo(sel, { rotationZ: -42 }, { rotationZ: -18, duration: sceneEnd(scene) - sceneStart(scene), ease: "none", immediateRender: false }, sceneStart(scene)); };
+  orbit("#bkstage", "05-zero");
+  write("#bkin", cueAt("#mkprog"), 0.8);
+  write("#bkl1", cueAt("#lg1"));
+  write("#bkl2", cueAt("#lg2"));
+  write("#bkout", cueAt("#lg2") + 1.3, 0.6);
+  gsap.set("#gostage", { rotationX: 62, rotationZ: -40, scale: 0.56 });
+  tl.fromTo("#gostage", { rotationZ: -40 }, { rotationZ: -16, duration: sceneEnd("05b-go") - cueAt("#p05bb .s3d"), ease: "none", immediateRender: false }, cueAt("#p05bb .s3d"));
+  write("#goin", cueAt("#p05bb .s3d") + 0.3, 0.5);
+  [0, 1].forEach((k) => write(`#goh${k}`, cueAt("#gl1") + k * 0.6));
+  [2, 3].forEach((k) => write(`#goh${k}`, cueAt("#gl2") + (k - 2) * 0.6));
+  [4, 5].forEach((k) => write(`#goh${k}`, cueAt("#gl3") + (k - 4) * 0.6));
+  write("#goout", cueAt("#gl3") + 1.4, 0.7);
+  // The tools: the slash crosses out training; the budget's coins turn into 512 answer sheets, then an x-ray.
+    tl.fromTo("#slash", { attr: { x2: 80, y2: 270 } }, { attr: { x2: 740, y2: 40 }, duration: 0.35, ease: "power3.out", immediateRender: false }, cueAt("#p06d .ob:nth-child(3)") + 0.4);
+  const coins = [...document.querySelectorAll("#coins i")];
+  tl.to(coins.slice(0, 1), { opacity: 0.25, scale: 0.8, duration: 0.2 }, cueAt("#mk512"));
+  const NS = "http://www.w3.org/2000/svg", sheets = document.getElementById("sheets");
+  for (let k = 0; k < 64; k++) {
+    const rct = document.createElementNS(NS, "rect");
+    rct.setAttribute("width", "26"); rct.setAttribute("height", "34"); rct.setAttribute("fill", "#ffffff"); rct.setAttribute("stroke", "#0f8f7f"); rct.setAttribute("stroke-width", "2");
+    sheets.appendChild(rct);
+    const x0 = 60, y0 = 60, x1 = 120 + ((k * 97) % 640), y1 = 40 + ((k * 53) % 220);
+    gsap.set(rct, { attr: { x: x0, y: y0 }, opacity: 0 });
+    tl.to(rct, { attr: { x: x1, y: y1 }, opacity: 1, duration: 0.5, ease: "power2.out" }, cueAt("#mk512") + 0.1 + k * 0.012);
+  }
+  tl.set("#cap4", { innerHTML: "one pass <small>the model answers up to 512 problems</small>" }, cueAt("#mk512"));
+  tl.to("#xray", { opacity: 1, duration: 0.4 }, cueAt("#mk1024"));
+  tl.to(["#sheets", "#coins"], { opacity: 0, duration: 0.3 }, cueAt("#mk1024"));
+  tl.set("#cap4", { innerHTML: "or it reads 1,024 texts <small>and Astra watches the insides</small>" }, cueAt("#mk1024"));
+  // The strength sweep steps aside for the speck.
+  tl.to("#sweep", { opacity: 0, duration: 0.3 }, cueAt("#s06b .speck") - 0.4);
 </script>

@@ -2,6 +2,6 @@
 
 [clear, admiring a clever design] For Breakout, it wrote a program and translated it into weights. The first layer works out where the ball will land. The second moves the paddle there.
 
-[mock-sympathetic toward the hard-working rival, then amused] Meanwhile, the usual way. PPO, a standard training method, played Breakout for a hundred million steps and averaged 15.8 points. Five hundred million steps: 25.3. Astra's one reply: 517.
+[mock-sympathetic toward the hard-working rival, then amused] Meanwhile, the usual way. PPO, a standard training method, played Breakout for a hundred million steps and averaged 15.8 points. Five hundred million steps: 25.3. Astra's one reply: 517. Points per game, so higher is better: about twenty times the best of them.
 
 [even-handed, keeping it honest] It wasn't a clean sweep. In Asterix it came close to the five hundred million step network, and in Seaquest it reached about sixty percent of its score. It beat the hundred million step networks in all three.

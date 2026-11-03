@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-11-03 (after the tag check and the redline theme, D97 and D98).
+Last reviewed: 2026-11-03 (after memes that play once and no progress bar, D99).
 
 ## Problem
 
@@ -135,6 +135,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F65 | Footage of the video's own app: local MP4, WebM or GIF figures start at their cue, optionally from an offset, play once at 1x and hold the final frame to the scene's end; independent frame tokens and packet measurements, outside memes and third-party credits (DESIGN D77) | done; tests; first used by DAIS product-videos |
 | F66 | A series frame stays still across scenes: top-level ss-frame blocks share a persistent layer over scenes, below overlay and captions; scene-qualified arrival cues and optional fade-out cues use the shared timeline (DESIGN D78) | done; tests; first used by DAIS product-videos |
 | F67 | A video stays unpredictable, within itself and against the person's other videos: the packet's *Devices* section counts every editing move (entrances, pieces, memes, screenshots, sounds, transitions, punch-ins, music drops) beside how many of the person's YouTube videos made it, how each act opens, and the rhythm of change (`bin/devices.mjs`); `critic-novelty` judges it in the standard and thorough plans; `explain-concept` *Break the formula* and its `references/pattern-breaks.md` hold the research, our measured formula and the moves; the kit adds a punch-in (`data-punch`), a whip transition and a music drop (`data-drop`) (DESIGN D96) | done; tests; the moves checked on a copy of qwen-phones-home, frames and the music measured |
+| F68 | Moving memes play once and hold their last frame unless the figure asks to loop (`data-loop`); a meme stays up as long as its picture and words ask, not a fixed floor; no progress bar in the shared themes (DESIGN D99) | done; tests |
 | F20 | Per-person preferences and private videos stay local (`tailor`, `local/`) | done in this repo; elsewhere a skill checks `local/` is ignored and uses `.git/info/exclude` |
 | F21 | Run code to verify a claim without harm: a sandbox script, a faithful scratch copy, no network, writes confined (`evidence-standard`) | done on macOS; Linux untested |
 | F22 | Scaffold and diagnose: `npm run new` from `template/`, `npm run setup` (picks a Python in 3.10 to 3.13, the range the pinned Kokoro supports, and upgrades the new venv's pip before installing), `npm run doctor` for what the machine lacks, a draft render mode | done |

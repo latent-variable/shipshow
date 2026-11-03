@@ -1394,6 +1394,19 @@ weight-space rides it through seven moods (file, arcade, garage, terminal, theat
 and no earlier theme was light, monospace-first or built around comments. **Costs.** A light base needs its moods' ambients
 chosen with care (`glow` on a light sky reads as paint blobs: AGENTS.md, *Traps*). **Tested.** weight-space's frames.
 
+### D99. Moving memes play once; no progress bar; a meme's time follows what it asks (2026-11-03)
+**Decision.** A moving meme (an animated template or a `data-clip`) is encoded to play once from its cue and hold its last
+frame (`encodeClip` with `hold`, in `assets/memes/clips/`); `data-loop` on the figure loops it to its scene's end as before.
+A once-played template whose lines take turns (memegen `start`/`stop`) keeps its last line to appear on screen after the clip
+ends (`kit/kit.js`, `data-once`). Every shared theme sets `--progress: off`. The meme-timing bar in `explain-concept` and
+`critic-engagement` changes from "about five seconds or more" to what the meme asks: about 1.5 s for the picture, its words at
+about three a second, a beat; under that or more than about double is a finding. **Why.** The owner, watching weight-space:
+the celebration GIF "loops, and so then it's like confusing because ... it goes back and people look worried again"; the
+progress bar "defeats the purpose" when the player already shows time; the Frogger seal sat "probably double what it needed",
+because the five-second floor plus a scene's closing pause set its time, not its content. **Costs.** A loop that was the joke
+now needs `data-loop`; no earlier video's meme relied on looping. **Tested.** `test/meme.test.mjs` (a built meme carries
+`data-once`; inside its first loop the lines take turns as before; after it the last line stays and nothing flips back).
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

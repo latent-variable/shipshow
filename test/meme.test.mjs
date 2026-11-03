@@ -382,6 +382,7 @@ test("an animated template's box shows only in its part of every loop, from the 
   const at = +attr(fig, "data-at");
   assert.equal(+attr(fig, "data-loop"), 0.6, "the fixture GIF's loop, as ffprobe reads it");
   assert.equal(+attr(fig, "data-loop-start"), at, "counted from the cue, where the video starts");
+  assert.ok(/\sdata-once(\s|>|$)/.test(fig), "a moving meme plays once unless it asks to loop (D99)");
   assert.equal(+attr(videoTag(html), "data-start"), at);
   const boxes = [...html.matchAll(/<span class="ss-meme-box"[^>]*>/g)].map((m) => m[0]);
   assert.deepEqual(boxes.map((b) => (b.match(/data-show="([^"]*)"/) || [])[1] ?? null), ["0 0.5", "0.5 0.75", null]);
@@ -389,7 +390,7 @@ test("an animated template's box shows only in its part of every loop, from the 
   // kit.js drives each timed box's opacity from the time alone: sampled out of order, as a render worker seeks.
   const { runInNewContext } = await import("node:vm");
   const kit = readFileSync(join(REPO, "kit", "kit.js"), "utf8");
-  const figure = { dataset: { loop: "0.6", loopStart: String(at) } };
+  const figure = { dataset: { loop: "0.6", loopStart: String(at) }, querySelectorAll: () => timed };
   const box = (show) => ({ dataset: { show }, style: {}, closest: (sel) => (sel === "[data-loop]" ? figure : null) });
   const timed = [box("0 0.5"), box("0.5 0.75")];
   const driven = [], sets = [];
@@ -406,4 +407,10 @@ test("an animated template's box shows only in its part of every loop, from the 
     assert.deepEqual([opacity(timed[0], cycle(k, 0.9)), opacity(timed[1], cycle(k, 0.9))], [0, 0], `loop ${k}, late: neither`);
   }
   assert.deepEqual(sets.filter((s) => timed.includes(s.t)).map((s) => s.v.opacity), [opacity(timed[0], 0), opacity(timed[1], 0)], "time 0 is drawn as the same function says");
+  // Played once (D99): inside the first loop as before; after it, the last line to appear stays up.
+  figure.dataset.once = "";
+  driven.length = 0;
+  runInNewContext(kit, { TOTAL: 6, SEED: 1, gsap, document, window: {}, getComputedStyle: () => ({ getPropertyValue: () => "" }), console });
+  assert.deepEqual([opacity(timed[0], cycle(0, 0.1)), opacity(timed[1], cycle(0, 0.6))], [1, 1], "the first loop plays as before");
+  assert.deepEqual([opacity(timed[0], cycle(2, 0.1)), opacity(timed[1], cycle(2, 0.1))], [0, 1], "after it, the last line to appear stays up: the payoff holds, nothing flips back");
 });

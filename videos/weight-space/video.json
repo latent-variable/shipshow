@@ -151,7 +151,7 @@
       },
       "music": {
         "file": "local/music/weights/credits.wav",
-        "volume": 0.3,
+        "volume": 0.13,
         "duck": 0.33
       },
       "ambient": "stars"

@@ -145,3 +145,25 @@ right edge (moved in). Overlaps: 0.
 One package critic (gpt-6.1-sol) on the title, thumbnail, description, chapters, sources, credits and Studio answers:
 **pass**, one minor, fixed: the description said Gemma "doesn't loop"; it now says Gemma 3 "rarely loops" (8.5% of its
 answers hit the token limit). The title carries the owner's tag, "(Explained by Opus 5.5)", checked by `npm run package`.
+
+## The owner's watch (2026-11-03, after the first render)
+
+Lino watched the first cut and noted, as he went: the cold-open guess had no options to pick from; the progress bar should
+go (the player shows time); the Frogger seal stayed up about twice as long as it needed; the PPO-versus-Astra numbers did not
+say what they measured or which way was better; "layer by layer" was said but never shown ("we should be animating and
+showing what that looks like ... 3D"); the tools were plain boxes ("let's go crazy: logos, images, icons"); the celebration
+GIF looped back to worried faces; the fake-ending fanfare was "really loud ... obnoxious" and the joke did not land (keep it,
+make it land).
+
+Changed, for every video (D99, and the rules in `explain-concept`, `critic-engagement` and `pattern-breaks.md`): memes play
+once; meme time follows the meme; no progress bar; options for a guessing game; a comparison names its unit and which way is
+better; tools drawn as objects; a thing built step by step shown being built, in 3D when it has depth; a fake ending lands by
+visibly stopping, at the bed's level.
+
+Changed in this video: A/B/C/D under "Which game?"; Breakout and Go networks as 3D stacks lit layer by layer as the voice names
+each; the comparison as "Breakout · average points per game · higher is better" with the values beside their labels and a
+spoken "points per game, so higher is better: about twenty times the best of them", then three per-game verdict cards; the
+tools as Astra's real notebook cell, a CPU, a slashed training curve, coins that burst into answer sheets and an x-ray; Astra's
+own code for the subtraction and its four strength hypotheses; the credits at the bed's level ending on THE END, frozen grey
+and struck through as the scratch hits. The first worktree's voice takes and pictures went to the Trash with the merge, so
+both were regenerated from the committed prompts.

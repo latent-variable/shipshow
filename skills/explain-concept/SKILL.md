@@ -122,8 +122,9 @@ omission from an oversight.
   idea, not decoration (the owner, 2026-10-28): a recap meme (a galaxy brain of the steps) is held and walked through panel by
   panel, each with what it changed. And vary them: `npm run memes` and the packet's *Memes* table say which videos already use a
   template or a clip; a template another of the person's videos used is a finding (`critic-engagement`). It lands on the start of
-  the sentence that sets it up, not on a scene's last word as a transition, and stays up about five seconds or more so the viewer can
-  take it in (`pauses` when it closes a scene); its text sits clear of the face or expression the joke turns on, short enough to
+  the sentence that sets it up, not on a scene's last word as a transition, and stays up as long as it asks: about a second and a
+  half for the picture, its words at about three a second, and a beat; a moving one for its clip, which plays once and holds its
+  last frame (`data-loop` only for a loop that is the joke; D99). Not much more: double that drags (the owner, 2026-11-03); its text sits clear of the face or expression the joke turns on, short enough to
   keep to its box (the owner on qwen-phones-home, 2026-10-29: Gandalf's "I have no memory" line covered his face, and memes shown
   "just as transition points" left no time to digest them). Lay it on an opaque scrim over its scene. A decision video someone is waiting on mid-work is the exception: one at
   most, if it lands.
@@ -140,7 +141,9 @@ picture by what the idea *is*, not by what is easy to draw:
 | A change | Before and after, the same thing in the same place |
 | A structure or boundary | A few labelled boxes and the arrows that matter, no more |
 | Behaviour of code or an API | The real input and the real output, from a captured run |
-| A number or comparison | The number large, one comparison, nothing else on screen |
+| A number or comparison | The number large, one comparison, nothing else on screen; the unit named and which way is better, said or shown ("points per game, higher is better"), never left for the viewer to infer (the owner, 2026-11-03: "are we saying higher is better here?") |
+| A set of tools, inputs or parts | Each as its object: its logo, an icon, a generated picture, doing its job on screen; never a row of text boxes (the owner, 2026-11-03: "we cannot say the tools and just put boxes ... let's go crazy") |
+| Something built step by step ("layer by layer") | The building, step by step on its words; in 3D when the thing has depth, a stack of layers rising as each is written (the owner, 2026-11-03: "we should be animating and showing what that looks like") |
 | A result the source released data for (networks, logs, recordings) | The data itself, drawn: computed from the release, the method in `sources.md` (weight-space: the real weights as heatmaps, the paper's car runs replayed, the model's own looping answer) |
 | Something abstract | One concrete example before the general statement |
 | A place, an object or a situation no diagram shows | A generated image, our own labels on top, when it proves the point (`explainer-video`, *Scenes*) |

@@ -92,6 +92,6 @@
   --scanline-gap: 4px;
   --vignette-strength: 0.5;
   --vignette-color: #07040f;
-  --progress: on;
+  --progress: off;
   --progress-fill: linear-gradient(90deg, #ff9a5c, #ffb877, #f59ab5);
 }

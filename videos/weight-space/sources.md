@@ -77,6 +77,7 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 - Every weight zero; rules and source code; one reply; no data, no practice games. POST Experiment 5 setup ("every weight starting at 0", "no data, no loss, no gradients, and no tools", "the network never plays before it is scored").
 - Breakout: layer 1 computes where the ball lands, layer 2 moves the paddle there. POST ("Astra programs the first layer to compute where the ball would land, and the second layer is programmed to move the paddle to that position"). The little grid animation is ours, an illustration.
 - PPO 100M: 15.8; 500M: 25.3; Astra: 517.4. Asterix 25.8 / 55.2 / 53.2; Seaquest 5.6 / 88.9 / 53.1. POST table; LOGS `exp5_write_from_scratch/eval/minatar_eval.json`.
+- "About twenty times the best of them": 517.4 / 25.3 = 20.4 (ours). Scores are average points per game over 1,000 episodes (POST setup: "Scoring: 1,000 episodes"), so higher is better.
 - "About sixty percent" (53.1 / 88.9 = 0.60) and "came close" (53.2 vs 55.2): POST ("reach 60% of its score in Seaquest", "come close in Asterix").
 - PPO described as "a standard training method": ours.
 - The terminal text (`weights = zeros()`, "Astra's Breakout program, written as weights", the two layer lines) is ours, an illustration of the post's description, labelled on screen; not captured code.
@@ -97,6 +98,26 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 - It never finishes: the answer has no boxed answer and runs to the limit (ours, read in the record).
 - 85 of 96 ran out of room: LOGS `exp8_math/runs/p50c/requests/fwd_1.done.json`; POST ("85 of its first 96 practice answers ran to the 32,768-token limit"). Spoken "about thirty three thousand tokens of thinking".
 - Tools: a Python notebook (kernel) over the weights, CPU, no GPU; no training, no gradients, no optimizer, no loss fitting, no internet; 50 forward passes; a pass = up to 512 answers or up to 1,024 texts with internal states returned. LOGS `exp8_math/runs/p50c/turns/t001/prompt.txt`; POST setup ("a Python kernel over the weights (no GPU)", "a forward pass: the model answers up to 512 problems, or reads up to 1,024 texts").
+
+**06a-tools, 06b-direction: Astra's own code, shown**
+- All from LOGS `exp8_math/runs/p50c/tool_calls.jsonl` (commit above), one JSON object per line, the cell in its `code`
+  field, shown verbatim as whole lines with `…` for each gap:
+  - line 13: the `# Hypothesis: neuron 19:11 is one contributor ...` comment (wrapped onto three lines by us) and the edit
+    `new=w-strength*torch.outer(d,d@w)`, `save_edit(name,new)` (the rank-one removal, at strength 1).
+  - line 10: `diffH={l:(a[1::2]-a[::2]).mean(0) ...}` (repetitive minus productive pairs, averaged) and `d=d/d.norm()`,
+    `writes=(d@downweights[l]).numpy()` (the unit arrow, and how much each neuron writes along it).
+  - lines 42, 45, 70, 98: the `# Hypothesis:` comment opening each cell as the strength went to 2, 3, 4 and 6
+    (`w - 2.0 * torch.outer(u, u @ w)`, `w - 3.0 * ...`, `w-4*torch.outer(u,u@w)`, `set_subset_edit(6)`), verbatim.
+- The tool objects (CPU photo, the slashed training curve, the 50 coins, the answer sheets, the X-ray) are illustrations:
+  the CPU and X-ray generated (`generated/cpu.txt`, `xray.txt`), the rest drawn by us. 50 forward passes, 512 answers and
+  1,024 texts: LOGS `runs/p50c/turns/t001/prompt.txt`; POST setup.
+
+**05-zero, 05b-go: the 3D stacks**
+- Illustrations of the post's descriptions, labelled on screen: Breakout's network is 600 → 32 → 32 → 6 (POST Experiment 5
+  setup), drawn as a screen, two layers and an output; Go's is 243 → 512 × 6 → 82 (POST Experiment 6 setup), drawn as the
+  board, six layers and the move scores. Which layer does what: POST (Breakout: "the first layer to compute where the ball
+  would land, and the second layer ... to move the paddle"; Go: the paragraph cited under 05b-go). The order of lighting is
+  ours, following the narration.
 
 **06b-direction**
 - The model's state at each token is 1,024 numbers. CONFIG (hidden_size 1024). A token is "a word or a piece of one" (ours, standard). The 1,024 numbers as readings (needles on gauges), kept apart from the weights, and a direction as a pattern across them (some up, some down): our picture; the drawing shows 24 and is an illustration. A neuron as "a small calculator inside each layer": ours (one MLP unit; its weights are the ones edited, LOGS formula).
