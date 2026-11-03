@@ -1,0 +1,241 @@
+{
+  "title": "An AI opened another AI and edited its weights",
+  "builtBy": "Opus 5.5",
+  "kind": "feature",
+  "importance": "high",
+  "importance_reason": "A channel video for the public about a new research result: accuracy and novelty both matter, and it is the first video built under critic-novelty.",
+  "audience": "Curious YouTube viewers who use AI tools and know 'neural network' loosely but have never looked inside one; after watching they can say what a weight is, how Astra read, fixed and wrote networks, how it found and removed Qwen's loop, and why the jump was mostly the loop fix.",
+  "theme": "redline",
+  "engine": "drama",
+  "voice": "narrator-uk",
+  "speed": 1.0,
+  "gap": 0.5,
+  "beat": 0.9,
+  "hold": 3,
+  "say": {
+    "Qwen": "Kwen",
+    "GPT-6": "G P T six",
+    "PPO": "P P O",
+    "CPU": "C P U",
+    "MIT": "M I T",
+    "MATH-500": "Math five hundred",
+    "7.9": "seven point nine",
+    "48.1": "forty eight point one",
+    "13.8": "thirteen point eight",
+    "67.1": "sixty seven point one",
+    "62.3": "sixty two point three",
+    "15.8": "fifteen point eight",
+    "25.3": "twenty five point three",
+    "8.5": "eight point five",
+    "6.8": "six point eight",
+    "7.7": "seven point seven",
+    "3.5": "three point five",
+    "0.8": "point eight"
+  },
+  "moods": {
+    "file": {
+      "look": {},
+      "music": {
+        "file": "local/music/weights/file.wav",
+        "volume": 0.15,
+        "duck": 0.33
+      },
+      "ambient": "grain"
+    },
+    "arcade": {
+      "look": {
+        "--bg": "#0b0820",
+        "--sky": "radial-gradient(120% 90% at 50% 10%, #1d1450 0%, #0d0a26 60%, #06050f 100%)",
+        "--ink": "#f4f1ff",
+        "--muted": "#a89fd6",
+        "--card": "#15103a",
+        "--line": "#3a2f7a",
+        "--accent": "#ff3d7f",
+        "--accent-2": "#3df5ff",
+        "--accent-3": "#ffe14a",
+        "--good": "#5bff8a",
+        "--font-display": "\"Press Start 2P\", monospace",
+        "--display-tracking": "0",
+        "--display-weight": "400",
+        "--cap-bg": "rgba(6,5,15,0.9)",
+        "--progress-fill": "#3df5ff"
+      },
+      "music": {
+        "file": "local/music/weights/arcade.wav",
+        "volume": 0.14,
+        "duck": 0.33
+      },
+      "ambient": "grid scanlines"
+    },
+    "garage": {
+      "look": {
+        "--bg": "#0f2d4d",
+        "--sky": "linear-gradient(180deg, #14385e 0%, #0d2744 100%)",
+        "--ink": "#eef6ff",
+        "--muted": "#9fc0e0",
+        "--card": "#123659",
+        "--line": "#3d6c99",
+        "--accent": "#ff6b3d",
+        "--accent-2": "#ffd23d",
+        "--accent-3": "#ffd23d",
+        "--good": "#6dff9e",
+        "--cap-bg": "rgba(8,24,42,0.9)",
+        "--progress-fill": "#ffd23d"
+      },
+      "music": {
+        "file": "local/music/weights/garage.wav",
+        "volume": 0.15,
+        "duck": 0.33
+      },
+      "ambient": "grid"
+    },
+    "terminal": {
+      "look": {
+        "--bg": "#050806",
+        "--sky": "radial-gradient(120% 90% at 50% 40%, #0c1a10 0%, #050806 70%)",
+        "--ink": "#c9ffd8",
+        "--muted": "#5f9a6e",
+        "--card": "#08130b",
+        "--line": "#1f4a2a",
+        "--accent": "#ff5d5d",
+        "--accent-2": "#5dffa0",
+        "--accent-3": "#ffd75d",
+        "--good": "#5dffa0",
+        "--font-display": "\"IBM Plex Mono\", monospace",
+        "--display-tracking": "-0.01em",
+        "--cap-bg": "rgba(3,6,4,0.92)",
+        "--cap-hot": "#5dffa0",
+        "--progress-fill": "#5dffa0"
+      },
+      "music": {
+        "file": "local/music/weights/terminal.wav",
+        "volume": 0.15,
+        "duck": 0.33
+      },
+      "ambient": "scanlines vignette"
+    },
+    "theatre": {
+      "look": {
+        "--bg": "#e8f3f1",
+        "--sky": "radial-gradient(110% 80% at 50% 0%, #ffffff 0%, #e4f1ee 55%, #cfe4e0 100%)",
+        "--ink": "#10302c",
+        "--muted": "#4f6f6a",
+        "--card": "#ffffff",
+        "--line": "#b5d3cd",
+        "--accent": "#e0413a",
+        "--accent-2": "#0f8f7f",
+        "--accent-3": "#d08a00",
+        "--good": "#13a36b",
+        "--cap-bg": "rgba(16,48,44,0.92)",
+        "--progress-fill": "#0f8f7f",
+        "--vignette-strength": "0.25",
+        "--vignette-color": "#7fa8a2"
+      },
+      "music": {
+        "file": "local/music/weights/theatre.wav",
+        "volume": 0.17,
+        "duck": 0.33
+      },
+      "ambient": "vignette"
+    },
+    "credits": {
+      "look": {
+        "--bg": "#000000",
+        "--sky": "#000000",
+        "--ink": "#f6e7b5",
+        "--muted": "#b9a978",
+        "--accent-3": "#ffd24a",
+        "--font-display": "\"Space Grotesk\", sans-serif",
+        "--cap-bg": "rgba(0,0,0,0.85)",
+        "--progress-fill": "#ffd24a"
+      },
+      "music": {
+        "file": "local/music/weights/credits.wav",
+        "volume": 0.3,
+        "duck": 0.33
+      },
+      "ambient": "stars"
+    },
+    "close": {
+      "look": {},
+      "music": {
+        "file": "local/music/weights/close.wav",
+        "volume": 0.14,
+        "duck": 0.33
+      },
+      "ambient": "grain"
+    }
+  },
+  "leads": {
+    "03-guess": 1.6,
+    "04-car": 2.0,
+    "05-zero": 1.2,
+    "06-patient": 2.4,
+    "07-credits": 0.8,
+    "07b-gemma": 1.5,
+    "08-meaning": 1.4
+  },
+  "pauses": {
+    "01-numbers": 3.2,
+    "03-guess": 3.4,
+    "06c-results": 2.8,
+    "07-credits": 4.5,
+    "03a-reveal": 2.6,
+    "03b-hollow": 2.2,
+    "04-car": 3.0,
+    "06-patient": 2.8
+  },
+  "youtube": {
+    "title": "An AI Opened Another AI and Edited Its Weights by Hand (Explained by Opus 5.5)",
+    "alternatives": [
+      "GPT-6 Astra Fixed a Model's Math by Editing 0.016% of Its Weights (Explained by Opus 5.5)"
+    ],
+    "description": [
+      "MIT researchers handed GPT-6 Astra the raw weights of neural networks, as plain text. It told which game a network was trained on, fixed a car that couldn't get over a ramp, wrote Breakout and Go players from all-zero weights, and found the part of Qwen 3.5 that made it think in circles. Editing 0.016% of the weights, with no training, took its MATH-500 score from 7.9% to 48.1%.",
+      "This video walks through how each one worked, from the team's own released logs: the tools Astra had, the arrow it found inside Qwen, and why the jump was mostly a loop fix. The same method could not improve a model that doesn't loop. So: a real path to repairing models without gradient descent, and no sign yet of teaching them new skills.",
+      "Written, animated and narrated by Opus 5.5 with ShipShow, my toolkit of skills and plugins that lets AI build a whole video end to end. The voice is an invented one, not a real person's."
+    ],
+    "chapters": {
+      "01-numbers": "Which game is this?",
+      "02-knobs": "What a weight is",
+      "03-guess": "Reading weights",
+      "04-car": "Fixing a network",
+      "05-zero": "Writing one from zero",
+      "06-patient": "The patient: Qwen's loops",
+      "07-credits": "The fake ending",
+      "08-meaning": "What it means"
+    },
+    "sources": [
+      "Takehi, Teoh, Zhang, Khattab (MIT CSAIL), Sparks of Weight-Space Programming: https://rikiyat.github.io/blog/weight-space-programming/",
+      "The released logs (CC BY 4.0): https://github.com/RikiyaT/lm_understand-logs",
+      "The edited model: https://huggingface.co/RikiyaT/Qwen3.5-0.8B-weight-space-programming",
+      "Qwen3.5-0.8B model card: https://huggingface.co/Qwen/Qwen3.5-0.8B",
+      "Arditi et al., Refusal in Language Models Is Mediated by a Single Direction (2024): https://arxiv.org/abs/2406.11717"
+    ],
+    "credits": [
+      "Data, figures and logs: Takehi, Teoh, Zhang and Khattab, lm_understand-logs, CC BY 4.0",
+      "Breakout animation and car-on-ramp runs: from the blog post above",
+      "Voice: an invented narrator, Fish Audio Drama 3. Music: made for this video with ACE-Step 1.5",
+      "Pictures: generated with MOSS-Image. Memes: memegen templates (No Idea, Seal of Approval, Expectation vs. Reality, At Least You Tried, First Try!, Stop It Get Some Help, Soccer Celebration in a Bar, Sudden Clarity Clarence)"
+    ],
+    "tags": [
+      "AI",
+      "neural networks",
+      "GPT-6",
+      "Qwen",
+      "interpretability",
+      "machine learning",
+      "weight-space programming",
+      "MIT",
+      "explained"
+    ],
+    "studio": {
+      "Audience": "No, it's not made for kids",
+      "Paid promotion": "No",
+      "Altered or synthetic content": "Recommended No, the owner's call: an invented AI narrator that imitates no one; generated pictures are illustrations of objects, not real events",
+      "Category": "Science & Technology",
+      "Language": "English",
+      "Visibility": "Public"
+    }
+  }
+}

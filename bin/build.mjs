@@ -21,7 +21,7 @@ import { liftFrames } from "./frame.mjs";
 import { footageScene } from "./footage.mjs";
 import { portraitScene } from "./portrait.mjs";
 import { shotScene } from "./shot.mjs";
-import { REPO, config, die, dropsIn, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir, recordStep, missingLocalFiles } from "./lib.mjs";
+import { REPO, config, die, dropsIn, unbalancedTags, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir, recordStep, missingLocalFiles } from "./lib.mjs";
 import { resolveMoods } from "./moods.mjs";
 import { sfxTrack } from "./sfx.mjs";
 
@@ -157,6 +157,8 @@ const sections = await Promise.all([...lifted.scenes.matchAll(/<section([^>]*)>(
   if (!id) die(`scenes.html has a <section> with no data-scene: <section${m[1]}>`);
   const scene = byId[id];
   if (!scene) die(`scenes.html names scene ${id}, which has no script/${id}.txt (or run voice.mjs again)`);
+  const off = unbalancedTags(m[2]);
+  if (off.length) die(`scene ${id}: ${off.map((t) => `<${t.tag}> opened ${t.opened} times, closed ${t.closed}`).join("; ")}. An unclosed or extra tag ends the page early and the kit makes no timeline (D97)`);
   seen.add(id);
   // bin/shot.mjs: a screenshot of a real page; bin/portrait.mjs: a Commons photo and its credit; bin/meme.mjs: a meme figure's picture and text boxes; an animated one is a video that starts at its cue and runs to the scene's end
   const withMemes = await memeScene(await portraitScene(await shotScene(m[2], dir, id), dir, id), dir, id, { start: scene.start, end: round(scene.start + scene.duration - 0.01), at: (cue) => cueTime(scene, cue, `scene ${id}`) });

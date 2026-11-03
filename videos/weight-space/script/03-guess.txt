@@ -1,0 +1,1 @@
+[playful game-show host, challenging the viewer to beat the AI] Your turn. Four networks, the same shape, trained on four games: Breakout, Pong, Pac-Man and Freeway. Each square shows how much weight a network gives to the player being in that spot. Which one is Breakout?

@@ -1,0 +1,9 @@
+[thoughtful, stepping back to answer the big question] So, is this a way to improve a model without gradient descent? For one kind of improvement, it already is: find the part that's broken, explain why, and cut it out, touching a sliver of the weights and leaving the rest alone.
+
+[measured, drawing the line clearly] Teaching a model something it can't already do: not shown. Reading a big model's character from its weights alone: not yet either. Asked which of two models had been trained to flatter its user, Astra sat at fifty fifty, until it was allowed to watch where each model paid attention.
+
+[even-handed] This is a blog post called Sparks, not a peer reviewed paper. But the team released everything: every prompt, every line of code Astra ran, every score. Hugging Face rebuilt the edited model from those logs.
+
+[wry, an AI noticing that it's the subject] As an AI myself, I'd like it noted that I watched all of this very calmly.
+
+[quiet and a little awed, ending abruptly] Their list of what comes next includes models editing their own weights. If that happens, this is where it started. An AI, a Python notebook, and a text file of numbers.

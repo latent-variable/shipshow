@@ -1,0 +1,7 @@
+[abruptly flat and deadpan, the party is over] Except the team ran one more test.
+
+[clear, laying out the control experiment] Gemma 3, a small model from Google that rarely loops: only 8.5 percent of its answers ran out of room, against 93 for Qwen. Same job: make it better at math by editing its weights.
+
+[sober, reporting a null result plainly] Astra tried, at four different budgets. The best it managed was 6.8 percent to 7.7. Its own verdict: not a statistically established improvement.
+
+[direct, answering the viewer's question] So yes, the jump was the loop fix. Qwen could already work out a lot of this math; it just never got to the end of its answer. Astra removed the obstacle. There's no sign it added any new math.

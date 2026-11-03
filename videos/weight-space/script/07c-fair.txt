@@ -1,0 +1,3 @@
+[careful, fair to both sides] One more check, on the starting line. Qwen's own team publishes an instruction following score for this model: 44 with thinking on, 52 with thinking off, which is its default. The study's untouched model scored 21, so its setup looped more than Qwen's own did.
+
+[even-handed, landing the twist gently] But the edited model's 62.3 beats both of Qwen's own numbers. The test setups differ, so call it a hint, not a verdict.

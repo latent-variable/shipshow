@@ -583,6 +583,18 @@ export function musicBed(dir, music, timing, moods = [], drops = []) {
   return true;
 }
 
+/** The container tags a scene opens and closes a different number of times (D97): {tag, opened, closed}. One extra
+ *  closing div in a scene ends the page's root early, so the captions and every later scene fall outside it and the kit
+ *  fails before it makes a timeline (weight-space, 2026-11-03, after a scene was split by hand). Comments are skipped. */
+export function unbalancedTags(html) {
+  const body = html.replace(/<!--[\s\S]*?-->/g, "");
+  return ["div", "figure", "section", "svg", "pre", "table", "span", "p"].map((tag) => ({
+    tag,
+    opened: (body.match(new RegExp(`<${tag}(?=[\\s>/])`, "gi")) || []).length,
+    closed: (body.match(new RegExp(`</${tag}\\s*>`, "gi")) || []).length,
+  })).filter((t) => t.opened !== t.closed);
+}
+
 /** A music drop (D96): `data-drop="<seconds>"` on a cued element cuts the bed to silence on its cue, for that long, so a
  *  reveal lands in a hush the viewer did not expect. Out in DROP_OUT (a cut, not a fade), back in over DROP_IN. */
 export const DROP_OUT = 0.04, DROP_IN = 0.5;

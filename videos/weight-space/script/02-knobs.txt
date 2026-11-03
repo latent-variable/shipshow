@@ -1,0 +1,7 @@
+[clear, explaining to a curious friend] A neural network is a machine full of knobs. Each knob is a number, called a weight. Numbers go in one end, get multiplied and added through every knob, and an answer comes out the other.
+
+[matter-of-fact, with a hint of awe at the scale] Nobody sets the knobs by hand. Training does: play the game, check the score, nudge every knob a hair whichever way helps, and repeat. That nudging is gradient descent, and the game players here were trained for a billion steps.
+
+[amused, admitting a human limit] What nobody does is look at the finished knobs and say what the machine is for. To a person, it's a wall of numbers.
+
+[intrigued] The MIT team handed the wall to Astra as plain text. They call it weight-space programming: a model reading and writing another network's weights directly, with no training loop.

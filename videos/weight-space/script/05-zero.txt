@@ -1,0 +1,7 @@
+[energetic, raising the stakes] Reading and fixing start from a trained network. Next, Astra started from zero: every weight set to zero, the rules and source code of three tiny arcade games, and one reply to write the whole thing. No data, no practice games.
+
+[clear, admiring a clever design] For Breakout, it wrote a program and translated it into weights. The first layer works out where the ball will land. The second moves the paddle there.
+
+[mock-sympathetic toward the hard-working rival, then amused] Meanwhile, the usual way. PPO, a standard training method, played Breakout for a hundred million steps and averaged 15.8 points. Five hundred million steps: 25.3. Astra's one reply: 517.
+
+[even-handed, keeping it honest] It wasn't a clean sweep. In Asterix it came close to the five hundred million step network, and in Seaquest it reached about sixty percent of its score. It beat the hundred million step networks in all three.
