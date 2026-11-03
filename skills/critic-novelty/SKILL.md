@@ -23,7 +23,8 @@ moves: `explain-concept`, *Break the formula*, and its `references/pattern-break
 
 **Evidence:** the packet's *Devices* section (every editing move this video makes with how many of the person's other videos
 made it, *staple* and *new to the channel*, the entrance shares, how each act opens, the rhythm of change), *Memes*,
-*Moods*, *Stillness* and *Script, as voiced*; the frames; and the other videos themselves, read straight from their
+*Moods*, *Stillness*, *Cues* (every change on screen with its time and what is said then: read it a minute at a time to find a
+stretch where each change is the same kind as the last) and *Script, as voiced*; the frames; and the other videos themselves, read straight from their
 folders (`videos/*/script/`, `scenes.html`, and `local/videos/` or `SHIPSHOW_VIDEOS` for another person's), so you can say
 which earlier video already did a thing. Read the scripts of at least the two most recent other videos before you judge.
 
