@@ -1,0 +1,74 @@
+/* Redline: a neural network's weights opened as a plain text file, with an AI's tracked changes on top. Warm editor
+   paper, numbers in IBM Plex Mono, Space Grotesk for headings; a deletion struck through in red, an insertion in green,
+   an AI's margin comments in violet, the narrator's own notes in amber. Press Start 2P is here for the moods that turn
+   the page into an arcade (SIL Open Font License, all in fonts/). Made for weight-space-programming, where the whole
+   point is that a network's weights are text and a model can edit them. */
+@font-face { font-family: "Space Grotesk"; font-weight: 500; src: url("fonts/space-grotesk-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Space Grotesk"; font-weight: 700; src: url("fonts/space-grotesk-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 600; src: url("fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Press Start 2P"; font-weight: 400; src: url("fonts/press-start-2p-latin-400-normal.woff2") format("woff2"); }
+:root {
+  /* colour: editor paper */
+  --bg: #f6f3ea;
+  --sky: linear-gradient(180deg, #faf8f1 0%, #f1ede1 100%);
+  --ink: #1f1d1a;
+  --muted: #6f6a60;
+  --accent: #d6403a;          /* a deletion: struck through */
+  --accent-2: #6d4cff;        /* the AI's comments in the margin */
+  --accent-3: #9b6800;        /* the narrator's own notes, and the thing to look at (4.8:1 on white) */
+  --card: #fffdf7;
+  --line: #ddd6c6;
+  --code-bg: #fffdf7;
+  --code-ink: #3a3631;
+  --good: #23894a;            /* an insertion */
+  --bad: #d6403a;
+  /* type */
+  --font: "Space Grotesk", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Space Grotesk", -apple-system, Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+  --display-weight: 700;
+  --display-tracking: -0.02em;
+  /* layout and shape */
+  --pad: 120px;
+  --heading-top: 90px;
+  --heading-size: 96px;
+  --heading-align: left;
+  --meme-height: 760px;
+  --radius: 6px;
+  --border: 1.5px;
+  --shadow: 0 18px 50px rgba(60, 50, 30, 0.16);
+  --code-shadow: 0 0 0 1px #ddd6c6, 0 18px 50px rgba(60, 50, 30, 0.14);
+  --frame: #ddd6c6;
+  --frame-width: 1.5px;
+  --meme-border: 1.5px solid #cfc7b5;
+  --meme-radius: 6px;
+  --meme-shadow: 0 26px 70px rgba(40, 30, 10, 0.28);
+  --portrait-radius: 6px;
+  --portrait-frame-width: 1.5px;
+  --portrait-shadow: 0 22px 60px rgba(40, 30, 10, 0.22);
+  --shot-mark: #ffd54a;
+  --shot-bar: #ece6d8;
+  --shot-shadow: 0 30px 80px rgba(40, 30, 10, 0.3);
+  /* captions: a dark bar on the paper, the spoken word lit in amber */
+  --cap-bg: rgba(31, 29, 26, 0.92);
+  --cap-ink: #ffffff;
+  --cap-size: 44px;
+  --cap-radius: 6px;
+  --cap-style: karaoke;
+  --cap-words: 10;
+  --cap-font: "Space Grotesk", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --cap-weight: 700;
+  --cap-hot: #ffc24a;
+  --cap-wait: 0.6;
+  /* motion: an editor cuts, it does not dissolve */
+  --transition: none;
+  --entrance: left;
+  --camera: none;
+  --ambient: grain;
+  --grain-strength: 0.05;
+  --grain-fps: 8;
+  --grain-blend: multiply;
+  --progress: on;
+  --progress-fill: #6d4cff;
+}

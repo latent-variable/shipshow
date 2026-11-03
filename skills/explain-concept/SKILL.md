@@ -141,6 +141,7 @@ picture by what the idea *is*, not by what is easy to draw:
 | A structure or boundary | A few labelled boxes and the arrows that matter, no more |
 | Behaviour of code or an API | The real input and the real output, from a captured run |
 | A number or comparison | The number large, one comparison, nothing else on screen |
+| A result the source released data for (networks, logs, recordings) | The data itself, drawn: computed from the release, the method in `sources.md` (weight-space: the real weights as heatmaps, the paper's car runs replayed, the model's own looping answer) |
 | Something abstract | One concrete example before the general statement |
 | A place, an object or a situation no diagram shows | A generated image, our own labels on top, when it proves the point (`explainer-video`, *Scenes*) |
 | A physical thing the viewer is asked to picture and watch move (a needle, a table, a brush) | That thing, generated once and animated, never a bar standing in for it (`explainer-video`, *Scenes*) |
@@ -161,7 +162,9 @@ picture the kit can make or plan the script.
 
 A viewer who can predict the next beat stops attending to it, and a viewer who has seen three of our videos can (the
 owner, 2026-11-03: "I'm starting to see the patterns"). Before the script, read the packet's *Devices* section of the
-last video, or the last two videos' scripts, and plan this one against them:
+last video, or the last two videos' scripts, and plan this one against them. At every design decision the question is what
+would be fun, funny, interesting or novel here, never what is usual (the owner, 2026-11-03: "not what is generic, what do
+people typically do here"):
 
 - **Keep the constant, rotate the variable.** The narrator, the honesty and the sourcing stay. The structure, the act
   openings, the moves and the sentence shapes change from video to video.

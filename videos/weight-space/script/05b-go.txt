@@ -1,0 +1,5 @@
+[building toward the hardest one] Then Go, on a nine by nine board. This network has one and a half million weights, far too many to write out in one reply, so Astra got a Python sandbox to write them with.
+
+[impressed, describing a building plan] It wrote the network as a program for playing Go, layer by layer. The first layers mark every stone and the empty points beside it. The middle layers follow chains of stones to find groups in danger. The last layer scores each move: capture, rescue, and don't fill the empty spots that keep your own group alive.
+
+[measured, letting each result land] With no practice games at all, it won just over half its games against small trained networks. Given fifty rounds of practice games, to study its losses and adjust, it beat a same-size network trained on twenty million games, about three games in four.

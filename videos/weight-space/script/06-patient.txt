@@ -1,0 +1,3 @@
+[calm and a little ominous, like the cold open of a hospital drama] Now, the real patient. Qwen 3.5, with 0.8 billion weights: a small open model that thinks out loud before it answers. Its own model card warns that in thinking mode it is prone to getting stuck in loops.
+
+[clinical, reading out symptoms, then a dry aside] Here's one of its answers, to a question about rotating a point by ninety degrees. Wait, zero degrees is the first quadrant. Wait, ninety is the second. Wait, a hundred and eighty is the second. That one answer says wait fourteen hundred and sixty six times. It never finishes.

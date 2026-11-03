@@ -1,0 +1,7 @@
+[delighted, revealing the answer to a magic trick] An AI read this exact file, with no tools and no calculator, and wrote back: Breakout. Ninety nine percent sure. It was right.
+
+[brisk and building, like a movie trailer] The AI is GPT-6 Astra, from OpenAI, and the experiments come from a team at MIT. Astra read networks like this one. It fixed a broken one. It wrote new ones from nothing, as text, in a single reply.
+
+[leaning in, saving the biggest for last] Then it opened a real language model, Qwen, which kept getting stuck thinking in circles. It changed sixteen thousandths of one percent of its weights, with no training. Its math score went from 7.9 percent to 48.
+
+[honest, letting the viewer in on the catch] You might be thinking: that's just a loop fix. Mostly, yes. How it found the loop, and how far that goes, is the interesting part.

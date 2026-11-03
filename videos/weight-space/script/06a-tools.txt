@@ -1,0 +1,3 @@
+[clinical] In Astra's first check, 85 of 96 answers ran out of room, about thirty three thousand tokens of thinking, before they reached an answer.
+
+[clear, laying out the instruments on the tray] Astra's tools: a Python notebook holding all the weights, on a CPU. No training and no gradients. And fifty forward passes, each one letting it have the model answer up to 512 problems, or read up to 1,024 texts while Astra watched its insides.

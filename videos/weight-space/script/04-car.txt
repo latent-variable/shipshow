@@ -1,0 +1,7 @@
+[storyteller, setting up a small underdog] Now, fixing. A little car has to get over a ramp, and the trick is to back up first and take a run at it. A network trained for a billion steps never figured that out. It drives straight at the ramp and stalls: zero wins in two hundred and fifty six tries.
+
+[reading a doctor's note aloud, dry] Astra got the weights, the scene and one recording of the failure. Its diagnosis: reverse is effectively never sampled.
+
+[clear, walking through a repair] So it wired in a detour. Three inputs, the car's position, its speed and where its green wheel is, run through six spare units in every layer. The detour says: back up, then floor it. Once the green wheel is past the red strip, it switches itself off, and the original network drives the rest.
+
+[deadpan, then delighted, the punchline is the AI's own caution] Astra signed off with: this is a physics-based repair, not a simulated or verified result. They ran it. One thousand and twenty four wins out of one thousand and twenty four, from one reply that touched three and a half percent of the weights.

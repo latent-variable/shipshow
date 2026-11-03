@@ -1,0 +1,9 @@
+[clear, building a picture step by step] At every token, a word or a piece of one, the model holds its current thought as 1,024 numbers. Not the weights: readings, like 1,024 needles on gauges, moving with every word. A direction is a pattern across them: some needles up, some down, together.
+
+[intrigued, describing a detective's method] Astra wrote four pairs of short reasoning snippets. In each pair, one makes progress, and the other goes in circles: but is 20 the total? No, it is the remaining time. Over and over. It fed both through the model and subtracted one from the other. What's left is one such pattern, an arrow: the way the model leans when it's looping.
+
+[the culprit is found] Then it asked which neurons, the small calculators inside each layer, push the readings along that arrow hardest. Two layers stood out: fifteen and nineteen.
+
+[precise, describing the surgery] The edit: in each of those layers, take the 64 neurons pushing hardest and change their weights, so the arrow is stripped out of what they write. Then go further, and push them six times the other way. The neurons that kept nudging the model into a loop now nudge it out of one. That's 131,072 weights, out of 800 million.
+
+[fair-minded, crediting earlier work, then pointing at what's new] Deleting one direction from a model's weights is a known trick: in 2024, researchers used it to switch off a model's refusals. Astra never names that work. It found the arrow and the neurons through its own experiments, and checked them: an arrow picked at random barely moved the score.

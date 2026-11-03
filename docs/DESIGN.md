@@ -1328,7 +1328,8 @@ line height of 1 (an overlap the check measures), so its display lines set 1.2 o
 ending at its own tag. **Why.** It searched for a closing `</img>` that never comes, so a cued generated picture got the rest of the
 page as its text and the packet asked for 6,000 seconds of reading (binance-heist round 1: three false "short, late" rows that a
 pacing critic had to argue away). **Costs.** None measured. **Tested.** binance-heist's packet after the fix: the three picture cues
-show no reading time.
+show no reading time. A self-closing tag (a cued SVG `<line/>` or `<polygon/>`) is read the same way (weight-space round 1: its
+loop arrow was given 8,867 s to read, flagged late, and a sync critic took it at its word).
 
 ### D95. A person's titles carry their tag, naming the model that built the video (2026-11-02)
 **Decision.** `local/config.json` `youtube.titleTag` (Lino's: "(Explained by {model})") is words every title of that person's
@@ -1372,6 +1373,26 @@ the drop's curve and its refusals). On a copy of qwen-phones-home: *Devices* ren
 a drop added and built; headless Chrome at the punch showed `.inner` at scale 1.27 then 1.3 with its origin on the cued
 chip, captions unscaled, and 1.3 cropping the next card (so the docs say 1.1 to 1.25); the whip at 125.36 s read
 x 1,350 px and blur 28.6 px, settled by 125.8 s; the bed measured RMS 0.0 through the drop and back to 605 after it.
+
+### D97. A scene's tags must balance, and the build says which scene does not (2026-11-03)
+**Decision.** `build` counts each scene's opening and closing `div`, `figure`, `section`, `svg`, `pre`, `table`, `span` and `p`
+tags in order (comments and self-closing tags such as `<svg/>` skipped) and stops naming the scene and the tag when the counts
+differ or a tag is closed before it was opened, which ends an ancestor even when the totals match (`unbalancedTags` in
+`bin/lib.mjs`; PR #155's review). **Why.**
+Splitting two weight-space scenes by hand moved one closing `div` into the wrong scene. The browser closed `#root` early, the
+captions and later scenes fell outside it, the kit threw `insertBefore` before it made a timeline, and `overlaps` and the
+frames showed a broken page with no pointer to the cause. **Costs.** A tag left open on purpose (none in any video) would need
+closing. **Tested.** `test/pipeline.test.mjs` (the split's exact shape, an unclosed div, svg children and a comment not
+counted); no existing video's scenes trip it.
+
+### D98. The redline theme: weights opened as a text file, with an AI's tracked changes (2026-11-03)
+**Decision.** `themes/redline`: warm editor paper, numbers in IBM Plex Mono, Space Grotesk headings, a deletion struck through
+in red, an insertion underlined in green, an AI's margin comments in violet and the narrator's own in amber; Press Start 2P is
+bundled for moods that turn the page into an arcade. Cuts, not dissolves (`--transition: none`), and a faint multiply grain.
+weight-space rides it through seven moods (file, arcade, garage, terminal, theatre, credits, close), each with its own bed.
+**Why.** The video's point is that a network's weights are text and a model can edit them; the editor is that idea on screen,
+and no earlier theme was light, monospace-first or built around comments. **Costs.** A light base needs its moods' ambients
+chosen with care (`glow` on a light sky reads as paint blobs: AGENTS.md, *Traps*). **Tested.** weight-space's frames.
 
 ## Behaviour
 

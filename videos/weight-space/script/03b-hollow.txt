@@ -1,0 +1,5 @@
+[curious, setting up a clue] It works on pictures too. Three tiny image generators, one each for circles, squares and triangles. Astra was told not to run them, only to read them.
+
+[delighted, revealing the clue] It named all three, and drew what it saw. A hollow square. The real network draws them filled.
+
+[thoughtful, explaining why the mistake matters] The authors point to that mistake as the tell. Simulating the network would give a filled square. Astra read the last layer, where each unit's weights draw one piece of the edge, and drew just those pieces.
