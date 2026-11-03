@@ -362,6 +362,24 @@ function clipLines(inner, where) {
 const loops = (attrs) => /(?:^|\s)data-loop(?:[\s=]|$)/.test(attrs);
 const once = (attrs) => (loops(attrs) ? {} : { hold: true, folder: join("assets", "memes", "clips") });
 
+/** The cue a figure arrives on: its own data-cue, or else the nearest element around it that has one (a meme inside a cued
+ *  `meme-wrap` arrives with the wrap). A moving meme or footage starts playing there; without this a clip in a cued wrap
+ *  started at its scene's start and, played once, had finished before it was seen (weight-space, 2026-11-03; D99). */
+export function cueOf(html, index, attrs) {
+  const own = (attrs.match(/(?:^|\s)data-cue="([^"]*)"/) || [])[1];
+  if (own !== undefined) return own;
+  const VOIDS = /^(area|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
+  const stack = [];
+  for (const m of html.slice(0, index).matchAll(/<(\/?)([a-zA-Z][\w-]*)([^>]*)>/g)) {
+    const [, close, tag, rest] = m;
+    if (close) { const k = stack.map((e) => e.tag).lastIndexOf(tag.toLowerCase()); if (k >= 0) stack.length = k; continue; }
+    if (VOIDS.test(tag) || rest.endsWith("/")) continue;
+    stack.push({ tag: tag.toLowerCase(), cue: (rest.match(/(?:^|\s)data-cue="([^"]*)"/) || [])[1] });
+  }
+  for (let k = stack.length - 1; k >= 0; k--) if (stack[k].cue !== undefined) return stack[k].cue;
+  return undefined;
+}
+
 export async function memeScene(html, dir, sceneId, ctx = { start: 0, end: 10, at: () => 0 }) {
   const figs = [...html.matchAll(/<figure([^>]*\b(?:data-meme|data-clip)="([^"]*)"[^>]*)>([\s\S]*?)<\/figure>/g)];
   if (!figs.length) return html;
@@ -370,7 +388,7 @@ export async function memeScene(html, dir, sceneId, ctx = { start: 0, end: 10, a
     const [whole, attrs, id, inner] = m;
     const clip = attrOf(attrs, "data-clip");
     const where = `scene ${sceneId}: ${clip !== undefined ? "data-clip" : "data-meme"}="${id}"`;
-    const cue = attrOf(attrs, "data-cue");
+    const cue = cueOf(html, m.index, attrs);
     const start = cue ? ctx.at(cue) : ctx.start, window = ctx.end - start;
     mkdirSync(join(dir, "assets", "memes"), { recursive: true });
     if (clip !== undefined) {

@@ -349,10 +349,11 @@
         const loop = fig ? +fig.dataset.loop : 0, from = fig ? +fig.dataset.loopStart : 0, once = fig ? fig.dataset.once !== undefined : false;
         const [show, hide] = box.dataset.show.split(" ").map(Number);
         if (!(loop > 0)) return;
-        // A clip that plays once (D99) stops on its last frame; its last line to appear stays up, so the payoff holds.
+        // A clip that plays once (D99) stops on its last frame; its last line stays up from the moment it appears, so the
+        // payoff never blinks off and back on.
         const shows = fig ? [...fig.querySelectorAll(".ss-meme-box[data-show]")].map((b) => +b.dataset.show.split(" ")[0]) : [show];
         const last = show === Math.max(...shows);
-        driveBy(box, { opacity: (t) => { if (once && t - from >= loop) return last ? 1 : 0; const p = ((((t - from) / loop) % 1) + 1) % 1; return p >= show && p < hide ? 1 : 0; } });
+        driveBy(box, { opacity: (t) => { if (once && last && t - from >= show * loop) return 1; if (once && t - from >= loop) return 0; const p = ((((t - from) / loop) % 1) + 1) % 1; return p >= show && p < hide ? 1 : 0; } });
       });
 
       // Each element with a cue arrives when the voice reaches its word. data-anim picks how;
