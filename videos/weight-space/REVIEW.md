@@ -167,3 +167,29 @@ tools as Astra's real notebook cell, a CPU, a slashed training curve, coins that
 own code for the subtraction and its four strength hypotheses; the credits at the bed's level ending on THE END, frozen grey
 and struck through as the scratch hits. The first worktree's voice takes and pictures went to the Trash with the merge, so
 both were regenerated from the committed prompts.
+
+## Round 5 (2026-11-03, 821 s): the reworked cut
+
+Seven critics on Codex (visuals and clarity on gpt-6.1-sol). **Pass:** accuracy, sync, engagement, novelty. Fail: visuals
+(2 blocking, 1 major), clarity (2 major), grounding (1 major, the screenshot point again, declined as before: #154).
+
+Fixed: the verdict footer ran off the canvas (now inside, two lines); the notebook panels clipped their lines (fewer, whole
+lines, gaps marked, indentation shortened and said so); the code was small (now 28 to 30 px). Clarity: the 3D stacks lit up
+without showing the work, so one example now runs through each (Breakout: the ball's path, its landing marked at layer 1, the
+paddle sliding there at layer 2; Go: the empty points beside a group, the group in danger, the move that scores best); the
+subtraction jumped from text to "pattern", so three rows of illustrative readings now subtract on screen (looping, progressing,
+the difference) before the pattern is named.
+
+## Round 6 (2026-11-03): visuals and clarity, confirming
+
+Visuals: the strength-hypothesis panel ran into the captions, and the evidence text was still under about 28 px; now two of
+Astra's hypotheses (strength 3, its caution; strength 6, the one it kept) at 28 px, and the notebook card shows only the edit
+lines at 30 px. Clarity: the search table used matrices, attention head, MLPs and columns; now "small nudges, spread wide",
+"switch off one small part" and "64 neurons in each of two layers". Checked by the builder in frames at each flagged time; no
+further round. Overlaps: 0 (one measured overlap was text the snippet's own fade-out hides, marked as meant).
+
+## Status (second cut)
+
+Accuracy passes (round 5). Sync, engagement and novelty pass on the reworked cut. Visuals and clarity findings fixed and
+checked in frames. Pacing accepted at the owner's narrator pace (as before). Grounding's screenshot provenance declined, #154.
+All critic work on Codex. Nobody has listened to the second cut's mix.

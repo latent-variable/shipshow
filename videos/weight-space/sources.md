@@ -102,12 +102,12 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 **06a-tools, 06b-direction: Astra's own code, shown**
 - All from LOGS `exp8_math/runs/p50c/tool_calls.jsonl` (commit above), one JSON object per line, the cell in its `code`
   field, shown verbatim as whole lines with `…` for each gap:
-  - line 13: the `# Hypothesis: neuron 19:11 is one contributor ...` comment (wrapped onto three lines by us) and the edit
-    `new=w-strength*torch.outer(d,d@w)`, `save_edit(name,new)` (the rank-one removal, at strength 1).
+  - line 13: `d=d/d.norm()`, `w=downweights[l]`, `new=w-strength*torch.outer(d,d@w)` and `save_edit(name,new)` (the rank-one
+    removal, at strength 1), indentation shortened by us.
   - line 10: `diffH={l:(a[1::2]-a[::2]).mean(0) ...}` (repetitive minus productive pairs, averaged) and `d=d/d.norm()`,
     `writes=(d@downweights[l]).numpy()` (the unit arrow, and how much each neuron writes along it).
-  - lines 42, 45, 70, 98: the `# Hypothesis:` comment opening each cell as the strength went to 2, 3, 4 and 6
-    (`w - 2.0 * torch.outer(u, u @ w)`, `w - 3.0 * ...`, `w-4*torch.outer(u,u@w)`, `set_subset_edit(6)`), verbatim.
+  - lines 45 and 98: the `# Hypothesis:` comments opening the cells at strength 3 (`w - 3.0 * torch.outer(u, scores)`) and
+    6 (`set_subset_edit(6)`), verbatim; the cells at strength 2 and 4 (lines 42, 70) are not shown.
 - The tool objects (CPU photo, the slashed training curve, the 50 coins, the answer sheets, the X-ray) are illustrations:
   the CPU and X-ray generated (`generated/cpu.txt`, `xray.txt`), the rest drawn by us. 50 forward passes, 512 answers and
   1,024 texts: LOGS `runs/p50c/turns/t001/prompt.txt`; POST setup.
@@ -136,7 +136,7 @@ Tags: **post** (the blog post), **logs** (the released logs, a file path in the 
 - MATH-500 7.9 → 48.1; GSM8K (grade-school word problems) 13.8 → 67.1; IFEval (instruction following) 21.0 → 62.3. POST table (50 forward passes).
 - "The loops weren't only hurting math, so removing them helped the other tests too": POST ("The loops are not special to math, so performance beyond math improved as well").
 - The rotation question after the edit, boxed −2 + 7i: LOGS `exp8_math/eval/p50c/parts/math500_s8of10/math500_first_samples.jsonl.gz`, same record (matches the reference).
-- Separate tries with 10 and 25 passes found weaker fixes: 10 → broad edits across 30 matrices, 12.3; 25 → disable layer 15 attention head 7, 14.1; 50 → two MLPs, 64 columns, 48.1. LOGS `exp8_math/README.md`; `runs/p10c/final_answer.md`; `runs/p25c/final_answer.md`. These were three independent conversations (LOGS README). "A search, not a recipe": our wording (inferred).
+- Separate tries with 10 and 25 passes found weaker fixes: 10 → broad edits across 30 matrices (shown as "small nudges, spread wide"), 12.3; 25 → disable layer 15 attention head 7 ("switch off one small part"), 14.1; 50 → two MLPs, 64 columns ("64 neurons in each of two layers"), 48.1. LOGS `exp8_math/README.md`; `runs/p10c/final_answer.md`; `runs/p25c/final_answer.md`. These were three independent conversations (LOGS README). "A search, not a recipe": our wording (inferred).
 
 **07-credits** (a gag)
 - Surgeon GPT-6 Astra; patient Qwen 3.5 0.8B; experiments by Takehi, Teoh, Zhang and Khattab, MIT CSAIL; gradients used: 0; weights edited: 131,072 of 800 million. POST. "PPO: still training" is a joke (ours).
