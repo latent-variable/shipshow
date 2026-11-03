@@ -33,7 +33,7 @@ https://github.com/user-attachments/assets/5421baa1-c54d-4151-8cf4-6e5e20be889e
 <p align="center">
   <img src="docs/assets/critics.svg" width="100%" alt="The critics: fresh agents, one question each; the agent that made the video never judges it. Ten numbered cards: accuracy, is every claim true? Clarity, will they follow it? Pacing, can they keep up? Sync, is it shown when it is said? Visuals, is every frame readable? Consistency, one name for one thing? Engagement, would they keep watching? Novelty, could they predict it? Decision, can they make the call? Grounding, is the evidence real?">
   <br>
-  <sub>Accuracy &middot; Clarity &middot; Pacing &middot; Sync &middot; Visuals &middot; Consistency &middot; Engagement &middot; Decision &middot; Grounding</sub>
+  <sub>Accuracy &middot; Clarity &middot; Pacing &middot; Sync &middot; Visuals &middot; Consistency &middot; Engagement &middot; Novelty &middot; Decision &middot; Grounding</sub>
 </p>
 
 ## Install as a Claude Code plugin

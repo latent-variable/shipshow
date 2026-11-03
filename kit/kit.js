@@ -511,9 +511,9 @@
           tl.set(inner, { transformOrigin: origin }, at);
           tl.fromTo(inner, { scale }, { scale: to, duration: 0.22, ease: "power4.out", immediateRender: false }, at);
           scale = to;
-          // A release that would land after the next punch is dropped: the next punch takes over from here.
+          // A release that would still be running when the next punch lands is dropped: the next punch takes over from here.
           const out = parseFloat(el.dataset.punchOut), next = els[i + 1] ? +els[i + 1].dataset.at : Infinity;
-          if (out > 0 && at + out < next) {
+          if (out > 0 && at + out + 0.4 <= next) {   // the release (0.4 s) finishes before the next punch starts
             tl.fromTo(inner, { scale }, { scale: 1, duration: 0.4, ease: "power2.inOut", immediateRender: false }, at + out);
             scale = 1;
           }
