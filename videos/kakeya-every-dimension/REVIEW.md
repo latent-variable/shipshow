@@ -354,3 +354,5 @@ One fresh critic (Sonnet) judged the folder: PASS, no blocking or major. Its thr
 line now says it is the limit of a search ("as far as I could find"), as scene 01 does; chapter 0:56 is "Rules of the needle game" and a
 5:32 chapter, "Turning in almost no room", marks 02c; the Cepelewicz source has its Quanta link. To fit YouTube's 5000 characters, the
 Cunningham source line (covered by the Wikipedia "Kakeya set" link) and one sentence of the picture credit were cut.
+
+**Published 2026-11-01:** https://youtu.be/yKmTdTj7Wdk (uploaded by the owner; the folder moved to `youtube/uploaded/2026-11-01 kakeya-every-dimension/`).
