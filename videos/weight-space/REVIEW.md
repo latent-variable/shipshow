@@ -193,3 +193,5 @@ further round. Overlaps: 0 (one measured overlap was text the snippet's own fade
 Accuracy passes (round 5). Sync, engagement and novelty pass on the reworked cut. Visuals and clarity findings fixed and
 checked in frames. Pacing accepted at the owner's narrator pace (as before). Grounding's screenshot provenance declined, #154.
 All critic work on Codex. Nobody has listened to the second cut's mix.
+
+**Published 2026-11-03:** https://youtu.be/nLnvGUwkLoM (uploaded by the owner; the folder moved to `youtube/uploaded/2026-11-03 weight-space/`).
