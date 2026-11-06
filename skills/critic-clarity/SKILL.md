@@ -22,7 +22,9 @@ with no rewind; the frames for what they see alongside it.
   this call, nothing), or says it so vaguely they could not act on it.
 - **major:** a comparison the viewer cannot make: two things measured in different units, or one of them never measured
   (checking "is fast" against solving in "two to the n" steps), or a result shown on a picture the viewer has not seen before
-  when one they have would place it (`explain-concept`, *Compare like for like*).
+  when one they have would place it (`explain-concept`, *Compare like for like*). So is a result against a yardstick ("vs
+  training") with the yardstick's own number missing, and two inputs compared ("the map is easier than the raw screen") that
+  were never shown side by side.
 - **major:** a term, acronym or concept used before it is explained, or never explained,
   that this viewer would not know. So is a step told in the source's vocabulary ("a piece of algebra", "a polynomial",
   "Taylor coefficients") where the example the viewer already holds would carry it (the owner on eth-is-false's dial,
@@ -37,12 +39,16 @@ with no rewind; the frames for what they see alongside it.
 - **major:** a fundamental left unbuilt: a rule the viewer must hold that was never on screen, a move that seems to break a
   rule with no check against it, a definition with no example (or a claim of "strange" never shown), a number like "1.5
   dimensions" the viewer never saw produced, or a chart whose lines were never seen as pictures (the owner on
-  kakeya-every-dimension's sixth cut, 2026-10-31).
+  kakeya-every-dimension's sixth cut, 2026-10-31). So is an analogy acting on something the viewer never saw the real input
+  become (knobs turned by "the screen"), and an experiment's results before its conditions and yardstick were laid out
+  (doom-weights, 2026-11-05).
 - **major:** a scene that carries two ideas, or an order that makes the viewer hold
   something unexplained for more than a scene.
 - **major:** time spent on what this viewer does not need, while something they need is
   thin. Name both.
 - **blocking:** the video never answers the question in its title or its brief, or answers a different one, even if every line is true.
+- **major:** the video stops on its last fact: no takeaway said and no end card, or an experiment the viewer cannot say worked
+  or not (the owner on doom-weights: "it just feels very abrupt").
 - **major:** a claim of cause is stated as fact with no test: removing the supposed cause was never tried, and
   another cause would fit the same lines.
 - **major:** spoken aliases (`glossary`) that the viewer is never told map to the names they will meet

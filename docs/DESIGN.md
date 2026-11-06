@@ -1411,6 +1411,26 @@ the owner saw it "completely broken, just frozen" (looping had hidden the wrong 
 built meme carries `data-once`; inside its first loop the lines take turns as before; after it the last line stays; a meme in
 a cued wrap starts its clip and its caption clock on the wrap's cue, and that test fails with `cueOf` removed).
 
+### D100. What doom-weights taught: an experiment laid out first, analogies from the real input, a linked repo public (2026-11-05)
+**Decision.** Five cuts of doom-weights (Claude writing Doom networks, against PPO) turned the owner's notes into bars in the
+skills, sharpening ones that already existed where the video missed them: `explain-concept` (an experiment's conditions and
+yardstick on screen before any result, each test shown in play; an analogy starts from the real input becoming numbers; two
+inputs compared as the same moment with real values; a board shows the yardstick's own number in every cell; a failure our
+setup caused is owned as the setup's; the video ends on its answer and an end card, never on its last fact), `critic-clarity`
+(the same, as findings), and `publish` (the subject's picture stays whole under the words; a result is credited to the model
+that got it; an estimate keeps its "~"; a claim against people needs people in the comparison; the voice is credited as what it
+is). `npm run package` now lists every GitHub repository the description or the scenes link and warns, on screen and under
+"Before you upload" in the youtube.txt, about each one that is not public or could not be checked (`githubRepos`,
+`repoWarnings` in `bin/package.mjs`). **Why.** The owner's notes on cuts 2 to 5 and the thumbnail: "how do you multiply a screen
+into knobs?"; "we don't show what the map looks like"; "we say versus training, but ... we're not showing what the training
+scores are"; "it just feels very abrupt"; the first thumbnail's numbers covered the pistol ("we want to make it very obvious that
+this is Doom"). Most of these were already bars (answer the title, fundamentals first, like for like) stated in terms of earlier
+videos, so a builder met them in letter and missed them here. And the video went up linking a private repository: its end card's
+link was a 404 until the owner made it public. **Costs.** A warning, not a stop, because a repo is usually made public at the
+upload, after the folder is made; the check calls `gh` once per linked repo and says "could not check" without it.
+**Tested.** `test/pipeline.test.mjs` (repos found once each from several link shapes, GitHub's own pages skipped; a private repo
+warned, a public one not, an unknown said).
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

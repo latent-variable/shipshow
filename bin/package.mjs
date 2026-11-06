@@ -14,6 +14,7 @@
 import { copyFileSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { execFileSync } from "node:child_process";
 import { isEntry } from "./entry.mjs";
 import { REPO, config, die, flag, localConfig, outDir, outName, videoDir, recordStep, missingLocalFiles } from "./lib.mjs";
 
@@ -61,6 +62,41 @@ export function youtubeProblems({ title, description, chapters: ch, total }) {
     });
   }
   return out;
+}
+
+/** Every GitHub repository a text links, as "owner/repo", once each. GitHub's own paths (github.com/features, /orgs/x) are
+ *  not repositories. */
+export function githubRepos(text) {
+  const notRepos = new Set(["features", "orgs", "sponsors", "topics", "marketplace", "settings", "apps", "about", "pricing", "login"]);
+  const found = new Set();
+  for (const m of text.matchAll(/github\.com\/([A-Za-z0-9-]+)\/([A-Za-z0-9._-]+)/g)) {
+    const repo = m[2].replace(/\.git$/, "").replace(/[.]+$/, "");
+    if (!notRepos.has(m[1].toLowerCase()) && repo) found.add(`${m[1]}/${repo}`);
+  }
+  return [...found];
+}
+
+/** Warnings for linked repositories a viewer cannot open: private ones (doom-weights went up linking a private repo, and
+ *  its end card's link was a 404 until the owner made it public, 2026-11-05), and ones the lookup could not see. A warning,
+ *  never a stop: a repo is usually made public at upload, after the folder is made. `visibility(repo)` returns "PUBLIC",
+ *  "PRIVATE", "INTERNAL" or null when it cannot tell. */
+export function repoWarnings(repos, visibility) {
+  const out = [];
+  for (const r of repos) {
+    const v = visibility(r);
+    if (v === "PUBLIC") continue;
+    out.push(v ? `github.com/${r} is ${v.toLowerCase()}: make it public before the upload, or viewers following the link get a 404`
+      : `github.com/${r}: could not check that it is public (gh missing, signed out, or no such repo); open the link signed out before the upload`);
+  }
+  return out;
+}
+
+export function ghVisibility(repo) {
+  try {
+    return execFileSync("gh", ["repo", "view", repo, "--json", "visibility", "-q", ".visibility"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"], timeout: 20000 }).trim() || null;
+  } catch {
+    return null;
+  }
 }
 
 /** The description as pasted into Studio: the text, the chapters, sources, then credits. */
@@ -129,6 +165,10 @@ if (isEntry(import.meta.url)) {
   const missing = missingLocalFiles(readFileSync(thumbHtml, "utf8"), dir);
   if (missing.length) die(`not packaged: thumbnail.html draws files that are not here (a generated asset is not committed: make it again, its prompt is beside the page):\n  ${missing.join("\n  ")}`);
 
+  const linked = githubRepos(`${description}\n${existsSync(scenesFile) ? readFileSync(scenesFile, "utf8") : ""}`);
+  const repoWarned = repoWarnings(linked, ghVisibility);
+  for (const w of repoWarned) console.warn(`WARNING ${w}`);
+
   const to = resolve(flag("to") || join(outDir(), "publish", name));
   mkdirSync(to, { recursive: true });
   const thumb = join(to, `${name}-thumbnail.png`);
@@ -158,6 +198,7 @@ if (isEntry(import.meta.url)) {
     `  ${name}.mp4            the video to upload`,
     `  ${basename(thumb)}  its thumbnail`,
     "",
+    ...(repoWarned.length ? ["Before you upload", ...repoWarned.map((w) => `  ${w}`), ""] : []),
     ...(studio.length ? ["What Studio asks", ...studio, ""] : []),
     "TITLE",
     "",
