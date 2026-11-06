@@ -41,7 +41,10 @@ omission from an oversight.
 
 - One idea per scene. A scene that needs "and also" is two.
 - **The first scene poses the question the viewer has, and the last scene answers it in a sentence**: the
-  question in the title or the brief. A video that is true on every line and never answers it has failed. A
+  question in the title or the brief. A video that is true on every line and never answers it has failed. Then it ends: the answer said plainly, where to go next (the code, a
+  link) and the credits, on an end card held a few seconds; a video that stops on its last fact feels abrupt (the owner on
+  doom-weights, 2026-11-05: "we didn't have a clear takeaway, or some ending page"). A video about an experiment never leaves the
+  viewer asking "so did it work or not?". A
   claim of cause ("because", "the cause is") is `[ran]` where removing the cause changes the result, or it is
   `[inferred]` and the open question is said: a hidden false premise ("the tests passed, so each change is
   right") is a premise to test, not to repeat.
@@ -96,16 +99,23 @@ omission from an oversight.
   ordinary ones, the strange ones it allows (if the voice says "strange", show one), and one that fails. A measuring procedure
   shows its instrument at each setting (the brush at full, half, quarter width). A number between two familiar ones (a dimension
   of 1.58) comes from an example the viewer can count, never a label. A chart arrives only after each of its lines was seen as a
-  picture, and a log scale is replaced by something countable (the zeros written out) for a general viewer.
+  picture, and a log scale is replaced by something countable (the zeros written out) for a general viewer. An experiment is
+  a game too: its conditions, how each is scored and the yardstick are on screen before the first result, as a board that
+  fills in as the results arrive, and each test is shown in play (what it asks, what makes it hard), never as a thumbnail
+  (doom-weights' second and fourth cuts).
 - **A longer video is acts, and each act has its own feel.** Past about three minutes, group the scenes into acts (the
   setup, the history, the turn, the consequences) and give each a mood (`video.json` `moods`: its colours, background and
   music). Open each act on a hook, a question or a turn, never a signpost like "so how does it work". Show what failure
-  looks like and why it matters to someone, not only the case that works. `critic-engagement` judges these (the owner,
+  looks like and why it matters to someone, not only the case that works. A failure our own setup caused (no pictures, a
+  wrong brief) is owned as the setup's, never told as "it worked, now it doesn't" (doom-weights' third cut). `critic-engagement` judges these (the owner,
   2026-10-27).
 - **Compare like for like, on one picture that comes back.** When two things are compared (checking an answer against
   finding one), give both in the same unit, with numbers ("about n steps" against "two to the n tries"), on one chart, and
   bring that chart back when the result lands, so the new thing is placed in a picture the viewer already holds (the owner,
-  2026-10-28: "it might just go over their head if we're not intentional about comparing apples to apples").
+  2026-10-28: "it might just go over their head if we're not intentional about comparing apples to apples"). A board that says
+  "vs training" shows training's own number in every cell, and two inputs compared (the game's map against the raw screen) are
+  shown as the same moment, with one row of their real values each, so the viewer sees why one is easier (the owner on
+  doom-weights, 2026-11-05: "we say versus training, but ... we're not showing what the training scores are").
 - **Every mechanism gets numbers and an animation of why.** Not "split into groups and multiply": sixty switches, about a
   billion billion settings; three groups of twenty, a million each; three million steps. A claim about growth is drawn as the
   growth, a translation as the thing being translated (a Sudoku's 729 switches). The owner: "you have the ability to create
@@ -114,6 +124,9 @@ omission from an oversight.
   follow" twice while it spoke of rules as algebra and notes as weighted sums; the sixth cut keeps the sixty switches in groups of
   twenty, says a note is how many of a group's twenty switches are on, so only twenty one values, and shows the multiplication as
   a tally of three settings. The source's terms go in small type on screen, for the viewer who wants them.
+  **An analogy starts from the real input.** "Every weight is a knob" lost a newcomer ("how do you multiply a screen into
+  knobs?", the owner on doom-weights) until the video cut a real frame into its grid, gave one square's three real colour
+  values, and multiplied each by a knob and added them up; only then did the knobs mean something.
 - **Memes and GIFs by default, wherever one helps a viewer hold the point** (the owner, 2026-10-27: "by default we should be
   including GIFs and memes ... making light of it usually helps convey information"; of eth-is-false's three, "the meme to
   information ratio is very low"). Plan about one a minute in a video watched by choice, spread across every act (the first and

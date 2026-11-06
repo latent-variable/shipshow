@@ -1475,6 +1475,18 @@ test("package: a title carries the person's tag, naming the model that built the
   assert.equal(titleTagProblem("How It Broke", undefined, undefined, "feature", undefined), null, "no tag set, nothing checked");
 });
 
+test("package: every linked GitHub repo, and a warning for one viewers cannot open", async () => {
+  const { githubRepos, repoWarnings } = await import("../bin/package.mjs");
+  const text = "Code: https://github.com/latent-variable/doom-weights. Also github.com/latent-variable/doom-weights/blob/main/README.md, " +
+    "https://github.com/jacebrowning/memegen.git and https://github.com/features/copilot";
+  assert.deepEqual(githubRepos(text), ["latent-variable/doom-weights", "jacebrowning/memegen"], "once each; .git and a trailing full stop dropped; GitHub's own pages skipped");
+  const vis = { "latent-variable/doom-weights": "PRIVATE", "jacebrowning/memegen": "PUBLIC" };
+  const warned = repoWarnings(githubRepos(text), (r) => vis[r] ?? null);
+  assert.equal(warned.length, 1, "the public repo is not warned about");
+  assert.match(warned[0], /doom-weights is private: make it public before the upload/);
+  assert.match(repoWarnings(["a/b"], () => null)[0], /could not check that it is public/, "an unknown is said, never passed silently");
+});
+
 test("package: a clone or invented voice must be named in sources.md, so credits never describe an earlier voice", async () => {
   const { voiceCreditProblem, creditsProblem } = await import("../bin/package.mjs");
   const { missingLocalFiles } = await import("../bin/lib.mjs");

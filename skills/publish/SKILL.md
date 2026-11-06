@@ -21,7 +21,7 @@ and find where every fact came from. The owner uploads; you hand over a folder h
 | `description` | Paragraphs in the author's own voice, as they talk to camera (`narration-writing`): what the video argues, what it covers, and the tool it was made with. No announcing ("In this video we will"), no cadence line to close on |
 | `chapters` | `{"<scene>": "title"}` at each act's first scene. YouTube shows chapters only from 0:00, three or more, each ten seconds or longer; `npm run package` refuses anything else |
 | `sources` | The primary sources a viewer would want, each with its author and link, from `sources.md`. Every fact the title or thumbnail implies is among them |
-| `credits` | The voice (a clone is named as one), the music and what made it, each meme by name; the photos and captured pages come from `review/credits.txt` on their own |
+| `credits` | The voice as what it is (a clone is named as one; an invented narrator is "voiced by an invented narrator", never "narrated by" the model that wrote the video), the music and what made it, each meme by name; the photos and captured pages come from `review/credits.txt` on their own |
 | `tags`, `studio` | Tags for the topic; Studio's answers (audience, paid promotion, category, language, altered or synthetic content) |
 
 **Altered or synthetic content is the owner's call.** The question is whether a viewer could be misled. Lino's own cloned
@@ -51,9 +51,16 @@ a failure, not a pass (the owner on qwen-phones-home, 2026-10-29, after three ro
 - **It reads at a glance, in one direction.** A map from here to there puts the origin outside the destination (the local AI on
   a laptop over the ocean, not on the Chinese coast), names both ends, and shows the direction with an arrowhead. The topic
   (the model's name) is on the picture itself, big enough at 320 px, rather than in a chip nobody reads.
+- **The subject stays whole and is named.** What makes the subject recognisable at a glance (Doom's pistol and a monster) is
+  never under the words or a sticker: zoom the frame so it is big at 320 px and set the words beside it. The AI or product the
+  video is about is named on it. doom-weights' first thumbnail laid its numbers over the pistol and never said Claude (the owner:
+  "we want to make it very obvious that this is Doom").
 - **It complements the title.** The title says the topic; the thumbnail says the hook. never-about-the-code's: Grace
   Hopper's photo, "Compilers got roasted too", "Now it's AI's turn".
-- **Every label is true as drawn.** A laptop labelled "your PC" says the viewer's machine did it; "local AI" does not. A mocked-up
+- **Every label is true as drawn.** A laptop labelled "your PC" says the viewer's machine did it; "local AI" does not. A result is credited to
+  the model that got it: "CLAUDE · 0 GAMES · 945" credited Claude as a whole while Opus scored −4.4 on the same test, so it
+  reads "CLAUDE FABLE". An estimate keeps its "~". A claim against people ("better than humans") needs people in the video's
+  comparison; a training method is not people. A mocked-up
   warning says exactly what the video shows ("qwen3.8-flash-next tried to upload to ...", not "your model sent data").
 - **Nothing on it misdates a photo or puts words in a real person's mouth.** A quote beside a face reads as that person's;
   a year under a photo reads as the photo's date. Name the person, and leave the dates to the video. (Both happened on the
@@ -83,7 +90,9 @@ on a render older than the timing, and on screenshot or portrait credits not yet
 writes them). Then **a fresh critic judges the folder** (`critic-loop`'s rule, applied to the
 package): truth first (the title, thumbnail and description claim nothing the video and `sources.md` do not), then whether a
 developer would click it at 320 by 180, then the author's voice, then the YouTube mechanics. Fix and repackage; one round
-is usually enough.
+is usually enough. `npm run package` also warns, on screen and under *Before you upload* in the youtube.txt, about a linked
+GitHub repository that is not public (D100): tell the owner, and make it public when they say so, before or at the upload
+(doom-weights' end card linked a 404 until it was).
 
 ## Once it is up
 
