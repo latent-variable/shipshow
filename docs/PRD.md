@@ -148,7 +148,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | N2 | **Truth.** A fact the sources lack is reported as a gap, never filled | `sources.md`, `critic-accuracy`, `critic-grounding` | done |
 | N3 | **Independence.** The builder never judges its own video; critics are fresh agents | `critic-loop` | done |
 | N4 | **Public-safe.** A private code base's details never reach this public repo | `local/` is gitignored; `evidence-standard`, *Where the result goes* | done |
-| N5 | **Safe to run.** Reading a code base does not change it, spend money or send data out | `evidence-standard`, `scripts/sandbox-run.sh` (DESIGN D9) | done on macOS, tested; refuses elsewhere; reads are not confined and it is not a defence against hostile code |
+| N5 | **Safe to run.** Reading a code base does not change it, spend money or send data out | `evidence-standard`, `skills/evidence-standard/scripts/sandbox-run.sh` (DESIGN D9) | done on macOS, tested; refuses elsewhere; reads are not confined and it is not a defence against hostile code |
 | N6 | **Cheap to carry.** Each skill's name and description count toward context on every turn once installed, so descriptions stay short and bodies stay under 500 lines | Measured 2026-11-03: 24 skills, 8,752 characters (about 2,188 tokens) of names and descriptions; longest SKILL.md 259 lines (a test checks these figures against the tree) | done |
 | N7 | **Reproducible.** A voice take is cached by text, voice and speed; generated files are gitignored | `assets/voice/*.key` | done |
 | N8 | **Observable.** Token and context use is readable per agent | `npm run usage` | done |
