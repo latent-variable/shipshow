@@ -1071,7 +1071,7 @@ test("the packet's reading queue: simultaneous text waits its turn, so three par
 
 test("every script a skill names exists at the path the skill gives, and no skill uses a bare relative scripts/ path", () => {
   const skills = readdirSync(join(REPO, "skills")).filter((n) => existsSync(join(REPO, "skills", n, "SKILL.md")));
-  const files = [...skills.map((n) => ["skills/" + n + "/SKILL.md", n]), ["agents/critic.md", null]];
+  const files = [...skills.map((n) => ["skills/" + n + "/SKILL.md", n]), ["skills/REVIEW.md", null], ["agents/critic.md", null]];
   let found = 0;
   for (const [rel, own] of files) {
     let text = readFileSync(join(REPO, rel), "utf8");
