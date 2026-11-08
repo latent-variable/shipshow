@@ -31,13 +31,13 @@ it first and follow it. **The person's word in the moment beats all of it** ("qu
 | Preset | Critics | Rounds | Until | Model | Frames | About | For |
 |---|---|---|---|---|---|---|---|
 | `quick` | accuracy, sync, visuals | 1 | blocking | sonnet | scenes | 1 min | a decision video mid-work (its default), a draft, a private video |
-| `standard` | all seven | 2 | major | sonnet | cues | 1 to 2 min | the default |
-| `thorough` | all seven | 3 | major | sonnet, Opus for the last round's taste critics still failing | cues | up to 5 min | a video going public |
+| `standard` | the whole base roster (`BASE_CRITICS`; `npm run critics -- <folder>` prints it) | 2 | major | sonnet | cues | 1 to 2 min | the default |
+| `thorough` | the whole base roster (`BASE_CRITICS`; `npm run critics -- <folder>` prints it) | 3 | major | sonnet, Opus for the last round's taste critics still failing | cues | up to 5 min | a video going public |
 
 Times are critic time on a 70 second video; the builder's fixes between rounds come on top,
 and are usually most of it. Tokens grow with the video: a Sonnet critic reads about 65k on a 70 second
-video and about 110k on a ten minute one, an Opus critic about twice that, so one round of seven on a
-ten minute video is about 800k (eth-is-false, 2026-10-27). Each dial, and what it trades:
+video and about 110k on a ten minute one, an Opus critic about twice that. The token estimate for a
+round depends on its roster and model; `npm run critics -- <folder>` prints it. Each dial, and what it trades:
 
 | Dial | Values | Turning it down saves | and costs |
 |---|---|---|---|
