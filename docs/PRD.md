@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-11-06 (after what doom-weights taught and the private-repo warning, D100).
+Last reviewed: 2026-11-08 (after clarifying optional YouTube chapters in F57).
 
 ## Problem
 
