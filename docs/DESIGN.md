@@ -998,12 +998,13 @@ missing-sentence check, as before. **Tested** by a unit test on `lineRuns`, and 
 ### D67. A video ships with its upload folder (2026-10-27)
 **Decision.** `bin/package.mjs` (`npm run package`) writes one folder per video, the shape the owner's product-videos channel
 already uses (`~/Movies/Explainers/findbusiness/youtube/`): the MP4, `<name>-thumbnail.png` and `<name>-youtube.txt` (title, other
-titles considered, the description with chapters, sources and credits, tags, and what Studio asks). Everything comes from the
-video's own files: `video.json` `"youtube"`, chapter times from `timing.json`'s scene starts (so they move with the cut), credits
+titles considered, the description with optional chapters, sources and credits, tags, and what Studio asks). Everything comes from the
+video's own files: `video.json` `"youtube"`, chapter times from `timing.json`'s scene starts for scenes selected in `youtube.chapters`
+(so they move with the cut and are not inferred for every scene), credits
 from `review/credits.txt`, and `thumbnail.html` rendered at 1280 by 720 in the same headless Chrome as screenshots (`shot.mjs`
 `chromePath`). It stops before writing on what YouTube refuses (a title over 100 characters, a description over 5000, `<` or `>`)
-or silently ignores (when chapters are configured, they must start at 0:00, number at least three, and each last at least ten
-seconds; with no configured chapters, packaging succeeds and the description has no chapter markers), and on a render older than
+or silently ignores (a configured chapter list must start at 0:00, number at least three, and each last at least ten seconds; no
+configured chapters is valid and adds no chapter markers), and on a render older than
 the timing. It copies; it never moves or deletes. **Why.** The owner, ready to publish never-about-the-code on his channel: "the
 same thing that we do for the product videos: a dedicated thumbnail and a dedicated title, descriptions, all the other stuff",
 and that every lesson feed back into ShipShow so the next video starts from it. **Costs.** The description is written by the
