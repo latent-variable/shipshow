@@ -181,7 +181,7 @@ anything it runs. `critic-loop` names `shipshow:critic` for Claude Code.
 - Which skills work outside a clone: three. `code-context`, `change-context` and `evidence-standard` need
   no repo files (running code needs macOS, for the sandbox). The rest produce an artifact only the pipeline
   consumes (`decision-brief`, `explain-concept`, `glossary`, `narration-writing`, `explain-handoff`: a brief,
-  a plan, names, a script, a hand-back) or run or judge it (`explainer-video`, `critic-loop`, the nine
+  a plan, names, a script, a hand-back) or run or judge it (`explainer-video`, `critic-loop`, the ten
   critics, `theme`, `tailor`), and need this repo cloned and set up. They also cite `AGENTS.md`. `local/` is
   gitignored only here, so a skill that writes private material elsewhere first checks `git check-ignore
   local/` and uses `.git/info/exclude` with the person's consent. `repo-context` is for this repo only.
