@@ -1456,6 +1456,21 @@ are not killed on a rebuild, so the builder still must not rebuild while a round
 separate `-i` (control: joining the sheets into one argument fails the test), `--sandbox read-only`, the brief with its template's own
 words and no placeholder, the files written, a garbled answer kept raw, and the refusals; one real `critic-visuals` run on
 `videos/how-it-works` on gpt-6-luna.
+### D102. The packet measures reading, not path data, and the overlap check sees cut-off text (2026-11-09)
+**Decision.** (#127) A cued element's reading text comes from `elementAt` and `readableText` in `bin/measure.mjs`: an SVG shape
+(`path`, `line`, `circle`, `polygon`, `image`, `clipPath` and the like) has no text however it is written, and `style`, `script`,
+`defs`, `title` and `desc` blocks are dropped, so only HTML text and SVG `<text>` labels count as words. A cued `<path ...>`
+with no close had sent the search to the end of the page, where the inline script read as code (kakeya-every-dimension: 7000 s
+for one figure). (#128) `scan()` in `bin/overlap.mjs` also measures each text's own extent (its text nodes' line boxes, not its
+element's box) at every sampled time and reports three kinds beside `overlap`: `offframe` (the text leaves 0..1920 x 0..1080),
+`overflow` (more than 4 px past its own element's box, outside an SVG) and `svgclip` (an SVG label past its nearest svg's
+viewport, unless that svg sets `overflow: visible`). They print as `CLIPPED` lines and carry `kind` in `review/overlaps.json`;
+`data-overlap="ok"` skips them like pairs. **Why.** A nowrap chip's box fit (820 px) while its words ran to x=2298 and `#root`
+cut them; the pair check and a box scan both missed it (kakeya cut 4). **Not done.** Text over a stroke: a stroke's visible
+extent is its path geometry, which a box test cannot read without rasterizing, so a cheap reliable measure does not exist.
+**Tested.** `test/measure.test.mjs` (an SVG figure with path data, style, defs and an unclosed shape), `test/overlap.test.mjs`
+(a clipped chip, a clipped SVG label and an off-frame line fire; a fitting chip, a fitting label, `overflow: visible` and
+`data-overlap="ok"` do not).
 ### D105. A Drama 3 take that repeated another line is never the one kept (2026-11-09)
 **Decision.** `bin/drama.py` ranks a line's takes with `hearback.take_rank`, whose first element is "said no more than its line" (`hearback.added`: five or more words the line lacks), ahead of passing, words gone and the rest. **Why.** The rank was `(ok, -gone, -extra, ...)`, so a take that opened with the video's first sentence outranked one that dropped a word; kakeya-every-dimension (cut 7) kept one at 91% heard back, and its extra 2.6 s shifted every cue after it (#138). A dropped word costs a viewer less than another line's sentence. **Costs.** A line whose five takes all repeat is still kept (the least bad of them, and flagged as before); the cut of a prefix repeat at the line's first word (the issue's option 2) was not done, as it needs the model's word times, a second hear-back and a splice, none testable without the 20 GB model. **Seeds.** Forcing one take again by moving its `.key` aside gives the same take, because the seed is hashed from the key (`bin/voice.mjs`): reword the line or its direction instead (`AGENTS.md`, *Traps*). **Tested.** `test/voicecheck.test.mjs` (`take_rank` orders a repeat under a dropped-word take, a spelled-out take and a clean one; fails with the first element removed). Not run on Drama 3 itself.
 ### D107. The second listen hears a scene in windows cut at its pauses, because heard whole it skips short sentences (2026-11-09)
