@@ -17,7 +17,7 @@ import { moodRows } from "./moods.mjs";
 import { overlaps } from "./overlap.mjs";
 import { actOpenings, changeRhythm, channelDevices, devicesIn } from "./devices.mjs";
 import { listenSection, voiceCheckSection } from "./hearback.mjs";
-import { READ_CODE_TPS, READ_WPS, duplicateStills, moveAside, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
+import { READ_CODE_TPS, READ_WPS, duplicateStills, elementAt, moveAside, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
 
 
 const STARTED = Date.now();
@@ -27,28 +27,7 @@ for (const f of ["timing.json", "index.html"]) if (!existsSync(join(dir, f))) di
 const timing = JSON.parse(readFileSync(join(dir, "timing.json"), "utf8"));
 const html = readFileSync(join(dir, "index.html"), "utf8");
 
-const VOID = /^(area|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
-
-/** The text inside the element whose opening tag starts at `i`, nested tags of its kind included, and where it ends. */
-function element(i) {
-  const tag = html.slice(i + 1).match(/^\w+/)[0];
-  // A void element (a cued <img>) has no closing tag and no text: without this the search ran on to the
-  // end of the page and gave the picture the whole video's text to read (binance-heist, 2026-11-02).
-  // So has a self-closing one (a cued SVG <line/> or <polygon/>): weight-space's arrow was given 8,800 s to read (D94).
-  const open = html.slice(i, html.indexOf(">", i) + 1);
-  if (VOID.test(tag) || open.endsWith("/>")) { const end = html.indexOf(">", i) + 1; return { end, text: "" }; }
-  const re = new RegExp(`<(/?)${tag}\\b[^>]*>`, "g");
-  re.lastIndex = i;
-  let depth = 0, m;
-  while ((m = re.exec(html))) {
-    if (m[0].endsWith("/>")) continue;   // a self-closing one inside opens nothing
-    depth += m[1] ? -1 : 1;
-    if (!depth) break;
-  }
-  const end = m ? m.index : html.length;
-  const inner = html.slice(html.indexOf(">", i) + 1, end);
-  return { end, text: inner.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&rarr;/g, "->").replace(/\s+/g, " ").trim() };
-}
+const element = (i) => elementAt(html, i);   // one copy of the rule, in bin/measure.mjs (D102)
 
 const sceneEndOf = (id) => { const sc = timing.scenes.find((x) => x.id === id); return sc.start + sc.duration; };
 const sceneAt = (t) => timing.scenes.find((s) => t >= s.start && t < s.start + s.duration) || timing.scenes.at(-1);
@@ -234,9 +213,12 @@ if (found) writeFileSync(join(dir, "review", "overlaps.json"), JSON.stringify(fo
 if (!found) out.push("Not measured: no Chrome to load the page in (`npx hyperframes browser ensure`). Look for text on text in every frame.", "");
 else if (!found.length) out.push("None: at a moment after every cue and before every scene end, no visible text sat on other text or on a picture (`bin/overlap.mjs`).", "");
 else {
-  out.push(`${found.length} measured at a moment after every cue and before every scene end (\`bin/overlap.mjs\`, \`review/overlaps.json\`): visible text on other text or on a picture. Each is blocking unless the scene means it (a label on purpose over a picture); \`data-overlap="ok"\` on the element says so and removes it from this list.`, "");
-  out.push(md(found.map((o) => [o.from, round(o.to - o.from), o.scene, o.a, o.b, o.px]), ["from (s)", "lasts (s)", "scene", "this", "over this", "shared px²"]), "");
-  for (const o of found) console.log(`OVERLAP ${o.from} s ${o.scene}: "${o.a}" and "${o.b}"`);
+  out.push(`${found.length} measured at a moment after every cue and before every scene end (\`bin/overlap.mjs\`, \`review/overlaps.json\`): visible text on other text or on a picture, and text cut off by the frame, its box or its SVG. Each is blocking unless the scene means it (a label on purpose over a picture); \`data-overlap="ok"\` on the element says so and removes it from this list.`, "");
+  const over = found.filter((o) => (o.kind ?? "overlap") === "overlap"), clipped = found.filter((o) => (o.kind ?? "overlap") !== "overlap");
+  if (over.length) out.push(md(over.map((o) => [o.from, round(o.to - o.from), o.scene, o.a, o.b, o.px]), ["from (s)", "lasts (s)", "scene", "this", "over this", "shared px²"]), "");
+  if (clipped.length) out.push("Clipped text: a text that leaves the frame (`offframe`), runs past its own box (`overflow`) or past its SVG's viewport (`svgclip`), so part of it is cut off (D102).", "", md(clipped.map((o) => [o.from, round(o.to - o.from), o.scene, o.kind, o.a, o.b]), ["from (s)", "lasts (s)", "scene", "kind", "text", "how far"]), "");
+  for (const o of over) console.log(`OVERLAP ${o.from} s ${o.scene}: "${o.a}" and "${o.b}"`);
+  for (const o of clipped) console.log(`CLIPPED (${o.kind}) ${o.from} s ${o.scene}: "${o.a}", ${o.b}`);
 }
 out.push("## Frames", "", `In \`review/frames/\`, ${frames.length} stills (${frameMode === "scenes" ? "mid-scene and scene end only" : "after each cue and at each scene end"}); ${sheets.map((f) => `\`${f}\``).join(", ")} show them together.`, "");
 const sceneEnd = (t) => timing.scenes.some((s) => Math.abs(s.start + s.duration - 0.4 - t) < 0.01);
