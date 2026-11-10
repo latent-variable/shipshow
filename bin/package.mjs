@@ -136,7 +136,7 @@ if (isEntry(import.meta.url)) {
   const dir = videoDir(process.argv[2]);
   const cfg = config(dir);
   const yt = cfg.youtube;
-  if (!yt) die(`${dir}/video.json has no "youtube": give it a title, a description and chapters (explainer-video, *Publish*)`);
+  if (!yt) die(`${dir}/video.json has no "youtube": give it a title and a description, and chapters if you want them (explainer-video, *Publish*)`);
   const name = outName(dir);
   const render = join(outDir(), `${name}.mp4`);
   if (!existsSync(render)) die(`no render at ${render}: npm run render -- ${process.argv[2]}`);

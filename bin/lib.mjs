@@ -386,6 +386,11 @@ export function run(cmd, args, opts = {}) {
   });
 }
 
+/** The environment `hyperframes render` runs in: multi-worker capture streams frames to the encoder instead of writing every frame to disk (D103); a user-set HF_CAPTURE_PARALLEL_STREAM wins. */
+export function renderEnv(env = process.env) {
+  return { ...env, HF_CAPTURE_PARALLEL_STREAM: env.HF_CAPTURE_PARALLEL_STREAM || "true" };
+}
+
 /** The environment `hyperframes tts` needs: this repo's venv as its Python, unless one is set. */
 export function ttsEnv() {
   return { ...process.env, HYPERFRAMES_PYTHON: process.env.HYPERFRAMES_PYTHON || VENV_PY };
