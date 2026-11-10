@@ -1433,6 +1433,17 @@ upload, after the folder is made; the check calls `gh` once per linked repo and 
 **Tested.** `test/pipeline.test.mjs` (repos found once each from several link shapes, GitHub's own pages skipped; a private repo
 warned, a public one not, an unknown said).
 
+### D104. A light screenshot is captured opaque (2026-11-09)
+**Decision.** `bin/shot.mjs` takes a capture with `omitBackground` only when the page is dark (`found.light` false); a light page
+is photographed on Chrome's own white where it paints no background, so the PNG is opaque. `VERSION` is 8, so cached
+see-through light captures are taken again. **Why.** A chainalysis.com capture (`data-scheme="light"`) came back transparent, so
+its dark-blue ink and marker sat on the dark scene (binance-heist, issue #144), which worked around it with
+`.ss-shot-light .ss-shot-photo { background: #fff }`. **Alternatives.** A CSS background behind `.ss-shot-photo` fixes the
+picture but not the PNG, and cannot know the page's own colour; flattening at capture uses the page's real background and leaves
+the marker (a `multiply` layer over the picture inside `.ss-shot-photo`) multiplying against solid pixels. binance-heist's own rule
+is now redundant but harmless, so it is left. **Tested.** `test/shot.test.mjs` (a real capture of a page with no background has
+alpha 255).
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
