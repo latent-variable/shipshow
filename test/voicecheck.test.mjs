@@ -641,3 +641,21 @@ print(open(${JSON.stringify(join(dir, "s-r01.check"))}).read())
   assert.equal(c.spelledChecked, true);
   assert.deepEqual(c.timing, { matched: 4, words: 4 }, "the run's word times are kept");
 });
+
+test("Drama 3 ranks a take that repeated another line under every take without a repeat (D105)", { skip: !plain && "no python3" }, () => {
+  const r = python(plain, `
+import hearback as h
+# take_rank(ok, gone, spelled, extra, clean, got): the largest is kept
+repeat = h.take_rank(False, [], [], ["here is a question that"], False, 0.91)   # said the video's first sentence first
+dropped = h.take_rank(False, ["punchline"], [], [], True, 0.95)                 # dropped a sentence, nothing added
+spelled = h.take_rank(False, [], ["en"], [], True, 0.97)
+clean = h.take_rank(True, [], [], [], True, 0.99)
+print(max([repeat, dropped, spelled, clean]) == clean)
+print(max([repeat, dropped]) == dropped)          # the bug: a repeat used to outrank a dropped sentence
+print(max([repeat, spelled]) == spelled)
+print(max([repeat, h.take_rank(False, ["a", "b", "c"], [], [], False, 0.5)])[0])   # worst non-repeat still wins: key starts True
+print(h.take_rank(True, [], [], [], True, 0.99) > h.take_rank(True, [], [], [], True, 0.98))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  assert.deepEqual(r.stdout.trim().split("\n"), ["True", "True", "True", "True", "True"]);
+});
