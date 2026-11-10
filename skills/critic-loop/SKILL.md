@@ -105,7 +105,7 @@ finding from `critic-accuracy` (or, for a decision video, `critic-decision`, and
 code, output or captures, `critic-grounding`: set `"shows_code"` in `video.json`, or a `<pre>` or `<code>`
 in `scenes.html` sets it): fix it and run that one critic once more, past the cap if need be; if it
 still fails, it goes to a person.
-A `critics` list that leaves out a floor critic gets it added back (`npm run critics` says so).
+A `critics` list that leaves out a floor critic gets it added back in the plan (`npm run critics` says so). `--run --critics` is the exception: it runs exactly the critics named, so a later round re-runs only the ones that failed, and names any floor critic left out; that critic must still pass before the video ships.
 
 ## Who runs it
 
