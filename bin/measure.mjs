@@ -72,6 +72,39 @@ export function newReadingText(cue, earlierInScene) {
   return cue.text;
 }
 
+// SVG shapes carry geometry, never words: a cued one has no text of its own however it is written (`<path d="..."/>`, or
+// `<path d="...">` with no close, which sent the search on to the end of the page and gave it the page's inline script to
+// read: kakeya-every-dimension's figures were given 7000 s, #127). Only `<text>` and `<tspan>` in an SVG carry words.
+const SVG_SHAPE = /^(path|line|circle|ellipse|rect|polyline|polygon|use|image|stop|mask|clipPath|marker|pattern|filter|linearGradient|radialGradient)$/i;
+const VOID = /^(area|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
+// Blocks whose content is never read by a viewer: style, script, SVG defs, titles and descriptions.
+const UNREAD = /<(style|script|defs|title|desc|metadata)\b[^>]*>[\s\S]*?<\/\1>/gi;
+
+/** The text a viewer reads in a piece of markup: tags, attributes, unread blocks (a style, a script, SVG defs) and SVG path data gone. */
+export function readableText(inner) {
+  return inner.replace(UNREAD, " ").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&rarr;/g, "->").replace(/\s+/g, " ").trim();
+}
+
+/** The text inside the element whose opening tag starts at `i` in `html`, nested tags of its kind included, and where it ends. */
+export function elementAt(html, i) {
+  const tag = html.slice(i + 1).match(/^\w+/)[0];
+  // A void element (a cued <img>) has no closing tag and no text: without this the search ran on to the
+  // end of the page and gave the picture the whole video's text to read (binance-heist, 2026-11-02).
+  // So has a self-closing one (a cued SVG <line/> or <polygon/>: D94) and any SVG shape (D102).
+  const open = html.slice(i, html.indexOf(">", i) + 1);
+  if (VOID.test(tag) || SVG_SHAPE.test(tag) || open.endsWith("/>")) { const end = html.indexOf(">", i) + 1; return { end, text: "" }; }
+  const re = new RegExp(`<(/?)${tag}\\b[^>]*>`, "g");
+  re.lastIndex = i;
+  let depth = 0, m;
+  while ((m = re.exec(html))) {
+    if (m[0].endsWith("/>")) continue;   // a self-closing one inside opens nothing
+    depth += m[1] ? -1 : 1;
+    if (!depth) break;
+  }
+  const end = m ? m.index : html.length;
+  return { end, text: readableText(html.slice(html.indexOf(">", i) + 1, end)) };
+}
+
 /** The sound effects as the review packet lists them: one row per sound with its time and scene,
  *  what is being said, its level against the voice, how long it is audible, and how close the next
  *  sentence's first word is. `record` is a video's assets/sfx.json. A critic judges the rows. */
