@@ -1435,6 +1435,28 @@ warned, a public one not, an unknown said).
 
 ### D105. A Drama 3 take that repeated another line is never the one kept (2026-11-09)
 **Decision.** `bin/drama.py` ranks a line's takes with `hearback.take_rank`, whose first element is "said no more than its line" (`hearback.added`: five or more words the line lacks), ahead of passing, words gone and the rest. **Why.** The rank was `(ok, -gone, -extra, ...)`, so a take that opened with the video's first sentence outranked one that dropped a word; kakeya-every-dimension (cut 7) kept one at 91% heard back, and its extra 2.6 s shifted every cue after it (#138). A dropped word costs a viewer less than another line's sentence. **Costs.** A line whose five takes all repeat is still kept (the least bad of them, and flagged as before); the cut of a prefix repeat at the line's first word (the issue's option 2) was not done, as it needs the model's word times, a second hear-back and a splice, none testable without the 20 GB model. **Seeds.** Forcing one take again by moving its `.key` aside gives the same take, because the seed is hashed from the key (`bin/voice.mjs`): reword the line or its direction instead (`AGENTS.md`, *Traps*). **Tested.** `test/voicecheck.test.mjs` (`take_rank` orders a repeat under a dropped-word take, a spelled-out take and a clean one; fails with the first element removed). Not run on Drama 3 itself.
+### D101. The review packet's stills belong to one run, and its Moods table has one source (2026-11-09)
+**Decision.** `bin/review.mjs` takes its stills into a fresh `review/.frames-<time>` folder and then moves the previous
+`review/frames/` to `review/frames-stale/<time>/` (a move, never a delete) before putting the new folder at `review/frames/`,
+so the folder and the packet list only this run's stills; re-running after a timing change used to leave the old
+`frame-NN-at-<s>.png` files beside the new ones, and a critic judged a build that no longer existed (issue 139). Option 2 of
+the issue, rather than building the expected names from the times, because it does not depend on HyperFrames' file naming.
+After capture each still is hashed (SHA-256); stills that are byte-identical **and fall in different scenes** are retaken
+once (the whole set, so the contact sheets match) and, if they stay identical, the packet's *Frames* section opens with a
+bold WARNING and the run prints it (issue 160: stills at four unrelated times showed one earlier scene). It warns rather than
+fails because a real video can have two scenes whose frames are legitimately alike, and a stop would give the person no way
+out; identical stills inside one scene are a held frame and never reported (`duplicateStills` in `bin/measure.mjs`). The
+*Screenshots* section gives each capture's cached path (`<cache>/<key>/shot.png`), a SHA-256 and a copy in
+`review/shots/<key>.png`, which a sandboxed critic can read (issue 154; `shotsIn` now returns the capture's `key`). The packet's
+Moods table is built from `moodSchedule` in `bin/moods.mjs`, the same walk `resolveMoods` uses for the render, so the critics
+are told the schedule the video follows and the rule has one copy (issue 174; `moodRows`). **Costs.** `review/frames-stale/`
+grows by one folder per re-run with changed timing (move it away by hand); a retake doubles the capture time, only when a
+duplicate appears. `review` now stops on an unknown `data-mood`, as the build already did. **Tested.** `test/review-packet.test.mjs`:
+the Moods table against the old walk on synthetic marks and on the scenes.html and video.json of binance-heist, weight-space
+and never-about-the-code; `duplicateStills` (different scenes reported, a held frame not); `moveAside`; `shotsIn`'s key. By hand
+on videos/how-it-works: review run twice with a cue's time changed between, which left 34 stills and moved the first 38 files
+to `frames-stale`; a screenshot figure injected into the built page listed the cache path and the matching SHA-256 and copied the
+file. The retake path itself was not forced live.
 ### D103. Render streams multi-worker capture by default; the package hint says chapters are optional (2026-11-09)
 **Decision.** `bin/render.mjs` runs `hyperframes render` with `HF_CAPTURE_PARALLEL_STREAM=true` (`renderEnv` in `bin/lib.mjs`), and `make` gets it by calling `render`. A value the person already set, `false` included, wins. The `npm run package` hint for a missing `"youtube"` block no longer lists chapters as required. **Why.** Verified in the installed HyperFrames: multi-worker screenshot capture lands on disk, every frame an image file, unless this variable is on (`resolveParallelCaptureMode`, `isCaptureParallelStreamRouterEnabled`), and a long render failed on that disk use (#142). **Costs.** The streaming path is HyperFrames' opt-in for screenshot capture; `HF_CAPTURE_PARALLEL_STREAM=false` returns to the disk path. **Tested.** `test/pipeline.test.mjs` (default on, empty is default, a set value wins); a draft render of `videos/how-it-works`.
 ### D104. A light screenshot is captured opaque (2026-11-09)

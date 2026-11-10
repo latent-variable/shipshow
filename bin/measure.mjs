@@ -3,6 +3,9 @@
 //   stillStretches(scene, ats) the longest stretch of a scene in which nothing new appears
 // Prose is read at 3.3 words a second. Code is counted in identifier tokens (`Author.followers.of_type`
 // is four: an underscore splits one), because it is harder to read than the same number of words, at 1.5 tokens a second.
+import { existsSync, mkdirSync, renameSync } from "node:fs";
+import { join } from "node:path";
+
 export const READ_WPS = 3.3;
 export const READ_CODE_TPS = 1.5;
 
@@ -84,4 +87,24 @@ export function soundRows(record, timing) {
     return [e.t, e.scene, e.name, e.label.length > 50 ? `${e.label.slice(0, 47)}...` : e.label, saying ? saying.text.slice(0, 60) : "(between sentences)",
       e.level === undefined ? "" : `${e.level} LUFS (${r2(e.level - record.reference)} vs voice)`, e.audible ? `${e.audible[0]} to ${e.audible[1]} s` : "", flags.join("; ")];
   });
+}
+
+/** Stills that are byte-identical although they sit in different scenes: [{hash, files}] for each such group.
+ *  A held frame inside one scene is legitimately the same picture and is never reported (D101, issue 160).
+ *  stills: [{file, scene, hash}]. */
+export function duplicateStills(stills) {
+  const by = new Map();
+  for (const s of stills) by.set(s.hash, [...(by.get(s.hash) ?? []), s]);
+  return [...by].filter(([, g]) => new Set(g.map((s) => s.scene)).size > 1).map(([hash, g]) => ({ hash, files: g.map((s) => s.file) }));
+}
+
+/** Move a folder aside to <parent>/<stamp>, never deleting it (the repo's scripts do not delete). Returns the new
+ *  path, or null when there was nothing to move. A name already taken gets a counter. */
+export function moveAside(src, parent, stamp) {
+  if (!existsSync(src)) return null;
+  mkdirSync(parent, { recursive: true });
+  let dest = join(parent, stamp), n = 1;
+  while (existsSync(dest)) dest = join(parent, `${stamp}-${++n}`);
+  renameSync(src, dest);
+  return dest;
 }

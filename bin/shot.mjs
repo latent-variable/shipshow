@@ -247,5 +247,7 @@ export function shotsIn(html) {
     shot: unesc(m[1]), url: unesc(m[2]), taken: unesc(m[3]), marked: m[4] === "yes",
     find: unesc((m[0].match(/data-find="([^"]*)"/) || [, ""])[1]),
     source: unesc((m[0].match(/data-source="([^"]*)"/) || [, ""])[1]),
+    // The capture's file name, from the picture inside this figure: <cache>/<key>/shot.png is the original.
+    key: (html.slice(m.index, html.indexOf("</figure>", m.index)).match(/assets\/shots\/([^"]+)\.png/) || [, ""])[1],
   }));
 }
