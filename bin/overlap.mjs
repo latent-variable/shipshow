@@ -125,6 +125,7 @@ function scan({ minOpacity, minShare }) {
   const sceneOf = (el) => el.closest("[data-scene]")?.dataset.scene ?? "";
   for (const it of items) {
     if (!it.nodes || opacity(it.el) < minOpacity) continue;
+    if (shown.includes(it) && !visible.includes(it)) continue;   // under a full-frame cover: hidden, so nothing cut off is seen
     const ext = it.rects.reduce((e, r) => ({ left: Math.min(e.left, r.left), top: Math.min(e.top, r.top), right: Math.max(e.right, r.right), bottom: Math.max(e.bottom, r.bottom) }), { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity });
     const past = (o, box) => Math.round(Math.max(box.left - o.left, box.top - o.top, o.right - box.right, o.bottom - box.bottom));
     const side = (o, box) => [["left", box.left - o.left], ["top", box.top - o.top], ["right", o.right - box.right], ["bottom", o.bottom - box.bottom]].sort((x, y) => y[1] - x[1])[0][0];
