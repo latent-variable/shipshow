@@ -55,3 +55,27 @@ test("overlaps: persistent frame text colliding with scene text is measured", { 
   assert.equal(found[0].scene, "s1");
   assert.deepEqual([found[0].a, found[0].b], ["Scene words", "Series plate"]);
 });
+
+test("overlaps: text cut off by its own svg, by a narrow box, or off the frame is found, and the honest cases are not (#128)", { skip: !chrome && "no Chrome" }, async () => {
+  const dir = mkdtempSync(join(tmpdir(), "shipshow-clip-"));
+  writeFileSync(join(dir, "timing.json"), JSON.stringify({ total: 5, scenes: [{ id: "s1", start: 0, duration: 5, sentences: [] }] }));
+  writeFileSync(join(dir, "index.html"), `<!doctype html><html><body style="margin: 0; width: 1920px; height: 1080px; position: relative; overflow: hidden">
+<section data-scene="s1"><span data-at="1"></span>
+  <div style="position: absolute; left: 100px; top: 100px; width: 300px; font: 40px sans-serif; white-space: nowrap">a chip that is far too wide for its column</div>
+  <div style="position: absolute; left: 100px; top: 200px; width: 700px; font: 40px sans-serif">a chip that fits its box</div>
+  <svg style="position: absolute; left: 100px; top: 300px" width="200" height="100" viewBox="0 0 200 100"><text x="120" y="50" font-size="40" font-family="sans-serif">a shifted wave</text></svg>
+  <svg style="position: absolute; left: 100px; top: 450px" width="400" height="100" viewBox="0 0 400 100"><text x="10" y="50" font-size="40" font-family="sans-serif">fits its svg</text></svg>
+  <svg style="position: absolute; left: 100px; top: 600px; overflow: visible" width="200" height="100" viewBox="0 0 200 100"><text x="120" y="50" font-size="40" font-family="sans-serif">svg lets it out</text></svg>
+  <div style="position: absolute; left: 1700px; top: 800px; font: 40px sans-serif; white-space: nowrap">runs off the right edge</div>
+  <div data-overlap="ok" style="position: absolute; left: 100px; top: 800px; width: 100px; font: 40px sans-serif; white-space: nowrap">meant to be wide</div>
+</section>
+<script>window.__timelines = { main: { pause() {}, seek() {} } };</script></body></html>`);
+  const found = await overlaps(dir);
+  const got = found.map((o) => `${o.kind} | ${o.a}`).sort();
+  assert.deepEqual(got, [
+    "offframe | runs off the right edge",
+    "overflow | a chip that is far too wide for its column",
+    "svgclip | a shifted wave",
+  ]);
+  assert.ok(found.every((o) => o.px > 4));
+});

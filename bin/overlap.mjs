@@ -10,7 +10,7 @@
 // a portrait's caption); two things in one SVG (a chart's labels on its lines); anything inside `[data-overlap="ok"]`;
 // letters of one word animated one by one; the captions; and anything under a full-frame cover (an act card, a pop meme's scrim: an element painted above it that
 // spans most of the frame with a background). Writes review/overlaps.json; prints one OVERLAP line per pair, with when
-// it starts and how long it lasts; exits 0 either way: the review packet lists them and the critic judges.
+// it starts and how long it lasts; and one CLIPPED line per text cut off or off the frame (#128, D102); exits 0 either way: the review packet lists them and the critic judges.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -116,6 +116,30 @@ function scan({ minOpacity, minShare }) {
     finally { for (const [t, props] of keep) for (const [k, v, pr] of props) { if (v) t.style.setProperty(k, v, pr); else t.style.removeProperty(k); } }
   };
   const found = [];
+  // Text that is cut off or off the frame (#128). Measured by the text's own extent, not its element's box: a
+  // nowrap chip in a narrow column has a box that fits while its words run past it (kakeya cut 4: box 820 px, text to x=2298,
+  // cut by #root's overflow). Three kinds, each [label, what, px, scene, kind]: "offframe" (the text's extent leaves the
+  // 1920 x 1080 frame), "overflow" (more than TOL px past its own element's box, outside an SVG) and "svgclip" (an SVG
+  // label past its nearest svg's viewport, which clips it unless the svg sets overflow visible). Skipped like the pairs are.
+  const TOL = 4;
+  const sceneOf = (el) => el.closest("[data-scene]")?.dataset.scene ?? "";
+  for (const it of items) {
+    if (!it.nodes || opacity(it.el) < minOpacity) continue;
+    const ext = it.rects.reduce((e, r) => ({ left: Math.min(e.left, r.left), top: Math.min(e.top, r.top), right: Math.max(e.right, r.right), bottom: Math.max(e.bottom, r.bottom) }), { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity });
+    const past = (o, box) => Math.round(Math.max(box.left - o.left, box.top - o.top, o.right - box.right, o.bottom - box.bottom));
+    const side = (o, box) => [["left", box.left - o.left], ["top", box.top - o.top], ["right", o.right - box.right], ["bottom", o.bottom - box.bottom]].sort((x, y) => y[1] - x[1])[0][0];
+    const frame = { left: 0, top: 0, right: W, bottom: H };
+    const svg = it.el.closest("svg");
+    if (past(ext, frame) > TOL) found.push([label(it.el), `text runs ${past(ext, frame)} px past the ${side(ext, frame)} of the frame`, past(ext, frame), sceneOf(it.el), "offframe"]);
+    else if (svg) {
+      const ov = getComputedStyle(svg).overflow;
+      const box = svg.getBoundingClientRect(), n = past(ext, box);
+      if (n > TOL && ov !== "visible" && ov !== "auto" && ov !== "scroll") found.push([label(it.el), `SVG label runs ${n} px past the ${side(ext, box)} of its svg and is cut off`, n, sceneOf(it.el), "svgclip"]);
+    } else if (!it.el.closest(".ss-meme")) {   // a meme's lines are fitted to their box by the kit, in a tall font whose glyph box passes it
+      const box = it.el.getBoundingClientRect(), n = past(ext, box);
+      if (n > TOL) found.push([label(it.el), `text runs ${n} px past the ${side(ext, box)} of its own box`, n, sceneOf(it.el), "overflow"]);
+    }
+  }
   for (let i = 0; i < visible.length; i++) for (let j = i + 1; j < visible.length; j++) {
     const a = visible[i], b = visible[j];
     if (a.el.contains(b.el) || b.el.contains(a.el) || sameGroup(a.el, b.el)) continue;
@@ -125,13 +149,13 @@ function scan({ minOpacity, minShare }) {
     if (best) { const f = untilted(a, b); if (f !== null) best = f; }
     if (best) {
       const scene = (a.el.closest("[data-scene]") || b.el.closest("[data-scene]"))?.dataset.scene ?? "";
-      found.push([label(a.el), label(b.el), best, scene]);
+      found.push([label(a.el), label(b.el), best, scene, "overlap"]);
     }
   }
   return found;
 }
 
-/** Every overlap in the built video at `dir`, merged across consecutive sample times: [{scene, a, b, from, to, px}]. */
+/** Every overlap in the built video at `dir`, merged across consecutive sample times: [{kind, scene, a, b, from, to, px}]; kind is "overlap" (a is on b), or for one text alone "offframe", "overflow" or "svgclip" (b says how far). */
 export async function overlaps(dir) {
   const root = resolve(dir);
   const timing = JSON.parse(readFileSync(join(root, "timing.json"), "utf8"));
@@ -157,11 +181,11 @@ export async function overlaps(dir) {
       await page.evaluate((t) => { window.__timelines.main.seek(t, false); }, t);   // braces: a returned timeline would be serialized, and hangs
       const found = await page.evaluate(scan, { minOpacity: MIN_OPACITY, minShare: MIN_SHARE });
       const now = new Set();
-      for (const [a, b, px, scene] of found) {
-        const key = `${scene}\u0000${a}\u0000${b}`;
+      for (const [a, b, px, scene, kind] of found) {
+        const key = `${kind}\u0000${scene}\u0000${a}\u0000${kind === "overlap" ? b : ""}`;   // a clipped text's b says how far, which changes
         now.add(key);
         const o = open.get(key);
-        if (o) { o.to = t; o.px = Math.max(o.px, px); } else open.set(key, { scene, a, b, from: t, to: t, px });
+        if (o) { o.to = t; o.px = Math.max(o.px, px); } else open.set(key, { kind, scene, a, b, from: t, to: t, px });
       }
       for (const [key, o] of open) if (!now.has(key)) { done.push(o); open.delete(key); }
     }
@@ -181,7 +205,8 @@ if (isEntry(import.meta.url)) {
   writeFileSync(join(dir, "review", "overlaps.json"), JSON.stringify(found, null, 2) + "\n");
   if (process.argv.includes("--json")) console.log(JSON.stringify(found, null, 2));
   else {
-    for (const o of found) console.log(`OVERLAP ${o.from.toFixed(1)} s (${(o.to - o.from).toFixed(1)} s) ${o.scene}: "${o.a}" and "${o.b}", ${o.px} px²`);
+    for (const o of found) if (o.kind !== "overlap") console.log(`CLIPPED (${o.kind}) ${o.from.toFixed(1)} s (${(o.to - o.from).toFixed(1)} s) ${o.scene}: "${o.a}", ${o.b}`);
+    for (const o of found) if (o.kind === "overlap") console.log(`OVERLAP ${o.from.toFixed(1)} s (${(o.to - o.from).toFixed(1)} s) ${o.scene}: "${o.a}" and "${o.b}", ${o.px} px²`);
     console.log(`${found.length} overlap(s) -> ${join(dir, "review", "overlaps.json")}`);
   }
   recordStep(dir, "overlaps", started, { found: found.length });
