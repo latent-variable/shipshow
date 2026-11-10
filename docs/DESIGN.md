@@ -1435,6 +1435,16 @@ warned, a public one not, an unknown said).
 
 ### D103. Render streams multi-worker capture by default; the package hint says chapters are optional (2026-11-09)
 **Decision.** `bin/render.mjs` runs `hyperframes render` with `HF_CAPTURE_PARALLEL_STREAM=true` (`renderEnv` in `bin/lib.mjs`), and `make` gets it by calling `render`. A value the person already set, `false` included, wins. The `npm run package` hint for a missing `"youtube"` block no longer lists chapters as required. **Why.** Verified in the installed HyperFrames: multi-worker screenshot capture lands on disk, every frame an image file, unless this variable is on (`resolveParallelCaptureMode`, `isCaptureParallelStreamRouterEnabled`), and a long render failed on that disk use (#142). **Costs.** The streaming path is HyperFrames' opt-in for screenshot capture; `HF_CAPTURE_PARALLEL_STREAM=false` returns to the disk path. **Tested.** `test/pipeline.test.mjs` (default on, empty is default, a set value wins); a draft render of `videos/how-it-works`.
+### D104. A light screenshot is captured opaque (2026-11-09)
+**Decision.** `bin/shot.mjs` takes a capture with `omitBackground` only when the page is dark (`found.light` false); a light page
+is photographed on Chrome's own white where it paints no background, so the PNG is opaque. `VERSION` is 8, so cached
+see-through light captures are taken again. **Why.** A chainalysis.com capture (`data-scheme="light"`) came back transparent, so
+its dark-blue ink and marker sat on the dark scene (binance-heist, issue #144), which worked around it with
+`.ss-shot-light .ss-shot-photo { background: #fff }`. **Alternatives.** A CSS background behind `.ss-shot-photo` fixes the
+picture but not the PNG, and cannot know the page's own colour; flattening at capture uses the page's real background and leaves
+the marker (a `multiply` layer over the picture inside `.ss-shot-photo`) multiplying against solid pixels. binance-heist's own rule
+is now redundant but harmless, so it is left. **Tested.** `test/shot.test.mjs` (a real capture of a page with no background has
+alpha 255).
 
 ## Behaviour
 

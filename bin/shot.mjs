@@ -31,7 +31,7 @@ import { pathToFileURL } from "node:url";
 import { die, REPO } from "./lib.mjs";
 import { imageSize } from "./meme.mjs";
 
-export const VERSION = 7;   // how a capture is taken: bump when that changes, so cached shots are taken again
+export const VERSION = 8;   // how a capture is taken: bump when that changes, so cached shots are taken again
 export const cacheDir = () => process.env.SHIPSHOW_SHOTS_CACHE || join(homedir(), ".cache", "shipshow", "shots");
 const SCALE = 2;            // device pixels per CSS px: sharp when the figure is drawn larger than the page was
 const TIMEOUT = 30000;
@@ -182,7 +182,9 @@ async function capture(spec) {
     if (found.error) throw new Error(found.error);
     const clip = Object.fromEntries(Object.entries(found.clip).map(([k, v]) => [k, Math.round(v)]));
     if (clip.width < 10 || clip.height < 10) throw new Error(`the element to capture is ${clip.width} by ${clip.height} px: nothing to show`);
-    const png = Buffer.from(await page.screenshot({ clip, captureBeyondViewport: true, omitBackground: true, type: "png" }));
+    // A light page is captured on Chrome's own white where it paints no background, never see-through: laid on a dark scene,
+    // a transparent capture shows dark ink on dark (binance-heist, 2026-11-02). Opaque keeps the marker's multiply working.
+    const png = Buffer.from(await page.screenshot({ clip, captureBeyondViewport: true, omitBackground: !found.light, type: "png" }));
     const mark = found.mark && found.mark.map((m) => ({ x: m.x / clip.width, y: m.y / clip.height, w: m.w / clip.width, h: m.h / clip.height }));
     return { png, meta: { url: spec.url, select: spec.select, find: spec.find, title: found.title, capturedAt: new Date().toISOString().slice(0, 10), mark, light: found.light } };
   } finally { await browser.close(); }
