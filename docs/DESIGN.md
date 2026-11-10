@@ -1433,6 +1433,8 @@ upload, after the folder is made; the check calls `gh` once per linked repo and 
 **Tested.** `test/pipeline.test.mjs` (repos found once each from several link shapes, GitHub's own pages skipped; a private repo
 warned, a public one not, an unknown said).
 
+### D103. Render streams multi-worker capture by default; the package hint says chapters are optional (2026-11-09)
+**Decision.** `bin/render.mjs` runs `hyperframes render` with `HF_CAPTURE_PARALLEL_STREAM=true` (`renderEnv` in `bin/lib.mjs`), and `make` gets it by calling `render`. A value the person already set, `false` included, wins. The `npm run package` hint for a missing `"youtube"` block no longer lists chapters as required. **Why.** Verified in the installed HyperFrames: multi-worker screenshot capture lands on disk, every frame an image file, unless this variable is on (`resolveParallelCaptureMode`, `isCaptureParallelStreamRouterEnabled`), and a long render failed on that disk use (#142). **Costs.** The streaming path is HyperFrames' opt-in for screenshot capture; `HF_CAPTURE_PARALLEL_STREAM=false` returns to the disk path. **Tested.** `test/pipeline.test.mjs` (default on, empty is default, a set value wins); a draft render of `videos/how-it-works`.
 ### D104. A light screenshot is captured opaque (2026-11-09)
 **Decision.** `bin/shot.mjs` takes a capture with `omitBackground` only when the page is dark (`found.light` false); a light page
 is photographed on Chrome's own white where it paints no background, so the PNG is opaque. `VERSION` is 8, so cached
