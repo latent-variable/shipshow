@@ -1,7 +1,8 @@
 // Shared plumbing for the bin/ scripts: paths, the video's config, sentence splitting, WAV I/O.
 import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { appendFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
+import { appendFileSync, copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
+import { homedir } from "node:os";
 import { basename, delimiter, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -18,6 +19,39 @@ export function pythonExists(py) {
   if (!py) return false;
   if (py.includes("/") || py.includes("\\")) return existsSync(py);
   return (process.env.PATH || "").split(delimiter).some((d) => d && existsSync(join(d, py)));
+}
+
+// The shared take cache (DESIGN D106). A video's takes live in its gitignored assets/voice/, which a retired worktree takes
+// with it, so voice.mjs also keeps each take outside the worktree, keyed by the take's own key (text, voice, speed, rules),
+// and copies it back before voicing anything. A copy both ways, never a move, and nothing here deletes.
+/** Where the takes are kept: SHIPSHOW_TAKES_CACHE, else ~/.cache/shipshow/takes; "off" turns it off (null). */
+export const takesCache = () => process.env.SHIPSHOW_TAKES_CACHE === "off" ? null : process.env.SHIPSHOW_TAKES_CACHE || join(homedir(), ".cache", "shipshow", "takes");
+// Everything that makes a take valid, the .key last, so a copy stopped halfway never looks current.
+const TAKE_FILES = [".wav", ".lvl", ".check", ".turns.npz", ".key"];
+const takeAt = (cache, key) => join(cache, createHash("sha256").update(key).digest("hex"));
+function copyTake(from, to) {
+  for (const ext of TAKE_FILES) {
+    if (!existsSync(from + ext)) continue;
+    if (existsSync(to + ext) && readFileSync(to + ext).equals(readFileSync(from + ext))) continue;
+    mkdirSync(dirname(to), { recursive: true });
+    const tmp = `${to + ext}.${process.pid}.tmp`;   // per process: two worktrees storing the same take at once must not share a file
+    copyFileSync(from + ext, tmp);
+    renameSync(tmp, to + ext);
+  }
+}
+/** Copy the cached take for `key` to `wav` and its sidecars (.lvl .check .turns.npz .key) beside it. False when the cache has none. */
+export function restoreTake(cache, key, wav) {
+  const from = takeAt(cache, key);
+  if (!existsSync(`${from}.wav`) || !existsSync(`${from}.key`) || readFileSync(`${from}.key`, "utf8") !== key) return false;
+  copyTake(from, wav.replace(/\.wav$/, ""));
+  return true;
+}
+/** Copy the take at `wav` and its sidecars into the cache, if its .key is `key` (a take mid-voicing or from other rules is not kept). */
+export function storeTake(cache, key, wav) {
+  const from = wav.replace(/\.wav$/, "");
+  if (!existsSync(wav) || !existsSync(`${from}.key`) || readFileSync(`${from}.key`, "utf8") !== key) return false;
+  copyTake(from, takeAt(cache, key));
+  return true;
 }
 
 export function die(msg) {

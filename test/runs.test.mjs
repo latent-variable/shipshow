@@ -11,6 +11,7 @@ import { test } from "node:test";
 import { createHash } from "node:crypto";
 import { BASE_PACE, DRAMA_LINE_MAX, LINE_MAX, styled, REPO, VENV_PY, breathe, groupRuns, lineRuns, pythonExists, readWav, sentences, spokenWords, writeWav } from "../bin/lib.mjs";
 import { hearbackAvailable, levelStamp, voiceCheckSection } from "../bin/hearback.mjs";
+process.env.SHIPSHOW_TAKES_CACHE = "off";   // the voice runs here use fake workers: never read or write the real take cache (D106)
 
 const BIN = join(REPO, "bin");
 const plain = ["python3", "python"].find((p) => spawnSync(p, ["-c", "import sys"], { stdio: "ignore" }).status === 0);

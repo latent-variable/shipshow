@@ -12,6 +12,7 @@ import { join } from "node:path";
 import { test } from "node:test";
 import { BASE_PACE, REPO, VENV_PY, readWav, writeWav } from "../bin/lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, listenSection, voiceCheckSection } from "../bin/hearback.mjs";
+process.env.SHIPSHOW_TAKES_CACHE = "off";   // the voice runs here use fake workers: never read or write the real take cache (D106)
 
 const BIN = join(REPO, "bin");
 const python = (py, code, args = []) => spawnSync(py, ["-c", `import sys; sys.path.insert(0, ${JSON.stringify(BIN)})\n${code}`, ...args], { encoding: "utf8" });

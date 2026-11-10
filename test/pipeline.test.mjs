@@ -9,6 +9,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { test } from "node:test";
 import { REPO, outName, readWav, sentences, spoken, writeWav } from "../bin/lib.mjs";
+process.env.SHIPSHOW_TAKES_CACHE = "off";   // the voice runs here use fake workers: never read or write the real take cache (D106)
 
 test("sentences end at . ! or ? and a space, not inside a number or a file name", () => {
   assert.deepEqual(sentences("It costs 3.5 dollars. Open index.html now! Ready?  Yes."), [
@@ -1639,6 +1640,127 @@ test("build stops on a picture a scene draws that is not there, naming it (a gen
   writeFileSync(join(dir, "assets", "gen", "fossil.png"), "");
   r = spawnSync(process.execPath, [join(REPO, "bin", "build.mjs"), dir], { encoding: "utf8" });
   assert.doesNotMatch(r.stderr, /draws files that are not here/, r.stderr);
+});
+
+// The shared take cache (DESIGN D106). A fake worker whose every take is different (random samples) and whose Drama-style
+// turns file records what it was told, so a re-voiced take can be told from a restored one and what a line heard is visible.
+const randomWorker = () => {
+  const path = join(mkdtempSync(join(tmpdir(), "kx-py-")), "python");
+  writeFileSync(path, `#!${process.execPath}
+import { appendFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { writeWav } from ${JSON.stringify(join(REPO, "bin", "lib.mjs"))};
+const spec = JSON.parse(readFileSync(process.argv[3], "utf8"));
+const turns = (w) => (w && existsSync(w.replace(/\\.wav$/, ".turns.npz")) ? readFileSync(w.replace(/\\.wav$/, ".turns.npz"), "utf8") : null);
+for (const j of spec.jobs) {
+  appendFileSync(join(dirname(process.argv[3]), "seen.log"), JSON.stringify({ text: j.text, after: turns(j.after), anchor: turns(j.anchor) }) + "\\n");
+  writeWav(j.wav, { rate: 24000, channels: 1, samples: Int16Array.from({ length: 24000 }, () => Math.floor(Math.random() * 2000)) });
+  writeFileSync(j.wav.replace(/\\.wav$/, ".turns.npz"), "turns " + Math.random());
+  if (j.keyFile) writeFileSync(j.keyFile, j.key);
+}
+`, { mode: 0o755 });
+  return path;
+};
+const seenBy = (dir) => existsSync(join(dir, "assets", "seen.log")) ? readFileSync(join(dir, "assets", "seen.log"), "utf8").trim().split("\n").map((l) => JSON.parse(l)) : [];
+/** The video in `dir` as a fresh checkout would have it: its script and settings, no assets, no timing. */
+const checkout = (dir) => {
+  const copy = join(mkdtempSync(join(tmpdir(), "kx-test-")), "demo");
+  cpSync(dir, copy, { recursive: true, filter: (src) => !["assets", "timing.json", "index.html"].includes(src.slice(dir.length + 1)) });
+  return copy;
+};
+const takesOf = (dir) => {
+  const v = join(dir, "assets", "voice");
+  return Object.fromEntries(readdirSync(v).sort().map((f) => [f, readFileSync(join(v, f)).toString("hex")]));
+};
+const cached = (cache) => ({ SHIPSHOW_TAKES_CACHE: cache });
+const voiceIn = (dir, local, py, cache, ...args) => spawnSync(process.execPath, [join(REPO, "bin", "voice.mjs"), dir, ...args], {
+  encoding: "utf8", env: { ...process.env, SHIPSHOW_LOCAL: local, HYPERFRAMES_PYTHON: py, ...cached(cache) },
+});
+
+test("a fresh checkout of a voiced video voices nothing and gets the same takes; an edited sentence voices only itself", () => {
+  const a = newVideo(), local = fakeLocal(), py = randomWorker(), cache = mkdtempSync(join(tmpdir(), "kx-takes-"));
+  let r = voiceIn(a, local, py, cache, "--engine", "omnivoice");
+  assert.equal(r.status, 0, r.stderr);
+  assert.equal(seenBy(a).length, 4, "the template's four sentences were voiced in A");
+
+  // B is A without its assets: a new worktree. Its takes come from the cache, none from the worker.
+  const b = checkout(a);
+  assert.equal(existsSync(join(b, "assets")), false);
+  r = voiceIn(b, local, py, cache, "--engine", "omnivoice");
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /restored 4 take\(s\) from the shared take cache/);
+  assert.match(r.stdout, /every sentence already voiced/);
+  assert.equal(seenBy(b).length, 0, "nothing was voiced in B");
+  assert.deepEqual(takesOf(b), takesOf(a), "every take and its key are the bytes A had");
+
+  // Editing one sentence in B re-voices that sentence alone; the other three are the takes A had.
+  const text = readFileSync(join(b, "script", "02-idea.txt"), "utf8");
+  writeFileSync(join(b, "script", "02-idea.txt"), text.replace("A box appears", "A square appears"));
+  r = voiceIn(b, local, py, cache, "--engine", "omnivoice");
+  assert.equal(r.status, 0, r.stderr);
+  assert.deepEqual(seenBy(b).map((x) => x.text), ["A square appears when the voice says box."]);
+  const was = takesOf(a), now = takesOf(b);
+  assert.equal(now["01-intro-01.wav"], was["01-intro-01.wav"]);
+  assert.equal(now["01-intro-02.wav"], was["01-intro-02.wav"]);
+  assert.equal(now["02-idea-01.wav"], was["02-idea-01.wav"]);
+  assert.notEqual(now["02-idea-02.wav"], was["02-idea-02.wav"], "the edited sentence is a new take");
+
+  // A third checkout with the edit finds the new take in the cache too: both versions are kept, neither replaces the other.
+  const c = checkout(b);
+  r = voiceIn(c, local, py, cache, "--engine", "omnivoice");
+  assert.match(r.stdout, /restored 4 take\(s\)/);
+  assert.deepEqual(takesOf(c), takesOf(b));
+  r = voiceIn(checkout(a), local, py, cache, "--engine", "omnivoice");
+  assert.match(r.stdout, /restored 4 take\(s\)/, "the unedited script still finds all four");
+
+  // A take is found by its key, not its file name: a sentence inserted ahead renumbers the rest, and they are still restored.
+  const d = checkout(a);
+  writeFileSync(join(d, "script", "02-idea.txt"), "Brand new opening. " + readFileSync(join(d, "script", "02-idea.txt"), "utf8"));
+  r = voiceIn(d, local, py, cache, "--engine", "omnivoice");
+  assert.match(r.stdout, /restored 4 take\(s\)/);
+  assert.deepEqual(seenBy(d).map((x) => x.text), ["Brand new opening."]);
+  assert.equal(takesOf(d)["02-idea-03.wav"], was["02-idea-02.wav"], "the renumbered sentence is the take it was");
+});
+
+test("the take cache is off with SHIPSHOW_TAKES_CACHE=off, and a take is not reused under another voice or speed", () => {
+  const a = newVideo(), local = fakeLocal(), py = randomWorker(), cache = mkdtempSync(join(tmpdir(), "kx-takes-"));
+  voiceIn(a, local, py, cache, "--engine", "omnivoice");
+  const b = checkout(a);
+  let r = voiceIn(b, local, py, cache, "--engine", "omnivoice", "--speed", "1.1");
+  assert.equal(seenBy(b).length, 4, "a new speed is a new key: the cached takes do not match");
+  const c = checkout(a);
+  r = voiceIn(c, local, py, "off", "--engine", "omnivoice");
+  assert.equal(r.status, 0, r.stderr);
+  assert.equal(seenBy(c).length, 4, "off voices everything");
+  assert.doesNotMatch(r.stdout, /restored/);
+});
+
+test("a drama line voiced again in a fresh checkout hears the same neighbours it would have in the old one (D83)", () => {
+  const a = newVideo(), local = fakeLocal(), py = randomWorker(), cache = mkdtempSync(join(tmpdir(), "kx-takes-"));
+  const run = (dir) => spawnSync(process.execPath, [join(REPO, "bin", "voice.mjs"), dir, "--engine", "drama", "--voice", "mine"], {
+    encoding: "utf8", env: { ...process.env, SHIPSHOW_LOCAL: local, SHIPSHOW_DRAMA_PYTHON: py, HYPERFRAMES_PYTHON: "/nonexistent", ...cached(cache) },
+  });
+  writeFileSync(join(a, "script", "01-intro.txt"), "One line.\nAnother line.\n");
+  writeFileSync(join(a, "script", "02-idea.txt"), "A third line.\nA fourth line.\n");
+  assert.equal(run(a).status, 0);
+  const turnsA = (f) => readFileSync(join(a, "assets", "voice", f), "utf8");
+  assert.equal(seenBy(a).length, 4);
+
+  const b = checkout(a);
+  let r = run(b);
+  assert.match(r.stdout, /restored 4 take\(s\)/);
+  assert.equal(seenBy(b).length, 0, "no line is voiced again in B");
+  assert.equal(existsSync(join(b, "assets", "voice", "02-idea-r01.turns.npz")), true, "the turns each line hears come back with its take");
+
+  // The third line is edited: it hears the take before it (A's second line) and the first take, as the cached takes made them.
+  writeFileSync(join(b, "script", "02-idea.txt"), "A third line, changed.\nA fourth line.\n");
+  r = run(b);
+  assert.equal(r.status, 0, r.stderr);
+  const [seen] = seenBy(b);
+  assert.equal(seenBy(b).length, 1);
+  assert.equal(seen.text, "A third line, changed.");
+  assert.equal(seen.after, turnsA("01-intro-r02.turns.npz"), "it heard the take before it, A's own");
+  assert.equal(seen.anchor, turnsA("01-intro-r01.turns.npz"), "and the video's first take");
 });
 
 test("render: HyperFrames streams multi-worker capture by default, and a user-set value wins", async () => {
