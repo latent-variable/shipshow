@@ -312,6 +312,15 @@ def score(text, samples):
     return agreement(text, heard), heard
 
 
+def take_rank(ok, gone, spelled, extra, clean, got):
+    """The key a line's takes are ranked by, the largest kept (bin/drama.py). A take that said more than its line (`extra`:
+    part of another line of the video, said again) is worse for a viewer than one that dropped a word, and its added seconds
+    shift every cue after it, so it ranks under every take without one whatever else it has (D105; kakeya-every-dimension
+    kept a take opened by the video's first sentence over four cleaner ones). Then: passing, fewest words gone, fewest
+    spelled out, no fault, best score."""
+    return (not extra, ok, -len(gone), -len(extra), -len(spelled), clean, got or 0.0)
+
+
 def write_check(wav, key, text, got, heard, faults=(), timing=None, rounds=None):
     """The `.check` file beside a take: what it was judged by, so bin/voice.mjs and the review packet
     can say which sentences to listen to. `score` is None when nothing could hear it back. `timing`, for a

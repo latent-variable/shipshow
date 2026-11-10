@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-11-08 (after clarifying optional YouTube chapters in F57).
+Last reviewed: 2026-11-09 (after D105: a Drama 3 take that repeated another line is never kept).
 
 ## Problem
 
@@ -118,7 +118,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F49 | A word said wrongly is caught before render: hear-back retakes a Drama 3 take that spells out letters the script never spells, and an optional second listen (Parakeet, `npm run setup:listen`) hears the finished narration against the script as written (DESIGN D60) | done; a word said wrongly that both models mend from context still needs a person's ear |
 | F48 | A theme for an argument: `signal`, near-black with a highlighter yellow, Bricolage Grotesque and Inter, karaoke captions, screenshots and photos flat on the desk (DESIGN D58) | done; judged by a fresh visual critic on never-about-the-code |
 | F50 | Named moods selected by `data-mood` carry across scenes: optional theme and token overrides, seekable sky and ambient crossfades, midpoint type switches, and independent music beds with centred crossfades (DESIGN D61) | done; tests, and a demo rendered and looked at; first used by eth-is-false |
-| F53 | A take that drawls is caught: Drama 3 retakes a take with more than 2.5 s between two words of one sentence, and the voice step lists any such take already made (DESIGN D65) | done; tests |
+| F53 | A take that drawls is caught: Drama 3 retakes a take with more than 2.5 s between two words of one sentence, and the voice step lists any such take already made (DESIGN D65); a take that repeated another line is never kept over one that did not (D105) | done; tests |
 | F54 | Drama 3 voices a paragraph of up to 160 words per take, so the delivery carries through a thought; every explainer breathes (act cards, beats, structure never announced) and `critic-pacing` calls rushing a major (DESIGN D66) | done; first used by eth-is-false's third cut |
 | F55 | Memes and GIFs by default: about one a minute in a video made to explain, every act with one, at least one moving, each tied to what is said; `critic-engagement` holds the bar (`explain-concept`) | done; eth-is-false's third cut has eleven |
 | F56 | A narrator is invented from a description, never a real person's voice without consent; the person picks from a numbered audition and the take is kept as the clone every line uses, its description kept in `<name>.style` and told in every direction (`narration-writing`, *A narrator*; DESIGN D68) | done; `narrator-uk` |

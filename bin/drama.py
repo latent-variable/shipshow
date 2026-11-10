@@ -316,7 +316,7 @@ def main(spec_path):
                 print(f"take repeated a take it heard; voicing it again without hearing them: {extra[0]}", file=sys.stderr, flush=True)
                 before = (None, None)   # the rest of this line's rounds start cold, as before D83: never worse than that
             ok = (got is None or got >= floor) and not gone and not spelled and fault is None
-            rank = (ok, -len(gone), -len(extra), -len(spelled), fault is None, got or 0.0)
+            rank = hearback.take_rank(ok, gone, spelled, extra, fault is None, got)   # a take that repeated another line never beats one that did not (D105)
             if best is None or rank > best[0]:
                 best = (rank, final, sr, got, heard, words, gone, spelled, fault, turns)
             if ok:
