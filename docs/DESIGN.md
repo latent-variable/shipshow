@@ -1455,6 +1455,16 @@ and never-about-the-code; `duplicateStills` (different scenes reported, a held f
 on videos/how-it-works: review run twice with a cue's time changed between, which left 34 stills and moved the first 38 files
 to `frames-stale`; a screenshot figure injected into the built page listed the cache path and the matching SHA-256 and copied the
 file. The retake path itself was not forced live.
+### D104. A light screenshot is captured opaque (2026-11-09)
+**Decision.** `bin/shot.mjs` takes a capture with `omitBackground` only when the page is dark (`found.light` false); a light page
+is photographed on Chrome's own white where it paints no background, so the PNG is opaque. `VERSION` is 8, so cached
+see-through light captures are taken again. **Why.** A chainalysis.com capture (`data-scheme="light"`) came back transparent, so
+its dark-blue ink and marker sat on the dark scene (binance-heist, issue #144), which worked around it with
+`.ss-shot-light .ss-shot-photo { background: #fff }`. **Alternatives.** A CSS background behind `.ss-shot-photo` fixes the
+picture but not the PNG, and cannot know the page's own colour; flattening at capture uses the page's real background and leaves
+the marker (a `multiply` layer over the picture inside `.ss-shot-photo`) multiplying against solid pixels. binance-heist's own rule
+is now redundant but harmless, so it is left. **Tested.** `test/shot.test.mjs` (a real capture of a page with no background has
+alpha 255).
 
 ## Behaviour
 

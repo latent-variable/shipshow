@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-11-09 (after F14 gained the stills-per-run, identical-stills and screenshot-capture guarantees).
+Last reviewed: 2026-11-09 (after F14 gained the stills-per-run, identical-stills and screenshot-capture guarantees; F46: a light screenshot is captured opaque, D104).
 
 ## Problem
 
@@ -113,7 +113,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F43 | A render plays at the loudness its platform plays at: `render` masters the audio to -14 LUFS by default (`video.json` `loudness`), one gain and a capped look-ahead limiter, never compression, the picture untouched (DESIGN D52) | done |
 | F44 | A writer decides which sentences are voiced together: with OmniVoice runs, each line of a script file is one take (DESIGN D54) | done |
 | F45 | A writer directs the delivery: with the Drama 3 engine (`"engine": "drama"`, `npm run setup:drama`), a bracketed direction at the start of a script line (`[deadpan]`, `[sarcastic]`) is performed and never shown, cued or read by another engine; every take is heard back and retaken up to five times, and one still under 97% is kept and listed to listen to, as OmniVoice's are (DESIGN D55) | done; how each direction sounds is judged by ear, which an agent cannot |
-| F46 | A quote is shown where it was said: `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of the real page (a PR comment, a contributing guide, a post), taken in headless Chrome at build, cached, with a marker on the words and a bar naming the page (DESIGN D56) | done; a page can change after it is captured, so the packet gives each capture's date |
+| F46 | A quote is shown where it was said: `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of the real page (a PR comment, a contributing guide, a post), taken in headless Chrome at build, cached, with a marker on the words and a bar naming the page, opaque on a light page so it reads on a dark scene (DESIGN D56, D104) | done; a page can change after it is captured, so the packet gives each capture's date |
 | F47 | A photo's credit goes in the video's description, not on the photo: `review` writes *Credits* and `review/credits.txt` for every portrait and screenshot (DESIGN D57) | done |
 | F49 | A word said wrongly is caught before render: hear-back retakes a Drama 3 take that spells out letters the script never spells, and an optional second listen (Parakeet, `npm run setup:listen`) hears the finished narration against the script as written (DESIGN D60) | done; a word said wrongly that both models mend from context still needs a person's ear |
 | F48 | A theme for an argument: `signal`, near-black with a highlighter yellow, Bricolage Grotesque and Inter, karaoke captions, screenshots and photos flat on the desk (DESIGN D58) | done; judged by a fresh visual critic on never-about-the-code |
