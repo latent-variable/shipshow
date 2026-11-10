@@ -1435,6 +1435,16 @@ warned, a public one not, an unknown said).
 
 ### D105. A Drama 3 take that repeated another line is never the one kept (2026-11-09)
 **Decision.** `bin/drama.py` ranks a line's takes with `hearback.take_rank`, whose first element is "said no more than its line" (`hearback.added`: five or more words the line lacks), ahead of passing, words gone and the rest. **Why.** The rank was `(ok, -gone, -extra, ...)`, so a take that opened with the video's first sentence outranked one that dropped a word; kakeya-every-dimension (cut 7) kept one at 91% heard back, and its extra 2.6 s shifted every cue after it (#138). A dropped word costs a viewer less than another line's sentence. **Costs.** A line whose five takes all repeat is still kept (the least bad of them, and flagged as before); the cut of a prefix repeat at the line's first word (the issue's option 2) was not done, as it needs the model's word times, a second hear-back and a splice, none testable without the 20 GB model. **Seeds.** Forcing one take again by moving its `.key` aside gives the same take, because the seed is hashed from the key (`bin/voice.mjs`): reword the line or its direction instead (`AGENTS.md`, *Traps*). **Tested.** `test/voicecheck.test.mjs` (`take_rank` orders a repeat under a dropped-word take, a spelled-out take and a clean one; fails with the first element removed). Not run on Drama 3 itself.
+### D104. A light screenshot is captured opaque (2026-11-09)
+**Decision.** `bin/shot.mjs` takes a capture with `omitBackground` only when the page is dark (`found.light` false); a light page
+is photographed on Chrome's own white where it paints no background, so the PNG is opaque. `VERSION` is 8, so cached
+see-through light captures are taken again. **Why.** A chainalysis.com capture (`data-scheme="light"`) came back transparent, so
+its dark-blue ink and marker sat on the dark scene (binance-heist, issue #144), which worked around it with
+`.ss-shot-light .ss-shot-photo { background: #fff }`. **Alternatives.** A CSS background behind `.ss-shot-photo` fixes the
+picture but not the PNG, and cannot know the page's own colour; flattening at capture uses the page's real background and leaves
+the marker (a `multiply` layer over the picture inside `.ss-shot-photo`) multiplying against solid pixels. binance-heist's own rule
+is now redundant but harmless, so it is left. **Tested.** `test/shot.test.mjs` (a real capture of a page with no background has
+alpha 255).
 
 ## Behaviour
 
