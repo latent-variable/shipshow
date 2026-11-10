@@ -8,6 +8,8 @@
 //   assets/voice/<scene>-<n>.wav   one take per sentence; a take whose text, voice and speed
 //                                  are unchanged is kept, so editing one sentence re-voices one
 //   assets/voice/<scene>-r<n>.wav  or, for a run of sentences, one take per run (OmniVoice with hear-back)
+//                                  each take is also kept in the shared take cache (~/.cache/shipshow/takes, SHIPSHOW_TAKES_CACHE,
+//                                  "off" for none; DESIGN D106) and copied back before a stale one is voiced: a new worktree re-voices nothing
 //   assets/narration.wav           every take on one track, with the pauses from video.json
 //   assets/voice/<scene>-<n>.check what the take was judged by: hear-back score, faults (see below)
 //   assets/listen.json             the second listen: Parakeet on the finished track, scene by scene (bin/listen.py)
@@ -28,7 +30,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { DRAMA, DRAMA_LINE_MAX, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, beatsAfter, breathe, drawled, config, styled, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav, recordStep } from "./lib.mjs";
+import { DRAMA, restoreTake, storeTake, takesCache, DRAMA_LINE_MAX, DRAMA_PY, LISTEN_PY, REPO, HF, VENV_PY, beatsAfter, breathe, drawled, config, styled, die, directedSentences, lineRuns, pythonExists, readWav, round, run, scenes, spoken, spokenWords, ttsEnv, videoDir, writeWav, recordStep } from "./lib.mjs";
 import { CHECK_VERSION, HEARBACK_MIN, hearbackAvailable, levelStamp, readCheck } from "./hearback.mjs";
 
 const PARALLEL = 3;
@@ -62,6 +64,8 @@ const PACE = cfg.speed <= WINDOW_MAX + 1e-9 ? "window" : "stretch";
 
 // Every take (a sentence, or a run of sentences) and whether it is current.
 const jobs = [];
+const cache = takesCache();   // the shared take cache (D106): looked in before voicing a take, written at the end
+let restored = 0;
 const plan = scenes(dir).map((s) => {
   // Stage directions ([deadpan], [laughs]) are Drama 3's: the written and timed text never has them, and only Drama 3 is told them.
   const ds = directedSentences(s.text);
@@ -91,8 +95,10 @@ const plan = scenes(dir).map((s) => {
       const keyFile = wav.replace(/\.wav$/, ".key");
       // A Kokoro take levelled by older rules (voicecheck.py VERSION) was squashed by them: voice it again.
       const lvl = wav.replace(/\.wav$/, ".lvl");
-      const older = !omni && existsSync(lvl) && /^v\d+:/.test(readFileSync(lvl, "utf8")) && !readFileSync(lvl, "utf8").startsWith(`v${CHECK_VERSION}:`);
-      const fresh = existsSync(wav) && existsSync(keyFile) && readFileSync(keyFile, "utf8") === key && !older;
+      const older = () => !omni && existsSync(lvl) && /^v\d+:/.test(readFileSync(lvl, "utf8")) && !readFileSync(lvl, "utf8").startsWith(`v${CHECK_VERSION}:`);
+      const isFresh = () => existsSync(wav) && existsSync(keyFile) && readFileSync(keyFile, "utf8") === key && !older();
+      let fresh = isFresh();
+      if (!fresh && cache && restoreTake(cache, key, wav) && (fresh = isFresh())) restored++;
       if (!fresh) jobs.push({ text, say, told, wav, key, keyFile, parts: RUNS ? idx.map((i) => spokenWords(texts[i], cfg.say)) : undefined });
       return { idx, texts: idx.map((i) => texts[i]), text, say, wav, key };
     }),
@@ -100,6 +106,13 @@ const plan = scenes(dir).map((s) => {
 });
 
 if (!plan.some((s) => s.units.length)) die("the script has no sentences to voice");
+if (restored) console.log(`restored ${restored} take(s) from the shared take cache (${cache})`);
+// Keep every take outside the worktree, whatever ends this run: a retired worktree takes assets/voice/ with it (D106).
+// Only a take whose .key is its own is copied, so one the worker never finished is not.
+if (cache) process.on("exit", () => {
+  try { for (const u of plan.flatMap((s) => s.units)) storeTake(cache, u.key, u.wav); }
+  catch (e) { console.warn(`the shared take cache (${cache}) could not be written: ${e.message}`); }
+});
 
 async function voiceOne({ say, wav, key, keyFile }) {
   writeFileSync(wav.replace(/\.wav$/, ".lvl"), "");   // this take is not levelled yet (a wav voiced again under the same key)

@@ -1435,6 +1435,29 @@ warned, a public one not, an unknown said).
 
 ### D105. A Drama 3 take that repeated another line is never the one kept (2026-11-09)
 **Decision.** `bin/drama.py` ranks a line's takes with `hearback.take_rank`, whose first element is "said no more than its line" (`hearback.added`: five or more words the line lacks), ahead of passing, words gone and the rest. **Why.** The rank was `(ok, -gone, -extra, ...)`, so a take that opened with the video's first sentence outranked one that dropped a word; kakeya-every-dimension (cut 7) kept one at 91% heard back, and its extra 2.6 s shifted every cue after it (#138). A dropped word costs a viewer less than another line's sentence. **Costs.** A line whose five takes all repeat is still kept (the least bad of them, and flagged as before); the cut of a prefix repeat at the line's first word (the issue's option 2) was not done, as it needs the model's word times, a second hear-back and a splice, none testable without the 20 GB model. **Seeds.** Forcing one take again by moving its `.key` aside gives the same take, because the seed is hashed from the key (`bin/voice.mjs`): reword the line or its direction instead (`AGENTS.md`, *Traps*). **Tested.** `test/voicecheck.test.mjs` (`take_rank` orders a repeat under a dropped-word take, a spelled-out take and a clean one; fails with the first element removed). Not run on Drama 3 itself.
+### D107. The second listen hears a scene in windows cut at its pauses, because heard whole it skips short sentences (2026-11-09)
+**Decision.** `bin/listen.py` no longer gives Parakeet a whole scene. `windows()` cuts the scene's sentences, from `timing.json`,
+into clips: a new clip starts wherever the silence between two sentences is 0.5 s or more (`PAUSE`), or the clip would pass 12 s
+(`WINDOW`), so most sentences are heard alone; each clip takes at most 0.2 s of silence before its first word and 0.3 s after its
+last, never past half the gap to the sentence beside it. The clips' transcripts are joined and compared with the script exactly
+as before (`hearback.agreement`, `vanished`, `spelled_out`; the threshold and the matcher are unchanged). **Why.** Issue #129:
+the second listen kept reporting sentences "not heard" that were in the track, always short, always after a pause: "Six soldiers
+shoot back." (1.2 s, mid-scene, 05-test) and "Thanks for watching." (15-close) in doom-weights, "Two to what power makes three?"
+and "The small circle shrinks as the ripples get finer." in kakeya-every-dimension's kept cut, and three more sentences in earlier
+kakeya cuts. Reproduced on the real tracks (2026-11-09): each sentence is in the audio and Parakeet hears it word for word from a
+clip that starts at it (`836.5:839` gives "Thanks for watching."; `231.5:236.5` gives "Six soldiers shoot back. Get to the armor
+at the far end alive."), but not from the scene's clip (80 s), and not from the last seven seconds of 15-close either, which
+still ended with the pause before the sentence. So the cause is the listening, not the matcher or the threshold: the model skips
+a short utterance after a pause (a transducer that predicts long frame skips is the likely mechanism; not verified), and a
+shorter clip alone does not cure it. With the windows, the two doom-weights false misses and the two kakeya ones are gone (0 flagged
+on both; lowest scene score 0.96 and 0.98, against the 0.9 threshold). **Control.** A copy of doom-weights' track with the
+audio of "Six soldiers shoot back.", "A few dozen beat them." and "Thanks for watching." muted still reports all three as not
+heard, with the windows as without. **Costs.** One model call per window instead of per scene: kakeya's 22 scenes took 58 s
+instead of 22 s. A sentence that stands alone has no context for the model, and a lone very short sentence could be mis-heard;
+none was in the two tracks measured. **Tested.** `test/voicecheck.test.mjs` runs `windows()` on doom-weights 15-close's real
+timings and on synthetic ones (no Parakeet): the last sentence is a clip of its own, sentences under 0.5 s apart stay together,
+a clip never reaches into its neighbour, every sentence is in one clip in order; with `PAUSE` and `WINDOW` set huge (the old
+behaviour) it fails. The Parakeet runs above are by hand: CI has no `.venv-listen`.
 ### D101. The review packet's stills belong to one run, and its Moods table has one source (2026-11-09)
 **Decision.** `bin/review.mjs` takes its stills into a fresh `review/.frames-<time>` folder and then moves the previous
 `review/frames/` to `review/frames-stale/<time>/` (a move, never a delete) before putting the new folder at `review/frames/`,
@@ -1470,14 +1493,37 @@ the marker (a `multiply` layer over the picture inside `.ss-shot-photo`) multipl
 is now redundant but harmless, so it is left. **Tested.** `test/shot.test.mjs` (a real capture of a page with no background has
 alpha 255).
 
+### D106. A video's takes outlive its worktree: a shared take cache (2026-11-09)
+**Decision.** `bin/voice.mjs` keeps every take in `~/.cache/shipshow/takes/` (`SHIPSHOW_TAKES_CACHE`; `off` for none), named by the
+sha256 of the take's own key, with the files that make it valid beside it: `.wav`, `.lvl`, `.check`, `.turns.npz` and, last, the
+`.key`. A take that is not fresh is looked up there before it is voiced and, on a hit whose stored `.key` is the key, copied into
+`assets/voice/` (`restoreTake`); a run's end, by `process.on("exit")` so a failed run keeps what it made, copies each take whose
+`.key` is its own into the cache (`storeTake`), which also back-fills a worktree voiced before the cache existed. Copies only: nothing
+is moved, and nothing deleted (an entry is overwritten when its bytes differ). **Why.** `assets/voice/` is gitignored and lives
+in the worktree, which `worktree.sh --remove` trashes after a merge: the next edit to kakeya-every-dimension re-voiced 50 Drama 3
+runs (about 40 minutes) and the new takes sounded unlike the approved cut (#131); weight-space paid about 17 minutes twice (#157).
+The key already holds everything that makes a take what it is (text, voice bytes, speed, check rules, model revision,
+`DRAMA_RULES`), so it is the address. **Consequences.** A take is found by its key, never its file name, so inserting a sentence
+re-voices only the new one (it re-voiced every later one in the scene before). Drama 3's D83 continuity is unchanged: a line's
+`after` and `anchor` come from the video's order, never from what was restored, and the `.turns.npz` they are read from comes with
+each take. **Costs.** Entries are never pruned (a take is some hundreds of kilobytes; the folder is the person's to trash). A Kokoro
+take stored before it is levelled carries an empty `.lvl` and is levelled on its next restore. Generated pictures (#157) are left
+out: nothing keys them (the GPU box's pictures are made by a skill's own commands, not by `build`), so there is nothing to address
+them by without a new mechanism. **Tested.** `test/pipeline.test.mjs`: with fake workers that write a different take each time, a
+fresh checkout (no `assets/`) voices nothing and has every take byte for byte; an edited sentence voices only itself; an inserted one
+likewise; another speed misses; `off` voices all; a Drama line voiced again after a restore is told the same `after` and `anchor`
+turns as in the old checkout. The first and third fail with the lookup removed. The three test files that run `voice.mjs` set the
+cache to `off`. Run by hand on a real Kokoro video: a copy of the template voiced from the cache had identical takes and narration,
+and an edited sentence voiced one take.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
 
 **The pipeline** (`bin/`, `kit/`)
 - `voice` voices one sentence at a time (or, with OmniVoice and hear-back, runs of sentences up to 45 words, D47) and writes `timing.json`. A take is cached by its text,
-  voice and speed, so inserting a sentence re-voices every later sentence in that scene (numbering restarts per
-  scene; the cost per take has not been measured).
+  voice and speed, both in `assets/voice/` and in the shared take cache outside the worktree (D106), which is looked in before
+  a stale take is voiced: a new worktree re-voices nothing, and inserting a sentence re-voices only the new one.
 - A music file `video.json` names as `local/...` is looked for beside the video, then in the person's local layer (`SHIPSHOW_LOCAL`, D75), then in the repo (`musicFile` in `bin/lib.mjs`); before, a worktree rendering with `SHIPSHOW_LOCAL` set found none of it and qwen-phones-home lost five of its seven beds (2026-10-29).
 - A bracketed stage direction in a script line reaches only the Drama 3 engine; captions, cues, `timing.json` and the other engines get the line without it, and a line's direction moves with the line, never to the next one (`directedSentences`, D55).
 - A Drama 3 line is generated hearing the video's first take and the take kept for the line before it, and every kept take has a `<take>.turns.npz` beside it (`bin/drama.py` `speak`, D83). A take heard saying five or more words in a row that its line does not have is retaken, and the rest of that line's rounds hear nothing; one kept with it lists `said more than its line` in its `.check` faults (`hearback.added`).
