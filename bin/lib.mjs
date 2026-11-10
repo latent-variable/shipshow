@@ -34,8 +34,9 @@ function copyTake(from, to) {
     if (!existsSync(from + ext)) continue;
     if (existsSync(to + ext) && readFileSync(to + ext).equals(readFileSync(from + ext))) continue;
     mkdirSync(dirname(to), { recursive: true });
-    copyFileSync(from + ext, `${to + ext}.tmp`);
-    renameSync(`${to + ext}.tmp`, to + ext);
+    const tmp = `${to + ext}.${process.pid}.tmp`;   // per process: two worktrees storing the same take at once must not share a file
+    copyFileSync(from + ext, tmp);
+    renameSync(tmp, to + ext);
   }
 }
 /** Copy the cached take for `key` to `wav` and its sidecars (.lvl .check .turns.npz .key) beside it. False when the cache has none. */
