@@ -1433,6 +1433,29 @@ upload, after the folder is made; the check calls `gh` once per linked repo and 
 **Tested.** `test/pipeline.test.mjs` (repos found once each from several link shapes, GitHub's own pages skipped; a private repo
 warned, a public one not, an unknown said).
 
+### D101. The review packet's stills belong to one run, and its Moods table has one source (2026-11-09)
+**Decision.** `bin/review.mjs` takes its stills into a fresh `review/.frames-<time>` folder and then moves the previous
+`review/frames/` to `review/frames-stale/<time>/` (a move, never a delete) before putting the new folder at `review/frames/`,
+so the folder and the packet list only this run's stills; re-running after a timing change used to leave the old
+`frame-NN-at-<s>.png` files beside the new ones, and a critic judged a build that no longer existed (issue 139). Option 2 of
+the issue, rather than building the expected names from the times, because it does not depend on HyperFrames' file naming.
+After capture each still is hashed (SHA-256); stills that are byte-identical **and fall in different scenes** are retaken
+once (the whole set, so the contact sheets match) and, if they stay identical, the packet's *Frames* section opens with a
+bold WARNING and the run prints it (issue 160: stills at four unrelated times showed one earlier scene). It warns rather than
+fails because a real video can have two scenes whose frames are legitimately alike, and a stop would give the person no way
+out; identical stills inside one scene are a held frame and never reported (`duplicateStills` in `bin/measure.mjs`). The
+*Screenshots* section gives each capture's cached path (`<cache>/<key>/shot.png`), a SHA-256 and a copy in
+`review/shots/<key>.png`, which a sandboxed critic can read (issue 154; `shotsIn` now returns the capture's `key`). The packet's
+Moods table is built from `moodSchedule` in `bin/moods.mjs`, the same walk `resolveMoods` uses for the render, so the critics
+are told the schedule the video follows and the rule has one copy (issue 174; `moodRows`). **Costs.** `review/frames-stale/`
+grows by one folder per re-run with changed timing (move it away by hand); a retake doubles the capture time, only when a
+duplicate appears. `review` now stops on an unknown `data-mood`, as the build already did. **Tested.** `test/review-packet.test.mjs`:
+the Moods table against the old walk on synthetic marks and on the scenes.html and video.json of binance-heist, weight-space
+and never-about-the-code; `duplicateStills` (different scenes reported, a held frame not); `moveAside`; `shotsIn`'s key. By hand
+on videos/how-it-works: review run twice with a cue's time changed between, which left 34 stills and moved the first 38 files
+to `frames-stale`; a screenshot figure injected into the built page listed the cache path and the matching SHA-256 and copied the
+file. The retake path itself was not forced live.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

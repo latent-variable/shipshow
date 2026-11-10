@@ -5,18 +5,19 @@
 // when it lands, and how long each piece of on-screen text stays up against the time it
 // takes to read. The frames are stills a moment after each cue lands and just before each
 // scene ends; a critic looks at those instead of the MP4. Critics: skills/critic-loop.
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
 import { createHash } from "node:crypto";
 import { BASE_SPM, BASE_WPM, HF, REPO, config, die, localDir, reviewPlan, round, run, syllables, videoDir, recordStep } from "./lib.mjs";
 import { memesIn, memesUsed } from "./meme.mjs";
 import { creditLines, portraitsIn } from "./portrait.mjs";
 import { footageIn } from "./footage.mjs";
-import { shotsIn } from "./shot.mjs";
+import { cacheDir as shotCacheDir, shotsIn } from "./shot.mjs";
+import { moodRows } from "./moods.mjs";
 import { overlaps } from "./overlap.mjs";
 import { actOpenings, changeRhythm, channelDevices, devicesIn } from "./devices.mjs";
 import { listenSection, voiceCheckSection } from "./hearback.mjs";
-import { READ_CODE_TPS, READ_WPS, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
+import { READ_CODE_TPS, READ_WPS, duplicateStills, moveAside, newReadingText, readingQueue, settleFor, soundRows, stillStretches, words } from "./measure.mjs";
 
 
 const STARTED = Date.now();
@@ -82,11 +83,29 @@ const times = (frameMode === "scenes"
   : [...cues.map((c) => c.at + settleFor(c.anim)), ...timing.scenes.map((s) => s.start + s.duration - 0.4)])
   .map(round).sort((a, b) => a - b)
   .filter((t, i, a) => t < timing.total && (i === 0 || t - a[i - 1] >= 0.4));
-const fdir = join(dir, "review", "frames");
-mkdirSync(fdir, { recursive: true });
-await run(HF, ["snapshot", dir, "--at", times.join(","), "--no-end", "-o", fdir]).catch((e) => die(e.message));
+// Stills are taken into a fresh folder, so the folder holds this run's stills and nothing from an earlier build
+// (D101, issue 139); the previous review/frames is moved to review/frames-stale/<time>/, never deleted.
+const fdir = join(dir, "review", "frames"), staleDir = join(dir, "review", "frames-stale");
+const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+const snap = async (to) => { mkdirSync(to, { recursive: true }); await run(HF, ["snapshot", dir, "--at", times.join(","), "--no-end", "-o", to]).catch((e) => die(e.message)); };
+const stillsIn = (d) => readdirSync(d).filter((f) => /^frame-.*\.png$/.test(f)).sort().map((f) => ({ file: f, scene: sceneAt(+f.match(/at-([\d.]+)s/)[1]).id, hash: createHash("sha256").update(readFileSync(join(d, f))).digest("hex") }));
+let fresh = join(dir, "review", `.frames-${stamp}`);
+await snap(fresh);
+// Byte-identical stills in different scenes mean a capture reused a page that had not settled (issue 160): take them once more.
+let dups = duplicateStills(stillsIn(fresh));
+if (dups.length) {
+  console.log(`REVIEW retaking stills: ${dups.map((d) => d.files.join(" = ")).join("; ")} are byte-identical but in different scenes`);
+  const again = join(dir, "review", `.frames-${stamp}-retake`);
+  await snap(again);
+  moveAside(fresh, staleDir, `${stamp}-identical-stills`);
+  fresh = again;
+  dups = duplicateStills(stillsIn(fresh));
+}
+moveAside(fdir, staleDir, stamp);
+renameSync(fresh, fdir);
 const frames = readdirSync(fdir).filter((f) => /^frame-.*\.png$/.test(f)).sort();
 const sheets = readdirSync(fdir).filter((f) => /^contact-sheet.*\.jpg$/.test(f)).sort();
+if (frames.length !== times.length) console.log(`REVIEW asked for ${times.length} stills and got ${frames.length}`);
 
 const out = [];
 const md = (rows, head) => [`| ${head.join(" | ")} |`, `|${head.map(() => "---").join("|")}|`, ...rows.map((r) => `| ${r.join(" | ").replace(/\n/g, " ")} |`)].join("\n");
@@ -116,18 +135,7 @@ out.push("## Pauses", "", "Silence before each sentence, and after the last.", "
 // Moods (D61): which look and music each section has, so a critic can judge where the video turns (critic-engagement).
 if (cfg.moods && Object.keys(cfg.moods).length) {
   const src = readFileSync(join(dir, "scenes.html"), "utf8");
-  const named = new Map([...src.matchAll(/<section([^>]*)>/g)].map((m) => [m[1].match(/data-scene="([^"]+)"/)?.[1], m[1].match(/data-mood="([^"]*)"/)?.[1]]));
-  const music = (m) => (m ? (typeof m === "string" ? m : m.file) : "").split("/").pop();
-  const rows = [];
-  let current = null, first = timing.scenes[0];
-  const flush = (end) => current !== undefined && rows.push([current ?? "(the video's own)", `${first.id} to ${end.id}`, `${round(first.start)}`, (current ? cfg.moods[current]?.theme : null) ?? cfg.theme ?? "", current ? Object.keys(cfg.moods[current]?.look ?? {}).join(", ") : "", (current ? cfg.moods[current]?.ambient : null) ?? "base", music(current ? cfg.moods[current]?.music : cfg.music) || "(previous)"]);
-  let prev = first;
-  for (const s of timing.scenes) {
-    const name = named.get(s.id);
-    if (name !== undefined && name !== current) { if (s !== timing.scenes[0]) flush(prev); current = name; first = s; }
-    prev = s;
-  }
-  flush(prev);
+  const rows = moodRows(cfg, timing, src);
   out.push("## Moods", "", "Each section of the video and its mood: the look (a theme, then token overrides), the ambient and the music under it. Neighbouring sections should look and sound different, and each should fit what it says (`critic-engagement`); the look crossfades over 1.2 s at each change, and a new act's music hands off: the old bed fades from the act's last word and the new one swells in from its opening over 2 s.", "", md(rows, ["mood", "scenes", "starts (s)", "theme", "look overrides", "ambient", "music"]), "");
 }
 out.push("## Cues", "", `Each element that arrives on a word: when it lands, what is being said then, and how long it stays up. Reading time assumes ${READ_WPS} words a second for prose and ${READ_CODE_TPS} identifier tokens a second for code; "short" means it leaves before a viewer could read it while listening, and "late" means that, reading in order, the viewer cannot finish it before its scene ends.`, "");
@@ -163,8 +171,19 @@ if (portraits.length) {
 }
 const shots = shotsIn(html);
 if (shots.length) {
-  out.push("## Screenshots", "", "Each is a real page, captured in headless Chrome at build and kept in the cache (`bin/shot.mjs`): check that it shows what the narration says it shows, that the marked words are the ones meant, and that it is current enough. Credit each in `sources.md`.", "");
-  out.push(md(shots.map((x) => [x.source ? `${x.source} (captured from ${x.url})` : x.url, x.taken, x.find ? `"${x.find}"${x.marked ? "" : " (not marked)"}` : "(none)"]), ["page", "captured", "marked words"]), "");
+  out.push("## Screenshots", "", "Each is a real page, captured in headless Chrome at build and kept in the cache (`bin/shot.mjs`): check that it shows what the narration says it shows (compare the frame with the capture it was cropped from: the copy in \`review/shots/\`, whose SHA-256 is listed), that the marked words are the ones meant, and that it is current enough. Credit each in `sources.md`.", "");
+  // The capture each frame was cropped from: its cached file, its SHA-256, and a copy in review/shots/ a sandboxed critic can read (D101, issue 154).
+  const shotsDir = join(dir, "review", "shots");
+  const capture = (x) => {
+    const cached = join(shotCacheDir(), x.key, "shot.png"), local = join(dir, "assets", "shots", `${x.key}.png`);
+    const file = x.key && existsSync(cached) ? cached : x.key && existsSync(local) ? local : null;
+    if (!file) return ["(not found)", "", ""];
+    const bytes = readFileSync(file);
+    mkdirSync(shotsDir, { recursive: true });
+    writeFileSync(join(shotsDir, `${x.key}.png`), bytes);
+    return [`\`${file}\``, `\`review/shots/${x.key}.png\``, `\`${createHash("sha256").update(bytes).digest("hex")}\``];
+  };
+  out.push(md(shots.map((x) => [x.source ? `${x.source} (captured from ${x.url})` : x.url, x.taken, x.find ? `"${x.find}"${x.marked ? "" : " (not marked)"}` : "(none)", ...capture(x)]), ["page", "captured", "marked words", "cached capture", "copy for critics", "SHA-256"]), "");
 }
 const credits = creditLines(portraits, shots);
 if (credits.length) {
@@ -222,6 +241,12 @@ else {
 out.push("## Frames", "", `In \`review/frames/\`, ${frames.length} stills (${frameMode === "scenes" ? "mid-scene and scene end only" : "after each cue and at each scene end"}); ${sheets.map((f) => `\`${f}\``).join(", ")} show them together.`, "");
 const sceneEnd = (t) => timing.scenes.some((s) => Math.abs(s.start + s.duration - 0.4 - t) < 0.01);
 const near = (t) => cues.filter((c) => Math.abs(c.at + settleFor(c.anim) - t) < 0.01).map((c) => `after \`${c.cue}\``).join(", ") || (sceneEnd(t) ? "scene end" : "mid-scene");
+if (dups.length) {
+  const msg = `WARNING: ${dups.map((d) => d.files.join(" = ")).join("; ")} stayed byte-identical in different scenes after a retake. They cannot all show their own scene: do not judge those frames, and look at the scenes at those times by other means (issue 160).`;
+  out.push(`**${msg}**`, "");
+  console.log(`REVIEW ${msg}`);
+}
+if (frames.length !== times.length) out.push(`**WARNING: ${times.length} stills were asked for and ${frames.length} were taken.**`, "");
 out.push(md(frames.map((f) => {
   const t = +f.match(/at-([\d.]+)s/)[1];
   return [f, t, sceneAt(t).id, near(t), sentenceAt(t)?.text || "(pause)"];
