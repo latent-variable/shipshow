@@ -57,6 +57,17 @@ export function extractJson(text) {
   return null;
 }
 
+/** Why a critic's JSON cannot be trusted as its verdict, or null. A truncated or free-form answer must not count as a pass:
+ *  the verdict is pass or fail, `findings` is a list whose severities are known, and a pass carries no blocking or major one. */
+export function verdictProblem(json, critic) {
+  if (!["pass", "fail"].includes(json.verdict)) return "its JSON has no pass or fail verdict";
+  if (json.critic && json.critic !== critic) return `its JSON is for ${json.critic}`;
+  if (!Array.isArray(json.findings)) return "its JSON has no findings list";
+  if (json.findings.some((f) => !f || !["blocking", "major", "minor"].includes(f.severity))) return "a finding has no blocking, major or minor severity";
+  if (json.verdict === "pass" && json.findings.some((f) => f.severity !== "minor")) return "it says pass with a blocking or major finding";
+  return null;
+}
+
 function skillFor(critic) {
   return [join(REPO, "skills", critic, "SKILL.md"), join(localDir(), "skills", critic, "SKILL.md")].find(existsSync);
 }
@@ -76,7 +87,7 @@ function runOne({ critic, model, round, dir, sheets, brief }) {
       const outDir = join(dir, "review", `round-${round}`);
       mkdirSync(outDir, { recursive: true });
       const json = extractJson(out);
-      const bad = code !== 0 ? `codex exited ${code}` : !json ? "no JSON object in its output" : !["pass", "fail"].includes(json.verdict) ? `its JSON has no pass or fail verdict` : null;
+      const bad = code !== 0 ? `codex exited ${code}` : !json ? "no JSON object in its output" : verdictProblem(json, critic);
       if (bad) {
         const raw = join(outDir, `${critic}.raw.txt`);
         writeFileSync(raw, `${out}${err ? `\n--- stderr ---\n${err}` : ""}`);

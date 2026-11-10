@@ -1443,7 +1443,7 @@ critic's name, the video folder, the round, `--changed` and the contact-sheet co
 because the critic runs outside the repo, with its `SKILL.md`'s absolute path named. The run stops if a placeholder is left unfilled,
 so a template edited out of shape fails loudly. Each critic's JSON (found as the whole output, a fenced block or the first `{` to the
 last `}`) goes to `review/round-<n>/<critic>.json`, `<n>` being `--round` or the next round not on disk; output with no JSON, no
-`pass`/`fail` verdict or a non-zero exit is saved beside it as `<critic>.raw.txt` and that critic is reported FAILED (exit 1), the
+`pass`/`fail` verdict, no `findings` list, an unknown severity, a pass over a blocking or major finding, or a non-zero exit is saved beside it as `<critic>.raw.txt` and that critic is reported FAILED (exit 1), the
 others still land. One verdict line per critic is printed. `--model` is the Codex model here (default `gpt-6-luna`, checked against
 `~/.codex/models_cache.json`), not the plan's Claude one. It refuses without `review/packet.md` or any contact sheet, with an unknown
 critic or model, and without `codex` on PATH. A `--critics` list that leaves out a floor critic is run as given and the omission said

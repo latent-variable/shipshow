@@ -8,7 +8,7 @@ import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSyn
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { REPO } from "../bin/lib.mjs";
-import { extractJson } from "../bin/critics-run.mjs";
+import { extractJson, verdictProblem } from "../bin/critics-run.mjs";
 
 // The fake records one JSON file per run, named by the critic in the brief's first line, then answers like a critic.
 // FAKE_BAD names a critic that answers with prose and no JSON.
@@ -126,4 +126,15 @@ test("extractJson finds the verdict in a fenced block, in chatter, or bare, and 
   assert.deepEqual(extractJson('I think {"verdict":"pass"} is right'), { verdict: "pass" });
   assert.equal(extractJson("no braces at all"), null);
   assert.equal(extractJson("{ not json }"), null);
+});
+
+test("a verdict is trusted only when whole: pass or fail, a findings list, known severities, no pass over a major finding", () => {
+  const ok = { critic: "critic-sync", verdict: "fail", findings: [{ severity: "major" }] };
+  assert.equal(verdictProblem(ok, "critic-sync"), null);
+  assert.equal(verdictProblem({ verdict: "pass", findings: [{ severity: "minor" }] }, "critic-sync"), null);
+  assert.match(verdictProblem({ verdict: "pass" }, "critic-sync"), /no findings list/);
+  assert.match(verdictProblem({ verdict: "pass", findings: [{ severity: "major" }] }, "critic-sync"), /pass with a blocking or major/);
+  assert.match(verdictProblem({ verdict: "fail", findings: [{}] }, "critic-sync"), /no blocking, major or minor severity/);
+  assert.match(verdictProblem(ok, "critic-visuals"), /is for critic-sync/);
+  assert.match(verdictProblem({ verdict: "maybe", findings: [] }, "critic-sync"), /no pass or fail verdict/);
 });
