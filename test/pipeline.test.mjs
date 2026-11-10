@@ -1640,3 +1640,11 @@ test("build stops on a picture a scene draws that is not there, naming it (a gen
   r = spawnSync(process.execPath, [join(REPO, "bin", "build.mjs"), dir], { encoding: "utf8" });
   assert.doesNotMatch(r.stderr, /draws files that are not here/, r.stderr);
 });
+
+test("render: HyperFrames streams multi-worker capture by default, and a user-set value wins", async () => {
+  const { renderEnv } = await import("../bin/lib.mjs");
+  assert.equal(renderEnv({}).HF_CAPTURE_PARALLEL_STREAM, "true");
+  assert.equal(renderEnv({ HF_CAPTURE_PARALLEL_STREAM: "" }).HF_CAPTURE_PARALLEL_STREAM, "true");
+  assert.equal(renderEnv({ HF_CAPTURE_PARALLEL_STREAM: "false" }).HF_CAPTURE_PARALLEL_STREAM, "false");
+  assert.equal(renderEnv({ PATH: "/x" }).PATH, "/x");
+});
