@@ -1433,14 +1433,37 @@ upload, after the folder is made; the check calls `gh` once per linked repo and 
 **Tested.** `test/pipeline.test.mjs` (repos found once each from several link shapes, GitHub's own pages skipped; a private repo
 warned, a public one not, an unknown said).
 
+### D106. A video's takes outlive its worktree: a shared take cache (2026-11-09)
+**Decision.** `bin/voice.mjs` keeps every take in `~/.cache/shipshow/takes/` (`SHIPSHOW_TAKES_CACHE`; `off` for none), named by the
+sha256 of the take's own key, with the files that make it valid beside it: `.wav`, `.lvl`, `.check`, `.turns.npz` and, last, the
+`.key`. A take that is not fresh is looked up there before it is voiced and, on a hit whose stored `.key` is the key, copied into
+`assets/voice/` (`restoreTake`); a run's end, by `process.on("exit")` so a failed run keeps what it made, copies each take whose
+`.key` is its own into the cache (`storeTake`), which also back-fills a worktree voiced before the cache existed. Copies only: nothing
+is moved, and nothing deleted (an entry is overwritten when its bytes differ). **Why.** `assets/voice/` is gitignored and lives
+in the worktree, which `worktree.sh --remove` trashes after a merge: the next edit to kakeya-every-dimension re-voiced 50 Drama 3
+runs (about 40 minutes) and the new takes sounded unlike the approved cut (#131); weight-space paid about 17 minutes twice (#157).
+The key already holds everything that makes a take what it is (text, voice bytes, speed, check rules, model revision,
+`DRAMA_RULES`), so it is the address. **Consequences.** A take is found by its key, never its file name, so inserting a sentence
+re-voices only the new one (it re-voiced every later one in the scene before). Drama 3's D83 continuity is unchanged: a line's
+`after` and `anchor` come from the video's order, never from what was restored, and the `.turns.npz` they are read from comes with
+each take. **Costs.** Entries are never pruned (a take is some hundreds of kilobytes; the folder is the person's to trash). A Kokoro
+take stored before it is levelled carries an empty `.lvl` and is levelled on its next restore. Generated pictures (#157) are left
+out: nothing keys them (the GPU box's pictures are made by a skill's own commands, not by `build`), so there is nothing to address
+them by without a new mechanism. **Tested.** `test/pipeline.test.mjs`: with fake workers that write a different take each time, a
+fresh checkout (no `assets/`) voices nothing and has every take byte for byte; an edited sentence voices only itself; an inserted one
+likewise; another speed misses; `off` voices all; a Drama line voiced again after a restore is told the same `after` and `anchor`
+turns as in the old checkout. The first and third fail with the lookup removed. The three test files that run `voice.mjs` set the
+cache to `off`. Run by hand on a real Kokoro video: a copy of the template voiced from the cache had identical takes and narration,
+and an edited sentence voiced one take.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
 
 **The pipeline** (`bin/`, `kit/`)
 - `voice` voices one sentence at a time (or, with OmniVoice and hear-back, runs of sentences up to 45 words, D47) and writes `timing.json`. A take is cached by its text,
-  voice and speed, so inserting a sentence re-voices every later sentence in that scene (numbering restarts per
-  scene; the cost per take has not been measured).
+  voice and speed, both in `assets/voice/` and in the shared take cache outside the worktree (D106), which is looked in before
+  a stale take is voiced: a new worktree re-voices nothing, and inserting a sentence re-voices only the new one.
 - A music file `video.json` names as `local/...` is looked for beside the video, then in the person's local layer (`SHIPSHOW_LOCAL`, D75), then in the repo (`musicFile` in `bin/lib.mjs`); before, a worktree rendering with `SHIPSHOW_LOCAL` set found none of it and qwen-phones-home lost five of its seven beds (2026-10-29).
 - A bracketed stage direction in a script line reaches only the Drama 3 engine; captions, cues, `timing.json` and the other engines get the line without it, and a line's direction moves with the line, never to the next one (`directedSentences`, D55).
 - A Drama 3 line is generated hearing the video's first take and the take kept for the line before it, and every kept take has a `<take>.turns.npz` beside it (`bin/drama.py` `speak`, D83). A take heard saying five or more words in a row that its line does not have is retaken, and the rest of that line's rounds hear nothing; one kept with it lists `said more than its line` in its `.check` faults (`hearback.added`).
