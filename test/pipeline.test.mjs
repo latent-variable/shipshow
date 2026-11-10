@@ -1762,3 +1762,11 @@ test("a drama line voiced again in a fresh checkout hears the same neighbours it
   assert.equal(seen.after, turnsA("01-intro-r02.turns.npz"), "it heard the take before it, A's own");
   assert.equal(seen.anchor, turnsA("01-intro-r01.turns.npz"), "and the video's first take");
 });
+
+test("render: HyperFrames streams multi-worker capture by default, and a user-set value wins", async () => {
+  const { renderEnv } = await import("../bin/lib.mjs");
+  assert.equal(renderEnv({}).HF_CAPTURE_PARALLEL_STREAM, "true");
+  assert.equal(renderEnv({ HF_CAPTURE_PARALLEL_STREAM: "" }).HF_CAPTURE_PARALLEL_STREAM, "true");
+  assert.equal(renderEnv({ HF_CAPTURE_PARALLEL_STREAM: "false" }).HF_CAPTURE_PARALLEL_STREAM, "false");
+  assert.equal(renderEnv({ PATH: "/x" }).PATH, "/x");
+});
