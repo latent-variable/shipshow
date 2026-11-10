@@ -117,8 +117,10 @@ critic in the plan it starts a **new** agent, on the plan's model:
   `subagent_type: "shipshow:critic"`, which has Read, Grep, Glob, Bash and Skill, cannot Write or Edit, is told to keep
   Bash to a temporary directory, stops after 40 turns, and defaults to Sonnet (the plan's `model` overrides it); elsewhere a general-purpose agent. A judge from the builder's own model family shares
   its blind spots, so say which model judged.
-- **Codex:** `codex exec --sandbox read-only` from an empty folder, with the frames passed as
-  `-i <absolute path>` and the brief on stdin.
+- **Codex:** `npm run critics -- <folder> --run` (`--model gpt-6-luna`, `--critics a,b`, `--round N`, `--changed "<scenes and
+  lines>"`). It starts one fresh read-only `codex exec` per critic in parallel, each from its own empty folder, every contact
+  sheet its own `-i`, this section's brief on stdin, and saves `review/round-<n>/<critic>.json`. Do not hand-roll it: a zsh launcher
+  once sent all 16 sheets as one argument and no critic saw a frame.
 - **Anything else:** any agent that starts with none of this conversation and can read files
   and images.
 

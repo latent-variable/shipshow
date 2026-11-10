@@ -3,16 +3,38 @@
 //   node bin/critics.mjs <folder> [--preset quick|standard|thorough] [--rounds 2] [--until major]
 //                        [--model sonnet] [--final opus|none] [--frames cues|scenes]
 //                        [--rerun failed|touched|all] [--critics a,b,c] [--json]
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
-import { config, reviewPlan, videoDir } from "./lib.mjs";
+//   node bin/critics.mjs <folder> --run [--model gpt-6-luna] [--critics a,b] [--round N] [--changed "<scenes and lines>"]
+//                        [--code <path>]   run the critics on Codex, one fresh read-only agent each (bin/critics-run.mjs, D108)
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { DEFAULT_MODEL, runCritics } from "./critics-run.mjs";
+import { config, die, flag, reviewPlan, videoDir } from "./lib.mjs";
 
 const dir = videoDir(process.argv[2]);
 const cfg = config(dir);
 if (/^who watches/i.test(cfg.audience || "")) console.error(`warning: ${dir}/video.json still has the template's placeholder audience; critic-clarity and critic-engagement judge against it, so write the real one`);
 const timing = join(dir, "timing.json");
 const seconds = existsSync(timing) ? JSON.parse(readFileSync(timing, "utf8")).total || 70 : 70;
-const plan = reviewPlan(cfg, process.argv, seconds);
+// With --run, --model names the Codex model, not the plan's Claude one (and --round, --changed, --code are the run's).
+const running = process.argv.includes("--run");
+const planArgv = running ? process.argv.filter((a, i, all) => !/^--model(=|$)/.test(a) && !/^--model$/.test(all[i - 1] || "")) : process.argv;
+const plan = reviewPlan(cfg, planArgv, seconds);
+if (running) {
+  const asked = flag("critics");
+  // An explicit --critics is exactly the list to run (a floor critic left out is said, not added back); else the plan's.
+  const critics = asked ? asked.split(",").map((c) => c.trim()).filter(Boolean) : plan.critics;
+  const missing = plan.floor.filter((c) => !critics.includes(c));
+  if (missing.length) console.error(`note: ${missing.join(", ")} (the floor) is not in this run; it still has to run before the video ships`);
+  let round = Number(flag("round") ?? 0);
+  if (!flag("round")) {
+    const had = existsSync(join(dir, "review")) ? readdirSync(join(dir, "review")).map((f) => Number(f.match(/^round-(\d+)$/)?.[1] || 0)) : [];
+    round = Math.max(0, ...had) + 1;   // the next round not yet on disk
+  }
+  if (!Number.isInteger(round) || round < 1) die(`--round is ${flag("round")}; it takes a whole number from 1`);
+  const code = flag("code");
+  const results = await runCritics({ dir, critics, model: flag("model") || DEFAULT_MODEL, round, changed: flag("changed"), code: code && resolve(code) });
+  process.exit(results.every((r) => r.ok) ? 0 : 1);
+}
 if (process.argv.includes("--json")) {
   console.log(JSON.stringify(plan, null, 2));
   process.exit(0);

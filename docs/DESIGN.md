@@ -1433,6 +1433,30 @@ upload, after the folder is made; the check calls `gh` once per linked repo and 
 **Tested.** `test/pipeline.test.mjs` (repos found once each from several link shapes, GitHub's own pages skipped; a private repo
 warned, a public one not, an unknown said).
 
+### D108. `npm run critics -- <folder> --run`: the critics on Codex, started by one tested command (2026-11-09)
+**Decision.** `bin/critics.mjs --run` (the code is `bin/critics-run.mjs`) starts the plan's critics, or the `--critics` list
+exactly, as fresh read-only Codex agents in parallel: `codex exec --skip-git-repo-check --sandbox read-only -m <model> -c
+model_reasoning_effort=medium`, each spawned from node with an argv array (never a shell string) in its own new empty temp folder,
+every `review/frames/contact-sheet*.jpg` its own `-i <absolute path>`, the brief on stdin. The brief is cut from
+`skills/critic-loop/SKILL.md` at run time (the *The brief* template and the *What a critic returns* section), so there is one copy; the
+critic's name, the video folder, the round, `--changed` and the contact-sheet count are filled in, and every path is made absolute
+because the critic runs outside the repo, with its `SKILL.md`'s absolute path named. The run stops if a placeholder is left unfilled,
+so a template edited out of shape fails loudly. Each critic's JSON (found as the whole output, a fenced block or the first `{` to the
+last `}`) goes to `review/round-<n>/<critic>.json`, `<n>` being `--round` or the next round not on disk; output with no JSON, no
+`pass`/`fail` verdict or a non-zero exit is saved beside it as `<critic>.raw.txt` and that critic is reported FAILED (exit 1), the
+others still land. One verdict line per critic is printed. `--model` is the Codex model here (default `gpt-6-luna`, checked against
+`~/.codex/models_cache.json`), not the plan's Claude one. It refuses without `review/packet.md` or any contact sheet, with an unknown
+critic or model, and without `codex` on PATH. A `--critics` list that leaves out a floor critic is run as given and the omission said
+on stderr. **Why.** A thorough-review essay (2026-11-03) ran its critics on Codex because Claude's weekly pool was tight, and had no
+runner: the builder's launcher built the `-i` list in a zsh variable, zsh does not split an unquoted variable, and all 16 sheets reached
+every critic as one bogus filename, so no critic saw a frame and the visual critics' round-1 verdicts were void (#159). **Costs.** Codex
+only; a Claude critic is still the Agent tool. There is no resume: a failed critic is re-run with `--critics <it> --round <n>`. Critics
+are not killed on a rebuild, so the builder still must not rebuild while a round runs. **Tested.** `test/critics-run.test.mjs` with a fake
+`codex` on PATH that records its argv, stdin and cwd: each critic had its own empty cwd outside the repo and the video, every sheet a
+separate `-i` (control: joining the sheets into one argument fails the test), `--sandbox read-only`, the brief with its template's own
+words and no placeholder, the files written, a garbled answer kept raw, and the refusals; one real `critic-visuals` run on
+`videos/how-it-works` on gpt-6-luna.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
