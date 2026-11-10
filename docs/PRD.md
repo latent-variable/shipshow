@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-11-09 (after F59 gained cut-off text and the reading time stopped counting SVG data).
+Last reviewed: 2026-11-09 (after render streams frames by default, N9 count; F46: a light screenshot is captured opaque, D104).
 
 ## Problem
 
@@ -74,7 +74,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F11 | Fresh critic agents judge a video; the builder never judges (`critic-loop`) | done |
 | F12 | Ten critics, one skill each: `critic-accuracy`, `critic-clarity`, `critic-pacing`, `critic-sync`, `critic-visuals`, `critic-consistency`, `critic-engagement`, `critic-novelty`, `critic-decision`, `critic-grounding` | done |
 | F13 | A critic can verify that shown code and output match the source: a scripted excerpt check, capture files with a recomputable hash, a visible source file and range label, and a per-asset table (`critic-grounding`) | done, being hardened |
-| F14 | A review packet gives critics measurements and frames (`npm run review`) | done |
+| F14 | A review packet gives critics measurements and frames (`npm run review`). `review/frames/` holds only this run's stills (an earlier set is moved to `review/frames-stale/<time>/`, never deleted); stills that are byte-identical in different scenes are retaken once and, if they stay so, flagged in the packet; each screenshot's cached capture path and SHA-256 are listed and the capture copied to `review/shots/`; the Moods table reads the build's own mood schedule (DESIGN D101) | done |
 
 ### Hand it back and see the cost
 
@@ -113,7 +113,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F43 | A render plays at the loudness its platform plays at: `render` masters the audio to -14 LUFS by default (`video.json` `loudness`), one gain and a capped look-ahead limiter, never compression, the picture untouched (DESIGN D52) | done |
 | F44 | A writer decides which sentences are voiced together: with OmniVoice runs, each line of a script file is one take (DESIGN D54) | done |
 | F45 | A writer directs the delivery: with the Drama 3 engine (`"engine": "drama"`, `npm run setup:drama`), a bracketed direction at the start of a script line (`[deadpan]`, `[sarcastic]`) is performed and never shown, cued or read by another engine; every take is heard back and retaken up to five times, and one still under 97% is kept and listed to listen to, as OmniVoice's are (DESIGN D55) | done; how each direction sounds is judged by ear, which an agent cannot |
-| F46 | A quote is shown where it was said: `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of the real page (a PR comment, a contributing guide, a post), taken in headless Chrome at build, cached, with a marker on the words and a bar naming the page (DESIGN D56) | done; a page can change after it is captured, so the packet gives each capture's date |
+| F46 | A quote is shown where it was said: `<figure class="ss-shot" data-shot="<url>" data-find="<words>">` is a screenshot of the real page (a PR comment, a contributing guide, a post), taken in headless Chrome at build, cached, with a marker on the words and a bar naming the page, opaque on a light page so it reads on a dark scene (DESIGN D56, D104) | done; a page can change after it is captured, so the packet gives each capture's date |
 | F47 | A photo's credit goes in the video's description, not on the photo: `review` writes *Credits* and `review/credits.txt` for every portrait and screenshot (DESIGN D57) | done |
 | F49 | A word said wrongly is caught before render: hear-back retakes a Drama 3 take that spells out letters the script never spells, and an optional second listen (Parakeet, `npm run setup:listen`) hears the finished narration against the script as written (DESIGN D60) | done; a word said wrongly that both models mend from context still needs a person's ear |
 | F48 | A theme for an argument: `signal`, near-black with a highlighter yellow, Bricolage Grotesque and Inter, karaoke captions, screenshots and photos flat on the desk (DESIGN D58) | done; judged by a fresh visual critic on never-about-the-code |
@@ -152,7 +152,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | N6 | **Cheap to carry.** Each skill's name and description count toward context on every turn once installed, so descriptions stay short and bodies stay under 500 lines | Measured 2026-11-03: 24 skills, 8,752 characters (about 2,188 tokens) of names and descriptions; longest SKILL.md 259 lines (a test checks these figures against the tree) | done |
 | N7 | **Reproducible.** A voice take is cached by text, voice and speed; generated files are gitignored | `assets/voice/*.key` | done |
 | N8 | **Observable.** Token and context use is readable per agent | `npm run usage` | done |
-| N9 | **Tested without Kokoro.** `npm test` runs with no voice model; it is the only thing CI runs | `test/` (71 tests in `pipeline.test.mjs`, plus the voice-check and run tests in `voicecheck.test.mjs` and `runs.test.mjs`, the reading-time text tests in `measure.test.mjs`; the sandbox and capture tests run on macOS only, the CI docs check only on a pull request) | done; 7 tests need `npm install` (the cue-and-caption timing test, the caption function-word test, the bare-cue warning test, the flair test, both OmniVoice tests and the `hold` test) |
+| N9 | **Tested without Kokoro.** `npm test` runs with no voice model; it is the only thing CI runs | `test/` (72 tests in `pipeline.test.mjs`, plus the voice-check and run tests in `voicecheck.test.mjs` and `runs.test.mjs`; the sandbox and capture tests run on macOS only, the CI docs check only on a pull request) | done; 7 tests need `npm install` (the cue-and-caption timing test, the caption function-word test, the bare-cue warning test, the flair test, both OmniVoice tests and the `hold` test) |
 | N10 | **Portable.** The pipeline is tested on macOS; CI runs the unit tests on Linux (`ubuntu-latest`) | `README.md`, `.github/workflows/ci.yml` | open: pipeline on Linux untried |
 | N13 | **Third-party pictures stay out of the repo.** Memegen's code and configs are MIT; its template images are third-party pictures, fetched at build into `~/.cache/shipshow/memes` and the video's `assets/memes/` (gitignored: `videos/*/assets/` covers it), never committed. The meme fonts (Titillium Web, Anton) are SIL OFL, shipped with their licences in `kit/fonts/` | `bin/meme.mjs`, `.gitignore`, `kit/fonts/` | done |
 | N11 | **Attribution.** The sample is original (its `SOURCE.md` says what it is and is not based on); Kokoro-82M and HyperFrames are Apache 2.0; GSAP is under its standard licence | `sample_application/SOURCE.md`, `README.md` | done |
