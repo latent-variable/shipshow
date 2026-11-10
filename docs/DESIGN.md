@@ -1433,6 +1433,30 @@ upload, after the folder is made; the check calls `gh` once per linked repo and 
 **Tested.** `test/pipeline.test.mjs` (repos found once each from several link shapes, GitHub's own pages skipped; a private repo
 warned, a public one not, an unknown said).
 
+### D107. The second listen hears a scene in windows cut at its pauses, because heard whole it skips short sentences (2026-11-09)
+**Decision.** `bin/listen.py` no longer gives Parakeet a whole scene. `windows()` cuts the scene's sentences, from `timing.json`,
+into clips: a new clip starts wherever the silence between two sentences is 0.5 s or more (`PAUSE`), or the clip would pass 12 s
+(`WINDOW`), so most sentences are heard alone; each clip takes at most 0.2 s of silence before its first word and 0.3 s after its
+last, never past half the gap to the sentence beside it. The clips' transcripts are joined and compared with the script exactly
+as before (`hearback.agreement`, `vanished`, `spelled_out`; the threshold and the matcher are unchanged). **Why.** Issue #129:
+the second listen kept reporting sentences "not heard" that were in the track, always short, always after a pause: "Six soldiers
+shoot back." (1.2 s, mid-scene, 05-test) and "Thanks for watching." (15-close) in doom-weights, "Two to what power makes three?"
+and "The small circle shrinks as the ripples get finer." in kakeya-every-dimension's kept cut, and three more sentences in earlier
+kakeya cuts. Reproduced on the real tracks (2026-11-09): each sentence is in the audio and Parakeet hears it word for word from a
+clip that starts at it (`836.5:839` gives "Thanks for watching."; `231.5:236.5` gives "Six soldiers shoot back. Get to the armor
+at the far end alive."), but not from the scene's clip (80 s), and not from the last seven seconds of 15-close either, which
+still ended with the pause before the sentence. So the cause is the listening, not the matcher or the threshold: the model skips
+a short utterance after a pause (a transducer that predicts long frame skips is the likely mechanism; not verified), and a
+shorter clip alone does not cure it. With the windows, the two doom-weights false misses and the two kakeya ones are gone (0 flagged
+on both; lowest scene score 0.96 and 0.98, against the 0.9 threshold). **Control.** A copy of doom-weights' track with the
+audio of "Six soldiers shoot back.", "A few dozen beat them." and "Thanks for watching." muted still reports all three as not
+heard, with the windows as without. **Costs.** One model call per window instead of per scene: kakeya's 22 scenes took 58 s
+instead of 22 s. A sentence that stands alone has no context for the model, and a lone very short sentence could be mis-heard;
+none was in the two tracks measured. **Tested.** `test/voicecheck.test.mjs` runs `windows()` on doom-weights 15-close's real
+timings and on synthetic ones (no Parakeet): the last sentence is a clip of its own, sentences under 0.5 s apart stay together,
+a clip never reaches into its neighbour, every sentence is in one clip in order; with `PAUSE` and `WINDOW` set huge (the old
+behaviour) it fails. The Parakeet runs above are by hand: CI has no `.venv-listen`.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
