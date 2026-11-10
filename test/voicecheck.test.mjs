@@ -591,6 +591,38 @@ print(listen.said("two to the n, and ETH; n-th", {"n": "en", "ETH": "E T H"}))
   assert.equal(r.stdout.trim(), "two to the en, and E T H; en-th", "the same whole-word swap as bin/lib.mjs spoken()");
 });
 
+test("the second listen: a scene is heard in windows cut at its pauses, so a short sentence after a pause is not lost to the model", { skip: !plain && "no python3" }, () => {
+  // doom-weights 15-close, as timing.json laid it (2026-11-09, issue #129): Parakeet heard this scene whole and skipped "Thanks for watching."
+  const r = python(plain, `
+import json, listen
+S = [(772.06, 1.0), (774.48, 3.52), (779.38, 5.16), (785.02, 1.36), (787.58, 1.24), (790.32, 4.04), (795.44, 5.22),
+     (812.75, 4.92), (818.85, 0.56), (820.21, 3.42), (824.13, 6.44), (831.55, 4.62), (837.17, 1.02)]
+sents = [{"start": a, "duration": d} for a, d in S]
+w = listen.windows(sents)
+print(json.dumps([[round(a, 3), round(b, 3), idx] for a, b, idx in w]))
+print(json.dumps([[round(a, 3), round(b, 3), idx] for a, b, idx in listen.windows(sents, limit=1000, pause=1000)]))
+print(json.dumps(listen.windows([{"start": 0.0, "duration": 2.0}, {"start": 2.1, "duration": 2.0}, {"start": 30.0, "duration": 20.0}, {"start": 50.2, "duration": 1.0}])))
+`);
+  assert.equal(r.status, 0, r.stderr);
+  const [win, whole, tight] = r.stdout.trim().split("\n").map((l) => JSON.parse(l));
+  assert.deepEqual(win.flatMap((x) => x[2]), [...Array(13).keys()], "every sentence is in one window, in order");
+  assert.deepEqual(win.at(-1)[2], [12], "the last sentence, a second after a pause, is heard by itself");
+  assert.deepEqual(win.find((x) => x[2].includes(2))[2], [2, 3], "two sentences under half a second apart (0.48 s) stay in one clip");
+  assert.ok(win.length > 8, "the rest follow pauses and are each heard alone");
+  assert.deepEqual(whole.map((x) => x[2].length), [13], "with no limit and no pause rule it is the one clip that lost the sentence");
+  assert.ok(win.at(-1)[1] <= 838.19 + 0.3 + 1e-6 && win.at(-1)[0] >= 837.17 - 0.2 - 1e-6, "a clip takes at most 0.2 s before its first word and 0.3 s after its last");
+  // a 20 s sentence stands alone, whatever the limit; two sentences 0.1 s apart stay together
+  assert.deepEqual(tight.map((x) => x[2]), [[0, 1], [2], [3]]);
+  assert.equal(tight[0][1], 4.1 + 0.3, "the tail is 0.3 s when the silence after it allows");
+  const near = python(plain, `
+import json, listen
+print(json.dumps(listen.windows([{"start": 0.0, "duration": 2.0}, {"start": 2.2, "duration": 1.0}], pause=0.1)))
+`);
+  assert.equal(near.status, 0, near.stderr);
+  const [[, aEnd], [bStart]] = JSON.parse(near.stdout);
+  assert.ok(aEnd <= bStart + 1e-9 && aEnd <= 2.1 + 1e-9, "a clip never reaches into the sentence beside it: lead and tail are held to half the gap");
+});
+
 test("hear-back: a take checked before spelled_out existed is read again from what was heard, its timing kept", { skip: !plain && "no python3" }, () => {
   const dir = mkdtempSync(join(tmpdir(), "oldcheck-"));
   const wav = join(dir, "s-r01.wav");
