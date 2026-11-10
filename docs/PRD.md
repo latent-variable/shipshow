@@ -74,7 +74,7 @@ dropped (F19 stays open). The sample therefore speaks to an adtech company's pai
 | F11 | Fresh critic agents judge a video; the builder never judges (`critic-loop`) | done |
 | F12 | Ten critics, one skill each: `critic-accuracy`, `critic-clarity`, `critic-pacing`, `critic-sync`, `critic-visuals`, `critic-consistency`, `critic-engagement`, `critic-novelty`, `critic-decision`, `critic-grounding` | done |
 | F13 | A critic can verify that shown code and output match the source: a scripted excerpt check, capture files with a recomputable hash, a visible source file and range label, and a per-asset table (`critic-grounding`) | done, being hardened |
-| F14 | A review packet gives critics measurements and frames (`npm run review`) | done |
+| F14 | A review packet gives critics measurements and frames (`npm run review`). `review/frames/` holds only this run's stills (an earlier set is moved to `review/frames-stale/<time>/`, never deleted); stills that are byte-identical in different scenes are retaken once and, if they stay so, flagged in the packet; each screenshot's cached capture path and SHA-256 are listed and the capture copied to `review/shots/`; the Moods table reads the build's own mood schedule (DESIGN D101) | done |
 
 ### Hand it back and see the cost
 
