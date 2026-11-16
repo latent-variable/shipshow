@@ -70,3 +70,47 @@ Accepted:
 - novelty-1: 03a to 03c keep their shape; the music now drops out under "nearly eight times apart", and 03b's curves draw on
   their words. A lane race was considered and left out: one sampled run would misstate a probability.
 - novelty-4, engagement-4, visuals-5, visuals-6: minor, recorded.
+
+## Round 2 (2026-11-16, 9 min 27 s cut, Sonnet)
+
+| Critic | Verdict | Findings | Tokens |
+|---|---|---|---|
+| accuracy | pass | 3 minor | 107k |
+| clarity | pass | 1 major (subjective), 3 minor | 82k |
+| consistency | pass | 7 minor | 171k |
+| pacing | fail | 2 major, 4 minor | 121k |
+| sync | fail | 2 major, 2 minor | 173k |
+| visuals | fail | 1 major, 4 minor | 161k |
+| engagement | fail | 1 major, 1 major (subjective), 2 minor | 84k |
+| novelty | fail | 1 major, 2 major (subjective), 2 minor | 90k |
+
+Fixed:
+
+- accuracy-r2-1 to 3: the description says 3 on the old version and 12 on version 5, not "on one day"; v4.3 is dated
+  September; every meme template is credited in the description and sources.md.
+- clarity-r2-1: 05d says "No source I found says when Qwen was cut off" before the timing argument, with a card saying so.
+- clarity-r2-4: "produces two thirds more output per task".
+- pacing-r2-1: the two top boards land on different words ("agree", "American") and the Opus line is its own beat.
+- pacing-r2-2: the test-name list is gone from 02; the timeline's dots arrive across "keeps changing", "Counting" and "versions".
+- pacing-r2-3, 5: the hook's pause is 3.5 s; a beat before "Claude Opus 5.5 scores fifty nine"; 05d's question is a statement.
+- pacing-r2-6: a podcast chip lands mid-sentence in 05e; `hold` is 5 s.
+- sync-r2-1: 01b's definition card lands on "open"; sync-r2-2: the stonks meme leaves 2.2 s after it lands, and the v4.3 card
+  arrives on "gap" with its 3 on "three"; sync-r2-3: Opus 5.5's 70.1% is on the Vals board; sync-r2-4: the dots are staggered.
+- visuals-r2-1: the September box sits between the dots and the month labels, its label below both; visuals-r2-5: meme
+  source lines brighter.
+- engagement-r2-1, 2: a sixth meme (Philosoraptor, "if two jumpers clear every bar you set / how would you ever know who's
+  better?") in act three.
+- novelty-r2-1: the rhetorical questions in 03b, 05d and 06 are statements; 06 opens on "Both." The premise question (01b) and
+  the game (04) stay.
+- novelty-r2-2: the disclosure moved before the accusations (its own scene, 05a), flat, with a "disclosure" stamp, and no longer
+  worded like binance-heist's.
+- consistency-r2-1 to 6: "a difference you can't miss" for Qwen against Sol; "the twelve point gap"; one name for the index on
+  screen; "accusations" throughout, "Chinese labs" on the FBI card; one wording of the question ("Did Chinese models fall
+  behind, or did the ruler move?"); "rulebook" and "accusations" in Terms; the inferred chip is dashed and tagged "inference".
+
+Two builder catches before round 3: the new meme's cue "They" matched "they're" a sentence early, and the 3's cue "three"
+matched "forty three", which blanked the Qwen bars; both now use `#2`.
+
+Accepted: novelty-r2-3 (03a to 03c keep their card cadence; the music drop and the curves are its breaks, as in round 1),
+engagement-r2-3 (the Peter Parker's Glasses repeat is from a local video), visuals-r2-2 (5 to 7 px of the display font's ink
+past its box, no visible clipping), visuals-r2-3, 4, pacing-r2-4, consistency-r2-7, novelty-r2-4, 5 (minor).

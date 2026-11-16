@@ -39,8 +39,9 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 | version five | v5.0, released 2026-10-27; v5.0.1 (2026-11) is the regrade every current score is on; on screen "v5.0.1" where a current score is shown | |
 | Vals | the Vals Index, by Vals AI, the second scoreboard | |
 | the gap | the distance in index points from the best open model (a Chinese lab's) to the leader, as AA5 measures it; on screen "best open model vs leader" | Qwen's distance to Sol or Opus is "behind" or "trails", or "the sixteen points" |
-| scoreboard, leaderboard, ruler | spoken aliases: "scoreboard" for any ranking (the index, Vals, the high-jump board), "leaderboard" for the generic one in a headline, "the ruler" for the index as a measuring tool | |
+| scoreboard, leaderboard, ruler, rulebook | spoken aliases ("the Rulebook" is act two's title for the index's version history): "scoreboard" for any ranking (the index, Vals, the high-jump board), "leaderboard" for the generic one in a headline, "the ruler" for the index as a measuring tool | |
 | open model | a model whose weights anyone can download ("the kind anyone can download"); AA counts Kimi K3.1 Pro, weights not yet released, among them, and says so on screen | |
+| accusations | the noun for Anthropic's and the US agencies' claims of distillation; "allegation" is only the on-screen tag; "the post's claim" is the X post's | not "charges" |
 | distillation, copying | training a model on another model's answers (AN1); "copying" is the plain word for doing it to a rival | |
 | Chinese labs, Chinese models | labs based in China: Alibaba (Qwen), Moonshot (Kimi), DeepSeek, Z.ai (GLM), MiniMax | |
 | American labs | Anthropic, OpenAI, Google | |
@@ -96,11 +97,11 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 | Vals AI's index is built from finance, coding, legal and tax work, weighted by each sector's share of US GDP ("weighs professional work by its share of the economy") | VI |
 | Version five leans on harder, longer, private tests | AA5 (03a's three changes) |
 | On Vals: Qwen 4 Max 63.20%, GPT-6.1 Sol 63.94%; less than one point | VI, VQ; **ours**: 0.74 |
-| Opus 5.5 leads Qwen by 16 on the index and by about 7 on Vals | **ours**: 59 − 43 = 16 (AAL); 70.14 − 63.20 = 6.94 (VI) |
+| Opus 5.5 leads Qwen by 16 on the index and by about 7 on Vals (Opus 5.5 70.1% shown on the Vals board) | **ours**: 59 − 43 = 16 (AAL); 70.14 − 63.20 = 6.94 (VI) |
 | The top six on both are American | AAL: Fable 5.2, Gemini 4 Carbon, Opus 5.5, GPT-6 Astra, GPT-6.1 Sol, Sonnet 5.5 (Anthropic, Google, OpenAI). VI: Fable 5.2, Sonnet 5.5, Gemini 4 Carbon, Opus 5.5, Gemini 4 Argon, Gemini 4 Hydrogen (Anthropic, Google) |
 | The two scores are on different scales (index points, percent) | AAL, VI. The video compares each gap only within its own scoreboard, never a point on one with a point on the other, beyond saying one gap is large and one small |
 
-### 05-copying, 05b-charges, 05c-who, 05d-test, 05e-unknown: distillation
+### 05-copying, 05a-who, 05b-charges, 05d-test, 05e-unknown: distillation
 
 | Claim | Source |
 |---|---|
@@ -111,13 +112,14 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 | September: an Alibaba-linked campaign, more than 151 million exchanges, May to July | AN2 |
 | September 8: the FBI, NSA and CISA accused Chinese developers including DeepSeek, Alibaba, Moonshot and Z.ai of extracting capabilities from American models | AP |
 | China's Commerce Ministry called the claims groundless, and said distillation is a common practice, the US included | AP: "groundless"; distillation "is a common practice" used by many AI companies worldwide, including in the U.S. |
-| The narrator is Claude Opus 5.5, on the scoreboard, made by Anthropic, which makes the accusations | AAL (Opus 5.5 at 59); AN1, AN2 (Anthropic's reports); the builder is Opus 5.5 (`video.json` `builtBy`) |
+| The narrator is Claude Opus 5.5, fifty nine on the scoreboard, made by Anthropic, which makes the accusations (said before the accusations, as a disclosure) | AAL (Opus 5.5 at 59); AN1, AN2 (Anthropic's reports); the builder is Opus 5.5 (`video.json` `builtBy`) |
 | Qwen 3.8 Max came out in September (Sep 2) and Qwen 4 Max in November (Nov 16), both after the campaign's May to July window | AAQ38, AAQ, AN2 |
 | Same version of the index: Qwen 3.8 Max 34, Qwen 4 Max 43, nine points better; "a clear step up from Qwen 3.8 Max" (not "best yet": older versions' scores are not comparable) | AAQ38, AAQ (both v5.0.1); **ours**: 43 − 34 = 9 |
 | Cost per index task: $10.02 then $3.27, about a third | AAQ38, AAQ; **ours**: 3.27 / 10.02 = 0.33 |
 | Alibaba's own claim: cost per task down over 60% | QX ("in our internal evaluation") |
 | Anthropic's report says the Alibaba-linked campaign ran until July, and that its transcripts were used to train Qwen 3.5 to 3.7 | AN2 |
-| On v4.3, in use September to October (AAM), after the May to July campaigns, the best open model was 3 points behind | AA5, AAM, AN2 |
+| On v4.3, released in September (AAM; its patch v4.3.2 ran into October), after the May to July campaigns, the best open model was 3 points behind. Said and shown as "September" | AA5, AAM, AN2 |
+| No source read dates when Qwen was cut off from distillation | **absence**: AN1, AN2, AP, TC, IC, LF and K1, K2 give no date for a cut-off; K2 says only "is being cut off" |
 | Artificial Analysis puts the 3 on v4.3 and the 12 on version five; "the jump lines up with the new index, not with a cut-off" is **[inferred]**: AA5 does not say the same models were re-scored, and no cut-off date later than July is in any source read | AA5, AN2 |
 | Nathan Lambert argues distillation is becoming less and less impactful; RL runs are millions of rollouts; grading them through a frontier model's API "would be insanely expensive". "On his podcast" covers Brand's line that the strong capabilities come in the RL stage | IC: "distillation has becoming less and less impactful over time"; "big RL runs are millions and millions of rollouts"; "to do this on an API like Fable or GPT 5.6 would be insanely expensive". TC repeats the first: "I've been of the opinion that distillation is becoming less and less impactful over time" |
 | Reinforcement learning: training where a model practises tasks and is scored on them | IC (RL stage, rollouts) |
@@ -136,7 +138,7 @@ Collects 01 to 05; nothing new. "A third of the cost per task" is AAQ38 and AAQ 
 | Scoreboard bars (01, 04, 06): drawn from the numbers above, in `scenes.html` `<script>` as `AA` and `VALS` arrays | AAL, VI |
 | Version timeline (02): drawn from AAM | AAM |
 | Stadium and high-jump bar pictures (03): generated, see `images.md` | illustration, generated |
-| Memes: Peter Parker's Glasses, Stonks, Why Not Both? (animated) | memegen templates (github.com/jacebrowning/memegen); sources printed by `npm run memes` |
+| Memes: Two Guys on a Bus (02b), Philosoraptor (03), Peter Parker's Glasses (04b), Stonks (05d), Shut Up and Take My Money! (05e, animated), Why Not Both? (06, animated) | memegen templates (github.com/jacebrowning/memegen); sources printed by `npm run memes` |
 
 ## Left out, and why (not claims)
 

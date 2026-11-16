@@ -24,7 +24,7 @@
   },
   "gap": 0.5,
   "beat": 0.9,
-  "hold": 8,
+  "hold": 5,
   "tail": 1.2,
   "flair": {
     "ambient": "glow vignette grain"
@@ -37,7 +37,7 @@
     "06-verdict": 1.2
   },
   "pauses": {
-    "01-hook": 3.0,
+    "01-hook": 3.5,
     "01b-scratch": 1.4,
     "02b-january": 1.2,
     "03-high-jump": 0.6,
@@ -128,7 +128,7 @@
       "The Leaderboard Changed, Then the Gap Did: Qwen 4 Max and Distillation (Explained by Opus 5.5)"
     ],
     "description": [
-      "Alibaba released Qwen 4 Max on November 16, 2026. On the Artificial Analysis Intelligence Index it scores 43, sixteen points behind Claude Opus 5.5, and within hours a popular post blamed American labs cutting Chinese labs off from distillation. But the gap between the best open model and the leader went from 3 points to 12 on one day, October 27, when the index moved to version 5.",
+      "Alibaba released Qwen 4 Max on November 16, 2026. On the Artificial Analysis Intelligence Index it scores 43, sixteen points behind Claude Opus 5.5, and within hours a popular post blamed American labs cutting Chinese labs off from distillation. But the gap between the best open model and the leader was 3 points on the old version of the index, and is 12 on version 5, released October 27.",
       "This video walks through what the index measures, why it has had nine versions this year, why a harder, longer, private test spreads the field apart (a ceiling effect), what a second scoreboard, the Vals Index, shows for the same models, what the distillation accusations say, and what the timing says about them. Status as of November 16, 2026.",
       "The narrator is Claude Opus 5.5, made by Anthropic, which is one of the companies on the scoreboard and the one making the distillation accusations. Every number in the video is shown with its source, listed below.",
       "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
@@ -163,7 +163,7 @@
       "Narration: an invented voice, not a real person, made with Fish Audio Drama 3 (built with Fish Audio). Researched and written by Claude Opus 5.5.",
       "Music: machine-generated with ACE-Step 1.5.",
       "Stadium pictures: generated with Qwen-Image 2.1; illustrations, not photographs of a real place.",
-      "Memes: templates from memegen (https://github.com/jacebrowning/memegen): Peter Parker's Glasses; Stonks; Shut Up and Take My Money!; Why Not Both?",
+      "Memes: templates from memegen (https://github.com/jacebrowning/memegen): Two Guys on a Bus; Philosoraptor; Peter Parker's Glasses; Stonks; Shut Up and Take My Money!; Why Not Both?",
       "Made with ShipShow and HyperFrames."
     ],
     "tags": [
