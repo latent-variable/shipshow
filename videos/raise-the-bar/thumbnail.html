@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>raise-the-bar thumbnail</title>
+<style>
+  /* The YouTube thumbnail, 1280 by 720 (bin/package.mjs renders it). The picture is the video's own generated high-jump pit
+     (assets/img/highjump.jpg, gitignored; images.md remakes it), brightened. Every word and both bars are drawn here. It names
+     the subject big (Qwen 4 Max, 16 behind on the Artificial Analysis index) and asks the video's question, never answering it
+     as fact: the cause of the wider gap is inferred in sources.md, so the bar's move is a question. */
+  @font-face { font-family: "Anton"; src: url("../../themes/stadium/fonts/anton-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 800; src: url("../../themes/stadium/fonts/inter-latin-800-normal.woff2") format("woff2"); }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; background: #000; position: relative; }
+  .pic { position: absolute; inset: 0; width: 1280px; height: 720px; object-fit: cover; object-position: 50% 62%; filter: brightness(1.25) saturate(1.1); }
+  .fade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5, 8, 15, 0.94) 0%, rgba(5, 8, 15, 0.82) 46%, rgba(5, 8, 15, 0.15) 75%, rgba(5, 8, 15, 0.05) 100%); }
+  .bar { position: absolute; left: 640px; width: 600px; height: 20px; border-radius: 10px; }
+  .bar.old { top: 470px; background: #cfd6e3; opacity: 0.85; }
+  .bar.new { top: 250px; background: #ff6a3d; box-shadow: 0 0 40px rgba(255, 106, 61, 0.9); }
+  .lbl { position: absolute; left: 1050px; font-family: "Inter", sans-serif; font-weight: 800; font-size: 34px; color: #fff; text-shadow: 0 3px 12px #000; white-space: nowrap; }
+  .lbl.old { top: 500px; color: #dfe5ee; } .lbl.new { top: 190px; color: #ffb59d; }
+  .arrow { position: absolute; left: 930px; top: 290px; width: 14px; height: 170px; background: #ffc23a; }
+  .arrow::before { content: ""; position: absolute; left: -22px; top: -32px; border: 29px solid transparent; border-bottom: 36px solid #ffc23a; border-top: 0; }
+  .words { position: absolute; left: 44px; top: 34px; font-family: "Anton", sans-serif; text-transform: uppercase; line-height: 1.0; text-shadow: 0 6px 0 rgba(0, 0, 0, 0.5), 0 10px 40px rgba(0, 0, 0, 0.8); white-space: nowrap; }
+  .a { font-size: 132px; color: #3fe0a5; }
+  .b { font-size: 150px; color: #fff; }
+  .b em { font-style: normal; color: #ffc23a; }
+  .c { font-size: 92px; color: #ff6a3d; margin-top: 14px; }
+  .tag { position: absolute; left: 48px; bottom: 30px; font-family: "Inter", sans-serif; font-weight: 800; font-size: 30px; color: #a9b3c6; letter-spacing: 0.04em; white-space: nowrap; }
+</style>
+</head>
+<body>
+  <img class="pic" src="assets/img/highjump.jpg" alt="">
+  <div class="fade"></div>
+  <div class="bar old"></div><div class="lbl old">old index</div>
+  <div class="bar new"></div><div class="lbl new">version 5</div>
+  <div class="arrow"></div>
+  <div class="words"><div class="a">Qwen 4 Max</div><div class="b"><em>16</em> behind?</div><div class="c">or did the bar move</div></div>
+  <div class="tag">Artificial Analysis index: 43 vs Opus 5.5's 59</div>
+</body>
+</html>

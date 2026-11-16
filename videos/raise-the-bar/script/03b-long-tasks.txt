@@ -1,0 +1,3 @@
+[thoughtful, working through an example by hand, inviting the viewer along] Length matters because every extra step is another chance to slip. Take a task with a hundred steps, where one wrong step sinks it. A model that's right ninety nine times in a hundred finishes about a third of these tasks. A model that's right ninety seven times in a hundred finishes about one in twenty.
+
+[letting it land, then plain and certain] Two points apart on each step. Nearly eight times apart at the finish. Long tasks don't create a gap. They magnify one.

@@ -1554,6 +1554,19 @@ turns as in the old checkout. The first and third fail with the lookup removed. 
 cache to `off`. Run by hand on a real Kokoro video: a copy of the template voiced from the cache had identical takes and narration,
 and an edited sentence voiced one take.
 
+
+### D109. The stadium theme: a leaderboard argued as a results show at a night meet (2026-11-16)
+**Decision.** `themes/stadium`: floodlit navy, a tartan red for the bar and whatever is being measured, a scoreboard amber for
+every score, and two colours kept for one meaning each across every act (blue for American labs, green for Chinese labs), so a
+viewer can follow a lab from one scoreboard to the next. Anton for scoreboard headlines and numbers, Inter for text, JetBrains
+Mono for versions and sources (the fonts vault already ships). Karaoke captions lit in amber, `slide` cuts, a slow push, glow
+under the pictures and vignette with grain over them. raise-the-bar rides it through six moods, one of them the `paper` theme
+for the index's rulebook. **Why.** The video's question is whether a gap moved or the ruler did; a results board, a high-jump
+bar raised over a generated night stadium and a game-show reveal carry that, and no earlier theme was a sports broadcast.
+**Costs.** Anton's tall glyphs run a few pixels past a tight line box, which `overlaps` reports as overflow with nothing visibly
+clipped; boxes holding it get top padding. A class named `clip` in a scene's own styles also styles every timed element (HyperFrames
+gives each the class `clip`): raise-the-bar's first draft tilted every scene that way, so scene styles avoid `clip`, `k`, `s`,
+`win`, `cap` and the kit's other short names. **Tested.** raise-the-bar's frames and its three critic rounds.
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
