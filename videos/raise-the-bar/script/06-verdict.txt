@@ -1,3 +1,5 @@
-[amused, then plain] So, did the ruler move, or did Chinese models fall behind on the hardest work? Both.
+[amused, then plain] So, did the ruler move, or did Chinese models fall behind on the hardest work?
 
-[sincere, the point the whole video exists to make, warm and clear] Qwen 4 Max isn't a broken model. It's Alibaba's best yet: nine points up, at a third of the cost per task, on the same test. The gap you saw is real, and it's specific. It's widest on the hardest, longest, unseen tasks, which is exactly what version five was built to find. And no evidence I could find ties it to being cut off from copying.
+[warm, answering simply] Both.
+
+[sincere, the point the whole video exists to make, warm and clear] Qwen 4 Max isn't a broken model. It's a clear step up from Qwen 3.8 Max: nine points, at a third of the cost per task, on the same index. The sixteen points you saw are real, and specific. The gap is widest on the hardest tests in version five. And no evidence I could find ties it to being cut off from copying.

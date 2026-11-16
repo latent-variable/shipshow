@@ -54,7 +54,7 @@
   .vs2 { display: grid; grid-template-columns: 1fr 270px 1fr; gap: 24px; align-items: center; width: 1580px; margin: 0 auto; }
   .gb { background: var(--card); border: var(--border) solid var(--line); border-radius: 10px; padding: 26px 30px; }
   .gb .ver { font-family: var(--font-display); font-size: 70px; text-transform: uppercase;  line-height: 1.42; }
-  .gb .lane { display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 14px; margin-top: 18px; font-size: 32px; font-weight: 700; color: var(--muted); }
+  .gb .lane { display: grid; grid-template-columns: 250px 1fr; align-items: center; gap: 14px; margin-top: 18px; font-size: 32px; font-weight: 700; color: var(--muted); }
   .gb .lane .b { height: 50px; border-radius: 4px; }
   .gb .gapn { margin-top: 20px; font-family: var(--font-display); font-size: 92px; color: var(--accent); line-height: 1.42; }
   .gb .gapn small { font-family: var(--font); font-size: 36px; color: var(--ink); font-weight: 800; margin-left: 12px; }
@@ -188,7 +188,7 @@
   .me { font-family: var(--font-mono); font-size: 34px; color: var(--accent-2); font-weight: 700; }
   .pair2 { display: flex; justify-content: center; gap: 40px; }
   .qbar { display: flex; flex-direction: column; gap: 22px; width: 1500px; margin: 0 auto; }
-  .qbar .r { display: grid; grid-template-columns: 430px 1fr 170px; align-items: center; gap: 20px; font-size: 40px; font-weight: 800; }
+  .qbar .r { display: grid; grid-template-columns: 430px 1fr; align-items: center; gap: 20px; font-size: 40px; font-weight: 800; }
   .qbar .r small { display: block; font-family: var(--font-mono); font-size: 30px; color: var(--muted); font-weight: 400; }
   .qbar .b { height: 80px; border-radius: 4px; background: var(--good); }
   .qbar .sv { font-family: var(--font-display); font-size: 96px; color: var(--accent-3); text-align: right; line-height: 1.42; }
@@ -214,7 +214,7 @@
   /* 06 the answer */
   .verdicts { display: flex; flex-direction: column; gap: 22px; width: 1560px; margin: 0 auto; }
   .verdicts .v { display: grid; grid-template-columns: 70px 1fr; gap: 20px; align-items: center; font-size: 48px; font-weight: 800; line-height: 1.2; }
-  .verdicts .v .ic { font-family: var(--font-display); font-size: 64px; color: var(--accent-3); text-align: center;  line-height: 1.42; }
+  .verdicts .v .ic { font-family: var(--font-display); font-size: 64px; color: var(--accent); text-align: center;  line-height: 1.42; }
   .verdicts .v small { display: block; font-size: 32px; color: var(--muted); font-weight: 600; }
   .qs3 { display: flex; flex-direction: column; gap: 26px; width: 1500px; margin: 0 auto; }
   .qs3 .q { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 20px; font-size: 58px; font-weight: 800; }
@@ -223,6 +223,30 @@
   .endcard .t { font-family: var(--font-display); font-size: 120px; text-transform: uppercase; line-height: 1.42; }
   .endcard .a { font-family: var(--font-display); font-size: 150px; color: var(--accent-3); line-height: 1.42; }
   .endcard .sv { font-family: var(--font-mono); font-size: 32px; color: var(--muted); }
+
+  /* round 1 fixes */
+  .board .r .score, .gapbox .n, .gb .gapn, .datecard .d, .jan .n, .mag .n, .quiz, .pod .sc, .opt .v, .tick, .charges .num, .qs3 .q .n,
+  .three .card .n, .verdicts .v .ic, .endcard .a, .endcard .t, .q2 .l, .ceilchip .big, .cover .book .t, .count9, .stamp { padding-top: 12px; }
+  .qbar .track { position: relative; height: 96px; background: #16213a; border-radius: 4px; }
+  .qbar .b { position: absolute; left: 0; top: 0; bottom: 0; height: auto; display: flex; align-items: center; justify-content: flex-end; padding-right: 22px; }
+  .qbar .b .sv { color: #06101e; font-size: 76px; padding-top: 8px; text-shadow: none; }
+  .vcards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; width: 1500px; margin: 0 auto; }
+  .vcards .card { text-align: center; font-size: 46px; font-weight: 800; padding: 30px 10px; }
+  .vtitle { font-size: 52px; font-weight: 800; text-align: center; }
+  .work2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 1600px; margin: 0 auto; }
+  .work2 .card { font-size: 44px; font-weight: 800; line-height: 1.25; }
+  .work2 .card .kk { display: block; font-family: var(--font-mono); font-size: 30px; color: var(--muted); font-weight: 400; margin-bottom: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tag2 { display: inline-block; font-family: var(--font-mono); font-size: 30px; padding: 4px 14px; border: 2px solid var(--muted); border-radius: 6px; color: var(--muted); font-weight: 400; margin-top: 12px; }
+  .gapv { display: flex; align-items: center; justify-content: center; gap: 60px; }
+  .gapv .card { width: 560px; text-align: center; }
+  .gapv .kk { font-family: var(--font-mono); font-size: 30px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; display: block; }
+  .gapv .n { font-family: var(--font-display); font-size: 150px; color: var(--accent); line-height: 1.42; padding-top: 12px; display: block; }
+  .gapv .x { font-size: 32px; color: var(--muted); font-weight: 600; }
+  .hdr { font-family: var(--font-mono); font-size: 34px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-align: center; }
+  .callout { display: flex; justify-content: center; gap: 26px; flex-wrap: wrap; }
+  .callout .chip { font-size: 36px; }
+  .callout .chip b { font-family: var(--font-display); font-weight: 400; color: var(--accent); margin-right: 12px; }
+  .panic { font-family: var(--font-display); font-size: 120px; color: var(--accent); text-align: center; line-height: 1.42; padding-top: 12px; }
 </style>
 
 <!-- ============ ACT ONE: THE SCOREBOARD (cold open, no card) ============ -->
@@ -231,10 +255,10 @@
     <div class="stage">
       <div class="board" data-cue="results" data-anim="fade">
         <div class="head"><span>Results · <b>Artificial Analysis Intelligence Index</b></span><span data-cue="Artificial" data-anim="fade">v5.0.1</span></div>
-        <div class="r" id="r01q" data-cue="Qwen" data-anim="left"><div class="stripe" style="background: var(--good)"></div><div class="name cn">Qwen 4 Max<small>Alibaba · released Nov 16, 2026</small></div><div class="score" data-cue="forty" data-anim="count">43</div></div>
-        <div class="r" id="r01o" data-cue="Claude" data-anim="left"><div class="stripe" style="background: var(--accent-2)"></div><div class="name us">Claude Opus 5.5<small>Anthropic</small></div><div class="score" data-cue="fifty" data-anim="count">59</div></div>
+        <div class="r" data-cue="Qwen" data-anim="left"><div class="stripe" style="background: var(--good)"></div><div class="name cn">Qwen 4 Max<small>Alibaba · released Nov 16, 2026</small></div><div class="score" data-cue="forty" data-anim="count">43</div></div>
+        <div class="r" data-cue="Claude" data-anim="left"><div class="stripe" style="background: var(--accent-2)"></div><div class="name us">Claude Opus 5.5<small>Anthropic</small></div><div class="score" data-cue="fifty" data-anim="count">59</div></div>
       </div>
-      <div class="gapbox" data-cue="Sixteen#2" data-anim="slam"><span class="n">−16</span><span class="u">points behind</span></div>
+      <div class="gapbox" data-cue="Sixteen#2" data-anim="slam"><span class="n">16</span><span class="u">points behind</span></div>
       <div class="src center" data-cue="Sixteen#2" data-anim="fade">artificialanalysis.ai, models and leaderboard pages, read Nov 16, 2026</div>
     </div>
   </div>
@@ -253,7 +277,7 @@
       <div><div class="kk">a story about</div><div class="v">Copying</div></div>
       <div><div class="kk">starring</div><div class="v">Qwen 4 Max</div></div>
       <div><div class="kk">and</div><div class="v">Anti-distillation</div></div>
-      <div><div class="kk">directed by</div><div class="v">One post on X</div></div>
+      <div><div class="kk">based on</div><div class="v">One post on X</div></div>
       <div class="end">The end</div>
     </div>
   </div>
@@ -263,6 +287,7 @@
   <div class="mk" id="mk01drop" data-cue="Except" data-drop="3.2"></div>
   <div class="phase" id="p01ba">
     <div class="stage">
+      <div class="row" data-cue="Chinese#1" data-anim="fade"><span class="chip cn sm">open models: the kind anyone can download · the best come from Chinese labs</span></div>
       <div class="vs2">
         <div class="gb" data-cue="old" data-anim="left">
           <div class="ver">Old version <span class="src">v4.3</span></div>
@@ -271,15 +296,14 @@
           <div class="gapn" data-cue="three" data-anim="pop">3<small>points behind</small></div>
         </div>
         <div class="datecard" data-cue="October" data-anim="slam"><div class="d">Oct 27</div><div class="m">version five</div></div>
-        <div class="gb" data-cue="version#3" data-anim="right">
+        <div class="gb" data-cue="Kimi" data-anim="right">
           <div class="ver">Version five <span class="src">v5.0</span></div>
           <div class="lane"><span>leader</span><div class="b" style="background: var(--accent-2); width: 100%"></div></div>
-          <div class="lane"><span>best open</span><div class="b" style="background: var(--good); width: 79.3%"></div></div>
+          <div class="lane"><span>Kimi K3.1 Pro</span><div class="b" style="background: var(--good); width: 79.3%"></div></div>
           <div class="gapn" data-cue="twelve" data-anim="pop">12<small>points behind</small></div>
         </div>
       </div>
-      <div class="row" data-cue="Chinese#1" data-anim="fade"><span class="chip cn sm">best open models: Kimi · DeepSeek · GLM, all Chinese labs</span></div>
-      <div class="src center" data-cue="twelve" data-anim="fade">Artificial Analysis, "Intelligence Index v5", Oct 27, 2026: "12 points behind the leader, compared with a 3-point gap in v4.3"</div>
+      <div class="src center" data-cue="twelve" data-anim="fade">Artificial Analysis, "Intelligence Index v5", Oct 27, 2026: Kimi K3.1 Pro (weights not yet released) "12 points behind the leader, compared with a 3-point gap in v4.3"</div>
     </div>
   </div>
   <div class="phase" id="p01bb">
@@ -287,7 +311,7 @@
       <div class="q2">
         <div class="l" data-cue="Did" data-anim="up">Did Chinese AI <span class="cn">fall behind?</span></div>
         <div class="l" data-cue="Or" data-anim="up">Or did the <span class="tar">ruler</span> move?</div>
-        <div class="ruler" id="ruler01" data-cue="ruler" data-anim="grow"></div>
+        <div class="ruler" data-cue="ruler" data-anim="grow"></div>
       </div>
     </div>
   </div>
@@ -298,28 +322,18 @@
   <div class="cover" id="cov02" data-cue="+0.0" data-anim="fade"><div class="book" data-cue="+0.3" data-anim="up"><div class="t">The Rulebook</div><div class="sv">Artificial Analysis Intelligence Index</div></div></div>
   <div class="phase" id="p02a">
     <div class="stage">
-      <div class="tests" data-cue="bundle#1" data-anim="stagger">
-        <span class="chip sm">AA-Briefcase</span><span class="chip sm">AutomationBench-AA</span><span class="chip sm">GDP.pdf</span>
-        <span class="chip sm">FrontierCode 2.0</span><span class="chip sm">Terminal-Bench 4.0</span><span class="chip sm">Terminal-Bench-Science</span>
-        <span class="chip sm">CritPt v2</span><span class="chip sm">AA-Omniscience v1.1</span><span class="chip sm">HLE-Diamond</span>
-      </div>
-      <div class="funnel" data-cue="one" data-anim="up"><span>nine tests, weighted</span><span class="arr"></span><span>one number</span><span class="one" data-cue="Intelligence" data-anim="pop">43</span><span class="src">e.g. Qwen 4 Max</span></div>
-      <div class="src center" data-cue="bundle#1" data-anim="fade">the tests in version five · artificialanalysis.ai methodology</div>
-    </div>
-  </div>
-  <div class="phase" id="p02b">
-    <div class="stage">
+      <div class="funnel" data-cue="bundle#1" data-anim="up"><span>nine tests, weighted</span><span class="arr"></span><span data-cue="one" data-anim="fade">one number</span><span class="one" data-cue="Intelligence" data-anim="pop">43</span><span class="src">e.g. Qwen 4 Max</span></div>
+      <div class="src center" data-cue="bundle#1" data-anim="fade">version five's tests: AA-Briefcase · AutomationBench-AA · GDP.pdf · FrontierCode 2.0 · Terminal-Bench 4.0 · Terminal-Bench-Science · CritPt v2 · AA-Omniscience v1.1 · HLE-Diamond</div>
       <div class="clipping" data-cue="April" data-anim="up">
-        <div class="kk">Artificial Analysis · April 30, 2026</div>
-        <div class="h" data-cue="within" data-anim="fade">"the best open weights models within 3-6 points of the leading proprietary models"</div>
-        <div class="h" data-cue="ten" data-anim="fade" style="color: var(--good)">"The top 10 open weights models ... are all from China-based AI labs."</div>
+        <div class="kk">Artificial Analysis · Apr 30, 2026</div>
+        <div class="h">"the best open weights models within 3-6 points of the leading proprietary models"</div>
       </div>
     </div>
   </div>
   <div class="phase" id="p02c">
     <div class="stage">
       <div class="count9" data-cue="nine" data-anim="count">9 versions in 2026</div>
-      <div class="tl" id="tl02" data-cue="keeps" data-anim="fade">
+      <div class="tl" data-cue="keeps" data-anim="fade">
         <div class="axis"></div>
         <div class="mo" style="left: 0%">Jan</div><div class="mo" style="left: 20%">Mar</div><div class="mo" style="left: 40%">May</div><div class="mo" style="left: 60%">Jul</div><div class="mo" style="left: 70%">Aug</div><div class="mo" style="left: 80%">Sep</div><div class="mo" style="left: 90%">Oct</div><div class="mo" style="left: 100%">Nov</div>
         <div class="v" style="left: 0%" data-cue="nine" data-anim="pop"></div><div class="lbl" style="left: 0%" data-cue="nine" data-anim="fade">4.0</div>
@@ -334,7 +348,7 @@
         <div class="sep" style="left: 76.5%; width: 230px" data-cue="September" data-anim="grow"></div>
         <div class="seplbl" style="left: 57%" data-cue="September" data-anim="fade">four start in September</div>
       </div>
-      <div class="src center" data-cue="versions" data-anim="fade">version history, artificialanalysis.ai/methodology · small dots: grader and rating fixes</div>
+      <div class="src center" data-cue="nine" data-anim="fade">version history, artificialanalysis.ai/methodology · small dots: grader and rating fixes</div>
     </div>
   </div>
 </section>
@@ -342,12 +356,13 @@
 <section data-scene="02b-january" data-mood="rulebook">
   <div class="phase" id="p02ba">
     <div class="stage">
+      <div class="panic" data-cue="panic" data-anim="glitch">panic?</div>
       <div class="jan">
         <div class="n"><span data-cue="seventy" data-anim="count">73</span><small>best score · previous version</small></div>
         <div class="arrow" data-cue="four" data-anim="grow"></div>
         <div class="n tar" data-cue="fifty" data-anim="slam"><span>≤50</span><small>best score · v4.0, Jan 2026</small></div>
       </div>
-      <div class="row" data-cue="Nobody" data-anim="up"><span class="chip">same models, new tests</span></div>
+      <div class="row" data-cue="hadn't" data-anim="up"><span class="chip">same models, harder tests</span></div>
       <div class="src center" data-cue="seventy" data-anim="fade">VentureBeat, Jan 6, 2026</div>
     </div>
   </div>
@@ -358,9 +373,9 @@
         <div class="bars"><i style="background: var(--accent-2)"></i><i style="background: var(--accent-2); height: 98%"></i><i style="background: var(--good); height: 97%"></i><i style="background: var(--good)"></i><i style="background: var(--accent-2); height: 99%"></i></div>
       </div>
       <div class="src center" data-cue="easy" data-anim="fade">illustration: when a test is too easy, the best scores pile up under its ceiling</div>
-      <div class="quote" data-cue="VentureBeat" data-anim="up">"the tests used to rank them are becoming obsolete almost as quickly as the models improve"<span class="who">VentureBeat, Jan 6, 2026</span></div>
     </div>
   </div>
+  <div class="meme-wrap" id="m02b" data-cue="VentureBeat" data-anim="pop"><figure class="ss-meme" data-meme="bus"><span>the tests that rank them</span><span>models, getting better every month</span></figure><div class="src">"becoming obsolete almost as quickly as the models improve" · VentureBeat, Jan 6, 2026</div></div>
 </section>
 
 <!-- ============ ACT THREE: RAISING THE BAR (no card: the picture arrives alone) ============ -->
@@ -369,14 +384,14 @@
   <div class="shade"></div>
   <div class="jump">
     <svg width="1920" height="1080" viewBox="0 0 1920 1080">
-      <!-- the bar between the two standards; moved up by the script on "raise" -->
       <g id="barg" data-cue="Set" data-anim="fade">
         <rect id="barRect" x="487" y="612" width="1010" height="12" rx="6" fill="#ff6a3d" stroke="#ffd2c2" stroke-width="2"></rect>
         <text id="barLab" x="1530" y="628" font-family="JetBrains Mono, monospace" font-size="44" font-weight="700" fill="#ffc23a">1.5 m</text>
       </g>
-      <!-- jumper A (white) and jumper B (pink): arcs over the bar -->
-      <path id="a1" d="M 160 900 Q 980 230 1760 860" fill="none" stroke="#ffffff" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="jumpers" data-anim="draw"></path>
-      <path id="b1" d="M 200 910 Q 990 250 1720 880" fill="none" stroke="#ff8fd0" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="clear" data-anim="draw"></path>
+      <circle cx="160" cy="900" r="16" fill="#ffffff" data-cue="jumpers" data-anim="pop"></circle>
+      <circle cx="200" cy="910" r="16" fill="#ff8fd0" data-cue="jumpers" data-anim="pop"></circle>
+      <path id="a1" d="M 160 900 Q 980 230 1760 860" fill="none" stroke="#ffffff" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="clear" data-anim="draw"></path>
+      <path id="b1" d="M 200 910 Q 990 250 1720 880" fill="none" stroke="#ff8fd0" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="every" data-anim="draw"></path>
       <path id="a2" d="M 160 900 Q 980 0 1760 860" fill="none" stroke="#ffffff" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="metres#2" data-anim="draw"></path>
       <path id="b2" d="M 200 910 Q 860 220 990 500" fill="none" stroke="#ff8fd0" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="knocking" data-anim="draw"></path>
     </svg>
@@ -398,16 +413,17 @@
 
 <section data-scene="03a-three-changes" data-mood="stadium">
   <div class="stage">
+    <div class="row" data-cue="three" data-anim="fade"><span class="hdr">version five, Oct 27: what changed</span></div>
     <div class="three">
-      <div class="card" data-cue="threw" data-anim="up">
-        <div class="n">1</div><div class="h">Mastered questions, out</div>
+      <div class="card" data-cue="Harder" data-anim="up">
+        <div class="n">1</div><div class="h">Harder tests</div>
         <div class="qs" data-cue="mastered" data-anim="stagger"><i class="gone">?</i><i class="gone">?</i><i>?</i><i class="gone">?</i><i>?</i><i>?</i><i class="gone">?</i><i>?</i></div>
-        <div class="x">"saturated and public set questions removed"</div>
+        <div class="x">mastered questions out: "saturated and public set questions removed"</div>
       </div>
-      <div class="card" data-cue="sixty" data-anim="up">
+      <div class="card" data-cue="Sixty" data-anim="up">
         <div class="n">2</div><div class="h">60% private</div>
         <div class="donut" data-cue="private" data-anim="grow"><span>60%</span></div>
-        <div class="x" data-cue="train" data-anim="fade">private tests or held-out answers: nothing to study from</div>
+        <div class="x" data-cue="study" data-anim="fade">private tests or held-out answers: nothing to study from</div>
       </div>
       <div class="card" data-cue="longer" data-anim="up">
         <div class="n">3</div><div class="h">Longer tasks</div>
@@ -415,15 +431,16 @@
         <div class="x" data-cue="thirds" data-anim="fade">median output per task: 35k → 59k tokens</div>
       </div>
     </div>
-    <div class="src center" data-cue="threw" data-anim="fade">Artificial Analysis, "Intelligence Index v5", Oct 27, 2026</div>
+    <div class="src center" data-cue="Harder" data-anim="fade">Artificial Analysis, "Intelligence Index v5", Oct 27, 2026</div>
   </div>
 </section>
 
 <section data-scene="03b-long-tasks" data-mood="stadium">
   <div class="phase" id="p03ba">
     <div class="stage">
-      <div class="chart" id="ch03" data-cue="Take" data-anim="fade">
-        <div class="toy" data-cue="Take" data-anim="fade">toy arithmetic, not a measurement</div>
+      <div class="row" data-cue="Every" data-anim="up"><span class="chip bar">every extra step: another chance to slip</span></div>
+      <div class="chart" data-cue="Take" data-anim="fade">
+        <div class="toy">toy arithmetic, not a measurement</div>
         <svg width="1500" height="600" viewBox="0 0 1500 600">
           <line x1="120" y1="40" x2="120" y2="520" stroke="#2a3a58" stroke-width="3"></line>
           <line x1="120" y1="520" x2="1300" y2="520" stroke="#2a3a58" stroke-width="3"></line>
@@ -432,8 +449,8 @@
           <text class="ax" x="120" y="575">step 0</text>
           <text class="ax" x="1300" y="575" text-anchor="end">step 100</text>
           <text class="ax" x="140" y="20">chance the task is still alive</text>
-          <path id="c99" d="" fill="none" stroke="#ffc23a" stroke-width="8" data-cue="ninety" data-anim="draw"></path>
-          <path id="c97" d="" fill="none" stroke="#ff6a3d" stroke-width="8" data-cue="ninety#2" data-anim="draw"></path>
+          <path d="M 120.0 40.0 L 143.6 49.6 L 167.2 58.9 L 190.8 68.1 L 214.4 77.1 L 238.0 85.9 L 261.6 94.5 L 285.2 103.0 L 308.8 111.3 L 332.4 119.4 L 356.0 127.4 L 379.6 135.2 L 403.2 142.9 L 426.8 150.4 L 450.4 157.7 L 474.0 164.9 L 497.6 172.0 L 521.2 178.9 L 544.8 185.7 L 568.4 192.4 L 592.0 198.9 L 615.6 205.3 L 639.2 211.5 L 662.8 217.7 L 686.4 223.7 L 710.0 229.6 L 733.6 235.4 L 757.2 241.0 L 780.8 246.6 L 804.4 252.0 L 828.0 257.4 L 851.6 262.6 L 875.2 267.7 L 898.8 272.7 L 922.4 277.7 L 946.0 282.5 L 969.6 287.2 L 993.2 291.8 L 1016.8 296.4 L 1040.4 300.8 L 1064.0 305.2 L 1087.6 309.5 L 1111.2 313.7 L 1134.8 317.8 L 1158.4 321.8 L 1182.0 325.7 L 1205.6 329.6 L 1229.2 333.4 L 1252.8 337.1 L 1276.4 340.7 L 1300.0 344.3" fill="none" stroke="#ffc23a" stroke-width="8" data-cue="ninety" data-anim="draw"></path>
+          <path d="M 120.0 40.0 L 143.6 68.4 L 167.2 95.1 L 190.8 120.2 L 214.4 143.8 L 238.0 166.0 L 261.6 187.0 L 285.2 206.6 L 308.8 225.2 L 332.4 242.6 L 356.0 259.0 L 379.6 274.4 L 403.2 288.9 L 426.8 302.6 L 450.4 315.4 L 474.0 327.5 L 497.6 338.9 L 521.2 349.6 L 544.8 359.7 L 568.4 369.1 L 592.0 378.1 L 615.6 386.4 L 639.2 394.3 L 662.8 401.8 L 686.4 408.8 L 710.0 415.3 L 733.6 421.5 L 757.2 427.3 L 780.8 432.8 L 804.4 438.0 L 828.0 442.8 L 851.6 447.4 L 875.2 451.7 L 898.8 455.7 L 922.4 459.5 L 946.0 463.1 L 969.6 466.4 L 993.2 469.6 L 1016.8 472.6 L 1040.4 475.4 L 1064.0 478.0 L 1087.6 480.5 L 1111.2 482.8 L 1134.8 485.0 L 1158.4 487.1 L 1182.0 489.0 L 1205.6 490.9 L 1229.2 492.6 L 1252.8 494.2 L 1276.4 495.7 L 1300.0 497.2" fill="none" stroke="#ff6a3d" stroke-width="8" data-cue="ninety#2" data-anim="draw"></path>
           <text class="lab" x="1320" y="364" fill="#ffc23a" data-cue="third" data-anim="pop">37%</text>
           <text class="lab" x="1320" y="510" fill="#ff6a3d" data-cue="twenty" data-anim="pop">5%</text>
           <text class="ax" x="1320" y="300" fill="#ffc23a" data-cue="ninety" data-anim="fade">99% a step</text>
@@ -447,7 +464,7 @@
       <div class="mag">
         <div class="n" data-cue="Two" data-anim="pop" style="color: var(--muted)">2<small>points apart per step</small></div>
         <div class="arr"></div>
-        <div class="n" data-cue="eight" data-anim="slam" data-punch="1.12">×7.7<small>apart at the finish</small></div>
+        <div class="n" data-cue="eight" data-anim="slam" data-punch="1.12" data-drop="1.6">×7.7<small>apart at the finish</small></div>
       </div>
       <div class="row" data-cue="magnify" data-anim="up"><span class="chip bar">long tasks magnify a gap</span></div>
       <div class="src center" data-cue="Two" data-anim="fade">0.99¹⁰⁰ = 37% · 0.97¹⁰⁰ = 4.8% · toy arithmetic</div>
@@ -457,8 +474,9 @@
 
 <section data-scene="03c-where" data-mood="stadium">
   <div class="stage">
+    <div class="row" data-cue="+0.4" data-anim="fade"><span class="hdr">where version five found the gap</span></div>
     <div class="tests2">
-      <div class="card" data-cue="Humanity" data-anim="up"><div class="h">HLE-Diamond</div><div class="x">a harder cut of Humanity's Last Exam</div></div>
+      <div class="card" data-cue="widest" data-anim="up"><div class="h">HLE-Diamond</div><div class="x">a harder cut of Humanity's Last Exam</div></div>
       <div class="card" data-cue="science" data-anim="up"><div class="h">Terminal-Bench-Science</div><div class="x">real science work in a terminal</div></div>
     </div>
     <div class="hbars">
@@ -466,29 +484,32 @@
       <div class="r" data-cue="Claude" data-anim="left"><span class="us">Claude Opus 5.5<small>Anthropic</small></span><div class="track"><div class="fill" style="width: 68%; background: var(--accent-2)">68%</div></div></div>
       <div class="r" data-cue="Astra" data-anim="left"><span class="us">GPT-6 Astra<small>OpenAI</small></span><div class="track"><div class="fill" style="width: 63%; background: var(--accent-2)">63%</div></div></div>
     </div>
-    <div class="src center" data-cue="Kimi" data-anim="fade">Artificial Analysis, "Intelligence Index v5": "The gap is widest on HLE-Diamond and Terminal-Bench-Science"</div>
+    <div class="src center" data-cue="widest" data-anim="fade">Artificial Analysis, "Intelligence Index v5": "The gap is widest on HLE-Diamond and Terminal-Bench-Science"</div>
   </div>
 </section>
 
-<!-- ============ ACT FOUR: A SECOND SCOREBOARD (smash cut into a game, no lead) ============ -->
+<!-- ============ ACT FOUR: A SECOND SCOREBOARD (whip into a game) ============ -->
 <section data-scene="04-game" data-mood="quiz" data-transition="whip">
   <div class="phase" id="p04a">
     <div class="stage">
       <div class="quiz" data-cue="game" data-anim="slam">Game</div>
       <div class="pods">
-        <div class="pod" style="border-color: var(--good)" data-cue="Qwen" data-anim="up"><div class="nm cn">Qwen 4 Max</div><div class="lab">Alibaba</div><div class="sc" data-cue="trails" data-anim="count">43</div></div>
-        <div class="pod" style="border-color: var(--accent-2)" data-cue="GPT" data-anim="up"><div class="nm us">GPT-6.1 Sol</div><div class="lab">OpenAI</div><div class="sc" data-cue="trails" data-anim="count">55</div></div>
+        <div class="pod" style="border-color: var(--good)" data-cue="Qwen" data-anim="up"><div class="nm cn">Qwen 4 Max</div><div class="lab">Alibaba</div><div class="sc" data-cue="trails" data-anim="pop">43</div></div>
+        <div class="pod" style="border-color: var(--accent-2)" data-cue="GPT" data-anim="up"><div class="nm us">GPT-6.1 Sol</div><div class="lab">OpenAI</div><div class="sc" data-cue="trails" data-anim="pop">55</div></div>
       </div>
       <div class="gapbox" data-cue="twelve" data-anim="pop"><span class="n" style="font-size: 110px">12</span><span class="u">points apart on the Artificial Analysis index</span></div>
     </div>
   </div>
   <div class="phase" id="p04b">
     <div class="stage">
-      <div class="vals" data-cue="Vals" data-anim="up"><span>Vals AI's index:</span><span class="ic" data-cue="finance" data-anim="pop">finance</span><span class="ic" data-cue="coding" data-anim="pop">coding</span><span class="ic" data-cue="legal" data-anim="pop">legal</span><span class="ic" data-cue="tax" data-anim="pop">tax</span></div>
+      <div class="vtitle" data-cue="Vals" data-anim="up">Vals AI's index, built from</div>
+      <div class="vcards">
+        <div class="card" data-cue="finance" data-anim="pop">finance</div><div class="card" data-cue="coding" data-anim="pop">coding</div><div class="card" data-cue="legal" data-anim="pop">legal</div><div class="card" data-cue="tax" data-anim="pop">tax</div>
+      </div>
       <div class="opts">
         <div class="opt" data-cue="twelve#2" data-anim="pop"><div class="l">A</div><div class="v">12</div></div>
         <div class="opt" data-cue="Six" data-anim="pop"><div class="l">B</div><div class="v">6</div></div>
-        <div class="opt" id="optC" data-cue="less" data-anim="pop"><div class="l">C</div><div class="v">&lt;1</div></div>
+        <div class="opt" data-cue="less" data-anim="pop"><div class="l">C</div><div class="v">&lt;1</div></div>
       </div>
       <div class="tick" id="tick04" data-cue="less" data-anim="fade">?</div>
       <div class="src center" data-cue="Vals" data-anim="fade">vals.ai: "agentic model performance across finance, coding, legal, and tax tasks"</div>
@@ -502,11 +523,11 @@
       <div class="opts">
         <div class="opt" style="opacity: 0.35"><div class="l">A</div><div class="v">12</div></div>
         <div class="opt" style="opacity: 0.35"><div class="l">B</div><div class="v">6</div></div>
-        <div class="opt winner" id="win04" data-cue="Less" data-anim="pulse" data-sfx="ding" data-sfx-offset="1.7"><div class="l">C</div><div class="v amb">&lt;1</div></div>
+        <div class="opt winner" data-cue="Less" data-anim="pulse" data-sfx="ding" data-sfx-offset="0.75"><div class="l">C</div><div class="v amb">&lt;1</div></div>
       </div>
       <div class="pods">
-        <div class="pod" style="border-color: var(--good)" data-cue="Sixty" data-anim="up"><div class="nm cn">Qwen 4 Max</div><div class="lab">Vals Index</div><div class="sc" data-cue="Sixty" data-anim="count">63.2%</div></div>
-        <div class="pod" style="border-color: var(--accent-2)" data-cue="against" data-anim="up"><div class="nm us">GPT-6.1 Sol</div><div class="lab">Vals Index</div><div class="sc" data-cue="against" data-anim="count">63.9%</div></div>
+        <div class="pod" style="border-color: var(--good)" data-cue="Sixty" data-anim="up"><div class="nm cn">Qwen 4 Max</div><div class="lab">Vals Index</div><div class="sc">63.2%</div></div>
+        <div class="pod" style="border-color: var(--accent-2)" data-cue="against" data-anim="up"><div class="nm us">GPT-6.1 Sol</div><div class="lab">Vals Index</div><div class="sc">63.9%</div></div>
       </div>
       <div class="src center" data-cue="Sixty" data-anim="fade">vals.ai Vals Index, updated Nov 15, 2026</div>
     </div>
@@ -514,31 +535,40 @@
   <div class="phase" id="p04bb">
     <div class="stage">
       <div class="twin">
-        <div class="mini" data-cue="Same" data-anim="left"><div class="t">Artificial Analysis index</div><div class="r"><span class="us">GPT-6.1 Sol</span><b>55</b></div><div class="r"><span class="cn">Qwen 4 Max</span><b>43</b></div><div class="gapline">12 <small>a gap you can't miss</small></div></div>
-        <div class="mini" data-cue="other#1" data-anim="right"><div class="t">Vals Index</div><div class="r"><span class="us">GPT-6.1 Sol</span><b>63.9</b></div><div class="r"><span class="cn">Qwen 4 Max</span><b>63.2</b></div><div class="gapline">0.7 <small>a gap you could miss</small></div></div>
+        <div class="mini" data-cue="Same" data-anim="left"><div class="t">Artificial Analysis index</div><div class="r"><span class="us">GPT-6.1 Sol</span><b>55</b></div><div class="r"><span class="cn">Qwen 4 Max</span><b>43</b></div><div class="gapline">12 <small>points: a gap you can't miss</small></div></div>
+        <div class="mini" data-cue="other#1" data-anim="right"><div class="t">Vals Index</div><div class="r"><span class="us">GPT-6.1 Sol</span><b>63.9%</b></div><div class="r"><span class="cn">Qwen 4 Max</span><b>63.2%</b></div><div class="gapline">0.7 <small>points: one you could</small></div></div>
       </div>
-      <div class="src center" data-cue="Same" data-anim="fade">different scales: points on one, percent on the other</div>
+      <div class="src center" data-cue="Same" data-anim="fade">different scales: index points on one, percent on the other</div>
     </div>
   </div>
   <div class="meme-wrap" id="m04" data-cue="Neither" data-anim="pop"><figure class="ss-meme" data-meme="glasses"><span>two scoreboards, two gaps</span><span data-cue="measure" data-anim="fade">each one measures different work</span></figure></div>
+  <div class="phase" id="p04bd">
+    <div class="stage">
+      <div class="work2">
+        <div class="card" data-cue="weighs" data-anim="up"><span class="kk">Vals Index</span>finance, coding, legal and tax work, weighted by each sector's share of the US economy</div>
+        <div class="card" data-cue="leans" data-anim="up"><span class="kk">AA index, version five</span>harder cuts, longer tasks, 60% private</div>
+      </div>
+    </div>
+  </div>
   <div class="phase" id="p04bc">
     <div class="stage">
       <div class="twin">
-        <div class="mini" data-cue="agree" data-anim="left"><div class="t">Artificial Analysis · top six</div>
-          <div class="r"><span class="us">Claude Fable 5.2</span><b>65</b></div><div class="r"><span class="us">Gemini 4 Carbon</span><b>60</b></div><div class="r"><span class="us">Claude Opus 5.5</span><b>59</b></div><div class="r"><span class="us">GPT-6 Astra</span><b>57</b></div><div class="r"><span class="us">GPT-6.1 Sol</span><b>55</b></div><div class="r"><span class="us">Claude Sonnet 5.5</span><b>55</b></div>
-          <div class="r" style="opacity: 0.85"><span class="cn">… Qwen 4 Max</span><b>43</b></div></div>
-        <div class="mini" data-cue="agree" data-anim="right"><div class="t">Vals Index · top six</div>
-          <div class="r"><span class="us">Claude Fable 5.2</span><b>71.3</b></div><div class="r"><span class="us">Claude Sonnet 5.5</span><b>70.9</b></div><div class="r"><span class="us">Gemini 4 Carbon</span><b>70.5</b></div><div class="r"><span class="us">Claude Opus 5.5</span><b>70.1</b></div><div class="r"><span class="us">Gemini 4 Argon</span><b>69.4</b></div><div class="r"><span class="us">Gemini 4 Hydrogen</span><b>68.5</b></div>
-          <div class="r" style="opacity: 0.85"><span class="cn">… Qwen 4 Max</span><b>63.2</b></div></div>
+        <div class="mini" data-cue="agree" data-anim="left"><div class="t">Artificial Analysis · top of the board</div>
+          <div class="r"><span class="us">Claude Fable 5.2</span><b>65</b></div><div class="r"><span class="us">Gemini 4 Carbon</span><b>60</b></div><div class="r"><span class="us">Claude Opus 5.5</span><b>59</b></div>
+          <div class="r" style="opacity: 0.85"><span class="us">… three more, all American</span><b></b></div>
+          <div class="r"><span class="cn">… Qwen 4 Max</span><b>43</b></div></div>
+        <div class="mini" data-cue="agree" data-anim="right"><div class="t">Vals Index · top of the board</div>
+          <div class="r"><span class="us">Claude Fable 5.2</span><b>71.3%</b></div><div class="r"><span class="us">Claude Sonnet 5.5</span><b>70.9%</b></div><div class="r"><span class="us">Gemini 4 Carbon</span><b>70.5%</b></div>
+          <div class="r" style="opacity: 0.85"><span class="us">… three more, all American</span><b></b></div>
+          <div class="r"><span class="cn">… Qwen 4 Max</span><b>63.2%</b></div></div>
       </div>
-      <div class="row"><span class="chip us" data-cue="sixteen" data-anim="pop">Opus 5.5 ahead by 16</span><span class="chip us" data-cue="seven" data-anim="pop">and by about 7</span></div>
+      <div class="row"><span class="chip us" data-cue="sixteen" data-anim="pop">Opus 5.5 ahead by 16 points</span><span class="chip us" data-cue="seven" data-anim="pop">and by about 7</span></div>
     </div>
   </div>
 </section>
 
-<!-- ============ ACT FIVE: THE COPYING CLAIM ============ -->
+<!-- ============ ACT FIVE: THE COPYING CLAIM (opens on silence, no card) ============ -->
 <section data-scene="05-copying" data-mood="claim">
-  <div class="casefile" id="cf05" data-cue="+0.0" data-anim="fade"><div class="f" data-cue="+0.3" data-anim="up"><div class="kk">case file</div><div class="t">The copying claim</div></div></div>
   <div class="phase" id="p05a">
     <div class="stage">
       <div class="row"><span class="chip bar" data-cue="distillation" data-anim="type">distillation</span></div>
@@ -566,24 +596,25 @@
   <div class="stage">
     <div class="charges">
       <div class="card" data-cue="February" data-anim="up"><div class="when">Feb 23 · Anthropic</div><div class="who">DeepSeek, Moonshot, MiniMax</div><div class="num" data-cue="sixteen" data-anim="count">16M</div><div class="x">exchanges with Claude, through about <span data-cue="twenty" data-anim="highlight">24,000 fake accounts</span></div><span class="tag">allegation</span></div>
-      <div class="card" data-cue="September" data-anim="up"><div class="when">Sep · Anthropic</div><div class="who">a campaign linked to Alibaba</div><div class="num" data-cue="hundred" data-anim="count">151M</div><div class="x">exchanges, May to July 2026</div><span class="tag">allegation</span></div>
-      <div class="card" data-cue="FBI" data-anim="up"><div class="when">Sep 8 · FBI, NSA, CISA</div><div class="who">joint advisory</div><div class="x">accuses Chinese developers, Alibaba among them, of extracting capabilities from American models</div><span class="tag">allegation</span></div>
+      <div class="card" data-cue="September" data-anim="up"><div class="when">Sep · Anthropic</div><div class="who">a campaign linked to Alibaba</div><div class="num" data-cue="hundred" data-anim="count">151M</div><div class="x">exchanges, May to July 2026; <span data-cue="training" data-anim="highlight">used to train Qwen 3.5 to 3.7</span></div><span class="tag">allegation</span></div>
+      <div class="card" data-cue="FBI" data-anim="up"><div class="when">Sep 8 · FBI, NSA, CISA</div><div class="who">joint advisory</div><div class="x">accuses Chinese developers, <span data-cue="among" data-anim="highlight">Alibaba among them</span>, of extracting capabilities from American models</div><span class="tag">allegation</span></div>
       <div class="card" data-cue="Commerce" data-anim="up"><div class="when">Sep 9 · China's Commerce Ministry</div><div class="who cn">"groundless"</div><div class="x" data-cue="common" data-anim="fade">distillation "is a common practice", in the US too</div><span class="tag">denial</span></div>
     </div>
-    <div class="src center" data-cue="February" data-anim="fade">Anthropic, Feb 23, 2026 · Anthropic's Sep 2026 report via The Hacker News · AP, Sep 9, 2026</div>
+    <div class="src center" data-cue="February" data-anim="fade">Anthropic, Feb 23, 2026 · Anthropic, "Detecting and countering misuse of AI: September 2026" · AP, Sep 9, 2026</div>
   </div>
 </section>
 
 <section data-scene="05c-who" data-mood="claim">
   <div class="stage">
-    <div class="board" data-cue="word#1" data-anim="fade">
+    <div class="board" data-cue="scoreboard" data-anim="fade">
       <div class="head"><span>Results · <b>Artificial Analysis Intelligence Index</b></span><span>v5.0.1</span></div>
-      <div class="r hl" data-cue="Claude" data-anim="left"><div class="stripe" style="background: var(--accent-2)"></div><div class="name us">Claude Opus 5.5<small>Anthropic · <span class="me">the narrator</span></small></div><div class="score">59</div></div>
       <div class="r"><div class="stripe" style="background: var(--good)"></div><div class="name cn">Qwen 4 Max<small>Alibaba</small></div><div class="score">43</div></div>
+      <div class="r hl" data-cue="Claude" data-anim="pulse"><div class="stripe" style="background: var(--accent-2)"></div><div class="name us">Claude Opus 5.5<small>Anthropic · <span class="me">the narrator</span></small></div><div class="score">59</div></div>
     </div>
     <div class="row">
-      <span class="chip us" data-cue="Anthropic" data-anim="pop">Anthropic made me</span>
+      <span class="chip us" data-cue="company" data-anim="pop">Anthropic made me</span>
       <span class="chip bar" data-cue="accusations" data-anim="pop">Anthropic makes the accusations</span>
+      <span class="chip amber" data-cue="accusations" data-anim="slam">conflict of interest</span>
     </div>
     <div class="src center" data-cue="Every" data-anim="pulse">every number: its source, on screen · full list in the description</div>
   </div>
@@ -592,29 +623,39 @@
 <section data-scene="05d-test" data-mood="claim">
   <div class="phase" id="p05da">
     <div class="stage">
-      <div class="qbar">
-        <div class="r" data-cue="Qwen#2" data-anim="left"><span class="cn">Qwen 3.8 Max<small>Sep 2, 2026</small></span><div class="b" style="width: 34%"></div><span class="sv" data-cue="Thirty" data-anim="count">34</span></div>
-        <div class="r" data-cue="nine" data-anim="left"><span class="cn">Qwen 4 Max<small>Nov 16, 2026</small></span><div class="b" style="width: 43%"></div><span class="sv" data-cue="forty" data-anim="count">43</span></div>
+      <div class="yr" data-cue="Test" data-anim="fade">
+        <div class="axis"></div>
+        <div class="mo" style="left: 0%">Jan</div><div class="mo" style="left: 20%">Mar</div><div class="mo" style="left: 40%">May</div><div class="mo" style="left: 60%">Jul</div><div class="mo" style="left: 80%">Sep</div><div class="mo" style="left: 96%">Nov</div>
+        <div class="band" style="left: 40%; width: 30%" data-cue="July" data-anim="grow"></div>
+        <div class="bandl" style="left: 37%" data-cue="July" data-anim="fade">Alibaba-linked campaign, May to July</div>
+        <div class="dot" style="left: 80%" data-cue="September" data-anim="pop"></div>
+        <div class="dotl" style="left: 80%" data-cue="September" data-anim="fade">Qwen 3.8 Max</div>
+        <div class="dot" style="left: 95%" data-cue="November" data-anim="pop"></div>
+        <div class="dotl" style="left: 92%; top: 360px" data-cue="November" data-anim="fade">Qwen 4 Max</div>
       </div>
-      <div class="row"><span class="chip amber" data-cue="same" data-anim="pop">same index, v5.0.1</span><span class="chip cn" data-cue="nine" data-anim="slam">+9</span></div>
-      <div class="costs" data-cue="costs" data-anim="up"><span class="from">$10.02<small>per task</small></span><span class="arr"></span><span class="amb">$3.27<small>per task</small></span></div>
-      <div class="src center" data-cue="same" data-anim="fade">artificialanalysis.ai, Qwen3.8 Max and Qwen4 Max pages</div>
+      <div class="src center" data-cue="Test" data-anim="fade">Anthropic, "Detecting and countering misuse of AI: September 2026" · artificialanalysis.ai release dates</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m05d" data-cue="About#1" data-anim="pop"><figure class="ss-meme" data-meme="stonks"><span>+9 points at a third of the cost</span><span>stonks</span></figure></div>
   <div class="phase" id="p05db">
     <div class="stage">
-      <div class="yr" data-cue="timing" data-anim="fade">
-        <div class="axis"></div>
-        <div class="mo" style="left: 0%">Jan</div><div class="mo" style="left: 20%">Mar</div><div class="mo" style="left: 40%">May</div><div class="mo" style="left: 60%">Jul</div><div class="mo" style="left: 80%">Sep</div><div class="mo" style="left: 100%">Nov</div>
-        <div class="band" style="left: 40%; width: 30%" data-cue="campaign" data-anim="grow"></div>
-        <div class="bandl" style="left: 38%" data-cue="campaign" data-anim="fade">Alibaba-linked campaign, May to July</div>
-        <div class="pin" style="left: 97%" data-cue="gap" data-anim="grow"></div>
-        <div class="pinl" style="left: 72%" data-cue="gap" data-anim="fade">Oct 27: the test changes, gap 3 → 12</div>
-        <div class="dot" style="left: 103%" data-cue="changed" data-anim="pop"></div>
-        <div class="dotl" style="left: 98%" data-cue="changed" data-anim="fade">Qwen 4 Max</div>
+      <div class="qbar">
+        <div class="r" data-cue="same" data-anim="left"><span class="cn">Qwen 3.8 Max<small>Sep 2, 2026</small></span><div class="track"><div class="b" style="width: 54%; background: var(--good)"><span class="sv" data-cue="Thirty" data-anim="pop">34</span></div></div></div>
+        <div class="r" data-cue="nine" data-anim="left"><span class="cn">Qwen 4 Max<small>Nov 16, 2026</small></span><div class="track"><div class="b" style="width: 68%; background: var(--good)"><span class="sv" data-cue="forty" data-anim="pop">43</span></div></div></div>
       </div>
-      <div class="src center" data-cue="timing" data-anim="fade">Anthropic's Sep 2026 report · Artificial Analysis, Oct 27, 2026</div>
+      <div class="row"><span class="chip amber" data-cue="same" data-anim="pop">same index, v5.0.1</span><span class="chip cn" data-cue="nine" data-anim="slam">+9</span></div>
+      <div class="costs" data-cue="third" data-anim="up"><span class="from">$10.02<small>per task</small></span><span class="arr"></span><span class="amb">$3.27<small>per task</small></span></div>
+      <div class="src center" data-cue="same" data-anim="fade">artificialanalysis.ai, Qwen 3.8 Max and Qwen 4 Max pages</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m05d" data-cue="task" data-anim="pop"><figure class="ss-meme" data-meme="stonks"><span>+9 points at a third of the cost</span><span>stonks</span></figure></div>
+  <div class="phase" id="p05dc">
+    <div class="stage">
+      <div class="gapv">
+        <div class="card" data-cue="old" data-anim="left"><span class="kk">best open model vs leader · v4.3</span><span class="n">3</span><span class="x">Sep to Oct, after those campaigns</span></div>
+        <div class="card" data-cue="twelve" data-anim="right"><span class="kk">best open model vs leader · v5</span><span class="n">12</span><span class="x">from Oct 27</span></div>
+      </div>
+      <div class="row" data-cue="jump" data-anim="up"><span class="chip amber">the jump lines up with the new index</span></div>
+      <div class="src center" data-cue="twelve" data-anim="fade">Artificial Analysis, "Intelligence Index v5", Oct 27, 2026</div>
     </div>
   </div>
 </section>
@@ -623,8 +664,8 @@
   <div class="phase" id="p05ea">
     <div class="stage">
       <div class="ledger">
-        <div class="card" data-cue="accusations" data-anim="up"><span class="kk">the accusations say</span>it happened <span class="big amb">✓</span></div>
-        <div class="card" data-cue="None#2" data-anim="up"><span class="kk">how much it helped</span>no number <span class="big tar">?</span></div>
+        <div class="card" data-cue="accusations" data-anim="up"><span class="kk">the accusations say</span>it happened<br><span class="tag2">allegation</span></div>
+        <div class="card" data-cue="None#2" data-anim="up"><span class="kk">how much it helped</span>no number in the reports <span class="big tar">?</span></div>
       </div>
       <div class="quote" style="font-size: 52px" data-cue="Nathan" data-anim="up">"distillation is becoming less and less impactful over time"<span class="who">Nathan Lambert, quoted by TechCrunch, Jul 23, 2026</span></div>
     </div>
@@ -635,17 +676,17 @@
       <div class="src center" data-cue="practice" data-anim="fade">reinforcement learning: "big RL runs are millions and millions of rollouts" · Interconnects, Jul 22, 2026</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m05e" data-cue="Doing" data-anim="pop"><figure class="ss-meme" data-meme="money"><span>millions of practice runs through a rival's API</span><span>shut up and take my money</span></figure><div class="src" data-cue="insanely" data-anim="fade">"would be insanely expensive" · Nathan Lambert, Interconnects</div></div>
+  <div class="meme-wrap" id="m05e" data-cue="Grading" data-anim="pop"><figure class="ss-meme" data-meme="money"><span>grading millions of practice runs with a rival's model</span><span>shut up and take my money</span></figure><div class="src" data-cue="insanely" data-anim="fade">"would be insanely expensive" · Nathan Lambert, Interconnects</div></div>
 </section>
 
-<!-- ============ ACT SIX: THE ANSWER (no lead: mid-thought) ============ -->
+<!-- ============ ACT SIX: THE ANSWER (mid-thought) ============ -->
 <section data-scene="06-verdict" data-mood="verdict">
   <div class="meme-wrap" id="m06" data-cue="So" data-anim="pop"><figure class="ss-meme" data-meme="both"><span>the ruler moved, or they fell behind on the hardest work?</span><span data-cue="Both" data-anim="fade">why not both?</span></figure></div>
   <div class="stage">
     <div class="verdicts">
-      <div class="v" id="v06" data-cue="broken" data-anim="up"><span class="ic">1</span><span>Qwen 4 Max is Alibaba's best yet<small>+9 points, a third of the cost per task, same index</small></span></div>
-      <div class="v" data-cue="real" data-anim="up"><span class="ic">2</span><span>The gap is real, and specific<small>widest on the hardest, longest, unseen tasks</small></span></div>
-      <div class="v" data-cue="exactly" data-anim="up"><span class="ic">3</span><span>It's what version five was built to find<small>and it jumped the day the test changed</small></span></div>
+      <div class="v" id="v06" data-cue="broken" data-anim="up"><span class="ic">1</span><span>A clear step up from Qwen 3.8 Max<small data-cue="nine" data-anim="fade">+9 points, a third of the cost per task, same index</small></span></div>
+      <div class="v" data-cue="real" data-anim="up"><span class="ic">2</span><span>The 16 points are real, and specific</span></div>
+      <div class="v" data-cue="widest" data-anim="up"><span class="ic">3</span><span>Widest on version five's hardest tests<small>HLE-Diamond, Terminal-Bench-Science</small></span></div>
       <div class="v" data-cue="evidence" data-anim="up"><span class="ic">4</span><span>No evidence ties it to losing distillation<small>the accusations say copying happened, not how much it helped</small></span></div>
     </div>
   </div>
@@ -653,13 +694,18 @@
 
 <section data-scene="06b-three-questions" data-mood="verdict">
   <div class="stage">
-    <div class="qs3">
-      <div class="q" data-cue="Which" data-anim="left"><span class="n">1</span><span>Which version of the test?</span></div>
-      <div class="q" data-cue="What#1" data-anim="left"><span class="n">2</span><span>What work does it measure?</span></div>
-      <div class="q" data-cue="second" data-anim="left"><span class="n">3</span><span>What does a second scoreboard say?</span></div>
+    <div class="board" data-cue="headlines" data-anim="fade">
+      <div class="head"><span>Results · <b>Artificial Analysis Intelligence Index</b></span><span>v5.0.1</span></div>
+      <div class="r"><div class="stripe" style="background: var(--good)"></div><div class="name cn">Qwen 4 Max<small>Alibaba</small></div><div class="score">43</div></div>
+      <div class="r"><div class="stripe" style="background: var(--accent-2)"></div><div class="name us">Claude Opus 5.5<small>Anthropic</small></div><div class="score">59</div></div>
+    </div>
+    <div class="callout">
+      <span class="chip" data-cue="Which" data-anim="pop"><b>1</b>which version? v5.0.1</span>
+      <span class="chip" data-cue="What" data-anim="pop"><b>2</b>what work? hard, long, private</span>
+      <span class="chip" data-cue="second" data-anim="pop"><b>3</b>second scoreboard? Vals: 63.2% vs 70.1%</span>
     </div>
   </div>
-  <div class="endcard" id="end06" data-cue="Those" data-anim="fade">
+  <div class="endcard" data-cue="Those" data-anim="fade">
     <div class="t">Fell behind, or the ruler moved?</div>
     <div class="a">Both.</div>
     <div class="sv">sources in the description · explained by Claude Opus 5.5 · made with ShipShow</div>
@@ -667,8 +713,8 @@
 </section>
 
 <script>
-  // Covers and case files step aside once their act's first words begin (leads in video.json, plus the video's 0.5 s lead).
-  [["#cov02", "02-the-index", 2.7], ["#cf05", "05-copying", 2.5]].forEach(([sel, id, lead]) => tl.to(sel, { opacity: 0, duration: 0.45 }, sceneStart(id) + lead - 0.35));
+  // The rulebook cover steps aside once its act's first words begin (leads in video.json, plus the video's 0.5 s lead).
+  tl.to("#cov02", { opacity: 0, duration: 0.45 }, sceneStart("02-the-index") + 2.7 - 0.35);
 
   // Scenes in phases: each phase steps aside just before the next one's first arrival.
   document.querySelectorAll("section[data-scene]").forEach((sec) => {
@@ -685,30 +731,25 @@
   });
   // A meme owns the frame while it is up, and leaves just before the next thing arrives.
   const away = (meme, at) => tl.to(meme, { opacity: 0, duration: 0.3 }, at);
-  away("#m04", cueAt("#p04bc .mini") - 0.5);
-  away("#m05d", cueAt("#p05db .yr") - 0.5);
+  away("#m04", cueAt("#p04bd .card") - 0.5);
+  away("#m05d", cueAt("#p05dc .card") - 0.5);
   away("#m06", cueAt("#v06") - 0.5);
 
-  // 01: the fake ending's credits crawl up through the pause, then freeze when the scratch lands.
+  // 01: the fake ending's credits crawl up through the pause, then the scratch lands.
   tl.fromTo("#crawl01", { y: 0 }, { y: -1500, duration: sceneEnd("01-hook") - cueAt("#cr01"), ease: "none", immediateRender: false }, cueAt("#cr01"));
   sfx("scratch", sceneEnd("01-hook") - 0.25, { gain: -2 });
 
-  // 03: the bar rises on "raise", then jumper B clips it and it falls.
+  // 03: the bar rises on "raise", then jumper B clips it: it tips off one standard and fades, above the captions.
   tl.to("#barRect", { attr: { y: 497 }, duration: 0.9, ease: "power2.inOut" }, cueAt("#mk03raise"));
   tl.to("#barLab", { attr: { y: 513 }, duration: 0.9, ease: "power2.inOut" }, cueAt("#mk03raise"));
   tl.set("#barLab", { textContent: "2 m" }, cueAt("#mk03raise") + 0.45);
   tl.to(["#a1", "#b1"], { opacity: 0.18, duration: 0.4 }, cueAt("#mk03raise"));
-  const fall = cueAt("#mk03fall") + 0.85;
-  tl.to("#barRect", { rotation: 9, transformOrigin: "0% 50%", y: 300, duration: 0.7, ease: "power2.in" }, fall);
+  tl.to("#barRect", { rotation: 7, transformOrigin: "0% 50%", y: 90, duration: 0.6, ease: "power2.in" }, cueAt("#mk03fall") + 0.85);
+  tl.to("#barRect", { opacity: 0, duration: 0.5 }, cueAt("#mk03fall") + 1.6);
   sfx("thump", cueAt("#mk03fall") + 1.45, { gain: -3 });
-  tl.set("#ja", { textContent: "✓" }, fall);
-  tl.set("#jb", { textContent: "✗" }, fall);
-  tl.set("#jres", { textContent: "not tied" }, fall);
-
-  // 03b: the chance a 100-step task is still alive after each step, p^n, drawn from the arithmetic itself.
-  const curve = (p) => { let d = ""; for (let n = 0; n <= 100; n++) { const x = 120 + n * 11.8, y = 520 - 480 * Math.pow(p, n); d += (n ? " L " : "M ") + x.toFixed(1) + " " + y.toFixed(1); } return d; };
-  document.getElementById("c99").setAttribute("d", curve(0.99));
-  document.getElementById("c97").setAttribute("d", curve(0.97));
+  tl.set("#ja", { textContent: "✓" }, cueAt("#mk03fall") + 0.85);
+  tl.set("#jb", { textContent: "✗" }, cueAt("#mk03fall") + 0.85);
+  tl.set("#jres", { textContent: "not tied" }, cueAt("#mk03fall") + 0.85);
 
   // 04: a countdown in the guessing pause.
   const e04 = sceneEnd("04-game");

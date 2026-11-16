@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>raise-the-bar thumbnail</title>
+<style>
+  /* The YouTube thumbnail, 1280 by 720 (bin/package.mjs renders it). The picture is the video's own generated high-jump pit
+     (assets/img/highjump.jpg, gitignored; images.md remakes it). Every word and the bar are drawn here. It shows the scoreboard
+     everyone argued about and the twist the video turns on: the bar was raised. The title asks the question; this does not
+     repeat it. */
+  @font-face { font-family: "Anton"; src: url("../../themes/stadium/fonts/anton-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 800; src: url("../../themes/stadium/fonts/inter-latin-800-normal.woff2") format("woff2"); }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; background: #000; position: relative; }
+  .pic { position: absolute; inset: 0; width: 1280px; height: 720px; object-fit: cover; object-position: 50% 60%; filter: brightness(0.8); }
+  .fade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5, 8, 15, 0.92) 0%, rgba(5, 8, 15, 0.7) 40%, rgba(5, 8, 15, 0.05) 70%); }
+  .bar { position: absolute; left: 330px; width: 680px; height: 14px; border-radius: 7px; background: #ff6a3d; box-shadow: 0 0 30px rgba(255, 106, 61, 0.7); }
+  .bar.old { top: 420px; opacity: 0.35; background: #a9b3c6; box-shadow: none; }
+  .bar.new { top: 300px; }
+  .arrow { position: absolute; left: 980px; top: 316px; width: 10px; height: 96px; background: #ffc23a; }
+  .arrow::before { content: ""; position: absolute; left: -16px; top: -24px; border: 21px solid transparent; border-bottom: 26px solid #ffc23a; border-top: 0; }
+  .words { position: absolute; left: 50px; top: 40px; font-family: "Anton", sans-serif; text-transform: uppercase; color: #fff; line-height: 1.02;
+    text-shadow: 0 6px 0 rgba(0, 0, 0, 0.5), 0 10px 40px rgba(0, 0, 0, 0.8); }
+  .a { font-size: 150px; color: #ffc23a; }
+  .b { font-size: 150px; }
+  .board { position: absolute; left: 50px; bottom: 44px; background: rgba(5, 8, 15, 0.94); border: 3px solid #26344f; border-radius: 10px; padding: 14px 24px;
+    font-family: "Inter", sans-serif; font-weight: 800; font-size: 40px; color: #fff; display: grid; grid-template-columns: auto auto; gap: 2px 34px; }
+  .board b { font-family: "Anton", sans-serif; font-weight: 400; color: #ffc23a; font-size: 48px; text-align: right; }
+  .cn { color: #3fe0a5; } .us { color: #6cb8ff; }
+</style>
+</head>
+<body>
+  <img class="pic" src="assets/img/highjump.jpg" alt="">
+  <div class="fade"></div>
+  <div class="bar old"></div>
+  <div class="bar new"></div>
+  <div class="arrow"></div>
+  <div class="words"><div class="a">They</div><div class="b">raised</div><div class="b">the bar</div></div>
+  <div class="board"><span class="cn">Qwen 4 Max</span><b>43</b><span class="us">Opus 5.5</span><b>59</b></div>
+</body>
+</html>

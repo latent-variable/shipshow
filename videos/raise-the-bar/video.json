@@ -17,7 +17,10 @@
     "5.5": "five point five",
     "CISA": "Sisa",
     "NSA": "N S A",
-    "FBI": "F B I"
+    "FBI": "F B I",
+    "3.5": "three point five",
+    "3.7": "three point seven",
+    "3.8": "three point eight"
   },
   "gap": 0.5,
   "beat": 0.9,
@@ -29,24 +32,24 @@
   "leads": {
     "02-the-index": 2.2,
     "03-high-jump": 2.8,
-    "05-copying": 2.0,
     "04-game": 1.2,
+    "05-copying": 1.6,
     "06-verdict": 1.2
   },
   "pauses": {
-    "01-hook": 2.2,
+    "01-hook": 3.0,
     "01b-scratch": 1.4,
-    "02b-january": 0.8,
-    "03-high-jump": 0.8,
-    "03b-long-tasks": 1.2,
-    "03c-where": 1.0,
+    "02b-january": 1.2,
+    "03-high-jump": 0.6,
+    "03b-long-tasks": 0.8,
+    "03c-where": 0.8,
     "04-game": 3.2,
-    "04b-reveal": 0.8,
-    "05b-charges": 0.6,
-    "05c-who": 0.8,
-    "05d-test": 0.8,
+    "04b-reveal": 0.6,
+    "05b-charges": 0.4,
+    "05c-who": 0.6,
+    "05d-test": 0.6,
     "05e-unknown": 1.0,
-    "06-verdict": 0.8
+    "06-verdict": 1.0
   },
   "moods": {
     "scoreboard": {

@@ -1,3 +1,3 @@
-[methodical, like a detective checking an alibi] So, test the claim. If losing access had sunk Qwen 4, you'd expect it to slip against the Qwen before it. On the same version of the index, it's nine points better. Thirty four, then forty three. And each task costs a third as much. About ten dollars, then about three.
+[methodical, like a detective checking an alibi] Test the claim, then. Anthropic's report says the Alibaba campaign ran until July. Qwen 3.8 Max came out in September, and Qwen 4 Max in November, both after it. On the same version of the index, Qwen 4 Max is nine points better than Qwen 3.8 Max. Thirty four, then forty three, at a third of the cost per task.
 
-[methodical, then pointed] Then the timing. Anthropic's own report says the Alibaba-linked campaign ran until July. And the gap that went from three points to twelve did it when the test changed.
+[methodical, then pointed] And the gap between the best open model and the leader? On the old version, in September and October, after those campaigns, it was three points. Artificial Analysis puts the twelve on version five. The jump lines up with the new index, not with a cut-off.
