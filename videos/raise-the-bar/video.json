@@ -4,7 +4,7 @@
   "kind": "feature",
   "importance": "high",
   "importance_reason": "public: Lino's YouTube channel, about a live argument over named companies (Alibaba, Anthropic, Artificial Analysis) and an accusation still disputed; a viewer may repeat any number, and a wrong one is unfair to a lab or to the scoreboard",
-  "audience": "A developer or AI-curious viewer on YouTube who saw Qwen 4 Max land well behind Claude and GPT on the Artificial Analysis leaderboard, and the posts blaming American anti-distillation measures. They know what a language model is but not how the index is built. After watching they can say what changed in the index on October 27, why harder, longer, private tests spread scores apart, what a second scoreboard shows, what the distillation accusations are and why the timing does not tie the gap to them, and ask three questions of any leaderboard.",
+  "audience": "Someone already in AI on YouTube, the kind who follows model releases and leaderboards and knows what distillation, open weights and RL are, who saw Qwen 4 Max land well behind Claude and GPT on the Artificial Analysis leaderboard, and the posts blaming American anti-distillation measures. They may not know how the index's versions changed. After watching they can say what changed in the index on October 27, why harder, longer, private tests spread scores apart, why one ruler shows a lag rather than a fall, what a second scoreboard shows, why the timing does not tie the gap to the distillation accusations, and ask three questions of any leaderboard.",
   "theme": "stadium",
   "engine": "drama",
   "voice": "narrator-uk",
@@ -20,7 +20,8 @@
     "FBI": "F B I",
     "3.5": "three point five",
     "3.7": "three point seven",
-    "3.8": "three point eight"
+    "3.8": "three point eight",
+    "5.2": "five point two"
   },
   "gap": 0.5,
   "beat": 0.9,
@@ -49,8 +50,10 @@
     "05c-who": 0.6,
     "05d-test": 3.2,
     "05e-unknown": 1.0,
-    "06-verdict": 1.0,
-    "02-the-index": 3.4
+    "06-verdict": 1.4,
+    "02-the-index": 3.4,
+    "06a-months": 1.0,
+    "05-copying": 1.2
   },
   "moods": {
     "scoreboard": {
@@ -130,7 +133,7 @@
     ],
     "description": [
       "Alibaba released Qwen 4 Max on November 16, 2026. On the Artificial Analysis Intelligence Index it scores 43, sixteen points behind Claude Opus 5.5, and within hours a popular post blamed Qwen being cut off from distilling American models. But the gap between the best open model and the leader was 3 points on the old version of the index, and was 12 when version 5 launched on October 27.",
-      "Short answer: both. Version 5 of the index swapped in harder, longer and mostly private tests, and Artificial Analysis says the gap is widest on two of them, HLE-Diamond and Terminal-Bench-Science, so the ruler moved and Chinese models do trail on what it now measures. Qwen 4 Max is still nine points better than Qwen 3.8 Max on the same index, at a third of the cost per task, and nothing I read ties its score to being cut off from distillation. A second scoreboard, the Vals Index, puts it within a point of GPT-6.1 Sol. Status as of November 16, 2026.",
+      "Short answer: the ruler moved, and on one ruler I see no sign of a fall. Lining up the top-scoring American and Chinese models today's index has, at each moment: 23 points apart in early September, 13 when Kimi K3.1 Pro came out on October 23, 19 now, after Claude Fable 5.2. The gap swings with whoever released last, and China's side is still behind, by about seven months on average from 2023 to January 2026 by Epoch AI's count. Version 5 changed how big that looks: the best open model went from 3 points behind to 12. Nothing I read ties Qwen's score to being cut off from distillation. Status as of November 16, 2026.",
       "The narrator is Claude Opus 5.5, made by Anthropic, which is on the same scoreboard and is the main accuser in the distillation story. Every measured number in the video has its source, on screen or in the list below.",
       "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
     ],
@@ -145,11 +148,15 @@
     "sources": [
       "Artificial Analysis, Qwen4 Max: https://artificialanalysis.ai/models/qwen4-max",
       "Artificial Analysis, Qwen3.8 Max: https://artificialanalysis.ai/models/qwen3-8-max",
+      "Artificial Analysis, GPT-6 Astra: https://artificialanalysis.ai/models/gpt-6-astra",
+      "Artificial Analysis, Claude Fable 5.2: https://artificialanalysis.ai/models/claude-fable-5-2",
       "Artificial Analysis, leaderboard: https://artificialanalysis.ai/leaderboards/models",
       "Artificial Analysis, Intelligence Index v5, October 27, 2026: https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
       "Artificial Analysis, methodology and version history: https://artificialanalysis.ai/methodology/intelligence-benchmarking",
       "Artificial Analysis, Recent open weights model launches, April 30, 2026: https://artificialanalysis.ai/articles/recent-open-weights-model-launches",
       "VentureBeat, Artificial Analysis overhauls its AI Intelligence Index, January 6, 2026: https://venturebeat.com/technology/artificial-analysis-overhauls-its-ai-intelligence-index-replacing-popular",
+      "Epoch AI, Chinese AI models have lagged the US frontier by 7 months on average since 2023, January 2, 2026: https://epoch.ai/data-insights/us-vs-china-eci",
+      "Epoch AI, Can AI spot mistakes in IKEA assembly?, September 23, 2026: https://epoch.ai/publications/furniture-assembly",
       "Vals AI, Vals Index: https://www.vals.ai/benchmarks/vals_index",
       "Chubby (@kimmonismus) on X, November 16, 2026: https://x.com/kimmonismus/status/2122294330778132787",
       "Qwen (@Alibaba_Qwen) on X, November 16, 2026: https://x.com/Alibaba_Qwen/status/2122148127520289151",

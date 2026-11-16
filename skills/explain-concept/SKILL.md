@@ -82,11 +82,16 @@ omission from an oversight.
   works: put it on screen, then say why it is not, in one breath. Then walk the viewer through it by hand, the obvious try, a
   worse one, a cleverer one, so they are thinking along before the first new idea arrives. A credit, a disclosure or a date is
   not a hook.
-- **Write for the smart kid with high-school math, or someone from another field.** Every term is explained the first time it
-  is said, in everyday words, before it is used: a set, a dimension, a power, a logarithm, an imaginary number. People who know
-  the field follow anyway; the rest are lost from the first word they never got (the same note: "four minutes in ... we start
-  throwing terms that we didn't really [explain]"). Think through each kind of viewer, and let their perspective choose the
-  example.
+- **Write for the viewer this title draws, and explain what they would not already know.** A maths or science idea for a
+  general channel audience is watched by the smart kid with high-school maths or someone from another field: every term is
+  explained the first time it is said, in everyday words, before it is used (a set, a dimension, a power, a logarithm, an
+  imaginary number), or they are lost from the first word they never got (the same note: "four minutes in ... we start
+  throwing terms that we didn't really [explain]"). A video on a model release, a benchmark or an industry fight is watched
+  by people already in that field: its everyday terms (distillation, open weights, RL, a leaderboard) get a clause of recap at
+  most, and a definition from the ground up talks down to them (the owner, 2026-11-16, on raise-the-bar: "explaining
+  distillation from the bottom is kind of unnecessary ... we have to know our audience"). The title is evidence of who watches; `video.json`
+  `"audience"` is where the builder settles it, so write that persona from the title and keep the two in agreement. Think
+  through each kind of viewer the title draws, and let their perspective choose the example.
 - **No leaps: every step is shown happening** (the owner, 2026-10-31, on kakeya-every-dimension's fifth cut: "you basically
   lost me when a Kakeya set had area of zero ... how did we go from almost no area to ... absolutely zero area? ... some
   leaps"). When the voice goes from one claim to a stronger one in a sentence (almost none, then exactly zero), the step between

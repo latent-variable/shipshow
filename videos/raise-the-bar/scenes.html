@@ -258,6 +258,29 @@
   .rewind .datecard { display: inline-block; padding: 14px 36px; }
   .rewind .datecard .d { font-size: 84px; }
   .meme-wrap .ss-meme { --meme-height: 620px; }
+  .answer { font-family: var(--font-display); font-size: 180px; text-align: center; color: var(--accent-3); text-transform: uppercase; line-height: 1.42; padding-top: 12px; }
+  .answer2 { font-size: 66px; font-weight: 800; text-align: center; }
+  #p06b .stage { gap: 22px; }
+  #p06b .gb { padding: 18px 28px; }
+  #p06b .gb .gapn { margin-top: 8px; }
+  #p06b .stamp { font-size: 62px; }
+  #p06b .src { margin-top: 14px; }
+  .answer { padding-bottom: 14px; }
+  .mag3 { gap: 60px; align-items: flex-start; }
+  .mag3 .n { width: 480px; text-align: center; }
+  .mag3 .n small { margin: 10px auto 0; line-height: 1.25; }
+  .endcard .q2line { font-size: 34px; color: var(--muted); }
+  .m3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 1620px; margin: 0 auto; }
+  .g3 { padding: 18px 26px; }
+  .g3 .ver { font-size: 60px; }
+  .g3 .l3 { margin-top: 14px; }
+  .g3 .l3 > span { display: block; font-size: 30px; font-weight: 800; margin-bottom: 6px; }
+  .g3 .l3 .b { height: 54px; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; box-sizing: border-box; }
+  .g3 .l3 .b b { font-family: var(--font-display); font-size: 42px; color: #05080f; font-weight: 400; line-height: 1.42; padding-top: 6px; }
+  .g3 .gapn { margin-top: 10px; }
+  .holds .verdicts { width: 1640px; gap: 34px; }
+  .holds .verdicts .v { font-size: 60px; }
+  .holds .verdicts .v small { font-size: 38px; }
 </style>
 
 
@@ -301,7 +324,7 @@
   <div class="mk" id="mk01drop" data-cue="date" data-drop="2.4"></div>
   <div class="phase" id="p01ba">
     <div class="stage">
-      <div class="row"><span class="chip sm" data-cue="open" data-anim="fade">open models: the kind anyone can download</span><span class="chip cn sm" data-cue="Chinese#1" data-anim="fade">the best come from Chinese labs</span></div>
+      <div class="row"><span class="chip sm" data-cue="open" data-anim="fade">open-weight models</span><span class="chip cn sm" data-cue="Chinese#1" data-anim="fade">the best come from Chinese labs</span></div>
       <div class="vs2">
         <div class="gb" data-cue="old" data-anim="left">
           <div class="ver">Old version <span class="src">v4.3</span></div>
@@ -588,17 +611,17 @@
       <div class="tweetbox">
         <figure class="ss-shot flow" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2122294330778132787&amp;theme=dark"
           data-select="[data-testid='UserAvatar-Container-kimmonismus'], [data-testid='tweetText']:not(article article *)" data-width="620" data-pad="10" data-hide="[aria-label='Image']" data-source="x.com/kimmonismus/status/2122294330778132787"
-          data-find="cut off from distillation" data-cue="post" data-anim="fade" style="--shot-width: 1100px; --shot-max-height: 500px"></figure>
+          data-find="cut off from distillation" data-mark-cue="distillation" data-cue="post" data-anim="fade" style="--shot-width: 1100px; --shot-max-height: 500px"></figure>
       </div>
     </div>
   </div>
   <div class="phase" id="p05a">
     <div class="stage">
-      <div class="row"><span class="chip bar" data-cue="name" data-anim="type">distillation</span></div>
+      <div class="row"><span class="chip bar" data-cue="distillation" data-anim="type">distillation</span></div>
       <div class="distil">
         <div class="m" style="border-color: var(--accent-2)" data-cue="strong" data-anim="up">Teacher<small>a strong model</small></div>
-        <div class="arr" data-cue="questions" data-anim="grow"></div>
-        <div class="stack" data-cue="questions" data-anim="stagger"><span>Q: … → A: …</span><span>Q: … → A: …</span><span>Q: … → A: …</span><span>× a huge number</span></div>
+        <div class="arr" data-cue="answers" data-anim="grow"></div>
+        <div class="stack" data-cue="answers" data-anim="stagger"><span>Q: … → A: …</span><span>Q: … → A: …</span><span>Q: … → A: …</span><span>× a huge number</span></div>
         <div class="arr" data-cue="train" data-anim="grow"></div>
         <div class="m" style="border-color: var(--good)" data-cue="train" data-anim="up">Student<small>learns the answers</small></div>
       </div>
@@ -697,8 +720,8 @@
   <div class="phase" id="p05eb">
     <div class="stage">
       <div class="row" data-cue="podcast" data-anim="fade"><span class="chip sm">Interconnects podcast, Jul 22, 2026</span></div>
-      <div class="loop" data-cue="practice" data-anim="up"><span class="chip">try a task</span><span class="arr"></span><span class="chip">get scored</span><span class="arr"></span><span class="chip">try again</span><span class="times" data-cue="millions" data-anim="pop">× millions</span></div>
-      <div class="src center" data-cue="practice" data-anim="fade">reinforcement learning: "big RL runs are millions and millions of rollouts" · Interconnects, Jul 22, 2026</div>
+      <div class="loop" data-cue="reinforcement" data-anim="up"><span class="chip">try a task</span><span class="arr"></span><span class="chip">get scored</span><span class="arr"></span><span class="chip">try again</span><span class="times" data-cue="millions" data-anim="pop">× millions</span></div>
+      <div class="src center" data-cue="reinforcement" data-anim="fade">reinforcement learning: "big RL runs are millions and millions of rollouts" · Interconnects, Jul 22, 2026</div>
     </div>
   </div>
   <div class="meme-wrap" data-overlap="ok" id="m05e" data-cue="Grading" data-anim="pop"><figure class="ss-meme" data-meme="toohigh"><span>grading millions of practice runs with a rival's model:</span><span>the bill is too damn high</span></figure><div class="src" data-cue="insanely" data-anim="fade">"would be insanely expensive" · Nathan Lambert, Interconnects</div></div>
@@ -706,12 +729,82 @@
 
 <!-- ============ ACT SIX: THE ANSWER (mid-thought) ============ -->
 <section data-scene="06-verdict" data-mood="verdict">
-  <div class="meme-wrap" id="m06" data-cue="Both" data-anim="pop"><figure class="ss-meme" data-meme="both"><span>did the ruler move, or did Chinese models fall behind?</span><span>why not both?</span></figure></div>
-  <div class="stage">
+  <div class="phase" id="p06a">
+    <div class="stage">
+      <div class="answer" data-cue="ruler" data-anim="slam">The ruler moved.</div>
+      <div class="answer2" data-cue="sign" data-anim="up">And on one ruler, no sign of a fall.</div>
+    </div>
+  </div>
+  <div class="phase" id="p06b">
+    <div class="stage">
+      <div class="row center"><span class="chip bar sm" data-cue="rescored" data-anim="fade">one ruler: today's Artificial Analysis Intelligence Index, v5.0.1, which rescores many older models</span></div>
+      <div class="m3">
+        <div class="gb g3" data-cue="September" data-anim="up">
+          <div class="ver">Early September</div>
+          <div class="l3"><span class="us">GPT-6 Astra · Sep 3</span><div class="b" style="background: var(--accent-2); width: 87.7%"><b>57</b></div></div>
+          <div class="l3"><span class="cn">Qwen 3.8 Max · Sep 2</span><div class="b" style="background: var(--good); width: 52.3%"><b>34</b></div></div>
+          <div class="gapn" data-cue="Twenty" data-anim="pop">23<small>apart</small></div>
+        </div>
+        <div class="gb g3" data-cue="Kimi" data-anim="up">
+          <div class="ver">October 23</div>
+          <div class="l3"><span class="us">Claude Opus 5.5 · Sep 22</span><div class="b" style="background: var(--accent-2); width: 90.8%"><b>59</b></div></div>
+          <div class="l3"><span class="cn">Kimi K3.1 Pro · Oct 23</span><div class="b" style="background: var(--good); width: 70.8%"><b>46</b></div></div>
+          <div class="gapn" data-cue="thirteen" data-anim="pop">13<small>apart</small></div>
+        </div>
+        <div class="gb g3" data-cue="Fable" data-anim="up">
+          <div class="ver">Now</div>
+          <div class="l3"><span class="us">Claude Fable 5.2 · Nov 9</span><div class="b" style="background: var(--accent-2); width: 100%"><b>65</b></div></div>
+          <div class="l3"><span class="cn">Kimi K3.1 Pro · Oct 23</span><div class="b" style="background: var(--good); width: 70.8%"><b>46</b></div></div>
+          <div class="gapn" data-cue="nineteen" data-anim="pop">19<small>apart</small></div>
+        </div>
+      </div>
+      <div class="row center"><span class="stamp" data-cue="lag" data-anim="slam">a lag, not a fall</span></div>
+      <div class="src center" data-cue="September" data-anim="fade">Best American and best Chinese model released by each date, among models with a v5.0.1 score · Artificial Analysis model pages, as of Nov 16, 2026 · gaps ours</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="06a-months" data-mood="verdict">
+  <div class="phase" id="p06c">
+    <div class="stage">
+      <div class="row center"><span class="chip bar sm" data-cue="Epoch" data-anim="fade">Epoch AI: the gap in months, not points</span></div>
+      <div class="mag mag3">
+        <div class="n cn" data-cue="seven" data-anim="pop">7<small>months behind, on average, 2023 to January 2026</small></div>
+        <div class="n cn" data-cue="four#1" data-anim="pop">4<small>months, the closest, through January 2026</small></div>
+        <div class="n cn" data-cue="Kimi" data-anim="pop">4.4<small>months: Kimi K3, at its release (Epoch, September)</small></div>
+      </div>
+      <div class="src center" data-cue="seven" data-anim="fade">Epoch AI, "Chinese AI models have lagged the US frontier by 7 months on average since 2023" (range 4 to 14), Jan 2, 2026 · Epoch AI, Sep 23, 2026: Kimi K3 "trailed the frontier by only 4.4 months, as measured by the Epoch Capabilities Index" (7 on Epoch's newer furniture-assembly test)</div>
+    </div>
+  </div>
+  <div class="phase" id="p06d">
+    <div class="stage">
+      <div class="vs2">
+        <div class="gb" data-cue="old" data-anim="left">
+          <div class="ver">Old version <span class="src">v4.3</span></div>
+          <div class="lane"><span>leader</span><div class="b" style="background: var(--accent-2); width: 100%"></div></div>
+          <div class="lane"><span>best open</span><div class="b" style="background: var(--good); width: 94.8%"></div></div>
+          <div class="gapn" data-cue="three" data-anim="pop">3<small>"almost caught up"</small></div>
+        </div>
+        <div class="datecard" data-cue="version" data-anim="slam"><div class="d">Oct 27</div><div class="m">a new ruler</div></div>
+        <div class="gb" data-cue="twelve" data-anim="right">
+          <div class="ver">Version five <span class="src">v5.0</span></div>
+          <div class="lane"><span>leader</span><div class="b" style="background: var(--accent-2); width: 100%"></div></div>
+          <div class="lane"><span>best open</span><div class="b" style="background: var(--good); width: 79.3%"></div></div>
+          <div class="gapn" data-cue="twelve" data-anim="pop">12<small>"as if it fell"</small></div>
+        </div>
+      </div>
+      <div class="row center"><span class="stamp" data-cue="ruler" data-anim="slam">the ruler moved</span></div>
+      <div class="src center" data-cue="twelve" data-anim="fade">Artificial Analysis, "Intelligence Index v5", Oct 27, 2026: "12 points behind the leader, compared with a 3-point gap in v4.3"</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="06a2-holds" data-mood="verdict">
+  <div class="stage holds">
     <div class="verdicts">
-      <div class="v" id="v06" data-cue="clear" data-anim="up"><span class="ic">1</span><span>A clear step up from Qwen 3.8 Max<small data-cue="nine" data-anim="fade">+9 points, a third of the cost per task, same index</small></span></div>
-      <div class="v" data-cue="real" data-anim="up"><span class="ic">2</span><span>The 16 points are real, and specific</span></div>
-      <div class="v" data-cue="widest" data-anim="up"><span class="ic">3</span><span>Widest on two of version five's tests<small>HLE-Diamond, Terminal-Bench-Science</small></span></div>
+      <div class="v" data-cue="clear" data-anim="up"><span class="ic">1</span><span>A clear step up from Qwen 3.8 Max<small data-cue="nine" data-anim="fade">+9 points, a third of the cost per task, same index</small></span></div>
+      <div class="v" data-cue="real" data-anim="up"><span class="ic">2</span><span>The 16 points to Opus 5.5 are real<small>43 against 59, today's index</small></span></div>
+      <div class="v" data-cue="trail" data-anim="up"><span class="ic">3</span><span>Chinese models trail most on two of its tests<small>HLE-Diamond, Terminal-Bench-Science (Kimi K3.1 Pro, per Artificial Analysis)</small></span></div>
       <div class="v" data-cue="evidence" data-anim="up"><span class="ic">4</span><span>No evidence ties it to losing distillation<small>the accusations say copying happened, not how much it helped</small></span></div>
     </div>
   </div>
@@ -726,14 +819,15 @@
     </div>
     <div class="callout">
       <span class="chip" data-cue="Which" data-anim="pop"><b>1</b>which version? v5.0.1</span>
-      <span class="chip" data-cue="What" data-anim="pop"><b>2</b>what work? hard, long, private</span>
-      <span class="chip" data-cue="second" data-anim="pop"><b>3</b>second scoreboard? Vals: 63.2% vs 70.1%</span>
+      <span class="chip" data-cue="second" data-anim="pop"><b>2</b>second scoreboard? Vals: 63.2% vs 70.1%</span>
+      <span class="chip" data-cue="months" data-anim="pop"><b>3</b>how many months? Epoch: about 7, 2023 to Jan 2026</span>
     </div>
   </div>
   <div class="endcard" data-cue="Those" data-anim="fade">
     <div class="t">Did Chinese models fall behind,<br>or did the ruler move?</div>
-    <div class="a">Both.</div>
-    <div class="qline">ask any leaderboard: which version? what work? what does a second scoreboard say?</div>
+    <div class="a">The ruler moved.</div>
+    <div class="qline">Behind since 2023, by months. On one ruler, the gap swings with each release: a lag, not a fall.</div>
+    <div class="qline q2line">ask any leaderboard: which version? what does a second scoreboard say? how many months, not points?</div>
     <div class="sv">sources in the description · explained by Claude Opus 5.5 · made with ShipShow</div>
   </div>
 </section>
@@ -759,7 +853,6 @@
   const away = (meme, at) => tl.to(meme, { opacity: 0, duration: 0.3 }, at);
     away("#m04", cueAt("#p04bd .card") - 0.5);
   away("#m05d", cueAt("#m05d") + 4.6);
-  away("#m06", cueAt("#v06") - 0.5);
 
   // 01: "Case closed", then the tape rewinds: the board's version label ticks back to v4.3 (its scores blank: v4.3's are not
   // in the sources) and stops on the date the index changed.

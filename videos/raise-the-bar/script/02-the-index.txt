@@ -1,3 +1,3 @@
-[clear, explaining to a curious friend, unhurried] Artificial Analysis runs every new model through a bundle of tests, and boils the results down to one number: the Intelligence Index. In April, it wrote that the best open models were within three to six points of the leaders.
+[clear and unhurried] The ruler here is the Artificial Analysis Intelligence Index: one number from a bundle of tests. In April, it had the best open models within three to six points of the leaders.
 
-[matter-of-fact, then dry] And the bundle keeps changing. Counting small fixes, the index has had nine versions this year. Four of them started in September.
+[matter-of-fact, then dry] And the bundle keeps changing. Counting small fixes, it's had nine versions this year. Four of them started in September. So the ruler itself keeps moving.

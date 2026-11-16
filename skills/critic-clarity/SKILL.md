@@ -28,10 +28,13 @@ with no rewind; the frames for what they see alongside it.
 - **major:** a term, acronym or concept used before it is explained, or never explained,
   that this viewer would not know. So is a step told in the source's vocabulary ("a piece of algebra", "a polynomial",
   "Taylor coefficients") where the example the viewer already holds would carry it (the owner on eth-is-false's dial,
-  twice: "still a little bit too complicated to follow"). For a channel video, "this viewer" is a smart high-schooler or someone
-  from another field: a set, a dimension, a power, a logarithm, an imaginary number, a derivative each need everyday words the
-  first time they are said, and one word keeps one meaning (kakeya-every-dimension used "loss" for two things, and the step that
-  rested on it could not be followed). The owner stopped four minutes into its first cut, lost at the first such words.
+  twice: "still a little bit too complicated to follow"). "This viewer" is whoever the video's title draws. For a
+  maths or science idea on a channel, a smart high-schooler or someone from another field: a set, a dimension, a power, a
+  logarithm, an imaginary number, a derivative each need everyday words the first time they are said, and one word keeps one meaning (kakeya-every-dimension used "loss" for two things, and the step that
+  rested on it could not be followed). The owner stopped four minutes into its first cut, lost at the first such words. For a video on a model release, a benchmark or an industry
+  fight, the viewer already works in the field. The reverse failure is then a **minor**: a term they use every day
+  (distillation, open weights, RL) defined from the ground up. It talks down to them and spends their time (the owner on
+  raise-the-bar, 2026-11-16).
 - **major:** a leap: the voice goes from one claim to a stronger one (almost none, then exactly zero; a test described, then
   its verdict) and the step between is told, not shown. Name the two claims and what the viewer would need to see happen
   between them (the owner on kakeya-every-dimension, 2026-10-31: lost at the jump to "area zero", and at a paint test that was

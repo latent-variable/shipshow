@@ -194,3 +194,46 @@ Whisper heard no words). Every bed is levelled before use: `level/` copies, run 
 there is no ducking. Measured on the new `assets/music.wav`, the act medians sit between -40 and -45 dB, and over 3 s windows a
 bed holds within about 2 dB. The two `data-drop`s remain. Voice, script and pictures are unchanged, so no critic round was run.
 Only the bed changed, and that is a call Lino makes by ear.
+
+## The answer, rewritten (2026-11-16, Lino, after watching)
+
+Lino: the old close, "Both.", said Chinese models fell behind, when they were never level. They started behind and have
+trailed by months, and the old index made them look like they were catching up. He also asked that the video talk to the
+viewer the title draws, people already in AI, and not define distillation from the ground up.
+
+The close is now three scenes. 06-verdict says the ruler moved and that, on one ruler, there is no sign of a fall: the best
+American and best Chinese model out at each moment were 23, 13 and 19 points apart (early September, October 23, now).
+06a-months gives Epoch AI's lag in months and the ruler's 3 to 12. 06a2-holds collects what still stands. The "Why Not Both?"
+meme is gone. Distillation, open models, RL and the index lost their ground-up definitions (01b, 02, 05, 05e), and
+`explain-concept` and `critic-clarity` now take the viewer the title draws (DESIGN D110).
+
+### Round (changed scenes only; Sonnet: accuracy, clarity, visuals with sync; about 0.32M tokens)
+
+- **accuracy, FAIL, fixed.** The first draft said "nobody fell behind" from two Alibaba pairs, against a model released a day
+  later in September and against the leader in November, which was not like for like. The draft also left out that Kimi K3.1
+  Pro, the best Chinese model, went from 12 behind at launch to 19 now. The comparison is now best against best at each moment
+  (23, 13, 19), and the claim is "no sign of a fall" with "the gap swings with whoever released last". "All along" became
+  "since 2023", "four and a half in September" became "four point four, at its release" with the report dated, "didn't jump"
+  became "that jump came with the ruler" (inferred, as in 05d2), and "rescored" is said aloud.
+- **clarity, pass with majors, fixed.** Three gaps (12, 16, 22) and two leaders in a minute: the close now has one set of
+  three gaps on one board, and 06a2 says "the sixteen points to Opus 5.5 from the opening". The step from one model to
+  "nobody" is gone with the new comparison. Epoch's months are now explained in a clause: "how many months back the American
+  frontier was as good". 02 now ends on "So the ruler itself keeps moving." 06a2 is shorter.
+  Declined: "the post" has no referent (minor). The post is on screen, captured, on the word "post". Declined: why a rival's
+  model would grade RL (minor). This audience knows what a per-call API costs.
+- **visuals, pass, fixed.** 06a2's list sat in the top of the frame, so it is now larger and centred. The stamp brushed the
+  source line, and the layout is new. 05-copying's cards had too little time, so it gets a 1.2 s pause. The tweet's marker now
+  sweeps in on "distillation". Declined: chip 2 in 06b is late (minor). It is already cued on "second", and the lag is Whisper's
+  word time.
+- **accuracy re-check, FAIL, fixed.** "Best Chinese model" in September is only the best that today's index scores, since Kimi
+  K3 (July) has no v5.0.1 score. The line now says "the top-scoring American and Chinese models it has". "Rescored the older
+  models" became "many older models". "Widest on two of version five's tests" was AA5's finding for Kimi, not for Qwen's
+  sixteen, and is now "Chinese models trail most on two of version five's tests". "No sign of a fall" became "I see no sign of
+  a fall", said as a reading. Epoch's average is dated: "from 2023 to the start of this year".
+- **accuracy verification, PASS.** All five re-check findings are resolved. Fixed (on screen): "the closest it has been" now
+  reads "through January 2026", and the Epoch chip carries its dates. Accepted (minor, narration): "Chinese models trail most
+  on two of version five's tests" is AA5's finding for the best Chinese model, and the screen qualifies it as Kimi K3.1 Pro's
+  in the same moment. "Both sides keep climbing" became "Both sides have climbed since September", because the PR review flagged it too: the best Chinese score has been flat at 46 since October.
+  Re-voicing either would cost another round for a wording the screen already qualifies.
+
+Spend on this rewrite: about 0.55M Sonnet critic tokens (three critics, two accuracy re-checks).
