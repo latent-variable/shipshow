@@ -175,3 +175,11 @@ qwen-phones-home); Parakeet's second listen flagged nothing. Nobody has heard th
 
 Spend: about 3.0M critic tokens across 22 critic runs (round 1, 1.02M; round 2, 0.99M; round 3, 0.93M; verification, 0.26M),
 against the plan's 2.9M ceiling for three full rounds. The verification ran past the cap on purpose: accuracy is the floor.
+
+## The upload folder (2026-11-16, Sonnet, one round)
+
+A fresh critic judged `youtube/to-upload/raise-the-bar/` and failed it on the thumbnail: the subject and scores sat in an
+11 px chip at 320 by 180, the picture read as a calm stock photo, the scores had no index named, and "They raised the bar"
+stated an inferred cause as fact. Now it reads "Qwen 4 Max / 16 behind? / or did the bar move" over the old and new bars, with
+the index named. The title leads with Qwen 4 Max and "the Benchmark"; the description's second paragraph gives the answer
+instead of a list; the AP source has its link; sources.md no longer lists an AA5 capture the video never made.

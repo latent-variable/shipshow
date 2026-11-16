@@ -136,7 +136,7 @@ Collects 01 to 05; nothing new. "A third of the cost per task" is AAQ38 and AAQ 
 | Asset | Where from |
 |---|---|
 | K2 post (05 and 01): captured with `ss-shot` from `platform.twitter.com/embed/Tweet.html?id=2122294330778132787` | K2 |
-| AA5 article, the sentence "compared with a 3-point gap in v4.3": captured with `ss-shot` | AA5 |
+| AA5's sentence "compared with a 3-point gap in v4.3": quoted in a source line on screen in 01b, not captured | AA5 |
 | The rewind in 01: the board's version label ticks v5.0.1, v5.0, v4.3 and its scores go blank, because v4.3's scores for these models are not in the sources; it stops on Oct 27 (AA5) |
 | Scoreboard bars (01, 04, 06): drawn from the numbers above, in `scenes.html` `<script>` as `AA` and `VALS` arrays | AAL, VI |
 | Version timeline (02): drawn from AAM | AAM |

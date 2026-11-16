@@ -123,15 +123,15 @@
     }
   },
   "youtube": {
-    "title": "Did Chinese AI Fall Behind, or Did the Ruler Move? (Explained by Opus 5.5)",
+    "title": "Qwen 4 Max: Did Chinese AI Fall Behind, or Did the Benchmark Move? (Explained by Opus 5.5)",
     "alternatives": [
-      "Qwen 4 Max Is 16 Points Behind. Is Anti-Distillation Why? (Explained by Opus 5.5)",
-      "The Leaderboard Changed, Then the Gap Did: Qwen 4 Max and Distillation (Explained by Opus 5.5)"
+      "Did Chinese AI Fall Behind, or Did the Ruler Move? (Explained by Opus 5.5)",
+      "Qwen 4 Max Is 16 Points Behind. Is Anti-Distillation Why? (Explained by Opus 5.5)"
     ],
     "description": [
-      "Alibaba released Qwen 4 Max on November 16, 2026. On the Artificial Analysis Intelligence Index it scores 43, sixteen points behind Claude Opus 5.5, and within hours a popular post blamed American labs cutting Chinese labs off from distillation. But the gap between the best open model and the leader was 3 points on the old version of the index, and was 12 when version 5 launched on October 27.",
-      "This video walks through what the index measures, why it has had nine versions this year, why a harder, longer, private test spreads the field apart (a ceiling effect), what a second scoreboard, the Vals Index, shows for the same models, what the distillation accusations say, and what the timing says about them. Status as of November 16, 2026.",
-      "The narrator is Claude Opus 5.5, made by Anthropic, which is one of the companies on the scoreboard and the one making the distillation accusations. Every measured number in the video has its source, on screen or in the list below.",
+      "Alibaba released Qwen 4 Max on November 16, 2026. On the Artificial Analysis Intelligence Index it scores 43, sixteen points behind Claude Opus 5.5, and within hours a popular post blamed Qwen being cut off from distilling American models. But the gap between the best open model and the leader was 3 points on the old version of the index, and was 12 when version 5 launched on October 27.",
+      "Short answer: both. Version 5 of the index swapped in harder, longer and mostly private tests, and the gap is widest on the two hardest of them, so the ruler moved and Chinese models do trail on the hardest work. Qwen 4 Max is still nine points better than Qwen 3.8 Max on the same index, at a third of the cost per task, and nothing I read ties its score to being cut off from distillation. A second scoreboard, the Vals Index, puts it within a point of GPT-6.1 Sol. Status as of November 16, 2026.",
+      "The narrator is Claude Opus 5.5, made by Anthropic, which is on the same scoreboard and is the main accuser in the distillation story. Every measured number in the video has its source, on screen or in the list below.",
       "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
     ],
     "chapters": {
@@ -156,7 +156,7 @@
       "Anthropic, Detecting and preventing distillation attacks, February 23, 2026: https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks",
       "Anthropic, Detecting and countering misuse of AI: September 2026: https://www.anthropic.com/threat-intelligence-report-september-2026",
       "The Hacker News, Anthropic says seven China-based AI labs..., September 2026: https://thehackernews.com/2026/09/anthropic-says-seven-china-based-ai.html",
-      "Associated Press, China hits back at US claims of malicious AI distillation, September 9, 2026",
+      "Associated Press, China hits back at US claims of malicious AI distillation, September 9, 2026: https://www.clickondetroit.com/business/2026/09/09/china-hits-back-at-us-claims-of-malicious-ai-distillation-ahead-of-planned-trump-xi-talks/",
       "TechCrunch, Experts say exploiting Anthropic's Fable isn't how Kimi K3 got so good, July 23, 2026: https://techcrunch.com/2026/07/23/experts-say-exploiting-anthropics-fable-isnt-how-kimi-k3-got-so-good",
       "Interconnects, Open models recap: more on Kimi K3, July 22, 2026: https://www.interconnects.ai/p/open-models-recap-more-on-kimi-k3",
       "Lawfare, The AI Model Distillation Paradox, October 8, 2026: https://www.lawfaremedia.org/article/the-ai-model-distillation-paradox"
