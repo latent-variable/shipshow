@@ -225,3 +225,8 @@ meme is gone. Distillation, open models, RL and the index lost their ground-up d
   source line, and the layout is new. 05-copying's cards had too little time, so it gets a 1.2 s pause. The tweet's marker now
   sweeps in on "distillation". Declined: chip 2 in 06b is late (minor). It is already cued on "second", and the lag is Whisper's
   word time.
+- **accuracy re-check, FAIL, fixed.** "Best Chinese model" in September is only the best that today's index scores, since Kimi
+  K3 (July) has no v5.0.1 score. The line now says "the top-scoring American and Chinese models it has". "Rescored the older
+  models" became "many older models". "Widest on two of version five's tests" was AA5's finding for Kimi, not for Qwen's
+  sixteen, and is now "Chinese models trail most on two of version five's tests". "No sign of a fall" became "I see no sign of
+  a fall", said as a reading. Epoch's average is dated: "from 2023 to the start of this year".
