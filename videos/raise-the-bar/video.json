@@ -1,0 +1,190 @@
+{
+  "title": "Did Chinese AI Fall Behind, or Did the Ruler Move?",
+  "builtBy": "Opus 5.5",
+  "kind": "feature",
+  "importance": "high",
+  "importance_reason": "public: Lino's YouTube channel, about a live argument over named companies (Alibaba, Anthropic, Artificial Analysis) and an accusation still disputed; a viewer may repeat any number, and a wrong one is unfair to a lab or to the scoreboard",
+  "audience": "A developer or AI-curious viewer on YouTube who saw Qwen 4 Max land well behind Claude and GPT on the Artificial Analysis leaderboard, and the posts blaming American anti-distillation measures. They know what a language model is but not how the index is built. After watching they can say what changed in the index on October 27, why harder, longer, private tests spread scores apart, what a second scoreboard shows, what the distillation accusations are and why the timing does not tie the gap to them, and ask three questions of any leaderboard.",
+  "theme": "stadium",
+  "engine": "drama",
+  "voice": "narrator-uk",
+  "speed": 1.0,
+  "say": {
+    "Qwen": "Kwen",
+    "GPT-6.1": "G P T six point one",
+    "GPT-6": "G P T six",
+    "K3.1": "K three point one",
+    "5.5": "five point five",
+    "CISA": "Sisa",
+    "NSA": "N S A",
+    "FBI": "F B I"
+  },
+  "gap": 0.5,
+  "beat": 0.9,
+  "hold": 8,
+  "tail": 1.2,
+  "flair": {
+    "ambient": "glow vignette grain"
+  },
+  "leads": {
+    "02-the-index": 2.2,
+    "03-high-jump": 2.8,
+    "05-copying": 2.0,
+    "04-game": 1.2,
+    "06-verdict": 1.2
+  },
+  "pauses": {
+    "01-hook": 2.2,
+    "01b-scratch": 1.4,
+    "02b-january": 0.8,
+    "03-high-jump": 0.8,
+    "03b-long-tasks": 1.2,
+    "03c-where": 1.0,
+    "04-game": 3.2,
+    "04b-reveal": 0.8,
+    "05b-charges": 0.6,
+    "05c-who": 0.8,
+    "05d-test": 0.8,
+    "05e-unknown": 1.0,
+    "06-verdict": 0.8
+  },
+  "moods": {
+    "scoreboard": {
+      "look": {},
+      "music": {
+        "file": "local/music/bar/scoreboard.wav",
+        "volume": 0.16,
+        "duck": 0.33
+      }
+    },
+    "rulebook": {
+      "theme": "paper",
+      "look": {
+        "--accent-3": "#9a6a00",
+        "--font-display": "\"Iowan Old Style\", \"Palatino Linotype\", Palatino, Georgia, serif",
+        "--sky": "radial-gradient(120% 100% at 50% 0%, #fbf7ee 0%, #f3ecdd 60%, #e9dfcb 100%)"
+      },
+      "ambient": "grain",
+      "music": {
+        "file": "local/music/bar/rulebook.wav",
+        "volume": 0.15,
+        "duck": 0.33
+      }
+    },
+    "stadium": {
+      "look": {},
+      "ambient": "vignette grain",
+      "music": {
+        "file": "local/music/bar/stadium.wav",
+        "volume": 0.15,
+        "duck": 0.33
+      }
+    },
+    "quiz": {
+      "look": {
+        "--sky": "radial-gradient(120% 95% at 50% 0%, #2a1840 0%, #160d26 55%, #0a0612 100%)",
+        "--card": "#1c1230",
+        "--line": "#3d2a5e"
+      },
+      "ambient": "dots vignette grain",
+      "music": {
+        "file": "local/music/bar/quiz.wav",
+        "volume": 0.15,
+        "duck": 0.33
+      }
+    },
+    "claim": {
+      "look": {
+        "--sky": "radial-gradient(120% 95% at 50% 0%, #241a1a 0%, #140f10 55%, #08060a 100%)",
+        "--card": "#1b1416",
+        "--line": "#3b2b2e"
+      },
+      "ambient": "vignette grain",
+      "music": {
+        "file": "local/music/bar/claim.wav",
+        "volume": 0.14,
+        "duck": 0.33
+      }
+    },
+    "verdict": {
+      "look": {
+        "--sky": "radial-gradient(130% 95% at 50% 0%, #1f3550 0%, #11203a 55%, #070d18 100%)"
+      },
+      "ambient": "glow vignette grain",
+      "music": {
+        "file": "local/music/bar/verdict.wav",
+        "volume": 0.15,
+        "duck": 0.33
+      }
+    }
+  },
+  "youtube": {
+    "title": "Did Chinese AI Fall Behind, or Did the Ruler Move? (Explained by Opus 5.5)",
+    "alternatives": [
+      "Qwen 4 Max Is 16 Points Behind. Is Anti-Distillation Why? (Explained by Opus 5.5)",
+      "The Leaderboard Changed, Then the Gap Did: Qwen 4 Max and Distillation (Explained by Opus 5.5)"
+    ],
+    "description": [
+      "Alibaba released Qwen 4 Max on November 16, 2026. On the Artificial Analysis Intelligence Index it scores 43, sixteen points behind Claude Opus 5.5, and within hours a popular post blamed American labs cutting Chinese labs off from distillation. But the gap between the best open model and the leader went from 3 points to 12 on one day, October 27, when the index moved to version 5.",
+      "This video walks through what the index measures, why it has had nine versions this year, why a harder, longer, private test spreads the field apart (a ceiling effect), what a second scoreboard, the Vals Index, shows for the same models, what the distillation accusations say, and what the timing says about them. Status as of November 16, 2026.",
+      "The narrator is Claude Opus 5.5, made by Anthropic, which is one of the companies on the scoreboard and the one making the distillation accusations. Every number in the video is shown with its source, listed below.",
+      "I made this video with ShipShow, my open-source toolkit of skills and plugins that lets AI agents build narrated videos like this one, end to end. The narrator is an invented voice, not a real person. https://github.com/latent-variable/shipshow"
+    ],
+    "chapters": {
+      "01-hook": "The verdict",
+      "02-the-index": "The rulebook",
+      "03-high-jump": "Raising the bar",
+      "04-game": "A second scoreboard",
+      "05-copying": "The copying claim",
+      "06-verdict": "The answer"
+    },
+    "sources": [
+      "Artificial Analysis, Qwen4 Max: https://artificialanalysis.ai/models/qwen4-max",
+      "Artificial Analysis, Qwen3.8 Max: https://artificialanalysis.ai/models/qwen3-8-max",
+      "Artificial Analysis, leaderboard: https://artificialanalysis.ai/leaderboards/models",
+      "Artificial Analysis, Intelligence Index v5, October 27, 2026: https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+      "Artificial Analysis, methodology and version history: https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+      "Artificial Analysis, Recent open weights model launches, April 30, 2026: https://artificialanalysis.ai/articles/recent-open-weights-model-launches",
+      "VentureBeat, Artificial Analysis overhauls its AI Intelligence Index, January 6, 2026: https://venturebeat.com/technology/artificial-analysis-overhauls-its-ai-intelligence-index-replacing-popular",
+      "Vals AI, Vals Index: https://www.vals.ai/benchmarks/vals_index",
+      "Chubby (@kimmonismus) on X, November 16, 2026: https://x.com/kimmonismus/status/2122294330778132787",
+      "Qwen (@Alibaba_Qwen) on X, November 16, 2026: https://x.com/Alibaba_Qwen/status/2122148127520289151",
+      "Anthropic, Detecting and preventing distillation attacks, February 23, 2026: https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks",
+      "The Hacker News, Anthropic says seven China-based AI labs..., September 2026: https://thehackernews.com/2026/09/anthropic-says-seven-china-based-ai.html",
+      "Associated Press, China hits back at US claims of malicious AI distillation, September 9, 2026",
+      "TechCrunch, Experts say exploiting Anthropic's Fable isn't how Kimi K3 got so good, July 23, 2026: https://techcrunch.com/2026/07/23/experts-say-exploiting-anthropics-fable-isnt-how-kimi-k3-got-so-good",
+      "Interconnects, Open models recap: more on Kimi K3, July 22, 2026: https://www.interconnects.ai/p/open-models-recap-more-on-kimi-k3",
+      "Lawfare, The AI Model Distillation Paradox, October 8, 2026: https://www.lawfaremedia.org/article/the-ai-model-distillation-paradox"
+    ],
+    "credits": [
+      "Narration: an invented voice, not a real person, made with Fish Audio Drama 3 (built with Fish Audio). Researched and written by Claude Opus 5.5.",
+      "Music: machine-generated with ACE-Step 1.5.",
+      "Stadium pictures: generated with Qwen-Image 2.1; illustrations, not photographs of a real place.",
+      "Memes: templates from memegen (https://github.com/jacebrowning/memegen): Peter Parker's Glasses; Stonks; Shut Up and Take My Money!; Why Not Both?",
+      "Made with ShipShow and HyperFrames."
+    ],
+    "tags": [
+      "Qwen 4 Max",
+      "Qwen",
+      "Alibaba",
+      "Artificial Analysis",
+      "AI leaderboard",
+      "benchmarks",
+      "distillation",
+      "Chinese AI",
+      "Kimi",
+      "Claude Opus 5.5",
+      "GPT-6.1",
+      "Vals AI",
+      "LLM"
+    ],
+    "studio": {
+      "Audience": "No, it's not made for kids",
+      "Paid promotion": "No",
+      "Altered or synthetic content": "Recommended No, the owner's call: an invented AI narrator that imitates no one; the stadium pictures are generated illustrations of a place, not a real event",
+      "Category": "Science & Technology",
+      "Language": "English",
+      "Visibility": "Public"
+    }
+  }
+}

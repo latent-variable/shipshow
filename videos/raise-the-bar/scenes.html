@@ -1,0 +1,716 @@
+<style>
+  /* Layout only: colour and type come from the stadium theme's tokens, retinted per act (video.json moods).
+     One meaning per colour in every act: blue (--accent-2) is an American lab, green (--good) a Chinese lab, amber
+     (--accent-3) a score, tartan (--accent) the bar, the ruler and the thing being measured. Every supporting line is
+     30 px or more. Every number carries its source in a .src line. */
+  .stage { position: absolute; inset: 40px var(--pad) 40px; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
+  .row { display: flex; gap: 34px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .col { display: flex; flex-direction: column; gap: 20px; }
+  .card { background: var(--card); border: var(--border) solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 26px 36px; }
+  .src { font-family: var(--font-mono); font-size: 30px; color: var(--muted); line-height: 1.3; }
+  .center { text-align: center; }
+  .big { font-family: var(--font-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); line-height: 1.42; text-transform: uppercase; }
+  .chip { display: inline-block; padding: 14px 26px; background: var(--card); border: var(--border) solid var(--line); border-radius: 10px; font-size: 40px; font-weight: 800; white-space: nowrap; }
+  .chip.us { border-color: var(--accent-2); color: var(--accent-2); }
+  .chip.cn { border-color: var(--good); color: var(--good); }
+  .chip.bar { border-color: var(--accent); color: var(--accent); }
+  .chip.amber { border-color: var(--accent-3); color: var(--accent-3); }
+  .chip.sm { font-size: 32px; padding: 10px 20px; }
+  .stamp { display: inline-block; padding: 10px 30px; border: 6px solid var(--accent); border-radius: 8px; color: var(--accent); font-family: var(--font-display); font-size: 84px; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; transform: rotate(-5deg); background: rgba(6, 9, 16, 0.92);  line-height: 1.42; }
+  .phase { position: absolute; inset: 0; }
+  .meme-wrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; z-index: 6; background: rgb(6, 9, 16); }
+  .meme-wrap::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 200px; background: rgb(6, 9, 16); }
+  .meme-wrap .ss-meme { position: relative; inset: auto; margin: 0; --meme-height: 700px; }
+  .meme-wrap .src { position: relative; z-index: 2; }
+  .ss-shot.flow { position: relative; inset: auto; margin: 0 auto; }
+  .us { color: var(--accent-2); } .cn { color: var(--good); } .amb { color: var(--accent-3); } .tar { color: var(--accent); }
+  .mk { position: absolute; width: 0; height: 0; overflow: hidden; }
+  .bleed { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; }
+  .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4, 7, 14, 0.25) 0%, rgba(4, 7, 14, 0.1) 45%, rgba(4, 7, 14, 0.85) 82%, rgba(4, 7, 14, 0.95) 100%); }
+
+  /* The LED results board: the scoreboard that comes back (01, 04, 05c) */
+  .board { width: 1320px; margin: 0 auto; background: #05080f; border: 3px solid #26344f; border-radius: 10px; box-shadow: 0 0 0 8px #0b1220, var(--shadow); padding: 26px 40px 30px; }
+  .board .head { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-mono); font-size: 30px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 2px solid #1d2a42; padding-bottom: 14px; margin-bottom: 16px; }
+  .board .head b { color: var(--accent-3); font-weight: 700; }
+  .board .r { display: grid; grid-template-columns: 14px 1fr 220px; align-items: center; gap: 26px; padding: 4px 0; }
+  .board .r .stripe { height: 72px; border-radius: 4px; }
+  .board .r .name { font-size: 62px; font-weight: 800; }
+  .board .r .name small { display: block; font-family: var(--font-mono); font-size: 30px; color: var(--muted); font-weight: 400; letter-spacing: 0.06em; }
+  .board .r .score { font-family: var(--font-display); font-size: 120px; color: var(--accent-3); text-align: right; line-height: 1.42; text-shadow: 0 0 24px rgba(255, 194, 58, 0.45); }
+  .board .r.hl { background: rgba(108, 184, 255, 0.10); border-radius: 8px; outline: 3px solid var(--accent-2); }
+  .gapbox { display: flex; align-items: center; justify-content: center; gap: 30px; }
+  .gapbox .n { font-family: var(--font-display); font-size: 150px; color: var(--accent); line-height: 1.42; }
+  .gapbox .u { font-size: 44px; font-weight: 800; color: var(--ink); }
+
+  /* 01 the fake ending: end credits */
+  .credits { position: absolute; inset: 0; z-index: 7; background: #000; overflow: hidden; }
+  .credits .crawl { position: absolute; left: 0; right: 0; top: 1080px; text-align: center; display: flex; flex-direction: column; gap: 46px; }
+  .credits .crawl .kk { font-family: var(--font-mono); font-size: 34px; color: #9aa4b8; letter-spacing: 0.3em; text-transform: uppercase; }
+  .credits .crawl .v { font-family: var(--font-display); font-size: 92px; color: #fff; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.42; }
+  .credits .crawl .end { font-family: var(--font-display); font-size: 150px; color: #fff; margin-top: 80px;  line-height: 1.42; }
+  .tweetbox { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+
+  /* 01b two versions, one gap */
+  .vs2 { display: grid; grid-template-columns: 1fr 270px 1fr; gap: 24px; align-items: center; width: 1580px; margin: 0 auto; }
+  .gb { background: var(--card); border: var(--border) solid var(--line); border-radius: 10px; padding: 26px 30px; }
+  .gb .ver { font-family: var(--font-display); font-size: 70px; text-transform: uppercase;  line-height: 1.42; }
+  .gb .lane { display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 14px; margin-top: 18px; font-size: 32px; font-weight: 700; color: var(--muted); }
+  .gb .lane .b { height: 50px; border-radius: 4px; }
+  .gb .gapn { margin-top: 20px; font-family: var(--font-display); font-size: 92px; color: var(--accent); line-height: 1.42; }
+  .gb .gapn small { font-family: var(--font); font-size: 36px; color: var(--ink); font-weight: 800; margin-left: 12px; }
+  .datecard { text-align: center; border: 5px solid var(--accent); border-radius: 12px; padding: 18px 10px; background: rgba(6, 9, 16, 0.9); }
+  .datecard .d { font-family: var(--font-display); font-size: 100px; line-height: 1.42; }
+  .datecard .m { font-family: var(--font-mono); font-size: 30px; color: var(--accent); letter-spacing: 0.14em; margin-top: 8px; }
+  .q2 { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+  .q2 .l { font-family: var(--font-display); font-size: 110px; text-transform: uppercase; line-height: 1.42; text-align: center; }
+  .ruler { width: 1300px; height: 90px; background: repeating-linear-gradient(90deg, var(--accent) 0 4px, transparent 4px 52px), linear-gradient(180deg, #2a1810, #1a0f0a); border: 4px solid var(--accent); border-radius: 6px; }
+
+  /* 02 the rulebook (paper act) */
+  .cover { position: absolute; inset: 0; z-index: 7; background: var(--sky, var(--bg)); display: flex; align-items: center; justify-content: center; }
+  .cover .book { width: 900px; padding: 70px 60px; background: #1d3a5f; color: #f6f1e7; border-radius: 6px 18px 18px 6px; box-shadow: inset 18px 0 0 #142a46, 0 30px 70px rgba(60, 45, 20, 0.35); text-align: center; }
+  .cover .book .t { font-family: var(--font-display); font-size: 120px; line-height: 1.42; }
+  .cover .book .sv { font-family: var(--font-mono); font-size: 32px; letter-spacing: 0.12em; margin-top: 26px; color: #e9dfcb; text-transform: uppercase; }
+  .tests { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 1400px; margin: 0 auto; }
+  .tests .chip { font-size: 34px; text-align: center; }
+  .funnel { display: flex; align-items: center; justify-content: center; gap: 30px; font-size: 46px; font-weight: 800; }
+  .funnel .one { font-family: var(--font-display); font-size: 120px; color: var(--accent-3);  line-height: 1.42; }
+  .clipping { width: 1300px; margin: 0 auto; background: #fffdf8; border: 2px solid #d9cfbd; padding: 40px 54px; box-shadow: 0 16px 40px rgba(60, 45, 20, 0.18); transform: rotate(-1deg); }
+  .clipping .kk { font-family: var(--font-mono); font-size: 30px; color: #5e574c; letter-spacing: 0.1em; text-transform: uppercase; }
+  .clipping .h { font-family: var(--font-display); font-size: 62px; line-height: 1.42; margin-top: 12px; }
+  .tl { position: relative; width: 1640px; height: 330px; margin: 0 auto; }
+  .tl .axis { position: absolute; left: 0; right: 0; top: 150px; height: 6px; background: #1d1b18; }
+  .tl .mo { position: absolute; top: 176px; width: 140px; margin-left: -70px; text-align: center; font-family: var(--font-mono); font-size: 30px; color: #5e574c; }
+  .tl .v { position: absolute; top: 130px; width: 46px; height: 46px; margin-left: -23px; border-radius: 50%; background: var(--accent); border: 4px solid #f6f1e7; }
+  .tl .v.small { width: 30px; height: 30px; margin-left: -15px; top: 138px; background: #8a7f6c; }
+  .tl .lbl { position: absolute; top: 40px; width: 160px; margin-left: -80px; text-align: center; font-family: var(--font-mono); font-size: 30px; font-weight: 700; }
+  .tl .sep { position: absolute; top: 20px; height: 250px; border: 4px dashed var(--accent); border-radius: 14px; }
+  .tl .seplbl { position: absolute; top: 236px; font-size: 36px; font-weight: 800; color: var(--accent); }
+  .count9 { font-family: var(--font-display); font-size: 96px; text-align: center;  line-height: 1.42; }
+  .jan { display: flex; align-items: center; justify-content: center; gap: 60px; }
+  .jan .n { font-family: var(--font-display); font-size: 220px; line-height: 1.42; }
+  .jan .n small { display: block; font-family: var(--font-mono); font-size: 32px; color: #5e574c; text-align: center; letter-spacing: 0.06em; margin-top: 10px; }
+  .jan .arrow { width: 160px; height: 10px; background: #1d1b18; position: relative; }
+  .jan .arrow::after { content: ""; position: absolute; right: -14px; top: -16px; border: 21px solid transparent; border-left: 28px solid #1d1b18; border-right: 0; }
+  .ceil { position: relative; width: 900px; height: 300px; margin: 0 auto; border-bottom: 4px solid #1d1b18; }
+  .ceil .lid { position: absolute; left: -20px; right: -20px; top: 0; height: 10px; background: var(--accent); }
+  .ceil .lidl { position: absolute; right: -10px; top: -50px; font-family: var(--font-mono); font-size: 30px; color: var(--accent); font-weight: 700; }
+  .ceil .bars { position: absolute; left: 60px; right: 60px; bottom: 0; top: 10px; display: flex; align-items: flex-end; justify-content: space-around; }
+  .ceil .bars i { width: 110px; height: 100%; display: block; border-radius: 4px 4px 0 0; }
+  .quote { font-family: var(--font-display); font-size: 64px; line-height: 1.42; text-align: center; width: 1500px; margin: 0 auto; }
+  .quote .who { display: block; margin-top: 18px; font-family: var(--font-mono); font-size: 32px; color: var(--muted); }
+
+  /* 03 the high jump */
+  .jump { position: absolute; inset: 0; }
+  .jump svg { position: absolute; inset: 0; overflow: visible; }
+  .lane-board { position: absolute; right: 70px; top: 60px; width: 560px; background: rgba(5, 8, 15, 0.9); border: 3px solid #26344f; border-radius: 10px; padding: 22px 28px; font-family: var(--font-mono); }
+  .lane-board .t { font-size: 30px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  .lane-board .ln { display: flex; justify-content: space-between; font-size: 46px; font-weight: 700; margin-top: 10px; }
+  .lane-board .ln span:last-child { color: var(--accent-3); letter-spacing: 0.1em; }
+  .lane-board .res { font-family: var(--font-display); font-size: 64px; color: var(--accent-3); margin-top: 10px;  line-height: 1.42; }
+  .ceilchip { position: absolute; left: 130px; top: 70px; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+  .ceilchip .big { font-size: 96px; }
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; width: 1700px; margin: 0 auto; }
+  .three .card { min-height: 470px; display: flex; flex-direction: column; gap: 18px; }
+  .three .card .n { font-family: var(--font-display); font-size: 70px; color: var(--accent); line-height: 1.42; }
+  .three .card .h { font-size: 44px; font-weight: 800; line-height: 1.2; }
+  .three .card .x { font-size: 34px; color: var(--muted); font-weight: 600; line-height: 1.3; }
+  .qs { display: flex; gap: 12px; flex-wrap: wrap; }
+  .qs i { width: 64px; height: 80px; border-radius: 6px; border: 3px solid var(--line); display: block; font-style: normal; text-align: center; line-height: 74px; font-size: 40px; font-weight: 800; color: var(--muted); }
+  .qs i.gone { border-color: var(--accent); color: var(--accent); text-decoration: line-through; opacity: 0.6; }
+  .donut { width: 220px; height: 220px; border-radius: 50%; background: conic-gradient(var(--accent-3) 0 60%, #24324d 60% 100%); display: flex; align-items: center; justify-content: center; }
+  .donut span { width: 150px; height: 150px; border-radius: 50%; background: var(--card); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 64px; color: var(--accent-3);  line-height: 1.42; }
+  .tok { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; font-family: var(--font-mono); font-size: 32px; }
+  .tok .b { height: 44px; border-radius: 4px; background: var(--accent-3); }
+  .chart { position: relative; width: 1500px; height: 600px; margin: 0 auto; }
+  .chart svg { position: absolute; inset: 0; overflow: visible; }
+  .chart .ax { font-family: var(--font-mono); font-size: 30px; fill: var(--muted); }
+  .chart .lab { font-family: var(--font-display); font-size: 64px;  line-height: 1.42; }
+  .toy { position: absolute; right: 0; top: -40px; font-family: var(--font-mono); font-size: 30px; color: var(--accent); border: 2px dashed var(--accent); border-radius: 8px; padding: 6px 16px; }
+  .mag { display: flex; align-items: center; justify-content: center; gap: 70px; }
+  .mag .n { font-family: var(--font-display); font-size: 200px; line-height: 1.42; color: var(--accent); }
+  .mag .n small { display: block; font-family: var(--font); font-size: 40px; color: var(--ink); font-weight: 800; text-align: center; margin-top: 10px; }
+  .hbars { width: 1500px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+  .hbars .r { display: grid; grid-template-columns: 420px 1fr; align-items: center; gap: 22px; font-size: 40px; font-weight: 800; }
+  .hbars .r small { display: block; font-family: var(--font-mono); font-size: 30px; color: var(--muted); font-weight: 400; }
+  .hbars .track { height: 64px; background: #16213a; border-radius: 4px; position: relative; }
+  .hbars .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 18px; font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: #06101e; }
+  .tests2 { display: flex; gap: 30px; justify-content: center; }
+  .tests2 .card { width: 760px; text-align: center; }
+  .tests2 .card .h { font-size: 46px; font-weight: 800; }
+  .tests2 .card .x { font-size: 32px; color: var(--muted); margin-top: 8px; }
+
+  /* 04 the game */
+  .quiz { font-family: var(--font-display); font-size: 170px; text-transform: uppercase; color: var(--accent-3); text-align: center; line-height: 1.42; text-shadow: 0 0 40px rgba(255, 194, 58, 0.4); }
+  .pods { display: flex; justify-content: center; gap: 120px; }
+  .pod { width: 560px; text-align: center; border-radius: 14px; padding: 26px; border: 4px solid; background: var(--card); }
+  .pod .nm { font-size: 54px; font-weight: 800; }
+  .pod .lab { font-family: var(--font-mono); font-size: 30px; color: var(--muted); margin-bottom: 26px; }
+  .pod .sc { font-family: var(--font-display); font-size: 110px; color: var(--accent-3); line-height: 1.42; }
+  .opts { display: flex; justify-content: center; gap: 40px; }
+  .opt { width: 420px; padding: 24px; border-radius: 14px; border: 4px solid var(--line); background: var(--card); text-align: center; }
+  .opt .l { font-family: var(--font-mono); font-size: 36px; color: var(--muted); }
+  .opt .v { font-family: var(--font-display); font-size: 100px; line-height: 1.42; }
+  .opt.winner { border-color: var(--accent-3); box-shadow: 0 0 40px rgba(255, 194, 58, 0.45); }
+  .vals { display: flex; align-items: center; gap: 24px; justify-content: center; font-size: 40px; font-weight: 800; }
+  .vals .ic { font-family: var(--font-mono); font-size: 32px; padding: 10px 18px; border: 2px solid var(--line); border-radius: 8px; color: var(--ink); font-weight: 700; }
+  .tick { font-family: var(--font-display); font-size: 140px; color: var(--accent); text-align: center; line-height: 1.42; }
+  .twin { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 1700px; margin: 0 auto; }
+  .mini { background: #05080f; border: 3px solid #26344f; border-radius: 10px; padding: 22px 28px; }
+  .mini .t { font-family: var(--font-mono); font-size: 30px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 2px solid #1d2a42; padding-bottom: 10px; margin-bottom: 12px; }
+  .mini .r { display: grid; grid-template-columns: 1fr 160px; font-size: 34px; font-weight: 800; padding: 0; align-items: center; }
+  .mini .r b { font-family: var(--font-display); font-weight: 400; color: var(--accent-3); text-align: right; font-size: 52px;  line-height: 1.42; }
+  .mini .gapline { font-family: var(--font-display); font-size: 70px; color: var(--accent); margin-top: 8px;  line-height: 1.42; }
+  .mini .gapline small { font-family: var(--font); font-size: 34px; color: var(--ink); font-weight: 800; }
+
+  /* 05 the copying claim */
+  .casefile { position: absolute; inset: 0; z-index: 7; background: var(--sky, var(--bg)); display: flex; align-items: center; justify-content: center; }
+  .casefile .f { width: 1100px; padding: 50px 60px; background: #c8a46a; color: #1b1208; border-radius: 4px 4px 10px 10px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6); position: relative; }
+  .casefile .f::before { content: ""; position: absolute; top: -40px; left: 0; width: 360px; height: 46px; background: #c8a46a; border-radius: 10px 10px 0 0; }
+  .casefile .f .kk { font-family: var(--font-mono); font-size: 32px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 30px; }
+  .casefile .f .t { font-family: var(--font-display); font-size: 140px; line-height: 1.42; text-transform: uppercase; }
+  .distil { display: flex; align-items: center; justify-content: center; gap: 30px; }
+  .distil .m { width: 360px; height: 260px; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 46px; font-weight: 800; border: 4px solid; text-align: center; }
+  .distil .m small { font-size: 30px; color: var(--muted); font-weight: 600; margin-top: 8px; }
+  .distil .stack { display: flex; flex-direction: column; gap: 10px; }
+  .distil .stack span { display: block; width: 360px; padding: 10px 16px; border-radius: 8px; background: var(--card); border: 2px solid var(--line); font-family: var(--font-mono); font-size: 30px; }
+  .arr { width: 80px; height: 8px; background: var(--muted); position: relative; flex: none; }
+  .arr::after { content: ""; position: absolute; right: -10px; top: -13px; border: 17px solid transparent; border-left: 24px solid var(--muted); border-right: 0; }
+  .rules2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 1500px; margin: 0 auto; }
+  .rules2 .card { font-size: 42px; font-weight: 800; line-height: 1.25; }
+  .rules2 .card .mark { font-family: var(--font-display); font-size: 80px; line-height: 1.42; display: block; margin-bottom: 8px; }
+  .charges { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; width: 1720px; margin: 0 auto; }
+  .charges .card { padding: 24px 24px; min-height: 520px; display: flex; flex-direction: column; gap: 12px; }
+  .charges .when { font-family: var(--font-mono); font-size: 30px; color: var(--accent); letter-spacing: 0.06em; }
+  .charges .who { font-size: 36px; font-weight: 800; line-height: 1.2; }
+  .charges .num { font-family: var(--font-display); font-size: 86px; color: var(--accent-3); line-height: 1.42; }
+  .charges .x { font-size: 32px; color: var(--muted); font-weight: 600; line-height: 1.25; }
+  .charges .tag { align-self: flex-start; font-family: var(--font-mono); font-size: 30px; padding: 4px 12px; border: 2px solid var(--muted); border-radius: 6px; color: var(--muted); }
+  .me { font-family: var(--font-mono); font-size: 34px; color: var(--accent-2); font-weight: 700; }
+  .pair2 { display: flex; justify-content: center; gap: 40px; }
+  .qbar { display: flex; flex-direction: column; gap: 22px; width: 1500px; margin: 0 auto; }
+  .qbar .r { display: grid; grid-template-columns: 430px 1fr 170px; align-items: center; gap: 20px; font-size: 40px; font-weight: 800; }
+  .qbar .r small { display: block; font-family: var(--font-mono); font-size: 30px; color: var(--muted); font-weight: 400; }
+  .qbar .b { height: 80px; border-radius: 4px; background: var(--good); }
+  .qbar .sv { font-family: var(--font-display); font-size: 96px; color: var(--accent-3); text-align: right; line-height: 1.42; }
+  .costs { display: flex; align-items: center; justify-content: center; gap: 40px; font-family: var(--font-display); font-size: 120px;  line-height: 1.42; }
+  .costs .from { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--accent); }
+  .costs small { font-family: var(--font-mono); font-size: 30px; color: var(--muted); display: block; text-align: center; }
+  .yr { position: relative; width: 1660px; height: 420px; margin: 0 auto; }
+  .yr .axis { position: absolute; left: 0; right: 0; top: 230px; height: 6px; background: var(--line); }
+  .yr .mo { position: absolute; top: 258px; width: 120px; margin-left: -60px; text-align: center; font-family: var(--font-mono); font-size: 30px; color: var(--muted); }
+  .yr .band { position: absolute; top: 205px; height: 56px; background: rgba(255, 106, 61, 0.35); border: 3px solid var(--accent); border-radius: 8px; }
+  .yr .bandl { position: absolute; top: 120px; font-size: 34px; font-weight: 800; }
+  .yr .pin { position: absolute; top: 40px; width: 8px; height: 220px; margin-left: -4px; background: var(--accent-3); }
+  .yr .pinl { position: absolute; top: 0; width: 470px; font-size: 34px; font-weight: 800; color: var(--accent-3); }
+  .yr .dot { position: absolute; top: 216px; width: 34px; height: 34px; margin-left: -17px; border-radius: 50%; background: var(--good); }
+  .yr .dotl { position: absolute; top: 320px; width: 300px; margin-left: -150px; text-align: center; font-size: 32px; font-weight: 800; color: var(--good); }
+  .ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 1500px; margin: 0 auto; }
+  .ledger .card { font-size: 44px; font-weight: 800; line-height: 1.25; min-height: 240px; }
+  .ledger .card .kk { display: block; font-family: var(--font-mono); font-size: 30px; color: var(--muted); font-weight: 400; margin-bottom: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .ledger .card .big { font-size: 90px; display: block; margin-top: 10px; }
+  .loop { display: flex; align-items: center; justify-content: center; gap: 24px; font-size: 44px; font-weight: 800; }
+  .loop .times { font-family: var(--font-display); font-size: 90px; color: var(--accent-3);  line-height: 1.42; }
+
+  /* 06 the answer */
+  .verdicts { display: flex; flex-direction: column; gap: 22px; width: 1560px; margin: 0 auto; }
+  .verdicts .v { display: grid; grid-template-columns: 70px 1fr; gap: 20px; align-items: center; font-size: 48px; font-weight: 800; line-height: 1.2; }
+  .verdicts .v .ic { font-family: var(--font-display); font-size: 64px; color: var(--accent-3); text-align: center;  line-height: 1.42; }
+  .verdicts .v small { display: block; font-size: 32px; color: var(--muted); font-weight: 600; }
+  .qs3 { display: flex; flex-direction: column; gap: 26px; width: 1500px; margin: 0 auto; }
+  .qs3 .q { display: grid; grid-template-columns: 110px 1fr; align-items: center; gap: 20px; font-size: 58px; font-weight: 800; }
+  .qs3 .q .n { font-family: var(--font-display); font-size: 100px; color: var(--accent); line-height: 1.42; text-align: center; }
+  .endcard { position: absolute; inset: 0; z-index: 7; background: var(--sky, var(--bg)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; text-align: center; }
+  .endcard .t { font-family: var(--font-display); font-size: 120px; text-transform: uppercase; line-height: 1.42; }
+  .endcard .a { font-family: var(--font-display); font-size: 150px; color: var(--accent-3); line-height: 1.42; }
+  .endcard .sv { font-family: var(--font-mono); font-size: 32px; color: var(--muted); }
+</style>
+
+<!-- ============ ACT ONE: THE SCOREBOARD (cold open, no card) ============ -->
+<section data-scene="01-hook" data-mood="scoreboard">
+  <div class="phase" id="p01a">
+    <div class="stage">
+      <div class="board" data-cue="results" data-anim="fade">
+        <div class="head"><span>Results · <b>Artificial Analysis Intelligence Index</b></span><span data-cue="Artificial" data-anim="fade">v5.0.1</span></div>
+        <div class="r" id="r01q" data-cue="Qwen" data-anim="left"><div class="stripe" style="background: var(--good)"></div><div class="name cn">Qwen 4 Max<small>Alibaba · released Nov 16, 2026</small></div><div class="score" data-cue="forty" data-anim="count">43</div></div>
+        <div class="r" id="r01o" data-cue="Claude" data-anim="left"><div class="stripe" style="background: var(--accent-2)"></div><div class="name us">Claude Opus 5.5<small>Anthropic</small></div><div class="score" data-cue="fifty" data-anim="count">59</div></div>
+      </div>
+      <div class="gapbox" data-cue="Sixteen#2" data-anim="slam"><span class="n">−16</span><span class="u">points behind</span></div>
+      <div class="src center" data-cue="Sixteen#2" data-anim="fade">artificialanalysis.ai, models and leaderboard pages, read Nov 16, 2026</div>
+    </div>
+  </div>
+  <div class="phase" id="p01b">
+    <div class="stage">
+      <div class="tweetbox">
+        <figure class="ss-shot flow" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2122294330778132787&amp;theme=dark"
+          data-select="[data-testid='UserAvatar-Container-kimmonismus'], [data-testid='tweetText']:not(article article *)" data-width="620" data-pad="18" data-source="x.com/kimmonismus/status/2122294330778132787"
+          data-find="cut off from distillation" data-mark-cue="copying" data-cue="Within" data-anim="up" style="--shot-width: 1250px; --shot-max-height: 560px"></figure>
+      </div>
+      <div class="row"><span class="stamp" data-cue="Mystery" data-anim="slam">mystery solved</span></div>
+    </div>
+  </div>
+  <div class="credits" id="cr01" data-overlap="ok" data-cue="Roll" data-anim="fade">
+    <div class="crawl" id="crawl01">
+      <div><div class="kk">a story about</div><div class="v">Copying</div></div>
+      <div><div class="kk">starring</div><div class="v">Qwen 4 Max</div></div>
+      <div><div class="kk">and</div><div class="v">Anti-distillation</div></div>
+      <div><div class="kk">directed by</div><div class="v">One post on X</div></div>
+      <div class="end">The end</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="01b-scratch" data-mood="scoreboard" data-transition="none">
+  <div class="mk" id="mk01drop" data-cue="Except" data-drop="3.2"></div>
+  <div class="phase" id="p01ba">
+    <div class="stage">
+      <div class="vs2">
+        <div class="gb" data-cue="old" data-anim="left">
+          <div class="ver">Old version <span class="src">v4.3</span></div>
+          <div class="lane"><span>leader</span><div class="b" style="background: var(--accent-2); width: 100%"></div></div>
+          <div class="lane"><span>best open</span><div class="b" style="background: var(--good); width: 94.8%"></div></div>
+          <div class="gapn" data-cue="three" data-anim="pop">3<small>points behind</small></div>
+        </div>
+        <div class="datecard" data-cue="October" data-anim="slam"><div class="d">Oct 27</div><div class="m">version five</div></div>
+        <div class="gb" data-cue="version#3" data-anim="right">
+          <div class="ver">Version five <span class="src">v5.0</span></div>
+          <div class="lane"><span>leader</span><div class="b" style="background: var(--accent-2); width: 100%"></div></div>
+          <div class="lane"><span>best open</span><div class="b" style="background: var(--good); width: 79.3%"></div></div>
+          <div class="gapn" data-cue="twelve" data-anim="pop">12<small>points behind</small></div>
+        </div>
+      </div>
+      <div class="row" data-cue="Chinese#1" data-anim="fade"><span class="chip cn sm">best open models: Kimi · DeepSeek · GLM, all Chinese labs</span></div>
+      <div class="src center" data-cue="twelve" data-anim="fade">Artificial Analysis, "Intelligence Index v5", Oct 27, 2026: "12 points behind the leader, compared with a 3-point gap in v4.3"</div>
+    </div>
+  </div>
+  <div class="phase" id="p01bb">
+    <div class="stage">
+      <div class="q2">
+        <div class="l" data-cue="Did" data-anim="up">Did Chinese AI <span class="cn">fall behind?</span></div>
+        <div class="l" data-cue="Or" data-anim="up">Or did the <span class="tar">ruler</span> move?</div>
+        <div class="ruler" id="ruler01" data-cue="ruler" data-anim="grow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT TWO: THE RULEBOOK (paper) ============ -->
+<section data-scene="02-the-index" data-mood="rulebook">
+  <div class="cover" id="cov02" data-cue="+0.0" data-anim="fade"><div class="book" data-cue="+0.3" data-anim="up"><div class="t">The Rulebook</div><div class="sv">Artificial Analysis Intelligence Index</div></div></div>
+  <div class="phase" id="p02a">
+    <div class="stage">
+      <div class="tests" data-cue="bundle#1" data-anim="stagger">
+        <span class="chip sm">AA-Briefcase</span><span class="chip sm">AutomationBench-AA</span><span class="chip sm">GDP.pdf</span>
+        <span class="chip sm">FrontierCode 2.0</span><span class="chip sm">Terminal-Bench 4.0</span><span class="chip sm">Terminal-Bench-Science</span>
+        <span class="chip sm">CritPt v2</span><span class="chip sm">AA-Omniscience v1.1</span><span class="chip sm">HLE-Diamond</span>
+      </div>
+      <div class="funnel" data-cue="one" data-anim="up"><span>nine tests, weighted</span><span class="arr"></span><span>one number</span><span class="one" data-cue="Intelligence" data-anim="pop">43</span><span class="src">e.g. Qwen 4 Max</span></div>
+      <div class="src center" data-cue="bundle#1" data-anim="fade">the tests in version five · artificialanalysis.ai methodology</div>
+    </div>
+  </div>
+  <div class="phase" id="p02b">
+    <div class="stage">
+      <div class="clipping" data-cue="April" data-anim="up">
+        <div class="kk">Artificial Analysis · April 30, 2026</div>
+        <div class="h" data-cue="within" data-anim="fade">"the best open weights models within 3-6 points of the leading proprietary models"</div>
+        <div class="h" data-cue="ten" data-anim="fade" style="color: var(--good)">"The top 10 open weights models ... are all from China-based AI labs."</div>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p02c">
+    <div class="stage">
+      <div class="count9" data-cue="nine" data-anim="count">9 versions in 2026</div>
+      <div class="tl" id="tl02" data-cue="keeps" data-anim="fade">
+        <div class="axis"></div>
+        <div class="mo" style="left: 0%">Jan</div><div class="mo" style="left: 20%">Mar</div><div class="mo" style="left: 40%">May</div><div class="mo" style="left: 60%">Jul</div><div class="mo" style="left: 70%">Aug</div><div class="mo" style="left: 80%">Sep</div><div class="mo" style="left: 90%">Oct</div><div class="mo" style="left: 100%">Nov</div>
+        <div class="v" style="left: 0%" data-cue="nine" data-anim="pop"></div><div class="lbl" style="left: 0%" data-cue="nine" data-anim="fade">4.0</div>
+        <div class="v" style="left: 50%" data-cue="nine" data-anim="pop"></div><div class="lbl" style="left: 50%" data-cue="nine" data-anim="fade">4.1</div>
+        <div class="v small" style="left: 72%" data-cue="nine" data-anim="pop"></div>
+        <div class="v" style="left: 79%" data-cue="versions" data-anim="pop"></div>
+        <div class="v" style="left: 82%" data-cue="versions" data-anim="pop"></div>
+        <div class="v small" style="left: 85%" data-cue="versions" data-anim="pop"></div>
+        <div class="v small" style="left: 88%" data-cue="versions" data-anim="pop"></div>
+        <div class="v" style="left: 96%" data-cue="versions" data-anim="pop"></div><div class="lbl" style="left: 96%" data-cue="versions" data-anim="fade">5.0</div>
+        <div class="v small" style="left: 100%" data-cue="versions" data-anim="pop"></div>
+        <div class="sep" style="left: 76.5%; width: 230px" data-cue="September" data-anim="grow"></div>
+        <div class="seplbl" style="left: 57%" data-cue="September" data-anim="fade">four start in September</div>
+      </div>
+      <div class="src center" data-cue="versions" data-anim="fade">version history, artificialanalysis.ai/methodology · small dots: grader and rating fixes</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="02b-january" data-mood="rulebook">
+  <div class="phase" id="p02ba">
+    <div class="stage">
+      <div class="jan">
+        <div class="n"><span data-cue="seventy" data-anim="count">73</span><small>best score · previous version</small></div>
+        <div class="arrow" data-cue="four" data-anim="grow"></div>
+        <div class="n tar" data-cue="fifty" data-anim="slam"><span>≤50</span><small>best score · v4.0, Jan 2026</small></div>
+      </div>
+      <div class="row" data-cue="Nobody" data-anim="up"><span class="chip">same models, new tests</span></div>
+      <div class="src center" data-cue="seventy" data-anim="fade">VentureBeat, Jan 6, 2026</div>
+    </div>
+  </div>
+  <div class="phase" id="p02bb">
+    <div class="stage">
+      <div class="ceil" data-cue="easy" data-anim="fade">
+        <div class="lid"></div><div class="lidl">the test's ceiling</div>
+        <div class="bars"><i style="background: var(--accent-2)"></i><i style="background: var(--accent-2); height: 98%"></i><i style="background: var(--good); height: 97%"></i><i style="background: var(--good)"></i><i style="background: var(--accent-2); height: 99%"></i></div>
+      </div>
+      <div class="src center" data-cue="easy" data-anim="fade">illustration: when a test is too easy, the best scores pile up under its ceiling</div>
+      <div class="quote" data-cue="VentureBeat" data-anim="up">"the tests used to rank them are becoming obsolete almost as quickly as the models improve"<span class="who">VentureBeat, Jan 6, 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT THREE: RAISING THE BAR (no card: the picture arrives alone) ============ -->
+<section data-scene="03-high-jump" data-mood="stadium">
+  <img class="bleed" src="assets/img/highjump.jpg" alt="">
+  <div class="shade"></div>
+  <div class="jump">
+    <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+      <!-- the bar between the two standards; moved up by the script on "raise" -->
+      <g id="barg" data-cue="Set" data-anim="fade">
+        <rect id="barRect" x="487" y="612" width="1010" height="12" rx="6" fill="#ff6a3d" stroke="#ffd2c2" stroke-width="2"></rect>
+        <text id="barLab" x="1530" y="628" font-family="JetBrains Mono, monospace" font-size="44" font-weight="700" fill="#ffc23a">1.5 m</text>
+      </g>
+      <!-- jumper A (white) and jumper B (pink): arcs over the bar -->
+      <path id="a1" d="M 160 900 Q 980 230 1760 860" fill="none" stroke="#ffffff" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="jumpers" data-anim="draw"></path>
+      <path id="b1" d="M 200 910 Q 990 250 1720 880" fill="none" stroke="#ff8fd0" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="clear" data-anim="draw"></path>
+      <path id="a2" d="M 160 900 Q 980 0 1760 860" fill="none" stroke="#ffffff" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="metres#2" data-anim="draw"></path>
+      <path id="b2" d="M 200 910 Q 860 220 990 500" fill="none" stroke="#ff8fd0" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round" data-cue="knocking" data-anim="draw"></path>
+    </svg>
+    <div class="lane-board" data-cue="scoreboard" data-anim="fade">
+      <div class="t">High jump</div>
+      <div class="ln"><span>Jumper A</span><span id="ja">✓ ✓ ✓</span></div>
+      <div class="ln" style="color: #ff8fd0"><span>Jumper B</span><span id="jb">✓ ✓ ✓</span></div>
+      <div class="res" id="jres">tied</div>
+    </div>
+    <div class="ceilchip">
+      <span class="big" data-cue="never" data-anim="up">Never equal</span>
+      <span class="chip bar" data-cue="ceiling#1" data-anim="pop">ceiling effect</span>
+      <span class="chip amber" data-cue="version" data-anim="pop">version five: a higher bar</span>
+    </div>
+  </div>
+  <div class="mk" id="mk03raise" data-cue="raise#1"></div>
+  <div class="mk" id="mk03fall" data-cue="knocking"></div>
+</section>
+
+<section data-scene="03a-three-changes" data-mood="stadium">
+  <div class="stage">
+    <div class="three">
+      <div class="card" data-cue="threw" data-anim="up">
+        <div class="n">1</div><div class="h">Mastered questions, out</div>
+        <div class="qs" data-cue="mastered" data-anim="stagger"><i class="gone">?</i><i class="gone">?</i><i>?</i><i class="gone">?</i><i>?</i><i>?</i><i class="gone">?</i><i>?</i></div>
+        <div class="x">"saturated and public set questions removed"</div>
+      </div>
+      <div class="card" data-cue="sixty" data-anim="up">
+        <div class="n">2</div><div class="h">60% private</div>
+        <div class="donut" data-cue="private" data-anim="grow"><span>60%</span></div>
+        <div class="x" data-cue="train" data-anim="fade">private tests or held-out answers: nothing to study from</div>
+      </div>
+      <div class="card" data-cue="longer" data-anim="up">
+        <div class="n">3</div><div class="h">Longer tasks</div>
+        <div class="tok"><span>v4.3</span><div class="b" style="width: 59%"></div><span>v5</span><div class="b" style="width: 100%" data-cue="thirds" data-anim="grow"></div></div>
+        <div class="x" data-cue="thirds" data-anim="fade">median output per task: 35k → 59k tokens</div>
+      </div>
+    </div>
+    <div class="src center" data-cue="threw" data-anim="fade">Artificial Analysis, "Intelligence Index v5", Oct 27, 2026</div>
+  </div>
+</section>
+
+<section data-scene="03b-long-tasks" data-mood="stadium">
+  <div class="phase" id="p03ba">
+    <div class="stage">
+      <div class="chart" id="ch03" data-cue="Take" data-anim="fade">
+        <div class="toy" data-cue="Take" data-anim="fade">toy arithmetic, not a measurement</div>
+        <svg width="1500" height="600" viewBox="0 0 1500 600">
+          <line x1="120" y1="40" x2="120" y2="520" stroke="#2a3a58" stroke-width="3"></line>
+          <line x1="120" y1="520" x2="1300" y2="520" stroke="#2a3a58" stroke-width="3"></line>
+          <text class="ax" x="100" y="52" text-anchor="end">100%</text>
+          <text class="ax" x="100" y="530" text-anchor="end">0%</text>
+          <text class="ax" x="120" y="575">step 0</text>
+          <text class="ax" x="1300" y="575" text-anchor="end">step 100</text>
+          <text class="ax" x="140" y="20">chance the task is still alive</text>
+          <path id="c99" d="" fill="none" stroke="#ffc23a" stroke-width="8" data-cue="ninety" data-anim="draw"></path>
+          <path id="c97" d="" fill="none" stroke="#ff6a3d" stroke-width="8" data-cue="ninety#2" data-anim="draw"></path>
+          <text class="lab" x="1320" y="364" fill="#ffc23a" data-cue="third" data-anim="pop">37%</text>
+          <text class="lab" x="1320" y="510" fill="#ff6a3d" data-cue="twenty" data-anim="pop">5%</text>
+          <text class="ax" x="1320" y="300" fill="#ffc23a" data-cue="ninety" data-anim="fade">99% a step</text>
+          <text class="ax" x="1320" y="446" fill="#ff6a3d" data-cue="ninety#2" data-anim="fade">97% a step</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="phase" id="p03bb">
+    <div class="stage">
+      <div class="mag">
+        <div class="n" data-cue="Two" data-anim="pop" style="color: var(--muted)">2<small>points apart per step</small></div>
+        <div class="arr"></div>
+        <div class="n" data-cue="eight" data-anim="slam" data-punch="1.12">×7.7<small>apart at the finish</small></div>
+      </div>
+      <div class="row" data-cue="magnify" data-anim="up"><span class="chip bar">long tasks magnify a gap</span></div>
+      <div class="src center" data-cue="Two" data-anim="fade">0.99¹⁰⁰ = 37% · 0.97¹⁰⁰ = 4.8% · toy arithmetic</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="03c-where" data-mood="stadium">
+  <div class="stage">
+    <div class="tests2">
+      <div class="card" data-cue="Humanity" data-anim="up"><div class="h">HLE-Diamond</div><div class="x">a harder cut of Humanity's Last Exam</div></div>
+      <div class="card" data-cue="science" data-anim="up"><div class="h">Terminal-Bench-Science</div><div class="x">real science work in a terminal</div></div>
+    </div>
+    <div class="hbars">
+      <div class="r" data-cue="Kimi" data-anim="left"><span class="cn">Kimi K3.1 Pro<small>Moonshot · on those two</small></span><div class="track"><div class="fill" style="width: 37%; background: var(--good)">37% · 34%</div></div></div>
+      <div class="r" data-cue="Claude" data-anim="left"><span class="us">Claude Opus 5.5<small>Anthropic</small></span><div class="track"><div class="fill" style="width: 68%; background: var(--accent-2)">68%</div></div></div>
+      <div class="r" data-cue="Astra" data-anim="left"><span class="us">GPT-6 Astra<small>OpenAI</small></span><div class="track"><div class="fill" style="width: 63%; background: var(--accent-2)">63%</div></div></div>
+    </div>
+    <div class="src center" data-cue="Kimi" data-anim="fade">Artificial Analysis, "Intelligence Index v5": "The gap is widest on HLE-Diamond and Terminal-Bench-Science"</div>
+  </div>
+</section>
+
+<!-- ============ ACT FOUR: A SECOND SCOREBOARD (smash cut into a game, no lead) ============ -->
+<section data-scene="04-game" data-mood="quiz" data-transition="whip">
+  <div class="phase" id="p04a">
+    <div class="stage">
+      <div class="quiz" data-cue="game" data-anim="slam">Game</div>
+      <div class="pods">
+        <div class="pod" style="border-color: var(--good)" data-cue="Qwen" data-anim="up"><div class="nm cn">Qwen 4 Max</div><div class="lab">Alibaba</div><div class="sc" data-cue="trails" data-anim="count">43</div></div>
+        <div class="pod" style="border-color: var(--accent-2)" data-cue="GPT" data-anim="up"><div class="nm us">GPT-6.1 Sol</div><div class="lab">OpenAI</div><div class="sc" data-cue="trails" data-anim="count">55</div></div>
+      </div>
+      <div class="gapbox" data-cue="twelve" data-anim="pop"><span class="n" style="font-size: 110px">12</span><span class="u">points apart on the Artificial Analysis index</span></div>
+    </div>
+  </div>
+  <div class="phase" id="p04b">
+    <div class="stage">
+      <div class="vals" data-cue="Vals" data-anim="up"><span>Vals AI's index:</span><span class="ic" data-cue="finance" data-anim="pop">finance</span><span class="ic" data-cue="coding" data-anim="pop">coding</span><span class="ic" data-cue="legal" data-anim="pop">legal</span><span class="ic" data-cue="tax" data-anim="pop">tax</span></div>
+      <div class="opts">
+        <div class="opt" data-cue="twelve#2" data-anim="pop"><div class="l">A</div><div class="v">12</div></div>
+        <div class="opt" data-cue="Six" data-anim="pop"><div class="l">B</div><div class="v">6</div></div>
+        <div class="opt" id="optC" data-cue="less" data-anim="pop"><div class="l">C</div><div class="v">&lt;1</div></div>
+      </div>
+      <div class="tick" id="tick04" data-cue="less" data-anim="fade">?</div>
+      <div class="src center" data-cue="Vals" data-anim="fade">vals.ai: "agentic model performance across finance, coding, legal, and tax tasks"</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="04b-reveal" data-mood="quiz">
+  <div class="phase" id="p04ba">
+    <div class="stage">
+      <div class="opts">
+        <div class="opt" style="opacity: 0.35"><div class="l">A</div><div class="v">12</div></div>
+        <div class="opt" style="opacity: 0.35"><div class="l">B</div><div class="v">6</div></div>
+        <div class="opt winner" id="win04" data-cue="Less" data-anim="pulse" data-sfx="ding" data-sfx-offset="1.7"><div class="l">C</div><div class="v amb">&lt;1</div></div>
+      </div>
+      <div class="pods">
+        <div class="pod" style="border-color: var(--good)" data-cue="Sixty" data-anim="up"><div class="nm cn">Qwen 4 Max</div><div class="lab">Vals Index</div><div class="sc" data-cue="Sixty" data-anim="count">63.2%</div></div>
+        <div class="pod" style="border-color: var(--accent-2)" data-cue="against" data-anim="up"><div class="nm us">GPT-6.1 Sol</div><div class="lab">Vals Index</div><div class="sc" data-cue="against" data-anim="count">63.9%</div></div>
+      </div>
+      <div class="src center" data-cue="Sixty" data-anim="fade">vals.ai Vals Index, updated Nov 15, 2026</div>
+    </div>
+  </div>
+  <div class="phase" id="p04bb">
+    <div class="stage">
+      <div class="twin">
+        <div class="mini" data-cue="Same" data-anim="left"><div class="t">Artificial Analysis index</div><div class="r"><span class="us">GPT-6.1 Sol</span><b>55</b></div><div class="r"><span class="cn">Qwen 4 Max</span><b>43</b></div><div class="gapline">12 <small>a gap you can't miss</small></div></div>
+        <div class="mini" data-cue="other#1" data-anim="right"><div class="t">Vals Index</div><div class="r"><span class="us">GPT-6.1 Sol</span><b>63.9</b></div><div class="r"><span class="cn">Qwen 4 Max</span><b>63.2</b></div><div class="gapline">0.7 <small>a gap you could miss</small></div></div>
+      </div>
+      <div class="src center" data-cue="Same" data-anim="fade">different scales: points on one, percent on the other</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m04" data-cue="Neither" data-anim="pop"><figure class="ss-meme" data-meme="glasses"><span>two scoreboards, two gaps</span><span data-cue="measure" data-anim="fade">each one measures different work</span></figure></div>
+  <div class="phase" id="p04bc">
+    <div class="stage">
+      <div class="twin">
+        <div class="mini" data-cue="agree" data-anim="left"><div class="t">Artificial Analysis · top six</div>
+          <div class="r"><span class="us">Claude Fable 5.2</span><b>65</b></div><div class="r"><span class="us">Gemini 4 Carbon</span><b>60</b></div><div class="r"><span class="us">Claude Opus 5.5</span><b>59</b></div><div class="r"><span class="us">GPT-6 Astra</span><b>57</b></div><div class="r"><span class="us">GPT-6.1 Sol</span><b>55</b></div><div class="r"><span class="us">Claude Sonnet 5.5</span><b>55</b></div>
+          <div class="r" style="opacity: 0.85"><span class="cn">… Qwen 4 Max</span><b>43</b></div></div>
+        <div class="mini" data-cue="agree" data-anim="right"><div class="t">Vals Index · top six</div>
+          <div class="r"><span class="us">Claude Fable 5.2</span><b>71.3</b></div><div class="r"><span class="us">Claude Sonnet 5.5</span><b>70.9</b></div><div class="r"><span class="us">Gemini 4 Carbon</span><b>70.5</b></div><div class="r"><span class="us">Claude Opus 5.5</span><b>70.1</b></div><div class="r"><span class="us">Gemini 4 Argon</span><b>69.4</b></div><div class="r"><span class="us">Gemini 4 Hydrogen</span><b>68.5</b></div>
+          <div class="r" style="opacity: 0.85"><span class="cn">… Qwen 4 Max</span><b>63.2</b></div></div>
+      </div>
+      <div class="row"><span class="chip us" data-cue="sixteen" data-anim="pop">Opus 5.5 ahead by 16</span><span class="chip us" data-cue="seven" data-anim="pop">and by about 7</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT FIVE: THE COPYING CLAIM ============ -->
+<section data-scene="05-copying" data-mood="claim">
+  <div class="casefile" id="cf05" data-cue="+0.0" data-anim="fade"><div class="f" data-cue="+0.3" data-anim="up"><div class="kk">case file</div><div class="t">The copying claim</div></div></div>
+  <div class="phase" id="p05a">
+    <div class="stage">
+      <div class="row"><span class="chip bar" data-cue="distillation" data-anim="type">distillation</span></div>
+      <div class="distil">
+        <div class="m" style="border-color: var(--accent-2)" data-cue="strong" data-anim="up">Teacher<small>a strong model</small></div>
+        <div class="arr" data-cue="questions" data-anim="grow"></div>
+        <div class="stack" data-cue="questions" data-anim="stagger"><span>Q: … → A: …</span><span>Q: … → A: …</span><span>Q: … → A: …</span><span>× a huge number</span></div>
+        <div class="arr" data-cue="train" data-anim="grow"></div>
+        <div class="m" style="border-color: var(--good)" data-cue="train" data-anim="up">Student<small>learns the answers</small></div>
+      </div>
+      <div class="src center" data-cue="strong" data-anim="fade">Anthropic: "training a less capable model on the outputs of a stronger one"</div>
+    </div>
+  </div>
+  <div class="phase" id="p05b">
+    <div class="stage">
+      <div class="rules2">
+        <div class="card" data-cue="Labs" data-anim="up"><span class="mark amb">✓</span>Your own models<br><span class="src">"a widely used and legitimate training method" · Anthropic</span></div>
+        <div class="card" data-cue="rival" data-anim="up"><span class="mark tar">✗</span>A rival's, through fake accounts<br><span class="src">breaks the provider's rules</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="05b-charges" data-mood="claim">
+  <div class="stage">
+    <div class="charges">
+      <div class="card" data-cue="February" data-anim="up"><div class="when">Feb 23 · Anthropic</div><div class="who">DeepSeek, Moonshot, MiniMax</div><div class="num" data-cue="sixteen" data-anim="count">16M</div><div class="x">exchanges with Claude, through about <span data-cue="twenty" data-anim="highlight">24,000 fake accounts</span></div><span class="tag">allegation</span></div>
+      <div class="card" data-cue="September" data-anim="up"><div class="when">Sep · Anthropic</div><div class="who">a campaign linked to Alibaba</div><div class="num" data-cue="hundred" data-anim="count">151M</div><div class="x">exchanges, May to July 2026</div><span class="tag">allegation</span></div>
+      <div class="card" data-cue="FBI" data-anim="up"><div class="when">Sep 8 · FBI, NSA, CISA</div><div class="who">joint advisory</div><div class="x">accuses Chinese developers, Alibaba among them, of extracting capabilities from American models</div><span class="tag">allegation</span></div>
+      <div class="card" data-cue="Commerce" data-anim="up"><div class="when">Sep 9 · China's Commerce Ministry</div><div class="who cn">"groundless"</div><div class="x" data-cue="common" data-anim="fade">distillation "is a common practice", in the US too</div><span class="tag">denial</span></div>
+    </div>
+    <div class="src center" data-cue="February" data-anim="fade">Anthropic, Feb 23, 2026 · Anthropic's Sep 2026 report via The Hacker News · AP, Sep 9, 2026</div>
+  </div>
+</section>
+
+<section data-scene="05c-who" data-mood="claim">
+  <div class="stage">
+    <div class="board" data-cue="word#1" data-anim="fade">
+      <div class="head"><span>Results · <b>Artificial Analysis Intelligence Index</b></span><span>v5.0.1</span></div>
+      <div class="r hl" data-cue="Claude" data-anim="left"><div class="stripe" style="background: var(--accent-2)"></div><div class="name us">Claude Opus 5.5<small>Anthropic · <span class="me">the narrator</span></small></div><div class="score">59</div></div>
+      <div class="r"><div class="stripe" style="background: var(--good)"></div><div class="name cn">Qwen 4 Max<small>Alibaba</small></div><div class="score">43</div></div>
+    </div>
+    <div class="row">
+      <span class="chip us" data-cue="Anthropic" data-anim="pop">Anthropic made me</span>
+      <span class="chip bar" data-cue="accusations" data-anim="pop">Anthropic makes the accusations</span>
+    </div>
+    <div class="src center" data-cue="Every" data-anim="pulse">every number: its source, on screen · full list in the description</div>
+  </div>
+</section>
+
+<section data-scene="05d-test" data-mood="claim">
+  <div class="phase" id="p05da">
+    <div class="stage">
+      <div class="qbar">
+        <div class="r" data-cue="Qwen#2" data-anim="left"><span class="cn">Qwen 3.8 Max<small>Sep 2, 2026</small></span><div class="b" style="width: 34%"></div><span class="sv" data-cue="Thirty" data-anim="count">34</span></div>
+        <div class="r" data-cue="nine" data-anim="left"><span class="cn">Qwen 4 Max<small>Nov 16, 2026</small></span><div class="b" style="width: 43%"></div><span class="sv" data-cue="forty" data-anim="count">43</span></div>
+      </div>
+      <div class="row"><span class="chip amber" data-cue="same" data-anim="pop">same index, v5.0.1</span><span class="chip cn" data-cue="nine" data-anim="slam">+9</span></div>
+      <div class="costs" data-cue="costs" data-anim="up"><span class="from">$10.02<small>per task</small></span><span class="arr"></span><span class="amb">$3.27<small>per task</small></span></div>
+      <div class="src center" data-cue="same" data-anim="fade">artificialanalysis.ai, Qwen3.8 Max and Qwen4 Max pages</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m05d" data-cue="About#1" data-anim="pop"><figure class="ss-meme" data-meme="stonks"><span>+9 points at a third of the cost</span><span>stonks</span></figure></div>
+  <div class="phase" id="p05db">
+    <div class="stage">
+      <div class="yr" data-cue="timing" data-anim="fade">
+        <div class="axis"></div>
+        <div class="mo" style="left: 0%">Jan</div><div class="mo" style="left: 20%">Mar</div><div class="mo" style="left: 40%">May</div><div class="mo" style="left: 60%">Jul</div><div class="mo" style="left: 80%">Sep</div><div class="mo" style="left: 100%">Nov</div>
+        <div class="band" style="left: 40%; width: 30%" data-cue="campaign" data-anim="grow"></div>
+        <div class="bandl" style="left: 38%" data-cue="campaign" data-anim="fade">Alibaba-linked campaign, May to July</div>
+        <div class="pin" style="left: 97%" data-cue="gap" data-anim="grow"></div>
+        <div class="pinl" style="left: 72%" data-cue="gap" data-anim="fade">Oct 27: the test changes, gap 3 → 12</div>
+        <div class="dot" style="left: 103%" data-cue="changed" data-anim="pop"></div>
+        <div class="dotl" style="left: 98%" data-cue="changed" data-anim="fade">Qwen 4 Max</div>
+      </div>
+      <div class="src center" data-cue="timing" data-anim="fade">Anthropic's Sep 2026 report · Artificial Analysis, Oct 27, 2026</div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="05e-unknown" data-mood="claim">
+  <div class="phase" id="p05ea">
+    <div class="stage">
+      <div class="ledger">
+        <div class="card" data-cue="accusations" data-anim="up"><span class="kk">the accusations say</span>it happened <span class="big amb">✓</span></div>
+        <div class="card" data-cue="None#2" data-anim="up"><span class="kk">how much it helped</span>no number <span class="big tar">?</span></div>
+      </div>
+      <div class="quote" style="font-size: 52px" data-cue="Nathan" data-anim="up">"distillation is becoming less and less impactful over time"<span class="who">Nathan Lambert, quoted by TechCrunch, Jul 23, 2026</span></div>
+    </div>
+  </div>
+  <div class="phase" id="p05eb">
+    <div class="stage">
+      <div class="loop" data-cue="practice" data-anim="up"><span class="chip">try a task</span><span class="arr"></span><span class="chip">get scored</span><span class="arr"></span><span class="chip">try again</span><span class="times" data-cue="millions" data-anim="pop">× millions</span></div>
+      <div class="src center" data-cue="practice" data-anim="fade">reinforcement learning: "big RL runs are millions and millions of rollouts" · Interconnects, Jul 22, 2026</div>
+    </div>
+  </div>
+  <div class="meme-wrap" id="m05e" data-cue="Doing" data-anim="pop"><figure class="ss-meme" data-meme="money"><span>millions of practice runs through a rival's API</span><span>shut up and take my money</span></figure><div class="src" data-cue="insanely" data-anim="fade">"would be insanely expensive" · Nathan Lambert, Interconnects</div></div>
+</section>
+
+<!-- ============ ACT SIX: THE ANSWER (no lead: mid-thought) ============ -->
+<section data-scene="06-verdict" data-mood="verdict">
+  <div class="meme-wrap" id="m06" data-cue="So" data-anim="pop"><figure class="ss-meme" data-meme="both"><span>the ruler moved, or they fell behind on the hardest work?</span><span data-cue="Both" data-anim="fade">why not both?</span></figure></div>
+  <div class="stage">
+    <div class="verdicts">
+      <div class="v" id="v06" data-cue="broken" data-anim="up"><span class="ic">1</span><span>Qwen 4 Max is Alibaba's best yet<small>+9 points, a third of the cost per task, same index</small></span></div>
+      <div class="v" data-cue="real" data-anim="up"><span class="ic">2</span><span>The gap is real, and specific<small>widest on the hardest, longest, unseen tasks</small></span></div>
+      <div class="v" data-cue="exactly" data-anim="up"><span class="ic">3</span><span>It's what version five was built to find<small>and it jumped the day the test changed</small></span></div>
+      <div class="v" data-cue="evidence" data-anim="up"><span class="ic">4</span><span>No evidence ties it to losing distillation<small>the accusations say copying happened, not how much it helped</small></span></div>
+    </div>
+  </div>
+</section>
+
+<section data-scene="06b-three-questions" data-mood="verdict">
+  <div class="stage">
+    <div class="qs3">
+      <div class="q" data-cue="Which" data-anim="left"><span class="n">1</span><span>Which version of the test?</span></div>
+      <div class="q" data-cue="What#1" data-anim="left"><span class="n">2</span><span>What work does it measure?</span></div>
+      <div class="q" data-cue="second" data-anim="left"><span class="n">3</span><span>What does a second scoreboard say?</span></div>
+    </div>
+  </div>
+  <div class="endcard" id="end06" data-cue="Those" data-anim="fade">
+    <div class="t">Fell behind, or the ruler moved?</div>
+    <div class="a">Both.</div>
+    <div class="sv">sources in the description · explained by Claude Opus 5.5 · made with ShipShow</div>
+  </div>
+</section>
+
+<script>
+  // Covers and case files step aside once their act's first words begin (leads in video.json, plus the video's 0.5 s lead).
+  [["#cov02", "02-the-index", 2.7], ["#cf05", "05-copying", 2.5]].forEach(([sel, id, lead]) => tl.to(sel, { opacity: 0, duration: 0.45 }, sceneStart(id) + lead - 0.35));
+
+  // Scenes in phases: each phase steps aside just before the next one's first arrival.
+  document.querySelectorAll("section[data-scene]").forEach((sec) => {
+    const ps = [...sec.querySelectorAll(".phase")].filter((p) => !p.parentElement.closest(".phase"));
+    ps.forEach((p, i) => {
+      if (i === 0) return;
+      const ats = [...p.querySelectorAll("[data-at]")].map((e) => +e.dataset.at).filter((t) => !isNaN(t));
+      if (!ats.length) return;
+      const t = Math.min(...ats) - 0.4;
+      tl.set(p, { opacity: 0 }, 0);
+      tl.to(ps[i - 1], { opacity: 0, duration: 0.35 }, t);
+      tl.to(p, { opacity: 1, duration: 0.35 }, t);
+    });
+  });
+  // A meme owns the frame while it is up, and leaves just before the next thing arrives.
+  const away = (meme, at) => tl.to(meme, { opacity: 0, duration: 0.3 }, at);
+  away("#m04", cueAt("#p04bc .mini") - 0.5);
+  away("#m05d", cueAt("#p05db .yr") - 0.5);
+  away("#m06", cueAt("#v06") - 0.5);
+
+  // 01: the fake ending's credits crawl up through the pause, then freeze when the scratch lands.
+  tl.fromTo("#crawl01", { y: 0 }, { y: -1500, duration: sceneEnd("01-hook") - cueAt("#cr01"), ease: "none", immediateRender: false }, cueAt("#cr01"));
+  sfx("scratch", sceneEnd("01-hook") - 0.25, { gain: -2 });
+
+  // 03: the bar rises on "raise", then jumper B clips it and it falls.
+  tl.to("#barRect", { attr: { y: 497 }, duration: 0.9, ease: "power2.inOut" }, cueAt("#mk03raise"));
+  tl.to("#barLab", { attr: { y: 513 }, duration: 0.9, ease: "power2.inOut" }, cueAt("#mk03raise"));
+  tl.set("#barLab", { textContent: "2 m" }, cueAt("#mk03raise") + 0.45);
+  tl.to(["#a1", "#b1"], { opacity: 0.18, duration: 0.4 }, cueAt("#mk03raise"));
+  const fall = cueAt("#mk03fall") + 0.85;
+  tl.to("#barRect", { rotation: 9, transformOrigin: "0% 50%", y: 300, duration: 0.7, ease: "power2.in" }, fall);
+  sfx("thump", cueAt("#mk03fall") + 1.45, { gain: -3 });
+  tl.set("#ja", { textContent: "✓" }, fall);
+  tl.set("#jb", { textContent: "✗" }, fall);
+  tl.set("#jres", { textContent: "not tied" }, fall);
+
+  // 03b: the chance a 100-step task is still alive after each step, p^n, drawn from the arithmetic itself.
+  const curve = (p) => { let d = ""; for (let n = 0; n <= 100; n++) { const x = 120 + n * 11.8, y = 520 - 480 * Math.pow(p, n); d += (n ? " L " : "M ") + x.toFixed(1) + " " + y.toFixed(1); } return d; };
+  document.getElementById("c99").setAttribute("d", curve(0.99));
+  document.getElementById("c97").setAttribute("d", curve(0.97));
+
+  // 04: a countdown in the guessing pause.
+  const e04 = sceneEnd("04-game");
+  [3, 2, 1].forEach((n, i) => tl.set("#tick04", { textContent: String(n) }, e04 - 3.0 + i));
+</script>

@@ -1,0 +1,1 @@
+[brisk and clear, counting off changes on his fingers] It did three things. It threw out questions the models had already mastered. It made sixty percent of the index private: tests nobody outside can see, so nobody can train on the answers. And it made the tasks longer. The typical model now writes two thirds more per task than under the old version.

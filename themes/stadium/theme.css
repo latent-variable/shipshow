@@ -1,0 +1,86 @@
+/* Stadium: a results show at a night athletics meet. Floodlit navy, a red tartan track for the bar and the thing being
+   measured, a scoreboard amber for every score, a cool blue for American labs and a green for Chinese labs (one meaning
+   each, so a viewer can follow a lab across scoreboards). Anton for the scoreboard headlines (tall and condensed),
+   Inter for text, JetBrains Mono for versions, sources and the small print (all SIL Open Font License, in fonts/).
+   Behind the pictures a slow glow like floodlit haze; over them a light vignette and grain, a broadcast feed at night.
+   Made for a video about a leaderboard whose ruler changed. */
+@font-face { font-family: "Anton"; font-weight: 400; src: url("fonts/anton-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; src: url("fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 800; src: url("fonts/inter-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; src: url("fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 700; src: url("fonts/jetbrains-mono-latin-700-normal.woff2") format("woff2"); }
+
+:root {
+  /* colour */
+  --bg: #070b14;
+  --sky: radial-gradient(130% 95% at 50% -10%, #1c2b47 0%, #0d1526 50%, #060910 100%);
+  --ink: #f4f6fa;
+  --muted: #a9b3c6;
+  --accent: #ff6a3d;          /* tartan: the bar, the track, the thing being measured */
+  --accent-2: #6cb8ff;        /* American labs */
+  --accent-3: #ffc23a;        /* scoreboard amber: every score */
+  --card: #111a2b;
+  --line: #2a3a58;
+  --code-bg: #0a101c;
+  --code-ink: #d6dceb;
+  --good: #3fe0a5;            /* Chinese labs */
+  --bad: #ff6a6a;
+
+  /* type */
+  --font: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Anton", "Inter", Impact, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --display-weight: 400;
+  --display-tracking: 0.02em;
+
+  /* layout and shape */
+  --pad: 130px;
+  --heading-top: 96px;
+  --heading-size: 104px;
+  --heading-align: left;
+  --meme-height: 760px;
+  --radius: 8px;
+  --border: 2px;
+  --shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  --code-shadow: 0 0 0 1px #24324d, 0 24px 60px rgba(0, 0, 0, 0.55);
+
+  /* photos, memes and screenshots: a broadcast frame, a hairline of floodlight */
+  --frame: #3a4d70;
+  --frame-width: 2px;
+  --meme-border: 3px solid #ffc23a;
+  --meme-radius: 8px;
+  --meme-shadow: 0 34px 90px rgba(0, 0, 0, 0.75);
+  --portrait-radius: 8px;
+  --portrait-frame-width: 2px;
+  --portrait-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+  --shot-mark: #ffc23a;
+  --shot-bar: #142038;
+  --shot-shadow: 0 40px 100px rgba(0, 0, 0, 0.75);
+
+  /* captions: a lower third, the spoken word lit in scoreboard amber */
+  --cap-bg: rgba(6, 9, 16, 0.9);
+  --cap-ink: #ffffff;
+  --cap-size: 44px;
+  --cap-radius: 6px;
+  --cap-style: karaoke;
+  --cap-words: 10;
+  --cap-font: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --cap-weight: 700;
+  --cap-hot: #ffc23a;
+  --cap-border: 1px solid #2a3a58;
+
+  /* motion: broadcast cuts, a slow push like a camera on a crane */
+  --transition: slide;
+  --entrance: up;
+  --camera: push;
+  --ambient: glow vignette grain;
+  --ambient-strength: 0.14;
+  --grain-strength: 0.1;
+  --grain-fps: 12;
+  --grain-blend: overlay;
+  --vignette-strength: 0.55;
+  --vignette-color: #000000;
+  --progress: off;
+  --progress-fill: #ffc23a;
+}
