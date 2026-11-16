@@ -129,7 +129,7 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 
 ### 06-verdict, 06b-three-questions: the answer
 
-Collects 01 to 05; nothing new. "A third of the cost per task" is AAQ38 and AAQ (0.33). "The sixteen points you saw" is Qwen 4 Max against Opus 5.5 (AAL). "Widest on the hardest tests in version five" is AA5's two tests, named on screen. The closing board repeats AAL and VI (Opus 5.5 70.14% on Vals).
+Collects 01 to 05; nothing new. "A third of the cost per task" is AAQ38 and AAQ (0.33). "The sixteen points you saw" is Qwen 4 Max against Opus 5.5 (AAL). "Widest on two of version five's tests" is AA5's two, HLE-Diamond and Terminal-Bench-Science, named aloud and on screen; the video does not call them the hardest. The closing board repeats AAL and VI (Opus 5.5 70.14% on Vals).
 
 ## Shown assets
 
