@@ -237,3 +237,5 @@ meme is gone. Distillation, open models, RL and the index lost their ground-up d
   Re-voicing either would cost another round for a wording the screen already qualifies.
 
 Spend on this rewrite: about 0.55M Sonnet critic tokens (three critics, two accuracy re-checks).
+
+**Published 2026-11-16:** https://youtu.be/jPGEaSzqfmk (uploaded by the owner; the folder moved to `youtube/uploaded/2026-11-16 raise-the-bar/`).
