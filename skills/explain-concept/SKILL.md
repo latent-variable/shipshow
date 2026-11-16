@@ -89,8 +89,9 @@ omission from an oversight.
   throwing terms that we didn't really [explain]"). A video on a model release, a benchmark or an industry fight is watched
   by people already in that field: its everyday terms (distillation, open weights, RL, a leaderboard) get a clause of recap at
   most, and a definition from the ground up talks down to them (the owner, 2026-11-16, on raise-the-bar: "explaining
-  distillation from the bottom is kind of unnecessary ... we have to know our audience"). Think through each kind of viewer
-  the title draws, and let their perspective choose the example.
+  distillation from the bottom is kind of unnecessary ... we have to know our audience"). The title is evidence of who watches; `video.json`
+  `"audience"` is where the builder settles it, so write that persona from the title and keep the two in agreement. Think
+  through each kind of viewer the title draws, and let their perspective choose the example.
 - **No leaps: every step is shown happening** (the owner, 2026-10-31, on kakeya-every-dimension's fifth cut: "you basically
   lost me when a Kakeya set had area of zero ... how did we go from almost no area to ... absolutely zero area? ... some
   leaps"). When the voice goes from one claim to a stronger one in a sentence (almost none, then exactly zero), the step between
