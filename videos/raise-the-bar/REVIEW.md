@@ -154,3 +154,24 @@ and the packet's own numbers checked it (no overlaps; every reading flag within 
 
 Accepted at the cap: engagement-r3-3's bar of about nine memes (six, each on its own beat); engagement-r3-7 (the verdict list is
 text); novelty-r3-4 (the close's numbered lists); pacing's narrator rate (as before) and its minor pause notes; visuals-r3-6.
+
+## Verification after the cap (2026-11-16, Sonnet, changed scenes only)
+
+The floor critic and the critic with the blocking finding re-ran on what round 3's fixes changed.
+
+| Critic | Verdict | Findings | Tokens |
+|---|---|---|---|
+| accuracy | pass | 1 major, 2 minor | 101k |
+| visuals | pass | 3 minor | 163k |
+
+- accuracy-verify-1: the Vals leader's 71.3% is now in sources.md's VI row (Claude Fable 5.2, 71.31%, read on vals.ai).
+- accuracy-verify-2: "Every measured number has its source, on screen or in the description", in 05a and the description.
+- accuracy-verify-3: the hook paraphrases the post as "Qwen has been cut off from copying American models".
+- visuals-verify-1: the meme panels' bottom seam closed. The blocking capture finding is confirmed closed in all four frames.
+- visuals-verify-2, 3: minor, recorded.
+
+Voice: two takes heard back at 94 and 95%, where Whisper writes "Qwen" as "Quinn" (the `say` entry is "Kwen", as on
+qwen-phones-home); Parakeet's second listen flagged nothing. Nobody has heard the takes: listen to 04b and 05d.
+
+Spend: about 3.0M critic tokens across 22 critic runs (round 1, 1.02M; round 2, 0.99M; round 3, 0.93M; verification, 0.26M),
+against the plan's 2.9M ceiling for three full rounds. The verification ran past the cap on purpose: accuracy is the floor.

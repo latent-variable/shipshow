@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-11-09 (after the shared take cache (N7), render streams frames by default, N9 count; F46: a light screenshot is captured opaque, D104).
+Last reviewed: 2026-11-16 (F23 names the stadium theme, D109).
 
 ## Problem
 
