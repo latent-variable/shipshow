@@ -233,7 +233,7 @@ meme is gone. Distillation, open models, RL and the index lost their ground-up d
 - **accuracy verification, PASS.** All five re-check findings are resolved. Fixed (on screen): "the closest it has been" now
   reads "through January 2026", and the Epoch chip carries its dates. Accepted (minor, narration): "Chinese models trail most
   on two of version five's tests" is AA5's finding for the best Chinese model, and the screen qualifies it as Kimi K3.1 Pro's
-  in the same moment. "Both sides keep climbing" is said as a reading of the 23, 13 and 19 gaps, and is marked inferred.
+  in the same moment. "Both sides keep climbing" became "Both sides have climbed since September", because the PR review flagged it too: the best Chinese score has been flat at 46 since October.
   Re-voicing either would cost another round for a wording the screen already qualifies.
 
 Spend on this rewrite: about 0.55M Sonnet critic tokens (three critics, two accuracy re-checks).
