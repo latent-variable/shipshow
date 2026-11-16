@@ -1567,6 +1567,17 @@ bar raised over a generated night stadium and a game-show reveal carry that, and
 clipped; boxes holding it get top padding. A class named `clip` in a scene's own styles also styles every timed element (HyperFrames
 gives each the class `clip`): raise-the-bar's first draft tilted every scene that way, so scene styles avoid `clip`, `k`, `s`,
 `win`, `cap` and the kit's other short names. **Tested.** raise-the-bar's frames and its three critic rounds.
+
+### D110. The viewer is whoever the title draws, not always a newcomer (2026-11-16)
+
+`explain-concept` and `critic-clarity` used to set one viewer for every channel video: the smart high-schooler or
+someone from another field, with every term given everyday words. That came from kakeya-every-dimension, a maths idea for a
+general audience, where it was right. On raise-the-bar, a video about a model release and a benchmark, it made the script
+define distillation from the ground up for viewers who use the word every day, and the owner found that talked down to them
+("we have to know our audience"). The rule is now the viewer the title draws: a general idea still gets everyday words, and
+a field's own news gets at most a clause of recap for its everyday terms. `critic-clarity` grades the old failure (a term
+this viewer would not know) a major, as before, and the reverse (a term they use daily, defined from scratch) a minor.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.

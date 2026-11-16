@@ -14,10 +14,15 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 | AAQ | Artificial Analysis, model page "Qwen4 Max", artificialanalysis.ai/models/qwen4-max: "Artificial Analysis Intelligence Index v5.0.1", score 43, "Proprietary model", $1.50 / $4.50 per 1M input / output tokens, $3.27 per Intelligence Index task, 127M output tokens on the Index, release date November 16, 2026 (FAQ) | page via fetch |
 | AAQ38 | Artificial Analysis, "Qwen3.8 Max (0902)", artificialanalysis.ai/models/qwen3-8-max: "scores 34 on the Artificial Analysis Intelligence Index", v5.0.1, released September 2, 2026, $2.00 / $6.00 per 1M tokens, "$10.02 per task", "This model is deprecated" | page via fetch |
 | AAL | Artificial Analysis leaderboard, artificialanalysis.ai/leaderboards/models (current index, v5.0.1 per AAQ): Claude Fable 5.2 Max 65 ($26.54/task), Gemini 4 Carbon High 60, Claude Opus 5.5 Max 59 ($10.04), GPT-6 Astra Max 57, GPT-6.1 Sol Max 55 ($1.27), Claude Sonnet 5.5 Max 55, Kimi K3.1 Pro 46 ($3.68), Qwen4 Max 43 ($3.27), DeepSeek V4.1 Flash 1017 Max 33, GLM-5.3 Max 32, MiniMax-M3.1-Flash 29 | page via fetch |
+| AAG6 | Artificial Analysis, model page, artificialanalysis.ai/models/gpt-6-astra: "was released on September 3, 2026", "scores 57 on the Artificial Analysis Intelligence Index" (Max) | page via curl, 2026-11-16 |
+| AAF52 | Artificial Analysis, model page, artificialanalysis.ai/models/claude-fable-5-2: "was released on November 9, 2026", "scores 65 on the Artificial Analysis Intelligence Index" (Max), the top of AAL | page via curl, 2026-11-16 |
+| AAD | Artificial Analysis model pages read for release dates, 2026-11-16: Claude Opus 5.5 September 22, Claude Sonnet 5.5 September 28, GPT-6.1 Sol September 29, Gemini 4 Argon September 30, Kimi K3.1 Pro October 23, GPT-6.1 Terra October 26, Gemini 4 Carbon October 28, Gemini 4 Hydrogen November 12. Older American models (Opus 5, GPT-5.5 Pro, Gemini 3.1 Pro) show no v5.0.1 score on AAL, so today's index cannot place an older frontier model beside Qwen 4 Max | pages via curl and fetch |
 | AA5 | Artificial Analysis, "Artificial Analysis Intelligence Index v5", October 27, 2026, artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5 | page via fetch |
 | AAM | Artificial Analysis, methodology, artificialanalysis.ai/methodology/intelligence-benchmarking, *Version History* (v4.0 to v5.0.1, with months) | page via fetch, both halves |
 | AAA | Artificial Analysis, "Recent open weights model launches", April 30, 2026, artificialanalysis.ai/articles/recent-open-weights-model-launches | page via fetch |
 | VB | VentureBeat, "Artificial Analysis overhauls its AI Intelligence Index, replacing popular benchmarks...", January 6, 2026 | page via fetch |
+| EP1 | Epoch AI, "Chinese AI models have lagged the US frontier by 7 months on average since 2023", data insight, January 2, 2026, epoch.ai/data-insights/us-vs-china-eci: "Chinese models have trailed US capabilities by an average of seven months", "with a minimum gap of four months and a maximum gap of 14", frontier "as measured by the Epoch Capabilities Index" | page via fetch |
+| EP2 | Epoch AI, "Can AI spot mistakes in IKEA assembly?", September 23, 2026, epoch.ai/publications/furniture-assembly: "The best Chinese model as of today, the open-weight Kimi K3, lagged the frontier by seven months at the time of its release." "The gap between Kimi K3 and the frontier is wider in the FAB compared to general capabilities, where Kimi K3 trailed the frontier by only 4.4 months, as measured by the Epoch Capabilities Index" | page via fetch |
 | VI | Vals AI, Vals Index, vals.ai/benchmarks/vals_index, updated 11/15/2026: top 15 with scores (Claude Fable 5.2 71.31%, the leader; Claude Sonnet 5.5 70.85%; Gemini 4 Carbon 70.45%; Claude Opus 5.5 70.14%; Gemini 4 Argon 69.39%; Gemini 4 Hydrogen 68.49%; ... GPT-6.1 Sol 63.94%; Qwen 4 Max 63.20%); "agentic model performance across finance, coding, legal, and tax tasks, weighted by each sector's share of U.S. GDP" | page via fetch |
 | VQ | Vals AI, model page, vals.ai/models/alibaba_qwen4-max: Qwen 4 Max 63.20%, #11 of 38, released Nov 15, 2026 | page via fetch |
 | K1 | X, Chubby (@kimmonismus), 2026-11-11 10:18 UTC, x.com/kimmonismus/status/2120461099745096146: rumours that Qwen 4 is "disappointing" and that preventing distillation of Anthropic's model is braking it | api.fxtwitter.com JSON |
@@ -40,7 +45,7 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 | Vals | the Vals Index, by Vals AI, the second scoreboard | |
 | the gap | the distance in index points from the best open model (a Chinese lab's) to the leader, as AA5 measures it; on screen "best open model vs leader" | Qwen's distance to Sol or Opus is "behind" or "trails", or "the sixteen points" |
 | scoreboard, leaderboard, ruler, rulebook | spoken aliases ("the Rulebook" is act two's title for the index's version history): "scoreboard" for any ranking (the index, Vals, the high-jump board), "leaderboard" for the generic one in a headline, "the ruler" for the index as a measuring tool | |
-| open model | a model whose weights anyone can download ("the kind anyone can download"); AA counts Kimi K3.1 Pro, weights not yet released, among them, and says so on screen | |
+| open model | a model whose weights anyone can download (said as "open models", not defined: the viewer is in the field, D110; on screen "open-weight models"); AA counts Kimi K3.1 Pro, weights not yet released, among them, and says so on screen | |
 | accusations | the noun for Anthropic's and the US agencies' claims of distillation; "allegation" is only the on-screen tag; "the post's claim" is the X post's | not "charges" |
 | distillation, copying | training a model on another model's answers (AN1); "copying" is the plain word for doing it to a rival | |
 | Chinese labs, Chinese models | labs based in China: Alibaba (Qwen), Moonshot (Kimi), DeepSeek, Z.ai (GLM), MiniMax | |
@@ -124,12 +129,26 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 | No source read dates when Qwen was cut off from distillation | **absence**: AN1, AN2, AP, TC, IC, LF and K1, K2 give no date for a cut-off; K2 says only "is being cut off" |
 | Artificial Analysis puts the 3 on v4.3 and the 12 on version five; "the jump lines up with the new index, not with a cut-off" is **[inferred]**: AA5 does not say the same models were re-scored, and no cut-off date later than July is in any source read | AA5, AN2 |
 | Nathan Lambert argues distillation is becoming less and less impactful; RL runs are millions of rollouts; grading them through a frontier model's API "would be insanely expensive". "On his podcast" covers Brand's line that the strong capabilities come in the RL stage | IC: "distillation has becoming less and less impactful over time"; "big RL runs are millions and millions of rollouts"; "to do this on an API like Fable or GPT 5.6 would be insanely expensive". TC repeats the first: "I've been of the opinion that distillation is becoming less and less impactful over time" |
-| Reinforcement learning: training where a model practises tasks and is scored on them | IC (RL stage, rollouts) |
+| "The big gains now come from reinforcement learning, millions of scored attempts" | IC (RL stage; "millions and millions of rollouts") |
 | The accusations say copying happened; "none of the reports I read" puts a number on how much it helped | **absence**: AN1 and AN2 count exchanges and accounts; AP and TC report allegations ("It's not clear what those watermarks consist of", TC); none of AN1, AN2, AP, TC, IC, LF gives a share of capability. Said as "none of them", meaning these reports |
 
-### 06-verdict, 06b-three-questions: the answer
+### 06-verdict, 06a-months, 06a2-holds, 06b-three-questions: the answer
 
-Collects 01 to 05; nothing new. "A third of the cost per task" is AAQ38 and AAQ (0.33). "The sixteen points you saw" is Qwen 4 Max against Opus 5.5 (AAL). "Widest on two of version five's tests" is AA5's two, HLE-Diamond and Terminal-Bench-Science, named aloud and on screen; the video does not call them the hardest. The closing board repeats AAL and VI (Opus 5.5 70.14% on Vals).
+Rewritten 2026-11-16 after Lino's note: "fell behind" assumes the two sides were level, when Chinese labs have trailed by months
+all along; the old ending's "Both" said they fell behind.
+
+| Claim | Source |
+|---|---|
+| "Nobody fell behind": on one ruler, Alibaba's flagship was 23 points behind GPT-6 Astra in early September and is 22 behind the leader now | AAQ38 (34, Sep 2), AAG6 (57, Sep 3), AAQ (43, Nov 16), AAF52 (65, Nov 9, top of AAL). **ours**: 57 − 34 = 23, 65 − 43 = 22. Astra is the September pair because it came out a day after Qwen 3.8 Max; no American model released before September 2 has a v5.0.1 score (AAD). Fable 5.2 is called "the leader" (AAL), not "the best model out on November 16" |
+| "Both sides climbed about the same": Alibaba +9, American +8 | **ours**: 43 − 34 = 9 (AAQ, AAQ38); 65 − 57 = 8 (AAF52, AAG6) |
+| "Alibaba is behind by about as much as it was. That's a lag, not a fall." | **[inferred]** from the two gaps above (23, then 22) |
+| Epoch AI measures the gap in time; since 2023, about seven months behind on average, never closer than four | EP1 ("average of seven months", "minimum gap of four months and a maximum gap of 14", Epoch Capabilities Index). On screen with the range |
+| "Behind is where Chinese models have been all along"; on the end card, "as they have been since 2023" | EP1: the lag is averaged over every month since 2023 and its minimum is four months, so it never reached zero in that span. "All along" means since 2023, as the end card says |
+| In September, Epoch put the best of them four and a half months back on its general index | EP2: Kimi K3, "4.4 months, as measured by the Epoch Capabilities Index", at its release; published September 23. On screen beside it: seven months on Epoch's newer furniture-assembly test, so the harder test shows the bigger gap here too |
+| The old index showed the best open model three points from the top; version five, twelve | AA5 (as in 01b and 05d2). "Almost caught up" and "as if it had fallen" are how each number reads, said as "it seemed" and "as if" |
+| "The distance didn't jump in a few weeks. The ruler did." | **[inferred]**: the same-ruler gaps above held from 23 to 22 between September and November, while the old and new versions gave 3 and 12 for the best open model weeks apart (AA5) |
+| The rest of the close (a clear step up, nine points at a third of the cost per task; the sixteen points real and widest on HLE-Diamond and Terminal-Bench-Science; no evidence ties it to a cut-off) | As before: AAQ38, AAQ, AAL, AA5, and the absence row in 05 |
+| Third question: "how far behind is that in months, not points?"; chip "Epoch: about 7" | EP1 |
 
 ## Shown assets
 
@@ -141,7 +160,7 @@ Collects 01 to 05; nothing new. "A third of the cost per task" is AAQ38 and AAQ 
 | Scoreboard bars (01, 04, 06): drawn from the numbers above, in `scenes.html` `<script>` as `AA` and `VALS` arrays | AAL, VI |
 | Version timeline (02): drawn from AAM | AAM |
 | Stadium and high-jump bar pictures (03): generated, see `images.md` | illustration, generated |
-| Memes: I Feel Like I'm Taking Crazy Pills (02), Two Guys on a Bus (02b), Peter Parker's Glasses (04b), Stonks (05d), The Rent Is Too Damn High (05e), Why Not Both? (06, animated) | memegen templates (github.com/jacebrowning/memegen); sources printed by `npm run memes` |
+| Memes: I Feel Like I'm Taking Crazy Pills (02), Two Guys on a Bus (02b), Peter Parker's Glasses (04b), Stonks (05d), The Rent Is Too Damn High (05e) | memegen templates (github.com/jacebrowning/memegen); sources printed by `npm run memes` |
 
 ## Left out, and why (not claims)
 

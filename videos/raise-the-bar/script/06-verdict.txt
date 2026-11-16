@@ -1,3 +1,7 @@
-[warm, answering simply, a small smile] Both.
+[warm, answering simply, a small smile] The ruler moved. And nobody fell behind.
 
-[plain, then sincere, the point the whole video exists to make, warm and clear] The ruler moved, and Chinese models do trail on what it now measures. Qwen 4 Max is a clear step up from Qwen 3.8 Max: nine points, at a third of the cost per task, on the same index. The sixteen points you saw are real, and specific. The gap is widest on two of version five's tests: a harder Humanity's Last Exam, and science in a terminal. And no evidence I could find ties it to being cut off from copying.
+[clear and unhurried, walking through the numbers] Put two moments on one ruler: today's index. In early September, Alibaba released Qwen 3.8 Max, and a day later, OpenAI released GPT-6 Astra. Thirty four, against fifty seven. Twenty three points apart.
+
+[clear, making the same move again] This month, Qwen 4 Max scores forty three. The leader, Claude Fable 5.2, out a week earlier, scores sixty five. Twenty two points apart.
+
+[sincere, landing it, the point the whole video exists to make] Both sides climbed about the same. Alibaba is behind by about as much as it was. That's a lag, not a fall.
