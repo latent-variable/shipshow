@@ -56,9 +56,9 @@
     "scoreboard": {
       "look": {},
       "music": {
-        "file": "local/music/bar/scoreboard.wav",
-        "volume": 0.16,
-        "duck": 0.33
+        "file": "local/music/bar/level/intro-calm.wav",
+        "volume": 0.06,
+        "duck": 1
       }
     },
     "rulebook": {
@@ -70,18 +70,18 @@
       },
       "ambient": "grain",
       "music": {
-        "file": "local/music/bar/rulebook.wav",
-        "volume": 0.15,
-        "duck": 0.33
+        "file": "local/music/bar/level/rulebook.wav",
+        "volume": 0.06,
+        "duck": 1
       }
     },
     "stadium": {
       "look": {},
       "ambient": "vignette grain",
       "music": {
-        "file": "local/music/bar/stadium.wav",
-        "volume": 0.15,
-        "duck": 0.33
+        "file": "local/music/bar/level/stadium.wav",
+        "volume": 0.06,
+        "duck": 1
       }
     },
     "quiz": {
@@ -92,9 +92,9 @@
       },
       "ambient": "dots vignette grain",
       "music": {
-        "file": "local/music/bar/quiz.wav",
-        "volume": 0.15,
-        "duck": 0.33
+        "file": "local/music/bar/level/quiz.wav",
+        "volume": 0.06,
+        "duck": 1
       }
     },
     "claim": {
@@ -105,9 +105,9 @@
       },
       "ambient": "vignette grain",
       "music": {
-        "file": "local/music/bar/claim.wav",
-        "volume": 0.14,
-        "duck": 0.33
+        "file": "local/music/bar/level/claim.wav",
+        "volume": 0.06,
+        "duck": 1
       }
     },
     "verdict": {
@@ -116,9 +116,9 @@
       },
       "ambient": "glow vignette grain",
       "music": {
-        "file": "local/music/bar/verdict.wav",
-        "volume": 0.15,
-        "duck": 0.33
+        "file": "local/music/bar/level/verdict.wav",
+        "volume": 0.06,
+        "duck": 1
       }
     }
   },

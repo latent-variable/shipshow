@@ -183,3 +183,14 @@ A fresh critic judged `youtube/to-upload/raise-the-bar/` and failed it on the th
 stated an inferred cause as fact. Now it reads "Qwen 4 Max / 16 behind? / or did the bar move" over the old and new bars, with
 the index named. The title leads with Qwen 4 Max and "the Benchmark"; the description's second paragraph gives the answer
 instead of a list; the AP source has its link; sources.md no longer lists an AA5 capture the video never made.
+
+## The music (2026-11-16, Lino, after watching)
+
+Lino found the hook's bed (sports-broadcast brass and drums) too busy to sit under an explanation. He also heard every bed
+jump up whenever the narrator paused: each bed was ducked to a third under speech, so it rose by about 10 dB in every gap.
+Three changes. The scoreboard act now uses `intro-calm.wav`, which is warm pads and a low pulse with no drums or brass (ACE-Step seed 42,
+Whisper heard no words). Every bed is levelled before use: `level/` copies, run through a slow normaliser and loudnorm to
+-14 LUFS with LRA 3 (the command is in `local/music/bar/make.sh`). Every act also plays at one volume (0.06) with `duck: 1`, so
+there is no ducking. Measured on the new `assets/music.wav`, the act medians sit between -40 and -45 dB, and over 3 s windows a
+bed holds within about 2 dB. The two `data-drop`s remain. Voice, script and pictures are unchanged, so no critic round was run.
+Only the bed changed, and that is a call Lino makes by ear.
