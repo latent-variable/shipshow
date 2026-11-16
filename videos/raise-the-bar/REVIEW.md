@@ -230,3 +230,10 @@ meme is gone. Distillation, open models, RL and the index lost their ground-up d
   models" became "many older models". "Widest on two of version five's tests" was AA5's finding for Kimi, not for Qwen's
   sixteen, and is now "Chinese models trail most on two of version five's tests". "No sign of a fall" became "I see no sign of
   a fall", said as a reading. Epoch's average is dated: "from 2023 to the start of this year".
+- **accuracy verification, PASS.** All five re-check findings are resolved. Fixed (on screen): "the closest it has been" now
+  reads "through January 2026", and the Epoch chip carries its dates. Accepted (minor, narration): "Chinese models trail most
+  on two of version five's tests" is AA5's finding for the best Chinese model, and the screen qualifies it as Kimi K3.1 Pro's
+  in the same moment. "Both sides keep climbing" is said as a reading of the 23, 13 and 19 gaps, and is marked inferred.
+  Re-voicing either would cost another round for a wording the screen already qualifies.
+
+Spend on this rewrite: about 0.55M Sonnet critic tokens (three critics, two accuracy re-checks).
