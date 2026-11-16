@@ -59,7 +59,7 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 | Sixteen points behind | **ours**: 59 − 43 = 16 |
 | Within hours a post said the reason: Qwen is being cut off from distillation | K2, 11:42 UTC, about nine and a half hours after QX (02:01 UTC). Quoted verbatim on screen as a capture |
 | The same account had called it disappointing on rumours, before release, and blamed preventing distillation | K1 |
-| The best open model was 3 points behind the leader under the version before (v4.3); under version five, Kimi K3.1 Pro is 12 | AA5: "The best, Kimi K3.1 Pro (weights not yet released), scores 46, 12 points behind the leader, compared with a 3-point gap in v4.3." |
+| The best open model was 3 points behind the leader under the version before (v4.3); when version five launched, Kimi K3.1 Pro was 12 behind (said "at launch": on today's board, with Claude Fable 5.2 at 65, it is 19, **ours** 65 − 46, AAL) | AA5: "The best, Kimi K3.1 Pro (weights not yet released), scores 46, 12 points behind the leader, compared with a 3-point gap in v4.3." |
 | Version five was released October 27 | AA5 |
 | The top open-weight models are from Chinese labs | AAA: "The top 10 open weights models on the Intelligence Index are all from China-based AI labs" (April 30); AA5's leaders are Kimi K3.1 Pro (Moonshot), DeepSeek V4.1 Flash and GLM-5.3 (Z.ai), all China-based |
 | In April Artificial Analysis wrote the best open models were within 3 to 6 points | AAA: "within 3-6 points of the leading proprietary models" |
@@ -69,6 +69,7 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 
 | Claim | Source |
 |---|---|
+| Version five has nine evaluations ("nine tests, weighted" on screen) | AA5 and AAM (the v5 weights list nine) |
 | The index runs models through a bundle of tests and combines them into one number ("independent" is not said: no source read for it) | AA5, AAM (weights per evaluation) |
 | Nine versions in 2026: v4.0 (January 2026 to June 2026), v4.1 (June to August), v4.1.1 (August to September), v4.2 (September 2026), v4.3 (September 2026), v4.3.1 (September 2026), v4.3.2 (September 2026 to October 2026), v5.0 (October to November), v5.0.1 (November to current), each month as the changelog gives it | AAM, Version History. **ours**: counted; "four of them started in September" counts 4.2, 4.3, 4.3.1 and 4.3.2, whose span begins in September |
 | Some are small fixes (graders, ratings) | AAM: 4.1.1 grader model, 4.3.1 judge panels, 4.3.2 Elo anchoring, 5.0.1 CritPt regrade |
@@ -80,6 +81,7 @@ working. Lines marked **illustration** are toy examples said and shown as such, 
 | Claim | Source |
 |---|---|
 | The high jump with two jumpers tied at a low bar | **illustration** (no data; drawn as a picture) |
+| That version five's harder, longer, private tests are why the 3 became 12 (a ceiling effect) | **[inferred]** from AA5's removed saturated questions, 60% private sets and the gap being widest on its two hardest tests; AA5 does not name a cause |
 | Version five used harder cuts of its tests, with mastered questions taken out | AA5: AA-Omniscience v1.1, "saturated and public set questions removed"; CritPt v2 scored on "a private 40-question hard subset"; HLE replaced by HLE-Diamond, "a refined 1,000-question version". Said as "harder cuts of its tests", not as every test |
 | 60 percent of the index is now private tests or held-out answers | AA5: "60% of the Index is now based on evaluations with private test sets or held-out answers." |
 | Private so nobody can train on the answers | AA5 on FrontierCode 2.0: "the tasks stay private to avoid contamination" |
@@ -135,10 +137,11 @@ Collects 01 to 05; nothing new. "A third of the cost per task" is AAQ38 and AAQ 
 |---|---|
 | K2 post (05 and 01): captured with `ss-shot` from `platform.twitter.com/embed/Tweet.html?id=2122294330778132787` | K2 |
 | AA5 article, the sentence "compared with a 3-point gap in v4.3": captured with `ss-shot` | AA5 |
+| The rewind in 01: the board's version label ticks v5.0.1, v5.0, v4.3 and its scores go blank, because v4.3's scores for these models are not in the sources; it stops on Oct 27 (AA5) |
 | Scoreboard bars (01, 04, 06): drawn from the numbers above, in `scenes.html` `<script>` as `AA` and `VALS` arrays | AAL, VI |
 | Version timeline (02): drawn from AAM | AAM |
 | Stadium and high-jump bar pictures (03): generated, see `images.md` | illustration, generated |
-| Memes: Two Guys on a Bus (02b), Philosoraptor (03), Peter Parker's Glasses (04b), Stonks (05d), Shut Up and Take My Money! (05e, animated), Why Not Both? (06, animated) | memegen templates (github.com/jacebrowning/memegen); sources printed by `npm run memes` |
+| Memes: I Feel Like I'm Taking Crazy Pills (02), Two Guys on a Bus (02b), Peter Parker's Glasses (04b), Stonks (05d), The Rent Is Too Damn High (05e), Why Not Both? (06, animated) | memegen templates (github.com/jacebrowning/memegen); sources printed by `npm run memes` |
 
 ## Left out, and why (not claims)
 

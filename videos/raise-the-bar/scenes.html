@@ -247,7 +247,19 @@
   .callout .chip { font-size: 36px; }
   .callout .chip b { font-family: var(--font-display); font-weight: 400; color: var(--accent); margin-right: 12px; }
   .panic { font-family: var(--font-display); font-size: 120px; color: var(--accent); text-align: center; line-height: 1.42; padding-top: 12px; }
+  /* round 3 */
+  .endcard, .cover, .rewind { inset: 0 0 -190px 0; padding-bottom: 190px; }
+  .endcard .t { font-size: 92px; max-width: 1560px; }
+  .endcard .qline { font-size: 38px; font-weight: 800; color: var(--ink); max-width: 1500px; }
+  .rewind { position: absolute; z-index: 7; background: var(--sky, var(--bg)); opacity: 0; }
+  .rewind .stage { inset: 40px var(--pad) 230px; }
+  .rewind .rwtag { font-family: var(--font-display); font-size: 110px; color: var(--accent); text-align: center; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.42; padding-top: 12px; }
+  .rewind::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0 3px, transparent 3px 9px); pointer-events: none; }
+  .rewind .datecard { display: inline-block; padding: 14px 36px; }
+  .rewind .datecard .d { font-size: 84px; }
+  .meme-wrap .ss-meme { --meme-height: 620px; }
 </style>
+
 
 <!-- ============ ACT ONE: THE SCOREBOARD (cold open, no card) ============ -->
 <section data-scene="01-hook" data-mood="scoreboard">
@@ -266,25 +278,27 @@
     <div class="stage">
       <div class="tweetbox">
         <figure class="ss-shot flow" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2122294330778132787&amp;theme=dark"
-          data-select="[data-testid='UserAvatar-Container-kimmonismus'], [data-testid='tweetText']:not(article article *)" data-width="620" data-pad="18" data-source="x.com/kimmonismus/status/2122294330778132787"
+          data-select="[data-testid='UserAvatar-Container-kimmonismus'], [data-testid='tweetText']:not(article article *)" data-width="620" data-pad="10" data-hide="[aria-label='Image']" data-source="x.com/kimmonismus/status/2122294330778132787"
           data-find="cut off from distillation" data-mark-cue="copying" data-cue="Within" data-anim="up" style="--shot-width: 1250px; --shot-max-height: 560px"></figure>
       </div>
-      <div class="row"><span class="stamp" data-cue="Mystery" data-anim="slam">mystery solved</span></div>
+      <div class="row"><span class="stamp" data-cue="Mystery" data-anim="slam">case closed</span></div>
     </div>
   </div>
-  <div class="credits" id="cr01" data-overlap="ok" data-cue="Roll" data-anim="fade">
-    <div class="crawl" id="crawl01">
-      <div><div class="kk">a story about</div><div class="v">Copying</div></div>
-      <div><div class="kk">starring</div><div class="v">Qwen 4 Max</div></div>
-      <div><div class="kk">and</div><div class="v">Anti-distillation</div></div>
-      <div><div class="kk">based on</div><div class="v">One post on X</div></div>
-      <div class="end">The end</div>
+  <div class="rewind" id="rw01" data-overlap="ok">
+    <div class="stage">
+      <div class="rwtag">◀◀ rewind</div>
+      <div class="board">
+        <div class="head"><span>Results · <b>Artificial Analysis Intelligence Index</b></span><span class="rwv" id="rwv">v5.0.1</span></div>
+        <div class="r"><div class="stripe" style="background: var(--good)"></div><div class="name cn">Qwen 4 Max<small>Alibaba</small></div><div class="score" id="rws1">43</div></div>
+        <div class="r"><div class="stripe" style="background: var(--accent-2)"></div><div class="name us">Claude Opus 5.5<small>Anthropic</small></div><div class="score" id="rws2">59</div></div>
+      </div>
+      <div class="row"><span class="datecard" id="rwd" style="opacity: 0"><span class="d">Oct 27</span> <span class="m">the index changed</span></span></div>
     </div>
   </div>
 </section>
 
 <section data-scene="01b-scratch" data-mood="scoreboard" data-transition="none">
-  <div class="mk" id="mk01drop" data-cue="Except" data-drop="3.2"></div>
+  <div class="mk" id="mk01drop" data-cue="date" data-drop="2.4"></div>
   <div class="phase" id="p01ba">
     <div class="stage">
       <div class="row"><span class="chip sm" data-cue="open" data-anim="fade">open models: the kind anyone can download</span><span class="chip cn sm" data-cue="Chinese#1" data-anim="fade">the best come from Chinese labs</span></div>
@@ -350,6 +364,7 @@
       <div class="src center" data-cue="keeps" data-anim="fade">artificialanalysis.ai/methodology · small dots: fixes</div>
     </div>
   </div>
+  <div class="meme-wrap" id="m02" data-cue="Four" data-anim="pop"><figure class="ss-meme" data-meme="crazypills"><span>four new index versions in one month</span><span>I feel like I'm taking crazy pills</span></figure></div>
 </section>
 
 <section data-scene="02b-january" data-mood="rulebook">
@@ -361,7 +376,7 @@
         <div class="arrow" data-cue="four" data-anim="grow"></div>
         <div class="n tar" data-cue="fifty" data-anim="slam"><span>≤50</span><small>best score · v4.0, Jan 2026</small></div>
       </div>
-      <div class="row" data-cue="hadn't" data-anim="up"><span class="chip">same models, harder tests</span></div>
+      <div class="row" data-cue="old" data-anim="up"><span class="chip">same models, harder tests</span></div>
       <div class="src center" data-cue="seventy" data-anim="fade">VentureBeat, Jan 6, 2026</div>
     </div>
   </div>
@@ -374,7 +389,7 @@
       <div class="src center" data-cue="easy" data-anim="fade">illustration: when a test is too easy, the best scores pile up under its ceiling</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m02b" data-cue="VentureBeat" data-anim="pop"><figure class="ss-meme" data-meme="bus"><span>the tests that rank them</span><span>models, getting better every month</span></figure><div class="src">"becoming obsolete almost as quickly as the models improve" · VentureBeat, Jan 6, 2026</div></div>
+  <div class="meme-wrap" data-overlap="ok" id="m02b" data-cue="VentureBeat" data-anim="pop"><figure class="ss-meme" data-meme="bus"><span>the tests that rank them</span><span>models, getting better every month</span></figure><div class="src">"becoming obsolete almost as quickly as the models improve" · VentureBeat, Jan 6, 2026</div></div>
 </section>
 
 <!-- ============ ACT THREE: RAISING THE BAR (no card: the picture arrives alone) ============ -->
@@ -406,7 +421,6 @@
       <span class="chip amber" data-cue="version" data-anim="pop">version five: a higher bar</span>
     </div>
   </div>
-  <div class="meme-wrap" id="m03" data-cue="They#2" data-anim="pop"><figure class="ss-meme" data-meme="philosoraptor"><span>if two jumpers clear every bar you set</span><span>how would you ever know who's better?</span></figure></div>
   <div class="mk" id="mk03raise" data-cue="raise#1"></div>
   <div class="mk" id="mk03fall" data-cue="knocking"></div>
 </section>
@@ -521,8 +535,8 @@
   <div class="phase" id="p04ba">
     <div class="stage">
       <div class="opts">
-        <div class="opt" style="opacity: 0.35"><div class="l">A</div><div class="v">12</div></div>
-        <div class="opt" style="opacity: 0.35"><div class="l">B</div><div class="v">6</div></div>
+        <div class="opt" style="opacity: 0.7"><div class="l">A</div><div class="v">12</div></div>
+        <div class="opt" style="opacity: 0.7"><div class="l">B</div><div class="v">6</div></div>
         <div class="opt winner" data-cue="Less" data-anim="pulse" data-sfx="ding" data-sfx-offset="0.75"><div class="l">C</div><div class="v amb">&lt;1</div></div>
       </div>
       <div class="pods">
@@ -541,7 +555,7 @@
       <div class="src center" data-cue="Same" data-anim="fade">different scales: index points on one, percent on the other</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m04" data-cue="Neither" data-anim="pop"><figure class="ss-meme" data-meme="glasses"><span>two scoreboards, two gaps</span><span data-cue="measure" data-anim="fade">each one measures different work</span></figure></div>
+  <div class="meme-wrap" id="m04" data-cue="They" data-anim="pop"><figure class="ss-meme" data-meme="glasses"><span>two scoreboards, two gaps</span><span data-cue="measure" data-anim="fade">each one measures different work</span></figure></div>
   <div class="phase" id="p04bd">
     <div class="stage">
       <div class="work2">
@@ -553,25 +567,34 @@
   <div class="phase" id="p04bc">
     <div class="stage">
       <div class="twin">
-        <div class="mini" data-cue="agree" data-anim="left"><div class="t">Artificial Analysis Intelligence Index · top</div>
-          <div class="r"><span class="us">Claude Fable 5.2</span><b>65</b></div><div class="r"><span class="us">Gemini 4 Carbon</span><b>60</b></div><div class="r"><span class="us">Claude Opus 5.5</span><b>59</b></div>
-          <div class="r" style="opacity: 0.85"><span class="us">… three more, all American</span><b></b></div>
-          <div class="r"><span class="cn">… Qwen 4 Max</span><b>43</b></div></div>
-        <div class="mini" data-cue="American" data-anim="right"><div class="t">Vals Index · top</div>
-          <div class="r"><span class="us">Claude Fable 5.2</span><b>71.3%</b></div><div class="r"><span class="us">Claude Sonnet 5.5</span><b>70.9%</b></div><div class="r"><span class="us">Gemini 4 Carbon</span><b>70.5%</b></div><div class="r"><span class="us">Claude Opus 5.5</span><b>70.1%</b></div>
-          <div class="r" style="opacity: 0.85"><span class="us">… two more, all American</span><b></b></div>
-          <div class="r"><span class="cn">… Qwen 4 Max</span><b>63.2%</b></div></div>
+        <div class="mini" data-cue="agree" data-anim="left"><div class="t">Artificial Analysis Intelligence Index</div>
+          <div class="r"><span class="us">leader</span><b>65</b></div>
+          <div class="r" style="opacity: 0.85"><span class="us">top six: all American</span><b></b></div>
+          <div class="r"><span class="cn">Qwen 4 Max</span><b>43</b></div></div>
+        <div class="mini" data-cue="American" data-anim="right"><div class="t">Vals Index</div>
+          <div class="r"><span class="us">leader</span><b>71.3%</b></div>
+          <div class="r" style="opacity: 0.85"><span class="us">top six: all American</span><b></b></div>
+          <div class="r"><span class="cn">Qwen 4 Max</span><b>63.2%</b></div></div>
       </div>
-      <div class="row"><span class="chip us" data-cue="sixteen" data-anim="pop">Opus 5.5 ahead by 16 points</span><span class="chip us" data-cue="seven" data-anim="pop">and by about 7</span></div>
+      <div class="row"><span class="chip us" data-cue="sixteen" data-anim="pop">Opus 5.5 ahead by 16</span><span class="chip us" data-cue="seven" data-anim="pop">and by about 7</span></div>
     </div>
   </div>
 </section>
 
 <!-- ============ ACT FIVE: THE COPYING CLAIM (opens on silence, no card) ============ -->
 <section data-scene="05-copying" data-mood="claim">
+  <div class="phase" id="p05a0">
+    <div class="stage">
+      <div class="tweetbox">
+        <figure class="ss-shot flow" data-shot="https://platform.twitter.com/embed/Tweet.html?id=2122294330778132787&amp;theme=dark"
+          data-select="[data-testid='UserAvatar-Container-kimmonismus'], [data-testid='tweetText']:not(article article *)" data-width="620" data-pad="10" data-hide="[aria-label='Image']" data-source="x.com/kimmonismus/status/2122294330778132787"
+          data-find="cut off from distillation" data-cue="post" data-anim="fade" style="--shot-width: 1100px; --shot-max-height: 500px"></figure>
+      </div>
+    </div>
+  </div>
   <div class="phase" id="p05a">
     <div class="stage">
-      <div class="row"><span class="chip bar" data-cue="distillation" data-anim="type">distillation</span></div>
+      <div class="row"><span class="chip bar" data-cue="name" data-anim="type">distillation</span></div>
       <div class="distil">
         <div class="m" style="border-color: var(--accent-2)" data-cue="strong" data-anim="up">Teacher<small>a strong model</small></div>
         <div class="arr" data-cue="questions" data-anim="grow"></div>
@@ -594,7 +617,7 @@
 
 <section data-scene="05a-who" data-mood="claim">
   <div class="stage">
-    <div class="row"><span class="stamp" data-cue="disclosure" data-anim="slam" style="font-size: 64px">disclosure</span></div>
+    <div class="row"><span class="stamp" data-cue="disclosure" data-anim="slam" style="font-size: 64px; margin-top: 30px">disclosure</span></div>
     <div class="board" data-cue="narrated" data-anim="fade">
       <div class="head"><span>Results · <b>Artificial Analysis Intelligence Index</b></span><span>v5.0.1</span></div>
       <div class="r"><div class="stripe" style="background: var(--good)"></div><div class="name cn">Qwen 4 Max<small>Alibaba</small></div><div class="score">43</div></div>
@@ -646,10 +669,13 @@
     </div>
   </div>
   <div class="meme-wrap" id="m05d" data-cue="task" data-anim="pop"><figure class="ss-meme" data-meme="stonks"><span>+9 points at a third of the cost</span><span>stonks</span></figure></div>
+</section>
+
+<section data-scene="05d2-gap" data-mood="claim">
   <div class="phase" id="p05dc">
     <div class="stage">
       <div class="gapv">
-        <div class="card" data-cue="gap" data-anim="left"><span class="kk">best open model vs leader · v4.3</span><span class="n" data-cue="three#2" data-anim="pop">3</span><span class="x">Sep 2026, after those campaigns</span></div>
+        <div class="card" data-cue="gap" data-anim="left"><span class="kk">best open model vs leader · v4.3</span><span class="n" data-cue="three" data-anim="pop">3</span><span class="x" data-cue="campaigns" data-anim="highlight">Sep 2026, after those campaigns</span></div>
         <div class="card" data-cue="twelve" data-anim="right"><span class="kk">best open model vs leader · v5</span><span class="n">12</span><span class="x">from Oct 27</span></div>
       </div>
       <div class="row" data-cue="jump" data-anim="up"><span class="chip" style="border-style: dashed">the jump lines up with the new index <span class="tag2" style="margin: 0 0 0 12px">inference</span></span></div>
@@ -675,7 +701,7 @@
       <div class="src center" data-cue="practice" data-anim="fade">reinforcement learning: "big RL runs are millions and millions of rollouts" · Interconnects, Jul 22, 2026</div>
     </div>
   </div>
-  <div class="meme-wrap" id="m05e" data-cue="Grading" data-anim="pop"><figure class="ss-meme" data-meme="money"><span>grading millions of practice runs with a rival's model</span><span>shut up and take my money</span></figure><div class="src" data-cue="insanely" data-anim="fade">"would be insanely expensive" · Nathan Lambert, Interconnects</div></div>
+  <div class="meme-wrap" data-overlap="ok" id="m05e" data-cue="Grading" data-anim="pop"><figure class="ss-meme" data-meme="toohigh"><span>grading millions of practice runs with a rival's model:</span><span>the bill is too damn high</span></figure><div class="src" data-cue="insanely" data-anim="fade">"would be insanely expensive" · Nathan Lambert, Interconnects</div></div>
 </section>
 
 <!-- ============ ACT SIX: THE ANSWER (mid-thought) ============ -->
@@ -683,7 +709,7 @@
   <div class="meme-wrap" id="m06" data-cue="Both" data-anim="pop"><figure class="ss-meme" data-meme="both"><span>did the ruler move, or did Chinese models fall behind?</span><span>why not both?</span></figure></div>
   <div class="stage">
     <div class="verdicts">
-      <div class="v" id="v06" data-cue="broken" data-anim="up"><span class="ic">1</span><span>A clear step up from Qwen 3.8 Max<small data-cue="nine" data-anim="fade">+9 points, a third of the cost per task, same index</small></span></div>
+      <div class="v" id="v06" data-cue="clear" data-anim="up"><span class="ic">1</span><span>A clear step up from Qwen 3.8 Max<small data-cue="nine" data-anim="fade">+9 points, a third of the cost per task, same index</small></span></div>
       <div class="v" data-cue="real" data-anim="up"><span class="ic">2</span><span>The 16 points are real, and specific</span></div>
       <div class="v" data-cue="widest" data-anim="up"><span class="ic">3</span><span>Widest on version five's hardest tests<small>HLE-Diamond, Terminal-Bench-Science</small></span></div>
       <div class="v" data-cue="evidence" data-anim="up"><span class="ic">4</span><span>No evidence ties it to losing distillation<small>the accusations say copying happened, not how much it helped</small></span></div>
@@ -705,8 +731,9 @@
     </div>
   </div>
   <div class="endcard" data-cue="Those" data-anim="fade">
-    <div class="t">Did Chinese models fall behind, or did the ruler move?</div>
+    <div class="t">Did Chinese models fall behind,<br>or did the ruler move?</div>
     <div class="a">Both.</div>
+    <div class="qline">ask any leaderboard: which version? what work? what does a second scoreboard say?</div>
     <div class="sv">sources in the description · explained by Claude Opus 5.5 · made with ShipShow</div>
   </div>
 </section>
@@ -730,14 +757,19 @@
   });
   // A meme owns the frame while it is up, and leaves just before the next thing arrives.
   const away = (meme, at) => tl.to(meme, { opacity: 0, duration: 0.3 }, at);
-  away("#m03", cueAt(".ceilchip .chip") - 0.5);
-  away("#m04", cueAt("#p04bd .card") - 0.5);
-  away("#m05d", cueAt("#m05d") + 2.2);
+    away("#m04", cueAt("#p04bd .card") - 0.5);
+  away("#m05d", cueAt("#m05d") + 4.6);
   away("#m06", cueAt("#v06") - 0.5);
 
-  // 01: the fake ending's credits crawl up through the pause, then the scratch lands.
-  tl.fromTo("#crawl01", { y: 0 }, { y: -1500, duration: sceneEnd("01-hook") - cueAt("#cr01"), ease: "none", immediateRender: false }, cueAt("#cr01"));
-  sfx("scratch", sceneEnd("01-hook") - 0.25, { gain: -2 });
+  // 01: "Case closed", then the tape rewinds: the board's version label ticks back to v4.3 (its scores blank: v4.3's are not
+  // in the sources) and stops on the date the index changed.
+  const e01 = sceneEnd("01-hook");
+  tl.set("#rw01", { opacity: 1 }, e01 - 3.3);
+  tl.set("#rwv", { textContent: "v5.0" }, e01 - 2.6);
+  tl.set(["#rws1", "#rws2"], { textContent: "··" }, e01 - 2.6);
+  tl.set("#rwv", { textContent: "v4.3" }, e01 - 1.9);
+  tl.to("#rwd", { opacity: 1, duration: 0.3 }, e01 - 1.3);
+  sfx("whoosh", sceneEnd("01-hook") - 3.2, { gain: -2 });
 
   // 03: the bar rises on "raise", then jumper B clips it: it tips off one standard and fades, above the captions.
   tl.to("#barRect", { attr: { y: 497 }, duration: 0.9, ease: "power2.inOut" }, cueAt("#mk03raise"));

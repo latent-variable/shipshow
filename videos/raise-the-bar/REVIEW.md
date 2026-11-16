@@ -114,3 +114,43 @@ matched "forty three", which blanked the Qwen bars; both now use `#2`.
 Accepted: novelty-r2-3 (03a to 03c keep their card cadence; the music drop and the curves are its breaks, as in round 1),
 engagement-r2-3 (the Peter Parker's Glasses repeat is from a local video), visuals-r2-2 (5 to 7 px of the display font's ink
 past its box, no visible clipping), visuals-r2-3, 4, pacing-r2-4, consistency-r2-7, novelty-r2-4, 5 (minor).
+
+## Round 3, the cap (2026-11-16, 9 min 33 s cut; Sonnet for accuracy, pacing, sync; Opus for visuals, engagement, novelty)
+
+| Critic | Verdict | Findings | Tokens |
+|---|---|---|---|
+| accuracy | pass | 2 major (subjective), 4 minor | 123k |
+| sync | pass | 2 minor | 150k |
+| pacing | fail | 1 major, 5 minor | 123k |
+| visuals | fail | 1 blocking, 3 major, 2 minor | 189k |
+| engagement | fail | 4 major, 2 major (subjective), 2 minor | 190k |
+| novelty | fail | 1 major, 2 major (subjective), 1 minor | 151k |
+
+The cap was reached, so no fourth round ran. Every finding the builder could settle by a measurement was fixed in one pass,
+and the packet's own numbers checked it (no overlaps; every reading flag within 0.3 s of its scene end):
+
+- visuals-r3-1 (blocking): the X post capture's bottom cut into the post's attached card. It is now captured with images hidden
+  and 10 px of padding; the frame ends below "to illustrate this failure." Re-checked at full size.
+- visuals-r3-2 to 5: the end title is 92 px in two lines with a 1560 px limit; full-screen panels now run under the captions;
+  the ruled-out quiz answers sit at 70% instead of 35%; the disclosure stamp moved down.
+- accuracy-r3-1: "At launch, ... was twelve points behind" (on today's board, with Fable 5.2 at 65, it is 19; sources.md says
+  so). accuracy-r3-2: the ceiling effect as the cause of 3 to 12 is tagged inferred in sources.md. accuracy-r3-3, 4: "Every
+  measured number", "the main accuser". accuracy-r3-5, 6: nine evaluations sourced; Anthropic's September report in the
+  description's sources.
+- pacing-r3-1: the two top boards are cut to the leader, "top six: all American" and Qwen; 04b ends on a 3.2 s act-change pause.
+  pacing-r3-3: 02 holds its new meme 3.4 s.
+- sync-r3-1: the verdict's first card lands on "clear".
+- engagement-r3-1: the stonks meme holds 4.6 s; 05d is two scenes now (05d-test, 05d2-gap) with a 3.2 s pause between.
+- engagement-r3-2, novelty-r3-3: the Philosoraptor meme is gone; it asked its question after the bar had answered it.
+- engagement-r3-3: a meme on "four of them started in September" (I Feel Like I'm Taking Crazy Pills), so six in all.
+- engagement-r3-4: the v4.3 card's line highlights on "campaigns".
+- engagement-r3-5: act five opens on the X post again, "The post blamed one thing: being cut off from copying."
+- engagement-r3-6: "Shut Up and Take My Money" read the wrong way round; it is now "the bill is too damn high".
+- engagement-r3-8: the end card keeps the three questions.
+- novelty-r3-1: three of the "not X, Y" lines are plain now (02b, 04b, 06); 03b's and 05d's stay.
+- novelty-r3-2: the fake credits and record scratch were weight-space's; the hook now ends "Case closed." and the scoreboard
+  rewinds through its own versions (v5.0.1, v5.0, v4.3, its scores blanked because v4.3's are not in the sources) to Oct 27,
+  and 01b opens "Now check the date." New to the channel, and it is the video's idea: the ruler moved.
+
+Accepted at the cap: engagement-r3-3's bar of about nine memes (six, each on its own beat); engagement-r3-7 (the verdict list is
+text); novelty-r3-4 (the close's numbered lists); pacing's narrator rate (as before) and its minor pause notes; visuals-r3-6.

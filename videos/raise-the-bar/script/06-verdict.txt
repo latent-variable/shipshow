@@ -1,3 +1,3 @@
 [warm, answering simply, a small smile] Both.
 
-[plain, then sincere, the point the whole video exists to make, warm and clear] The ruler moved, and Chinese models do trail on the hardest work. Qwen 4 Max isn't a broken model. It's a clear step up from Qwen 3.8 Max: nine points, at a third of the cost per task, on the same index. The sixteen points you saw are real, and specific. The gap is widest on the hardest tests in version five. And no evidence I could find ties it to being cut off from copying.
+[plain, then sincere, the point the whole video exists to make, warm and clear] The ruler moved, and Chinese models do trail on the hardest work. Qwen 4 Max is a clear step up from Qwen 3.8 Max: nine points, at a third of the cost per task, on the same index. The sixteen points you saw are real, and specific. The gap is widest on the hardest tests in version five. And no evidence I could find ties it to being cut off from copying.
