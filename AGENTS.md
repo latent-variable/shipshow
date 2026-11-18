@@ -3,6 +3,19 @@
 Start here. This file says what the project is, where everything lives, which skill to load,
 and what is expected of you. `README.md` is the same story for humans.
 
+## Where to read
+
+The rules are all in this file, one sentence each. The detail behind a rule (procedure, rationale, history, field shapes, command flags) is in the docs below; read the one for the work in front of you before you change it.
+
+| Need | Read |
+|---|---|
+| Every `video.json` field, cues, voices, take checks, runs, themes, moods, frame, motion, review dials, memes, footage, portraits, screenshots, music, sound effects, speed | `docs/agent/video-files.md` |
+| Every command with its flags, checks and refusals | `docs/agent/commands.md` |
+| The full paths table, the layout, how the timing works | `docs/agent/layout-and-timing.md` |
+| The full text of every trap, with measurements and incidents | `docs/agent/traps.md` |
+| First-run downloads | `docs/agent/setup.md` |
+| Requirements, and the design decisions (D-numbers) | `docs/PRD.md`, `docs/DESIGN.md` |
+
 ## What this is
 
 ShipShow: turn a shit show into a ship show. When agents change a code base faster than a person can follow, a short narrated video of what changed and what needs deciding lets them ship code they understand.
@@ -16,19 +29,17 @@ same skills.
 The skills in `skills/` are the team's baseline. Each person tailors on top of them in
 `local/`, which is never committed (`tailor` skill).
 
+
 ## Where things are
 
 | Path | What |
 |---|---|
-| `.claude-plugin/`, `agents/` | The Claude Code plugin: `plugin.json`, `marketplace.json`, and the `critic` agent (Read, Grep, Glob, Bash and Skill; Write, Edit and NotebookEdit denied, `maxTurns` 40, Sonnet by default; Bash can still write, so it is told to use a temporary directory). Validate with `claude plugin validate .` (one expected warning: no `version`) |
+| `.claude-plugin/`, `agents/` | The Claude Code plugin: `plugin.json`, `marketplace.json`, and the `critic` agent (Write, Edit and NotebookEdit denied). Validate with `claude plugin validate .` |
 | `docs/PRD.md`, `docs/DESIGN.md` | The requirements, and the design decisions and behaviour. Kept current (*Docs that stay current*) |
+| `docs/agent/` | The detail moved out of this file (*Where to read*) |
 | `skills/` | Every skill. `npm install` links them into `.claude/skills/` for Claude Code; other agents read them here |
 | `videos/<name>/` | One video: `script/`, `scenes.html`, `video.json`, `sources.md`, `critics.md`, `REVIEW.md` |
-| `bin/` | The pipeline: `voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`; `memes` (search the memegen catalog, with `meme.mjs` behind it and `build`); `portrait.mjs` (Commons photos, credit and licence gate, called by `build` and `review`); `shot.mjs` (screenshots of real pages, taken in headless Chrome, called by `build` and `review`); `footage.mjs` (local app recordings played once and held, called by `build` and listed by `review`); and `usage` (token and context tracking) |
-| `kit/` | The page, base styles (including `ss-portrait`) and timeline every video shares; `kit/fonts/` holds the meme fonts (Titillium Web, Anton: SIL OFL, licences beside them) |
-| `themes/` | Shared themes (`shipshow`, `paper`, `launch`, `buildday`, `lofi`, `signal`, `chalk`, `archive`, `ripple`, `vault`, `redline`, `stadium`); a client's goes in `local/themes/` |
-| `template/` | What `npm run new` copies |
-| `examples/` | Fictional code bases for example videos: `ledgerly`, the invoicing API behind `videos/invoice-leak` |
+| `bin/`, `kit/`, `themes/`, `template/`, `examples/` | The pipeline (`voice`, `build`, `render`, `make`, `review`, `new`, `doctor`, `critics`, `memes`, `usage`), the shared page and timeline, shared themes (a client's goes in `local/themes/`), what `npm run new` copies, fictional code bases for example videos |
 | `.claude/settings.json`, `.claude/hooks/` | The project's Claude Code hooks and read denials (tracked; `.claude/skills/` is the generated skill links and is not) |
 | `local/` | Gitignored, per person: `preferences.md`, `critics.md`, `skills/`, and `videos/` about code that is not this repo's |
 
@@ -93,6 +104,7 @@ the rule makes a stale number loud, not a stale claim, so read the docs you touc
 - How to write an entry, and what `npm test` and CI check: `docs/DESIGN.md`, *Keeping these files current*.
 - **Bump nothing by hand in `plugin.json`:** it has no `version`, so the commit SHA versions the plugin.
 
+
 ## Set up
 
 Node.js 22+, Python 3.10 to 3.13 (`npm run setup` picks one; `doctor` checks it) and ffmpeg; tested on macOS.
@@ -107,321 +119,100 @@ npm run setup:drama                                               # optional, Ap
 npm run setup:listen                                              # optional, Apple Silicon: Parakeet's second listen over the finished narration, in .venv-listen
 ```
 
-The first `doctor` downloads Kokoro into `~/.cache/hyperframes/tts` (about 340 MB). The first
-render downloads a headless Chrome if HyperFrames finds none (about 190 MB). The first OmniVoice
-take downloads its model (about 1.5 GB, `~/.cache/huggingface`); `npm run doctor -- --omnivoice`
-checks it and voices one word; `-- --hearback` checks the hear-back and hears one word.
+
+First-run downloads (Kokoro, Chrome, OmniVoice) and the `doctor` flags: `docs/agent/setup.md`.
 
 ## Commands
+
+The table is the short form; every flag, check and refusal is in `docs/agent/commands.md`.
 
 | Command | What it does |
 |---|---|
 | `npm run new -- <folder>` | A new video from `template/` (`videos/x` for this repo, `local/videos/x` for any other code base) |
-| `npm run voice -- <folder>` | One take per sentence (Kokoro, or OmniVoice: `--engine omnivoice --voice <name>` to try it; OmniVoice with hear-back installed, and Drama 3 (`--engine drama`), voice a line of the script per take instead), levelled and, with hear-back installed, heard back (`--no-hearback` skips it), then `assets/narration.wav` and `timing.json` |
-| `npm run build -- <folder>` | The HyperFrames composition, `index.html`, from `scenes.html` and the timing |
+| `npm run voice -- <folder>` | One take per sentence (`--engine omnivoice`, `--engine drama`, `--no-hearback`), then `assets/narration.wav` and `timing.json` |
+| `npm run build -- <folder>` | `index.html` from `scenes.html` and the timing |
 | `npm run check -- <folder>` | HyperFrames' own check: lint, layout, motion, caption contrast |
-| `npm run preview -- <folder>` | The HyperFrames studio, to scrub through it |
-| `npm run render -- <folder>` | `out/<name>.mp4`, the name taken from the folder's path (`--draft` for a fast pass), its audio mastered to `video.json` `loudness` (-14 LUFS by default, YouTube's; one gain and a look-ahead limiter capped at 3 dB, never compression; `false` for none; D52); runs HyperFrames with `HF_CAPTURE_PARALLEL_STREAM=true` unless you set it, so long renders stream frames to the encoder instead of writing ~4 GB a minute to disk (D103) |
-| `npm run make -- <folder>` | Voice, build, lint and render (`--speed 1.5` to try a pace without editing `video.json`) |
-| `npm run review -- <folder>` | The critics' evidence: `review/packet.md` and `review/frames/` (only this run's stills; the last run's move to `review/frames-stale/`; `--frames scenes` for fewer stills); its *Overlaps* section is `overlaps`', and its *Devices* section counts every editing move beside how many of the person's YouTube videos made it, how each act opens and the rhythm of change (`bin/devices.mjs`, D96) |
-| `npm run overlaps -- <folder>` | Text over other text or over a picture, measured 0.8 s after every cue and before every scene end in headless Chrome (`bin/overlap.mjs`, D72): one OVERLAP line each and `review/overlaps.json`. `data-overlap="ok"` on an element says the scene means it |
-| `npm run package -- <folder>` | The upload folder, `out/publish/<name>/` (`--to <dir>` elsewhere): the render, `thumbnail.html` set at 1280 by 720, and `<name>-youtube.txt` with the title, the description with chapters (from the scene starts), sources and credits (`review/credits.txt` and `youtube.credits`), tags and Studio's answers, all from `video.json` `"youtube"`; it stops on anything YouTube would refuse or ignore (a title over 100 characters, a description over 5000, `<` or `>`, or, when chapters are configured, chapters not from 0:00, fewer than three, or one under ten seconds; no configured chapters are accepted and emit no chapter markers); it also stops when `sources.md` never names a clone or invented voice the video uses (D74), when the video shows screenshots or portraits but `review/credits.txt` (from `npm run review`) is missing (D84), and when the title lacks the person's `local/config.json` `youtube.titleTag`, its `{model}` filled from `video.json` `builtBy` (an essay is skipped; `video.json` `youtube.titleTag` names another or `false`, D95); it warns, on screen and under *Before you upload*, about a linked GitHub repository that is not public (D100) |
-| `npm run critics -- <folder>` | The video's critic plan: critics, models, rounds, severity, and a rough time and token estimate (`--preset`, `--rounds`, `--until`, `--model`, `--final`, `--frames`, `--rerun`, `--critics`, `--json`). **`--run`** runs the critics on Codex (`bin/critics-run.mjs`, D108): one fresh read-only `codex exec` each, in parallel, from its own empty folder, every contact sheet its own `-i`, the brief on stdin from `skills/critic-loop/SKILL.md`, JSON saved to `review/round-<n>/<critic>.json`, one verdict line each; with it `--model` is the Codex model (`gpt-6-luna`), and it takes `--round N`, `--changed "<scenes and lines>"` and `--code <path>`; it refuses without `review/packet.md` and needs `codex` on PATH |
-| `npm run memes -- <words>` | Search the memegen catalog (211 templates) by id, name, keywords or example text: id (what `data-meme` takes), lines, an example, the `source` to credit (`--refresh` refetches the cached list, `--limit N`, `--json`) |
-| `npm run skills` | Link new skills in `skills/` or `local/skills/` into `.claude/skills/` |
-| `npm run usage` | Tokens and context per agent for the newest Claude Code session of this repo, subagents included (`-- <session id>` for another, `-- --json` for data); read from `~/.claude/projects/`, or from `CLAUDE_PROJECTS_DIR` |
-| `npm run timeline -- <folder>` | How long each step took for that video, from what each step records as it runs in `review/timeline.jsonl` (voice, build, overlaps, review, render, package; D86): runs, last and median per step, voicing in seconds per narration minute and hear-back rounds per take, render as a multiple of real time, and the last voice + build + render as one rebuild (`-- --json` for data) |
-| `claude plugin validate .` | The two manifests only (`plugin.json`, `marketplace.json`); `claude plugin validate skills` and `agents` look at components but only warn on a broken one, so a test parses every `SKILL.md` and `agents/critic.md` front matter. One warning is expected (no `version`, on purpose: the commit SHA versions the plugin); `--strict` fails on it |
+| `npm run preview -- <folder>` | The HyperFrames studio |
+| `npm run render -- <folder>` | `out/<name>.mp4`, audio mastered to `video.json` `loudness` (-14 LUFS by default; one gain and a limiter, never compression); runs with `HF_CAPTURE_PARALLEL_STREAM=true` unless you set it (D103) |
+| `npm run make -- <folder>` | Voice, build, lint and render (`--speed` tries a pace) |
+| `npm run review -- <folder>` | The critics' evidence: `review/packet.md` and `review/frames/` |
+| `npm run overlaps -- <folder>` | Text over text or a picture, measured in headless Chrome (D72); `data-overlap="ok"` says the scene means it |
+| `npm run package -- <folder>` | The upload folder `out/publish/<name>/`; it stops on anything YouTube would refuse or ignore, on a clone or invented voice `sources.md` never names (D74), on screenshots or portraits without `review/credits.txt` (D84), and on a missing `youtube.titleTag` (D95) |
+| `npm run critics -- <folder>` | The critic plan; **`--run`** runs the critics on Codex (`bin/critics-run.mjs`, D108), refuses without `review/packet.md` and needs `codex` on PATH |
+| `npm run memes -- <words>` | Search the memegen catalog for the id `data-meme` takes |
+| `npm run skills` | Link new skills into `.claude/skills/` |
+| `npm run usage` | Tokens and context per agent for the newest Claude Code session |
+| `npm run timeline -- <folder>` | How long each step took, from `review/timeline.jsonl` (D86) |
+| `claude plugin validate .` | The two manifests only; one warning is expected (no `version`, on purpose) |
 | `npm test` | No Kokoro needed; CI runs only this |
 
 A change to `bin/`, `kit/` or `template/` is validated by running `make` and `review` on
 `videos/how-it-works` and looking at the contact sheets.
 
+
 ## A video's files
+
+The full table of files, every `video.json` field and every section below is in `docs/agent/video-files.md`; each rule here is the short form of its text there.
 
 | File | What it is |
 |---|---|
-| `script/01-intro.txt`, `02-...` | One file per scene, read aloud in file-name order. A sentence ends at `.`, `!` or `?` and a space. With OmniVoice runs, write one thought per line: each line is one take, so sentences meant to land together are voiced together (`lineRuns`, D54; a line over 70 words is split). A blank line between two lines is a beat: `video.json` `beat` seconds (0.6) more than the gap, so a punchline lands before the next point (`beatsAfter`, D64) |
-| `scenes.html` | One `<section data-scene="01-intro">` per script file, a `<style>` for the look, optionally a `<script>` |
-| `video.json` | `title`, `builtBy` (the model that built it, as the builder knows itself: "Opus 5.5"; a title tag names it, D95), `kind` (`decision`, `feature`, `release`, `essay`: an idea argued in the author's own voice, to share), `importance` and `importance_reason` (set by the builder), `sfx` (sound effects: `false`, a kit name, or `{kit, under, tonic}`), `shows_code` (puts `critic-grounding` on the floor; read from `scenes.html` when absent: a `<pre>`, `<code>` or `.ss-code` sets it, and `false` cannot lower it), `voice`, `speed`, `theme`, `flair`, `moods` (named looks, ambient and music selected by `data-mood`), `review`, `say`, `audience`; optional `lead`, `gap`, `tail` (seconds of pause), `pauses` (`{"<scene>": seconds}`: a beat after one scene, so a meme or a stamp at its end can be read), `leads` (`{"<scene>": seconds}`: a beat before one scene's first word, so a new act's look and music arrive first), `beat` (seconds a blank line in a script adds, 0.6), `hold` (still seconds after the last word; the last scene never fades), `youtube` (what `npm run package` publishes: `title`, `alternatives`, `description` paragraphs, `chapters` by scene, `sources`, `credits`, `tags`, `studio`), `seed`, `loudness` (LUFS the render is mastered to; -14 by default, `false` for none) |
-| `sources.md` | Every claim the video makes, with its source |
-| `critics.md` | This video's own bar, applied by every critic |
-| `brief.md` | A decision video's handoff from the agent that asked for it |
-| `REVIEW.md` | The critic rounds |
-| `thumbnail.html` | The YouTube thumbnail, a 1280 by 720 page (`npm run package` renders it) |
+| `script/01-intro.txt`, `02-...` | One file per scene, read aloud in file-name order; with OmniVoice one thought per line, each line one take (`lineRuns`, D54) |
+| `scenes.html` | One `<section data-scene="01-intro">` per script file, a `<style>`, optionally a `<script>` |
+| `video.json` | `title`, `builtBy`, `kind`, `importance` and `importance_reason`, `sfx`, `shows_code`, `voice`, `speed`, `theme`, `flair`, `moods`, `review`, `say`, `audience`, `youtube`, `seed`, `loudness` and the pause dials; every field is explained in the doc |
+| `sources.md`, `critics.md`, `brief.md`, `REVIEW.md`, `thumbnail.html` | Claims and their sources; the video's own bar; a decision video's handoff; the critic rounds; the 1280 by 720 thumbnail |
 
-**Cues.** An element with `data-cue` arrives when the voice reaches that word:
-`data-cue="Kokoro"` (the first word starting "Kokoro" in that scene; a prefix, so `one` also lands on "Once" and counts in `#n`), `data-cue="model#2"`
-(the second), `data-cue="+0.3"` (0.3 s into the scene). The build stops on a word the scene
-never says, and warns when a bare word occurs more than once. `data-anim` picks the entrance
-(the theme's `--entrance` when absent): `up`, `fade`, `pop`, `left`, `right`, `grow`, `zoom`,
-`blur`, and `type` (letter by letter), `draw` (an SVG's strokes draw themselves), `count` (the
-number in the text counts up), `highlight` (a marker sweeps under text already shown),
-`stagger` (children in turn), `pulse` (pops, then beats), `scramble` (decodes from glyphs),
-`glitch` (arrives split into colour channels, jitters, settles), `slam` (lands big and hard). A `<script>` in `scenes.html` runs after the shared
-timeline and may add GSAP tweens to `tl`; each cued element's time is its `data-at`.
-
-**Voice.** Three engines, set by `engine` in `video.json` or `local/config.json` (`--engine` on `make` or
-`voice` tries one). **`kokoro`** is the default and runs anywhere: `af_heart`; `npx hyperframes tts --list`
-shows the rest; non-English voices need `espeak-ng` system-wide. **`omnivoice`** is higher quality and
-clones voices, on Apple Silicon only (MLX; `npm run setup:omnivoice`, then `"engine": "omnivoice"`). Its
-`voice` is a recording: a **built-in** one (`caro_davy`, the default, `bill_boerst`, `peter_yearsley`,
-`stuart_bell`, `marius`, `javert`: CC0 clips from kyutai/tts-voices, `bin/omnivoice-voices.json`; and `eve`,
-VCTK speaker p361, CC BY 4.0, which a public video credits: "Voice: VCTK corpus, CC BY 4.0") or a
-**clone**, a 3 to 10 second clip at `local/voices/<name>.wav` with, optionally, the words spoken in it at
-`<name>.txt` beside it (a clip that ends mid-word, or has no transcript, clones worse: Eve's silent takes, 2026-10-17;
-with hear-back installed a clone or built-in voice with no `.txt` is given one by hearing its reference back, so
-write the `.txt` only to correct it). `say` maps a written word to what the engine is told to say
-(`"HyperFrames": "Hyper Frames"`); captions keep the written form. **`drama`** (Fish Audio Drama 3, DESIGN D55) is the
-directed one, on Apple Silicon only: `npm run setup:drama` makes `.venv-drama` (it needs an mlx-audio newer than
-OmniVoice's pin), and the model (`mlx-community/fish-audio-drama-3-4bit`, pinned in `bin/lib.mjs` `DRAMA`, about 20 GB)
-downloads on first use unless `SHIPSHOW_DRAMA_MODEL` or `local/config.json` `"dramaModel"` names a folder holding it. A
-stage direction in brackets at the start of a script line, `[deadpan] Like animals.`, is performed; captions, cues and
-the other engines never see it (`directedSentences` in `bin/lib.mjs`). How to direct, and what breaks it: `narration-writing`,
-*Direction*. Write a name as it is spelled: a `say` respelling with a hyphen is read as two words ("Dike-stra" came out
-"Di... kistra"), so respell only a name it gets wrong, as one word ("Dykstra"; D55). Voices are the same recordings as OmniVoice's, but a clone may be 3 to 30 seconds. Each line is one take,
-made by `bin/drama.py` in one process: retaken when it is silent, stalls for 2 s (silence read against its own hiss and 18 dB under its voice), ends in 3 s of silence, is heard back missing a whole sentence (a dropped punchline) or drawls (over 2.5 s between two words of one sentence, D65), time-stretched
-to `speed` (0.8 to 1.5; it has no speed control and reads slower than the base pace), levelled, heard back with word
-times, and the best of five kept. Each line hears the video's first take and the take kept for the line before it (D83), so the
-voice carries on instead of resetting at every line; a line voiced again alone hears its neighbours' kept takes, and the lines
-after it keep theirs. A take that says part of what it heard again (five or more words its line lacks, `hearback.added`) is retaken
-hearing nothing. Its licence is the Fish Audio Community License: free for research and non-commercial
-use and for commercial use under $500K a year in revenue, never as a hosted service, and never a voice cloned without
-consent.
-
-**Checks on every take** (ported from DAIS product-videos, where the owner heard these faults in published
-videos; `bin/voicecheck.py`, `bin/hearback.py`, `bin/hearback.mjs`). *Levelling*, both engines: a take's median
-speech is moved toward -23 dBFS by one gain, held back when it would put the loudest sample over -3 dBFS, so no
-take is clipped or squashed and one with a big peak stays a little quieter (a tanh knee above 0.4 did this before
-and was audible as a close mic on short takes, 2026-10-26). Kokoro's are levelled in place after voicing and their
-cache key is unchanged (a `.lvl` stamp beside the take records it; a take stamped by older rules is voiced again). *OmniVoice only*: the opening burst of noise is cut at the
-silence after it, a take that starts with no lead-in or shouts (a 400 ms stretch over 8 dB above its own median)
-is voiced again with another seed, up to three times, then kept and reported. *Hear-back*, optional
-(`npm run setup:hearback`; `--no-hearback` turns it off): faster-whisper small.en transcribes each take and
-`bin/hearback.py` scores it against the text the engine was told to say, by letters with spaces, punctuation and
-marks gone and numbers spelled out (a percent sign as the word; each number read as a quantity, a year, or digit by digit, the closest kept, and "a hundred and seventy one" the same as "171"). It also looks for letters spelled out that the script never spells (`spelled_out`:
-Whisper writes letters it hears spelled as capitals, "two to the EN"), against the script as written and as told; Drama 3
-retakes such a take, and one kept with it is listed (D60). *Second listen*, optional (`npm run setup:listen`, Apple Silicon;
-`--no-listen` skips it): after the track is laid, `bin/listen.py` has NVIDIA's Parakeet hear each scene of
-`assets/narration.wav` and compares it with the script as WRITTEN (letter score under 90%, a sentence not heard, letters
-spelled out), writes `assets/listen.json`, prints LISTEN lines, and the packet shows it under *Second listen* (stale once the
-narration changes). It flags and never re-voices. OmniVoice keeps the best of three; under 0.97 is flagged. Each take's
-`assets/voice/<scene>-<n>.check` holds the result, `timing.json` `voiceCheck` collects it, and `npm run review`
-prints it in the packet's *Voice checks*. Without faster-whisper everything else still runs and the packet says
-nobody heard the takes.
-
-**Runs of sentences** (D47). With OmniVoice and hear-back installed, a scene is voiced in runs of whole sentences
-up to 45 words (a longer sentence stands alone), one take per run, `assets/voice/<scene>-r<n>.wav`, because a take
-per sentence restarts the prosody each time and sounded choppy (the owner, 2026-10-26). Each run is retried up to
-five times for a clean start, kept as the best of three by hear-back score, and cached by its own text, so editing
-a sentence re-voices its run. Where Whisper heard two sentences of a run closer than the video's `gap`, a breath of silence goes in at the quietest 10 ms near the boundary, only if that point is under -40 dBFS (`BREATH_QUIET_DB`), so a word is never cut and a boundary with no quiet point is left as it is (`breathe` in `bin/lib.mjs`, D51), so a run keeps its prosody without running sentences together. The same Whisper pass that scores the take gives word times (`word_timestamps`);
-`bin/wordtime.py` lays the script's sentences and written words on them (through `say`, with a word Whisper missed
-placed between its neighbours), and they go in `timing.json` as each sentence's `words: [{"w", "at"}]`. `build`
-uses them for cues and captions when present, and the letter share otherwise. Kokoro, and OmniVoice without
-hear-back (or with `--no-hearback`), keep one take per sentence and the letter share, and nothing requires faster-whisper.
-
-**Look.** A theme is `themes/<name>/theme.css` (or `local/themes/<name>/`, which wins): a
-`:root` of tokens for colour, type, spacing, shape, captions and motion; `themes/shipshow`
-lists them all. Fonts and images sit beside it and are copied to `assets/theme/`, relative
-`url()`s rewritten (`bin/lib.mjs`, `themeCss`). Most specific wins: `--theme`, then
-`video.json`, then `local/config.json`, then `shipshow`. `kit/base.css` draws the canvas,
-captions and the `ss-` pieces from the tokens; a scene's own styles should use the tokens
-too, or a theme cannot restyle it. Tokens a theme may add, each unset (so other themes are unchanged) unless it opts in:
-`--sky` (the canvas's background, e.g. a gradient; `--bg` when unset), `--cap-border`, `--cap-shadow` and `--cap-wait` (karaoke's waiting words, 0.38), `--code-shadow`,
-`--meme-border`, `--meme-shadow` and `--photo-filter` (a CSS filter on meme pictures, to make pictures from anywhere look
-like one set), and `--frame`, `--frame-width`, `--portrait-frame-width`, `--portrait-radius`, `--portrait-shadow` and `--photo-filter` for framed photos (portraits and memes read them, falling back to the card border, shadow and no filter). `lofi` sets
-them all: a late-night study room (dusk sky, a city skyline, lamp amber, Fraunces, Nunito and IBM Plex Mono).
-
-**Moods.** `video.json` `"moods": {"history": {"theme": "paper", "look": {"--accent": "#b3261e"}, "ambient": "stars glow", "music": {"file": "history.wav", "volume": 0.22, "duck": 0.35}}}` names a section's feel. A
-`<section data-scene="02-history" data-mood="history">` selects it and following sections keep it until another names a mood;
-an unknown name stops the build with its scene. Before the first, the video's own theme, flair and music apply. Each mood starts
-from the base tokens, takes its optional theme's tokens, then its `look`. Mood theme files live under `assets/theme/<name>/`.
-Skies and explicit ambient layers crossfade over 1.2 seconds centred on the boundary; colours and plain numbers tween on the
-shared timeline, while fonts, caption tokens and other values switch at the midpoint. No `ambient` keeps the base ambient.
-Music accepts a file string or the usual object and loops if short. Where a mood changes the music, it hands off (D71): the old bed fades
-from the act's last word, held at its ducked level so it never swells back up, and is gone 0.5 s after the boundary; the new one
-starts from its own opening at the boundary and swells in over 2 s under the act's card. Absent or missing music keeps the previous bed's playhead. No moods keeps the single-bed path. The build warns when a mood starts less than 1.2 seconds before its scene's first word
-(`MOOD_BEAT`): give the change a beat with `leads`.
-
-**Frame.** Top-level `.ss-frame` blocks outside the sections in `scenes.html` are lifted, in source order, into one full-canvas `#frame` layer. It sits over the scenes and under both `#overlay` and captions, inherits the mood's tokens, and stays present from zero to the end without scene transitions or camera pushes. Uncued elements show from the first frame. An arrival uses a scene-qualified cue, such as `data-cue="02-start:Paste"`, `data-cue="02-start:word#2"` or `data-cue="02-start:+0.3"`, resolved exactly like that scene's own cues with the usual `data-anim`. Unqualified cues and unknown scene ids stop the build naming the element. Optional `data-leave="02-start:+3"` starts a 0.4-second fade at that time. The overlap check includes frame text against scene text (DESIGN D78).
-
-**Motion.** Theme tokens `--transition` (`none`, `fade`, `rise`, `slide`, `zoom`, `wipe`,
-`flash`, `whip`: a fast blurred pan, once a video), `--camera` (`none`, `push`: a slow push-in per scene), `--ambient` (`none`, `glow`,
-`grid`, `dots`, `stars`, `horizon` (a lit planet rim low in the frame), `blobs` (soft pools of light that drift and breathe;
-`--blob-1..3`, `--blob-strength`), `dust` (motes rising in lamplight; `--dust-color`), `skyline` (a night city along the bottom,
-two rows drifting apart, a few windows going on and off; `--skyline-far`, `--skyline-near`, `--window-color`), and three that
-lie over the pictures but under the captions, in `#overlay`: `grain` (`--grain-strength`, `--grain-fps`, `--grain-blend`),
-`scanlines` (`--scanline-strength`, `--scanline-gap`) and `vignette` (`--vignette-strength`, `--vignette-color`); or several:
-`stars glow`), `--ambient-strength`, `--progress` (`on`, `off`; off in every shared theme, D99) and `--entrance`. `video.json`
-`"flair"` overrides them for one video; a section's `data-transition` or `data-camera` for
-one scene. A cued element's `data-punch="1.15"` snaps the scene's view toward it on its word (1 to 2; 1.1 to 1.25 keeps the
-neighbours in frame), holding to the scene's next punch or `data-punch-out` seconds; `data-drop="1.5"` cuts the music bed to
-silence on its cue for that many seconds (0.3 to 6), back over half a second (D96). Rare moves land: `explain-concept`, *Break the formula*. Ambient motion is seeded from the video's name (`"seed"` to change it), so a
-render is repeatable and each video moves its own way. Motion that sways, wraps or jumps is a pure function of the time,
-driven through GSAP modifiers on one linear tween (`kit/kit.js`, `driveBy`), so a worker that seeks anywhere draws that
-time's frame; a test runs the kit in a sandbox and checks it (DESIGN D50).
-
-**Review.** How much critic review a video gets is a plan with dials (`critics`, `rounds`,
-`until`, `model`, `final`, `frames`, `rerun`) and presets (`quick`, `standard`, `thorough`),
-resolved by `reviewPlan` in `bin/lib.mjs`. The builder picks the preset by setting
-`video.json` `"importance"` (`low`, `normal`, `high` for `quick`, `standard`, `thorough`) with
-an `"importance_reason"`. Most specific wins: flags, then `video.json` `"review"` (an
-explicit preset there beats importance), then importance, then `local/config.json`
-`"review"`, then the kind's default (`quick` for a decision video, else `standard`). `skills/critic-loop` has what each dial trades and the floor no dial lowers.
-The estimate's constants are measurements from 2026-10-17 and 2026-10-27, and its tokens grow with the video's length; replace them when you measure. The builder says the spend before round 1 and stops past it (`critic-loop`, *Spend is part of the plan*).
-
-**Memes.** A well-chosen meme lands a beat. `<figure class="ss-meme" data-meme="astronaut" data-cue="never" data-anim="pop">`
-with a `<span>` per line, filled into the template's text boxes in order (an empty span leaves a box blank,
-fewer spans leave later boxes out, more than the template has stops the build); a span takes its own
-`data-cue` and `data-anim`, so each line arrives on its word. `npm run memes -- <words>` finds the id
-and shows how many lines it has. The catalog is memegen's (github.com/jacebrowning/memegen, MIT): the build
-fetches a template's `config.yml` and clean `default.<ext>` once into `~/.cache/shipshow/memes/<id>/`
-(`SHIPSHOW_MEMES_CACHE`), copies the picture to the video's `assets/memes/` and positions each span by the
-box's fractions and angle (`bin/meme.mjs`); `kit/kit.js` fits each line to its box at render time, before the
-first frame, in white with a black outline (black text gets a white one), upper case (`--meme-case`). Never
-memegen's rendered images: they carry a watermark and bake the text in. `SHIPSHOW_MEMEGEN_API` (the catalog)
-and `SHIPSHOW_MEMEGEN_FILES` (the repo's `templates/` folder, a URL or a clone) point at a mirror or a
-self-hosted memegen. An unknown id, an unreachable source with nothing cached, or too many spans stops the build
-naming the scene. Default size is `--meme-height` (760 px; set it in the theme, on the figure, or give the figure its own
-width and height), centred in the scene window, rounded and framed by the theme. The template pictures are
-third-party: fetched, never committed (`assets/` is ignored), and a published video relies on fair use and
-commentary norms, which is the publisher's call (DESIGN D42). The review packet lists each meme's template and
-`source`; credit both in `sources.md`.
-**Moving memes** (DESIGN D49). `data-meme="rollsafe"` plays a template whose clean `default.gif` is animated (17 of them; the
-cache now tries gif first), and `<figure class="ss-meme" data-clip="https://i.imgflip.com/62yufy.mp4" data-crop="top 98px"
-data-name="Willem Dafoe looking up" data-credit="<page to credit>" data-cue="agents" data-anim="pop"><span class="top">..</span>
-<span class="bottom">..</span></figure>` plays any GIF, MP4 or WebM: a URL (fetched once into `<cache>/clips/`) or a file in the
-video's folder. Imgflip serves each GIF template as a clean `https://i.imgflip.com/<id>.mp4`. `data-crop` takes sides with `%` or
-`px` (`top 14%`, `top 40px bottom 5%`); measure a frame for the band to cut, because a guess leaves white under the text. Text is optional: `top`
-and `bottom` spans (or first and second), drawn like a still's. `ffmpeg` writes `assets/memes/clips/<key>.mp4` (30 fps H.264, a keyframe
-a second, looped to cover the figure's cue to its scene's end) and the figure holds a `<video>` that starts at its cue; a scene that
-holds one keeps its times in `data-scene-start` and `data-scene-duration`, because HyperFrames refuses a video inside a timed
-element. A bad crop, a clip that is not a GIF, MP4 or WebM, or one with nothing cached and no network stops the build naming the scene. The
-packet lists each animated meme with its source URL; credit it in `sources.md` (third-party, as above). An animated template's box with memegen `start` and `stop` times shows only in that part of every loop, counted from the figure's cue (`crowd`'s two lines take turns in one corner; D81).
-
-**Footage** (DESIGN D77). The video's own app recording uses `<figure class="ss-footage" data-footage="footage/03-try.mp4" data-cue="paste" data-anim="fade"></figure>`: a local MP4, WebM or GIF relative to the video's folder, or an absolute path; URLs are refused. It plays once at 1x from its cue (the scene's start without one), from the file's start or `data-from="<seconds>"`. A short recording holds its last frame to the scene's end, never loops. `bin/footage.mjs` shares the clip encoder and seekable video markup with moving memes, writing `assets/footage/<key>.mp4`; it adds no text bands or meme attributes, and asks for no third-party credit. The packet's *Footage* section lists the scene, file, length, offset, scene-relative start and final-frame hold duration. A framed window uses `--footage-width` (1344px by default), the file's aspect ratio, `--footage-radius`, `--footage-border` (the card border when unset) and `--footage-shadow`. Like the other figures it is centred in the scene window; inside a layout set `position: relative; inset: auto; margin: 0`.
-
-**Portraits.** To show who is being talked about: `<figure class="ss-portrait" data-commons="File:Edsger Wybe Dijkstra.jpg" data-cue="Dijkstra" data-anim="pop"><figcaption>Edsger Dijkstra<small>1930-2002 · structured programming</small></figcaption></figure>`
-(the name is the Commons file page's title; the figcaption is yours and optional). The build (`bin/portrait.mjs`) asks the Commons API
-for the file's thumbnail (900 px wide), author and licence once, keeps both in `~/.cache/shipshow/commons/` (`SHIPSHOW_COMMONS_CACHE`;
-`SHIPSHOW_COMMONS_API` moves the endpoint, or is a folder of replies, which is how the tests run), copies the picture to the video's
-`assets/portraits/`, and writes a credit line (`Photo: James S. Davis · public domain`, `Photo: Hamilton Richards · CC BY-SA 3.0`) into the figure, hidden by default.
-**The licence gate** accepts public domain, CC0, CC BY and CC BY-SA of any version; anything else (non-free, fair use, NC, ND, GFDL, a licence
-Commons does not state), and a CC file with no author, stops the build naming the scene and the file. The gate runs on every build, cached or not.
-`review` lists each portrait's file page, author, licence and licence link under *Portraits*: copy them into `sources.md`. The
-credit is not drawn on the photo (`--portrait-credit: block` draws it); it goes in the video's description, which `review` writes
-under *Credits* and in `review/credits.txt` with the screenshots' pages (D57). Size: `--portrait-height`
-(640 px; theme or figure style). `ss-portrait-gray` and `ss-portrait-duo` (the theme's accent) treat an old or mismatched photo. A figure is
-centred in the scene window; to place two side by side, wrap them in a flex row and give each `position: relative; inset: auto; margin: 0`.
-A portrait is a person's photo: the pictures are third-party, fetched, never committed, and Commons' metadata is only as good as its uploader
-(some Karpathy and Sanfilippo files are YouTube stills): read the file page before publishing.
-
-**Screenshots** (DESIGN D56). To show a quote, a rule or a comment where it was said: `<figure class="ss-shot" data-shot="https://github.com/ocaml/ocaml/pull/14369#issuecomment-3556593972"
-data-find="hard to review, and very lightly tested" data-mark-cue="lightly" data-cue="OCaml's" data-anim="up"></figure>`. The build
-(`bin/shot.mjs`) opens the page in HyperFrames' headless Chrome (`SHIPSHOW_CHROME` overrides), dark mode unless `data-scheme="light"`,
-`data-width` CSS px wide (1100 by default: narrower makes the text bigger on screen), captures `data-select`'s element or else the
-block holding `data-find`'s words (`data-pad` px around it, default 20), and marks those words, one box per line; `data-mark-cue`
-sweeps the marker in on its own word. `data-select` may name several elements (`"#review h3, #review table"`: one capture around
-them all, and the words are looked for inside the nearest element holding them; hidden elements are skipped). `data-lines="1"` keeps only
-the lines holding the words and one more above and below, cut on line boundaries: for a long paragraph whose one sentence is the point.
-`data-hide` hides selectors first (a cookie banner). An X post: `data-shot="https://platform.twitter.com/embed/Tweet.html?id=<id>&amp;theme=dark"
-data-select="article" data-width="620" data-pad="0" data-source="x.com/<user>/status/<id>"` (no sign-in; `data-source` is what the
-bar shows and the credits cite). Captures are cached in `~/.cache/shipshow/shots/` (`SHIPSHOW_SHOTS_CACHE`; trash a folder to take it
-again). A page that will not load, or words or an element not on it, stops the build naming the scene. Size: `--shot-width` (1500 px)
-and `--shot-max-height` (860 px); inside a layout, give the figure `position: relative; inset: auto; margin: 0`. `review` lists each
-with its capture date. The pages are third-party: captured, never committed, shown as commentary.
-
-**Music.** `video.json` `"music": {"file", "volume", "duck"}` puts a bed under the narration:
-the build decodes it with ffmpeg, loops it to length, lowers it while the voice speaks (from the
-sentence timings, with short ramps), fades it in and out, and writes `assets/music.wav`
-(`bin/lib.mjs`, `musicBed`). A missing file warns and builds without music, since music is
-often local (`local/music/`): a generated track's licence is its maker's, so it is never
-committed. Check a generated track for vocals before using it under narration (Whisper hearing
-words is the sign); MiniMax Music 3 sang on its first take for why-shipshow despite
-`--instrumental`.
-
-**Sound effects.** A sound marks a thing moving, landing or arriving; it is felt, never heard over the
-words. Place one on a cued element, `<div data-cue="Kokoro" data-sfx="whoosh">` (`data-sfx-offset="0.2"` seconds
-later or earlier, `data-sfx-gain="-3"` dB, `data-sfx-step="2"` scale steps for a pitched sound), or from
-`scenes.html`'s `<script>`: `sfx("thump", cueAt("#id") + 0.3, {gain: -3})`, with `cueAt("#id")` an element's
-`data-at` and `sceneStart("scene")` / `sceneEnd("scene")` a scene's edges. The build reads those calls from the
-script's TEXT (not run), so the time is a number or those helpers plus or minus one; a call in a loop is an error.
-`bin/sfx.mjs` mixes `assets/sfx.wav` (the music bed's pattern; track 32) and writes `assets/sfx.json`, which
-`review` lists as *Sound effects*. It **refuses** a run of one sound (3 within 1.25 s of each other: Lino,
-2026-10-24) and any sound audible from 0.05 s before to 0.45 s after a sentence's first word (a glitch in the
-voice: Lino, 2026-10-26); the message says how far to move it. Level is measured: each sound's loudest 400 ms
-(EBU R128 momentary) lands `under` dB (default 14) below the voice's integrated loudness, plus the kit's gain.
-Pitched sounds play the bed's key, measured from the music (or `sfx.tonic`, else the kit's, else C). Sounds are
-synthesized by `bin/sounds.mjs` (ours, no licence; `node bin/sounds.mjs preview kit/sfx.json out.wav` plays the
-kit). The default kit `kit/sfx.json`: `swish`, `whoosh`, `thump`, `up`, `sting`, and for a punchline `boom`,
-`scratch`, `sad_trombone`, `ding`; each says what it is. A theme's `sfx.json`, a kit in `local/sfx/<name>.json`
-(`"sfx": {"kit": "<name>"}`), or a `{"file": "x.wav"}` sound (found beside the kit, in `local/sfx/`, the theme or
-the video) adds to or replaces it by name. `"sfx": false` in `video.json` or `local/config.json` turns sound off.
-Leave a pause after `boom` (about 1 s) and `sad_trombone` (about 2.5 s): `gap` in `video.json`.
-
-**Speed.** A multiplier on ShipShow's base pace (Kokoro at 0.85, OmniVoice at its own 1.0: both about 160 words
-a minute), not either engine's own: 1.25 by default. OmniVoice takes 1.0 to 1.3, the range it was tested at. The packet
-measures pace in syllables a minute (base about 210, `BASE_SPM`), since words a minute runs high on short words.
-Pauses shrink with it. The most specific wins: `--speed` on
-`make` or `voice`, then `video.json`, then the person's `local/config.json`, then 1.25, or 1.0 for an essay
-(`bin/lib.mjs`, `config`, `ESSAY_SPEED`). A take is re-voiced when its speed changes.
+- **Cues.** An element with `data-cue` arrives when the voice reaches that word, and `build` stops on a word the scene never says; `data-anim` picks the entrance and a `<script>` in `scenes.html` may add GSAP tweens to `tl`.
+- **Voice.** Three engines set by `engine` (`kokoro` by default; `omnivoice` and `drama` on Apple Silicon only); never clone a voice without consent, a public video credits the VCTK voice `eve` ("Voice: VCTK corpus, CC BY 4.0"), `say` respells a word for the engine and captions keep the written form, and Drama 3's licence (Fish Audio Community License) allows commercial use only under $500K a year in revenue, and forbids a hosted service and any cloning without consent.
+- **Checks on every take** (`bin/voicecheck.py`, `bin/hearback.py`): levelling, retakes, optional hear-back (`--no-hearback`) and second listen (`--no-listen`) flag and never block (Drama 3 retakes a take with `spelled_out` letters the script never spells, and one kept with it is listed, D60); without faster-whisper everything else still runs.
+- **Runs of sentences** (D47): with OmniVoice and hear-back a scene is voiced in runs of whole sentences up to 45 words; Whisper word times reach `timing.json` only through `bin/wordtime.py`, and nothing requires faster-whisper.
+- **Look.** A theme is `themes/<name>/theme.css` (or `local/themes/<name>/`, which wins); a scene's own styles should use the tokens, never a hard-coded colour.
+- **Moods.** `video.json` `moods` and `data-mood` select a section's feel; an unknown name stops the build with its scene, and `MOOD_BEAT` warns when a change has no beat: use `leads`.
+- **Frame.** Top-level `.ss-frame` blocks outside the sections form one full-canvas `#frame` layer; unqualified cues and unknown scene ids stop the build naming the element (D78).
+- **Motion.** Theme tokens `--transition`, `--camera`, `--ambient`, `--progress`, `--entrance`, overridden by `flair` and `data-transition` or `data-camera`; moving motion is a pure function of time (`driveBy` in `kit/kit.js`, D50).
+- **Review.** The plan's dials resolve in `reviewPlan` in `bin/lib.mjs`, the builder sets `importance`, and the builder says the spend before round 1 and stops past it (`critic-loop`, *Spend is part of the plan*); no dial lowers the floor (`skills/critic-loop`).
+- **Memes.** `data-meme` fills the template's text boxes with a `<span>` per line; never memegen's rendered images (watermark, baked-in text); an unknown id, an unreachable source with nothing cached or too many spans stops the build; a scene holding a moving meme or footage keeps its times in `data-scene-start` and `data-scene-duration`, because HyperFrames refuses a video inside a timed element; the template pictures are fetched, never committed, and the review packet's template and `source` are credited in `sources.md` (D42, D49, D81).
+- **Footage** (D77). `data-footage` plays a local file once at 1x and holds its last frame; URLs are refused (`bin/footage.mjs`).
+- **Portraits.** `data-commons` fetches a Commons photo (`bin/portrait.mjs`); the licence gate accepts only public domain, CC0, CC BY and CC BY-SA, stops the build otherwise, and the credits from `review` go in `sources.md` and the description (D57); read the file page before publishing.
+- **Screenshots** (D56). `data-shot` captures a real page in headless Chrome (`bin/shot.mjs`); a page that will not load or words not on it stops the build; `data-lines="1"` keeps only the lines holding the words and one more above and below; the pages are third-party, captured, never committed.
+- **Music.** `video.json` `music` puts a bed under the narration (`musicBed` in `bin/lib.mjs`); a missing file warns and builds without music, and a generated track is never committed (its licence is its maker's); check it for vocals before using it.
+- **Sound effects.** `data-sfx` on a cued element or `sfx()` in the `<script>`; `bin/sfx.mjs` refuses a run of one sound (3 within 1.25 s) and any sound audible from 0.05 s before to 0.45 s after a sentence's first word, and a call in a loop is an error; `"sfx": false` turns sound off.
+- **Speed.** A multiplier on the base pace (1.25 by default, 1.0 for an essay); the most specific wins: `--speed`, `video.json`, `local/config.json`; a take is re-voiced when its speed changes.
 
 ## How the timing works
 
-Kokoro does not report word times. So `bin/voice.mjs` voices each sentence on its own and places it on
-the track: a sentence's start is exact because we put it there. A word inside a sentence is
-placed by its share of the sentence's letters, close enough for a card to land on the word
-that names it. OmniVoice with hear-back voices runs of sentences instead, and the words
-Whisper hears in each run time its sentences and words (see *Runs of sentences*). `bin/build.mjs` turns those times into `data-start` and `data-duration` on each
-scene and caption and `data-at` on each cued element; `kit/kit.js` is the shared GSAP timeline;
-HyperFrames renders the page frame by frame in headless Chrome and muxes in the narration.
+`bin/voice.mjs` voices each sentence on its own and places it on the track (Kokoro reports no word times); `bin/build.mjs` turns the times into `data-start`, `data-duration` and `data-at`, and `kit/kit.js` is the shared GSAP timeline. Detail: `docs/agent/layout-and-timing.md`.
 
 ## Layout
 
-```
-bin/        devices (the editing moves a video makes, against the person's other videos), sfx and sounds (sound effects: placement, rules, synthesis), voice, build, render, make, review, timeline (how long each step took), overlap (text on text, measured), critics, memes, footage.mjs (local recordings, played once and held), new, doctor, setup, link-skills, usage; lib.mjs is shared, entry.mjs says whether a file is the script node runs (D79), measure.mjs holds the packet's measurements, python.mjs the supported Python range; voicecheck.py and hearback.py (and hearback.mjs, their node side) check every take; omnivoice.py and drama.py are the two MLX engines' workers
-kit/        shell.html (the page), base.css (canvas, captions, ss- pieces), kit.js (timeline, effects, meme text fitting), sfx.json (the default sound kit), fonts/ (the meme fonts)
-themes/     shipshow, paper, launch, buildday, lofi, signal, chalk, archive, ripple, vault, redline and stadium; each a theme.css of tokens, plus fonts (Space Grotesk, Space Mono, JetBrains Mono, Fraunces, Nunito, IBM Plex Mono, Bricolage Grotesque, Inter, Playfair Display, Courier Prime, Anton, Press Start 2P: SIL OFL)
-skills/     the explainer and development skills, critic-loop, publish, tailor, theme and the ten critics
-template/   what npm run new copies
-videos/     how-it-works (the example), how-we-built-it, why-shipshow (the pitch), invoice-leak (the decision demo, about examples/ledgerly), pacer-dev-journey (the Aperiam sample) never-about-the-code (an opinion piece for Lino's channel, in his cloned voice; renders only where local/voices/lino-long.wav exists, with Drama 3 set up) and eth-is-false (OpenAI's ETH preprint explained, for the same channel, read by an invented young British Drama 3 narrator, `local/voices/narrator-uk.wav` with its `.style`, on the chalk theme); qwen-phones-home (Cohere's Qwen 3.8 Beijing-upload claim investigated, the same narrator, on the signal theme); and kakeya-every-dimension (OpenAI's local smoothing preprint and the Kakeya conjecture explained, the same narrator, on the ripple theme); and binance-heist (the $6.3 billion Binance theft of 2026-10-29 explained, the same narrator, on the vault theme); and weight-space (MIT's GPT-6 Astra experiments reading, fixing and writing network weights, from the team's released logs, the same narrator, on the redline theme, the first video built under critic-novelty); and raise-the-bar (Qwen 4 Max, the Artificial Analysis index's version five and the distillation claim, the same narrator, on the stadium theme)
-examples/   ledgerly, a fictional invoicing API with one authorization bug, a threat model and an access log
-skills/critic-grounding/scripts/  excerpt.mjs and check-excerpt.mjs, the excerpt check (run through the skill)
-skills/evidence-standard/scripts/  sandbox-run.sh, capture.mjs, verify-vendored.sh (run through the skill)
-sample_application/  pacer-demo, a toy ad-spend pacer built by three agents in a day: the Aperiam sample (README, history/, agents/; ANSWER.md is a spoiler)
-docs/        PRD.md and DESIGN.md (kept current); assets/ holds the README's images: make-assets.mjs draws the SVGs (fonts embedded); demo.gif and themes.jpg are frames of videos/invoice-leak
-test/       sentence splitting, pronunciation swaps, cue and caption timing, skill links, usage counting, the excerpt checker, the sandbox runner, the docs rule
-local/      gitignored, per person (tailor skill)
-```
+`bin/` the pipeline, `kit/` the shared page, `themes/`, `skills/`, `template/`, `videos/`, `examples/`, `sample_application/`, `docs/`, `test/`, `local/`. `never-about-the-code` and `eth-is-false` render only where their voices exist (`local/voices/lino-long.wav`, `local/voices/narrator-uk.wav`). What is in each, and the example videos: `docs/agent/layout-and-timing.md`.
 
 ## Traps
 
-- **Another repo may be running this code with its own layer** (D75): `SHIPSHOW_LOCAL` (its `local/`), `SHIPSHOW_VENVS` (where `.venv*` live), `SHIPSHOW_OUT` (renders) and `SHIPSHOW_VIDEOS` (its video folders, for `memesUsed`). Read paths through `localDir()`, `VENVS` and `outDir()` in `bin/lib.mjs`, never `join(REPO, "local")`, `.venv` or `out` directly, or a repo on top silently reads ours.
-- **Kokoro's Python is this repo's `.venv`**, passed to `hyperframes tts` as `HYPERFRAMES_PYTHON` (`bin/lib.mjs` `ttsEnv`). A user-set `HYPERFRAMES_PYTHON` wins.
-- **`requirements.txt` pins phonemizer.** kokoro-onnx 0.6.1 needs `EspeakWrapper.set_data_path`, which phonemizer 3.3 lacks. Bump the two together and run `npm run doctor`.
-- **espeak-ng fails when its data path is 160 characters or longer** (measured 2026-10-17: 159 works, 160 fails). It reports a missing `.../site-packages//phontab`, not a path error. A venv deep in a temp or worktree path hits this; `doctor` checks the length.
-- **OmniVoice is Apple Silicon only, and opt-in.** `requirements-omnivoice.txt` is separate so Kokoro installs anywhere; `doctor` lists the engine as `opt` until you ask with `--omnivoice`. `bin/omnivoice.py` voices every stale sentence in one process (the model loads once) from a job file `bin/voice.mjs` writes; a user-set `HYPERFRAMES_PYTHON` is its Python too, which is how the tests stand a fake worker in for it. The model and the built-in clips are pinned by revision in `bin/omnivoice-voices.json`.
-- **A narrator is invented, not borrowed.** Never clone or vary a real person's voice without their consent; invent one from a description (`narration-writing`, *A narrator*).
-- **A clone is somebody's voice.** OmniVoice's own disclaimer prohibits unauthorized cloning and impersonation, and Drama 3's licence forbids cloning without consent: clone yourself or someone who agreed. `local/` never leaves the machine, so a clone never reaches this public repo; keep it that way.
-- **Drama 3 needs about 40 GB free** (it loads 22 GB and peaked at 35 GB; `bin/drama.py` caps MLX's GPU buffer cache, `SHIPSHOW_DRAMA_CACHE_GB`, DESIGN D69; `bin/drama.py` refuses below 40 unless `SHIPSHOW_DRAMA_FORCE=1`), and it drops words: a short last sentence on about 1 seed in 3 with no direction, and the rest of a line after a mid-line direction or a `[pause]`, `[long pause]` or `[slowly]` on nearly every seed (measured 2026-10-27, D55). Hear-back and the retakes are what make it usable, so `.venv-drama` always carries faster-whisper; never direct a pause, and listen to the lines the voice step lists.
-- **OmniVoice drops words when its window is too short, so a take of one sentence gets its speed after generation.** It fills the duration it is given: squeezed to 1.3x, 7 of 24 sentences lost or garbled words ("not a" vanished from "not a wall of logs"); generated at its natural length and then time-stretched (ffmpeg `atempo`), none did (measured 2026-10-17 with Whisper, why-shipshow). `bin/omnivoice.py` also trims the padding's silence from each take (13.8 s of a 67 s video was dead air) and re-voices a take that comes out silent. At 16 steps instead of 32 it dropped words on long lines, so `STEPS` stays 32. With faster-whisper installed the pipeline hears each take back and flags a sentence under 0.97 (see *Checks on every take*); a word said wrongly that Whisper mends from context still passes, so listen to the flagged ones and to anything that matters before you ship. A run of sentences (D47) is the exception: its window is shortened to the speed (`pace: "window"`), because at 1.2 it heard back as well as atempo (0.998 mean, none under 0.988, 5 runs three times each, 2026-10-26).
-- **A take's identity includes the voice's bytes.** A clip replaced under the same name (or its `.txt` edited) is a different voice, so its takes are voiced again; a Kokoro take's key is unchanged from before OmniVoice, so existing takes stay valid.
-- **Whisper times runs of sentences, and only runs.** This reverses "speech recognition checks takes and never times them" (2026-10-26, DESIGN D47). Why: `hyperframes transcribe` (whisper.cpp) timed out downloading its model, but faster-whisper is already installed for hear-back, so timing costs no second download; a take per sentence sounded choppy to the owner; and DAIS product-videos, whose narration he approved, times cues from the same word timestamps. A run's take is heard back with `word_timestamps=True`, never a whole video's track (a window edge dropped a dozen words in product-videos). A Whisper word time reaches `timing.json` only through `bin/wordtime.py`, only for a run, and only as `words`; a sentence take, Kokoro, and the `--no-hearback` path are placed as before. Never make faster-whisper required. A cue a few hundred milliseconds off in a run is Whisper's resolution: use `data-cue="+seconds"`.
-- **A take's key carries the check rules and the reference transcript** (OmniVoice only): `voicecheck.py` `VERSION` and whether the voice's reference has a transcript (`given`, `heard` or `none`), and `REF_PREP` (how a reference is prepared), so changing a rule, or installing or removing hear-back, voices OmniVoice takes again once. Bump `VERSION` when a rule in `voicecheck.py` changes, `REF_PREP` in `bin/voice.mjs` when `quiet()` in `bin/omnivoice.py` does. A reference goes to the model exactly as recorded, never denoised: cleaning the owner's hissy clip made his cloned voice hollow, "like talking through a paper towel roll" (2026-10-27, DESIGN D53). A clone copies its clip's hiss, so the clean-start check reads a take's silence against its own background (`quiet_level` in `bin/voicecheck.py`), not a fixed -45 dBFS. A clone whose clip starts speaking at its first sample (measured with a VCTK clip, 2026-10-26: 1 clean take in 24, whatever the seed or lead-in) is kept after three tries, trimmed, and listed under *Voice checks* to listen to; a longer lead-in did not help and slowed the voice.
-- **Voicing one take again gives the same take.** A take is re-voiced when its `.wav` or `.key` is missing or the key differs (`fresh` in `bin/voice.mjs`; the `.check` is only read, never decides), but Drama 3's seed is hashed from the key, so moving `.key` aside re-voices the line into the same take (kakeya, 2026-10-31). Change the line's words or its `[direction]` (the key, so the seed) to get another one; and a take that repeated another line is never kept while a take without a repeat exists (D105).
-- **Takes are cached by text, voice and speed** in `assets/voice/<scene>-<n>.key` (a run: `<scene>-r<n>.key`), and again in the **shared take cache**, `~/.cache/shipshow/takes/` (`SHIPSHOW_TAKES_CACHE`; `off` disables), so a retired worktree's takes survive: `bin/voice.mjs` copies a stale take back by its key before voicing, and copies every take in when it ends (D106: layout, Drama 3 continuity, costs). A take is found by key, never file name, so inserting a sentence re-voices only the new one. A test that runs `voice.mjs` must set `SHIPSHOW_TAKES_CACHE=off` (or a temp folder), or it touches the real cache. Generated pictures are not cached.
-- **Generated files are gitignored** (`videos/*/assets/`, `review/`, `index.html`, `meta.json`, `timing.json`). Never commit audio, frames or renders.
-- **The name is ShipShow**, one word, two capitals; the repo is `latent-variable/shipshow` (renamed from kokoro-explainers 2026-10-17, and GitHub redirects the old address). A rename also changes the PR reviewer's allowlist (latent-git-agents `config/repos.json` and `tests/repo-allowlist.test.mjs`), or PRs stop being reviewed.
-- **`hyperframes lint` warns `nested_structure_needs_subcomposition` and `timeline_track_too_dense`** on every video. Advisory: each scene is one section on one track by design. Errors still block.
-- **Project hooks enforce the no-delete rule** (`.claude/settings.json`, `.claude/hooks/`, DESIGN D41, D80): the Bash guard refuses `rm`, `find -delete` and, in this repo or a worktree of it, the git commands that discard work (`git branch -D` on a branch whose tip is a merged pull request's head is allowed: what `pr merge` says to run), the file guard refuses `sample_application/src/` and recorded runs (and so does the Bash guard, for `>`, `sed -i`, `cp` and the like, and for `cat .env` or `local/voices`: a seatbelt, not a sandbox), and the Stop hook runs `npm test`. A person overrides on purpose with `SHIPSHOW_ALLOW_DESTRUCTIVE=1`, `SHIPSHOW_EDIT_SAMPLE=1` or `SHIPSHOW_ALLOW_PRIVATE=1`. Copy a clip into `local/voices` with `cp`; that stays allowed. Move things aside with `mv` instead.
-- **One extra closing tag in a scene ends the page early**: `#root` closes, the captions and every later scene fall outside it, and the kit throws before it makes a timeline (weight-space, 2026-11-03, after a scene was split by hand). `build` now stops naming the scene and the tag (`unbalancedTags` in `bin/lib.mjs`, D97).
-- **`glow` on a light mood paints the accents as big blobs**: on weight-space's white theatre mood a red and a teal pool covered half of every frame. On a light sky use `vignette` or nothing.
+Each is one rule here; the measurements and incidents behind it are in `docs/agent/traps.md`.
+
+- **Another repo may be running this code with its own layer** (D75): read paths through `localDir()`, `VENVS` and `outDir()` in `bin/lib.mjs`, never `join(REPO, "local")`, `.venv` or `out` directly.
+- **Kokoro's Python is this repo's `.venv`**, passed as `HYPERFRAMES_PYTHON` (`bin/lib.mjs` `ttsEnv`); a user-set `HYPERFRAMES_PYTHON` wins.
+- **`requirements.txt` pins phonemizer**: bump it and kokoro-onnx together and run `npm run doctor`.
+- **espeak-ng fails when its data path is 160 characters or longer**; a venv deep in a temp or worktree path hits it, and `doctor` checks the length.
+- **OmniVoice is Apple Silicon only, and opt-in** (`requirements-omnivoice.txt`, `bin/omnivoice.py`, `bin/omnivoice-voices.json` pins the model and clips).
+- **A narrator is invented, not borrowed.** Never clone or vary a real person's voice without their consent (`narration-writing`, *A narrator*).
+- **A clone is somebody's voice.** Clone yourself or someone who agreed; `local/` never leaves the machine, so a clone never reaches this public repo.
+- **Drama 3 needs about 40 GB free** (`bin/drama.py` refuses below 40 unless `SHIPSHOW_DRAMA_FORCE=1`) and drops words, so `.venv-drama` always carries faster-whisper, never direct a pause, and listen to the lines the voice step lists.
+- **OmniVoice drops words when its window is too short**, so a take of one sentence gets its speed after generation (ffmpeg `atempo`); `STEPS` stays 32, and a run of sentences (D47) uses `pace: "window"`.
+- **A take's identity includes the voice's bytes**: a clip replaced under the same name, or its `.txt` edited, re-voices its takes.
+- **Whisper times runs of sentences, and only runs** (D47): a word time reaches `timing.json` only through `bin/wordtime.py`, only for a run, only as `words`; a run's take is heard back with `word_timestamps=True`, never a whole video's track; never make faster-whisper required; fix a cue that is a few hundred ms off with `data-cue="+seconds"`.
+- **A take's key carries the check rules and the reference transcript** (OmniVoice only): bump `voicecheck.py` `VERSION` when a rule changes and `REF_PREP` in `bin/voice.mjs` when `quiet()` changes; a reference goes to the model exactly as recorded, never denoised (D53).
+- **Voicing one take again gives the same take**: Drama 3's seed is hashed from the key, so change the line's words or its `[direction]`, and a take that repeated another line is never kept while a clean one exists (D105).
+- **Takes are cached by text, voice and speed** in `assets/voice/<scene>-<n>.key` and the shared cache `~/.cache/shipshow/takes/` (`SHIPSHOW_TAKES_CACHE`; `off` disables); a test that runs `voice.mjs` must set `SHIPSHOW_TAKES_CACHE=off` or a temp folder (D106).
+- **Generated files are gitignored** (`videos/*/assets/`, `review/`, `index.html`, `meta.json`, `timing.json`); never commit audio, frames or renders.
+- **The name is ShipShow**, one word, two capitals; a rename also changes the PR reviewer's allowlist (latent-git-agents `config/repos.json` and `tests/repo-allowlist.test.mjs`), or PRs stop being reviewed.
+- **`hyperframes lint` warns `nested_structure_needs_subcomposition` and `timeline_track_too_dense`** on every video; advisory, errors still block.
+- **Project hooks enforce the no-delete rule** (`.claude/settings.json`, `.claude/hooks/`, D41, D80): the Bash guard refuses file deletion and git commands that discard work, the file guard refuses `sample_application/src/` and recorded runs, the Stop hook runs `npm test`; override only on purpose with `SHIPSHOW_ALLOW_DESTRUCTIVE=1`, `SHIPSHOW_EDIT_SAMPLE=1` or `SHIPSHOW_ALLOW_PRIVATE=1`, and move things aside with `mv`.
+- **One extra closing tag in a scene ends the page early**; `build` stops naming the scene and the tag (`unbalancedTags` in `bin/lib.mjs`, D97).
+- **`glow` on a light mood paints the accents as big blobs**; on a light sky use `vignette` or nothing.
 - The scripts never delete files: a stale take is overwritten, never removed.
-- **Never write a literal style or script tag in a comment** inside `kit/` or `themes/`: the
-  build inlines them into the page, and `hyperframes lint` reads it as an unclosed tag (twice,
-  2026-10-17).
-- **A theme cannot restyle a hard-coded colour or font.** A scene that writes `#182033`
-  instead of `var(--card)` keeps it in every theme.
+- **Never write a literal style or script tag in a comment** inside `kit/` or `themes/`: the build inlines them and `hyperframes lint` reads an unclosed tag.
+- **A theme cannot restyle a hard-coded colour or font**: use `var(--card)` and the other tokens.
 
 ## For the PR reviewer
 
@@ -437,3 +228,4 @@ local/      gitignored, per person (tailor skill)
 - This file holds project facts only. Check with `~/.agents/bin/canon-echo.sh .`; a real exception is marked `<!-- canon-override: <rule> — <why> (date) -->`.
 - Refresh infra: `~/.agents/bin/project-sync.sh .`
 <!-- END agent-context -->
+
