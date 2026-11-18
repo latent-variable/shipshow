@@ -42,7 +42,7 @@ Skills live in `skills/<name>/SKILL.md` and are linked into `.claude/skills/` by
 ## Before you change anything
 
 Know three things, by whatever route you like: what the machine lacks (`npm run doctor` names it, with the
-fix), whether the tests pass now (`npm test` needs no Kokoro and is the only thing CI runs), and that you are
+fix), whether the tests pass now (`npm test` needs no Kokoro and is the only functional suite CI runs; CI's `security` job runs the audits), and that you are
 on a feature branch, never `main`.
 
 ## Validate the change
