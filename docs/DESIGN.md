@@ -9,6 +9,8 @@ with a new entry that names it. Dates are absolute.
 
 The rule itself is in `AGENTS.md`; the detail that does not need to be in every agent's context is here.
 
+`AGENTS.md` is loaded into every agent turn and is held under 30,000 characters (2026-11-17): each rule stays there as one sentence, and its full text, the pipeline reference and the command flags live in `docs/agent/` (*Where to read* in `AGENTS.md`).
+
 - A new decision is a new entry at the end of the log: number, date, decision, why, what it
   costs. Never rewrite a past entry; supersede it with a new one that names it.
 - A requirement keeps its ID. Move its status (done, in progress, planned, open) rather than
