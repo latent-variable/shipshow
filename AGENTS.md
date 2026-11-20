@@ -144,7 +144,7 @@ The table is the short form; every flag, check and refusal is in `docs/agent/com
 | `npm run usage` | Tokens and context per agent for the newest Claude Code session |
 | `npm run timeline -- <folder>` | How long each step took, from `review/timeline.jsonl` (D86) |
 | `claude plugin validate .` | The two manifests only; one warning is expected (no `version`, on purpose) |
-| `npm test` | No Kokoro needed; CI runs only this |
+| `npm test` | No Kokoro needed; it is the only functional test suite CI runs (CI's `security` job runs the audits) |
 
 A change to `bin/`, `kit/` or `template/` is validated by running `make` and `review` on
 `videos/how-it-works` and looking at the contact sheets.

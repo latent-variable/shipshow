@@ -22,7 +22,7 @@ The full original text, unedited. The rule for each item is kept in one sentence
 | `npm run usage` | Tokens and context per agent for the newest Claude Code session of this repo, subagents included (`-- <session id>` for another, `-- --json` for data); read from `~/.claude/projects/`, or from `CLAUDE_PROJECTS_DIR` |
 | `npm run timeline -- <folder>` | How long each step took for that video, from what each step records as it runs in `review/timeline.jsonl` (voice, build, overlaps, review, render, package; D86): runs, last and median per step, voicing in seconds per narration minute and hear-back rounds per take, render as a multiple of real time, and the last voice + build + render as one rebuild (`-- --json` for data) |
 | `claude plugin validate .` | The two manifests only (`plugin.json`, `marketplace.json`); `claude plugin validate skills` and `agents` look at components but only warn on a broken one, so a test parses every `SKILL.md` and `agents/critic.md` front matter. One warning is expected (no `version`, on purpose: the commit SHA versions the plugin); `--strict` fails on it |
-| `npm test` | No Kokoro needed; CI runs only this |
+| `npm test` | No Kokoro needed; it is the only functional test suite CI runs (CI's `security` job runs the audits) |
 
 A change to `bin/`, `kit/` or `template/` is validated by running `make` and `review` on
 `videos/how-it-works` and looking at the contact sheets.
