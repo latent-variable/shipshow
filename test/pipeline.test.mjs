@@ -23,6 +23,13 @@ test("say swaps whole words only", () => {
   assert.equal(spoken("MP4s and HyperFramesJS stay as written.", say), "MP4s and HyperFramesJS stay as written.");
 });
 
+test("say never swaps a number inside a longer one, whatever the key order", () => {
+  const say = { "$1,250": "twelve fifty dollars", "250": "two fifty", "1": "one" };   // "250" and "1" iterate first
+  assert.equal(spoken("At 250 contacts, $1,250 to build, version 2.50.", say),
+    "At two fifty contacts, twelve fifty dollars to build, version 2.50.");
+  assert.equal(spoken("Tier 1 costs 1,500.", say), "Tier one costs 1,500.");
+});
+
 test("a WAV survives a write and a read", () => {
   const path = join(mkdtempSync(join(tmpdir(), "kx-test-")), "a.wav");
   const samples = Int16Array.from([0, 1, -1, 32767, -32768]);
