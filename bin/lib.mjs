@@ -304,7 +304,9 @@ export function spoken(sentence, say) {
   const keys = Object.entries(say).sort(([a], [b]) => b.length - a.length);
   for (const [written, said] of keys) {
     const esc = written.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    out = out.replace(new RegExp(`(?<![\\w])(?<!\\d[,.])${esc}(?![\\w])(?![,.]\\d)`, "g"), said);
+    const before = /^\d/.test(written) ? "(?<!\\d[,.])" : "";   // number guards only where the key starts or ends in a digit,
+    const after = /\d$/.test(written) ? "(?![,.]\\d)" : "";     // so "C" still matches in "C.3"
+    out = out.replace(new RegExp(`(?<![\\w])${before}${esc}(?![\\w])${after}`, "g"), said);
   }
   return out;
 }

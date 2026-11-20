@@ -28,6 +28,7 @@ test("say never swaps a number inside a longer one, whatever the key order", () 
   assert.equal(spoken("At 250 contacts, $1,250 to build, version 2.50.", say),
     "At two fifty contacts, twelve fifty dollars to build, version 2.50.");
   assert.equal(spoken("Tier 1 costs 1,500.", say), "Tier one costs 1,500.");
+  assert.equal(spoken("C.3 is out.", { C: "see" }), "see.3 is out.");   // a word key keeps matching beside a number
 });
 
 test("a WAV survives a write and a read", () => {
