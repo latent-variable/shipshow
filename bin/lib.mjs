@@ -296,12 +296,17 @@ function directedLine(text) {
   return out.filter((s) => s.text);
 }
 
-/** What Kokoro is told to say for a sentence: video.json "say" applied, whole words only. */
+/** What Kokoro is told to say for a sentence: video.json "say" applied, whole words only. Longest key first,
+ *  because JavaScript lists integer-like keys ("250") before all others whatever their written order, and a
+ *  number never matches inside a longer one ("250" in "$1,250" or "2.50"). */
 export function spoken(sentence, say) {
   let out = sentence;
-  for (const [written, said] of Object.entries(say)) {
+  const keys = Object.entries(say).sort(([a], [b]) => b.length - a.length);
+  for (const [written, said] of keys) {
     const esc = written.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    out = out.replace(new RegExp(`(?<![\\w])${esc}(?![\\w])`, "g"), said);
+    const before = /^\d/.test(written) ? "(?<!\\d[,.])" : "";   // number guards only where the key starts or ends in a digit,
+    const after = /\d$/.test(written) ? "(?![,.]\\d)" : "";     // so "C" still matches in "C.3"
+    out = out.replace(new RegExp(`(?<![\\w])${before}${esc}(?![\\w])${after}`, "g"), said);
   }
   return out;
 }

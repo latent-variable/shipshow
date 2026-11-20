@@ -55,7 +55,8 @@ can be hard to hear. Write for the ear, then check it against the clock.
   `app/the models file`. It changes the voiced text but not the caption, and the cue arithmetic and
   the packet's word count use the written text. Use it for one-meaning words, never for a name that
   appears inside a path or that begins a longer phrase in the same script (`index` also rewrites
-  `the index route` and `index.html`).
+  `the index route` and `index.html`). Keys apply longest first, and a number never matches inside a
+  longer number, so `"250"` and `"$1,250"` can both be keys.
 - **Cue early in the sentence, not on its last word**: an element cued on the word that ends a scene has
   about a second left on screen, which the packet flags as short.
 - **A cue is placed on a word.** `data-cue` matches the start of a spoken word across the whole

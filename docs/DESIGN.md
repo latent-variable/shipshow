@@ -226,6 +226,9 @@ a recorded alias with its literal on screen is not a mismatch. `video.json` `say
 pure pronunciation of a one-meaning word. **Why.** `say` is global, case-sensitive and
 whole-word, so it cannot disambiguate one written name across scenes; it also changes the
 voiced text while captions and cue timing use the written text, which trips `critic-sync`.
+Keys apply longest first and a number key never matches inside a longer number (2026-11-19):
+JavaScript lists integer-like keys before all others, so `"250"` rewrote `"$1,250"` before its
+own key could match, and a builder had to delete the number keys to get the price said right.
 
 ### D17. Decision videos hand back a checked brief (2026-10-17)
 **Decision.** The explainer checks every claim in the brief against the code and lists each as
