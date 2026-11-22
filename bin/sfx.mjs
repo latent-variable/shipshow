@@ -37,7 +37,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import vm from "node:vm";
-import { REPO, readWav, round, themeDir, writeWav } from "./lib.mjs";
+import { REPO, localDir, readWav, round, themeDir, writeWav } from "./lib.mjs";
 import { NOTE_NAMES, RATE, fft, render } from "./sounds.mjs";
 
 export const UNDER = 14;                       // dB below the voice that a sound at gain 0 lands at
@@ -250,7 +250,6 @@ export function scriptEvents(script, { ids, starts, ends }) {
 // ---------------------------------------------------------------- kits
 
 const DEFAULT_KIT = join(REPO, "kit", "sfx.json");
-const localDir = () => process.env.SHIPSHOW_LOCAL || join(REPO, "local");
 
 /** video.json "sfx" (or local/config.json's) as {on, kit, under, tonic}. false turns sound off. */
 export function sfxSettings(value) {
