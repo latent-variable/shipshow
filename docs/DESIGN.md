@@ -512,6 +512,9 @@ project settings and rules cannot be committed. Nothing in the plan is done.
 **Why.** Hard rules here ("never delete", "docs stay current", "the sample stays buggy") are prose plus CI, and no run's
 cost or critic agreement is recorded. **Costs.** None yet; each step names how to tell it worked and the unconfirmed items
 to check first (plugin-shipped agent hooks, how a missing `version` resolves).
+**Since.** Removed `docs/PLAN.md` on 2026-11-22 (#198): untouched since 2026-11-02, its open steps described a tree that had
+moved on. The hooks shipped (D41, F32), the critic's write tools are denied in `agents/critic.md`, and `AGENTS.md` was cut on
+2026-11-17 (#195); per-run results and evals were never built. The plan's text, step numbers included, is in git at `58f48ea`.
 
 ### D40. CI installs a pinned static ffmpeg, not the apt package (2026-10-26)
 **Decision.** The `test` job downloads ffmpeg 6.0.1's static build (johnvansickle.com old-releases, a stable URL), checks its
