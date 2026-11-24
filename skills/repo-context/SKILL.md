@@ -21,7 +21,7 @@ You know your own way of reading a repo; these are the sources worth reaching fo
 
 - `AGENTS.md`: what the project is, where things are, what is expected, the traps. The
   traps are the point; each one cost someone time.
-- `README.md`: the short human story. The `data-cue` and `video.json` reference, the commands and the layout are in `AGENTS.md`.
+- `README.md`: the short human story. The `data-cue` and `video.json` reference is in `docs/agent/video-files.md`; commands are in `docs/agent/commands.md`, and layout is in `docs/agent/layout-and-timing.md`.
 - `.agents/memory/MEMORY.md` when it exists (gitignored project memory).
 - `git log --oneline -15`: what changed lately and why. Commit subjects here are
   `type: summary (#PR)`.
