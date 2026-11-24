@@ -174,7 +174,8 @@ be in `sources.md`, copied from the pin it names, never retyped (`explainer-vide
 checks it with a script).
 
 **What the kit renders natively:** entrances on a cue (`up`, `fade`, `pop`, `left`, `right`, `grow`, `zoom`,
-`blur`, `type`, `draw`, `count`, `highlight`, `stagger`, `pulse`, `scramble`, `glitch`, `slam`; `AGENTS.md`), a punch-in
+`blur`, `type`, `draw`, `count`, `highlight`, `stagger`, `pulse`, `scramble`, `glitch`, `slam`; see
+`docs/agent/video-files.md`), a punch-in
 on a word (`data-punch`), a whip into a scene (`data-transition="whip"`) and the music cut to silence on a word
 (`data-drop`). An exit, a swap and a connector between two boxes need a custom `<script>` in `scenes.html`; choose a
 picture the kit can make or plan the script.
