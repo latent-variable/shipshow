@@ -29,6 +29,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, s
 import { homedir } from "node:os";
 import { basename, isAbsolute, join, resolve } from "node:path";
 import { REPO, die, round } from "./lib.mjs";
+import { escapeHtml as esc, htmlAttr as attrOf, HTML_VOID_ELEMENTS } from "./html.mjs";
 
 const EXTS = ["gif", "jpg", "png", "jpeg"];   // gif first: a template with an animated default.gif keeps a still beside it
 const FPS = 30;                                // the composition's frame rate
@@ -180,9 +181,6 @@ export function imageSize(buf) {
   }
   throw new Error("not a PNG, JPEG or GIF it can read");
 }
-
-const esc = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
-const attrOf = (attrs, name) => (attrs.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`)) || [])[1];
 
 /** One figure's HTML: the picture (an img, or the video element of an animated meme), a box per span.
  *  `lines` are the spans as written: {attrs, html}. `extra` is added to the figure's attributes. */
@@ -366,15 +364,14 @@ const once = (attrs) => (loops(attrs) ? {} : { hold: true, folder: join("assets"
  *  `meme-wrap` arrives with the wrap). A moving meme or footage starts playing there; without this a clip in a cued wrap
  *  started at its scene's start and, played once, had finished before it was seen (weight-space, 2026-11-03; D99). */
 export function cueOf(html, index, attrs) {
-  const own = (attrs.match(/(?:^|\s)data-cue="([^"]*)"/) || [])[1];
+  const own = attrOf(attrs, "data-cue");
   if (own !== undefined) return own;
-  const VOIDS = /^(area|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
   const stack = [];
   for (const m of html.slice(0, index).matchAll(/<(\/?)([a-zA-Z][\w-]*)([^>]*)>/g)) {
     const [, close, tag, rest] = m;
     if (close) { const k = stack.map((e) => e.tag).lastIndexOf(tag.toLowerCase()); if (k >= 0) stack.length = k; continue; }
-    if (VOIDS.test(tag) || rest.endsWith("/")) continue;
-    stack.push({ tag: tag.toLowerCase(), cue: (rest.match(/(?:^|\s)data-cue="([^"]*)"/) || [])[1] });
+    if (HTML_VOID_ELEMENTS.test(tag) || rest.endsWith("/")) continue;
+    stack.push({ tag: tag.toLowerCase(), cue: attrOf(rest, "data-cue") });
   }
   for (let k = stack.length - 1; k >= 0; k--) if (stack[k].cue !== undefined) return stack[k].cue;
   return undefined;

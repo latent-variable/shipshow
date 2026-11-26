@@ -30,15 +30,15 @@ import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { die, REPO } from "./lib.mjs";
 import { imageSize } from "./meme.mjs";
+import { escapeHtml as esc, htmlAttr } from "./html.mjs";
 
 export const VERSION = 8;   // how a capture is taken: bump when that changes, so cached shots are taken again
 export const cacheDir = () => process.env.SHIPSHOW_SHOTS_CACHE || join(homedir(), ".cache", "shipshow", "shots");
 const SCALE = 2;            // device pixels per CSS px: sharp when the figure is drawn larger than the page was
 const TIMEOUT = 30000;
 
-const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const unesc = (s) => String(s).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
-const attrOf = (attrs, name) => { const v = (attrs.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`)) || [])[1]; return v === undefined ? undefined : unesc(v); };
+const attrOf = (attrs, name) => { const v = htmlAttr(attrs, name); return v === undefined ? undefined : unesc(v); };
 
 /** What a figure asks for, with defaults filled in and checked. Throws on a bad value. */
 export function shotSpec(attrs, videoDir) {
