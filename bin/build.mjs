@@ -24,6 +24,7 @@ import { shotScene } from "./shot.mjs";
 import { REPO, config, die, dropsIn, unbalancedTags, flairCss, musicBed, norm, round, seedFor, themeCss, videoDir, recordStep, missingLocalFiles } from "./lib.mjs";
 import { resolveMoods } from "./moods.mjs";
 import { sfxTrack } from "./sfx.mjs";
+import { escapeHtml as esc } from "./html.mjs";
 
 const CUE_LEAD = 0.15;      // a piece lands just before its word, so the eye gets there with the ear
 const LINE_WORDS = 12;      // the longest caption line
@@ -41,8 +42,6 @@ const token = (name, fallback) => theme.match(new RegExp(`${name}:\\s*([\\w.-]+)
 const KARAOKE = token("--cap-style", "plain") === "karaoke";
 const CAP_WORDS = +token("--cap-words", LINE_WORDS);
 const byId = Object.fromEntries(timing.scenes.map((s) => [s.id, s]));
-
-const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /** The time of each word of a sentence when it was timed from what was heard (bin/voice.mjs, Whisper), else null. */
 const heardAts = (s) => (s.words?.length === s.text.split(" ").length ? s.words.map((x) => x.at) : null);

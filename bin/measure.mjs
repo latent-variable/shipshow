@@ -5,6 +5,7 @@
 // is four: an underscore splits one), because it is harder to read than the same number of words, at 1.5 tokens a second.
 import { existsSync, mkdirSync, renameSync } from "node:fs";
 import { join } from "node:path";
+import { HTML_VOID_ELEMENTS } from "./html.mjs";
 
 export const READ_WPS = 3.3;
 export const READ_CODE_TPS = 1.5;
@@ -76,7 +77,6 @@ export function newReadingText(cue, earlierInScene) {
 // `<path d="...">` with no close, which sent the search on to the end of the page and gave it the page's inline script to
 // read: kakeya-every-dimension's figures were given 7000 s, #127). Only `<text>` and `<tspan>` in an SVG carry words.
 const SVG_SHAPE = /^(path|line|circle|ellipse|rect|polyline|polygon|use|image|stop|mask|clipPath|marker|pattern|filter|linearGradient|radialGradient)$/i;
-const VOID = /^(area|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/i;
 // Blocks whose content is never read by a viewer: style, script, SVG defs, titles and descriptions.
 const UNREAD = /<(style|script|defs|title|desc|metadata)\b[^>]*>[\s\S]*?<\/\1>/gi;
 
@@ -92,7 +92,7 @@ export function elementAt(html, i) {
   // end of the page and gave the picture the whole video's text to read (binance-heist, 2026-11-02).
   // So has a self-closing one (a cued SVG <line/> or <polygon/>: D94) and any SVG shape (D102).
   const open = html.slice(i, html.indexOf(">", i) + 1);
-  if (VOID.test(tag) || SVG_SHAPE.test(tag) || open.endsWith("/>")) { const end = html.indexOf(">", i) + 1; return { end, text: "" }; }
+  if (HTML_VOID_ELEMENTS.test(tag) || SVG_SHAPE.test(tag) || open.endsWith("/>")) { const end = html.indexOf(">", i) + 1; return { end, text: "" }; }
   const re = new RegExp(`<(/?)${tag}\\b[^>]*>`, "g");
   re.lastIndex = i;
   let depth = 0, m;

@@ -2,8 +2,7 @@
 import { spawnSync } from "node:child_process";
 import { die, round } from "./lib.mjs";
 import { encodeClip, localClipFile, videoHtml, cueOf } from "./meme.mjs";
-
-const attr = (s, name) => s.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1];
+import { htmlAttr as attr } from "./html.mjs";
 const un = (s) => s.replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 
 /** Source video length, not its audio track's length. */

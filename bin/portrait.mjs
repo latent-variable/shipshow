@@ -16,6 +16,7 @@ import { createHash } from "node:crypto";
 import { homedir } from "node:os";
 import { extname, join, resolve } from "node:path";
 import { die } from "./lib.mjs";
+import { escapeHtml as esc } from "./html.mjs";
 
 export const WIDTH = 900;   // thumbnail width asked of Commons: sharp at the default 640 px card, small on disk
 const UA = "ShipShow/1 (https://github.com/latent-variable/shipshow; portraits)";
@@ -131,8 +132,6 @@ export async function loadPortrait(title) {
   const { author, line } = creditFor(meta, licence);
   return { meta, image: join(dir, `image.${ext}`), ext, licence, author, credit: line, name: `${key(title)}.${ext}` };
 }
-
-const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /** One figure's HTML: the picture with its credit, then the builder's caption. */
 export function figureHtml(attrs, inner, p) {

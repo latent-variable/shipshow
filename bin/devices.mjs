@@ -5,8 +5,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { REPO } from "./lib.mjs";
-
-const attr = (attrs, name) => attrs.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1];
+import { htmlAttr as attr } from "./html.mjs";
 
 /** One pass over the page: each element with what it is, the scene and mood it sits in, and whether it is cued. */
 function elements(html) {

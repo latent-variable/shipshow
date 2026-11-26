@@ -1586,6 +1586,13 @@ define distillation from the ground up for viewers who use the word every day, a
 a field's own news gets at most a clause of recap for its everyday terms. `critic-clarity` grades the old failure (a term
 this viewer would not know) a major, as before, and the reverse (a term they use daily, defined from scratch) a minor.
 
+### D111. HTML helpers have one shared implementation (2026-11-26)
+
+`bin/html.mjs` owns the attribute reader, HTML escaper and 12-tag void-element matcher used by the bin modules. The
+frame lifter keeps its own void-element set because its boundary walk also treats `base` and `param` as void; cue
+walking and reading-time measurement retain their existing 12-tag behavior. **Why.** The copies in `meme.mjs`,
+`measure.mjs` and the other HTML readers had drifted, so a matching rule could change in one place and not the others.
+
 ## Behaviour
 
 What an agent or person observes. Each line is checkable against the cited file.
