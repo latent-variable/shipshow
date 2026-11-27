@@ -18,11 +18,22 @@ jobs:
           cache: npm
       # A static ffmpeg, pinned by hash. apt-get stalled on the Ubuntu mirror for 26 and 33
       # minutes on 2026-10-26 (most runs take under a minute); this download takes seconds.
+      # The mirror has also served a bad body that fails the hash (twice on 2026-11-27), so a
+      # verified tarball is cached by its hash and the download retries on a mismatch.
+      - uses: actions/cache@v4
+        with:
+          path: /tmp/ffmpeg.tar.xz
+          key: ffmpeg-6.0.1-28268bf402f1083833ea269331587f60a242848880073be8016501d864bd07a5
       - name: Install ffmpeg
         timeout-minutes: 5
         run: |
-          curl -sSfL --retry 3 -o /tmp/ffmpeg.tar.xz https://johnvansickle.com/ffmpeg/old-releases/ffmpeg-6.0.1-amd64-static.tar.xz
-          echo "28268bf402f1083833ea269331587f60a242848880073be8016501d864bd07a5  /tmp/ffmpeg.tar.xz" | sha256sum -c -
+          sum="28268bf402f1083833ea269331587f60a242848880073be8016501d864bd07a5  /tmp/ffmpeg.tar.xz"
+          for try in 1 2 3; do
+            echo "$sum" | sha256sum -c --status - && break
+            curl -sSfL --retry 3 -o /tmp/ffmpeg.tar.xz https://johnvansickle.com/ffmpeg/old-releases/ffmpeg-6.0.1-amd64-static.tar.xz || true
+            [ "$try" = 3 ] || sleep 10
+          done
+          echo "$sum" | sha256sum -c -
           tar -xJf /tmp/ffmpeg.tar.xz -C /tmp
           sudo install -m 0755 /tmp/ffmpeg-6.0.1-amd64-static/ffmpeg /tmp/ffmpeg-6.0.1-amd64-static/ffprobe /usr/local/bin/
           ffmpeg -version | head -1
