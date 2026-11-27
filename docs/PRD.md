@@ -5,7 +5,7 @@ in the same change (`AGENTS.md`, *Docs that stay current*). How it is built and 
 [DESIGN.md](DESIGN.md). Dates are absolute. Status is one of **done**, **in progress**,
 **planned**, **open**.
 
-Last reviewed: 2026-11-22 (F31 re-statused once docs/PLAN.md was retired; F23 names the stadium theme, D109; D110 the viewer the title draws; N9 names CI's security job).
+Last reviewed: 2026-11-27 (F31 re-statused once docs/PLAN.md was retired; F23 names the stadium theme, D109; D110 the viewer the title draws; N9 names CI's security job).
 
 ## Problem
 
